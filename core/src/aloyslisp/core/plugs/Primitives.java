@@ -152,7 +152,6 @@ public class Primitives
 	 * @param cls
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
 	@Global(name = "%instantiate")
 	public static boolean INSTANTIATE( //
 			@Arg(name = "class") String cls)
@@ -176,7 +175,7 @@ public class Primitives
 			// Get method data
 			Global g = m.getAnnotation(Global.class);
 			Primitive p = m.getAnnotation(Primitive.class);
-			Class<?>[] paramTypes = m.getParameterTypes();
+			// Class<?>[] paramTypes = m.getParameterTypes();
 			Annotation[][] notes = m.getParameterAnnotations();
 
 			tLIST cmd;
@@ -190,6 +189,7 @@ public class Primitives
 						declareArgs(),
 						list("%primitive", list("quote", g.name())).APPEND(
 								argsCall(notes)));
+				System.out.println("" + cmd);
 				cmd.EVAL();
 			}
 			else if (p != null)
@@ -197,21 +197,11 @@ public class Primitives
 				cmd = list("defun", p.name(), argsDecl(notes), p.doc(),
 						declareArgs(), list("%global", list("quote", p.name()))
 								.APPEND(argsCall(notes)));
+				System.out.println("" + cmd);
 				cmd.EVAL();
 			}
 			else
 				continue;
-
-			// Transform arguments
-			int i = 0;
-			for (Class<?> classArg : paramTypes)
-			{
-				// boolean ia = classArg.isArray();
-				System.out.println("Argument " + classArg.getSimpleName());
-				System.out.println("Parameter annotations");
-				System.out.println(writeAnnotation(notes[i]));
-				i++;
-			}
 		}
 		return true;
 	}

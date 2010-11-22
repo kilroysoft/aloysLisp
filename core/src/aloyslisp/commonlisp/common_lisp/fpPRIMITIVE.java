@@ -27,7 +27,7 @@
 // IP 11 nov. 2010 Creation
 // --------------------------------------------------------------------------
 
-package aloyslisp.commonlisp.system;
+package aloyslisp.commonlisp.common_lisp;
 
 import static aloyslisp.commonlisp.L.*;
 
