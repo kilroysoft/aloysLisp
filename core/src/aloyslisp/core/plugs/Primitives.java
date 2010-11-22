@@ -147,8 +147,7 @@ public class Primitives
 	}
 
 	/**
-	 * Read all lisp functions of the class and create appropriate
-	 * package entry
+	 * Read all lisp functions of the class and create appropriate package entry
 	 * 
 	 * @param cls
 	 * @return
@@ -173,41 +172,35 @@ public class Primitives
 		Method[] meth = c.getMethods();
 		for (Method m : meth)
 		{
-			Annotation[] an = m.getAnnotations();
+
+			// Get method data
 			Global g = m.getAnnotation(Global.class);
 			Primitive p = m.getAnnotation(Primitive.class);
-			tCONS cmd;
-			if (g != null)
-			{
-				cmd = list(sym(
-						"defun",
-						g.name(),
-						args(),
-						g.doc(),
-						declare(),
-						list("%primitive", list("quote", g.name())).append(
-								args())));
-			}
-			else if (p != null)
-			{
-				cmd = list(sym(
-						"defun",
-						g.name(),
-						args(),
-						g.doc(),
-						declare(),
-						list("%global", list("quote", g.name())).append(
-								args())));
-			}
-			else
-				continue;
-
 			Class<?>[] paramTypes = m.getParameterTypes();
 			Annotation[][] notes = m.getParameterAnnotations();
 
-			// Test arguments number, type is always tT
-			// boolean va = m.isVarArgs();
-			// int l = paramTypes.length;
+			tLIST cmd;
+			if (g != null)
+			{
+				cmd = list(
+						"defun",
+						g.name(),
+						argsDecl(notes),
+						g.doc(),
+						declareArgs(),
+						list("%primitive", list("quote", g.name())).APPEND(
+								argsCall(notes)));
+				cmd.EVAL();
+			}
+			else if (p != null)
+			{
+				cmd = list("defun", p.name(), argsDecl(notes), p.doc(),
+						declareArgs(), list("%global", list("quote", p.name()))
+								.APPEND(argsCall(notes)));
+				cmd.EVAL();
+			}
+			else
+				continue;
 
 			// Transform arguments
 			int i = 0;
@@ -221,6 +214,84 @@ public class Primitives
 			}
 		}
 		return true;
+	}
+
+	/**
+	 * @param notes
+	 * @return
+	 */
+	private static tLIST declareArgs()
+	{
+		return NIL;
+	}
+
+	/**
+	 * @param notes
+	 * @return
+	 */
+	private static tLIST argsDecl(Annotation[][] notes)
+	{
+		tLIST res = NIL;
+		res = (tLIST) res.APPEND(argsBase(notes, Arg.class, ""));
+		res = (tLIST) res.APPEND(argsBase(notes, Opt.class, "&optional"));
+		res = (tLIST) res.APPEND(argsBase(notes, Rest.class, "&rest"));
+		res = (tLIST) res.APPEND(argsBase(notes, Key.class, "&key"));
+		return res;
+	}
+
+	/**
+	 * @param notes
+	 * @param type
+	 * @return
+	 */
+	private static tLIST argsCall(Annotation[][] notes)
+	{
+		tLIST res = NIL;
+		res = (tLIST) res.APPEND(argsBase(notes, Arg.class, ""));
+		res = (tLIST) res.APPEND(argsBase(notes, Opt.class, ""));
+		res = (tLIST) res.APPEND(argsBase(notes, Rest.class, ""));
+		res = (tLIST) res.APPEND(argsBase(notes, Key.class, ""));
+		return res;
+	}
+
+	/**
+	 * @param notes
+	 * @param type
+	 * @param prefix
+	 * @return
+	 */
+	private static tLIST argsBase(Annotation[][] notes,
+			Class<? extends Annotation> type, String prefix)
+	{
+		tLIST res = NIL;
+
+		for (Annotation[] an : notes)
+		{
+			for (Annotation a : an)
+			{
+				if (a.getClass().isAssignableFrom(type))
+				{
+					if (a instanceof Arg)
+					{
+						res = (tLIST) res.APPEND(list(((Arg) a).name()));
+					}
+					else if (a instanceof Opt)
+					{
+
+					}
+					else if (a instanceof Key)
+					{
+
+					}
+					else if (a instanceof Rest)
+					{
+
+					}
+				}
+			}
+		}
+
+		return res;
 	}
 
 	/**
