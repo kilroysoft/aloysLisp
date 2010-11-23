@@ -219,7 +219,7 @@ public class NIL extends SYMBOL implements tNULL
 	 * @see aloyslisp.core.types.tSEQUENCE#SET_ELT(java.lang.Integer,
 	 * aloyslisp.core.types.tT)
 	 */
-	public tLIST SET_ELT(Integer pos, tT value)
+	public tLIST SETF_ELT(Integer pos, tT value)
 	{
 		throw new LispErrorFunctionCannotApplyOn("selt", this);
 	}
@@ -485,7 +485,7 @@ public class NIL extends SYMBOL implements tNULL
 	 */
 	@Override
 	// defined elsewhere (NIL is just a gost of a CONS or SYMBOL)
-	public tLIST SET_LAST(tT value)
+	public tLIST SETF_LAST(tT value)
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -497,7 +497,7 @@ public class NIL extends SYMBOL implements tNULL
 	 * @see aloyslisp.core.types.tSEQUENCE#SET_SUBSEQ(java.lang.Integer,
 	 * java.lang.Integer, aloyslisp.core.types.tT)
 	 */
-	public tSEQUENCE SET_SUBSEQ(Integer start, Integer end, tT value)
+	public tSEQUENCE SETF_SUBSEQ(Integer start, Integer end, tT value)
 	{
 		// TODO Auto-generated method stub
 		return null;

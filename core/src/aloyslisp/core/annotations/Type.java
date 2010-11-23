@@ -7,24 +7,18 @@ import java.lang.annotation.*;
 
 /**
  * @author ivan
- *
+ * 
  */
-@Target(ElementType.PARAMETER)
+@Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Key 
+public @interface Type
 {
+
 	/**
-	 * Lisp name of key
+	 * Lisp Class type name
 	 * 
 	 * @return
 	 */
 	String name();
-
-	/**
-	 * Default value as a string
-	 * 
-	 * @return
-	 */
-	String def() default "";
 
 }

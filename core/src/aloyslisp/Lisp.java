@@ -46,14 +46,10 @@ public class Lisp
 	 * 
 	 * @param args
 	 */
-	/**
-	 * @param args
-	 */
 	public static void main(String[] args)
 	{
 		// tLIST repl = list(fWRITE, (list(fEVAL, list(fREAD))));
 		// System.out.println(Psystem.pPUTD.describe());
-		sym("lisp::load");
 		sym("lisp::load").e(str("class.lisp"));
 		for (;;)
 		{

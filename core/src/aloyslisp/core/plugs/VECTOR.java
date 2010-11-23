@@ -179,7 +179,7 @@ public class VECTOR extends CELL implements tARRAY, tVECTOR
 		return array.get(pos);
 	}
 
-	public tSEQUENCE SET_ELT(Integer pos, tT value)
+	public tSEQUENCE SETF_ELT(Integer pos, tT value)
 	{
 		if (!testLimits(pos))
 			return null;
@@ -286,7 +286,7 @@ public class VECTOR extends CELL implements tARRAY, tVECTOR
 	 * java.lang.Integer, aloyslisp.core.types.tT)
 	 */
 	@Override
-	public tSEQUENCE SET_SUBSEQ(Integer start, Integer end, tT value)
+	public tSEQUENCE SETF_SUBSEQ(Integer start, Integer end, tT value)
 	{
 		// TODO Auto-generated method stub
 		return null;

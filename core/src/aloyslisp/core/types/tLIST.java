@@ -40,6 +40,7 @@ import aloyslisp.core.annotations.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
+@Type(name = "list")
 public interface tLIST extends tSEQUENCE
 {
 	/**
@@ -89,13 +90,16 @@ public interface tLIST extends tSEQUENCE
 	 * 
 	 * @return
 	 */
+	@Primitive(name = "last")
 	public tLIST LAST();
 
 	/**
 	 * @param value
 	 * @return
 	 */
-	public tLIST SET_LAST(tT value);
+	@Primitive(name = "setf-last")
+	public tLIST SETF_LAST( //
+			@Arg(name = "value") tT value);
 
 	/**
 	 * Push element in head position, returned cons is preserved, NIL is of
@@ -104,7 +108,9 @@ public interface tLIST extends tSEQUENCE
 	 * 
 	 * @return
 	 */
-	public tLIST PUSH(tT item);
+	@Primitive(name = "push")
+	public tLIST PUSH( //
+			@Arg(name = "item") tT item);
 
 	/**
 	 * Pop element and supress car of list. DON'tT WORK ON LAST ELEMENT (ERROR).
@@ -113,6 +119,7 @@ public interface tLIST extends tSEQUENCE
 	 * 
 	 * @return
 	 */
+	@Primitive(name = "pop")
 	public tT POP();
 
 	/**
@@ -120,6 +127,8 @@ public interface tLIST extends tSEQUENCE
 	 * 
 	 * @return
 	 */
-	public tT APPEND(tT item);
+	@Primitive(name = "append")
+	public tT APPEND( //
+			@Arg(name = "item") tT item);
 
 }

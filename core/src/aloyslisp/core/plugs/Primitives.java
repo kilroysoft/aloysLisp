@@ -182,22 +182,27 @@ public class Primitives
 			if (g != null)
 			{
 				cmd = list(
-						"defun",
+						"defmacro",
 						g.name(),
 						argsDecl(notes),
-						g.doc(),
+						str(g.doc()),
 						declareArgs(),
-						list("%primitive", list("quote", g.name())).APPEND(
-								argsCall(notes)));
-				System.out.println("" + cmd);
+						backquote(list("%global", quote(g.name())).APPEND(
+								argsCall(notes))));
+				// System.out.println("" + cmd);
 				cmd.EVAL();
 			}
 			else if (p != null)
 			{
-				cmd = list("defun", p.name(), argsDecl(notes), p.doc(),
-						declareArgs(), list("%global", list("quote", p.name()))
-								.APPEND(argsCall(notes)));
-				System.out.println("" + cmd);
+				cmd = list(
+						"defmacro",
+						p.name(),
+						list(sym("obj")).APPEND(argsDecl(notes)),
+						str(p.doc()),
+						declareArgs(),
+						backquote(list("%primitive", quote(p.name()),
+								unquote("obj")).APPEND(argsCall(notes))));
+				// System.out.println("" + cmd);
 				cmd.EVAL();
 			}
 			else
@@ -237,10 +242,10 @@ public class Primitives
 	private static tLIST argsCall(Annotation[][] notes)
 	{
 		tLIST res = NIL;
-		res = (tLIST) res.APPEND(argsBase(notes, Arg.class, ""));
-		res = (tLIST) res.APPEND(argsBase(notes, Opt.class, ""));
-		res = (tLIST) res.APPEND(argsBase(notes, Rest.class, ""));
-		res = (tLIST) res.APPEND(argsBase(notes, Key.class, ""));
+		res = (tLIST) res.APPEND(argsBase(notes, Arg.class, null));
+		res = (tLIST) res.APPEND(argsBase(notes, Opt.class, null));
+		res = (tLIST) res.APPEND(argsBase(notes, Rest.class, null));
+		res = (tLIST) res.APPEND(argsBase(notes, Key.class, null));
 		return res;
 	}
 
@@ -254,50 +259,53 @@ public class Primitives
 			Class<? extends Annotation> type, String prefix)
 	{
 		tLIST res = NIL;
+		boolean call = prefix == null;
 
 		for (Annotation[] an : notes)
 		{
 			for (Annotation a : an)
 			{
-				if (a.getClass().isAssignableFrom(type))
+				tT arg = NIL;
+				if (type.isAssignableFrom(a.getClass()))
 				{
 					if (a instanceof Arg)
 					{
-						res = (tLIST) res.APPEND(list(((Arg) a).name()));
+						arg = sym(((Arg) a).name());
+						if (call)
+							arg = unquote(arg);
 					}
 					else if (a instanceof Opt)
 					{
-
+						arg = sym(((Opt) a).name());
+						if (call)
+							arg = unquote(arg);
+						else
+							arg = list(arg).APPEND(list(((Opt) a).def()));
 					}
 					else if (a instanceof Key)
 					{
-
+						arg = sym(((Key) a).name());
+						if (call)
+							arg = unquote(arg);
+						else
+							arg = list(arg).APPEND(list(((Key) a).def()));
 					}
 					else if (a instanceof Rest)
 					{
-
+						arg = sym(((Rest) a).name());
+						if (call)
+							arg = splice(arg);
 					}
 				}
+				if (arg != NIL)
+					res = (tLIST) res.APPEND(list(arg));
 			}
 		}
 
-		return res;
-	}
-
-	/**
-	 * @param ann
-	 * @return
-	 */
-	private static String writeAnnotation(Annotation[] ann)
-	{
-		String res = "";
-
-		for (Annotation an : ann)
-		{
-			res += an.toString() + "\n";
-		}
+		// If a prefix is given and
+		if (prefix != null && !prefix.equals("") && res.LENGTH() != 0)
+			res = (tLIST) list(prefix).APPEND(res);
 
 		return res;
 	}
-
 }

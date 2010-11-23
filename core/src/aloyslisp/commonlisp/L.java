@@ -677,6 +677,50 @@ public class L extends Primitives
 	}
 
 	/**
+	 * Quote the form
+	 * 
+	 * @param form
+	 * @return
+	 */
+	public static tLIST quote(Object form)
+	{
+		return list("lisp::quote", form);
+	}
+
+	/**
+	 * Unquote the form
+	 * 
+	 * @param form
+	 * @return
+	 */
+	public static tLIST unquote(Object form)
+	{
+		return list("sys::%unquote", form);
+	}
+
+	/**
+	 * Backquote the form
+	 * 
+	 * @param form
+	 * @return
+	 */
+	public static tLIST backquote(Object form)
+	{
+		return list("sys::%backquote", form);
+	}
+
+	/**
+	 * splice the form
+	 * 
+	 * @param form
+	 * @return
+	 */
+	public static tLIST splice(Object form)
+	{
+		return list("sys::%splice", form);
+	}
+
+	/**
 	 * Test if cell is a list beginning with name
 	 * 
 	 * @param cell

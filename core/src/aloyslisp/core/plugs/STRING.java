@@ -48,7 +48,7 @@ public class STRING extends VECTOR implements tSTRING
 	{
 		for (int i = 0; i < string.length(); i++)
 		{
-			this.SET_ELT(i, new CHARACTER(string.charAt(i)));
+			this.SETF_ELT(i, new CHARACTER(string.charAt(i)));
 		}
 	}
 

@@ -57,7 +57,7 @@ public interface tSEQUENCE extends tT, Iterable<tT>
 	 * @param value
 	 * @return
 	 */
-	public tSEQUENCE SET_ELT(Integer pos, tT value);
+	public tSEQUENCE SETF_ELT(Integer pos, tT value);
 
 	/**
 	 * @param start
@@ -72,7 +72,7 @@ public interface tSEQUENCE extends tT, Iterable<tT>
 	 * @param value
 	 * @return
 	 */
-	public tSEQUENCE SET_SUBSEQ(Integer start, Integer end, tT value);
+	public tSEQUENCE SETF_SUBSEQ(Integer start, Integer end, tT value);
 
 	/**
 	 * Reverse the list.

@@ -373,7 +373,7 @@ public class CONS extends CELL implements tCONS
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tLIST#SET_LAST(aloyslisp.core.types.tT)
 	 */
-	public tLIST SET_LAST(tT value)
+	public tLIST SETF_LAST(tT value)
 	{
 		// IMPLEMENT set-last
 		return null;
@@ -427,7 +427,7 @@ public class CONS extends CELL implements tCONS
 	 * @see aloyslisp.core.types.tSEQUENCE#SET_ELT(java.lang.Integer,
 	 * aloyslisp.core.types.tT)
 	 */
-	public tLIST SET_ELT(Integer pos, tT value)
+	public tLIST SETF_ELT(Integer pos, tT value)
 	{
 		Integer i = 0;
 		// TODO walk differently
@@ -456,7 +456,7 @@ public class CONS extends CELL implements tCONS
 	 * @see aloyslisp.core.types.tSEQUENCE#SET_SUBSEQ(java.lang.Integer,
 	 * java.lang.Integer, aloyslisp.core.types.tT)
 	 */
-	public tSEQUENCE SET_SUBSEQ(Integer start, Integer end, tT value)
+	public tSEQUENCE SETF_SUBSEQ(Integer start, Integer end, tT value)
 	{
 		// TODO Auto-generated method stub
 		return null;
