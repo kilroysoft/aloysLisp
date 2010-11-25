@@ -35,7 +35,7 @@ import aloyslisp.core.plugs.*;
 import aloyslisp.core.types.*;
 
 /**
- * sDEFUN
+ * sDEFUN 
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
