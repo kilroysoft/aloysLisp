@@ -36,7 +36,7 @@ package aloyslisp.core.types;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public interface tFLOAT extends tNUMBER, tREAL
+public interface tFLOAT extends tREAL
 {
 
 }

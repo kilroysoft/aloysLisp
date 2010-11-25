@@ -33,6 +33,7 @@ package aloyslisp.core.plugs;
 import java.util.*;
 
 import static aloyslisp.commonlisp.L.*;
+import aloyslisp.core.annotations.*;
 import aloyslisp.core.common.*;
 import aloyslisp.core.types.*;
 
@@ -61,6 +62,7 @@ public class CONS extends CELL implements tCONS
 	 * @param car
 	 * @param cdr
 	 */
+	@Construct(name = "cons")
 	public CONS(tT car, tT cdr)
 	{
 		SETF_CAR(car);
@@ -72,7 +74,8 @@ public class CONS extends CELL implements tCONS
 	 * 
 	 * @param list
 	 */
-	public CONS(Object[] list)
+	@Construct(name = "list")
+	public CONS(Object... list)
 	{
 		if (list.length == 0)
 			throw new LispException(
@@ -460,35 +463,6 @@ public class CONS extends CELL implements tCONS
 	{
 		// TODO Auto-generated method stub
 		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.types.tLIST#PUSH(aloyslisp.core.types.tT)
-	 */
-	public tLIST PUSH(tT item)
-	{
-		tLIST rest = new CONS(car, cdr);
-		SETF_CAR(item);
-		SETF_CDR(rest);
-		return this;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.types.tLIST#POP()
-	 */
-	public tT POP()
-	{
-		if (((tLIST) CDR()).ENDP())
-		{
-			throw new LispException("Can't pop from last element of list");
-		}
-
-		tT res = CAR();
-		SETF_CAR(CDR().CAR());
-		SETF_CDR(CDR().CDR());
-		return res;
 	}
 
 	/*

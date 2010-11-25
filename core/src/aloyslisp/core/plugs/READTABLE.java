@@ -304,7 +304,7 @@ public class READTABLE extends CELL implements tREADTABLE
 	public void setCase(tSYMBOL c)
 	{
 		// caseVal = Enum.valueOf(CaseType, c.getName().toUpperCase());
-		String name = c.SYMBOL_NAME().getString();
+		String name = c.SYMBOL_NAME();
 		if (name.equalsIgnoreCase("downcase"))
 		{
 			caseVal = CaseType.DOWNCASE;

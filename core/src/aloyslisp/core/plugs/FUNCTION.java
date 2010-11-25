@@ -62,7 +62,7 @@ public abstract class FUNCTION extends CELL implements tFUNCTION
 	 * @see aloyslisp.core.plugs.IFunc#exec(aloyslisp.core.plugs.CELL[])
 	 */
 	@Override
-	public tT[] e(tT... args)
+	public tT[] e(Object... args)
 	{
 		if (args.length == 0)
 			return exec(NIL);

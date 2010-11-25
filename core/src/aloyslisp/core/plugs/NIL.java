@@ -50,7 +50,7 @@ public class NIL extends SYMBOL implements tNULL
 	 */
 	public NIL()
 	{
-		super(str("NIL"));
+		super("NIL");
 	}
 
 	/*

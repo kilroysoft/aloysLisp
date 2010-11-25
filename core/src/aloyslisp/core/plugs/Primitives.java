@@ -108,13 +108,13 @@ public class Primitives
 			return currPackage();
 		if (pack instanceof tPACKAGE)
 			return pack;
-		if (pack instanceof tSYMBOL)
-			pack = ((tSYMBOL) pack).SYMBOL_NAME();
-		if (!(pack instanceof tSTRING))
+		if (!(pack instanceof tSTRING) && !(pack instanceof tSYMBOL))
 			return NIL;
-		tT packN = packages.get(((tSTRING) pack).getString());
+
+		tT packN = packages.get(((tSYMBOL) pack).SYMBOL_NAME());
 		if (packN == null)
 			ERROR("FIND-PACKAGE : Package inconnu : ~s", pack);
+
 		return ((tSYMBOL) packN).SYMBOL_VALUE();
 	}
 
@@ -128,7 +128,7 @@ public class Primitives
 	 */
 	@Global(name = "list")
 	public static tLIST LIST( //
-			@Rest(name = "list") tT... list)
+			@Rest(name = "list") Object... list)
 	{
 		return new CONS(list);
 	}

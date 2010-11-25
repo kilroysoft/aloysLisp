@@ -24,12 +24,15 @@
 
 package aloyslisp.core.types;
 
+import aloyslisp.core.annotations.Type;
+
 /**
  * tBIGNUM
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  *
  */
+@Type(name = "bignum", test = "bignump")
 public interface tBIGNUM extends tINTEGER
 {
 

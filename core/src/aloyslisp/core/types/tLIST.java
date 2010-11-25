@@ -40,7 +40,7 @@ import aloyslisp.core.annotations.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-@Type(name = "list")
+@Type(name = "list", test = "listp")
 public interface tLIST extends tSEQUENCE
 {
 	/**
@@ -100,27 +100,6 @@ public interface tLIST extends tSEQUENCE
 	@Primitive(name = "setf-last")
 	public tLIST SETF_LAST( //
 			@Arg(name = "value") tT value);
-
-	/**
-	 * Push element in head position, returned cons is preserved, NIL is of
-	 * course changed.
-	 * != (PUSH item) function.
-	 * 
-	 * @return
-	 */
-	@Primitive(name = "push")
-	public tLIST PUSH( //
-			@Arg(name = "item") tT item);
-
-	/**
-	 * Pop element and supress car of list. DON'tT WORK ON LAST ELEMENT (ERROR).
-	 * Returned cons is preserved.
-	 * != (POP) function.
-	 * 
-	 * @return
-	 */
-	@Primitive(name = "pop")
-	public tT POP();
 
 	/**
 	 * Append : write to the cdr of last cons (append to NIL -> item)

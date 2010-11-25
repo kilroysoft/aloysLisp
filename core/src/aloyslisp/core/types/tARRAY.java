@@ -29,6 +29,8 @@
 
 package aloyslisp.core.types;
 
+import aloyslisp.core.annotations.Type;
+
 /**
  * tARRAY
  * 
@@ -36,6 +38,7 @@ package aloyslisp.core.types;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
+@Type(name = "array", test = "arrayp")
 public interface tARRAY extends tATOM
 {
 	/**

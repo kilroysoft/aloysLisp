@@ -88,7 +88,7 @@ public interface tINPUT_STREAM extends tSTREAM
 	 * @return
 	 * @throws EOFException
 	 */
-	public tSTRING readAtom(tT eofErrorP, tT eofValue, tT recursiveP)
+	public String readAtom(tT eofErrorP, tT eofValue, tT recursiveP)
 			throws EOFException;
 
 	/**
@@ -99,7 +99,7 @@ public interface tINPUT_STREAM extends tSTREAM
 	 * @return
 	 * @throws EOFException
 	 */
-	public tSTRING readAtom(boolean firstEscaped, tT eofErrorP, tT eofValue,
+	public String readAtom(boolean firstEscaped, tT eofErrorP, tT eofValue,
 			tT recursiveP) throws EOFException;
 
 	/**

@@ -190,7 +190,7 @@ public abstract class CELL implements tT
 		String name = "";
 		if (type instanceof tSYMBOL)
 			name = "t"
-					+ ((tSYMBOL) type).SYMBOL_NAME().getString().toUpperCase()
+					+ ((tSYMBOL) type).SYMBOL_NAME().toUpperCase()
 							.replace('-', '_');
 		else
 			throw new LispException("type should be defined by a symbol : "

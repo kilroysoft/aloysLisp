@@ -262,7 +262,7 @@ public class INPUT_STREAM extends STREAM implements tINPUT_STREAM
 				return res;
 
 			// It's a constituent... so atom
-			tSTRING atom = readAtom(eofErrorP, eofValue, recursiveP);
+			String atom = readAtom(eofErrorP, eofValue, recursiveP);
 			if (atom != null)
 			{
 				// test if numeric
@@ -271,7 +271,7 @@ public class INPUT_STREAM extends STREAM implements tINPUT_STREAM
 					return res;
 
 				// else it's a symbol
-				return sym(atom.getString());
+				return sym(atom);
 			}
 		}
 	}
@@ -330,7 +330,7 @@ public class INPUT_STREAM extends STREAM implements tINPUT_STREAM
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.plugs.streams.IInputStream#readAtom()
 	 */
-	public tSTRING readAtom(tT eofErrorP, tT eofValue, tT recursiveP)
+	public String readAtom(tT eofErrorP, tT eofValue, tT recursiveP)
 			throws EOFException
 	{
 		return readAtom(false, eofErrorP, eofValue, recursiveP);
@@ -340,7 +340,7 @@ public class INPUT_STREAM extends STREAM implements tINPUT_STREAM
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.plugs.streams.IInputStream#readAtom(boolean)
 	 */
-	public tSTRING readAtom(boolean firstEscaped, tT eofErrorP, tT eofValue,
+	public String readAtom(boolean firstEscaped, tT eofErrorP, tT eofValue,
 			tT recursiveP) throws EOFException
 	{
 		Character curr = PEEK_CHAR(NIL, eofErrorP, eofValue, recursiveP);
@@ -367,7 +367,7 @@ public class INPUT_STREAM extends STREAM implements tINPUT_STREAM
 		if (atom.equals(""))
 			return null;
 
-		return str(atom);
+		return atom;
 	}
 
 	/**

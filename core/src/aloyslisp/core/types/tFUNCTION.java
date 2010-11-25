@@ -54,7 +54,7 @@ public interface tFUNCTION extends tATOM
 	 *            individual args
 	 * @return Evaluated results in ana array for eventual multiple values
 	 */
-	public tT[] e(tT... args);
+	public tT[] e(Object... args);
 
 	/**
 	 * Implemntation of function

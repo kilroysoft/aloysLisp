@@ -24,50 +24,46 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 13 sept. 2010 Creation
+// IP 20 nov. 2010 Creation
 // --------------------------------------------------------------------------
 
-package aloyslisp.core.types;
+package aloyslisp.core.annotations;
 
-import java.util.Map;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
- * tPACKAGE
+ * Construct
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public interface tPACKAGE extends tATOM, Iterable<String>, Map<String, tSYMBOL>
+@Target(ElementType.CONSTRUCTOR)
+@Retention(RetentionPolicy.RUNTIME)
+public @interface Construct
 {
 	/**
-	 * @param pack
-	 * @return
-	 */
-	public boolean isInUseList(tPACKAGE pack);
-
-	/**
-	 * @return
-	 */
-	public String getName();
-
-	/**
-	 * APROPOS
+	 * Lisp function name
 	 * 
 	 * @return
 	 */
-	public String dump();
+	String name();
 
 	/**
-	 * Load all java classes of the package
-	 */
-	public void loadClasses();
-
-	/**
-	 * @param symbol
-	 * @param pack
+	 * Documentation string
+	 * 
 	 * @return
 	 */
-	public tSYMBOL INTERN(String symbol);
+	String doc() default "";
+
+	/**
+	 * Nr mandatory arguments. -1 all.
+	 * 
+	 * @return
+	 */
+	int obl() default -1;
 
 }

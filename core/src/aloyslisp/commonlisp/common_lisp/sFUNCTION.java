@@ -149,8 +149,8 @@ public class sFUNCTION extends SPECIAL_OPERATOR
 
 		// test lambda header
 		if (!(walk.CAR() instanceof tSYMBOL)
-				|| !((tSYMBOL) walk.CAR()).SYMBOL_NAME().getString()
-						.equalsIgnoreCase("lambda"))
+				|| !((tSYMBOL) walk.CAR()).SYMBOL_NAME().equalsIgnoreCase(
+						"lambda"))
 			return null;
 
 		walk = (tLIST) walk.CDR();

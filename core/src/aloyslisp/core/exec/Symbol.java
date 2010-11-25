@@ -186,7 +186,7 @@ public class Symbol extends CELL
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tSYMBOL#getName()
 	 */
-	public tSTRING SYMBOL_NAME()
+	public String SYMBOL_NAME()
 	{
 		return orig.SYMBOL_NAME();
 	}

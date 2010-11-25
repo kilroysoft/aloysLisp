@@ -83,7 +83,7 @@ public class fpGLOBAL extends fpPRIMITIVE
 		if (func instanceof tSTRING)
 			name = ((tSTRING) func).getString();
 		else if (func instanceof tSYMBOL)
-			name = ((tSYMBOL) func).SYMBOL_NAME().getString();
+			name = ((tSYMBOL) func).SYMBOL_NAME();
 		else
 		{
 			throw new LispException(

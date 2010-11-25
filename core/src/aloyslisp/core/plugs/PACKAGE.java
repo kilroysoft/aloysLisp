@@ -125,7 +125,7 @@ public class PACKAGE extends CELL implements tPACKAGE
 						.toLowerCase();
 
 				// Inter symbol sym with function loaded in current package
-				INTERN(str(sym)).SETF_SYMBOL_FUNCTION(f);
+				INTERN(sym).SETF_SYMBOL_FUNCTION(f);
 			}
 			catch (ClassNotFoundException e)
 			{
@@ -310,24 +310,19 @@ public class PACKAGE extends CELL implements tPACKAGE
 	 * @param pack
 	 * @return
 	 */
-	public tSYMBOL INTERN(tT symbol /* , tT packName */)
+	public tSYMBOL INTERN(String symbol /* , tT packName */)
 	{
 		// tT pack = FIND_PACKAGE(packName);
 		// if (pack == NIL)
 		// throw new LispErrorFunctionCannotApplyOn("INTERN", pack);
 
-		if (symbol instanceof tSTRING)
+		tT sym = get(symbol);
+		if (sym == null)
 		{
-			tT sym = get(((tSTRING) symbol).getString());
-			if (sym == null)
-			{
-				sym = new SYMBOL((tSTRING) symbol, this);
-				put(((tSTRING) symbol).getString(), (tSYMBOL) sym);
-			}
-			return (tSYMBOL) sym;
+			sym = new SYMBOL(symbol);
+			put(symbol, (tSYMBOL) sym);
 		}
-		else
-			throw new LispErrorFunctionCannotApplyOn("INTERN", symbol);
+		return (tSYMBOL) sym;
 	}
 
 	/**

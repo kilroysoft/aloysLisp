@@ -73,12 +73,11 @@ public class fpPARENT_READER extends SYSTEM_FUNCTION
 		{
 			tT curr = in.READ(NIL, NIL, T);
 			while (!(curr instanceof tSYMBOL)
-					|| !((tSYMBOL) curr).SYMBOL_NAME().getString().equals(")"))
+					|| !((tSYMBOL) curr).SYMBOL_NAME().equals(")"))
 			{
 				// manage dotted lists
 				if (curr instanceof tSYMBOL
-						&& ((tSYMBOL) curr).SYMBOL_NAME().getString()
-								.equals("."))
+						&& ((tSYMBOL) curr).SYMBOL_NAME().equals("."))
 				{
 					curr = in.READ(NIL, NIL, T);
 					res = (tLIST) ((tLIST) res.REVERSE()).APPEND(curr);
@@ -86,8 +85,7 @@ public class fpPARENT_READER extends SYSTEM_FUNCTION
 
 					// dotted pair should end
 					if (curr instanceof tSYMBOL
-							&& ((tSYMBOL) curr).SYMBOL_NAME().getString()
-									.equals(")"))
+							&& ((tSYMBOL) curr).SYMBOL_NAME().equals(")"))
 						return new tT[]
 						{ res };
 

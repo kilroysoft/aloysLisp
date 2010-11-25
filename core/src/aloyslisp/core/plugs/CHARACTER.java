@@ -189,11 +189,9 @@ public class CHARACTER extends CELL implements tCHARACTER
 		return null;
 	}
 
-	/*
-	 * (non-Javadoc)
+	/* (non-Javadoc)
 	 * @see aloyslisp.core.types.tCHARACTER#CHAR_INT()
 	 */
-	@Override
 	public tT CHAR_INT()
 	{
 		// TODO Auto-generated method stub

@@ -67,6 +67,8 @@ public class sDEFUN extends SPECIAL_OPERATOR
 		{ arg(0), arg(1), arg() };
 	}
 
+	private static final tSYMBOL	SETF	= sym("lisp::setf");
+
 	/*
 	 * (non-Javadoc)
 	 * @see
@@ -83,6 +85,23 @@ public class sDEFUN extends SPECIAL_OPERATOR
 		if (name instanceof tCONS)
 		{
 			// (setf func) definition
+			if (((tLIST) name).CAR() != SETF || ((tLIST) name).LENGTH() != 2
+					|| !(((tLIST) name).CDR().CAR() instanceof tSYMBOL))
+			{
+				ERROR("DEFUN : Function name as list should have the form (SEFT name) : ~s",
+						name);
+			}
+
+			tSYMBOL newFunc = sym(((tSYMBOL) ((tLIST) name).CDR().CAR())
+					.SYMBOL_NAME()).hgfhfhgfhgfhgf;
+
+			tFUNCTION def = new DEFUN_FUNCTION((tSYMBOL) name, (tLIST) argList,
+					(tLIST) func);
+			((tSYMBOL) name).SETF_SYMBOL_FUNCTION(def);
+
+			return new tT[]
+			{ name };
+
 			return new tT[]
 			{ name };
 			// throw new LispException("Function name not a symbol " + name);

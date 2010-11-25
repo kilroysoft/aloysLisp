@@ -123,7 +123,7 @@ public interface tSYMBOL extends tATOM
 	/**
 	 * @return
 	 */
-	public tSTRING SYMBOL_NAME();
+	public String SYMBOL_NAME();
 
 	/**
 	 * @param constant
@@ -140,7 +140,7 @@ public interface tSYMBOL extends tATOM
 	 * @param args
 	 * @return
 	 */
-	public tT[] e(tT... args);
+	public tT[] e(Object... args);
 
 	/**
 	 * @param value

@@ -36,7 +36,7 @@ package aloyslisp.core.types;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public interface tRATIONAL extends tNUMBER, tREAL
+public interface tRATIONAL extends tREAL
 {
 
 }

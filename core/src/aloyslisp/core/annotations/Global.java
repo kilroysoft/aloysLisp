@@ -61,9 +61,6 @@ public @interface Global
 	 * 
 	 * @return
 	 */
-	/**
-	 * @return
-	 */
 	int obl() default -1;
 
 }

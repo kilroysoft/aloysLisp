@@ -36,20 +36,6 @@ import aloyslisp.core.common.*;
 import aloyslisp.core.types.*;
 
 /**
- * Pvalue
- * 
- * @author Ivan Pierre {ivan@kilroysoft.ch}
- * @author George Kilroy {george@kilroysoft.ch}
- * 
- */
-/**
- * NUMBER
- * 
- * @author Ivan Pierre {ivan@kilroysoft.ch}
- * @author George Kilroy {george@kilroysoft.ch}
- * 
- */
-/**
  * NUMBER
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
@@ -61,12 +47,12 @@ public abstract class NUMBER extends CELL implements tNUMBER, Cloneable
 	/**
 	 * Table of operator according to weight
 	 */
-	static INTEGER							zero	= new INTEGER(0);
+	protected static INTEGER				zero	= new INTEGER(0);
 
 	/**
 	 * 
 	 */
-	static INTEGER							one		= new INTEGER(1);
+	protected static INTEGER				one		= new INTEGER(1);
 
 	/**
 	 * 
@@ -136,16 +122,7 @@ public abstract class NUMBER extends CELL implements tNUMBER, Cloneable
 	 * @param nb
 	 * @return
 	 */
-	public static tNUMBER create(tSTRING numStr)
-	{
-		return createStr(numStr.getString());
-	}
-
-	/**
-	 * @param nb
-	 * @return
-	 */
-	public static tNUMBER createStr(String nb)
+	public static tNUMBER create(String nb)
 	{
 		// floating point
 		if (nb.matches("^(-|\\+)?\\d*\\.\\d+([esfdlESFDL](-|\\+)?\\d+)?$")
@@ -180,7 +157,7 @@ public abstract class NUMBER extends CELL implements tNUMBER, Cloneable
 		if (nb.matches("^(-|\\+)?" + strBase + "+/" + strBase + "+$"))
 		{
 			String[] rat = nb.split("/");
-			return new RATIO(create(str(rat[0])), create(str(rat[1])));
+			return new RATIO(create(rat[0]), create(rat[1]));
 		}
 
 		// Integer

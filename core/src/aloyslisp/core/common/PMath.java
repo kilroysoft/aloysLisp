@@ -27,9 +27,9 @@
 // IP 12 oct. 2010 Creation
 // --------------------------------------------------------------------------
 
-package aloyslisp.core.plugs;
+package aloyslisp.core.common;
 
-import aloyslisp.core.common.*;
+import aloyslisp.core.plugs.*;
 import aloyslisp.core.types.*;
 import static aloyslisp.commonlisp.L.*;
 

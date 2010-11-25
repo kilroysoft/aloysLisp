@@ -70,7 +70,7 @@ public class fpUNINTERN_READER extends SYSTEM_FUNCTION
 
 		try
 		{
-			tSTRING varName = in.readAtom(NIL, NIL, T);
+			String varName = in.readAtom(NIL, NIL, T);
 			if (varName.equals(""))
 				throw new LispException(
 						"#: should be followed by an symbol name");

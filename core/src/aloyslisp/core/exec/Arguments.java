@@ -175,11 +175,11 @@ public class Arguments
 	/**
 	 * @return
 	 */
-	public tSTRING getStringName()
+	public String getStringName()
 	{
 		if (name == null)
 		{
-			return str("no name in argument");
+			return "no name in argument";
 		}
 		return name.SYMBOL_NAME();
 	}
@@ -258,7 +258,7 @@ public class Arguments
 
 			if (walk instanceof tSYMBOL)
 			{
-				name = ((tSYMBOL) walk).SYMBOL_NAME().getString();
+				name = ((tSYMBOL) walk).SYMBOL_NAME();
 				if (name.equalsIgnoreCase("&optional"))
 				{
 					t = VarType.OPTIONAL;
@@ -368,8 +368,7 @@ public class Arguments
 						// key is a (symbol def) -> ((:symbol symbol) def) if in
 						// current package
 						if (((tSYMBOL) walk).SYMBOL_PACKAGE() == currPackage())
-							key = key(((tSYMBOL) walk).SYMBOL_NAME()
-									.getString());
+							key = key(((tSYMBOL) walk).SYMBOL_NAME());
 						else
 							key = walk;
 					}

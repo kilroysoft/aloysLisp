@@ -123,7 +123,7 @@ public class fLOAD extends SYSTEM_FUNCTION
 			if (file instanceof tSTRING)
 				name = ((tSTRING) file).getString();
 			else if (file instanceof tSYMBOL)
-				name = ((tSYMBOL) file).SYMBOL_NAME().getString();
+				name = ((tSYMBOL) file).SYMBOL_NAME();
 			else
 			{
 				throw new LispException(

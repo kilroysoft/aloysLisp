@@ -47,7 +47,7 @@ public class SYMBOL extends CELL implements tSYMBOL
 	/**
 	 * 
 	 */
-	protected tSTRING	name;
+	protected String	name;
 
 	/**
 	 * 
@@ -92,7 +92,7 @@ public class SYMBOL extends CELL implements tSYMBOL
 	/**
 	 * @param name
 	 */
-	public SYMBOL(tSTRING name)
+	public SYMBOL(String name)
 	{
 		// trace = true;
 		this.name = name;
@@ -104,7 +104,7 @@ public class SYMBOL extends CELL implements tSYMBOL
 	 * @param name
 	 * @param pack
 	 */
-	public SYMBOL(tSTRING name, tPACKAGE pack)
+	public SYMBOL(String name, tPACKAGE pack)
 	{
 		// trace = true;
 		this.name = name;
@@ -277,9 +277,7 @@ public class SYMBOL extends CELL implements tSYMBOL
 			Symbol atom = getAll(this);
 
 			// If we fall back here, normal set
-			if (atom != null
-					&& !atom.SYMBOL_NAME().getString()
-							.equals(this.SYMBOL_NAME().getString()))
+			if (atom != null && !atom.SYMBOL_NAME().equals(this.SYMBOL_NAME()))
 			{
 				return atom.SETF_SYMBOL_VALUE(value);
 			}
@@ -304,9 +302,7 @@ public class SYMBOL extends CELL implements tSYMBOL
 		{
 			// If we fall back here, normal set
 			Symbol res = getAll(this);
-			if (res != null
-					&& !res.SYMBOL_NAME().getString()
-							.equals(this.SYMBOL_NAME().getString()))
+			if (res != null && !res.SYMBOL_NAME().equals(this.SYMBOL_NAME()))
 				return res.SYMBOL_VALUE();
 		}
 		else
@@ -340,9 +336,7 @@ public class SYMBOL extends CELL implements tSYMBOL
 		if (isSpecial())
 		{
 			Symbol res = getAll(this);
-			if (res != null
-					&& !res.SYMBOL_NAME().getString()
-							.equals(this.SYMBOL_NAME().getString()))
+			if (res != null && !res.SYMBOL_NAME().equals(this.SYMBOL_NAME()))
 				return res.SYMBOL_VALUE();
 		}
 		else
@@ -365,9 +359,7 @@ public class SYMBOL extends CELL implements tSYMBOL
 		if (isSpecial())
 		{
 			Symbol res = getAll(this);
-			if (res != null
-					&& !res.SYMBOL_NAME().getString()
-							.equals(this.SYMBOL_NAME().getString()))
+			if (res != null && !res.SYMBOL_NAME().equals(this.SYMBOL_NAME()))
 				return res.unset();
 		}
 
@@ -535,7 +527,7 @@ public class SYMBOL extends CELL implements tSYMBOL
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tSYMBOL#getName()
 	 */
-	public tSTRING SYMBOL_NAME()
+	public String SYMBOL_NAME()
 	{
 		return name;
 	}
@@ -557,23 +549,22 @@ public class SYMBOL extends CELL implements tSYMBOL
 	public String printable()
 	{
 		if (pack == null)
-			return "#:" + name.getString();
+			return "#:" + name;
 
 		boolean current = currPackage() == pack;
 		boolean reachable = current || currPackage().isInUseList(pack);
 
 		if (pack == key)
-			return (":" + name.getString());
+			return (":" + name);
 
-		return (current ? "" : pack + (reachable ? ":" : "::"))
-				+ name.getString();
+		return (current ? "" : pack + (reachable ? ":" : "::")) + name;
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tSYMBOL#e(aloyslisp.core.types.tT[])
 	 */
-	public tT[] e(tT... args)
+	public tT[] e(Object... args)
 	{
 		tFUNCTION func = SYMBOL_FUNCTION();
 		tT a = NIL;
