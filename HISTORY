@@ -1,0 +1,40 @@
+HISTORY : List of changes
+	
+To do
+=====
+- All this stuff is intended to move to a more general lisp object model.
+- All non lisp functions on objects are private or protected or global.
+- Lisp object constructor put to static, only use static creator.
+- Create type objects.
+- Automatic instantiate of all base object. This will be managed in detail later, perhaps config file
+and command tags.
+- Clean-up all instantiation process.
+- At last write all the base functions !!!
+
+Current state
+=============
+
+Version UB26
+=============
+- Add %instantiate function to create %primitive and %global function call for general LISP functions
+- Add setf definition in plist :setf-func
+- Add type definition in plist :type-class
+- All function arguments can be object (translate Objects to tT's).
+- Une notation classes to give lisp info on Java definition of LISP functions.
+- Create function %static for creators and static functions call based on types.
+- Automatically load all the lisp function classes.
+- implement macroexpanders.
+- Added type basic test (%istype obj)
+- Added equality functions eq, eql, equal.
+- Rewrite SYSTEM-FUNCTIONs in lisp begin the whole lisp interface with java in lisp.
+- Create primitive lisp function to call directly objects java methods.
+- Transform all Cell objects interface in type in a proper package aloyslisp.core.types (+rename)
+- Complete key definition ((keyword variable) default)
+- &allow-other-keys
+- Change in the management of arguments binding order (mandatory, &optional, &rest, &key, 
+&allow-other-keys, &aux).	
+	
+Version UB09
+============	
+- Alpha version working
+	
