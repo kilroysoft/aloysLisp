@@ -50,7 +50,7 @@ public class fpBACKQUOTE extends SPECIAL_OPERATOR
 	 */
 	public fpBACKQUOTE()
 	{
-		super(list("obj"), //
+		super(decl("obj"), //
 				"(fpBACKQUOTE obj)", //
 				NIL);
 		mac = "`";

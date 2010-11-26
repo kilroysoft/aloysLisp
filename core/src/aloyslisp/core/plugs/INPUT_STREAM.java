@@ -197,7 +197,7 @@ public class INPUT_STREAM extends STREAM implements tINPUT_STREAM
 		Character walk = READ_CHAR(eofErrorP, eofValue, recursiveP);
 		boolean space = car == T;
 		boolean carTest = car instanceof tCHARACTER;
-		Character test = '§';
+		Character test = '\uffff';
 		if (carTest)
 			test = ((tCHARACTER) car).getChar();
 

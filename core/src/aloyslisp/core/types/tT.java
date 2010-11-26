@@ -30,6 +30,8 @@
 
 package aloyslisp.core.types;
 
+import aloyslisp.core.annotations.*;
+
 /**
  * tT
  * <p>
@@ -54,13 +56,16 @@ public interface tT
 	 * 
 	 * @return converted object
 	 */
-	public tT COERCE(tT type);
+	@Primitive(name = "coerce")
+	public tT COERCE( //
+			@Arg(name="type") tT type);
 
 	/**
 	 * Evaluate the cell
 	 * 
 	 * @return Value as an array (functions can give back multiple values)
 	 */
+	@Primitive(name = "eval")
 	public tT[] EVAL();
 
 	/**
@@ -68,6 +73,7 @@ public interface tT
 	 * 
 	 * @return
 	 */
+	@Primitive(name = "compile")
 	public String COMPILE();
 
 	/**
@@ -75,6 +81,7 @@ public interface tT
 	 * 
 	 * @return
 	 */
+	@Primitive(name = "evalcompile")
 	public String EVALCOMPILE();
 
 	/**
@@ -90,6 +97,7 @@ public interface tT
 	 * 
 	 * @return
 	 */
+	@Primitive(name = "describe")
 	public String DESCRIBE();
 
 	/**
@@ -97,6 +105,7 @@ public interface tT
 	 * 
 	 * @return
 	 */
+	@Primitive(name = "macroexpand")
 	public tT[] MACROEXPAND();
 
 	/**
@@ -104,6 +113,7 @@ public interface tT
 	 * 
 	 * @return
 	 */
+	@Primitive(name = "macroexpand1")
 	public tT[] MACROEXPAND1();
 
 	/**
@@ -113,6 +123,7 @@ public interface tT
 	 * 
 	 * @return
 	 */
+	// definition in tSYMBOL
 	public tT CAR();
 
 	/**
@@ -122,6 +133,7 @@ public interface tT
 	 * 
 	 * @return
 	 */
+	// definition in tSYMBOL
 	public tT CDR();
 
 	/**
@@ -130,7 +142,9 @@ public interface tT
 	 * @param cell
 	 * @return
 	 */
-	public boolean EQ(tT cell);
+	@Primitive(name = "eq")
+	public boolean EQ( //
+			@Arg(name="cell") tT cell);
 
 	/**
 	 * eql
@@ -139,7 +153,9 @@ public interface tT
 	 * @return
 	 *         TODO will be removed for a lisp version
 	 */
-	public boolean EQL(tT cell);
+	@Primitive(name = "eql")
+	public boolean EQL( //
+			@Arg(name="cell") tT cell);
 
 	/**
 	 * equal
@@ -148,7 +164,9 @@ public interface tT
 	 * @return
 	 *         TODO will be removed for a lisp version
 	 */
-	public boolean EQUAL(tT cell);
+	@Primitive(name = "equal")
+	public boolean EQUAL( //
+			@Arg(name="cell") tT cell);
 
 	/**
 	 * equalp
@@ -157,7 +175,9 @@ public interface tT
 	 * @return
 	 *         TODO will be removed for a lisp version
 	 */
-	public boolean EQUALP(tT cell);
+	@Primitive(name = "equalp")
+	public boolean EQUALP( //
+			@Arg(name="cell") tT cell);
 
 	/**
 	 * Test basic subtype test
@@ -165,6 +185,7 @@ public interface tT
 	 * @param type
 	 * @return
 	 */
+	@Primitive(name = "%istype")
 	public boolean ISTYPE(tSYMBOL type);
 
 	/**
@@ -172,6 +193,7 @@ public interface tT
 	 * 
 	 * @return
 	 */
+	@Primitive(name = "constantp")
 	public boolean CONSTANTP();
-	
+
 }

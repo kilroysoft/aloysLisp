@@ -41,7 +41,7 @@ import aloyslisp.core.types.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class VECTOR extends CELL implements tARRAY, tVECTOR
+public class VECTOR extends CELL implements tVECTOR
 {
 	private ArrayList<tT>	array;
 
@@ -94,7 +94,8 @@ public class VECTOR extends CELL implements tARRAY, tVECTOR
 	 */
 	public tT copy()
 	{
-		return new VECTOR((tT[]) array.clone());
+		// return new VECTOR(new CONS(array.toArray()));
+		return this;
 	}
 
 	/*
@@ -179,7 +180,7 @@ public class VECTOR extends CELL implements tARRAY, tVECTOR
 		return array.get(pos);
 	}
 
-	public tSEQUENCE SETF_ELT(Integer pos, tT value)
+	public tSEQUENCE SET_ELT(Integer pos, tT value)
 	{
 		if (!testLimits(pos))
 			return null;
@@ -286,7 +287,7 @@ public class VECTOR extends CELL implements tARRAY, tVECTOR
 	 * java.lang.Integer, aloyslisp.core.types.tT)
 	 */
 	@Override
-	public tSEQUENCE SETF_SUBSEQ(Integer start, Integer end, tT value)
+	public tSEQUENCE SET_SUBSEQ(Integer start, Integer end, tT value)
 	{
 		// TODO Auto-generated method stub
 		return null;

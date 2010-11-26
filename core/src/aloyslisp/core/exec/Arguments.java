@@ -360,7 +360,7 @@ public class Arguments
 										+ key);
 							}
 							// BUG this is false look for Symbol
-							((tSYMBOL) assoc).SETF_SYMBOL_VALUE(val);
+							((tSYMBOL) assoc).SET_SYMBOL_VALUE(val);
 						}
 					}
 					else

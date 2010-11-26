@@ -48,7 +48,7 @@ public class sGO extends SPECIAL_OPERATOR
 	 */
 	public sGO()
 	{
-		super(list("tag"), //
+		super(decl("tag"), //
 				"(sGO tag)", //
 				NIL //
 		);

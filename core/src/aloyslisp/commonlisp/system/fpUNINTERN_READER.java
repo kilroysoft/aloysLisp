@@ -52,7 +52,7 @@ public class fpUNINTERN_READER extends SYSTEM_FUNCTION
 	 */
 	public fpUNINTERN_READER()
 	{
-		super(list("stream", "key", "&rest", "args"), //
+		super(decl("stream", "key", "&rest", "args"), //
 				"(%unintern-reader stream key &rest args)", //
 				NIL);
 	}

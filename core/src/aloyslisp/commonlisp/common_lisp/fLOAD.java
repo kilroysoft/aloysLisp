@@ -85,12 +85,12 @@ public class fLOAD extends SYSTEM_FUNCTION
 	public fLOAD()
 	{
 		super(
-				list("file", //
+				decl("file", //
 						"&key", //
-						list("verbose", false), // *load-verbose*
-						list("print", false), // *load-print*
-						list("if-does-not-exist", true), //
-						list("external-format", key("default")) //
+						decl("verbose", true), // *load-verbose*
+						decl("print", true), // *load-print*
+						decl("if-does-not-exist", true), //
+						decl("external-format", key("default")) //
 				), //
 				"(fLOAD file &key verbose print if-does-not-exist external-format)", //
 				NIL);
@@ -167,7 +167,7 @@ public class fLOAD extends SYSTEM_FUNCTION
 				}
 
 				// and evaluate it
-				// System.out.println("eval : " + res[0]);
+				System.out.println("eval : " + res[0]);
 				res = res[0].EVAL();
 
 				if (print)

@@ -49,7 +49,7 @@ public class sBLOCK extends SPECIAL_OPERATOR
 	 */
 	public sBLOCK()
 	{
-		super(list("name", "&rest", "blocks"), //
+		super(decl("name", "&rest", "blocks"), //
 				"(sBLOCK name &rest)", //
 				NIL);
 	}

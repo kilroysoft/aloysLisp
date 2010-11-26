@@ -52,7 +52,7 @@ public class fpCHARACTER_READER extends SYSTEM_FUNCTION
 	 */
 	public fpCHARACTER_READER()
 	{
-		super(list("stream", "key", "&rest", "args"), //
+		super(decl("stream", "key", "&rest", "args"), //
 				"(%character-reader stream key &rest args)", //
 				NIL);
 	}

@@ -50,7 +50,7 @@ public class sTAGBODY extends SPECIAL_OPERATOR
 	 */
 	public sTAGBODY()
 	{
-		super(list("&rest", "blocks"), //
+		super(decl("&rest", "blocks"), //
 				"(sTAGBODY &rest)", //
 				NIL);
 	}

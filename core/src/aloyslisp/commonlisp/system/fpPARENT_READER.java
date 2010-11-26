@@ -52,7 +52,7 @@ public class fpPARENT_READER extends SYSTEM_FUNCTION
 	 */
 	public fpPARENT_READER()
 	{
-		super(list("stream", "key", "&rest", "args"), //
+		super(decl("stream", "key", "&rest", "args"), //
 				"(%parent-reader stream key &rest args)", //
 				NIL);
 	}

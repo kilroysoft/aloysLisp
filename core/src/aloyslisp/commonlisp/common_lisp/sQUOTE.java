@@ -60,7 +60,7 @@ public class sQUOTE extends SPECIAL_OPERATOR
 	 */
 	public sQUOTE()
 	{
-		super(list("cell"), //
+		super(decl("cell"), //
 				"(sQUOTE cell)", //
 				NIL);
 		mac = "'";

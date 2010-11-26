@@ -49,7 +49,7 @@ public class fpPUTD extends SPECIAL_OPERATOR
 	 */
 	public fpPUTD()
 	{
-		super(list("atom", "func"), //
+		super(decl("atom", "func"), //
 				"(%putd atom func)", //
 				NIL);
 	}
@@ -93,7 +93,7 @@ public class fpPUTD extends SPECIAL_OPERATOR
 			throw new LispException("Can't %PUTD with a non function " + func);
 		}
 
-		((tSYMBOL) atom).SETF_SYMBOL_FUNCTION((tFUNCTION) func);
+		((tSYMBOL) atom).SET_SYMBOL_FUNCTION((tFUNCTION) func);
 
 		return new tT[]
 		{ NIL };

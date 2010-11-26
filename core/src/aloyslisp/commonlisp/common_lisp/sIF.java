@@ -48,7 +48,7 @@ public class sIF extends SPECIAL_OPERATOR
 	 */
 	public sIF()
 	{
-		super(list("cond", "then", "&optional", "else"), //
+		super(decl("cond", "then", "&optional", "else"), //
 				"(sIF then &optional else)", //
 				NIL //
 		);

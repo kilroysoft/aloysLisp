@@ -49,7 +49,7 @@ public class sLET extends SPECIAL_OPERATOR
 	 */
 	public sLET()
 	{
-		super(list("decl", "&rest", "blocks"), //
+		super(decl("decl", "&rest", "blocks"), //
 				"(sLET ({var|(var [value])}*){declaration}*{form}*)", //
 				NIL //
 		);
@@ -92,7 +92,7 @@ public class sLET extends SPECIAL_OPERATOR
 
 		// execute unnamed block with optional arguments (args are not passed
 		// but defined as default)
-		newBlock(null, (tLIST) list("&optional").APPEND(arg), (tLIST) func, NIL);
+		newBlock(null, (tLIST) decl("&optional").APPEND(arg), (tLIST) func, NIL);
 
 		tT res[] = e.exec();
 		e.popBlock();

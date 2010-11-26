@@ -32,7 +32,7 @@ package aloyslisp.commonlisp;
 import aloyslisp.core.common.*;
 import aloyslisp.core.exec.*;
 import aloyslisp.core.plugs.*;
-import aloyslisp.core.types.*; 
+import aloyslisp.core.types.*;
 
 /**
  * Base environment en global functions of Common Lisp
@@ -74,14 +74,14 @@ public class L extends Primitives
 	public static tPACKAGE		ext			= new PACKAGE("ext", true);
 
 	{
-		packages.INTERN("common-lisp").SETF_SYMBOL_VALUE(cl);
-		packages.INTERN("lisp").SETF_SYMBOL_VALUE(cl);
-		packages.INTERN("cl").SETF_SYMBOL_VALUE(cl);
-		packages.INTERN("system").SETF_SYMBOL_VALUE(sys);
-		packages.INTERN("sys").SETF_SYMBOL_VALUE(sys);
-		packages.INTERN("keyword").SETF_SYMBOL_VALUE(key);
-		packages.INTERN("key").SETF_SYMBOL_VALUE(key);
-		packages.INTERN("ext").SETF_SYMBOL_VALUE(ext);
+		packages.INTERN("common-lisp").SET_SYMBOL_VALUE(cl);
+		packages.INTERN("lisp").SET_SYMBOL_VALUE(cl);
+		packages.INTERN("cl").SET_SYMBOL_VALUE(cl);
+		packages.INTERN("system").SET_SYMBOL_VALUE(sys);
+		packages.INTERN("sys").SET_SYMBOL_VALUE(sys);
+		packages.INTERN("keyword").SET_SYMBOL_VALUE(key);
+		packages.INTERN("key").SET_SYMBOL_VALUE(key);
+		packages.INTERN("ext").SET_SYMBOL_VALUE(ext);
 	}
 	/**
 	 * Execution context for Closures
@@ -90,14 +90,17 @@ public class L extends Primitives
 
 	/**
 	 * Current Package
-	 * Package should be be first hardwired
+	 * *package* should be be first hardwired, because it's used to intern
+	 * symbols....
 	 */
-	public static tSYMBOL		sPACKAGEs	= cl.INTERN("*package*")
+	public static tSYMBOL		sPACKAGEs	= new SYMBOL("*package*", cl)
 													.setExported(true)
-													.setSpecial(true);
+													.setSpecial(true)
+													.SET_SYMBOL_VALUE(cl);
+
 	static
 	{
-		sPACKAGEs.SETF_SYMBOL_VALUE(cl);
+		cl.put("*package*", sPACKAGEs);
 	}
 
 	/**
@@ -131,6 +134,12 @@ public class L extends Primitives
 	private static final tSTREAM	terminal				= in;
 	private static final tSTREAM	query					= terminal;
 
+	// Key for setf in PLIST
+	public static final tSYMBOL		setfKey					= key("setf-func");
+
+	// Key for symbol type in PLIST
+	public static final tSYMBOL		typeClass				= key("type-class");
+
 	/*
 	 * All standard streams variables
 	 */
@@ -140,7 +149,7 @@ public class L extends Primitives
 																			true)
 																	.setSpecial(
 																			true)
-																	.SETF_SYMBOL_VALUE(
+																	.SET_SYMBOL_VALUE(
 																			in);
 
 	public static tSYMBOL			standardOutput			= sym(
@@ -149,7 +158,7 @@ public class L extends Primitives
 																			true)
 																	.setSpecial(
 																			true)
-																	.SETF_SYMBOL_VALUE(
+																	.SET_SYMBOL_VALUE(
 																			out);
 
 	public static tSYMBOL			errorOutput				= sym(
@@ -158,7 +167,7 @@ public class L extends Primitives
 																			true)
 																	.setSpecial(
 																			true)
-																	.SETF_SYMBOL_VALUE(
+																	.SET_SYMBOL_VALUE(
 																			err);
 
 	public static tSYMBOL			traceOutput				= sym(
@@ -167,7 +176,7 @@ public class L extends Primitives
 																			true)
 																	.setSpecial(
 																			true)
-																	.SETF_SYMBOL_VALUE(
+																	.SET_SYMBOL_VALUE(
 																			out);
 
 	public static tSYMBOL			queryIO					= sym("*query-io*")
@@ -175,7 +184,7 @@ public class L extends Primitives
 																			true)
 																	.setSpecial(
 																			true)
-																	.SETF_SYMBOL_VALUE(
+																	.SET_SYMBOL_VALUE(
 																			query);
 
 	public static tSYMBOL			debugIO					= sym("*debug-io*")
@@ -183,7 +192,7 @@ public class L extends Primitives
 																			true)
 																	.setSpecial(
 																			true)
-																	.SETF_SYMBOL_VALUE(
+																	.SET_SYMBOL_VALUE(
 																			query);
 
 	public static tSYMBOL			terminalIO				= sym(
@@ -192,13 +201,13 @@ public class L extends Primitives
 																			true)
 																	.setSpecial(
 																			true)
-																	.SETF_SYMBOL_VALUE(
+																	.SET_SYMBOL_VALUE(
 																			terminal);
 
 	public static tSYMBOL			T						= sym("T");
 	static
 	{
-		T.SETF_SYMBOL_VALUE(T).setConstant(true).setExported(true);
+		T.SET_SYMBOL_VALUE(T).setConstant(true).setExported(true);
 	}
 
 	/**
@@ -210,7 +219,7 @@ public class L extends Primitives
 																			true)
 																	.setSpecial(
 																			true)
-																	.SETF_SYMBOL_VALUE(
+																	.SET_SYMBOL_VALUE(
 																			T);
 
 	public static tSYMBOL			printRadix				= sym(
@@ -219,7 +228,7 @@ public class L extends Primitives
 																			true)
 																	.setSpecial(
 																			true)
-																	.SETF_SYMBOL_VALUE(
+																	.SET_SYMBOL_VALUE(
 																			NIL);
 
 	public static tSYMBOL			printBase				= sym(
@@ -228,7 +237,7 @@ public class L extends Primitives
 																			true)
 																	.setSpecial(
 																			true)
-																	.SETF_SYMBOL_VALUE(
+																	.SET_SYMBOL_VALUE(
 																			INTEGER.make(10));
 
 	public static tSYMBOL			printCircle				= sym(
@@ -237,7 +246,7 @@ public class L extends Primitives
 																			true)
 																	.setSpecial(
 																			true)
-																	.SETF_SYMBOL_VALUE(
+																	.SET_SYMBOL_VALUE(
 																			NIL);
 
 	public static tSYMBOL			printPretty				= sym(
@@ -246,7 +255,7 @@ public class L extends Primitives
 																			true)
 																	.setSpecial(
 																			true)
-																	.SETF_SYMBOL_VALUE(
+																	.SET_SYMBOL_VALUE(
 																			NIL);
 
 	public static tSYMBOL			printLevel				= sym(
@@ -255,7 +264,7 @@ public class L extends Primitives
 																			true)
 																	.setSpecial(
 																			true)
-																	.SETF_SYMBOL_VALUE(
+																	.SET_SYMBOL_VALUE(
 																			NIL);
 
 	public static tSYMBOL			printLength				= sym(
@@ -264,7 +273,7 @@ public class L extends Primitives
 																			true)
 																	.setSpecial(
 																			true)
-																	.SETF_SYMBOL_VALUE(
+																	.SET_SYMBOL_VALUE(
 																			NIL);
 
 	public static tSYMBOL			printCase				= sym(
@@ -273,7 +282,7 @@ public class L extends Primitives
 																			true)
 																	.setSpecial(
 																			true)
-																	.SETF_SYMBOL_VALUE(
+																	.SET_SYMBOL_VALUE(
 																			key("upcase"));
 
 	public static tSYMBOL			printArray				= sym(
@@ -282,7 +291,7 @@ public class L extends Primitives
 																			true)
 																	.setSpecial(
 																			true)
-																	.SETF_SYMBOL_VALUE(
+																	.SET_SYMBOL_VALUE(
 																			T);
 
 	public static tSYMBOL			printGensym				= sym(
@@ -291,7 +300,7 @@ public class L extends Primitives
 																			true)
 																	.setSpecial(
 																			true)
-																	.SETF_SYMBOL_VALUE(
+																	.SET_SYMBOL_VALUE(
 																			T);
 
 	public static tSYMBOL			printReadably			= sym(
@@ -300,7 +309,7 @@ public class L extends Primitives
 																			true)
 																	.setSpecial(
 																			true)
-																	.SETF_SYMBOL_VALUE(
+																	.SET_SYMBOL_VALUE(
 																			T);
 
 	public static tSYMBOL			printRightMargin		= sym(
@@ -309,7 +318,7 @@ public class L extends Primitives
 																			true)
 																	.setSpecial(
 																			true)
-																	.SETF_SYMBOL_VALUE(
+																	.SET_SYMBOL_VALUE(
 																			NIL);
 
 	public static tSYMBOL			printMiserWidth			= sym(
@@ -318,7 +327,7 @@ public class L extends Primitives
 																			true)
 																	.setSpecial(
 																			true)
-																	.SETF_SYMBOL_VALUE(
+																	.SET_SYMBOL_VALUE(
 																			NIL);
 
 	public static tSYMBOL			printLines				= sym(
@@ -327,7 +336,7 @@ public class L extends Primitives
 																			true)
 																	.setSpecial(
 																			true)
-																	.SETF_SYMBOL_VALUE(
+																	.SET_SYMBOL_VALUE(
 																			NIL);
 
 	public static tSYMBOL			printPprintDispatch		= sym(
@@ -336,7 +345,7 @@ public class L extends Primitives
 																			true)
 																	.setSpecial(
 																			true)
-																	.SETF_SYMBOL_VALUE(
+																	.SET_SYMBOL_VALUE(
 																			NIL);
 
 	public static tSYMBOL			readBase				= sym("*read-base*")
@@ -344,7 +353,7 @@ public class L extends Primitives
 																			true)
 																	.setSpecial(
 																			true)
-																	.SETF_SYMBOL_VALUE(
+																	.SET_SYMBOL_VALUE(
 																			nInt(10));
 
 	public static tSYMBOL			readDefaultFloatFormat	= sym(
@@ -353,7 +362,7 @@ public class L extends Primitives
 																			true)
 																	.setSpecial(
 																			true)
-																	.SETF_SYMBOL_VALUE(
+																	.SET_SYMBOL_VALUE(
 																			sym("single-float"));
 
 	public static tSYMBOL			readEval				= sym("*readEval*")
@@ -361,7 +370,7 @@ public class L extends Primitives
 																			true)
 																	.setSpecial(
 																			true)
-																	.SETF_SYMBOL_VALUE(
+																	.SET_SYMBOL_VALUE(
 																			T);
 
 	public static tSYMBOL			readSuppress			= sym(
@@ -370,19 +379,19 @@ public class L extends Primitives
 																			true)
 																	.setSpecial(
 																			true)
-																	.SETF_SYMBOL_VALUE(
+																	.SET_SYMBOL_VALUE(
 																			NIL);
 
 	static
 	{
-		packages.INTERN("common-lisp").SETF_SYMBOL_VALUE(cl);
-		packages.INTERN("lisp").SETF_SYMBOL_VALUE(cl);
-		packages.INTERN("cl").SETF_SYMBOL_VALUE(cl);
-		packages.INTERN("system").SETF_SYMBOL_VALUE(sys);
-		packages.INTERN("sys").SETF_SYMBOL_VALUE(sys);
-		packages.INTERN("keyword").SETF_SYMBOL_VALUE(key);
-		packages.INTERN("key").SETF_SYMBOL_VALUE(key);
-		packages.INTERN("ext").SETF_SYMBOL_VALUE(ext);
+		packages.INTERN("common-lisp").SET_SYMBOL_VALUE(cl);
+		packages.INTERN("lisp").SET_SYMBOL_VALUE(cl);
+		packages.INTERN("cl").SET_SYMBOL_VALUE(cl);
+		packages.INTERN("system").SET_SYMBOL_VALUE(sys);
+		packages.INTERN("sys").SET_SYMBOL_VALUE(sys);
+		packages.INTERN("keyword").SET_SYMBOL_VALUE(key);
+		packages.INTERN("key").SET_SYMBOL_VALUE(key);
+		packages.INTERN("ext").SET_SYMBOL_VALUE(ext);
 		cl.loadClasses();
 		sys.loadClasses();
 	}
@@ -392,7 +401,7 @@ public class L extends Primitives
 																			true)
 																	.setSpecial(
 																			true)
-																	.SETF_SYMBOL_VALUE(
+																	.SET_SYMBOL_VALUE(
 																			new READTABLE());
 
 	public static tSYMBOL			lispTraceSuppress		= sym("*trace*")
@@ -400,7 +409,7 @@ public class L extends Primitives
 																			true)
 																	.setSpecial(
 																			true)
-																	.SETF_SYMBOL_VALUE(
+																	.SET_SYMBOL_VALUE(
 																			NIL);
 
 	/**
@@ -472,7 +481,7 @@ public class L extends Primitives
 	}
 
 	/**
-	 * Create a list from ana array
+	 * Create a list from an array
 	 * 
 	 * @param list
 	 * @return
@@ -480,6 +489,17 @@ public class L extends Primitives
 	public static tLIST list(Object... list)
 	{
 		return new CONS(list);
+	}
+
+	/**
+	 * Create a list from an array for declaration
+	 * 
+	 * @param list
+	 * @return
+	 */
+	public static tLIST decl(Object... list)
+	{
+		return new CONS(true, list);
 	}
 
 	/**
@@ -657,12 +677,12 @@ public class L extends Primitives
 	 */
 	public static tSYMBOL sym(tT pack, String name)
 	{
-		tT in = FIND_PACKAGE(pack);
-		if (in == null || in == NIL)
+		tT p = FIND_PACKAGE(pack);
+		if (p == null || p == NIL)
 		{
 			throw new LispException("Package " + pack + " not found");
 		}
-		return ((tPACKAGE) in).INTERN(name);
+		return ((tPACKAGE) p).INTERN(name);
 	}
 
 	/**
@@ -684,7 +704,7 @@ public class L extends Primitives
 	 */
 	public static tLIST quote(Object form)
 	{
-		return list("lisp::quote", form);
+		return decl("lisp::quote", form);
 	}
 
 	/**
@@ -695,7 +715,7 @@ public class L extends Primitives
 	 */
 	public static tLIST unquote(Object form)
 	{
-		return list("sys::%unquote", form);
+		return decl("sys::%unquote", form);
 	}
 
 	/**
@@ -706,7 +726,7 @@ public class L extends Primitives
 	 */
 	public static tLIST backquote(Object form)
 	{
-		return list("sys::%backquote", form);
+		return decl("sys::%backquote", form);
 	}
 
 	/**
@@ -717,7 +737,7 @@ public class L extends Primitives
 	 */
 	public static tLIST splice(Object form)
 	{
-		return list("sys::%splice", form);
+		return decl("sys::%splice", form);
 	}
 
 	/**

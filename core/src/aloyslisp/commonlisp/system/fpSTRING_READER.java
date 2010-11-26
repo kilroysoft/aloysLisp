@@ -52,7 +52,7 @@ public class fpSTRING_READER extends SYSTEM_FUNCTION
 	 */
 	public fpSTRING_READER()
 	{
-		super(list("stream", "key", "&rest", "args"), //
+		super(decl("stream", "key", "&rest", "args"), //
 				"(%string-reader stream key &rest args)", //
 				NIL);
 	}

@@ -35,7 +35,7 @@ import aloyslisp.core.plugs.*;
 import aloyslisp.core.types.*;
 
 /**
- * sDEFUN 
+ * sDEFUN
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
@@ -49,7 +49,7 @@ public class sDEFUN extends SPECIAL_OPERATOR
 	 */
 	public sDEFUN()
 	{
-		super(list("name", "arglist", "&rest", "func"), //
+		super(decl("name", "arglist", "&rest", "func"), //
 				"(sDEFUN name args &rest func)", //
 				NIL);
 	}
@@ -92,19 +92,29 @@ public class sDEFUN extends SPECIAL_OPERATOR
 						name);
 			}
 
-			tSYMBOL newFunc = sym(((tSYMBOL) ((tLIST) name).CDR().CAR())
-					.SYMBOL_NAME()).hgfhfhgfhgfhgf;
+			// Setf func to manage
+			tT newFunc = name.CDR().CAR();
+			if (!(newFunc instanceof tSYMBOL))
+			{
+				ERROR("DEFUN : Function name as list should have the form (SEFT name) : ~s",
+						name);
+			}
 
-			tFUNCTION def = new DEFUN_FUNCTION((tSYMBOL) name, (tLIST) argList,
+			// setf writer symbol
+			tSYMBOL setfFunc = sym(((tSYMBOL) newFunc).SYMBOL_PACKAGE(),
+					"setf-" + ((tSYMBOL) newFunc).SYMBOL_NAME());
+
+			// setf writer function
+			tFUNCTION def = new DEFUN_FUNCTION(setfFunc, (tLIST) argList,
 					(tLIST) func);
-			((tSYMBOL) name).SETF_SYMBOL_FUNCTION(def);
+
+			((tSYMBOL) setfFunc).SET_SYMBOL_FUNCTION(def);
+
+			//
+			((tSYMBOL) newFunc).SET_GET(setfKey, setfFunc);
 
 			return new tT[]
-			{ name };
-
-			return new tT[]
-			{ name };
-			// throw new LispException("Function name not a symbol " + name);
+			{ newFunc };
 		}
 
 		if (!(name instanceof tSYMBOL))
@@ -125,7 +135,7 @@ public class sDEFUN extends SPECIAL_OPERATOR
 
 		tFUNCTION def = new DEFUN_FUNCTION((tSYMBOL) name, (tLIST) argList,
 				(tLIST) func);
-		((tSYMBOL) name).SETF_SYMBOL_FUNCTION(def);
+		((tSYMBOL) name).SET_SYMBOL_FUNCTION(def);
 
 		return new tT[]
 		{ name };

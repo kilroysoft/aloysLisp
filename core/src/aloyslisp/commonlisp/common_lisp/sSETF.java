@@ -50,7 +50,7 @@ public class sSETF extends SPECIAL_OPERATOR
 	 */
 	public sSETF()
 	{
-		super(list("place", "value"), "(SETF place value)", NIL);
+		super(decl("place", "value"), "(SETF place value)", NIL);
 	}
 
 	/*
@@ -100,8 +100,8 @@ public class sSETF extends SPECIAL_OPERATOR
 		}
 
 		// get setf function
-		tT newFunc = ((tSYMBOL) func).GET(key("setf-func"), NIL);
-		if (!(newFunc instanceof tSYMBOL))
+		tT newFunc = ((tSYMBOL) func).GET(setfKey, NIL);
+		if (newFunc instanceof tNULL)
 		{
 			ERROR("FSET : Function for place has no FSET definition: ~s", func);
 			return null;

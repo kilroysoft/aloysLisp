@@ -51,7 +51,7 @@ public class fpBACKQUOTE_READER extends SYSTEM_FUNCTION
 	 */
 	public fpBACKQUOTE_READER()
 	{
-		super(list("stream", "key", "&rest", "args"), //
+		super(decl("stream", "key", "&rest", "args"), //
 				"(%functionm-reader stream key &rest args)", //
 				NIL); //
 

@@ -76,9 +76,9 @@ public class NIL extends SYMBOL implements tNULL
 	// defined elsewhere (NIL is just a gost of a CONS or SYMBOL)
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.types.tLIST#SETF_CAR(aloyslisp.core.types.tT)
+	 * @see aloyslisp.core.types.tLIST#SET_CAR(aloyslisp.core.types.tT)
 	 */
-	public tLIST SETF_CAR(tT newCell)
+	public tLIST SET_CAR(tT newCell)
 	{
 		throw new LispErrorFunctionCannotApplyOn("rplaca", this);
 	}
@@ -86,9 +86,9 @@ public class NIL extends SYMBOL implements tNULL
 	// defined elsewhere (NIL is just a gost of a CONS or SYMBOL)
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.types.tLIST#SETF_CDR(aloyslisp.core.types.tT)
+	 * @see aloyslisp.core.types.tLIST#SET_CDR(aloyslisp.core.types.tT)
 	 */
-	public tLIST SETF_CDR(tT newCell)
+	public tLIST SET_CDR(tT newCell)
 	{
 		throw new LispErrorFunctionCannotApplyOn("rplacd", this);
 	}
@@ -219,7 +219,7 @@ public class NIL extends SYMBOL implements tNULL
 	 * @see aloyslisp.core.types.tSEQUENCE#SET_ELT(java.lang.Integer,
 	 * aloyslisp.core.types.tT)
 	 */
-	public tLIST SETF_ELT(Integer pos, tT value)
+	public tLIST SET_ELT(Integer pos, tT value)
 	{
 		throw new LispErrorFunctionCannotApplyOn("selt", this);
 	}
@@ -233,26 +233,6 @@ public class NIL extends SYMBOL implements tNULL
 	public tLIST SUBSEQ(Integer start, Integer end)
 	{
 		return NIL;
-	}
-
-	// defined elsewhere (NIL is just a gost of a CONS or SYMBOL)
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.types.tLIST#PUSH(aloyslisp.core.types.tT)
-	 */
-	public tLIST PUSH(tT item)
-	{
-		return new CONS(item, NIL);
-	}
-
-	// defined elsewhere (NIL is just a gost of a CONS or SYMBOL)
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.types.tLIST#POP()
-	 */
-	public tLIST POP()
-	{
-		throw new LispErrorFunctionCannotApplyOn("pop", this);
 	}
 
 	// defined elsewhere (NIL is just a gost of a CONS or SYMBOL)
@@ -288,10 +268,10 @@ public class NIL extends SYMBOL implements tNULL
 	/*
 	 * (non-Javadoc)
 	 * @see
-	 * aloyslisp.core.plugs.atoms.SYMBOL#SETF_SYMBOL_PACKAGE(aloyslisp.core.
+	 * aloyslisp.core.plugs.atoms.SYMBOL#SET_SYMBOL_PACKAGE(aloyslisp.core.
 	 * types.tT)
 	 */
-	public tSYMBOL SETF_SYMBOL_PACKAGE(tT dictionary)
+	public tSYMBOL SET_SYMBOL_PACKAGE(tT dictionary)
 	{
 		return this;
 	}
@@ -384,10 +364,10 @@ public class NIL extends SYMBOL implements tNULL
 	/*
 	 * (non-Javadoc)
 	 * @see
-	 * aloyslisp.core.plugs.atoms.SYMBOL#SETF_SYMBOL_VALUE(aloyslisp.core.types
+	 * aloyslisp.core.plugs.atoms.SYMBOL#SET_SYMBOL_VALUE(aloyslisp.core.types
 	 * .tT)
 	 */
-	public tSYMBOL SETF_SYMBOL_VALUE(tT value)
+	public tSYMBOL SET_SYMBOL_VALUE(tT value)
 	{
 		return this;
 	}
@@ -396,10 +376,10 @@ public class NIL extends SYMBOL implements tNULL
 	/*
 	 * (non-Javadoc)
 	 * @see
-	 * aloyslisp.core.plugs.atoms.SYMBOL#SETF_SYMBOL_FUNCTION(aloyslisp.core
+	 * aloyslisp.core.plugs.atoms.SYMBOL#SET_SYMBOL_FUNCTION(aloyslisp.core
 	 * .types.tFUNCTION)
 	 */
-	public tSYMBOL SETF_SYMBOL_FUNCTION(tFUNCTION func)
+	public tSYMBOL SET_SYMBOL_FUNCTION(tFUNCTION func)
 	{
 		return this;
 	}
@@ -485,7 +465,7 @@ public class NIL extends SYMBOL implements tNULL
 	 */
 	@Override
 	// defined elsewhere (NIL is just a gost of a CONS or SYMBOL)
-	public tLIST SETF_LAST(tT value)
+	public tLIST SET_LAST(tT value)
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -497,7 +477,7 @@ public class NIL extends SYMBOL implements tNULL
 	 * @see aloyslisp.core.types.tSEQUENCE#SET_SUBSEQ(java.lang.Integer,
 	 * java.lang.Integer, aloyslisp.core.types.tT)
 	 */
-	public tSEQUENCE SETF_SUBSEQ(Integer start, Integer end, tT value)
+	public tSEQUENCE SET_SUBSEQ(Integer start, Integer end, tT value)
 	{
 		// TODO Auto-generated method stub
 		return null;

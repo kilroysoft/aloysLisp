@@ -65,7 +65,7 @@ public interface tLIST extends tSEQUENCE
 	 * @param newCell
 	 */
 	@Primitive(name = "setf-car")
-	public tLIST SETF_CAR( //
+	public tLIST SET_CAR( //
 			@Arg(name = "val") tT val);
 
 	/**
@@ -74,7 +74,7 @@ public interface tLIST extends tSEQUENCE
 	 * @param newCell
 	 */
 	@Primitive(name = "setf-cdr")
-	public tLIST SETF_CDR( //
+	public tLIST SET_CDR( //
 			@Arg(name = "val") tT val);
 
 	/**
@@ -98,7 +98,7 @@ public interface tLIST extends tSEQUENCE
 	 * @return
 	 */
 	@Primitive(name = "setf-last")
-	public tLIST SETF_LAST( //
+	public tLIST SET_LAST( //
 			@Arg(name = "value") tT value);
 
 	/**

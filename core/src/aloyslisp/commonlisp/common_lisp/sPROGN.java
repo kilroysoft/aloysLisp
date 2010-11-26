@@ -50,7 +50,7 @@ public class sPROGN extends SPECIAL_OPERATOR
 	 */
 	public sPROGN()
 	{
-		super(list("&rest", "blocks"), //
+		super(decl("&rest", "blocks"), //
 				"(sPROGN &rest blocks)", //
 				NIL);
 	}

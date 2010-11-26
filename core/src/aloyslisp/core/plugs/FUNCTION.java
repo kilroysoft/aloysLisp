@@ -66,7 +66,7 @@ public abstract class FUNCTION extends CELL implements tFUNCTION
 	{
 		if (args.length == 0)
 			return exec(NIL);
-		return exec(new CONS(args));
+		return exec(list(args));
 	}
 
 	/*
@@ -187,7 +187,7 @@ public abstract class FUNCTION extends CELL implements tFUNCTION
 			}
 
 			// System.out.println("évalué   = " + out);
-			res = new CONS(out, res);
+			res = cons(out, res);
 		}
 		res = res.REVERSE();
 		return (tLIST) res;

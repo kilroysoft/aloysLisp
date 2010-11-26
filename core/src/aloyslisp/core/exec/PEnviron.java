@@ -120,7 +120,7 @@ public abstract class PEnviron extends CELL implements tATOM,
 	{
 		// System.out.println("interm(" + name + "," + value + ")");
 		Symbol atom = intern(name);
-		atom.SETF_SYMBOL_VALUE(value);
+		atom.SET_SYMBOL_VALUE(value);
 		// System.out.println("interm(" + name + "," + value + ") = " +
 		// atom.describe());
 		return atom;

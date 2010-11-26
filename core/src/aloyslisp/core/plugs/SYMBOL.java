@@ -43,7 +43,7 @@ import aloyslisp.core.types.*;
  * 
  */
 public class SYMBOL extends CELL implements tSYMBOL
-{ 
+{
 	/**
 	 * 
 	 */
@@ -173,7 +173,7 @@ public class SYMBOL extends CELL implements tSYMBOL
 	 * @see aloyslisp.core.types.tSYMBOL#setPList(java.lang.String,
 	 * aloyslisp.core.types.tT)
 	 */
-	public tSYMBOL SETF_GET(tT name, tT data)
+	public tSYMBOL SET_GET(tT name, tT data)
 	{
 		tLIST sym = findPList(name);
 		if (sym == null)
@@ -184,13 +184,13 @@ public class SYMBOL extends CELL implements tSYMBOL
 				pList = list(name, data);
 				return this;
 			}
-			tLIST nc = list(name, cons(pList.CAR(), pList.CDR()));
-			pList.SETF_CAR(nc.CAR());
-			pList.SETF_CDR(nc.CDR());
+			tLIST nc = (tLIST) list(name, data).APPEND(pList.copy());
+			pList.SET_CAR(nc.CAR());
+			pList.SET_CDR(nc.CDR());
 			return (tSYMBOL) name;
 		}
 		// Write data
-		((tLIST) sym.CDR()).SETF_CAR(data);
+		((tLIST) sym.CDR()).SET_CAR(data);
 		return (tSYMBOL) name;
 	}
 
@@ -239,7 +239,7 @@ public class SYMBOL extends CELL implements tSYMBOL
 				if (name.EQ(sym))
 				{
 					// Supress entry
-					previous.SETF_CDR(cell.CDR().CDR());
+					previous.SET_CDR(cell.CDR().CDR());
 
 					// return suppressed with following defs
 					return (tLIST) cell;
@@ -259,7 +259,7 @@ public class SYMBOL extends CELL implements tSYMBOL
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tSYMBOL#set(aloyslisp.core.types.tT)
 	 */
-	public tSYMBOL SETF_SYMBOL_VALUE(tT value)
+	public tSYMBOL SET_SYMBOL_VALUE(tT value)
 	{
 		if (e.writeVal(this, value) != null)
 		{
@@ -279,7 +279,7 @@ public class SYMBOL extends CELL implements tSYMBOL
 			// If we fall back here, normal set
 			if (atom != null && !atom.SYMBOL_NAME().equals(this.SYMBOL_NAME()))
 			{
-				return atom.SETF_SYMBOL_VALUE(value);
+				return atom.SET_SYMBOL_VALUE(value);
 			}
 		}
 
@@ -380,13 +380,13 @@ public class SYMBOL extends CELL implements tSYMBOL
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tSYMBOL#fSet(aloyslisp.core.types.tFUNCTION)
 	 */
-	public tSYMBOL SETF_SYMBOL_FUNCTION(tFUNCTION function)
+	public tSYMBOL SET_SYMBOL_FUNCTION(tFUNCTION function)
 	{
 		Symbol func = e.read(this);
 
 		if (func != null)
 		{
-			return func.SETF_SYMBOL_VALUE(function);
+			return func.SET_SYMBOL_VALUE(function);
 		}
 
 		this.function = function;
@@ -442,7 +442,7 @@ public class SYMBOL extends CELL implements tSYMBOL
 
 		if (atom != null)
 		{
-			return atom.SETF_SYMBOL_VALUE(null);
+			return atom.SET_SYMBOL_VALUE(null);
 		}
 
 		function = null;
@@ -462,7 +462,7 @@ public class SYMBOL extends CELL implements tSYMBOL
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tSYMBOL#setPack(aloyslisp.core.types.tPACKAGE)
 	 */
-	public tSYMBOL SETF_SYMBOL_PACKAGE(tT pack)
+	public tSYMBOL SET_SYMBOL_PACKAGE(tT pack)
 	{
 		if (pack != null)
 			pack = FIND_PACKAGE(pack);
@@ -482,7 +482,7 @@ public class SYMBOL extends CELL implements tSYMBOL
 				constant = true;
 			}
 
-			((tPACKAGE) pack).INTERN(name).SETF_SYMBOL_VALUE(this);
+			((tPACKAGE) pack).INTERN(name).SET_SYMBOL_VALUE(this);
 		}
 		this.pack = (tPACKAGE) pack;
 		return this;
@@ -569,7 +569,7 @@ public class SYMBOL extends CELL implements tSYMBOL
 		tFUNCTION func = SYMBOL_FUNCTION();
 		tT a = NIL;
 		if (args.length > 0)
-			a = new CONS(args);
+			a = list(args);
 		return cons(func, a).EVAL();
 	}
 
@@ -664,7 +664,8 @@ public class SYMBOL extends CELL implements tSYMBOL
 	 */
 	public String DESCRIBE()
 	{
-		return printable() + " " + pack + " " + getValue() + " " + fGetValue();
+		return printable() + " " + pack + " " + getValue() + " " + fGetValue()
+				+ " " + pList;
 	}
 
 	/*

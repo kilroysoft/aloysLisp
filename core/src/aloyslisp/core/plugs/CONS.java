@@ -65,8 +65,8 @@ public class CONS extends CELL implements tCONS
 	@Construct(name = "cons")
 	public CONS(tT car, tT cdr)
 	{
-		SETF_CAR(car);
-		SETF_CDR(cdr);
+		SET_CAR(car);
+		SET_CDR(cdr);
 	}
 
 	/**
@@ -76,6 +76,21 @@ public class CONS extends CELL implements tCONS
 	 */
 	@Construct(name = "list")
 	public CONS(Object... list)
+	{
+		initCons(false, list);
+	}
+
+	/**
+	 * Create cons from am array, for declaration
+	 * 
+	 * @param list
+	 */
+	public CONS(boolean decl, Object... list)
+	{
+		initCons(decl, list);
+	}
+
+	public void initCons(boolean decl, Object... list)
 	{
 		if (list.length == 0)
 			throw new LispException(
@@ -92,9 +107,18 @@ public class CONS extends CELL implements tCONS
 			else if (cell instanceof tT)
 				newCell = (tT) cell;
 			else if (cell instanceof String)
-				newCell = sym((String) cell);
+				if (decl)
+					newCell = sym((String) cell);
+				else
+					newCell = str((String) cell);
 			else if (cell instanceof Boolean)
 				newCell = bool((Boolean) cell);
+			else if (cell instanceof Integer)
+				newCell = nInt((Integer) cell);
+			else if (cell instanceof Long)
+				newCell = nLong((Long) cell);
+			else if (cell instanceof Float)
+				newCell = nFloat((Float) cell);
 			else
 			{
 				throw new LispException("Bad type creating a list CONS() : "
@@ -131,8 +155,8 @@ public class CONS extends CELL implements tCONS
 			res = new CONS(value, res);
 		}
 
-		SETF_CAR(res.CAR());
-		SETF_CDR(res.CDR());
+		SET_CAR(res.CAR());
+		SET_CDR(res.CDR());
 	}
 
 	// ////////////////////////////////////////////////////////////////////////////
@@ -158,9 +182,9 @@ public class CONS extends CELL implements tCONS
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.types.tLIST#SETF_CAR(aloyslisp.core.types.tT)
+	 * @see aloyslisp.core.types.tLIST#SET_CAR(aloyslisp.core.types.tT)
 	 */
-	public tLIST SETF_CAR(tT val)
+	public tLIST SET_CAR(tT val)
 	{
 		car = val;
 		return this;
@@ -168,9 +192,9 @@ public class CONS extends CELL implements tCONS
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.types.tLIST#SETF_CDR(aloyslisp.core.types.tT)
+	 * @see aloyslisp.core.types.tLIST#SET_CDR(aloyslisp.core.types.tT)
 	 */
-	public tLIST SETF_CDR(tT val)
+	public tLIST SET_CDR(tT val)
 	{
 		cdr = val;
 		return this;
@@ -307,8 +331,8 @@ public class CONS extends CELL implements tCONS
 	public tLIST NREVERSE()
 	{
 		tLIST newCons = REVERSE();
-		SETF_CAR(newCons.CAR());
-		SETF_CDR(newCons.CDR());
+		SET_CAR(newCons.CAR());
+		SET_CDR(newCons.CDR());
 		return this;
 	}
 
@@ -376,7 +400,7 @@ public class CONS extends CELL implements tCONS
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tLIST#SET_LAST(aloyslisp.core.types.tT)
 	 */
-	public tLIST SETF_LAST(tT value)
+	public tLIST SET_LAST(tT value)
 	{
 		// IMPLEMENT set-last
 		return null;
@@ -430,14 +454,14 @@ public class CONS extends CELL implements tCONS
 	 * @see aloyslisp.core.types.tSEQUENCE#SET_ELT(java.lang.Integer,
 	 * aloyslisp.core.types.tT)
 	 */
-	public tLIST SETF_ELT(Integer pos, tT value)
+	public tLIST SET_ELT(Integer pos, tT value)
 	{
 		Integer i = 0;
 		// TODO walk differently
 		for (tT walk : this)
 		{
 			if (i++ == pos)
-				((tCONS) walk).SETF_CAR(value);
+				((tCONS) walk).SET_CAR(value);
 		}
 		throw new LispException("Element " + pos + " hors des bornes de "
 				+ this);
@@ -459,7 +483,7 @@ public class CONS extends CELL implements tCONS
 	 * @see aloyslisp.core.types.tSEQUENCE#SET_SUBSEQ(java.lang.Integer,
 	 * java.lang.Integer, aloyslisp.core.types.tT)
 	 */
-	public tSEQUENCE SETF_SUBSEQ(Integer start, Integer end, tT value)
+	public tSEQUENCE SET_SUBSEQ(Integer start, Integer end, tT value)
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -471,7 +495,7 @@ public class CONS extends CELL implements tCONS
 	 */
 	public tT APPEND(tT item)
 	{
-		LAST().SETF_CDR(item);
+		LAST().SET_CDR(item);
 		return this;
 	}
 

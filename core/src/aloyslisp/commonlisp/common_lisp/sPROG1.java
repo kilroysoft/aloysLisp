@@ -48,7 +48,7 @@ public class sPROG1 extends SPECIAL_OPERATOR
 	 */
 	public sPROG1()
 	{
-		super(list("first", "&rest", "blocks"), //
+		super(decl("first", "&rest", "blocks"), //
 				"(sPROG1 first &rest blocks)", //
 				NIL);
 	}

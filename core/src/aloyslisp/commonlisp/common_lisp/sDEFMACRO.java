@@ -49,7 +49,7 @@ public class sDEFMACRO extends SPECIAL_OPERATOR
 	 */
 	public sDEFMACRO()
 	{
-		super(list("name", "arglist", "&rest", "func"), //
+		super(decl("name", "arglist", "&rest", "func"), //
 				"(DEMACRO name argslist &rest func)", //
 				NIL);
 	}
@@ -98,7 +98,7 @@ public class sDEFMACRO extends SPECIAL_OPERATOR
 
 		tFUNCTION def = new MACRO_FUNCTION((tSYMBOL) name, (tLIST) argList,
 				(tLIST) func);
-		((tSYMBOL) name).SETF_SYMBOL_FUNCTION(def);
+		((tSYMBOL) name).SET_SYMBOL_FUNCTION(def);
 
 		return new tT[]
 		{ name };

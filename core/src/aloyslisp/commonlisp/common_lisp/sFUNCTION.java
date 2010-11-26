@@ -65,7 +65,7 @@ public class sFUNCTION extends SPECIAL_OPERATOR
 	 */
 	public sFUNCTION()
 	{
-		super(list("func"), //
+		super(decl("func"), //
 				"(function func)", //
 				NIL);
 	}

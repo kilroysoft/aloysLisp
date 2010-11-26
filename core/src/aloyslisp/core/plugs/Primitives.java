@@ -181,28 +181,28 @@ public class Primitives
 			tLIST cmd;
 			if (g != null)
 			{
-				cmd = list(
+				cmd = decl(
 						"defmacro",
 						g.name(),
 						argsDecl(notes),
 						str(g.doc()),
 						declareArgs(),
-						backquote(list("%global", quote(g.name())).APPEND(
+						backquote(decl("%global", quote(g.name())).APPEND(
 								argsCall(notes))));
-				// System.out.println("" + cmd);
+				System.out.println("" + cmd);
 				cmd.EVAL();
 			}
 			else if (p != null)
 			{
-				cmd = list(
+				cmd = decl(
 						"defmacro",
 						p.name(),
 						list(sym("obj")).APPEND(argsDecl(notes)),
 						str(p.doc()),
 						declareArgs(),
-						backquote(list("%primitive", quote(p.name()),
+						backquote(decl("%primitive", quote(p.name()),
 								unquote("obj")).APPEND(argsCall(notes))));
-				// System.out.println("" + cmd);
+				System.out.println("" + cmd);
 				cmd.EVAL();
 			}
 			else
@@ -304,7 +304,7 @@ public class Primitives
 
 		// If a prefix is given and
 		if (prefix != null && !prefix.equals("") && res.LENGTH() != 0)
-			res = (tLIST) list(prefix).APPEND(res);
+			res = (tLIST) decl(prefix).APPEND(res);
 
 		return res;
 	}

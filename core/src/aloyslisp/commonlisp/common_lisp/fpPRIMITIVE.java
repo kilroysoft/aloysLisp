@@ -55,7 +55,7 @@ public class fpPRIMITIVE extends SYSTEM_FUNCTION
 	 */
 	public fpPRIMITIVE()
 	{
-		super(list("obj", "func", "&rest", "args"),
+		super(decl("obj", "func", "&rest", "args"),
 				"(%primitive obj func &rest args)", NIL);
 	}
 

@@ -68,9 +68,9 @@ public class fREAD extends SYSTEM_FUNCTION
 	public fREAD()
 	{
 		super(
-				list("&optional", //
-						list("input-stream", standardInput), //
-						list("eof-error-p", true), //
+				decl("&optional", //
+						decl("input-stream", standardInput), //
+						decl("eof-error-p", true), //
 						"eof-value", //
 						"recursive-p"), //
 				"(fREAD &optional inputStream eof-error-p eof-value recursive-p)", //

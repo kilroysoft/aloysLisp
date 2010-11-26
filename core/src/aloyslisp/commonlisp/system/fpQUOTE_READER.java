@@ -52,7 +52,7 @@ public class fpQUOTE_READER extends SYSTEM_FUNCTION
 	 */
 	public fpQUOTE_READER()
 	{
-		super(list("stream", "key", "&rest", "args"), //
+		super(decl("stream", "key", "&rest", "args"), //
 				"(%quote-reader stream key &rest args)", //
 				NIL);
 
@@ -74,7 +74,7 @@ public class fpQUOTE_READER extends SYSTEM_FUNCTION
 		try
 		{
 			return new tT[]
-			{ list(QUOTE, in.READ(NIL, NIL, T)) };
+			{ quote(in.READ(NIL, NIL, T)) };
 		}
 		catch (EOFException e)
 		{

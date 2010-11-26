@@ -50,7 +50,7 @@ public class sRETURN_FROM extends SPECIAL_OPERATOR
 	 */
 	public sRETURN_FROM()
 	{
-		super(list("tag", "&optional", "value"), //
+		super(decl("tag", "&optional", "value"), //
 				"(RETURN-FROM tag &optional )", //
 				NIL //
 		);

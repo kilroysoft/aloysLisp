@@ -77,23 +77,23 @@ public class fWRITE extends SYSTEM_FUNCTION
 	public fWRITE()
 	{
 		super(
-				list("object", "&key", //
-						list("stream", NIL),//
-						list("escape", printEscape), //
-						list("radix", printRadix), //
-						list("base", printBase), //
-						list("circle", printCircle),//
-						list("pretty", printPretty), //
-						list("level", printLevel), //
-						list("length", printLength), //
-						list("case", printCase), //
-						list("gensym", printGensym), //
-						list("array", printArray), //
-						list("readably", printReadably), //
-						list("right-margin", printRightMargin), //
-						list("miser-width", printMiserWidth), //
-						list("lines", printLines), //
-						list("pprint-dispatch", printPprintDispatch) //
+				decl("object", "&key", //
+						decl("stream", NIL),//
+						decl("escape", printEscape), //
+						decl("radix", printRadix), //
+						decl("base", printBase), //
+						decl("circle", printCircle),//
+						decl("pretty", printPretty), //
+						decl("level", printLevel), //
+						decl("length", printLength), //
+						decl("case", printCase), //
+						decl("gensym", printGensym), //
+						decl("array", printArray), //
+						decl("readably", printReadably), //
+						decl("right-margin", printRightMargin), //
+						decl("miser-width", printMiserWidth), //
+						decl("lines", printLines), //
+						decl("pprint-dispatch", printPprintDispatch) //
 				), //
 				"(fWRITE object &key stream escape radix base circle pretty level "
 						+ "length case gensym array readably right-margin miser-width lines "

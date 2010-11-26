@@ -140,7 +140,7 @@ public class Closure
 		Symbol atom = read(name);
 		if (atom != null)
 		{
-			atom.SETF_SYMBOL_VALUE(val);
+			atom.SET_SYMBOL_VALUE(val);
 		}
 		return atom;
 	}

@@ -56,7 +56,7 @@ public interface tSYMBOL extends tATOM
 	 * @param pack
 	 * @return
 	 */
-	public tSYMBOL SETF_SYMBOL_PACKAGE(tT dictionary);
+	public tSYMBOL SET_SYMBOL_PACKAGE(tT dictionary);
 
 	/**
 	 * @return
@@ -106,7 +106,7 @@ public interface tSYMBOL extends tATOM
 	 * @param data
 	 * @return
 	 */
-	public tSYMBOL SETF_GET(tT name, tT data);
+	public tSYMBOL SET_GET(tT name, tT data);
 
 	/**
 	 * @param name
@@ -146,13 +146,13 @@ public interface tSYMBOL extends tATOM
 	 * @param value
 	 * @return
 	 */
-	public tSYMBOL SETF_SYMBOL_VALUE(tT value);
+	public tSYMBOL SET_SYMBOL_VALUE(tT value);
 
 	/**
 	 * @param func
 	 * @return
 	 */
-	public tSYMBOL SETF_SYMBOL_FUNCTION(tFUNCTION func);
+	public tSYMBOL SET_SYMBOL_FUNCTION(tFUNCTION func);
 
 	/**
 	 * @return

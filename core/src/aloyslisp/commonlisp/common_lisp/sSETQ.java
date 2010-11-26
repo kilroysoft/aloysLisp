@@ -51,7 +51,7 @@ public class sSETQ extends SPECIAL_OPERATOR
 	 */
 	public sSETQ()
 	{
-		super(list("&rest", "list"), //
+		super(decl("&rest", "list"), //
 				"(sSETQ &rest list)", //
 				NIL);
 	}
@@ -106,7 +106,7 @@ public class sSETQ extends SPECIAL_OPERATOR
 			{
 				// get and set value
 				val = cell.CAR().EVAL()[0];
-				((tSYMBOL) var).SETF_SYMBOL_VALUE(val);
+				((tSYMBOL) var).SET_SYMBOL_VALUE(val);
 
 				// prepare to get next variable
 				var = null;

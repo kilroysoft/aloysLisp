@@ -178,7 +178,7 @@ public class Environment
 		Symbol atom = read(name);
 		if (atom == null)
 			return null;
-		return atom.SETF_SYMBOL_VALUE(value);
+		return atom.SET_SYMBOL_VALUE(value);
 	}
 
 	/**

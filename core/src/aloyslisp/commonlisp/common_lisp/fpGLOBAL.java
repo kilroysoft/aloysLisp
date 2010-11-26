@@ -52,7 +52,7 @@ public class fpGLOBAL extends fpPRIMITIVE
 	 */
 	public fpGLOBAL()
 	{
-		super(list("func", "&rest", "args"), "(%global func &rest args)", NIL);
+		super(decl("func", "&rest", "args"), "(%global func &rest args)", NIL);
 	}
 
 	static final tSYMBOL	sType	= key("type-class");

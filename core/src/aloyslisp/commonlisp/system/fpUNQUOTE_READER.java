@@ -52,7 +52,7 @@ public class fpUNQUOTE_READER extends SYSTEM_FUNCTION
 	 */
 	public fpUNQUOTE_READER()
 	{
-		super(list("stream", "key", "&rest", "args"), //
+		super(decl("stream", "key", "&rest", "args"), //
 				"(%quote-reader stream key &rest args)", //
 				NIL);
 	}

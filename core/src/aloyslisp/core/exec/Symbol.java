@@ -78,7 +78,7 @@ public class Symbol extends CELL
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tSYMBOL#set(aloyslisp.core.types.tT)
 	 */
-	public tSYMBOL SETF_SYMBOL_VALUE(tT value)
+	public tSYMBOL SET_SYMBOL_VALUE(tT value)
 	{
 		this.value = value;
 		return orig;
@@ -88,7 +88,7 @@ public class Symbol extends CELL
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tSYMBOL#fSet(aloyslisp.core.types.tFUNCTION)
 	 */
-	public tSYMBOL SETF_SYMBOL_FUNCTION(tFUNCTION func)
+	public tSYMBOL SET_SYMBOL_FUNCTION(tFUNCTION func)
 	{
 		this.value = func;
 		return orig;
