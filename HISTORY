@@ -10,6 +10,7 @@ To do
 and command tags.
 - Clean-up all instantiation process.
 - At last write all the base functions !!!
+- Change %global, %primitive, %construct as direct function call class.
 
 Current state
 =============
