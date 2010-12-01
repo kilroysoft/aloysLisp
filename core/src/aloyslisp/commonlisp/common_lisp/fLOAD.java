@@ -188,8 +188,6 @@ public class fLOAD extends SYSTEM_FUNCTION
 		}
 		catch (Exception e)
 		{
-			// Change other error in Lisp errors
-			e.printStackTrace();
 			throw new LispException(e.getLocalizedMessage());
 		}
 

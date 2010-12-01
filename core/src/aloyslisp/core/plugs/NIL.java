@@ -51,6 +51,7 @@ public class NIL extends SYMBOL implements tNULL
 	public NIL()
 	{
 		super("NIL");
+		this.value = this;
 	}
 
 	/*
@@ -391,7 +392,7 @@ public class NIL extends SYMBOL implements tNULL
 	 */
 	public tT SYMBOL_VALUE()
 	{
-		return NIL;
+		return this;
 	}
 
 	// defined elsewhere (NIL is just a gost of a CONS or SYMBOL)

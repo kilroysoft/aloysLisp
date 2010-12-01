@@ -30,6 +30,7 @@
 package aloyslisp;
 
 import static aloyslisp.commonlisp.L.*;
+import aloyslisp.core.types.tNULL;
 
 /**
  * Lisp
@@ -51,6 +52,7 @@ public class Lisp
 		// tLIST repl = list(fWRITE, (list(fEVAL, list(fREAD))));
 		// System.out.println(Psystem.pPUTD.describe());
 		sym("lisp::load").e(str("class.lisp"));
+		sym("*trace*").SET_SYMBOL_VALUE(NIL);
 		for (;;)
 		{
 			try
@@ -60,6 +62,7 @@ public class Lisp
 			catch (Exception ex)
 			{
 				debug(ex);
+
 				e.init();
 			}
 		}
@@ -71,6 +74,7 @@ public class Lisp
 	public static void debug(Exception ex)
 	{
 		System.err.println(ex.getLocalizedMessage());
+		System.err.println("*trace = " + sym("*trace*").SYMBOL_VALUE());
 		if (sym("*trace*").SYMBOL_VALUE() != NIL)
 		{
 			ex.printStackTrace();
