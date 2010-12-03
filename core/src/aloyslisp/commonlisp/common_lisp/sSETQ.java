@@ -56,14 +56,10 @@ public class sSETQ extends SPECIAL_OPERATOR
 				NIL);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see
-	 * aloyslisp.core.plugs.functions.IFunc#impl(aloyslisp.core.plugs.collections
-	 * .IList)
+	/**
+	 * @return
 	 */
-	@Override
-	public tT[] impl()
+	public tT[] IMPL()
 	{
 		return new tT[]
 		{ arg() };

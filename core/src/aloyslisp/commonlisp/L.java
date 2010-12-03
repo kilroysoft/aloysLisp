@@ -488,6 +488,9 @@ public class L extends Primitives
 	 */
 	public static tLIST list(Object... list)
 	{
+		if (list.length == 0)
+			return NIL;
+
 		return new CONS(list);
 	}
 

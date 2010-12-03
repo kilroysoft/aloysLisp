@@ -24,65 +24,28 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 11 nov. 2010 Creation
+// IP 14 nov. 2010 Creation
 // --------------------------------------------------------------------------
 
-package aloyslisp.commonlisp.common_lisp;
+package aloyslisp.core.plugs;
 
-import static aloyslisp.commonlisp.L.*;
-import aloyslisp.core.common.*;
-import aloyslisp.core.plugs.*;
 import aloyslisp.core.types.*;
 
 /**
- * fpPRIMITIVE
+ * fpGLOBAL
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class fpPRIMITIVE extends SYSTEM_FUNCTION
+public class COMPILED_FUNCTION extends SYSTEM_FUNCTION
 {
 
-	/**
-	 * @param args
-	 * @param doc
-	 * @param declare
-	 */
-	public fpPRIMITIVE()
+	public COMPILED_FUNCTION(Class<?> cls, String name, tLIST decl, String doc,
+			tLIST declare)
 	{
-		super(decl("obj", "func", "&rest", "args"),
-				"(%primitive obj func &rest args)", NIL);
+		super(cls, name, decl, doc, declare);
+		this.setFunctionCall(cls, name);
+		object = this;
 	}
-
-	public fpPRIMITIVE(tLIST args, String doc, tLIST declare)
-	{
-		super(args, doc, declare);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.types.tFUNCTION#impl()
-	 */
-	@Override
-	public tT[] impl()
-	{
-		Class<?> c = arg(1).getClass();
-
-		// get function name
-		tT func = arg(0);
-		String name = null;
-		if (func instanceof tSTRING)
-			name = ((tSTRING) func).getString();
-		else if (func instanceof tSYMBOL)
-			name = ((tSYMBOL) func).SYMBOL_NAME();
-		else
-		{
-			throw new LispException(
-					"%primitive : func argument should be a string or a symbol: "
-							+ func);
-		}
-		return invoke(c, arg(1), name, (tLIST) arg());
-	}
-
 }

@@ -43,21 +43,21 @@ public class LAMBDA_FUNCTION extends FUNCTION implements tLAMBDA_FUNCTION
 {
 
 	/**
-	 * @param def
+	 * @param name
+	 * @param args
+	 * @param func
 	 */
 	public LAMBDA_FUNCTION(tSYMBOL name, tLIST args, tLIST func)
 	{
-		super(name, args, func);
+		super(false, null, name, args, func);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see
-	 * aloyslisp.core.plugs.functions.IFunc#impl(aloyslisp.core.plugs.collections
-	 * .IList)
+	/**
+	 * Execute Lisp code
+	 * 
+	 * @return
 	 */
-	@Override
-	public tT[] impl()
+	public tT[] IMPL()
 	{
 		return e.exec();
 	}

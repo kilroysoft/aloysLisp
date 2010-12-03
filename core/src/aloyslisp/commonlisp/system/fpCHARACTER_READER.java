@@ -57,14 +57,10 @@ public class fpCHARACTER_READER extends SYSTEM_FUNCTION
 				NIL);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see
-	 * aloyslisp.core.plugs.functions.IFunc#impl(aloyslisp.core.plugs.collections
-	 * .IList)
+	/**
+	 * @return
 	 */
-	@Override
-	public tT[] impl()
+	public tT[] IMPL()
 	{
 		tINPUT_STREAM in = (tINPUT_STREAM) arg(0);
 

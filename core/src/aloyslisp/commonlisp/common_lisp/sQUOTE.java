@@ -69,9 +69,9 @@ public class sQUOTE extends SPECIAL_OPERATOR
 	/*
 	 * (non-Javadoc)
 	 * @see
-	 * aloyslisp.core.plugs.functions.FUNCTION#impl(aloyslisp.core.plugs.CELL)
+	 * aloyslisp.core.plugs.functions.FUNCTION#IMPL(aloyslisp.core.plugs.CELL)
 	 */
-	public tT[] impl()
+	public tT[] IMPL()
 	{
 		return new tT[]
 		{ arg(0) };

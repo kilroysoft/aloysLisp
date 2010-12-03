@@ -53,12 +53,10 @@ public class sSETF extends SPECIAL_OPERATOR
 		super(decl("place", "value"), "(SETF place value)", NIL);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.types.tFUNCTION#impl()
+	/**
+	 * @return
 	 */
-	@Override
-	public tT[] impl()
+	public tT[] IMPL()
 	{
 		return new tT[]
 		{ arg(0), arg(1) };

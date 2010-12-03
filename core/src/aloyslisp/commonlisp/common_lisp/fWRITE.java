@@ -123,9 +123,9 @@ public class fWRITE extends SYSTEM_FUNCTION
 	/*
 	 * (non-Javadoc)
 	 * @see
-	 * aloyslisp.core.plugs.functions.FUNCTION#impl(aloyslisp.core.plugs.CELL)
+	 * aloyslisp.core.plugs.functions.FUNCTION#IMPL(aloyslisp.core.plugs.CELL)
 	 */
-	public tT[] impl()
+	public tT[] IMPL()
 	{
 		e.intern(sym("lisp::*print-escape*"), arg("escape"));
 		e.intern(sym("lisp::*print-radix*"), arg("radix"));

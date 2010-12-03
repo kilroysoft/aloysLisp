@@ -56,12 +56,10 @@ public class sRETURN_FROM extends SPECIAL_OPERATOR
 		);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.plugs.functions.IFunc#impl()
+	/**
+	 * @return
 	 */
-	@Override
-	public tT[] impl()
+	public tT[] IMPL()
 	{
 		return new tT[]
 		{ arg(0), arg(1) };

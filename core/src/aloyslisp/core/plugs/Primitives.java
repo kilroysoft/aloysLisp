@@ -152,8 +152,8 @@ public class Primitives
 	 * @param cls
 	 * @return
 	 */
-	@Global(name = "%instantiate")
-	public static boolean INSTANTIATE( //
+	@Global(name = "instantiate")
+	public static Boolean INSTANTIATE( //
 			@Arg(name = "class") String cls)
 	{
 		// Search method
@@ -178,32 +178,18 @@ public class Primitives
 			// Class<?>[] paramTypes = m.getParameterTypes();
 			Annotation[][] notes = m.getParameterAnnotations();
 
-			tLIST cmd;
+			tFUNCTION func;
 			if (g != null)
 			{
-				cmd = decl(
-						"defmacro",
-						g.name(),
-						argsDecl(notes),
-						str(g.doc()),
-						declareArgs(),
-						backquote(decl("%global", quote(g.name())).APPEND(
-								argsCall(notes))));
-				System.out.println("" + cmd);
-				cmd.EVAL();
+				func = new COMPILED_FUNCTION(Primitives.class, m.getName(),
+						argsDecl(notes), g.doc(), declareArgs());
+				sym(g.name()).SET_SYMBOL_FUNCTION(func);
 			}
 			else if (p != null)
 			{
-				cmd = decl(
-						"defmacro",
-						p.name(),
-						list(sym("obj")).APPEND(argsDecl(notes)),
-						str(p.doc()),
-						declareArgs(),
-						backquote(decl("%primitive", quote(p.name()),
-								unquote("obj")).APPEND(argsCall(notes))));
-				System.out.println("" + cmd);
-				cmd.EVAL();
+				func = new PRIMITIVE(c, m.getName(), (tLIST) list(sym("obj"))
+						.APPEND(argsDecl(notes)), p.doc(), declareArgs());
+				sym(p.name()).SET_SYMBOL_FUNCTION(func);
 			}
 			else
 				continue;
@@ -231,21 +217,6 @@ public class Primitives
 		res = (tLIST) res.APPEND(argsBase(notes, Opt.class, "&optional"));
 		res = (tLIST) res.APPEND(argsBase(notes, Rest.class, "&rest"));
 		res = (tLIST) res.APPEND(argsBase(notes, Key.class, "&key"));
-		return res;
-	}
-
-	/**
-	 * @param notes
-	 * @param type
-	 * @return
-	 */
-	private static tLIST argsCall(Annotation[][] notes)
-	{
-		tLIST res = NIL;
-		res = (tLIST) res.APPEND(argsBase(notes, Arg.class, null));
-		res = (tLIST) res.APPEND(argsBase(notes, Opt.class, null));
-		res = (tLIST) res.APPEND(argsBase(notes, Rest.class, null));
-		res = (tLIST) res.APPEND(argsBase(notes, Key.class, null));
 		return res;
 	}
 

@@ -24,44 +24,26 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 26 oct. 2010 Creation
-// TODO Rethink about Special form as a 2 way function and macro
-// transformations.
+// IP 11 nov. 2010 Creation
 // --------------------------------------------------------------------------
 
 package aloyslisp.core.plugs;
 
-import static aloyslisp.commonlisp.L.*;
 import aloyslisp.core.types.*;
 
 /**
- * SPECIAL_OPERATOR
+ * fpPRIMITIVE
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public abstract class SPECIAL_OPERATOR extends FUNCTION implements
-		tSPECIAL_OPERATOR, tCOMPILED_FUNCTION
+public class PRIMITIVE extends SYSTEM_FUNCTION
 {
-
-	/**
-	 * @param def
-	 */
-	public SPECIAL_OPERATOR(tLIST args, String doc, tLIST declare)
+	public PRIMITIVE(Class<?> cls, String name, tLIST decl, String doc,
+			tLIST declare)
 	{
-		super(false, null, null, args, list(str(doc), declare));
-		this.setFuncName(sym(currPackage(), compiledName()));
+		super(cls, name, decl, doc, declare);
+		this.setFunctionCall(cls, name);
 	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.plugs.functions.FUNCTION#printableStruct()
-	 */
-	protected String printableStruct()
-	{
-		return "SPECIAL " + compiledName() + " " + intern.getArgs() + " "
-				+ intern.commentary() + " " + intern.declare();
-	}
-
 }

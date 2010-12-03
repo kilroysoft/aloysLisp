@@ -56,9 +56,9 @@ public class sIF extends SPECIAL_OPERATOR
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.commonlisp.common_lisp.sPROGN#impl()
+	 * @see aloyslisp.commonlisp.common_lisp.sPROGN#IMPL()
 	 */
-	public tT[] impl()
+	public tT[] IMPL()
 	{
 		return new tT[]
 		{ arg(0), arg(1), arg(2) };

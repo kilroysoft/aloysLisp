@@ -59,14 +59,10 @@ public class fpBACKQUOTE_READER extends SYSTEM_FUNCTION
 
 	private static final tSYMBOL	BACKQUOTE	= sym("sys::%backquote");
 
-	/*
-	 * (non-Javadoc)
-	 * @see
-	 * aloyslisp.core.plugs.functions.IFunc#impl(aloyslisp.core.plugs.collections
-	 * .IList)
+	/**
+	 * @return
 	 */
-	@Override
-	public tT[] impl()
+	public tT[] IMPL()
 	{
 		tINPUT_STREAM in = (tINPUT_STREAM) arg(0);
 

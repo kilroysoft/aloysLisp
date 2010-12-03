@@ -54,15 +54,13 @@ public class sBLOCK extends SPECIAL_OPERATOR
 				NIL);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.plugs.functions.IFunc#impl()
+	/**
+	 * @return
 	 */
-	@Override
-	public tT[] impl()
+	public tT[] IMPL(tSYMBOL name, tT... block)
 	{
 		return new tT[]
-		{ arg(0), arg() };
+		{ name, list((Object[]) block) };
 	}
 
 	/*

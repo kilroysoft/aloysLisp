@@ -59,14 +59,10 @@ public class fpFUNCTION_READER extends SYSTEM_FUNCTION
 
 	private static final tSYMBOL	FUNCTION	= sym("lisp::function");
 
-	/*
-	 * (non-Javadoc)
-	 * @see
-	 * aloyslisp.core.plugs.functions.IFunc#impl(aloyslisp.core.plugs.collections
-	 * .IList)
+	/**
+	 * @return
 	 */
-	@Override
-	public tT[] impl()
+	public tT[] IMPL()
 	{
 		tINPUT_STREAM in = (tINPUT_STREAM) arg(0);
 

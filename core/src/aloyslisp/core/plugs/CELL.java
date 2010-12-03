@@ -184,7 +184,7 @@ public abstract class CELL implements tT
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tT#istype(aloyslisp.core.types.tT)
 	 */
-	public boolean ISTYPE(tSYMBOL type)
+	public boolean pISTYPE(tSYMBOL type)
 	{
 		// get name of type
 		String name = "";

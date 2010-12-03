@@ -57,14 +57,6 @@ public interface tFUNCTION extends tATOM
 	public tT[] e(Object... args);
 
 	/**
-	 * Implemntation of function
-	 * 
-	 * @param args
-	 * @return
-	 */
-	public tT[] impl();
-
-	/**
 	 * @return
 	 */
 	public tSYMBOL getFuncName();

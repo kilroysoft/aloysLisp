@@ -63,12 +63,10 @@ public class sPROGN extends SPECIAL_OPERATOR
 		super(def, doc, declare);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.plugs.functions.IFunc#impl()
+	/**
+	 * @return
 	 */
-	@Override
-	public tT[] impl()
+	public tT[] IMPL()
 	{
 		return new tT[]
 		{ arg() };

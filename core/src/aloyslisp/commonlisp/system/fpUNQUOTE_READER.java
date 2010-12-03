@@ -61,14 +61,10 @@ public class fpUNQUOTE_READER extends SYSTEM_FUNCTION
 	private static final tSYMBOL	NSPLICE	= sym("sys::%nsplice");
 	private static final tSYMBOL	UNQUOTE	= sym("sys::%unquote");
 
-	/*
-	 * (non-Javadoc)
-	 * @see
-	 * aloyslisp.core.plugs.functions.IFunc#impl(aloyslisp.core.plugs.collections
-	 * .IList)
+	/**
+	 * @return
 	 */
-	@Override
-	public tT[] impl()
+	public tT[] IMPL()
 	{
 		tINPUT_STREAM in = (tINPUT_STREAM) arg(0);
 		Character sup = ' ';

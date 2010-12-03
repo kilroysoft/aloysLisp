@@ -30,7 +30,6 @@
 package aloyslisp;
 
 import static aloyslisp.commonlisp.L.*;
-import aloyslisp.core.types.tNULL;
 
 /**
  * Lisp
@@ -51,8 +50,11 @@ public class Lisp
 	{
 		// tLIST repl = list(fWRITE, (list(fEVAL, list(fREAD))));
 		// System.out.println(Psystem.pPUTD.describe());
+		sym("*trace*").SET_SYMBOL_VALUE(T);
+		INSTANTIATE("aloyslisp.core.plugs.Primitives");
 		sym("lisp::load").e(str("class.lisp"));
-		sym("*trace*").SET_SYMBOL_VALUE(NIL);
+
+		// loop recovering errors
 		for (;;)
 		{
 			try

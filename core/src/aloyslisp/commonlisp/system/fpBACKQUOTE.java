@@ -56,14 +56,10 @@ public class fpBACKQUOTE extends SPECIAL_OPERATOR
 		mac = "`";
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see
-	 * aloyslisp.core.plugs.functions.IFunc#impl(aloyslisp.core.plugs.collections
-	 * .IList)
+	/**
+	 * @return
 	 */
-	@Override
-	public tT[] impl()
+	public tT[] IMPL()
 	{
 		// Pass code to special executor
 		return new tT[]

@@ -31,6 +31,7 @@ package aloyslisp.commonlisp.common_lisp;
 
 import java.io.*;
 import static aloyslisp.commonlisp.L.*;
+import aloyslisp.core.annotations.*;
 import aloyslisp.core.common.*;
 import aloyslisp.core.plugs.*;
 import aloyslisp.core.types.*;
@@ -98,18 +99,15 @@ public class fLOAD extends SYSTEM_FUNCTION
 
 	static final tSYMBOL	WRITE	= sym("lisp::write");
 
-	/*
-	 * (non-Javadoc)
-	 * @see
-	 * aloyslisp.core.plugs.functions.IFunc#impl(aloyslisp.core.plugs.CELL)
+	/**
+	 * @return
 	 */
-	@Override
-	public tT[] impl()
+	@Global(name = "load")
+	public tT[] IMPL(@Arg(name = "file") tT file, //
+			@Opt(name = "verbose", def = "t") Boolean verbose, //
+			@Opt(name = "print", def = "t") Boolean print, //
+			@Opt(name = "not-exists", def = "nil") Boolean notExists)
 	{
-		tT file = arg(0);
-		boolean verbose = !(arg("verbose") instanceof NIL);
-		boolean print = !(arg("print") instanceof NIL);
-		boolean notExists = arg("if-does-not-exist") instanceof NIL;
 		String name;
 		tINPUT_STREAM in;
 
@@ -167,7 +165,7 @@ public class fLOAD extends SYSTEM_FUNCTION
 				}
 
 				// and evaluate it
-				System.out.println("eval : " + res[0]);
+				// System.out.println("eval : " + res[0]);
 				res = res[0].EVAL();
 
 				if (print)

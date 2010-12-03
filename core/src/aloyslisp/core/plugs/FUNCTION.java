@@ -33,6 +33,7 @@ package aloyslisp.core.plugs;
 import static aloyslisp.commonlisp.L.*;
 
 import java.lang.reflect.*;
+
 import aloyslisp.core.common.*;
 import aloyslisp.core.exec.*;
 import aloyslisp.core.types.*;
@@ -61,16 +62,30 @@ public abstract class FUNCTION extends CELL implements tFUNCTION
 	 */
 	public Method		method	= null;
 
+	tT					object	= null;
+
 	/**
 	 * Creation with arguments detail
 	 * 
 	 * @param def
 	 */
-	public FUNCTION(tSYMBOL name, tLIST args, tLIST func)
+	public FUNCTION(boolean external, Class<?> c, tSYMBOL name, tLIST args,
+			tLIST func)
 	{
+		// Class is null so we call internal impl function on this class
+		String f = "IMPL";
+		if (c == null)
+		{
+			c = getClass();
+			object = this;
+		}
+		else
+			f = name.SYMBOL_NAME();
+
 		intern = new Arguments(name, args, func);
-		System.out.println("Name = " + name + " Class = "
-				+ this.getClass().getCanonicalName());
+		System.out.println("Name = " + name + " new Name = " + f + " Class = "
+				+ c.getCanonicalName());
+		setFunctionCall(c, f);
 	}
 
 	/*
@@ -112,14 +127,64 @@ public abstract class FUNCTION extends CELL implements tFUNCTION
 		// System.out.println("\nv----TRACE---->" + this + "\n" + e.trace(false)
 		// + "^------------");
 
-		res = impl();
+		try
+		{
+			Object[] newArgs = null;
+			tT actObj = object;
+
+			// Transform arguments
+			if (object == null)
+			{
+				newArgs = tranformArgs(method.getParameterTypes(),
+						(tLIST) args.CDR());
+				actObj = args.CAR();
+			}
+			else
+				newArgs = tranformArgs(method.getParameterTypes(), args);
+
+			// Call function
+//			System.out.println("exec(" + method.getName() + " (" + actObj
+//					+ ") " + args + ")");
+			Object ret = method.invoke(actObj, newArgs);
+
+			// if function return multiple values
+			if (ret instanceof tT[])
+				res = (tT[]) ret;
+			else
+				// return value as tT
+				res = new tT[]
+				{ normalize(ret) };
+		}
+		catch (IllegalArgumentException e)
+		{
+			throw new LispException("Function " + intern.getStringName()
+					+ " bad arguments : " + e.getLocalizedMessage());
+		}
+		catch (IllegalAccessException e)
+		{
+			e.printStackTrace();
+		}
+		catch (InvocationTargetException e)
+		{
+			if (sym("*trace*").SYMBOL_VALUE() != NIL)
+			{
+				e.getCause().printStackTrace();
+			}
+			throw new LispException(e.getCause().getLocalizedMessage());
+		}
+		catch (RuntimeException e)
+		{
+			// throw back exception upper
+			e.printStackTrace();
+			throw new LispException(e.getLocalizedMessage());
+		}
 
 		e.popBlock();
 
 		// If it's a special form we have to manage the global environment part
 		// of the code. For example sSETQ should have access to the local
 		// variable to be set in the closure... but it shouldn't be disturbed by
-		// the local variables of the impl() part variables.
+		// the local variables of the IMPL() part variables.
 		// (sSETQ &rest list), so (sSETQ list 10) should not write the arguments
 		// list of sSETQ... which is (list 10) :D
 		if (this instanceof tSPECIAL_OPERATOR)
@@ -292,6 +357,30 @@ public abstract class FUNCTION extends CELL implements tFUNCTION
 
 	/**
 	 * @param c
+	 * @param obj
+	 * @param name
+	 * @return
+	 */
+	public boolean setFunctionCall(Class<?> c, String name)
+	{
+		Method[] meth = c.getMethods();
+		for (Method m : meth)
+		{
+			// m.getParameterAnnotations();
+
+			if (m.getName().equalsIgnoreCase(name))
+			{
+				method = m;
+				intern.setName(sym(name));
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	/**
+	 * @param c
 	 *            Class to invoque
 	 * @param obj
 	 *            Object to manage (unused if static function)
@@ -328,23 +417,7 @@ public abstract class FUNCTION extends CELL implements tFUNCTION
 					continue;
 
 				// Transform arguments
-				int i = 0;
-				Object[] newArgs = new Object[paramTypes.length];
-				for (Class<?> classArg : paramTypes)
-				{
-					if (classArg.isArray())
-					{
-						// manage rest of args as an array
-						newArgs[i] = arg.getArray();
-						arg = NIL;
-						continue;
-					}
-					else
-						newArgs[i] = transform(arg.CAR(), classArg);
-
-					arg = (tLIST) arg.CDR();
-					i++;
-				}
+				Object[] newArgs = tranformArgs(paramTypes, arg);
 
 				// found
 				try
@@ -392,6 +465,34 @@ public abstract class FUNCTION extends CELL implements tFUNCTION
 	}
 
 	/**
+	 * @param paramTypes
+	 * @param arg
+	 * @return
+	 */
+	public Object[] tranformArgs(Class<?>[] paramTypes, tLIST arg)
+	{
+		// Transform arguments
+		int i = 0;
+		Object[] newArgs = new Object[paramTypes.length];
+		for (Class<?> classArg : paramTypes)
+		{
+			if (classArg.isArray())
+			{
+				// manage rest of args as an array
+				newArgs[i] = arg.getArray();
+				arg = NIL;
+				continue;
+			}
+			else
+				newArgs[i] = transform(arg.CAR(), classArg);
+
+			arg = (tLIST) arg.CDR();
+			i++;
+		}
+		return newArgs;
+	}
+
+	/**
 	 * Coerce a lisp argument to the object class of the function
 	 * 
 	 * @param arg
@@ -405,6 +506,14 @@ public abstract class FUNCTION extends CELL implements tFUNCTION
 			if (cl.isAssignableFrom(arg.getClass()))
 			{
 				return arg;
+			}
+			else if (arg instanceof Boolean)
+			{
+				return (Boolean) arg ? T : NIL;
+			}
+			else if (arg instanceof String)
+			{
+				return str((String) arg);
 			}
 			else
 			{

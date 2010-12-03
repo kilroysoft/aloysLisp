@@ -53,12 +53,10 @@ public class sPROG1 extends SPECIAL_OPERATOR
 				NIL);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.plugs.functions.IFunc#impl()
+	/**
+	 * @return
 	 */
-	@Override
-	public tT[] impl()
+	public tT[] IMPL()
 	{
 		return new tT[]
 		{ arg(0), arg() };

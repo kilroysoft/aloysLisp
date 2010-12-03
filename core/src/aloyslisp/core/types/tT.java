@@ -58,7 +58,7 @@ public interface tT
 	 */
 	@Primitive(name = "coerce")
 	public tT COERCE( //
-			@Arg(name="type") tT type);
+			@Arg(name = "type") tT type);
 
 	/**
 	 * Evaluate the cell
@@ -144,7 +144,7 @@ public interface tT
 	 */
 	@Primitive(name = "eq")
 	public boolean EQ( //
-			@Arg(name="cell") tT cell);
+			@Arg(name = "cell") tT cell);
 
 	/**
 	 * eql
@@ -155,7 +155,7 @@ public interface tT
 	 */
 	@Primitive(name = "eql")
 	public boolean EQL( //
-			@Arg(name="cell") tT cell);
+			@Arg(name = "cell") tT cell);
 
 	/**
 	 * equal
@@ -166,7 +166,7 @@ public interface tT
 	 */
 	@Primitive(name = "equal")
 	public boolean EQUAL( //
-			@Arg(name="cell") tT cell);
+			@Arg(name = "cell") tT cell);
 
 	/**
 	 * equalp
@@ -177,7 +177,7 @@ public interface tT
 	 */
 	@Primitive(name = "equalp")
 	public boolean EQUALP( //
-			@Arg(name="cell") tT cell);
+			@Arg(name = "cell") tT cell);
 
 	/**
 	 * Test basic subtype test
@@ -186,7 +186,7 @@ public interface tT
 	 * @return
 	 */
 	@Primitive(name = "%istype")
-	public boolean ISTYPE(tSYMBOL type);
+	public boolean pISTYPE(tSYMBOL type);
 
 	/**
 	 * Test if cell is constant
