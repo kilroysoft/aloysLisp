@@ -50,6 +50,10 @@ public class Lisp
 	{
 		// tLIST repl = list(fWRITE, (list(fEVAL, list(fREAD))));
 		// System.out.println(Psystem.pPUTD.describe());
+		writeClasses("aloyslisp.core.plugs");
+		writeClasses("aloyslisp.core.types");
+		writeClasses("aloyslisp.commonlisp.common_lisp");
+		writeClasses("aloyslisp.commonlisp.system");
 		sym("*trace*").SET_SYMBOL_VALUE(T);
 		INSTANTIATE("aloyslisp.core.plugs.Primitives");
 		sym("lisp::load").e(str("class.lisp"));

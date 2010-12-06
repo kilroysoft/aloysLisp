@@ -29,6 +29,17 @@
 
 package aloyslisp.commonlisp;
 
+import java.io.File;
+import java.io.FilenameFilter;
+import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Enumeration;
+import java.util.List;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
+
 import aloyslisp.core.common.*;
 import aloyslisp.core.exec.*;
 import aloyslisp.core.plugs.*;
@@ -759,6 +770,200 @@ public class L extends Primitives
 		if (!(atom instanceof tSYMBOL))
 			return false;
 		return ((tSYMBOL) atom).SYMBOL_NAME().equalsIgnoreCase(name);
+	}
+
+	/**
+	 * 
+	 */
+	public static void writeClasses(String pkg)
+	{
+		System.out.println("Loading package " + pkg);
+		System.out.println("----------------------------------------");
+		try
+		{
+			List<Class<?>> cla = getClasses(pkg);
+			for (Class<?> clas : cla)
+			{
+				System.out.println(clas.getCanonicalName());
+			}
+		}
+		catch (ClassNotFoundException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		catch (IOException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * @param pckgname
+	 * @return
+	 * @throws ClassNotFoundException
+	 * @throws IOException
+	 */
+	public static List<Class<?>> getClasses(String pckgname)
+			throws ClassNotFoundException, IOException
+	{
+		// Création de la liste qui sera retournée
+		ArrayList<Class<?>> classes = new ArrayList<Class<?>>();
+
+		// On récupère toutes les entrées du CLASSPATH
+		String[] entries = System.getProperty("java.class.path").split(
+				System.getProperty("path.separator"));
+
+		// Pour toutes ces entrées, on verifie si elles contiennent
+		// un répertoire ou un jar
+		for (int i = 0; i < entries.length; i++)
+		{
+
+			if (entries[i].endsWith(".jar"))
+			{
+				classes.addAll((Collection<? extends Class<?>>) manageJar(
+						entries[i], pckgname));
+			}
+			else
+			{
+				classes.addAll((Collection<? extends Class<?>>) manageDirectory(
+						entries[i], pckgname));
+			}
+
+		}
+
+		// ajout => analyse classpath de la webapp
+		Enumeration<URL> eUrl = NIL.getClass().getClassLoader()
+				.getResources(pckgname);
+		for (; eUrl.hasMoreElements();)
+		{
+			URL url = eUrl.nextElement();
+			String sUrl = url.toString();
+
+			if (sUrl.contains(".jar!"))
+			{
+				sUrl = sUrl.substring(0, sUrl.indexOf("!"));
+				classes.addAll((Collection<? extends Class<?>>) manageJar(sUrl,
+						pckgname));
+			}
+			else
+			{
+				classes.addAll((Collection<? extends Class<?>>) manageDirectory(
+						sUrl, pckgname));
+			}
+
+		}
+
+		return classes;
+	}
+
+	/**
+	 * @param repertoire
+	 * @param pckgname
+	 * @return
+	 * @throws ClassNotFoundException
+	 */
+	private static Collection<Class<?>> manageDirectory(String repertoire,
+			String pckgname) throws ClassNotFoundException
+	{
+		ArrayList<Class<?>> classes = new ArrayList<Class<?>>();
+
+		// On génère le chemin absolu du package
+		StringBuffer sb = new StringBuffer(repertoire);
+		String[] repsPkg = pckgname.split("\\.");
+		for (int i = 0; i < repsPkg.length; i++)
+		{
+			sb.append(System.getProperty("file.separator") + repsPkg[i]);
+		}
+		File rep = new File(sb.toString());
+
+		// Si le chemin existe, et que c'est un dossier, alors, on le liste
+		if (rep.exists() && rep.isDirectory())
+		{
+			// On filtre les entrées du répertoire
+			FilenameFilter filter = new DotClassFilter();
+			File[] liste = rep.listFiles(filter);
+
+			// Pour chaque classe présente dans le package, on l'ajoute à la
+			// liste
+			for (int i = 0; i < liste.length; i++)
+			{
+				classes.add(Class.forName(pckgname + "."
+						+ liste[i].getName().split("\\.")[0]));
+			}
+		}
+
+		return classes;
+	}
+
+	/**
+	 * @param jar
+	 * @param pckgname
+	 * @return
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 */
+	private static Collection<Class<?>> manageJar(String jar, String pckgname)
+			throws IOException, ClassNotFoundException
+	{
+		ArrayList<Class<?>> classes = new ArrayList<Class<?>>();
+
+		JarFile jfile = new JarFile(jar);
+		String pkgpath = pckgname.replace(".", "/");
+
+		// Pour chaque entrée du Jar
+		for (Enumeration<JarEntry> entries = jfile.entries(); entries
+				.hasMoreElements();)
+		{
+			JarEntry element = entries.nextElement();
+
+			// all the .class in package and sub-package
+			if (element.getName().startsWith(pkgpath)
+					&& element.getName().endsWith(".class"))
+			{
+				// get
+				String nomFichier = element.getName().substring(
+						pckgname.length() + 1);
+
+				Class<?> found = Class.forName(pckgname + "."
+						+ nomFichier.split("\\.")[0]);
+
+				classes.add(found);
+
+			}
+
+		}
+
+		return classes;
+	}
+
+	/**
+	 * Cette classe permet de filtrer les fichiers d'un répertoire. Il n'accepte
+	 * que les fichiers .class.
+	 */
+	private static class DotClassFilter implements FilenameFilter
+	{
+
+		public boolean accept(File arg0, String arg1)
+		{
+			return arg1.endsWith(".class");
+		}
+
+	}
+
+	/**
+	 * Cette classe permet de filtrer les fichiers d'un répertoire. Il n'accepte
+	 * que les fichiers .class.
+	 */
+	private static class DirFilter implements FilenameFilter
+	{
+
+		public boolean accept(File arg0, String arg1)
+		{
+			return arg0.isDirectory();
+		}
+
 	}
 
 }
