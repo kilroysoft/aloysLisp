@@ -2,18 +2,22 @@ HISTORY : List of changes
 	
 To do
 =====
-- All this stuff is intended to move to a more general lisp object model.
 - All non lisp functions on objects are private or protected or global.
-- Lisp object constructor put to static, only use static creator.
-- Create type objects.
-- Automatic instantiate of all base object. This will be managed in detail later, perhaps config file
-and command tags.
-- Clean-up all instantiation process.
 - At last write all the base functions !!!
-- Change %global, %primitive, %construct as direct function call class.
+
+
+Doing
+=====
+- All this stuff is intended to move to a more general lisp object model.
+- Prepare JAVA - LISP classes interfaces.
+- Clean-up all instantiation process.
+- Create type objects.
 
 Current state
 =============
+- Change %global, %primitive, %construct as direct function call class.
+- Automatic instantiate of all base object. This will be managed in detail later, perhaps config file
+and command tags.
 
 Version UB26
 =============
