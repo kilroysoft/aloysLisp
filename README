@@ -8,7 +8,7 @@
 	Ivan Pierre <me@ivanpierre.ch>
 	George Kilroy <george@kilroysoft.ch>
 	
-IP 21/11/2010
+IP 06/12/2010
 
 PREAMBLE
 ========
@@ -38,7 +38,8 @@ and valuable that using someone's else code (even if I did). So is here this pro
 
 LINKS
 =====
-Main info page : http://kilroysoft.github.com/aloysLisp/
+Main info page : http://kilroysoft.github.com/aloysLisp
+Javadoc page : http://kilroysoft.github.com/aloysLisp/doc
 GitHUB repository : http://github.com/kilroysoft/aloysLisp
 Documentation : http://github.com/kilroysoft/aloysLisp/wiki
 
