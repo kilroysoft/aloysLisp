@@ -1,0 +1,9 @@
+aloyslisp
+aloyslisp.commonlisp
+aloyslisp.commonlisp.common_lisp
+aloyslisp.commonlisp.system
+aloyslisp.core.annotations
+aloyslisp.core.common
+aloyslisp.core.exec
+aloyslisp.core.plugs
+aloyslisp.core.types

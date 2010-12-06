@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="javadoc">
+    <target name="javadoc">
+        <javadoc access="package" author="true" classpath="." destdir="doc" doctitle="aloysLisp : a COMMON-LISP interpreter, compiler and library in java" nodeprecated="false" nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false" packagenames="aloyslisp.core.plugs,aloyslisp.commonlisp,aloyslisp.core.annotations,aloyslisp.core.exec,aloyslisp.commonlisp.common_lisp,aloyslisp.commonlisp.system,aloyslisp.core.types,aloyslisp,aloyslisp.core.common" source="1.6" sourcepath="C:\Users\Public\Projects\Java\aloysLisp\aloysLisp\core\src" splitindex="true" use="true" version="true"/>
+    </target>
+</project>
