@@ -4,20 +4,26 @@ To do
 =====
 - All non lisp functions on objects are private or protected or global.
 - At last write all the base functions !!!
-
+- Manage *xxx* variables for output of objects.
+- Environment as dynamic values.
+- Debug environment.
+- Interface hooks (debug). Execute, continue, breakpoints.
+- Compilation.... (as soon as possible)
 
 Doing
 =====
 - All this stuff is intended to move to a more general lisp object model.
-- Prepare JAVA - LISP classes interfaces.
 - Clean-up all instantiation process.
 - Create type objects.
 
 Current state
 =============
-- Change %global, %primitive, %construct as direct function call class.
+- Rewrite INPUT_STREAM lisp functions.
+- Function library as blank classes.
 - Automatic instantiate of all base object. This will be managed in detail later, perhaps config file
 and command tags.
+- Creation of STATIC, PRIMITIVE function classes.
+- Change %global, %primitive, %construct as direct function call class.
 
 Version UB26
 =============
