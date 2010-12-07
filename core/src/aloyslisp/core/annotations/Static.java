@@ -38,9 +38,9 @@ import java.lang.annotation.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-@Target(ElementType.METHOD)
+@Target({ElementType.METHOD, ElementType.CONSTRUCTOR })
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Global
+public @interface Static
 {
 	/**
 	 * Lisp function name

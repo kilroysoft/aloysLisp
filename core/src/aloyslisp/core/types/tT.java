@@ -56,7 +56,7 @@ public interface tT
 	 * 
 	 * @return converted object
 	 */
-	@Primitive(name = "coerce")
+	@Function(name = "coerce")
 	public tT COERCE( //
 			@Arg(name = "type") tT type);
 
@@ -65,7 +65,7 @@ public interface tT
 	 * 
 	 * @return Value as an array (functions can give back multiple values)
 	 */
-	@Primitive(name = "eval")
+	@Function(name = "eval")
 	public tT[] EVAL();
 
 	/**
@@ -73,7 +73,7 @@ public interface tT
 	 * 
 	 * @return
 	 */
-	@Primitive(name = "compile")
+	@Function(name = "compile")
 	public String COMPILE();
 
 	/**
@@ -81,7 +81,7 @@ public interface tT
 	 * 
 	 * @return
 	 */
-	@Primitive(name = "evalcompile")
+	@Function(name = "evalcompile")
 	public String EVALCOMPILE();
 
 	/**
@@ -97,7 +97,7 @@ public interface tT
 	 * 
 	 * @return
 	 */
-	@Primitive(name = "describe")
+	@Function(name = "describe")
 	public String DESCRIBE();
 
 	/**
@@ -105,7 +105,7 @@ public interface tT
 	 * 
 	 * @return
 	 */
-	@Primitive(name = "macroexpand")
+	@Function(name = "macroexpand")
 	public tT[] MACROEXPAND();
 
 	/**
@@ -113,7 +113,7 @@ public interface tT
 	 * 
 	 * @return
 	 */
-	@Primitive(name = "macroexpand1")
+	@Function(name = "macroexpand1")
 	public tT[] MACROEXPAND1();
 
 	/**
@@ -142,7 +142,7 @@ public interface tT
 	 * @param cell
 	 * @return
 	 */
-	@Primitive(name = "eq")
+	@Function(name = "eq")
 	public boolean EQ( //
 			@Arg(name = "cell") tT cell);
 
@@ -153,7 +153,7 @@ public interface tT
 	 * @return
 	 *         TODO will be removed for a lisp version
 	 */
-	@Primitive(name = "eql")
+	@Function(name = "eql")
 	public boolean EQL( //
 			@Arg(name = "cell") tT cell);
 
@@ -164,7 +164,7 @@ public interface tT
 	 * @return
 	 *         TODO will be removed for a lisp version
 	 */
-	@Primitive(name = "equal")
+	@Function(name = "equal")
 	public boolean EQUAL( //
 			@Arg(name = "cell") tT cell);
 
@@ -175,7 +175,7 @@ public interface tT
 	 * @return
 	 *         TODO will be removed for a lisp version
 	 */
-	@Primitive(name = "equalp")
+	@Function(name = "equalp")
 	public boolean EQUALP( //
 			@Arg(name = "cell") tT cell);
 
@@ -185,7 +185,7 @@ public interface tT
 	 * @param type
 	 * @return
 	 */
-	@Primitive(name = "%istype")
+	@Function(name = "%istype")
 	public boolean pISTYPE(tSYMBOL type);
 
 	/**
@@ -193,7 +193,7 @@ public interface tT
 	 * 
 	 * @return
 	 */
-	@Primitive(name = "constantp")
+	@Function(name = "constantp")
 	public boolean CONSTANTP();
 
 }

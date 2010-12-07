@@ -24,67 +24,46 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 15 sept. 2010 Creation
+// IP 14 nov. 2010 Creation
 // --------------------------------------------------------------------------
 
-package aloyslisp.commonlisp.common_lisp;
+package aloyslisp.core.plugs;
 
-import static aloyslisp.commonlisp.L.*;
-import aloyslisp.core.plugs.*;
 import aloyslisp.core.types.*;
 
 /**
- * sQUOTE
+ * fpGLOBAL
  * 
- * <p>
- * [Special Form]
- * <p>
- * quote object
- * 
- * <p>
- * (quote x) simply returns x. The object is not evaluated and may be any Lisp
- * object whatsoever. This construct allows any Lisp object to be written as a
- * constant value in a program.
- * 
- * @see <a href='http://clm.aloys.li/node78.html'>7.1. Reference</a>
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class sQUOTE extends SPECIAL_OPERATOR
+public class STATIC extends SYSTEM_FUNCTION
 {
-	// private static final Integer cell = 0;
 
 	/**
-	 * @param eval
+	 * @param cls
+	 * @param name
+	 * @param decl
+	 * @param doc
+	 * @param declare
 	 */
-	public sQUOTE()
+	public STATIC(Class<?> cls, String name, tLIST decl, String doc,
+			tLIST declare)
 	{
-		super(decl("cell"), //
-				"(sQUOTE cell)", //
-				NIL);
-		mac = "'";
+		super(cls, name, decl, doc, declare);
+		this.setFunctionCall(cls, name);
+		object = this;
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see
-	 * aloyslisp.core.plugs.functions.FUNCTION#IMPL(aloyslisp.core.plugs.CELL)
+	 * @see aloyslisp.core.plugs.functions.FUNCTION#printableStruct()
 	 */
-	public tT[] IMPL()
+	protected String printableStruct()
 	{
-		return new tT[]
-		{ arg(0) };
+		return "FUNCTION " + compiledName() + " " + intern.getArgs() + " "
+				+ intern.commentary() + " " + intern.declare();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see
-	 * aloyslisp.core.plugs.functions.ISpecialForm#implSpecial(aloyslisp.core
-	 * .plugs.Cell[])
-	 */
-	public tT[] implSpecial(tT[] args)
-	{
-		return args;
-	}
 }

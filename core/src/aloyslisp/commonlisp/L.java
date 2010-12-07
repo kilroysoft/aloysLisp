@@ -403,8 +403,6 @@ public class L extends Primitives
 		packages.INTERN("keyword").SET_SYMBOL_VALUE(key);
 		packages.INTERN("key").SET_SYMBOL_VALUE(key);
 		packages.INTERN("ext").SET_SYMBOL_VALUE(ext);
-		cl.loadClasses();
-		sys.loadClasses();
 	}
 
 	public static tSYMBOL			readTable				= sym("*readtable*")
@@ -954,7 +952,7 @@ public class L extends Primitives
 
 	/**
 	 * Cette classe permet de filtrer les fichiers d'un répertoire. Il n'accepte
-	 * que les fichiers .class.
+	 * que les repertoires.
 	 */
 	private static class DirFilter implements FilenameFilter
 	{

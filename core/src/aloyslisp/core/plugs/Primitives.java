@@ -31,6 +31,9 @@
 
 package aloyslisp.core.plugs;
 
+import java.io.EOFException;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.lang.annotation.*;
 import java.lang.reflect.*;
 
@@ -55,7 +58,7 @@ public class Primitives
 	 * @param args
 	 * @return
 	 */
-	@Global(name = "error")
+	@Static(name = "error")
 	public static String ERROR( //
 			@Arg(name = "mess") String message, //
 			@Rest(name = "args") tT... args)
@@ -70,7 +73,7 @@ public class Primitives
 	 * @param args
 	 * @return
 	 */
-	@Global(name = "format")
+	@Static(name = "format")
 	public static String FORMAT( //
 			@Arg(name = "format") String format, //
 			@Rest(name = "args") tT... args)
@@ -85,7 +88,7 @@ public class Primitives
 	 * @param name
 	 * @return
 	 */
-	@Global(name = "name-char")
+	@Static(name = "name-char")
 	public static tCHARACTER NAME_CHAR( //
 			@Arg(name = "name") tT name)
 	{
@@ -100,7 +103,7 @@ public class Primitives
 	 * @param pack
 	 * @return
 	 */
-	@Global(name = "name-char")
+	@Static(name = "name-char")
 	public static tT FIND_PACKAGE( //
 			@Arg(name = "pack") tT pack)
 	{
@@ -126,7 +129,7 @@ public class Primitives
 	 * @param list
 	 * @return
 	 */
-	@Global(name = "list")
+	@Static(name = "list")
 	public static tLIST LIST( //
 			@Rest(name = "list") Object... list)
 	{
@@ -138,7 +141,7 @@ public class Primitives
 	 * @param cdr
 	 * @return
 	 */
-	@Global(name = "cons")
+	@Static(name = "cons")
 	public static tLIST CONS( //
 			@Arg(name = "car") tT car, //
 			@Arg(name = "cdr") tT cdr)
@@ -147,12 +150,116 @@ public class Primitives
 	}
 
 	/**
+	 * @return
+	 */
+	@Static(name = "load")
+	public tT[] IMPL(@Arg(name = "file") tT file, //
+			@Opt(name = "verbose", def = "t") Boolean verbose, //
+			@Opt(name = "print", def = "t") Boolean print, //
+			@Opt(name = "not-exists", def = "nil") Boolean notExists)
+	{
+		String name;
+		tINPUT_STREAM in;
+
+		if (file instanceof tINPUT_STREAM)
+		{
+			in = (tINPUT_STREAM) file;
+			name = in.printable();
+		}
+		else
+		{
+			if (file instanceof tSTRING)
+				name = ((tSTRING) file).getString();
+			else if (file instanceof tSYMBOL)
+				name = ((tSYMBOL) file).SYMBOL_NAME();
+			else
+			{
+				throw new LispException(
+						"Filename should be a string or an atom");
+			}
+
+			try
+			{
+				in = new INPUT_STREAM(new FileInputStream(name));
+			}
+			catch (FileNotFoundException e)
+			{
+				if (notExists)
+				{
+					return new tT[]
+					{ NIL };
+				}
+				throw new LispException("Error opening " + name + " "
+						+ e.getLocalizedMessage());
+			}
+		}
+
+		if (verbose)
+		{
+			System.out.println("; Loading contents of file " + name);
+		}
+
+		// while there's something to read
+		try
+		{
+			tT[] res;
+			for (;;)
+			{
+				// read it
+				res = new tT[]
+				{ INPUT_STREAM.READ(in, false, NIL, false) };
+
+				if (verbose)
+				{
+					System.out.println("; lisp>" + res[0]);
+				}
+
+				// and evaluate it
+				// System.out.println("eval : " + res[0]);
+				res = res[0].EVAL();
+
+				if (print)
+					for (tT cell : res)
+					{
+						System.out.println("; " + cell);
+					}
+			}
+		}
+		catch (EOFException e)
+		{
+			// End of file
+		}
+		catch (LispException e)
+		{
+			// Lisp error transfer
+			throw e;
+		}
+		catch (Exception e)
+		{
+			throw new LispException(e.getLocalizedMessage());
+		}
+
+		if (verbose)
+		{
+			System.out.println("; Finished loading " + name);
+		}
+		return new tT[]
+		{ T };
+	}
+
+	/**
 	 * Read all lisp functions of the class and create appropriate package entry
+	 * 
+	 * There is different types of functions
+	 * <ul>
+	 * <li>@Function Normal Lisp objects function
+	 * <li>@Static Normal static function or constructor
+	 * </ul>
 	 * 
 	 * @param cls
 	 * @return
 	 */
-	@Global(name = "instantiate")
+	@Static(name = "instantiate")
 	public static Boolean INSTANTIATE( //
 			@Arg(name = "class") String cls)
 	{
@@ -173,23 +280,24 @@ public class Primitives
 		{
 
 			// Get method data
-			Global g = m.getAnnotation(Global.class);
-			Primitive p = m.getAnnotation(Primitive.class);
-			// Class<?>[] paramTypes = m.getParameterTypes();
+			Static s = m.getAnnotation(Static.class);
+			Function f = m.getAnnotation(Function.class);
 			Annotation[][] notes = m.getParameterAnnotations();
 
 			tFUNCTION func;
-			if (g != null)
+			if (s != null)
 			{
-				func = new COMPILED_FUNCTION(Primitives.class, m.getName(),
-						argsDecl(notes), g.doc(), declareArgs());
-				sym(g.name()).SET_SYMBOL_FUNCTION(func);
+				// Static normal function
+				func = new STATIC(Primitives.class, m.getName(),
+						argsDecl(notes), s.doc(), declareArgs());
+				sym(s.name()).SET_SYMBOL_FUNCTION(func);
 			}
-			else if (p != null)
+			else if (f != null)
 			{
+				// Object primitive
 				func = new PRIMITIVE(c, m.getName(), (tLIST) list(sym("obj"))
-						.APPEND(argsDecl(notes)), p.doc(), declareArgs());
-				sym(p.name()).SET_SYMBOL_FUNCTION(func);
+						.APPEND(argsDecl(notes)), f.doc(), declareArgs());
+				sym(f.name()).SET_SYMBOL_FUNCTION(func);
 			}
 			else
 				continue;

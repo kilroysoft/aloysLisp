@@ -48,7 +48,7 @@ public interface tLIST extends tSEQUENCE
 	 * 
 	 * @return fCAR of cons
 	 */
-	@Primitive(name = "car")
+	@Function(name = "car")
 	public tT CAR();
 
 	/**
@@ -56,7 +56,7 @@ public interface tLIST extends tSEQUENCE
 	 * 
 	 * @return fCDR of cons
 	 */
-	@Primitive(name = "cdr")
+	@Function(name = "cdr")
 	public tT CDR();
 
 	/**
@@ -64,7 +64,7 @@ public interface tLIST extends tSEQUENCE
 	 * 
 	 * @param newCell
 	 */
-	@Primitive(name = "setf-car")
+	@Function(name = "setf-car")
 	public tLIST SET_CAR( //
 			@Arg(name = "val") tT val);
 
@@ -73,7 +73,7 @@ public interface tLIST extends tSEQUENCE
 	 * 
 	 * @param newCell
 	 */
-	@Primitive(name = "setf-cdr")
+	@Function(name = "setf-cdr")
 	public tLIST SET_CDR( //
 			@Arg(name = "val") tT val);
 
@@ -82,7 +82,7 @@ public interface tLIST extends tSEQUENCE
 	 * 
 	 * @return
 	 */
-	@Primitive(name = "endp")
+	@Function(name = "endp")
 	public boolean ENDP();
 
 	/**
@@ -90,14 +90,14 @@ public interface tLIST extends tSEQUENCE
 	 * 
 	 * @return
 	 */
-	@Primitive(name = "last")
+	@Function(name = "last")
 	public tLIST LAST();
 
 	/**
 	 * @param value
 	 * @return
 	 */
-	@Primitive(name = "setf-last")
+	@Function(name = "setf-last")
 	public tLIST SET_LAST( //
 			@Arg(name = "value") tT value);
 
@@ -106,7 +106,7 @@ public interface tLIST extends tSEQUENCE
 	 * 
 	 * @return
 	 */
-	@Primitive(name = "append")
+	@Function(name = "append")
 	public tT APPEND( //
 			@Arg(name = "item") tT item);
 

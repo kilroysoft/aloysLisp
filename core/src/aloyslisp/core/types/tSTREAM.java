@@ -46,20 +46,6 @@ public interface tSTREAM extends tATOM
 	/**
 	 * @return
 	 */
-	public boolean INPUT_STREAM_P();
-
-	/**
-	 * @return
-	 */
-	public boolean OUTPUT_STREAM_P();
-
-	/**
-	 * @return
-	 */
 	public tT STREAM_ELEMENT_TYPE();
 
-	/**
-	 * 
-	 */
-	public tT CLOSE();
 }

@@ -30,9 +30,10 @@
 package aloyslisp.core.types;
 
 import java.io.EOFException;
+import java.io.IOException;
 
 /**
- * IInput
+ * tINPUT_STREAM
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
@@ -41,46 +42,27 @@ import java.io.EOFException;
 public interface tINPUT_STREAM extends tSTREAM
 {
 	/**
-	 * @param eofErrorP
-	 * @param eofValue
-	 * @param recursiveP
 	 * @return
-	 * @throws EOFException
+	 * @throws IOException
 	 */
-	public Character READ_CHAR(tT eofErrorP, tT eofValue, tT recursiveP)
-			throws EOFException;
+	public int read() throws IOException;
+
+	/**
+	 * @return
+	 * @throws IOException
+	 */
+	public boolean ready() throws IOException;
 
 	/**
 	 * @param car
-	 * @return
+	 * @throws IOException
 	 */
-	public Character UNREAD_CHAR(tT car);
+	public void unread(Character car) throws IOException;
 
 	/**
-	 * @param car
-	 * @param eofErrorP
-	 * @param eofValue
-	 * @param recursiveP
-	 * @return
-	 * @throws EOFException
+	 * @throws IOException
 	 */
-	public Character PEEK_CHAR(tT car, tT eofErrorP, tT eofValue, tT recursiveP)
-			throws EOFException;
-
-	/**
-	 * @return
-	 */
-	public boolean LISTEN();
-
-	/**
-	 * @param eofErrorP
-	 * @param eofValue
-	 * @param recursiveP
-	 * @return
-	 * @throws EOFException
-	 */
-	public Character READ_CHAR_NO_HANG(tT eofErrorP, tT eofValue, tT recursiveP)
-			throws EOFException;
+	public void close() throws IOException;
 
 	/**
 	 * Read an atom as string
@@ -88,8 +70,10 @@ public interface tINPUT_STREAM extends tSTREAM
 	 * @return
 	 * @throws EOFException
 	 */
-	public String readAtom(tT eofErrorP, tT eofValue, tT recursiveP)
-			throws EOFException;
+	public String readAtom( //
+			Boolean eofErrorP, //
+			tT eofValue, //
+			Boolean recursiveP) throws EOFException;
 
 	/**
 	 * Read an atom as string, first character can be escaped (for char
@@ -99,15 +83,20 @@ public interface tINPUT_STREAM extends tSTREAM
 	 * @return
 	 * @throws EOFException
 	 */
-	public String readAtom(boolean firstEscaped, tT eofErrorP, tT eofValue,
-			tT recursiveP) throws EOFException;
+	public String readAtom( //
+			Boolean firstEscaped, //
+			Boolean eofErrorP, //
+			tT eofValue, //
+			Boolean recursiveP) throws EOFException;
 
 	/**
-	 * @param inputStream
+	 * @param eofErrorP
+	 * @param eofValue
 	 * @param recursiveP
 	 * @return
 	 * @throws EOFException
 	 */
-	public tT READ(tT eofErrorP, tT eofValue, tT recursiveP)
+	public tT readMacroChar(Boolean eofErrorP, tT eofValue, Boolean recursiveP)
 			throws EOFException;
+
 }

@@ -24,7 +24,7 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 20 nov. 2010 Creation
+// IP 6 déc. 2010 Creation
 // --------------------------------------------------------------------------
 
 package aloyslisp.core.annotations;
@@ -35,7 +35,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Construct
+ * Constructor
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
@@ -46,7 +46,7 @@ import java.lang.annotation.Target;
 public @interface Construct
 {
 	/**
-	 * Lisp function name
+	 * Lisp constructor name
 	 * 
 	 * @return
 	 */
@@ -60,10 +60,9 @@ public @interface Construct
 	String doc() default "";
 
 	/**
-	 * Nr mandatory arguments. -1 all.
+	 * Nbr of mandatory arguments. -1 all.
 	 * 
 	 * @return
 	 */
 	int obl() default -1;
-
 }

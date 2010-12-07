@@ -31,7 +31,6 @@
 
 package aloyslisp.core.plugs;
 
-import static aloyslisp.commonlisp.L.*;
 import aloyslisp.core.types.*;
 
 /**
@@ -41,17 +40,23 @@ import aloyslisp.core.types.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public abstract class SPECIAL_OPERATOR extends FUNCTION implements
-		tSPECIAL_OPERATOR, tCOMPILED_FUNCTION
+public abstract class SPECIAL_OPERATOR extends SYSTEM_FUNCTION implements
+		tSPECIAL_OPERATOR
 {
 
 	/**
-	 * @param def
+	 * @param cls
+	 * @param name
+	 * @param decl
+	 * @param doc
+	 * @param declare
 	 */
-	public SPECIAL_OPERATOR(tLIST args, String doc, tLIST declare)
+	public SPECIAL_OPERATOR(Class<?> cls, String name, tLIST decl, String doc,
+			tLIST declare)
 	{
-		super(false, null, null, args, list(str(doc), declare));
-		this.setFuncName(sym(currPackage(), compiledName()));
+		super(cls, name, decl, doc, declare);
+		this.setFunctionCall(cls, name);
+		object = this;
 	}
 
 	/*

@@ -59,11 +59,6 @@ public interface tPACKAGE extends tATOM, Iterable<String>, Map<String, tSYMBOL>
 	public String dump();
 
 	/**
-	 * Load all java classes of the package
-	 */
-	public void loadClasses();
-
-	/**
 	 * @param symbol
 	 * @param pack
 	 * @return

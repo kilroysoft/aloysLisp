@@ -32,7 +32,6 @@ package aloyslisp.core.plugs;
 
 import static aloyslisp.commonlisp.L.*;
 
-import java.io.File;
 import java.util.*;
 
 import aloyslisp.core.common.*;
@@ -96,69 +95,6 @@ public class PACKAGE extends CELL implements tPACKAGE
 			uses = new PACKAGE("Uses of " + name, false);
 			shadow = new PACKAGE("Shadow of " + name, false);
 		}
-	}
-
-	/**
-	 * Load all the java definitions in package
-	 * 
-	 * @param name
-	 */
-	public void loadClasses()
-	{
-		// Init load process
-		ClassLoader classLoader = PACKAGE.class.getClassLoader();
-		name = name.replace('-', '_');
-		String bClassName = baseClass + name + ".";
-		String[] classes = getClasses(name);
-
-		// loop over classes names
-		for (String c : classes)
-		{
-			try
-			{
-				// create cell
-				tFUNCTION f = (tFUNCTION) classLoader.loadClass(bClassName + c)
-						.newInstance();
-
-				// create symbol
-				String sym = c.substring(1).replace("p", "%").replace("_", "-")
-						.toLowerCase();
-
-				// Inter symbol sym with function loaded in current package
-				INTERN(sym).SET_SYMBOL_FUNCTION(f);
-			}
-			catch (ClassNotFoundException e)
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			catch (InstantiationException e)
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			catch (IllegalAccessException e)
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-	}
-
-	/**
-	 * Get all the classes to load
-	 * 
-	 * @param path
-	 * @return
-	 */
-	public String[] getClasses(String name)
-	{
-		String[] files = new File(basePath + name + "/").list();
-		for (int i = 0; i < files.length; i++)
-		{
-			files[i] = files[i].replaceAll("\\.class", "");
-		}
-		return files;
 	}
 
 	/*

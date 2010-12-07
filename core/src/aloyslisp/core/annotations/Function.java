@@ -24,70 +24,41 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 6 nov. 2010 Creation
+// IP 20 nov. 2010 Creation
 // --------------------------------------------------------------------------
 
-package aloyslisp.commonlisp.common_lisp;
+package aloyslisp.core.annotations;
 
-import static aloyslisp.commonlisp.L.*;
-import aloyslisp.core.exec.*;
-import aloyslisp.core.plugs.*;
-import aloyslisp.core.types.*;
+import java.lang.annotation.*;
 
 /**
- * sPROGN
+ * Primitive
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
- * 
  */
-public class sPROGN extends SPECIAL_OPERATOR
+@Target(ElementType.METHOD)
+@Retention(RetentionPolicy.RUNTIME)
+public @interface Function
 {
-	Arguments	block	= null;
-
 	/**
+	 * Lisp function name
 	 * 
-	 */
-	public sPROGN()
-	{
-		super(decl("&rest", "blocks"), //
-				"(sPROGN &rest blocks)", //
-				NIL);
-	}
-
-	/**
-	 * @param def
-	 */
-	public sPROGN(tLIST def, String doc, tLIST declare)
-	{
-		super(def, doc, declare);
-	}
-
-	/**
 	 * @return
 	 */
-	public tT[] IMPL()
-	{
-		return new tT[]
-		{ arg() };
-	}
+	String name();
 
-	/*
-	 * (non-Javadoc)
-	 * @see
-	 * aloyslisp.core.plugs.functions.SPECIAL_OPERATOR#implSpecial(aloyslisp.core
-	 * .plugs.Cell[])
+	/**
+	 * Documentation string
+	 * 
+	 * @return
 	 */
-	public tT[] implSpecial(tT[] rest)
-	{
-		// anonymous code w/o args
-		newBlock(null, NIL, (tLIST) rest[0], NIL);
+	String doc() default "";
 
-		// Execute progn
-		tT res[] = e.exec();
-
-		e.popBlock();
-		return res;
-	}
-
+	/**
+	 * Nbr mandatory arguments. -1 all.
+	 * 
+	 * @return
+	 */
+	int obl() default -1;
 }

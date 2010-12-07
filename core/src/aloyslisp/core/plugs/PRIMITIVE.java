@@ -46,4 +46,14 @@ public class PRIMITIVE extends SYSTEM_FUNCTION
 		super(cls, name, decl, doc, declare);
 		this.setFunctionCall(cls, name);
 	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.plugs.functions.FUNCTION#printableStruct()
+	 */
+	protected String printableStruct()
+	{
+		return "FUNCTION " + compiledName() + " " + intern.getArgs() + " "
+				+ intern.commentary() + " " + intern.declare();
+	}
 }
