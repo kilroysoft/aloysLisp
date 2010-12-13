@@ -29,7 +29,6 @@
 
 package aloyslisp.core.types;
 
-
 /**
  * tSPECIAL_OPERATOR
  * 
@@ -39,11 +38,4 @@ package aloyslisp.core.types;
  */
 public interface tSPECIAL_OPERATOR extends tFUNCTION
 {
-	/**
-	 * Execution of special form
-	 * 
-	 * @return Values of execution
-	 */
-	tT[] implSpecial(tT[] res);
-
 }

@@ -45,15 +45,6 @@ public abstract class SYSTEM_FUNCTION extends FUNCTION implements
 	/**
 	 * @param def
 	 */
-	public SYSTEM_FUNCTION(tLIST args, String doc, tLIST declare)
-	{
-		super(false, null, null, args, list(str(doc), declare));
-		this.setFuncName(sym(currPackage(), compiledName()));
-	}
-
-	/**
-	 * @param def
-	 */
 	public SYSTEM_FUNCTION(Class<?> cls, String name, tLIST args, String doc,
 			tLIST declare)
 	{
@@ -66,7 +57,7 @@ public abstract class SYSTEM_FUNCTION extends FUNCTION implements
 	 */
 	protected String printableStruct()
 	{
-		return "SYSTEM " + compiledName() + " " + intern.getArgs() + " "
+		return "SYSTEM " + getFuncName() + " " + intern.getArgs() + " "
 				+ intern.commentary() + " " + intern.declare();
 	}
 

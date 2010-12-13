@@ -24,27 +24,31 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 19 nov. 2010 Creation
+// IP 8 déc. 2010 Creation
 // --------------------------------------------------------------------------
 
-package aloyslisp.commonlisp.system;
+package aloyslisp.core.annotations;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
- * fpSPLICE
+ * Mac
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class fpSPLICE extends fpBACKQUOTE
+@Target(ElementType.METHOD)
+@Retention(RetentionPolicy.RUNTIME)
+public @interface Mac
 {
-
 	/**
+	 * Prefix string for macro char remplacement as ', `, ,@, etc...
 	 * 
+	 * @return
 	 */
-	public fpSPLICE()
-	{
-		mac = ",@";
-	}
-
+	String prefix();
 }

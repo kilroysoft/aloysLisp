@@ -66,4 +66,10 @@ public interface tFUNCTION extends tATOM
 	 */
 	public void setFuncName(tSYMBOL name);
 
+	/**
+	 * Set String replacement for macrochar transformations
+	 * @param pref
+	 */
+	public void setPrefix(String pref);
+	
 }

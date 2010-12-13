@@ -773,7 +773,7 @@ public class L extends Primitives
 	/**
 	 * 
 	 */
-	public static void writeClasses(String pkg)
+	public static void loadClasses(String pkg)
 	{
 		System.out.println("Loading package " + pkg);
 		System.out.println("----------------------------------------");
@@ -782,7 +782,9 @@ public class L extends Primitives
 			List<Class<?>> cla = getClasses(pkg);
 			for (Class<?> clas : cla)
 			{
-				System.out.println(clas.getCanonicalName());
+				System.out.println("(INSTANCIATE " + clas.getCanonicalName()
+						+ ")");
+				Primitives.INSTANTIATE(clas.getCanonicalName());
 			}
 		}
 		catch (ClassNotFoundException e)
@@ -946,20 +948,6 @@ public class L extends Primitives
 		public boolean accept(File arg0, String arg1)
 		{
 			return arg1.endsWith(".class");
-		}
-
-	}
-
-	/**
-	 * Cette classe permet de filtrer les fichiers d'un répertoire. Il n'accepte
-	 * que les repertoires.
-	 */
-	private static class DirFilter implements FilenameFilter
-	{
-
-		public boolean accept(File arg0, String arg1)
-		{
-			return arg0.isDirectory();
 		}
 
 	}

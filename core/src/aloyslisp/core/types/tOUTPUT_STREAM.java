@@ -51,7 +51,7 @@ public interface tOUTPUT_STREAM extends tSTREAM
 	 * @param car
 	 * @return
 	 */
-	public tT WRITE_CHAR(tT car);
+	public Character WRITE_CHAR(Character car);
 
 	/**
 	 * Write an object

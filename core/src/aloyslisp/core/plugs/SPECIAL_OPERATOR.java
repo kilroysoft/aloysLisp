@@ -40,7 +40,7 @@ import aloyslisp.core.types.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public abstract class SPECIAL_OPERATOR extends SYSTEM_FUNCTION implements
+public class SPECIAL_OPERATOR extends SYSTEM_FUNCTION implements
 		tSPECIAL_OPERATOR
 {
 
@@ -65,7 +65,7 @@ public abstract class SPECIAL_OPERATOR extends SYSTEM_FUNCTION implements
 	 */
 	protected String printableStruct()
 	{
-		return "SPECIAL " + compiledName() + " " + intern.getArgs() + " "
+		return "SPECIAL " + getFuncName() + " " + intern.getArgs() + " "
 				+ intern.commentary() + " " + intern.declare();
 	}
 

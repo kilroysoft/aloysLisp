@@ -32,6 +32,7 @@ package aloyslisp.core.plugs;
 import java.io.*;
 
 import static aloyslisp.commonlisp.L.*;
+import aloyslisp.core.annotations.*;
 import aloyslisp.core.types.*;
 
 /**
@@ -71,12 +72,11 @@ public class OUTPUT_STREAM extends STREAM implements tOUTPUT_STREAM
 
 	/*
 	 * (non-Javadoc)
-	 * @see
-	 * aloyslisp.core.plugs.streams.IOutputStream#write(aloyslisp.core.plugs
-	 * .Cell)
+	 * @see aloyslisp.core.types.tOUTPUT_STREAM#WRITE(aloyslisp.core.types.tT)
 	 */
-	@Override
-	public tT WRITE(tT obj)
+	@Function(name = "sys::write")
+	public tT WRITE( //
+			@Arg(name = "obj") tT obj)
 	{
 		return WRITE_STRING(str(obj.printable()), NIL, NIL);
 	}
@@ -87,12 +87,11 @@ public class OUTPUT_STREAM extends STREAM implements tOUTPUT_STREAM
 	 * aloyslisp.core.plugs.streams.IOutputStream#writeChar(java.lang.Character)
 	 */
 	@Override
-	public tT WRITE_CHAR(tT caracter)
+	public Character WRITE_CHAR(Character car)
 	{
-		Character car = ((tCHARACTER) caracter).getChar();
 		lineBegin = (car == '\n' || car == '\r');
 		putc(car);
-		return caracter;
+		return car;
 	}
 
 	/*
@@ -106,7 +105,7 @@ public class OUTPUT_STREAM extends STREAM implements tOUTPUT_STREAM
 		// TODO manage start and end in WRITE_STRING
 		for (tT car : (tSTRING) str)
 		{
-			WRITE_CHAR((tCHARACTER) car);
+			WRITE_CHAR(((tCHARACTER) car).getChar());
 		}
 		return str;
 	}
@@ -117,7 +116,7 @@ public class OUTPUT_STREAM extends STREAM implements tOUTPUT_STREAM
 	 */
 	public tNULL TERPRI()
 	{
-		WRITE_CHAR(c('\n'));
+		WRITE_CHAR('\n');
 		return NIL;
 
 	}
@@ -144,12 +143,7 @@ public class OUTPUT_STREAM extends STREAM implements tOUTPUT_STREAM
 		return writer != null;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.plugs.streams.IStream#close()
-	 */
-	@Override
-	public tT CLOSE()
+	public tT CLOSE(tOUTPUT_STREAM stream)
 	{
 		writer.close();
 		writer = null;
@@ -231,26 +225,6 @@ public class OUTPUT_STREAM extends STREAM implements tOUTPUT_STREAM
 	{
 		// IMPLEMENT Coerce
 		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.types.tSTREAM#INPUT_STREAM_P()
-	 */
-	@Override
-	public boolean INPUT_STREAM_P()
-	{
-		return false;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.types.tSTREAM#OUTPUT_STREAM_P()
-	 */
-	@Override
-	public boolean OUTPUT_STREAM_P()
-	{
-		return true;
 	}
 
 	/*

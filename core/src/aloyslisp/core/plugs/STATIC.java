@@ -62,7 +62,7 @@ public class STATIC extends SYSTEM_FUNCTION
 	 */
 	protected String printableStruct()
 	{
-		return "FUNCTION " + compiledName() + " " + intern.getArgs() + " "
+		return "FUNCTION " + getFuncName() + " " + intern.getArgs() + " "
 				+ intern.commentary() + " " + intern.declare();
 	}
 

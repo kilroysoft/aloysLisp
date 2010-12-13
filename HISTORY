@@ -9,6 +9,7 @@ To do
 - Debug environment.
 - Interface hooks (debug). Execute, continue, breakpoints.
 - Compilation.... (as soon as possible)
+- Add Interactive stream
 
 Doing
 =====
@@ -18,7 +19,8 @@ Doing
 
 Current state
 =============
-- Rewrite INPUT_STREAM lisp functions.
+- Rewrite ALL Stream lisp functions.
+- Define clear documentation about function.
 - Function library as blank classes.
 - Automatic instantiate of all base object. This will be managed in detail later, perhaps config file
 and command tags.

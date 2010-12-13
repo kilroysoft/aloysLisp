@@ -271,7 +271,9 @@ public class Primitives
 		}
 		catch (ClassNotFoundException e1)
 		{
-			ERROR("%%global : System error ~s not found", str(cls));
+			// ERROR("%%global : System error ~s not found", str(cls));
+			System.err.println(FORMAT("%%global : System error ~s not found",
+					str(cls)));
 			return false;
 		}
 
@@ -280,17 +282,24 @@ public class Primitives
 		{
 
 			// Get method data
-			Static s = m.getAnnotation(Static.class);
+			Special special = m.getAnnotation(Special.class);
+			Mac prefix = m.getAnnotation(Mac.class);
+			Static stat = m.getAnnotation(Static.class);
 			Function f = m.getAnnotation(Function.class);
 			Annotation[][] notes = m.getParameterAnnotations();
 
 			tFUNCTION func;
-			if (s != null)
+			if (stat != null)
 			{
-				// Static normal function
-				func = new STATIC(Primitives.class, m.getName(),
-						argsDecl(notes), s.doc(), declareArgs());
-				sym(s.name()).SET_SYMBOL_FUNCTION(func);
+				if (special == null)
+					// Static normal function
+					func = new STATIC(c, m.getName(), argsDecl(notes),
+							stat.doc(), declareArgs());
+				else
+					// Static normal function
+					func = new SPECIAL_OPERATOR(c, m.getName(),
+							argsDecl(notes), stat.doc(), declareArgs());
+				sym(stat.name()).SET_SYMBOL_FUNCTION(func);
 			}
 			else if (f != null)
 			{
@@ -301,7 +310,11 @@ public class Primitives
 			}
 			else
 				continue;
+
+			if (prefix != null)
+				func.setPrefix(prefix.prefix());
 		}
+
 		return true;
 	}
 

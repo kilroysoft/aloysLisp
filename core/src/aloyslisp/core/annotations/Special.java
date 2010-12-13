@@ -19,26 +19,18 @@
 //--------------------------------------------------------------------------
 // history
 //--------------------------------------------------------------------------
-// IP 19 nov. 2010 Creation
+// IP 8 déc. 2010 Creation
 //--------------------------------------------------------------------------
 
-package aloyslisp.commonlisp.system;
+package aloyslisp.core.annotations;
 
 /**
- * fpUNQUOTE
+ * Special
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  *
  */
-public class fpUNQUOTE extends fpBACKQUOTE
+public @interface Special
 {
-
-	/**
-	 * 
-	 */
-	public fpUNQUOTE()
-	{
-		mac = ",";
-	}
 
 }

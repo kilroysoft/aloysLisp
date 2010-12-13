@@ -85,7 +85,11 @@ public abstract class FUNCTION extends CELL implements tFUNCTION
 		intern = new Arguments(name, args, func);
 		System.out.println("Name = " + name + " new Name = " + f + " Class = "
 				+ c.getCanonicalName());
-		setFunctionCall(c, f);
+		if (!setFunctionCall(c, f))
+		{
+			System.err.println("Function " + f + " not found in class "
+					+ c.getCanonicalName());
+		}
 	}
 
 	/*
@@ -132,6 +136,13 @@ public abstract class FUNCTION extends CELL implements tFUNCTION
 			Object[] newArgs = null;
 			tT actObj = object;
 
+			// test method
+			if (method == null)
+			{
+				throw new LispException("Function call w/o method : (" + this
+						+ " " + args + ")");
+			}
+
 			// Transform arguments
 			if (object == null)
 			{
@@ -143,8 +154,8 @@ public abstract class FUNCTION extends CELL implements tFUNCTION
 				newArgs = tranformArgs(method.getParameterTypes(), args);
 
 			// Call function
-//			System.out.println("exec(" + method.getName() + " (" + actObj
-//					+ ") " + args + ")");
+			System.out.println("exec(" + method.getName() + " (" + actObj
+					+ ") " + args + ")");
 			Object ret = method.invoke(actObj, newArgs);
 
 			// if function return multiple values
@@ -181,16 +192,16 @@ public abstract class FUNCTION extends CELL implements tFUNCTION
 
 		e.popBlock();
 
-		// If it's a special form we have to manage the global environment part
-		// of the code. For example sSETQ should have access to the local
-		// variable to be set in the closure... but it shouldn't be disturbed by
-		// the local variables of the IMPL() part variables.
-		// (sSETQ &rest list), so (sSETQ list 10) should not write the arguments
-		// list of sSETQ... which is (list 10) :D
-		if (this instanceof tSPECIAL_OPERATOR)
-			return ((tSPECIAL_OPERATOR) this).implSpecial(res);
-		else
-			return res;
+		return res;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.types.tFUNCTION#setPrefix(java.lang.String)
+	 */
+	public void setPrefix(String pref)
+	{
+		mac = pref;
 	}
 
 	/*
@@ -201,18 +212,6 @@ public abstract class FUNCTION extends CELL implements tFUNCTION
 	public tT copy()
 	{
 		return this;
-	}
-
-	/**
-	 * @return
-	 */
-	public String compiledName()
-	{
-		String name = getClass().getSimpleName();
-		name = name.replace("h", "-");
-		name = name.replace("s", "*");
-		name = name.replace("p", "%");
-		return name.substring(1);
 	}
 
 	/*
@@ -474,6 +473,7 @@ public abstract class FUNCTION extends CELL implements tFUNCTION
 		// Transform arguments
 		int i = 0;
 		Object[] newArgs = new Object[paramTypes.length];
+		System.out.println("Args : " + arg);
 		for (Class<?> classArg : paramTypes)
 		{
 			if (classArg.isArray())
@@ -517,7 +517,8 @@ public abstract class FUNCTION extends CELL implements tFUNCTION
 			}
 			else
 			{
-				System.out.println("transform " + arg.getClass() + "->" + cl);
+				System.out.println("transform fn " + method.getName() + " arg "
+						+ arg + " : " + arg.getClass() + "->" + cl);
 				throw new LispException("1Argument " + arg
 						+ " should be of type " + cl.getSimpleName());
 			}
