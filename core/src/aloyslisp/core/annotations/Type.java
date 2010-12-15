@@ -32,10 +32,12 @@ package aloyslisp.core.annotations;
 import java.lang.annotation.*;
 
 /**
- * Type
+ * Defines type as a LISP Class, with a test name for p function (e.g. (ATOMP
+ * ...) )
+ * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
- *
+ * 
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
@@ -44,14 +46,15 @@ public @interface Type
 
 	/**
 	 * Name of type
+	 * 
 	 * @return
 	 */
 	String name();
 
 	/**
 	 * Test function
+	 * 
 	 * @return
 	 */
 	String test();
-
 }

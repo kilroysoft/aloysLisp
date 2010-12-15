@@ -32,11 +32,10 @@ package aloyslisp.core.annotations;
 import java.lang.annotation.*;
 
 /**
- * Opt
+ * Defines argument as optional LISP argument
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
- * 
  */
 @Target(ElementType.PARAMETER)
 @Retention(RetentionPolicy.RUNTIME)
@@ -54,6 +53,6 @@ public @interface Opt
 	 * 
 	 * @return
 	 */
-	String def() default "";
+	String def() default "nil";
 
 }

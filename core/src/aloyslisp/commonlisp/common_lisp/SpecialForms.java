@@ -100,7 +100,7 @@ public class SpecialForms
 					"setf-" + ((tSYMBOL) newFunc).SYMBOL_NAME());
 
 			// setf writer function
-			tFUNCTION def = new DEFUN_FUNCTION(setfFunc, (tLIST) argList,
+			tFUNCTION def = new BLOCK_FUNCTION(setfFunc, (tLIST) argList,
 					list((Object[]) func));
 
 			((tSYMBOL) setfFunc).SET_SYMBOL_FUNCTION(def);
@@ -117,7 +117,7 @@ public class SpecialForms
 			throw new LispException("Function name not a symbol " + name);
 		}
 
-		tFUNCTION def = new DEFUN_FUNCTION((tSYMBOL) name, argList,
+		tFUNCTION def = new BLOCK_FUNCTION((tSYMBOL) name, argList,
 				list((Object) func));
 		((tSYMBOL) name).SET_SYMBOL_FUNCTION(def);
 

@@ -24,22 +24,36 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 8 déc. 2010 Creation
+// IP 29 oct. 2010 Creation
 // --------------------------------------------------------------------------
 
-package aloyslisp.core.annotations;
+package aloyslisp.core.plugs;
 
-import java.lang.annotation.*;
+import aloyslisp.core.types.*;
 
 /**
- * Defines function as a special form
+ * BLOCK_FUNCTION
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
+ * 
  */
-@Target(ElementType.METHOD)
-@Retention(RetentionPolicy.RUNTIME)
-public @interface Special
+public class BLOCK_FUNCTION extends LAMBDA_FUNCTION implements tBLOCK_FUNCTION
 {
+
+	/**
+	 * @param def
+	 */
+	public BLOCK_FUNCTION(tSYMBOL name, tLIST args, tLIST func)
+	{
+		super(name, args, func);
+	}
+
+	protected String printableStruct()
+	{
+		return "FUNCTION " + intern.getName() + " " + intern.getArgs() + " "
+				+ intern.commentary() + " " + intern.declare() + " "
+				+ intern.func();
+	}
 
 }

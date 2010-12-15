@@ -29,14 +29,13 @@
 
 package aloyslisp.core.types;
 
-
 /**
- * tDEFUN_FUNCTION
+ * tBLOCK_FUNCTION
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public interface tDEFUN_FUNCTION extends tFUNCTION
+public interface tBLOCK_FUNCTION extends tFUNCTION
 {
 }

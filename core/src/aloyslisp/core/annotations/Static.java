@@ -32,7 +32,7 @@ package aloyslisp.core.annotations;
 import java.lang.annotation.*;
 
 /**
- * Global
+ * Defines function as a global static LISP function
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}

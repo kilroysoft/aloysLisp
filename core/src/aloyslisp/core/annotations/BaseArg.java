@@ -24,36 +24,46 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 29 oct. 2010 Creation
+// IP 14 déc. 2010 Creation
 // --------------------------------------------------------------------------
 
-package aloyslisp.core.plugs;
+package aloyslisp.core.annotations;
 
-import aloyslisp.core.types.*;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
- * DEFUN_FUNCTION
+ * Defines object used as base object for method function call.
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class DEFUN_FUNCTION extends LAMBDA_FUNCTION implements tDEFUN_FUNCTION
+@Target(ElementType.PARAMETER)
+@Retention(RetentionPolicy.RUNTIME)
+public @interface BaseArg
 {
+	/**
+	 * Lisp name of arg
+	 * 
+	 * @return
+	 */
+	String name();
 
 	/**
-	 * @param def
+	 * Function to convert argument
+	 * 
+	 * @return
 	 */
-	public DEFUN_FUNCTION(tSYMBOL name, tLIST args, tLIST func)
-	{
-		super(name, args, func);
-	}
+	String convert() default "";
 
-	protected String printableStruct()
-	{
-		return "FUNCTION " + intern.getName() + " " + intern.getArgs() + " "
-				+ intern.commentary() + " " + intern.declare() + " "
-				+ intern.func();
-	}
+	/**
+	 * Default value as a string
+	 * 
+	 * @return
+	 */
+	String def() default "";
 
 }

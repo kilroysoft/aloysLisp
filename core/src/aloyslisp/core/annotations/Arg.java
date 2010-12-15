@@ -32,7 +32,7 @@ package aloyslisp.core.annotations;
 import java.lang.annotation.*;
 
 /**
- * Arg
+ * Normal mandatory arguments for LISP function
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}

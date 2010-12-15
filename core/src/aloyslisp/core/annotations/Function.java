@@ -32,7 +32,7 @@ package aloyslisp.core.annotations;
 import java.lang.annotation.*;
 
 /**
- * Primitive
+ * defines primitive lisp function as an object method
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}

@@ -122,7 +122,7 @@ public abstract class FUNCTION extends CELL implements tFUNCTION
 
 		// Push a new closure except if it's a lisp function
 		// defun function will push the closure
-		if (this instanceof tDEFUN_FUNCTION)
+		if (this instanceof tBLOCK_FUNCTION)
 			e.newClosure();
 
 		intern.pushBlock(args);

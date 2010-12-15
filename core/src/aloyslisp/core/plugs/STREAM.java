@@ -36,7 +36,7 @@ import aloyslisp.core.types.*;
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
- * 
+ * @see http://hyper.aloys.li/Body/t_stream.htm
  */
 public abstract class STREAM extends CELL implements tSTREAM
 {

@@ -40,13 +40,13 @@ import aloyslisp.core.annotations.*;
 import aloyslisp.core.types.*;
 
 /**
- * ReadTableReader
+ * ReadTableReaders
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class ReadTableReader
+public class ReadTableReaders
 {
 
 	// ***************************************************************************
