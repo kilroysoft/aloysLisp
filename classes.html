@@ -20,8 +20,8 @@
 </HEAD>
 
 <BODY TEXT="#000000">
-<TABLE FRAME=VOID CELLSPACING=0 COLS=2 RULES=NONE BORDER=0>
-	<COLGROUP><COL WIDTH=34><COL WIDTH=213></COLGROUP>
+<TABLE FRAME=VOID CELLSPACING=0 COLS=3 RULES=NONE BORDER=0>
+	<COLGROUP><COL WIDTH=279><COL WIDTH=279><COL WIDTH=279></COLGROUP>
 	<TBODY>
 		<TR>
 			<TD COLSPAN=3 WIDTH=837 HEIGHT=30 ALIGN=CENTER><B><U><FONT FACE="Times New Roman" SIZE=5>Types, classes and functions in Java and Lisp</FONT></U></B></TD>
@@ -29,53 +29,61 @@
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD COLSPAN=2 ALIGN=LEFT><FONT FACE="Times New Roman"><A HREF="http://kilroysoft.github.com/aloysLisp/">Back to main page</A></FONT></TD>
-		</TR>
+			</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman">l</FONT></TD>
 			<TD COLSPAN=2 ALIGN=LEFT><FONT FACE="Times New Roman">not in core, defined in base .lisp scripts</FONT></TD>
-		</TR>
+			</TR>
+		<TR>
+			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman">m</FONT></TD>
+			<TD COLSPAN=2 ALIGN=LEFT><FONT FACE="Times New Roman">not in core defined as macro</FONT></TD>
+			</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman">s</FONT></TD>
 			<TD COLSPAN=2 ALIGN=LEFT><FONT FACE="Times New Roman">special form, static function</FONT></TD>
-		</TR>
+			</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman">g</FONT></TD>
 			<TD COLSPAN=2 ALIGN=LEFT><FONT FACE="Times New Roman">global static function</FONT></TD>
-		</TR>
+			</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman">c</FONT></TD>
 			<TD COLSPAN=2 ALIGN=LEFT><FONT FACE="Times New Roman">static constructor</FONT></TD>
-		</TR>
+			</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman">%</FONT></TD>
 			<TD COLSPAN=2 ALIGN=LEFT><FONT FACE="Times New Roman">primitive object method % prefixed, not standard lisp function</FONT></TD>
-		</TR>
+			</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD COLSPAN=2 ALIGN=LEFT><FONT FACE="Times New Roman">if nothing, primitive object method</FONT></TD>
-		</TR>
+			</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman">v</FONT></TD>
 			<TD COLSPAN=2 ALIGN=LEFT><FONT FACE="Times New Roman">variable, for now special variables</FONT></TD>
-		</TR>
+			</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD COLSPAN=2 ALIGN=LEFT><FONT FACE="Times New Roman">Java names are uppercase name with transformation of '-' by '_' and '%' by 'p'</FONT></TD>
-		</TR>
+			</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
@@ -84,582 +92,877 @@
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
-			<TD HEIGHT=18 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
-			<TD COLSPAN=2 ALIGN=LEFT><B><I><U><FONT FACE="Times New Roman"><A HREF="http://www.lispworks.com/documentation/HyperSpec/Body/t_seq.htm">tSEQUENCE</A></FONT></U></I></B></TD>
+			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD COLSPAN=2 ALIGN=LEFT><U><FONT FACE="Times New Roman"><A HREF="http://www.lispworks.com/documentation/HyperSpec/Body/t_seq.htm">tSEQUENCE</A></FONT></U></TD>
+			</TR>
+		<TR>
+			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><U><FONT FACE="Times New Roman"><BR></FONT></U></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+		</TR>
+		<TR>
+			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><U><FONT FACE="Times New Roman">copy-seq</FONT></U></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+		</TR>
+		<TR>
+			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><U><FONT FACE="Times New Roman">elt</FONT></U></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+		</TR>
+		<TR>
+			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman">%</FONT></TD>
+			<TD ALIGN=LEFT><U><FONT FACE="Times New Roman">set-elt</FONT></U></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+		</TR>
+		<TR>
+			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><U><FONT FACE="Times New Roman">fill</FONT></U></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+		</TR>
+		<TR>
+			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman">g</FONT></TD>
+			<TD ALIGN=LEFT><U><FONT FACE="Times New Roman">make-sequence</FONT></U></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+		</TR>
+		<TR>
+			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><U><FONT FACE="Times New Roman">subseq</FONT></U></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+		</TR>
+		<TR>
+			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><U><FONT FACE="Times New Roman">map</FONT></U></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+		</TR>
+		<TR>
+			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><U><FONT FACE="Times New Roman">map-into</FONT></U></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+		</TR>
+		<TR>
+			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><U><FONT FACE="Times New Roman">reduce</FONT></U></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+		</TR>
+		<TR>
+			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><U><FONT FACE="Times New Roman">count</FONT></U></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+		</TR>
+		<TR>
+			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman">l</FONT></TD>
+			<TD ALIGN=LEFT><U><FONT FACE="Times New Roman">count-if</FONT></U></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+		</TR>
+		<TR>
+			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman">l</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman">count-if-not</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+		</TR>
+		<TR>
+			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman">length</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+		</TR>
+		<TR>
+			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman">reverse</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+		</TR>
+		<TR>
+			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman">nreverse</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+		</TR>
+		<TR>
+			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman">sort</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+		</TR>
+		<TR>
+			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman">stable-sort</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+		</TR>
+		<TR>
+			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman">find</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+		</TR>
+		<TR>
+			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman">l</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman">find-if</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+		</TR>
+		<TR>
+			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman">l</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman">find-if-not</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+		</TR>
+		<TR>
+			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman">position</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+		</TR>
+		<TR>
+			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman">l</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman">position-if</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+		</TR>
+		<TR>
+			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman">l</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman">position-if-not</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+		</TR>
+		<TR>
+			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman">search</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+		</TR>
+		<TR>
+			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman">mismatch</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+		</TR>
+		<TR>
+			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman">replace</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+		</TR>
+		<TR>
+			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman">substitute</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+		</TR>
+		<TR>
+			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman">l</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman">substitute-if</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+		</TR>
+		<TR>
+			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman">l</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman">substitute-if-not</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+		</TR>
+		<TR>
+			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman">nsubstitute</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+		</TR>
+		<TR>
+			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman">l</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman">nsubstitute-if</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+		</TR>
+		<TR>
+			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman">l</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman">nsubstitute-if-not</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+		</TR>
+		<TR>
+			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman">concatenate</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+		</TR>
+		<TR>
+			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman">merge</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+		</TR>
+		<TR>
+			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman">remove</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+		</TR>
+		<TR>
+			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman">l</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman">remove-if</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+		</TR>
+		<TR>
+			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman">l</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman">remove-if-not</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+		</TR>
+		<TR>
+			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman">delete</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+		</TR>
+		<TR>
+			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman">l</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman">delete-if</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+		</TR>
+		<TR>
+			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman">l</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman">delete-if-not</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+		</TR>
+		<TR>
+			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman">remove-duplicates</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+		</TR>
+		<TR>
+			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman">delete-duplicates</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
-		</TR>
-		<TR>
-			<TD HEIGHT=18 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
-			<TD COLSPAN=2 ALIGN=LEFT><B><I><U><FONT FACE="Times New Roman"><A HREF="http://hyper.aloys.li/Body/t_list.htm">tLIST</A></FONT></U></I></B></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD COLSPAN=2 ALIGN=LEFT><U><FONT FACE="Times New Roman"><A HREF="http://hyper.aloys.li/Body/t_list.htm">tLIST</A></FONT></U></TD>
+			</TR>
+		<TR>
+			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
 			<TD HEIGHT=18 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD COLSPAN=2 ALIGN=LEFT><B><I><U><FONT FACE="Times New Roman"><A HREF="http://hyper.aloys.li/Body/t_cons.htm">tCONS</A> / CONS</FONT></U></I></B></TD>
-		</TR>
+			</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
 			<TD HEIGHT=18 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD COLSPAN=2 ALIGN=LEFT><B><I><U><FONT FACE="Times New Roman"><A HREF="http://hyper.aloys.li/Body/t_vector.htm">tVECTOR</A> / VECTOR</FONT></U></I></B></TD>
-		</TR>
+			</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
 			<TD HEIGHT=18 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD COLSPAN=2 ALIGN=LEFT><B><I><U><FONT FACE="Times New Roman"><A HREF="http://hyper.aloys.li/Body/t_string.htm">tSTRING</A> / STRING</FONT></U></I></B></TD>
-		</TR>
+			</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
-			<TD COLSPAN=3 HEIGHT=21 ALIGN=CENTER><B><U><FONT FACE="Times New Roman" SIZE=3>SYMBOL</FONT></U></B></TD>
+			<TD COLSPAN=3 HEIGHT=17 ALIGN=CENTER><U><FONT FACE="Times New Roman"><A HREF="http://hyper.aloys.li/Body/c_symbol.htm">SYMBOL</A></FONT></U></TD>
 			</TR>
 		<TR>
-			<TD HEIGHT=20 ALIGN=CENTER><B><U><FONT FACE="Times New Roman" SIZE=3><BR></FONT></U></B></TD>
+			<TD HEIGHT=17 ALIGN=CENTER><U><FONT FACE="Times New Roman"><BR></FONT></U></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
 			<TD HEIGHT=18 ALIGN=CENTER><U><FONT FACE="Times New Roman"><BR></FONT></U></TD>
 			<TD COLSPAN=2 ALIGN=LEFT><B><I><U><FONT FACE="Times New Roman"><A HREF="http://www.lispworks.com/documentation/HyperSpec/Body/t_symbol.htm">tSYMBOL</A> / SYMBOL</FONT></U></I></B></TD>
-		</TR>
+			</TR>
 		<TR>
-			<TD HEIGHT=20 ALIGN=CENTER><B><U><FONT FACE="Times New Roman" SIZE=3><BR></FONT></U></B></TD>
+			<TD HEIGHT=17 ALIGN=CENTER><U><FONT FACE="Times New Roman"><BR></FONT></U></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
 			<TD HEIGHT=18 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD COLSPAN=2 ALIGN=LEFT><B><I><U><FONT FACE="Times New Roman"><A HREF="http://hyper.aloys.li/Body/t_t.htm">tT</A> / All objects</FONT></U></I></B></TD>
-		</TR>
+			</TR>
 		<TR>
-			<TD HEIGHT=20 ALIGN=CENTER><B><U><FONT FACE="Times New Roman" SIZE=3><BR></FONT></U></B></TD>
+			<TD HEIGHT=17 ALIGN=CENTER><U><FONT FACE="Times New Roman"><BR></FONT></U></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
 			<TD HEIGHT=18 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD COLSPAN=2 ALIGN=LEFT><B><I><U><FONT FACE="Times New Roman"><A HREF="http://hyper.aloys.li/Body/t_nil.htm">tNIL</A> / No object</FONT></U></I></B></TD>
-		</TR>
+			</TR>
 		<TR>
-			<TD HEIGHT=20 ALIGN=CENTER><B><U><FONT FACE="Times New Roman" SIZE=3><BR></FONT></U></B></TD>
+			<TD HEIGHT=17 ALIGN=CENTER><U><FONT FACE="Times New Roman"><BR></FONT></U></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
 			<TD HEIGHT=18 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD COLSPAN=2 ALIGN=LEFT><B><I><U><FONT FACE="Times New Roman"><A HREF="http://hyper.aloys.li/Body/t_null.htm">tNULL</A> / <A HREF="http://hyper.aloys.li/Body/v_nil.htm">NIL</A></FONT></U></I></B></TD>
-		</TR>
-		<TR>
-			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
-			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
-		</TR>
-		<TR>
-			<TD COLSPAN=3 HEIGHT=21 ALIGN=CENTER><B><U><FONT FACE="Times New Roman" SIZE=3>NUMBER</FONT></U></B></TD>
 			</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+		</TR>
+		<TR>
+			<TD COLSPAN=3 HEIGHT=17 ALIGN=CENTER><U><FONT FACE="Times New Roman"><A HREF="http://hyper.aloys.li/Body/c_number.htm">NUMBER</A></FONT></U></TD>
+			</TR>
+		<TR>
+			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
 			<TD HEIGHT=18 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD COLSPAN=2 ALIGN=LEFT><B><I><U><FONT FACE="Times New Roman"><A HREF="http://hyper.aloys.li/Body/t_number.htm">tNUMBER</A> / NUMBER (abstract)</FONT></U></I></B></TD>
-		</TR>
+			</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
 			<TD HEIGHT=18 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD COLSPAN=2 ALIGN=LEFT><B><I><U><FONT FACE="Times New Roman"><A HREF="http://hyper.aloys.li/Body/t_comple.htm">tCOMPLEX</A> / COMPLEX</FONT></U></I></B></TD>
-		</TR>
+			</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
-		</TR>
-		<TR>
-			<TD HEIGHT=18 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
-			<TD COLSPAN=2 ALIGN=LEFT><B><I><U><FONT FACE="Times New Roman"><A HREF="http://hyper.aloys.li/Body/t_real.htm">tREAL</A></FONT></U></I></B></TD>
-		</TR>
-		<TR>
-			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
-			<TD HEIGHT=18 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
-			<TD COLSPAN=2 ALIGN=LEFT><B><I><U><FONT FACE="Times New Roman"><A HREF="http://hyper.aloys.li/Body/t_ration.htm">tRATIONAL</A></FONT></U></I></B></TD>
+			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD COLSPAN=2 ALIGN=LEFT><U><FONT FACE="Times New Roman"><A HREF="http://hyper.aloys.li/Body/t_real.htm">tREAL</A></FONT></U></TD>
+			</TR>
+		<TR>
+			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD COLSPAN=2 ALIGN=LEFT><U><FONT FACE="Times New Roman"><A HREF="http://hyper.aloys.li/Body/t_ration.htm">tRATIONAL</A></FONT></U></TD>
+			</TR>
+		<TR>
+			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
 			<TD HEIGHT=18 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD COLSPAN=2 ALIGN=LEFT><B><I><U><FONT FACE="Times New Roman"><A HREF="http://hyper.aloys.li/Body/t_ratio.htm">tRATIO</A> / RATIO</FONT></U></I></B></TD>
-		</TR>
+			</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
-		</TR>
-		<TR>
-			<TD HEIGHT=18 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
-			<TD COLSPAN=2 ALIGN=LEFT><B><I><U><FONT FACE="Times New Roman"><A HREF="http://hyper.aloys.li/Body/t_intege.htm">tINTEGER</A></FONT></U></I></B></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD COLSPAN=2 ALIGN=LEFT><U><FONT FACE="Times New Roman"><A HREF="http://hyper.aloys.li/Body/t_intege.htm">tINTEGER</A></FONT></U></TD>
+			</TR>
+		<TR>
+			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
 			<TD HEIGHT=18 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD COLSPAN=2 ALIGN=LEFT><B><I><U><FONT FACE="Times New Roman"><A HREF="http://hyper.aloys.li/Body/t_fixnum.htm">tFIXNUM</A> / INTEGER / LONG</FONT></U></I></B></TD>
-		</TR>
+			</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
 			<TD HEIGHT=18 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD COLSPAN=2 ALIGN=LEFT><B><I><U><FONT FACE="Times New Roman"><A HREF="http://hyper.aloys.li/Body/t_bignum.htm">tBIGNUM</A> / BIGNUM</FONT></U></I></B></TD>
-		</TR>
+			</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
-		</TR>
-		<TR>
-			<TD HEIGHT=18 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
-			<TD COLSPAN=2 ALIGN=LEFT><B><I><U><FONT FACE="Times New Roman"><A HREF="http://hyper.aloys.li/Body/t_float.htm">tFLOAT</A></FONT></U></I></B></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD COLSPAN=2 ALIGN=LEFT><U><FONT FACE="Times New Roman"><A HREF="http://hyper.aloys.li/Body/t_float.htm">tFLOAT</A></FONT></U></TD>
+			</TR>
+		<TR>
+			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
 			<TD HEIGHT=18 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD COLSPAN=2 ALIGN=LEFT><B><I><U><FONT FACE="Times New Roman"><A HREF="http://hyper.aloys.li/Body/t_short_.htm">tSHORT_FLOAT</A> / FLOAT</FONT></U></I></B></TD>
-		</TR>
+			</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
 			<TD HEIGHT=18 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
-			<TD COLSPAN=2 ALIGN=LEFT><B><I><U><FONT FACE="Times New Roman"> <A HREF="http://hyper.aloys.li/Body/t_short_.htm">tSINGLE_FLOAT</A> / FLOAT</FONT></U></I></B></TD>
-		</TR>
+			<TD COLSPAN=2 ALIGN=LEFT><B><I><U><FONT FACE="Times New Roman"><A HREF="http://hyper.aloys.li/Body/t_short_.htm">tSINGLE_FLOAT</A> / FLOAT</FONT></U></I></B></TD>
+			</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
 			<TD HEIGHT=18 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD COLSPAN=2 ALIGN=LEFT><B><I><U><FONT FACE="Times New Roman"><A HREF="http://hyper.aloys.li/Body/t_short_.htm">tDOUBLE_FLOAT</A> / DOUBLE</FONT></U></I></B></TD>
-		</TR>
+			</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
 			<TD HEIGHT=18 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD COLSPAN=2 ALIGN=LEFT><B><I><U><FONT FACE="Times New Roman"><A HREF="http://hyper.aloys.li/Body/t_short_.htm">tLONG_FLOAT</A> / BIGFLOAT</FONT></U></I></B></TD>
-		</TR>
-		<TR>
-			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
-			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
-		</TR>
-		<TR>
-			<TD COLSPAN=3 HEIGHT=21 ALIGN=CENTER><B><U><FONT FACE="Times New Roman" SIZE=3>STREAM</FONT></U></B></TD>
 			</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+		</TR>
+		<TR>
+			<TD COLSPAN=3 HEIGHT=17 ALIGN=CENTER><U><FONT FACE="Times New Roman"><A HREF="http://hyper.aloys.li/Body/c_stream.htm">STREAM</A></FONT></U></TD>
+			</TR>
+		<TR>
+			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
 			<TD HEIGHT=18 ALIGN=CENTER><U><FONT FACE="Times New Roman"><BR></FONT></U></TD>
 			<TD COLSPAN=2 ALIGN=LEFT><B><I><U><FONT FACE="Times New Roman"><A HREF="http://hyper.aloys.li/Body/t_stream.htm">tSTREAM</A> / STREAM (abstract)</FONT></U></I></B></TD>
-		</TR>
+			</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><A HREF="http://hyper.aloys.li/Body/f_open_s.htm">open-stream-p</A></FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman">v</FONT></TD>
 		</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman">close</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman">v</FONT></TD>
 		</TR>
 		<TR>
-			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman">s</FONT></TD>
+			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman">g</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman">open</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman">v</FONT></TD>
+		</TR>
+		<TR>
+			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman">m</FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman">with-open-file</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman">g</FONT></TD>
+		</TR>
+		<TR>
+			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman">m</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman">with-open-stream</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman">g</FONT></TD>
 		</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman">stream-element-type</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman">v</FONT></TD>
 		</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><I><FONT FACE="Times New Roman">v</FONT></I></TD>
 			<TD ALIGN=LEFT><I><FONT FACE="Times New Roman">*debug-io*</FONT></I></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><I><FONT FACE="Times New Roman">v</FONT></I></TD>
 			<TD ALIGN=LEFT><I><FONT FACE="Times New Roman">*error-output*</FONT></I></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><I><FONT FACE="Times New Roman">v</FONT></I></TD>
 			<TD ALIGN=LEFT><I><FONT FACE="Times New Roman">*query-io*</FONT></I></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><I><FONT FACE="Times New Roman">v</FONT></I></TD>
 			<TD ALIGN=LEFT><I><FONT FACE="Times New Roman">*standard-input*</FONT></I></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><I><FONT FACE="Times New Roman">v</FONT></I></TD>
 			<TD ALIGN=LEFT><I><FONT FACE="Times New Roman">*standard-output*</FONT></I></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><I><FONT FACE="Times New Roman">v</FONT></I></TD>
 			<TD ALIGN=LEFT><I><FONT FACE="Times New Roman">*terminal-io*</FONT></I></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><I><FONT FACE="Times New Roman">v</FONT></I></TD>
 			<TD ALIGN=LEFT><I><FONT FACE="Times New Roman">*trace-output*</FONT></I></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
 			<TD HEIGHT=18 ALIGN=CENTER><U><FONT FACE="Times New Roman"><BR></FONT></U></TD>
 			<TD COLSPAN=2 ALIGN=LEFT><B><I><U><FONT FACE="Times New Roman"><A HREF="http://hyper.aloys.li/Body/21_aaaa.htm">tINPUT_STREAM</A> / INPUT_STREAM (abstract)</FONT></U></I></B></TD>
-		</TR>
+			</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman">clear-input</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman">listen</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman">peek-char</FONT></TD>
-		</TR>
-		<TR>
-			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
-			<TD ALIGN=LEFT><FONT FACE="Times New Roman">read</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman">read-byte</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman">read-char</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman">read-char-no-hang</FONT></TD>
-		</TR>
-		<TR>
-			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
-			<TD ALIGN=LEFT><FONT FACE="Times New Roman">read-delimited-list</FONT></TD>
-		</TR>
-		<TR>
-			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman">g</FONT></TD>
-			<TD ALIGN=LEFT><FONT FACE="Times New Roman">read-from-string</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman">read-line</FONT></TD>
-		</TR>
-		<TR>
-			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
-			<TD ALIGN=LEFT><FONT FACE="Times New Roman">read-preserving-whitespace</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman">unread-char</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
 			<TD HEIGHT=18 ALIGN=CENTER><U><FONT FACE="Times New Roman"><BR></FONT></U></TD>
 			<TD COLSPAN=2 ALIGN=LEFT><B><I><U><FONT FACE="Times New Roman"><A HREF="http://hyper.aloys.li/Body/21_aaaa.htm">tOUTPUT_STREAM</A> / OUTPUT_STREAM (abstract)</FONT></U></I></B></TD>
-		</TR>
+			</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman">clear-output</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman">finish-output</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman">force-output</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman">format</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman">fresh-line</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman">l</FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman">pprint</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman">l</FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman">prin1</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman">l</FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman">prin1-to-string</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman">l</FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman">princ</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman">l</FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman">princ-to-string</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman">l</FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman">print</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman">l</FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman">terpri</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman">write</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman">write-byte</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman">write-char</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
-			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman">l</FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman">write-line</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
-			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman">l</FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman">write-string</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
-			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman">g</FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman">write-to-string</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
 			<TD HEIGHT=18 ALIGN=CENTER><U><FONT FACE="Times New Roman"><BR></FONT></U></TD>
 			<TD COLSPAN=2 ALIGN=LEFT><B><I><U><FONT FACE="Times New Roman"><A HREF="http://hyper.aloys.li/Body/21_aaaa.htm">tBIDIRECTIONAL</A> (type only)</FONT></U></I></B></TD>
-		</TR>
+			</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman">y-or-n-p</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman">yes-or-no-p</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
 			<TD HEIGHT=18 ALIGN=CENTER><U><FONT FACE="Times New Roman"><BR></FONT></U></TD>
 			<TD COLSPAN=2 ALIGN=LEFT><B><I><U><FONT FACE="Times New Roman"><A HREF="http://hyper.aloys.li/Body/t_syn_st.htm">tSYNONYM_STREAM</A> / SYNONYM_STREAM</FONT></U></I></B></TD>
-		</TR>
+			</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman">c</FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman">make-synonym-stream</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman">synonym-stream-symbol</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
 			<TD HEIGHT=18 ALIGN=CENTER><U><FONT FACE="Times New Roman"><BR></FONT></U></TD>
 			<TD COLSPAN=2 ALIGN=LEFT><B><I><U><FONT FACE="Times New Roman"><A HREF="http://hyper.aloys.li/Body/t_syn_st.htm">tTWO_WAY_STREAM</A> / TWO_WAY_STREAM</FONT></U></I></B></TD>
-		</TR>
+			</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman">c</FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman">make-two-way-stream</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman">two-way-stream-input-stream</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman">two-way-stream-output-stream</FONT></TD>
-		</TR>
-		<TR>
-			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
-			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
-		</TR>
-		<TR>
-			<TD HEIGHT=18 ALIGN=CENTER><U><FONT FACE="Times New Roman"><BR></FONT></U></TD>
-			<TD COLSPAN=2 ALIGN=LEFT><B><I><U><FONT FACE="Times New Roman"><A HREF="http://hyper.aloys.li/Body/26_glo_s.htm#stream_designator">tSTREAM_DESIGNATOR</A></FONT></U></I></B></TD>
-		</TR>
-		<TR>
-			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
-			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
-		</TR>
-		<TR>
-			<TD HEIGHT=18 ALIGN=CENTER><U><FONT FACE="Times New Roman"><BR></FONT></U></TD>
-			<TD COLSPAN=2 ALIGN=LEFT><B><I><U><FONT FACE="Times New Roman"><A HREF="http://hyper.aloys.li/Body/t_file_s.htm">tFILE_STREAM</A></FONT></U></I></B></TD>
-		</TR>
-		<TR>
-			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman">g</FONT></TD>
-			<TD ALIGN=LEFT><FONT FACE="Times New Roman">open</FONT></TD>
-		</TR>
-		<TR>
-			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
-			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
-		</TR>
-		<TR>
-			<TD HEIGHT=18 ALIGN=CENTER><U><FONT FACE="Times New Roman"><BR></FONT></U></TD>
-			<TD COLSPAN=2 ALIGN=LEFT><B><I><U><FONT FACE="Times New Roman"><A HREF="http://hyper.aloys.li/Body/f_open.htm">tFILE_INPUT_STREAM</A></FONT></U></I></B></TD>
-		</TR>
-		<TR>
-			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
-		</TR>
-		<TR>
-			<TD HEIGHT=18 ALIGN=CENTER><U><FONT FACE="Times New Roman"><BR></FONT></U></TD>
-			<TD COLSPAN=2 ALIGN=LEFT><B><I><U><FONT FACE="Times New Roman"><A HREF="http://hyper.aloys.li/Body/f_open.htm">tFILE_OUTPUT_STREAM</A></FONT></U></I></B></TD>
-		</TR>
-		<TR>
-			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
-			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
-			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
-		</TR>
-		<TR>
-			<TD HEIGHT=18 ALIGN=CENTER><U><FONT FACE="Times New Roman"><BR></FONT></U></TD>
-			<TD COLSPAN=2 ALIGN=LEFT><B><I><U><FONT FACE="Times New Roman"><A HREF="http://hyper.aloys.li/Body/t_stg_st.htm">tSTRING_STREAM</A></FONT></U></I></B></TD>
-		</TR>
+			<TD HEIGHT=17 ALIGN=CENTER><U><FONT FACE="Times New Roman"><BR></FONT></U></TD>
+			<TD COLSPAN=2 ALIGN=LEFT><U><FONT FACE="Times New Roman"><A HREF="http://hyper.aloys.li/Body/26_glo_s.htm#stream_designator">tSTREAM_DESIGNATOR</A></FONT></U></TD>
+			</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
-			<TD HEIGHT=18 ALIGN=CENTER><U><FONT FACE="Times New Roman"><BR></FONT></U></TD>
-			<TD COLSPAN=2 ALIGN=LEFT><B><I><U><FONT FACE="Times New Roman"><A HREF="http://hyper.aloys.li/Body/f_mk_s_1.htm#make-string-input-stream">tSTRING_INPUT_STREAM</A></FONT></U></I></B></TD>
+			<TD HEIGHT=17 ALIGN=CENTER><U><FONT FACE="Times New Roman"><BR></FONT></U></TD>
+			<TD COLSPAN=2 ALIGN=LEFT><U><FONT FACE="Times New Roman"><A HREF="http://hyper.aloys.li/Body/t_file_s.htm">tFILE_STREAM</A></FONT></U></TD>
+			</TR>
+		<TR>
+			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
+		<TR>
+			<TD HEIGHT=17 ALIGN=CENTER><U><FONT FACE="Times New Roman"><BR></FONT></U></TD>
+			<TD COLSPAN=2 ALIGN=LEFT><U><FONT FACE="Times New Roman"><A HREF="http://hyper.aloys.li/Body/f_open.htm">tFILE_INPUT_STREAM</A></FONT></U></TD>
+			</TR>
+		<TR>
+			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+		</TR>
+		<TR>
+			<TD HEIGHT=17 ALIGN=CENTER><U><FONT FACE="Times New Roman"><BR></FONT></U></TD>
+			<TD COLSPAN=2 ALIGN=LEFT><U><FONT FACE="Times New Roman"><A HREF="http://hyper.aloys.li/Body/f_open.htm">tFILE_OUTPUT_STREAM</A></FONT></U></TD>
+			</TR>
+		<TR>
+			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+		</TR>
+		<TR>
+			<TD HEIGHT=17 ALIGN=CENTER><U><FONT FACE="Times New Roman"><BR></FONT></U></TD>
+			<TD COLSPAN=2 ALIGN=LEFT><U><FONT FACE="Times New Roman"><A HREF="http://hyper.aloys.li/Body/t_stg_st.htm">tSTRING_STREAM</A></FONT></U></TD>
+			</TR>
+		<TR>
+			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+		</TR>
+		<TR>
+			<TD HEIGHT=17 ALIGN=CENTER><U><FONT FACE="Times New Roman"><BR></FONT></U></TD>
+			<TD COLSPAN=2 ALIGN=LEFT><U><FONT FACE="Times New Roman"><A HREF="http://hyper.aloys.li/Body/f_mk_s_1.htm#make-string-input-stream">tSTRING_INPUT_STREAM</A></FONT></U></TD>
+			</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman">c</FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman">make-string-input-stream</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman">s</FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman">with-input-from-string</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
-			<TD HEIGHT=18 ALIGN=CENTER><U><FONT FACE="Times New Roman"><BR></FONT></U></TD>
-			<TD COLSPAN=2 ALIGN=LEFT><B><I><U><FONT FACE="Times New Roman"><A HREF="http://hyper.aloys.li/Body/f_mk_s_2.htm">tSTRING_OUTPUT_STREAM</A></FONT></U></I></B></TD>
-		</TR>
+			<TD HEIGHT=17 ALIGN=CENTER><U><FONT FACE="Times New Roman"><BR></FONT></U></TD>
+			<TD COLSPAN=2 ALIGN=LEFT><U><FONT FACE="Times New Roman"><A HREF="http://hyper.aloys.li/Body/f_mk_s_2.htm">tSTRING_OUTPUT_STREAM</A></FONT></U></TD>
+			</TR>
 		<TR>
 			<TD HEIGHT=18 ALIGN=CENTER><B><I><FONT FACE="Times New Roman">c</FONT></I></B></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman">make-string-output-stream</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman">get-output-stream-string</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman">s</FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman">with-output-to-string</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
-			<TD HEIGHT=18 ALIGN=CENTER><U><FONT FACE="Times New Roman"><BR></FONT></U></TD>
-			<TD COLSPAN=2 ALIGN=LEFT><B><I><U><FONT FACE="Times New Roman"><A HREF="http://hyper.aloys.li/Body/t_broadc.htm">tBROADCAST_STREAM</A></FONT></U></I></B></TD>
-		</TR>
+			<TD HEIGHT=17 ALIGN=CENTER><U><FONT FACE="Times New Roman"><BR></FONT></U></TD>
+			<TD COLSPAN=2 ALIGN=LEFT><U><FONT FACE="Times New Roman"><A HREF="http://hyper.aloys.li/Body/t_broadc.htm">tBROADCAST_STREAM</A></FONT></U></TD>
+			</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman">c</FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman">make-broadcast-stream</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman">broadcast-stream-streams</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
-			<TD HEIGHT=18 ALIGN=CENTER><U><FONT FACE="Times New Roman"><BR></FONT></U></TD>
-			<TD COLSPAN=2 ALIGN=LEFT><B><I><U><FONT FACE="Times New Roman"><A HREF="http://hyper.aloys.li/Body/t_concat.htm">tCONCATENED_STREAM</A></FONT></U></I></B></TD>
-		</TR>
+			<TD HEIGHT=17 ALIGN=CENTER><U><FONT FACE="Times New Roman"><BR></FONT></U></TD>
+			<TD COLSPAN=2 ALIGN=LEFT><U><FONT FACE="Times New Roman"><A HREF="http://hyper.aloys.li/Body/t_concat.htm">tCONCATENED_STREAM</A></FONT></U></TD>
+			</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman">c</FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman">make-concatened-stream</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman">concatened-stream-streams</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
-			<TD HEIGHT=18 ALIGN=CENTER><U><FONT FACE="Times New Roman"><BR></FONT></U></TD>
-			<TD COLSPAN=2 ALIGN=LEFT><B><I><U><FONT FACE="Times New Roman"><A HREF="http://hyper.aloys.li/Body/t_echo_s.htm">tECHO_STREAM</A></FONT></U></I></B></TD>
-		</TR>
+			<TD HEIGHT=17 ALIGN=CENTER><U><FONT FACE="Times New Roman"><BR></FONT></U></TD>
+			<TD COLSPAN=2 ALIGN=LEFT><U><FONT FACE="Times New Roman"><A HREF="http://hyper.aloys.li/Body/t_echo_s.htm">tECHO_STREAM</A></FONT></U></TD>
+			</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman">c</FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman">make-echo-stream</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman">echo-stream-input-stream</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman">echo-stream-output-stream</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
@@ -668,74 +971,202 @@
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
 			<TD HEIGHT=18 ALIGN=CENTER><U><FONT FACE="Times New Roman"><BR></FONT></U></TD>
 			<TD COLSPAN=2 ALIGN=LEFT><B><I><U><FONT FACE="Times New Roman"><A HREF="http://hyper.aloys.li/Body/t_fn.htm">tFUNCTION</A> / FUNCTION (abstract)</FONT></U></I></B></TD>
-		</TR>
+			</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman">s</FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman">function</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman">funcall</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman">apply</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman">multiple-value-call</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
-		</TR>
-		<TR>
-			<TD HEIGHT=18 ALIGN=CENTER><B><I><U><FONT FACE="Times New Roman"><BR></FONT></U></I></B></TD>
-			<TD COLSPAN=2 ALIGN=LEFT><B><I><U><FONT FACE="Times New Roman"><A HREF="http://hyper.aloys.li/Body/m_lambda.htm">tLAMBDA_FUNCTION</A></FONT></U></I></B></TD>
-		</TR>
-		<TR>
-			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
-			<TD HEIGHT=18 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
-			<TD COLSPAN=2 ALIGN=LEFT><B><I><U><FONT FACE="Times New Roman"><A HREF="http://hyper.aloys.li/Body/s_block.htm">tBLOCK_FUNCTION</A></FONT></U></I></B></TD>
-		</TR>
+			<TD HEIGHT=17 ALIGN=CENTER><U><FONT FACE="Times New Roman"><BR></FONT></U></TD>
+			<TD COLSPAN=2 ALIGN=LEFT><U><FONT FACE="Times New Roman"><A HREF="http://hyper.aloys.li/Body/m_lambda.htm">tLAMBDA_FUNCTION</A></FONT></U></TD>
+			</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
-		</TR>
-		<TR>
-			<TD HEIGHT=18 ALIGN=CENTER><B><I><U><FONT FACE="Times New Roman"><BR></FONT></U></I></B></TD>
-			<TD COLSPAN=2 ALIGN=LEFT><B><I><U><FONT FACE="Times New Roman"><A HREF="http://hyper.aloys.li/Body/03_dd.htm">tMACRO_FUNCTION</A></FONT></U></I></B></TD>
-		</TR>
-		<TR>
-			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
-			<TD HEIGHT=18 ALIGN=CENTER><B><I><U><FONT FACE="Times New Roman"><BR></FONT></U></I></B></TD>
-			<TD COLSPAN=2 ALIGN=LEFT><B><I><U><FONT FACE="Times New Roman"><A HREF="http://hyper.aloys.li/Body/t_cmpd_f.htm">tCOMPILED_FUNCTION</A></FONT></U></I></B></TD>
-		</TR>
+			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD COLSPAN=2 ALIGN=LEFT><U><FONT FACE="Times New Roman"><A HREF="http://hyper.aloys.li/Body/s_block.htm">tBLOCK_FUNCTION</A></FONT></U></TD>
+			</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+		</TR>
+		<TR>
+			<TD HEIGHT=17 ALIGN=CENTER><U><FONT FACE="Times New Roman"><BR></FONT></U></TD>
+			<TD COLSPAN=2 ALIGN=LEFT><U><FONT FACE="Times New Roman"><A HREF="http://hyper.aloys.li/Body/03_dd.htm">tMACRO_FUNCTION</A></FONT></U></TD>
+			</TR>
+		<TR>
+			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+		</TR>
+		<TR>
+			<TD HEIGHT=17 ALIGN=CENTER><U><FONT FACE="Times New Roman"><BR></FONT></U></TD>
+			<TD COLSPAN=2 ALIGN=LEFT><U><FONT FACE="Times New Roman"><A HREF="http://hyper.aloys.li/Body/t_cmpd_f.htm">tCOMPILED_FUNCTION</A></FONT></U></TD>
+			</TR>
+		<TR>
+			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
 			<TD HEIGHT=18 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD COLSPAN=2 ALIGN=LEFT><B><I><U><FONT FACE="Times New Roman">tCOMPILER_MACRO (probably obsol&egrave;te)</FONT></U></I></B></TD>
+			</TR>
+		<TR>
+			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+		</TR>
+		<TR>
+			<TD HEIGHT=17 ALIGN=CENTER><U><FONT FACE="Times New Roman"><BR></FONT></U></TD>
+			<TD COLSPAN=2 ALIGN=LEFT><U><FONT FACE="Times New Roman"><A HREF="http://hyper.aloys.li/Body/03_ababa.htm#clspecialops">tSPECIAL_OPERATOR</A></FONT></U></TD>
+			</TR>
+		<TR>
+			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
 			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
 			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 		<TR>
-			<TD HEIGHT=18 ALIGN=CENTER><B><I><U><FONT FACE="Times New Roman"><BR></FONT></U></I></B></TD>
-			<TD COLSPAN=2 ALIGN=LEFT><B><I><U><FONT FACE="Times New Roman"><A HREF="http://hyper.aloys.li/Body/03_ababa.htm#clspecialops">tSPECIAL_OPERATOR</A></FONT></U></I></B></TD>
+			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+		</TR>
+		<TR>
+			<TD COLSPAN=3 HEIGHT=21 ALIGN=CENTER><B><U><FONT FACE="Times New Roman" SIZE=3>ATOM</FONT></U></B></TD>
+			</TR>
+		<TR>
+			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+		</TR>
+		<TR>
+			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD COLSPAN=2 ALIGN=LEFT><B><I><U><FONT FACE="Times New Roman">tREADTABLE</FONT></U></I></B></TD>
+			</TR>
+		<TR>
+			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman">g</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman">read</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+		</TR>
+		<TR>
+			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman">g</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman">read-delimited-list</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+		</TR>
+		<TR>
+			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman">g</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman">read-from-string</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+		</TR>
+		<TR>
+			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman">g</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman">read-preserving-whitespace</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+		</TR>
+		<TR>
+			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman">copy-readtable</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+		</TR>
+		<TR>
+			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman">make-dispatch-macro-character</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+		</TR>
+		<TR>
+			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman">readtable-case</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+		</TR>
+		<TR>
+			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman">set-dispatch-macro-character</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+		</TR>
+		<TR>
+			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman">get-dispatch-macro-character</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+		</TR>
+		<TR>
+			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman">set-macro-character</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+		</TR>
+		<TR>
+			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman">get-macro-character</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+		</TR>
+		<TR>
+			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman"><BR></FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman">set-syntax-from-char</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+		</TR>
+		<TR>
+			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman">m</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman">with-standard-io-syntax</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+		</TR>
+		<TR>
+			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman">v</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman">*read-base*</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+		</TR>
+		<TR>
+			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman">v</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman">*read-default-float-format*</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+		</TR>
+		<TR>
+			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman">v</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman">*read-eval*</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+		</TR>
+		<TR>
+			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman">v</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman">*read-suppress*</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
+		</TR>
+		<TR>
+			<TD HEIGHT=17 ALIGN=CENTER><FONT FACE="Times New Roman">v</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman">*readtable*</FONT></TD>
+			<TD ALIGN=LEFT><FONT FACE="Times New Roman"><BR></FONT></TD>
 		</TR>
 	</TBODY>
 </TABLE>
