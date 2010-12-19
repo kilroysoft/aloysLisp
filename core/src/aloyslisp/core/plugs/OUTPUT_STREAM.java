@@ -29,10 +29,7 @@
 
 package aloyslisp.core.plugs;
 
-import java.io.*;
-
 import static aloyslisp.commonlisp.L.*;
-import aloyslisp.core.annotations.*;
 import aloyslisp.core.types.*;
 
 /**
@@ -42,57 +39,9 @@ import aloyslisp.core.types.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class OUTPUT_STREAM extends STREAM implements tOUTPUT_STREAM
+public abstract class OUTPUT_STREAM extends STREAM implements tOUTPUT_STREAM
 {
-	protected boolean		lineBegin	= true;
-	protected PrintStream	writer;
-
-	/**
-	 * For file output
-	 * 
-	 * @param file
-	 *            new FileWriter("datafile")
-	 * @throws FileNotFoundException
-	 */
-	public OUTPUT_STREAM(File file) throws FileNotFoundException
-	{
-		writer = new PrintStream(file);
-	}
-
-	/**
-	 * For standard output file
-	 * 
-	 * @param file
-	 *            System.out
-	 */
-	public OUTPUT_STREAM(PrintStream file)
-	{
-		writer = file;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.types.tOUTPUT_STREAM#WRITE(aloyslisp.core.types.tT)
-	 */
-	@Function(name = "sys::write")
-	public tT WRITE( //
-			@Arg(name = "obj") tT obj)
-	{
-		return WRITE_STRING(str(obj.printable()), NIL, NIL);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see
-	 * aloyslisp.core.plugs.streams.IOutputStream#writeChar(java.lang.Character)
-	 */
-	@Override
-	public Character WRITE_CHAR(Character car)
-	{
-		lineBegin = (car == '\n' || car == '\r');
-		putc(car);
-		return car;
-	}
+	protected boolean	lineBegin	= true;
 
 	/*
 	 * (non-Javadoc)
@@ -100,12 +49,12 @@ public class OUTPUT_STREAM extends STREAM implements tOUTPUT_STREAM
 	 * aloyslisp.core.plugs.streams.IOutputStream#writeString(java.lang.String)
 	 */
 	@Override
-	public tT WRITE_STRING(tT str, tT start, tT end)
+	public tT WRITE_STRING(tT str, tOUTPUT_STREAM stream, tT start, tT end)
 	{
 		// TODO manage start and end in WRITE_STRING
 		for (tT car : (tSTRING) str)
 		{
-			WRITE_CHAR(((tCHARACTER) car).getChar());
+			WRITE_CHAR(((tCHARACTER) car).getChar(), stream);
 		}
 		return str;
 	}
@@ -114,9 +63,10 @@ public class OUTPUT_STREAM extends STREAM implements tOUTPUT_STREAM
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.plugs.streams.IOutputStream#terpri()
 	 */
-	public tNULL TERPRI()
+	public tNULL TERPRI(tOUTPUT_STREAM stream)
 	{
-		WRITE_CHAR('\n');
+		WRITE_CHAR('\n', stream);
+		lineBegin = true;
 		return NIL;
 
 	}
@@ -126,27 +76,10 @@ public class OUTPUT_STREAM extends STREAM implements tOUTPUT_STREAM
 	 * @see aloyslisp.core.plugs.streams.IOutputStream#freshLine()
 	 */
 	@Override
-	public tT FRESH_LINE()
+	public tT FRESH_LINE(tOUTPUT_STREAM stream)
 	{
 		if (!lineBegin)
-			return TERPRI();
-		return T;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.plugs.streams.IStream#isOpen()
-	 */
-	@Override
-	public boolean OPEN_STREAM_P()
-	{
-		return writer != null;
-	}
-
-	public tT CLOSE(tOUTPUT_STREAM stream)
-	{
-		writer.close();
-		writer = null;
+			return TERPRI(stream);
 		return T;
 	}
 
@@ -172,52 +105,6 @@ public class OUTPUT_STREAM extends STREAM implements tOUTPUT_STREAM
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.plugs.streams.IOutputStream#putc(java.lang.Character)
-	 */
-	@Override
-	public void putc(Character car)
-	{
-		writer.print(car);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.plugs.streams.IOutputStream#finishOutput()
-	 */
-	@Override
-	public tT FINISH_OUTPUT()
-	{
-		// TODO verify return
-		writer.flush();
-		return T;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.plugs.streams.IOutputStream#forceOutput()
-	 */
-	@Override
-	public tT FORCE_OUTPUT()
-	{
-		// TODO verify return
-		writer.flush();
-		return T;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.plugs.streams.IOutputStream#clearOutput()
-	 */
-	@Override
-	public tT CLEAR_OUTPUT()
-	{
-		// TODO verify output
-		writer.flush();
-		return T;
-	}
-
-	/*
-	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tT#coerce(aloyslisp.core.types.tT)
 	 */
 	@Override
@@ -232,10 +119,82 @@ public class OUTPUT_STREAM extends STREAM implements tOUTPUT_STREAM
 	 * @see aloyslisp.core.types.tSTREAM#STREAM_ELEMENT_TYPE()
 	 */
 	@Override
-	public tT STREAM_ELEMENT_TYPE()
+	public tT STREAM_ELEMENT_TYPE(tSTREAM stream)
 	{
 		// IMPLEMENT return value
 		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.types.tOUTPUT_STREAM#WRITE(aloyslisp.core.types.tT)
+	 */
+	public tT WRITE(tT obj, tOUTPUT_STREAM stream)
+	{
+		return WRITE_STRING(str(obj.printable()), stream, NIL, NIL);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.types.tOUTPUT_STREAM#PRIN1(aloyslisp.core.types.tT,
+	 * aloyslisp.core.types.tOUTPUT_STREAM)
+	 */
+	@Override
+	public tT PRIN1(tT obj, tOUTPUT_STREAM stream)
+	{
+		tT res = null;
+		tT savEscape = printEscape.SYMBOL_VALUE();
+		printEscape.SET_SYMBOL_VALUE(T);
+
+		try
+		{
+			res = WRITE(obj, this);
+		}
+		finally
+		{
+			printEscape.SET_SYMBOL_VALUE(savEscape);
+		}
+		return res;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.types.tOUTPUT_STREAM#PRINC(aloyslisp.core.types.tT,
+	 * aloyslisp.core.types.tOUTPUT_STREAM)
+	 */
+	@Override
+	public tT PRINC(tT obj, tOUTPUT_STREAM stream)
+	{
+		tT res = null;
+		tT savEscape = printEscape.SYMBOL_VALUE();
+		printEscape.SET_SYMBOL_VALUE(NIL);
+		tT savReadably = printReadably.SYMBOL_VALUE();
+		printReadably.SET_SYMBOL_VALUE(NIL);
+
+		try
+		{
+			res = WRITE(obj, this);
+		}
+		finally
+		{
+			printReadably.SET_SYMBOL_VALUE(savReadably);
+			printEscape.SET_SYMBOL_VALUE(savEscape);
+		}
+		return res;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.types.tOUTPUT_STREAM#PRINT(aloyslisp.core.types.tT,
+	 * aloyslisp.core.types.tOUTPUT_STREAM)
+	 */
+	@Override
+	public tT PRINT(tT obj, tOUTPUT_STREAM stream)
+	{
+		TERPRI(stream);
+		tT res = PRIN1(obj, stream);
+		WRITE(c(' '), stream);
+		return res;
 	}
 
 }

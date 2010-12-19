@@ -55,68 +55,68 @@ public class Arguments
 	/**
 	 * Name of environment
 	 */
-	tSYMBOL					name			= NIL;
+	tSYMBOL						name			= NIL;
 
 	/**
 	 * Number of mandatory arguments
 	 */
-	Integer					nbObl			= 0;
+	Integer						nbObl			= 0;
 
 	/**
 	 * Original list
 	 */
-	tLIST					orig			= NIL;
+	tLIST						orig			= NIL;
 
 	/**
 	 * Argument list
 	 */
-	tLIST					args			= NIL;
+	tLIST						args			= NIL;
 
 	/**
 	 * Aux list
 	 */
-	tLIST					aux				= NIL;
+	tLIST						aux				= NIL;
 
 	/**
 	 * Key list
 	 */
-	HashMap<tSYMBOL, tT>	keyArgs			= new LinkedHashMap<tSYMBOL, tT>();
+	LinkedHashMap<tSYMBOL, tT>	keyArgs			= new LinkedHashMap<tSYMBOL, tT>();
 
 	/**
 	 * Rest of arguments
 	 */
-	Symbol					rest			= null;
+	Symbol						rest			= null;
 
 	/**
 	 * Commentary on functions
 	 */
-	String					commentary;
+	String						commentary;
 
 	/**
 	 * Declare statements
 	 */
-	tLIST					declare			= NIL;
+	tLIST						declare			= NIL;
 
 	/**
 	 * Lisp function
 	 */
-	tLIST					func			= null;
+	tLIST						func			= null;
 
 	/**
 	 * For optional values evaluation is only done for non special forms (SF,
 	 * macros)
 	 */
-	boolean					special			= false;
+	boolean						special			= false;
 
 	/**
 	 * Switch to display trace
 	 */
-	boolean					trace			= false;
+	boolean						trace			= false;
 
 	/**
 	 * 
 	 */
-	boolean					allowOtherKeys	= false;
+	boolean						allowOtherKeys	= false;
 
 	/**
 	 * VarType
@@ -411,6 +411,8 @@ public class Arguments
 	}
 
 	/**
+	 * Push dynamic variables in block
+	 * 
 	 * @param args
 	 */
 	public void pushBlock(tLIST vals)
@@ -475,8 +477,8 @@ public class Arguments
 
 		if (nbArgs < nbObl)
 		{
-			throw new LispException("Missing arguments. " + nbObl + " needed, "
-					+ nbArgs + "found.");
+			throw new LispException("Missing arguments in " + name + ". "
+					+ nbObl + " needed, " + nbArgs + "found." + getArgs());
 		}
 
 		// read keys loop over tCONS (stop on NIL)
@@ -521,7 +523,38 @@ public class Arguments
 		// At the end initialization of &aux variables with already initialized
 		// local variables
 		initDef(aux);
+	}
 
+	/**
+	 * Push dynamic variables in block
+	 * 
+	 * @param args
+	 */
+	public tLIST getValues()
+	{
+		// Get mandatory and optionals args
+		tLIST res = NIL;
+		tLIST walk = args;
+		while (walk instanceof tCONS)
+		{
+			// Taking arg list's CARs witch are symbols
+			// Using symbol to take in the environment the dynamic variable
+			// And appending the value
+			res = (tLIST) res.APPEND(list(e.arg(((Symbol) walk.CAR()).orig)
+					.SYMBOL_VALUE()));
+			walk = (tLIST) walk.CDR();
+		}
+
+		// TODO append keys
+		// Get mandatory and optionals args
+
+		// Get rest
+		if (rest != null)
+		{
+			res = (tLIST) res.APPEND(e.arg(rest.orig).SYMBOL_VALUE());
+		}
+
+		return res;
 	}
 
 	/**

@@ -37,7 +37,7 @@ package aloyslisp.core.types;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public interface tLAMBDA_FUNCTION extends tFUNCTION
+public interface tLAMBDA_FUNCTION extends tFUNCTION, tFUNCTION_DESIGNATOR
 {
 	/**
 	 * @return

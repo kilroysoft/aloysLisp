@@ -24,59 +24,12 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 13 sept. 2010 Creation
+// IP 16 dec. 2010 Creation
 // --------------------------------------------------------------------------
 
 package aloyslisp.core.types;
 
-/**
- * tLAMBDA_FUNCTION
- * 
- * @author Ivan Pierre {ivan@kilroysoft.ch}
- * @author George Kilroy {george@kilroysoft.ch}
- * 
- */
-public interface tFUNCTION extends tATOM
+public interface tFUNCTION_DESIGNATOR extends tT
 {
-	/**
-	 * Execute function with arguments as a cons
-	 * 
-	 * @param args
-	 *            List of arguments
-	 * @return Evaluated results in ana array for eventual multiple values
-	 */
-	public tT[] exec(tLIST args);
 
-	/**
-	 * Execute function with separate arguments
-	 * 
-	 * @param args
-	 *            individual args
-	 * @return Evaluated results in ana array for eventual multiple values
-	 */
-	public tT[] e(Object... args);
-
-	/**
-	 * @return
-	 */
-	public tSYMBOL getFuncName();
-
-	/**
-	 * @param name
-	 */
-	public void setFuncName(tSYMBOL name);
-
-	/**
-	 * Set String replacement for macrochar transformations
-	 * 
-	 * @param pref
-	 */
-	public void setPrefix(String pref);
-
-	/**
-	 * Set the argument for object call in Primitives
-	 * 
-	 * @param no
-	 */
-	public void setBaseArg(Integer no);
 }

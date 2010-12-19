@@ -32,6 +32,7 @@ package aloyslisp.core.plugs;
 import java.io.*;
 
 import static aloyslisp.commonlisp.L.*;
+import aloyslisp.core.annotations.*;
 import aloyslisp.core.common.*;
 import aloyslisp.core.types.*;
 
@@ -42,200 +43,18 @@ import aloyslisp.core.types.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class INPUT_STREAM extends STREAM implements tINPUT_STREAM
+public abstract class INPUT_STREAM extends STREAM implements tINPUT_STREAM
 {
-
-	public PushbackReader	reader;
-
-	/**
-	 * Use standard input
-	 * 
-	 * @param file
-	 *            System.in
-	 */
-	public INPUT_STREAM(InputStream file)
-	{
-		reader = new PushbackReader(new InputStreamReader(file));
-	}
-
-	/**
-	 * Use a file
-	 * 
-	 * @param file
-	 *            new FileReader("filename")
-	 */
-	public INPUT_STREAM(FileReader file)
-	{
-		reader = new PushbackReader(file);
-	}
-
-	/**
-	 * Use a string
-	 * 
-	 * @param str
-	 *            string to be used
-	 */
-	public INPUT_STREAM(String str)
-	{
-		reader = new PushbackReader(new StringReader(str));
-	}
 
 	/**
 	 * @param stream
-	 * @return
-	 */
-	public static Boolean CLOSE(tINPUT_STREAM stream)
-	{
-		try
-		{
-			stream.close();
-		}
-		catch (IOException e)
-		{
-			e.printStackTrace();
-		}
-		return true;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.plugs.Cell#copy()
-	 */
-	@Override
-	public tT copy()
-	{
-		return this;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.plugs.Cell#printable()
-	 */
-	@Override
-	public String printable()
-	{
-		return "<#INPUT " + this.getClass().getSimpleName() + ">";
-	}
-
-	/**
 	 * @param eofErrorP
 	 * @param eofValue
 	 * @param recursiveP
 	 * @return
 	 * @throws EOFException
 	 */
-	public static Character READ_CHAR(tINPUT_STREAM stream, Boolean eofErrorP,
-			tT eofValue, Boolean recursiveP) throws EOFException
-	{
-		Character res = null;
-		try
-		{
-			int car = stream.read();
-			if (car == -1)
-			{
-				throw new EOFException("");
-			}
-
-			res = new Character((char) car);
-			// System.out.println("char : '" + res + "' (" + res.hashCode() +
-			// ")");
-		}
-		catch (EOFException e)
-		{
-			// retrow EOF
-			throw new EOFException("");
-		}
-		catch (IOException e)
-		{
-			throw new LispException("Error on reading stream. "
-					+ e.getLocalizedMessage());
-		}
-
-		return res;
-	}
-
-	/**
-	 * @param car
-	 * @return
-	 */
-	public static Character UNREAD_CHAR(tINPUT_STREAM stream, Character car)
-	{
-		try
-		{
-			stream.unread(car);
-		}
-		catch (IOException e)
-		{
-			throw new LispException("Error unbuffering " + car + " "
-					+ e.getLocalizedMessage());
-		}
-		return car;
-	}
-
-	public static Character PEEK_CHAR(tINPUT_STREAM stream, tT car,
-			Boolean eofErrorP, tT eofValue, Boolean recursiveP)
-			throws EOFException
-	{
-		Character walk = READ_CHAR(stream, eofErrorP, eofValue, recursiveP);
-		boolean space = car == T;
-		boolean carTest = car instanceof tCHARACTER;
-		Character test = '\uffff';
-		if (carTest)
-			test = ((tCHARACTER) car).getChar();
-
-		while (walk != null
-		// test for space char or for terminal char
-				&& ((space && Character.isSpaceChar(walk)) || (carTest && walk != test)))
-		{
-			walk = READ_CHAR(stream, eofErrorP, eofValue, recursiveP);
-		}
-
-		if (walk != null)
-			UNREAD_CHAR(stream, walk);
-
-		return walk;
-	}
-
-	/**
-	 * @return
-	 */
-	public static boolean LISTEN(tINPUT_STREAM stream)
-	{
-		try
-		{
-			return stream.ready();
-		}
-		catch (IOException e)
-		{
-			throw new LispException("Can't listen to the file. "
-					+ e.getLocalizedMessage());
-		}
-	}
-
-	/**
-	 * @param eofErrorP
-	 * @param eofValue
-	 * @param recursiveP
-	 * @return
-	 * @throws EOFException
-	 */
-	public static Character READ_CHAR_NO_HANG(tINPUT_STREAM stream,
-			Boolean eofErrorP, tT eofValue, Boolean recursiveP)
-			throws EOFException
-	{
-		if (!LISTEN(stream))
-			return null;
-		return READ_CHAR(stream, eofErrorP, eofValue, recursiveP);
-	}
-
-	/**
-	 * @param eofErrorP
-	 * @param eofValue
-	 * @param recursiveP
-	 * @return
-	 * @throws EOFException
-	 */
-	public static tT READ(tINPUT_STREAM stream, Boolean eofErrorP, tT eofValue,
+	public tT READ(tINPUT_STREAM stream, Boolean eofErrorP, tT eofValue,
 			Boolean recursiveP) throws EOFException
 	{
 		// loop until something found or EOF
@@ -261,6 +80,68 @@ public class INPUT_STREAM extends STREAM implements tINPUT_STREAM
 		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.plugs.Cell#copy()
+	 */
+	@Override
+	public tT copy()
+	{
+		return this;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.plugs.Cell#printable()
+	 */
+	@Override
+	public String printable()
+	{
+		return "<#INPUT-STREAM " + this.getClass().getSimpleName() + ">";
+	}
+
+	public Character PEEK_CHAR(tT peekType, //
+			tINPUT_STREAM stream, //
+			Boolean eofErrorP, //
+			tT eofValue, //
+			Boolean recursiveP) throws EOFException
+
+	{
+		Character walk = READ_CHAR(stream, eofErrorP, eofValue, recursiveP);
+		boolean space = peekType == T;
+		boolean carTest = peekType instanceof tCHARACTER;
+		Character test = '\uffff';
+		if (carTest)
+			test = ((tCHARACTER) peekType).getChar();
+
+		while (walk != null
+		// test for space char or for terminal char
+				&& ((space && Character.isSpaceChar(walk)) || (carTest && walk != test)))
+		{
+			walk = READ_CHAR(stream, eofErrorP, eofValue, recursiveP);
+		}
+
+		if (walk != null)
+			UNREAD_CHAR(walk, stream);
+
+		return walk;
+	}
+
+	/**
+	 * @param eofErrorP
+	 * @param eofValue
+	 * @param recursiveP
+	 * @return
+	 * @throws EOFException
+	 */
+	public Character READ_CHAR_NO_HANG(tINPUT_STREAM stream, Boolean eofErrorP,
+			tT eofValue, Boolean recursiveP) throws EOFException
+	{
+		if (!LISTEN(stream))
+			return null;
+		return READ_CHAR(stream, eofErrorP, eofValue, recursiveP);
+	}
+
 	/**
 	 * @param stream
 	 * @param eofErrorP
@@ -272,26 +153,27 @@ public class INPUT_STREAM extends STREAM implements tINPUT_STREAM
 	public tT readMacroChar(Boolean eofErrorP, tT eofValue, Boolean recursiveP)
 			throws EOFException
 	{
-		Character curr = PEEK_CHAR(this, NIL, eofErrorP, eofValue, recursiveP);
+		Character curr = PEEK_CHAR(NIL, this, eofErrorP, eofValue, recursiveP);
 		READTABLE table = (READTABLE) readTable.SYMBOL_VALUE();
 
-		if (!table.isConstituent(curr = PEEK_CHAR(this, NIL, eofErrorP,
+		if (!table.isConstituent(curr = PEEK_CHAR(NIL, this, eofErrorP,
 				eofValue, recursiveP)))
 		{
 			curr = READ_CHAR(this, eofErrorP, eofValue, recursiveP);
 
 			// test macrochar
-			tLIST charMacro = table.getMacroCharacter(curr);
-			if (charMacro == null)
+			tT[] charMacro = table.GET_MACRO_CHARACTER(curr, table);
+			if (charMacro[0] == NIL)
 				return null;
 
 			// test macrochar extension
-			if (charMacro.CDR() == NIL)
+			if (charMacro[1] != NIL)
 			{
 				Character curr2 = READ_CHAR(this, eofErrorP, eofValue,
 						recursiveP);
-				charMacro = table.getDispatchMacroCharacter(curr, curr2);
-				if (charMacro == null)
+				charMacro[0] = table.GET_DISPATCH_MACRO_CHARACTER(curr, curr2,
+						table);
+				if (charMacro[0] == NIL)
 				{
 					throw new LispException("Macro character " + curr + curr2
 							+ " not defined");
@@ -301,15 +183,22 @@ public class INPUT_STREAM extends STREAM implements tINPUT_STREAM
 			}
 
 			// verify function
-			tFUNCTION function = ((tFUNCTION) charMacro.CAR());
+			tT function = charMacro[0];
+			if (function instanceof tSYMBOL)
+			{
+				trace = true;
+				trace("Symbol macrochar = " + function + " "
+						+ function.DESCRIBE());
+				function = ((tSYMBOL) function).SYMBOL_FUNCTION();
+			}
 			if (function == null)
 			{
 				throw new LispException("Function not defined for macrochar "
-						+ curr);
+						+ charMacro);
 			}
 
 			// Call macro function
-			tT read = function.e(this, c(curr), NIL)[0];
+			tT read = ((tFUNCTION) function).e(this, c(curr), NIL)[0];
 			return read;
 		}
 
@@ -333,7 +222,7 @@ public class INPUT_STREAM extends STREAM implements tINPUT_STREAM
 	public String readAtom(Boolean firstEscaped, Boolean eofErrorP,
 			tT eofValue, Boolean recursiveP) throws EOFException
 	{
-		Character curr = PEEK_CHAR(this, NIL, eofErrorP, eofValue, recursiveP);
+		Character curr = PEEK_CHAR(NIL, this, eofErrorP, eofValue, recursiveP);
 		READTABLE table = (READTABLE) readTable.SYMBOL_VALUE();
 		StringBuilder res = new StringBuilder("");
 		boolean singleEscaped = firstEscaped;
@@ -351,7 +240,7 @@ public class INPUT_STREAM extends STREAM implements tINPUT_STREAM
 			// single escape
 			singleEscaped = (curr == '\\') && !singleEscaped && !multiEscaped;
 		}
-		UNREAD_CHAR(this, curr);
+		UNREAD_CHAR(curr, this);
 
 		String atom = res.toString();
 		if (atom.equals(""))
@@ -381,37 +270,104 @@ public class INPUT_STREAM extends STREAM implements tINPUT_STREAM
 		return null;
 	}
 
-	@Override
-	public boolean OPEN_STREAM_P()
+	/**
+	 * @return
+	 */
+	@Static(name = "load")
+	public static tT[] LOAD( //
+			@Arg(name = "file") tT file, //
+			@Opt(name = "verbose", def = "t") Boolean verbose, //
+			@Opt(name = "print", def = "t") Boolean print, //
+			@Opt(name = "not-exists", def = "nil") Boolean notExists)
 	{
-		// TODO Auto-generated method stub
-		return reader != null;
-	}
+		String name;
+		tINPUT_STREAM in;
 
-	@Override
-	public int read() throws IOException
-	{
-		return reader.read();
-	}
+		if (file instanceof tINPUT_STREAM)
+		{
+			in = (tINPUT_STREAM) file;
+			name = in.printable();
+		}
+		else
+		{
+			if (file instanceof tSTRING)
+				name = ((tSTRING) file).getString();
+			else if (file instanceof tSYMBOL)
+				name = ((tSYMBOL) file).SYMBOL_NAME();
+			else
+			{
+				throw new LispException(
+						"Filename should be a string or an atom");
+			}
 
-	@Override
-	public boolean ready() throws IOException
-	{
-		return reader.ready();
-	}
+			try
+			{
+				in = new FILE_INPUT_STREAM(new FileInputStream(name));
+			}
+			catch (FileNotFoundException e)
+			{
+				if (notExists)
+				{
+					return new tT[]
+					{ NIL };
+				}
+				throw new LispException("Error opening " + name + " "
+						+ e.getLocalizedMessage());
+			}
+		}
 
-	@Override
-	public void unread(Character car) throws IOException
-	{
-		// TODO Auto-generated method stub
-		reader.unread(car);
-	}
+		if (verbose)
+		{
+			System.out.println("; Loading contents of file " + name);
+		}
 
-	@Override
-	public void close() throws IOException
-	{
-		// TODO Auto-generated method stub
-		reader.close();
+		// while there's something to read
+		try
+		{
+			tT[] res;
+			for (;;)
+			{
+				// read it
+				res = new tT[]
+				{ in.READ(in, false, NIL, false) };
+
+				if (verbose)
+				{
+					System.out.println("; lisp>" + res[0]);
+				}
+
+				// and evaluate it
+				// System.out.println("eval : " + res[0]);
+				res = res[0].EVAL();
+
+				if (print)
+					for (tT cell : res)
+					{
+						System.out.println("; " + cell);
+					}
+			}
+		}
+		catch (EOFException e)
+		{
+			// End of file
+		}
+		catch (LispException e)
+		{
+			// Lisp error transfer
+			throw e;
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			throw new LispException(e.getLocalizedMessage());
+		}
+
+		if (verbose)
+		{
+			System.out.println("; Finished loading " + name);
+		}
+		return new tT[]
+		{ T };
 	}
 
 }

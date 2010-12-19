@@ -19,18 +19,18 @@
 //--------------------------------------------------------------------------
 // history
 //--------------------------------------------------------------------------
-// IP 10 nov. 2010 Creation
+// IP 18 déc. 2010 Creation
 //--------------------------------------------------------------------------
 
 package aloyslisp.core.types;
 
 /**
- * tCOMPILED_FUNCTION
+ * tFILE_OUTPUT_STREAM
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  *
  */
-public interface tCOMPILED_FUNCTION extends tFUNCTION, tFUNCTION_DESIGNATOR
+public interface tFILE_OUTPUT_STREAM extends tOUTPUT_STREAM, tFILE_STREAM
 {
 
 }

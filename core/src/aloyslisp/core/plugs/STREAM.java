@@ -29,6 +29,7 @@
 
 package aloyslisp.core.plugs;
 
+import aloyslisp.core.annotations.*;
 import aloyslisp.core.types.*;
 
 /**
@@ -40,5 +41,33 @@ import aloyslisp.core.types.*;
  */
 public abstract class STREAM extends CELL implements tSTREAM
 {
+	/**
+	 * @param stream
+	 * @param form
+	 * @return
+	 */
+	@Special
+	@Static(name = "with-open-stream")
+	public static tT WITH_OPEN_STREAM(tLIST stream, tT... form)
+	{
+		return null;
+	}
+
+	/**
+	 * @param fileSpec
+	 * @param direction
+	 * @param ifExists
+	 * @param ifDoesNotExists
+	 * @param externalFormat
+	 * @return
+	 */
+	@Special
+	@Static(name = "open")
+	public static tT OPEN(tFILE_DESIGNATOR fileSpec, tSYMBOL direction,
+			tSYMBOL ifExists, tSYMBOL ifDoesNotExists, tT externalFormat)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

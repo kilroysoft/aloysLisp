@@ -31,9 +31,6 @@
 
 package aloyslisp.core.plugs;
 
-import java.io.EOFException;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.lang.annotation.*;
 import java.lang.reflect.*;
 
@@ -150,104 +147,6 @@ public class Primitives
 	}
 
 	/**
-	 * @return
-	 */
-	@Static(name = "load")
-	public tT[] IMPL(@Arg(name = "file") tT file, //
-			@Opt(name = "verbose", def = "t") Boolean verbose, //
-			@Opt(name = "print", def = "t") Boolean print, //
-			@Opt(name = "not-exists", def = "nil") Boolean notExists)
-	{
-		String name;
-		tINPUT_STREAM in;
-
-		if (file instanceof tINPUT_STREAM)
-		{
-			in = (tINPUT_STREAM) file;
-			name = in.printable();
-		}
-		else
-		{
-			if (file instanceof tSTRING)
-				name = ((tSTRING) file).getString();
-			else if (file instanceof tSYMBOL)
-				name = ((tSYMBOL) file).SYMBOL_NAME();
-			else
-			{
-				throw new LispException(
-						"Filename should be a string or an atom");
-			}
-
-			try
-			{
-				in = new INPUT_STREAM(new FileInputStream(name));
-			}
-			catch (FileNotFoundException e)
-			{
-				if (notExists)
-				{
-					return new tT[]
-					{ NIL };
-				}
-				throw new LispException("Error opening " + name + " "
-						+ e.getLocalizedMessage());
-			}
-		}
-
-		if (verbose)
-		{
-			System.out.println("; Loading contents of file " + name);
-		}
-
-		// while there's something to read
-		try
-		{
-			tT[] res;
-			for (;;)
-			{
-				// read it
-				res = new tT[]
-				{ INPUT_STREAM.READ(in, false, NIL, false) };
-
-				if (verbose)
-				{
-					System.out.println("; lisp>" + res[0]);
-				}
-
-				// and evaluate it
-				// System.out.println("eval : " + res[0]);
-				res = res[0].EVAL();
-
-				if (print)
-					for (tT cell : res)
-					{
-						System.out.println("; " + cell);
-					}
-			}
-		}
-		catch (EOFException e)
-		{
-			// End of file
-		}
-		catch (LispException e)
-		{
-			// Lisp error transfer
-			throw e;
-		}
-		catch (Exception e)
-		{
-			throw new LispException(e.getLocalizedMessage());
-		}
-
-		if (verbose)
-		{
-			System.out.println("; Finished loading " + name);
-		}
-		return new tT[]
-		{ T };
-	}
-
-	/**
 	 * Read all lisp functions of the class and create appropriate package entry
 	 * 
 	 * There is different types of functions
@@ -304,8 +203,9 @@ public class Primitives
 			else if (f != null)
 			{
 				// Object primitive
-				func = new PRIMITIVE(c, m.getName(), (tLIST) list(sym("obj"))
-						.APPEND(argsDecl(notes)), f.doc(), declareArgs());
+				func = new PRIMITIVE(c, m.getName(), argsDecl(notes), f.doc(),
+						declareArgs());
+				func.setBaseArg(noArgsBase(notes));
 				sym(f.name()).SET_SYMBOL_FUNCTION(func);
 			}
 			else
@@ -372,7 +272,7 @@ public class Primitives
 						if (call)
 							arg = unquote(arg);
 						else
-							arg = list(arg).APPEND(list(((Opt) a).def()));
+							arg = list(arg).APPEND(list(sym(((Opt) a).def())));
 					}
 					else if (a instanceof Key)
 					{
@@ -380,7 +280,7 @@ public class Primitives
 						if (call)
 							arg = unquote(arg);
 						else
-							arg = list(arg).APPEND(list(((Key) a).def()));
+							arg = list(arg).APPEND(list(sym(((Key) a).def())));
 					}
 					else if (a instanceof Rest)
 					{
@@ -399,5 +299,34 @@ public class Primitives
 			res = (tLIST) decl(prefix).APPEND(res);
 
 		return res;
+	}
+
+	/**
+	 * @param notes
+	 * @return
+	 */
+	private static Integer noArgsBase(Annotation[][] notes)
+	{
+		int base = 0;
+
+		for (Annotation[] an : notes)
+		{
+			for (Annotation a : an)
+			{
+				if (a instanceof Arg || a instanceof Opt || a instanceof Key
+						|| a instanceof Rest)
+				{
+					base++;
+				}
+				else if (a instanceof BaseArg)
+				{
+					System.out.println("-----------> base arg = " + base);
+					return base;
+				}
+			}
+		}
+
+		// First arg is discarded
+		return -1;
 	}
 }

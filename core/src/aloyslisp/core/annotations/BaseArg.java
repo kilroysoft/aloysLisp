@@ -29,10 +29,7 @@
 
 package aloyslisp.core.annotations;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import java.lang.annotation.*;
 
 /**
  * Defines object used as base object for method function call.
@@ -45,25 +42,4 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface BaseArg
 {
-	/**
-	 * Lisp name of arg
-	 * 
-	 * @return
-	 */
-	String name();
-
-	/**
-	 * Function to convert argument
-	 * 
-	 * @return
-	 */
-	String convert() default "";
-
-	/**
-	 * Default value as a string
-	 * 
-	 * @return
-	 */
-	String def() default "";
-
 }

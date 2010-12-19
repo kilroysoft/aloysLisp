@@ -29,8 +29,9 @@
 
 package aloyslisp.core.types;
 
-import java.io.EOFException;
-import java.io.IOException;
+import java.io.*;
+
+import aloyslisp.core.annotations.*;
 
 /**
  * tINPUT_STREAM
@@ -42,38 +43,157 @@ import java.io.IOException;
 public interface tINPUT_STREAM extends tSTREAM
 {
 	/**
+	 * @param stream
+	 * @param eofErrorP
+	 * @param eofValue
+	 * @param recursiveP
 	 * @return
-	 * @throws IOException
+	 * @throws EOFException
 	 */
-	public int read() throws IOException;
+	@Function(name = "read")
+	public tT READ(
+			@BaseArg @Opt(name = "input-stream", def = "*standard-input*") tINPUT_STREAM stream, //
+			@Opt(name = "eof-error-p", def = "t") Boolean eofErrorP, //
+			@Opt(name = "eof-value", def = "nil") tT eofValue, //
+			@Opt(name = "recursive-p", def = "nil") Boolean recursiveP)
+			throws EOFException;
 
 	/**
+	 * @param stream
+	 * @param eofErrorP
+	 * @param eofValue
+	 * @param recursiveP
 	 * @return
-	 * @throws IOException
+	 * @throws EOFException
 	 */
-	public boolean ready() throws IOException;
+	@Function(name = "read-char")
+	public Character READ_CHAR( //
+			@BaseArg @Opt(name = "input-stream", def = "*standard-input*") tINPUT_STREAM stream, //
+			@Opt(name = "eof-error-p", def = "t") Boolean eofErrorP, //
+			@Opt(name = "eof-value", def = "nil") tT eofValue, //
+			@Opt(name = "recursive-p", def = "nil") Boolean recursiveP)
+			throws EOFException;
 
 	/**
+	 * @param stream
 	 * @param car
-	 * @throws IOException
+	 * @param eofErrorP
+	 * @param eofValue
+	 * @param recursiveP
+	 * @return
+	 * @throws EOFException
 	 */
-	public void unread(Character car) throws IOException;
+	@Function(name = "peek-char")
+	public Character PEEK_CHAR(
+			@Arg(name = "peek-type") tT peekType, //
+			@BaseArg @Opt(name = "input-stream", def = "*standard-input*") tINPUT_STREAM stream, //
+			@Opt(name = "eof-error-p", def = "t") Boolean eofErrorP, //
+			@Opt(name = "eof-value", def = "nil") tT eofValue, //
+			@Opt(name = "recursive-p", def = "nil") Boolean recursiveP)
+			throws EOFException;
 
 	/**
-	 * @throws IOException
+	 * @param stream
+	 * @param car
+	 * @return
 	 */
-	public void close() throws IOException;
+	@Function(name = "unread-char")
+	public Character UNREAD_CHAR(
+			@Arg(name = "character") Character character,
+			@BaseArg @Opt(name = "input-stream", def = "*standard-input*") tINPUT_STREAM stream);
+
+	/**
+	 * @param stream
+	 * @return
+	 */
+	@Function(name = "listen")
+	public boolean LISTEN(
+			@BaseArg @Opt(name = "input-stream", def = "*standard-input*") tINPUT_STREAM stream);
+
+	/**
+	 * @param stream
+	 * @return
+	 */
+	@Function(name = "clear-input")
+	public tT CLEAR_INPUT(
+			@BaseArg @Opt(name = "input-stream", def = "*standard-input*") tINPUT_STREAM stream);
+
+	/**
+	 * @param stream
+	 * @param eofErrorP
+	 * @param eofValue
+	 * @param recursiveP
+	 * @return
+	 * @throws EOFException
+	 */
+	@Function(name = "read-byte")
+	public Integer READ_BYTE(
+			@BaseArg @Opt(name = "input-stream", def = "*standard-input*") tINPUT_STREAM stream, //
+			@Opt(name = "eof-error-p", def = "t") Boolean eofErrorP, //
+			@Opt(name = "eof-value", def = "nil") tT eofValue, //
+			@Opt(name = "recursive-p", def = "nil") Boolean recursiveP)
+			throws EOFException;
+
+	/**
+	 * @param stream
+	 * @param eofErrorP
+	 * @param eofValue
+	 * @param recursiveP
+	 * @return
+	 * @throws EOFException
+	 */
+	@Function(name = "read-char-no-hang")
+	public Character READ_CHAR_NO_HANG(
+			@BaseArg @Opt(name = "input-stream", def = "*standard-input*") tINPUT_STREAM stream, //
+			@Opt(name = "eof-error-p", def = "t") Boolean eofErrorP, //
+			@Opt(name = "eof-value", def = "nil") tT eofValue, //
+			@Opt(name = "recursive-p", def = "nil") Boolean recursiveP)
+			throws EOFException;
+
+	/**
+	 * @param sequence
+	 * @param stream
+	 * @param start
+	 * @param end
+	 * @return
+	 */
+	@Function(name = "read-sequence")
+	public tT READ_SEQUENCE( //
+			@Arg(name = "sequence") tSEQUENCE sequence, //
+			@BaseArg @Arg(name = "input-stream") tINPUT_STREAM stream, //
+			@Opt(name = "start", def = "0") Integer start, //
+			@Opt(name = "end", def = "-1") Integer end);
+
+	/**
+	 * @param stream
+	 * @param eofErrorP
+	 * @param eofValue
+	 * @param recursiveP
+	 * @return
+	 * @throws EOFException
+	 */
+	@Function(name = "read-line")
+	public tT[] READ_LINE(
+			@BaseArg @Opt(name = "input-stream", def = "*standard-input*") tINPUT_STREAM stream, //
+			@Opt(name = "eof-error-p", def = "t") Boolean eofErrorP, //
+			@Opt(name = "eof-value", def = "nil") tT eofValue, //
+			@Opt(name = "recursive-p", def = "nil") Boolean recursiveP)
+			throws EOFException;
 
 	/**
 	 * Read an atom as string
 	 * 
+	 * @param eofErrorP
+	 * @param eofValue
+	 * @param recursiveP
 	 * @return
 	 * @throws EOFException
 	 */
 	public String readAtom( //
-			Boolean eofErrorP, //
-			tT eofValue, //
-			Boolean recursiveP) throws EOFException;
+			@Opt(name = "eof-error-p", def = "t") Boolean eofErrorP, //
+			@Opt(name = "eof-value", def = "nil") tT eofValue, //
+			@Opt(name = "recursive-p", def = "nil") Boolean recursiveP)
+			throws EOFException;
 
 	/**
 	 * Read an atom as string, first character can be escaped (for char

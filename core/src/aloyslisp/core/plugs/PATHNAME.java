@@ -19,18 +19,39 @@
 //--------------------------------------------------------------------------
 // history
 //--------------------------------------------------------------------------
-// IP 10 nov. 2010 Creation
+// IP 18 déc. 2010 Creation
 //--------------------------------------------------------------------------
 
-package aloyslisp.core.types;
+package aloyslisp.core.plugs;
+
+import aloyslisp.core.types.tPATHNAME;
+import aloyslisp.core.types.tT;
 
 /**
- * tCOMPILED_FUNCTION
+ * PATHNAME
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  *
  */
-public interface tCOMPILED_FUNCTION extends tFUNCTION, tFUNCTION_DESIGNATOR
+public class PATHNAME extends CELL implements tPATHNAME
 {
+
+	/**
+	 * 
+	 */
+	public PATHNAME()
+	{
+		// TODO Auto-generated constructor stub
+	}
+
+	/* (non-Javadoc)
+	 * @see aloyslisp.core.types.tT#COERCE(aloyslisp.core.types.tT)
+	 */
+	@Override
+	public tT COERCE(tT type)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

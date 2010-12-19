@@ -29,6 +29,8 @@
 
 package aloyslisp.core.types;
 
+import aloyslisp.core.annotations.*;
+
 /**
  * IOutput
  * 
@@ -41,53 +43,123 @@ public interface tOUTPUT_STREAM extends tSTREAM
 	/**
 	 * Write a char
 	 * 
-	 * @param obj
-	 */
-	public void putc(Character car);
-
-	/**
-	 * Write a char
-	 * 
-	 * @param car
+	 * @param character
+	 * @param stream
 	 * @return
 	 */
-	public Character WRITE_CHAR(Character car);
+	@Function(name = "write-char")
+	public Character WRITE_CHAR(
+			@Arg(name = "character") Character character, //
+			@BaseArg @Opt(name = "stream", def = "*standard-output*") tOUTPUT_STREAM stream);
 
 	/**
-	 * Write an object
+	 * @param val
+	 * @param stream
+	 * @return
+	 */
+	public Integer WRITE_BYTE(
+			@Arg(name = "val") Integer val, //
+			@BaseArg @Opt(name = "stream", def = "*standard-output*") tOUTPUT_STREAM stream);
+
+	/**
+	 * Write an object. This is a base function not the LISP one.
 	 * 
 	 * @param obj
 	 * @return
 	 */
-	public tT WRITE(tT obj);
+	@Function(name = "%write")
+	public tT WRITE(
+			//
+			@Arg(name = "object") tT obj, //
+			@BaseArg @Opt(name = "stream", def = "*standard-output*") tOUTPUT_STREAM stream);
 
 	/**
-	 * @param str
+	 * @param obj
+	 * @param stream
+	 * @return
 	 */
-	public tT WRITE_STRING(tT str, tT start, tT end);
+	@Function(name = "prin1")
+	public tT PRIN1(
+			//
+			@Arg(name = "object") tT obj, //
+			@BaseArg @Opt(name = "stream", def = "*standard-output*") tOUTPUT_STREAM stream);
 
 	/**
+	 * @param obj
+	 * @param stream
+	 * @return
+	 */
+	@Function(name = "princ")
+	public tT PRINC(
+			//
+			@Arg(name = "object") tT obj, //
+			@BaseArg @Opt(name = "stream", def = "*standard-output*") tOUTPUT_STREAM stream);
+
+	/**
+	 * @param obj
+	 * @param stream
+	 * @return
+	 */
+	@Function(name = "print")
+	public tT PRINT(
+			@Arg(name = "object") tT obj, //
+			@BaseArg @Opt(name = "stream", def = "*standard-output*") tOUTPUT_STREAM stream);
+
+	/**
+	 * Print new line
 	 * 
+	 * @param stream
+	 * @return
 	 */
-	public tNULL TERPRI();
+	@Function(name = "terpri")
+	public tNULL TERPRI(
+			@BaseArg @Opt(name = "stream", def = "*standard-output*") tOUTPUT_STREAM stream);
 
 	/**
+	 * Print newline if necessary
 	 * 
+	 * @param stream
+	 * @return
 	 */
-	public tT FRESH_LINE();
+	@Function(name = "fresh-line")
+	public tT FRESH_LINE(
+			@BaseArg @Opt(name = "stream", def = "*standard-output*") tOUTPUT_STREAM stream);
 
 	/**
-	 * 
+	 * @param stream
+	 * @return
 	 */
-	public tT FINISH_OUTPUT();
+	@Function(name = "finish-output")
+	public tT FINISH_OUTPUT(
+			@BaseArg @Opt(name = "stream", def = "*standard-output*") tOUTPUT_STREAM stream);
 
 	/**
-	 * 
+	 * @param stream
+	 * @return
 	 */
-	public tT FORCE_OUTPUT();
+	@Function(name = "force-output")
+	public tT FORCE_OUTPUT(
+			@BaseArg @Opt(name = "stream", def = "*standard-output*") tOUTPUT_STREAM stream);
 
 	/**
-	 * 
+	 * @param stream
+	 * @return
 	 */
-	public tT CLEAR_OUTPUT();
+	@Function(name = "clear-output")
+	public tT CLEAR_OUTPUT(
+			@BaseArg @Opt(name = "stream", def = "*standard-output*") tOUTPUT_STREAM stream);
+
+	/**
+	 * @param obj
+	 * @param stream
+	 * @param start
+	 * @param end
+	 * @return
+	 */
+	@Function(name = "write-string")
+	public tT WRITE_STRING(
+			@Arg(name = "object") tT obj, //
+			@BaseArg @Opt(name = "stream", def = "*standard-output*") tOUTPUT_STREAM stream,
+			@Key(name = "start", def = "0") tT start,
+			@Key(name = "end", def = "nil") tT end);
 }

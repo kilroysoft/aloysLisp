@@ -62,7 +62,15 @@ public abstract class FUNCTION extends CELL implements tFUNCTION
 	 */
 	public Method		method	= null;
 
+	/**
+	 * Static object for static function
+	 */
 	tT					object	= null;
+
+	/**
+	 * Number of argument used as base object for primitives
+	 */
+	Integer				baseArg	= -1;
 
 	/**
 	 * Creation with arguments detail
@@ -90,6 +98,15 @@ public abstract class FUNCTION extends CELL implements tFUNCTION
 			System.err.println("Function " + f + " not found in class "
 					+ c.getCanonicalName());
 		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.types.tFUNCTION#setBaseArg(java.lang.Integer)
+	 */
+	public void setBaseArg(Integer no)
+	{
+		baseArg = no;
 	}
 
 	/*
@@ -126,10 +143,9 @@ public abstract class FUNCTION extends CELL implements tFUNCTION
 			e.newClosure();
 
 		intern.pushBlock(args);
-
+		args = intern.getValues();
 		// trace arguments
-		// System.out.println("\nv----TRACE---->" + this + "\n" + e.trace(false)
-		// + "^------------");
+		System.out.println(this + "\n->" + method.getName() + " " + args);
 
 		try
 		{
@@ -146,16 +162,24 @@ public abstract class FUNCTION extends CELL implements tFUNCTION
 			// Transform arguments
 			if (object == null)
 			{
-				newArgs = tranformArgs(method.getParameterTypes(),
-						(tLIST) args.CDR());
-				actObj = args.CAR();
+				if (baseArg >= 0)
+				{
+					newArgs = tranformArgs(method.getParameterTypes(), args);
+					actObj = args.ELT(baseArg);
+				}
+				else
+				{
+					newArgs = tranformArgs(method.getParameterTypes(),
+							(tLIST) args.CDR());
+					actObj = args.CAR();
+				}
 			}
 			else
 				newArgs = tranformArgs(method.getParameterTypes(), args);
 
 			// Call function
-			System.out.println("exec(" + method.getName() + " (" + actObj
-					+ ") " + args + ")");
+			// System.out.println("exec(" + method.getName() + " (" + actObj
+			// + ") " + args + ")");
 			Object ret = method.invoke(actObj, newArgs);
 
 			// if function return multiple values
@@ -168,6 +192,7 @@ public abstract class FUNCTION extends CELL implements tFUNCTION
 		}
 		catch (IllegalArgumentException e)
 		{
+			e.printStackTrace();
 			throw new LispException("Function " + intern.getStringName()
 					+ " bad arguments : " + e.getLocalizedMessage());
 		}
@@ -379,91 +404,6 @@ public abstract class FUNCTION extends CELL implements tFUNCTION
 	}
 
 	/**
-	 * @param c
-	 *            Class to invoque
-	 * @param obj
-	 *            Object to manage (unused if static function)
-	 * @param name
-	 *            Name of the function
-	 * @param arg
-	 *            Arguments as the class list
-	 * @return
-	 */
-	public tT[] invoke(Class<?> c, Object obj, String name, tLIST arg)
-	{
-		Method[] meth = c.getMethods();
-		boolean nameFound = false;
-		name = name.replace("-", "_");
-		for (Method m : meth)
-		{
-
-			m.getParameterAnnotations();
-
-			if (m.getName().equalsIgnoreCase(name))
-			{
-				Class<?>[] paramTypes = m.getParameterTypes();
-				nameFound = true;
-
-				// Test arguments number, type is always tT
-				if (m.isVarArgs())
-				{
-					// Variable number mandatory should be given
-					if (paramTypes.length > arg.LENGTH())
-						continue;
-				}
-				// test nb of arguments match
-				else if (paramTypes.length != arg.LENGTH())
-					continue;
-
-				// Transform arguments
-				Object[] newArgs = tranformArgs(paramTypes, arg);
-
-				// found
-				try
-				{
-					Object res = m.invoke(obj, newArgs);
-
-					// if function return multiple values
-					if (res instanceof tT[])
-						return (tT[]) res;
-
-					// return value as tT
-					return new tT[]
-					{ normalize(res) };
-				}
-				catch (IllegalArgumentException e)
-				{
-					throw new LispException("Function " + name
-							+ " bad arguments : " + e.getLocalizedMessage());
-				}
-				catch (IllegalAccessException e)
-				{
-					e.printStackTrace();
-				}
-				catch (InvocationTargetException e)
-				{
-					if (sym("*trace*").SYMBOL_VALUE() != NIL)
-					{
-						e.getCause().printStackTrace();
-					}
-					throw new LispException(e.getCause().getLocalizedMessage());
-				}
-				catch (RuntimeException e)
-				{
-					// throw back exception upper
-					throw new LispException(e.getLocalizedMessage());
-				}
-			}
-		}
-
-		if (nameFound)
-			throw new LispException("%primitive : Bad argument number for "
-					+ name);
-
-		throw new LispErrorFunctionCannotApplyOn("%primitive : " + name, arg(1));
-	}
-
-	/**
 	 * @param paramTypes
 	 * @param arg
 	 * @return
@@ -473,7 +413,7 @@ public abstract class FUNCTION extends CELL implements tFUNCTION
 		// Transform arguments
 		int i = 0;
 		Object[] newArgs = new Object[paramTypes.length];
-		System.out.println("Args : " + arg);
+		// System.out.println("Args : " + arg);
 		for (Class<?> classArg : paramTypes)
 		{
 			if (classArg.isArray())
@@ -551,6 +491,11 @@ public abstract class FUNCTION extends CELL implements tFUNCTION
 		if (cl == String.class && arg instanceof tSTRING)
 		{
 			return ((tSTRING) arg).getString();
+		}
+
+		if (cl == Character.class && arg instanceof tCHARACTER)
+		{
+			return ((tCHARACTER) arg).getChar();
 		}
 
 		System.out.println("transform " + arg.getClass() + "->" + cl);

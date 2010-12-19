@@ -34,10 +34,11 @@
 
 package aloyslisp.core.plugs;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.io.EOFException;
+import java.util.*;
 
 import static aloyslisp.commonlisp.L.*;
+import aloyslisp.core.annotations.*;
 import aloyslisp.core.common.*;
 import aloyslisp.core.types.*;
 
@@ -112,81 +113,105 @@ public class READTABLE extends CELL implements tREADTABLE
 		// default value
 		caseVal = CaseType.DOWNCASE;
 
+		System.out.println("-------->" + sym("%comment-reader").DESCRIBE());
+
 		// standard macro char
-		setMacroCharacter('"', sym("sys::%string-reader").SYMBOL_FUNCTION(),
-				false);
-		setMacroCharacter('\'', sym("sys::%quote-reader").SYMBOL_FUNCTION(),
-				false);
-		setMacroCharacter('(', sym("sys::%parent-reader").SYMBOL_FUNCTION(),
-				false);
-		setMacroCharacter(')', sym("sys::%close-parent-reader")
-				.SYMBOL_FUNCTION(), false);
-		setMacroCharacter(',', sym("sys::%unquote-reader").SYMBOL_FUNCTION(),
-				false);
-		setMacroCharacter(';', sym("sys::%comment-reader").SYMBOL_FUNCTION(),
-				false);
-		setMacroCharacter('`', sym("sys::%backquote-reader").SYMBOL_FUNCTION(),
-				false);
+		SET_MACRO_CHARACTER('"', sym("sys::%string-reader"), false, this);
+		SET_MACRO_CHARACTER('\'', sym("sys::%quote-reader"), false, this);
+		SET_MACRO_CHARACTER('(', sym("sys::%parent-reader"), false, this);
+		SET_MACRO_CHARACTER(')', sym("sys::%close-parent-reader"), false, this);
+		SET_MACRO_CHARACTER(',', sym("sys::%unquote-reader"), false, this);
+		SET_MACRO_CHARACTER(';', sym("%comment-reader"), false, this);
+		SET_MACRO_CHARACTER('`', sym("sys::%backquote-reader"), false, this);
 
 		// as standard only # as dispatch macro
-		makeDispatchMacroCharacter('#', true);
+		MAKE_DISPATCH_MACRO_CHARACTER('#', true, this);
 
 		// reserved
-		setDispatchMacroCharacter('#', '!', null);
-		setDispatchMacroCharacter('#', '?', null);
-		setDispatchMacroCharacter('#', '[', null);
-		setDispatchMacroCharacter('#', ']', null);
-		setDispatchMacroCharacter('#', '{', null);
-		setDispatchMacroCharacter('#', '}', null);
+		SET_DISPATCH_MACRO_CHRACTER('#', '!', NIL, this);
+		SET_DISPATCH_MACRO_CHRACTER('#', '?', NIL, this);
+		SET_DISPATCH_MACRO_CHRACTER('#', '[', NIL, this);
+		SET_DISPATCH_MACRO_CHRACTER('#', ']', NIL, this);
+		SET_DISPATCH_MACRO_CHRACTER('#', '{', NIL, this);
+		SET_DISPATCH_MACRO_CHRACTER('#', '}', NIL, this);
 
 		// signal error
-		setDispatchMacroCharacter('#', '<', null);
-		setDispatchMacroCharacter('#', '\b', null);
-		setDispatchMacroCharacter('#', '\t', null);
-		setDispatchMacroCharacter('#', '\r', null);
-		setDispatchMacroCharacter('#', '\n', null);
-		setDispatchMacroCharacter('#', '\f', null);
-		setDispatchMacroCharacter('#', ' ', null);
-		setDispatchMacroCharacter('#', ')', null);
+		SET_DISPATCH_MACRO_CHRACTER('#', '<', NIL, this);
+		SET_DISPATCH_MACRO_CHRACTER('#', '\b', NIL, this);
+		SET_DISPATCH_MACRO_CHRACTER('#', '\t', NIL, this);
+		SET_DISPATCH_MACRO_CHRACTER('#', '\r', NIL, this);
+		SET_DISPATCH_MACRO_CHRACTER('#', '\n', NIL, this);
+		SET_DISPATCH_MACRO_CHRACTER('#', '\f', NIL, this);
+		SET_DISPATCH_MACRO_CHRACTER('#', ' ', NIL, this);
+		SET_DISPATCH_MACRO_CHRACTER('#', ')', NIL, this);
 
 		// undefined
-		setDispatchMacroCharacter('#', '"', null);
-		setDispatchMacroCharacter('#', '$', null);
-		setDispatchMacroCharacter('#', '%', null);
-		setDispatchMacroCharacter('#', '&', null);
-		setDispatchMacroCharacter('#', ';', null);
-		setDispatchMacroCharacter('#', '>', null);
-		setDispatchMacroCharacter('#', '@', null);
-		setDispatchMacroCharacter('#', '^', null);
-		setDispatchMacroCharacter('#', '_', null);
-		setDispatchMacroCharacter('#', '`', null);
-		setDispatchMacroCharacter('#', '~', null);
-		setDispatchMacroCharacter('#', '/', null);
+		SET_DISPATCH_MACRO_CHRACTER('#', '"', NIL, this);
+		SET_DISPATCH_MACRO_CHRACTER('#', '$', NIL, this);
+		SET_DISPATCH_MACRO_CHRACTER('#', '%', NIL, this);
+		SET_DISPATCH_MACRO_CHRACTER('#', '&', NIL, this);
+		SET_DISPATCH_MACRO_CHRACTER('#', ';', NIL, this);
+		SET_DISPATCH_MACRO_CHRACTER('#', '>', NIL, this);
+		SET_DISPATCH_MACRO_CHRACTER('#', '@', NIL, this);
+		SET_DISPATCH_MACRO_CHRACTER('#', '^', NIL, this);
+		SET_DISPATCH_MACRO_CHRACTER('#', '_', NIL, this);
+		SET_DISPATCH_MACRO_CHRACTER('#', '`', NIL, this);
+		SET_DISPATCH_MACRO_CHRACTER('#', '~', NIL, this);
+		SET_DISPATCH_MACRO_CHRACTER('#', '/', NIL, this);
 
 		// macro char
-		setDispatchMacroCharacter('#', '#', null);
-		setDispatchMacroCharacter('#', '\'', sym("sys::%function-reader")
-				.SYMBOL_FUNCTION());
-		setDispatchMacroCharacter('#', '(', null);
-		setDispatchMacroCharacter('#', '*', null);
-		setDispatchMacroCharacter('#', ',', null);
-		setDispatchMacroCharacter('#', ':', sym("sys::%unintern-reader")
-				.SYMBOL_FUNCTION());
-		setDispatchMacroCharacter('#', '=', null);
-		setDispatchMacroCharacter('#', '\\', sym("sys::%character-reader")
-				.SYMBOL_FUNCTION());
-		setDispatchMacroCharacter('#', '|', null);
-		setDispatchMacroCharacter('#', '+', null);
-		setDispatchMacroCharacter('#', '-', null);
-		setDispatchMacroCharacter('#', '.', null);
-		setDispatchMacroCharacter('#', 'A', null);
-		setDispatchMacroCharacter('#', 'B', null);
-		setDispatchMacroCharacter('#', 'C', null);
-		setDispatchMacroCharacter('#', 'O', null);
-		setDispatchMacroCharacter('#', 'P', null);
-		setDispatchMacroCharacter('#', 'R', null);
-		setDispatchMacroCharacter('#', 'S', null);
-		setDispatchMacroCharacter('#', 'X', null);
+		SET_DISPATCH_MACRO_CHRACTER('#', '#', NIL, this);
+		SET_DISPATCH_MACRO_CHRACTER('#', '\'', sym("sys::%function-reader"),
+				this);
+		SET_DISPATCH_MACRO_CHRACTER('#', '(', NIL, this);
+		SET_DISPATCH_MACRO_CHRACTER('#', '*', NIL, this);
+		SET_DISPATCH_MACRO_CHRACTER('#', ',', NIL, this);
+		SET_DISPATCH_MACRO_CHRACTER('#', ':', sym("sys::%unintern-reader"),
+				this);
+		SET_DISPATCH_MACRO_CHRACTER('#', '=', NIL, this);
+		SET_DISPATCH_MACRO_CHRACTER('#', '\\', sym("sys::%character-reader"),
+				this);
+		SET_DISPATCH_MACRO_CHRACTER('#', '|', NIL, this);
+		SET_DISPATCH_MACRO_CHRACTER('#', '+', NIL, this);
+		SET_DISPATCH_MACRO_CHRACTER('#', '-', NIL, this);
+		SET_DISPATCH_MACRO_CHRACTER('#', '.', NIL, this);
+		SET_DISPATCH_MACRO_CHRACTER('#', 'A', NIL, this);
+		SET_DISPATCH_MACRO_CHRACTER('#', 'B', NIL, this);
+		SET_DISPATCH_MACRO_CHRACTER('#', 'C', NIL, this);
+		SET_DISPATCH_MACRO_CHRACTER('#', 'O', NIL, this);
+		SET_DISPATCH_MACRO_CHRACTER('#', 'P', NIL, this);
+		SET_DISPATCH_MACRO_CHRACTER('#', 'R', NIL, this);
+		SET_DISPATCH_MACRO_CHRACTER('#', 'S', NIL, this);
+		SET_DISPATCH_MACRO_CHRACTER('#', 'X', NIL, this);
+	}
+
+	/**
+	 * @param character
+	 * @param stream
+	 * @param recursiveP
+	 * @return
+	 * @throws EOFException
+	 */
+	@Static(name = "read-delimited-list")
+	public static tT READ_DELIMITED_LIST(
+			@Arg(name = "character") Character character, //
+			@BaseArg @Opt(name = "input-stream", def = "*standard-input*") tINPUT_STREAM stream, //
+			@Opt(name = "recursive-p", def = "nil") Boolean recursiveP)
+			throws EOFException
+	{
+		return null;
+	}
+
+	@Static(name = "read-preserving-whitespace")
+	public static tT READ_PRESERVING_WHITESPACE()
+	{
+		return null;
+	}
+
+	@Static(name = "read-from string")
+	public static tT READ_FROM_STRING()
+	{
+		return null;
 	}
 
 	/*
@@ -211,11 +236,9 @@ public class READTABLE extends CELL implements tREADTABLE
 
 	/*
 	 * (non-Javadoc)
-	 * @see
-	 * aloyslisp.core.plugs.collections.IReadTable#isConstituent(java.lang.Character
-	 * )
+	 * @see aloyslisp.core.types.tREADTABLE#isConstituent(java.lang.Character)
 	 */
-	public boolean isConstituent(Character car)
+	public Boolean isConstituent(Character car)
 	{
 		switch (car)
 		{
@@ -232,65 +255,83 @@ public class READTABLE extends CELL implements tREADTABLE
 	/*
 	 * (non-Javadoc)
 	 * @see
-	 * aloyslisp.core.plugs.collections.IReadTable#makeDispatchMacroCharacter
-	 * (java.lang.Character, boolean)
+	 * aloyslisp.core.types.tREADTABLE#MAKE_DISPATCH_MACRO_CHARACTER(java.lang
+	 * .Character, java.lang.Boolean, aloyslisp.core.types.tREADTABLE)
 	 */
-	public void makeDispatchMacroCharacter(Character c, boolean nonTerm)
+	public tT MAKE_DISPATCH_MACRO_CHARACTER(Character c, Boolean nonTerm,
+			tREADTABLE readtable)
 	{
-		map.put("" + c, cons(null, NIL));
+		map.put("" + c, cons(null, nonTerm ? T : NIL));
+		return T;
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * @see
-	 * aloyslisp.core.plugs.collections.IReadTable#setDispatchMacroCharacter
-	 * (java.lang.Character, java.lang.Character,
-	 * aloyslisp.core.plugs.functions.IFunc)
+	 * aloyslisp.core.types.tREADTABLE#SET_DISPATCH_MACRO_CHRACTER(java.lang
+	 * .Character, java.lang.Character,
+	 * aloyslisp.core.types.tFUNCTION_DESIGNATOR,
+	 * aloyslisp.core.types.tREADTABLE)
 	 */
-	public void setDispatchMacroCharacter(Character disp, Character sub,
-			tFUNCTION func)
+	public tT SET_DISPATCH_MACRO_CHRACTER(Character disp, Character sub,
+			tFUNCTION_DESIGNATOR func, tREADTABLE readTable)
 	{
-		map.put("" + disp + sub, cons(func, T));
+		map.put("" + disp + sub, cons(func, NIL));
+		return T;
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * @see
-	 * aloyslisp.core.plugs.collections.IReadTable#getDispatchMacroCharacter
-	 * (java.lang.Character, java.lang.Character)
+	 * aloyslisp.core.types.tREADTABLE#GET_DISPATCH_MACRO_CHARACTER(java.lang
+	 * .Character, java.lang.Character, aloyslisp.core.types.tREADTABLE)
 	 */
-	public tLIST getDispatchMacroCharacter(Character disp, Character sub)
+	public tFUNCTION_DESIGNATOR GET_DISPATCH_MACRO_CHARACTER(Character disp,
+			Character sub, tREADTABLE readtable)
 	{
-		return map.get("" + disp + sub);
+		tLIST res = map.get("" + disp + sub);
+		if (res == null)
+			return NIL;
+		return (tFUNCTION_DESIGNATOR) res.CAR();
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * @see
-	 * aloyslisp.core.plugs.collections.IReadTable#setMacroCharacter(java.lang
-	 * .Character, aloyslisp.core.plugs.functions.IFunc, boolean)
+	 * aloyslisp.core.types.tREADTABLE#SET_MACRO_CHARACTER(java.lang.Character,
+	 * aloyslisp.core.types.tFUNCTION_DESIGNATOR, java.lang.Boolean,
+	 * aloyslisp.core.types.tREADTABLE)
 	 */
-	public void setMacroCharacter(Character c, tFUNCTION func, boolean nonTerm)
+	public tT SET_MACRO_CHARACTER(Character c, tFUNCTION_DESIGNATOR func,
+			Boolean nonTerm, tREADTABLE readtable)
 	{
-		map.put("" + c, cons(func, nonTerm ? NIL : T));
+		map.put("" + c, cons(func, nonTerm ? T : NIL));
+		return T;
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * @see
-	 * aloyslisp.core.plugs.collections.IReadTable#getMacroCharacter(java.lang
-	 * .Character)
+	 * aloyslisp.core.types.tREADTABLE#GET_MACRO_CHARACTER(java.lang.Character,
+	 * aloyslisp.core.types.tREADTABLE)
 	 */
-	public tLIST getMacroCharacter(Character c)
+	public tT[] GET_MACRO_CHARACTER(Character c, tREADTABLE readtable)
 	{
-		return map.get("" + c);
+		tLIST res = map.get("" + c);
+		if (res == null)
+			return new tT[]
+			{ NIL, NIL };
+
+		return new tT[]
+		{ res.CAR(), res.CDR() };
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.plugs.collections.IReadTable#getCase()
+	 * @see aloyslisp.core.types.tREADTABLE#READTABLE_CASE(aloyslisp.core.types.
+	 * tREADTABLE)
 	 */
-	public tSYMBOL getCase()
+	public tSYMBOL READTABLE_CASE(tREADTABLE tablereader)
 	{
 		return key(caseVal.toString());
 	}
@@ -298,10 +339,10 @@ public class READTABLE extends CELL implements tREADTABLE
 	/*
 	 * (non-Javadoc)
 	 * @see
-	 * aloyslisp.core.plugs.collections.IReadTable#setCase(aloyslisp.core.plugs
-	 * .atoms.ISymbol)
+	 * aloyslisp.core.types.tREADTABLE#SET_READTABLE_CASE(aloyslisp.core.types
+	 * .tREADTABLE, aloyslisp.core.types.tSYMBOL)
 	 */
-	public void setCase(tSYMBOL c)
+	public tSYMBOL SET_READTABLE_CASE(tREADTABLE readtable, tSYMBOL c)
 	{
 		// caseVal = Enum.valueOf(CaseType, c.getName().toUpperCase());
 		String name = c.SYMBOL_NAME();
@@ -327,13 +368,12 @@ public class READTABLE extends CELL implements tREADTABLE
 					"Invalid table case ahould be :upcase, :downcase, :preserve or :invert : "
 							+ c);
 		}
+		return c;
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see
-	 * aloyslisp.core.plugs.collections.IReadTable#changeCase(java.lang.Character
-	 * )
+	 * @see aloyslisp.core.types.tREADTABLE#changeCase(java.lang.Character)
 	 */
 	public Character changeCase(Character c)
 	{
@@ -365,6 +405,33 @@ public class READTABLE extends CELL implements tREADTABLE
 	public tT COERCE(tT type)
 	{
 		// IMPLEMENT Coerce
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * aloyslisp.core.types.tREADTABLE#SET_SYNTAX_FROM_CHAR(java.lang.Character,
+	 * java.lang.Character, aloyslisp.core.types.tREADTABLE,
+	 * aloyslisp.core.types.tREADTABLE)
+	 */
+	@Override
+	public void SET_SYNTAX_FROM_CHAR(Character fromChar, Character toChar,
+			tREADTABLE toReadtable, tREADTABLE fromReadtable)
+	{
+		// TODO Auto-generated method stub
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.types.tREADTABLE#COPY_READTABLE(aloyslisp.core.types.
+	 * tREADTABLE, aloyslisp.core.types.tREADTABLE)
+	 */
+	@Override
+	public tREADTABLE COPY_READTABLE(tREADTABLE fromReadtable, tT toReadtable)
+	{
+		// TODO Auto-generated method stub
 		return null;
 	}
 }

@@ -34,7 +34,6 @@ import static aloyslisp.commonlisp.L.*;
 import java.io.EOFException;
 
 import aloyslisp.core.common.*;
-import static aloyslisp.core.plugs.INPUT_STREAM.*;
 import aloyslisp.core.plugs.*;
 import aloyslisp.core.annotations.*;
 import aloyslisp.core.types.*;
@@ -58,15 +57,15 @@ public class ReadTableReaders
 	 * @param args
 	 * @return
 	 */
-	@Static(name = "sys::%backquote_reader")
-	public tT BACKQUOTE_READER( //
+	@Static(name = "sys::%backquote-reader")
+	public static tT BACKQUOTE_READER( //
 			@Arg(name = "sys::stream") tINPUT_STREAM in, //
 			@Arg(name = "sys::char") Character car, //
 			@Rest(name = "sys::args") tT... args)
 	{
 		try
 		{
-			return list(BACKQUOTE, READ(in, false, NIL, true));
+			return list(BACKQUOTE, in.READ(in, false, NIL, true));
 		}
 		catch (EOFException e)
 		{
@@ -81,8 +80,8 @@ public class ReadTableReaders
 	 * @param args
 	 * @return
 	 */
-	@Static(name = "sys::%character_reader")
-	public tT CHARACTER_READER( //
+	@Static(name = "sys::%character-reader")
+	public static tT CHARACTER_READER( //
 			@Arg(name = "sys::stream") tINPUT_STREAM in, //
 			@Arg(name = "sys::char") Character car, //
 			@Rest(name = "sys::args") tT... args)
@@ -106,23 +105,23 @@ public class ReadTableReaders
 	 * @param args
 	 * @return
 	 */
-	@Static(name = "sys::%comment_reader")
-	public tT COMMENT_READER( //
-			@Arg(name = "sys::stream") tINPUT_STREAM in, //
-			@Arg(name = "sys::char") Character car, //
-			@Rest(name = "sys::args") tT... args)
+	@Static(name = "%comment-reader")
+	public static tT COMMENT_READER( //
+			@Arg(name = "stream") tINPUT_STREAM in, //
+			@Arg(name = "char") Character car, //
+			@Rest(name = "args") tT... args)
 	{
 		Character curr;
 
 		try
 		{
 			// TODO COMMENT_READER should test on eol
-			while ((curr = READ_CHAR(in, false, NIL, true)) != '\n'
+			while ((curr = in.READ_CHAR(in, false, NIL, true)) != '\n'
 					&& curr != '\r')
 				;
 
 			// we should reverse the list
-			return READ(in, false, NIL, true);
+			return in.READ(in, false, NIL, true);
 		}
 		catch (EOFException e)
 		{
@@ -137,8 +136,8 @@ public class ReadTableReaders
 	 * @param args
 	 * @return
 	 */
-	@Static(name = "sys::%close_parent_reader")
-	public tT CLOSE_PARENT_READER( //
+	@Static(name = "sys::%close-parent-reader")
+	public static tT CLOSE_PARENT_READER( //
 			@Arg(name = "sys::stream") tINPUT_STREAM in, //
 			@Arg(name = "sys::char") Character car, //
 			@Rest(name = "sys::args") tT... args)
@@ -155,15 +154,15 @@ public class ReadTableReaders
 	 * @param args
 	 * @return
 	 */
-	@Static(name = "sys::%function_reader")
-	public tT FUNCTION_READER( //
+	@Static(name = "sys::%function-reader")
+	public static tT FUNCTION_READER( //
 			@Arg(name = "sys::stream") tINPUT_STREAM in, //
 			@Arg(name = "sys::char") Character car, //
 			@Rest(name = "sys::args") tT... args)
 	{
 		try
 		{
-			return list(FUNCTION, READ(in, false, NIL, true));
+			return list(FUNCTION, in.READ(in, false, NIL, true));
 		}
 		catch (EOFException e)
 		{
@@ -178,8 +177,8 @@ public class ReadTableReaders
 	 * @param args
 	 * @return
 	 */
-	@Static(name = "sys::%parent_reader")
-	public tT PARENT_READER( //
+	@Static(name = "sys::%parent-reader")
+	public static tT PARENT_READER( //
 			@Arg(name = "sys::stream") tINPUT_STREAM in, //
 			@Arg(name = "sys::char") Character car, //
 			@Rest(name = "sys::args") tT... args)
@@ -187,7 +186,7 @@ public class ReadTableReaders
 		tLIST res = NIL;
 		try
 		{
-			tT curr = READ(in, false, NIL, true);
+			tT curr = in.READ(in, false, NIL, true);
 			while (!(curr instanceof tSYMBOL)
 					|| !((tSYMBOL) curr).SYMBOL_NAME().equals(")"))
 			{
@@ -195,9 +194,9 @@ public class ReadTableReaders
 				if (curr instanceof tSYMBOL
 						&& ((tSYMBOL) curr).SYMBOL_NAME().equals("."))
 				{
-					curr = READ(in, false, NIL, true);
+					curr = in.READ(in, false, NIL, true);
 					res = (tLIST) ((tLIST) res.REVERSE()).APPEND(curr);
-					curr = READ(in, false, NIL, true);
+					curr = in.READ(in, false, NIL, true);
 
 					// dotted pair should end
 					if (curr instanceof tSYMBOL
@@ -209,7 +208,7 @@ public class ReadTableReaders
 
 				// else append element of list
 				res = cons(curr, res);
-				curr = READ(in, false, NIL, true);
+				curr = in.READ(in, false, NIL, true);
 			}
 
 			// we should reverse the list
@@ -230,15 +229,15 @@ public class ReadTableReaders
 	 * @param args
 	 * @return
 	 */
-	@Static(name = "sys::%quote_reader")
-	public tT QUOTE_READER( //
+	@Static(name = "sys::%quote-reader")
+	public static tT QUOTE_READER( //
 			@Arg(name = "sys::stream") tINPUT_STREAM in, //
 			@Arg(name = "sys::char") Character car, //
 			@Rest(name = "sys::args") tT... args)
 	{
 		try
 		{
-			return quote(READ(in, false, NIL, true));
+			return quote(in.READ(in, false, NIL, true));
 		}
 		catch (EOFException e)
 		{
@@ -252,8 +251,8 @@ public class ReadTableReaders
 	 * @param args
 	 * @return
 	 */
-	@Static(name = "sys::%string_reader")
-	public tT STRING_READER( //
+	@Static(name = "sys::%string-reader")
+	public static tT STRING_READER( //
 			@Arg(name = "sys::stream") tINPUT_STREAM in, //
 			@Arg(name = "sys::char") Character car, //
 			@Rest(name = "sys::args") tT... args)
@@ -263,11 +262,11 @@ public class ReadTableReaders
 
 		try
 		{
-			while ((curr = READ_CHAR(in, false, NIL, true)) != '"')
+			while ((curr = in.READ_CHAR(in, false, NIL, true)) != '"')
 			{
 				if (curr == '\\')
 				{
-					curr = READ_CHAR(in, false, NIL, true);
+					curr = in.READ_CHAR(in, false, NIL, true);
 				}
 
 				str.append(curr);
@@ -288,8 +287,8 @@ public class ReadTableReaders
 	 * @param args
 	 * @return
 	 */
-	@Static(name = "sys::%unintern_reader")
-	public tT UNINTERN_READER( //
+	@Static(name = "sys::%unintern-reader")
+	public static tT UNINTERN_READER( //
 			@Arg(name = "sys::stream") tINPUT_STREAM in, //
 			@Arg(name = "sys::char") Character car, //
 			@Rest(name = "sys::args") tT... args)
@@ -319,8 +318,8 @@ public class ReadTableReaders
 	 * @param args
 	 * @return
 	 */
-	@Static(name = "sys::%unquote_reader")
-	public tT UNQUOTE_READER( //
+	@Static(name = "sys::%unquote-reader")
+	public static tT UNQUOTE_READER( //
 			@Arg(name = "sys::stream") tINPUT_STREAM in, //
 			@Arg(name = "sys::char") Character car, //
 			@Rest(name = "sys::args") tT... args)
@@ -328,19 +327,19 @@ public class ReadTableReaders
 		Character sup = ' ';
 		try
 		{
-			sup = PEEK_CHAR(in, NIL, false, NIL, true);
+			sup = in.PEEK_CHAR(NIL, in, false, NIL, true);
 			switch (sup)
 			{
 				case '@':
-					READ_CHAR(in, false, NIL, true);
-					return list(SPLICE, READ(in, false, NIL, true));
+					in.READ_CHAR(in, false, NIL, true);
+					return list(SPLICE, in.READ(in, false, NIL, true));
 
 				case '.':
-					READ_CHAR(in, false, NIL, true);
-					return list(NSPLICE, READ(in, false, NIL, true));
+					in.READ_CHAR(in, false, NIL, true);
+					return list(NSPLICE, in.READ(in, false, NIL, true));
 
 				default:
-					return list(UNQUOTE, READ(in, false, NIL, true));
+					return list(UNQUOTE, in.READ(in, false, NIL, true));
 			}
 		}
 		catch (EOFException e)
@@ -358,7 +357,7 @@ public class ReadTableReaders
 	@Static(name = "sys::%backquote")
 	@Special
 	@Mac(prefix = "`")
-	public tT BACKQUOTE( //
+	public static tT BACKQUOTE( //
 			@Arg(name = "sys::obj") tT obj)
 	{
 		if (obj instanceof tCONS)
@@ -375,7 +374,7 @@ public class ReadTableReaders
 	 * @return
 	 * @throws ExceptionLisp
 	 */
-	public tT walk(tT cons)
+	public static tT walk(tT cons)
 	{
 		// System.out.println("walk:" + cons);
 
@@ -405,7 +404,6 @@ public class ReadTableReaders
 		}
 		else if (func == NSPLICE) // ,. = fpNSPLICE
 		{
-			// TODO fpNSPLICE is implemented as fpSPLICE
 			cons = cons.CDR();
 			cons = cons.CAR();
 			return cons.EVAL()[0];
@@ -433,7 +431,7 @@ public class ReadTableReaders
 	 */
 	@Static(name = "sys::%nsplice")
 	@Mac(prefix = ",.")
-	public tT NSPLICE( //
+	public static tT NSPLICE( //
 			@Rest(name = "sys::obj") tT... obj)
 	{
 		ERROR(",. without `");
@@ -446,7 +444,7 @@ public class ReadTableReaders
 	 */
 	@Static(name = "sys::%splice")
 	@Mac(prefix = ",@")
-	public tT SPLICE( //
+	public static tT SPLICE( //
 			@Rest(name = "sys::obj") tT... obj)
 	{
 		ERROR(",@ without `");
@@ -459,7 +457,7 @@ public class ReadTableReaders
 	 */
 	@Static(name = "sys::%unquote")
 	@Mac(prefix = ",")
-	public tT UNQUOTE( //
+	public static tT UNQUOTE( //
 			@Rest(name = "sys::obj") tT... obj)
 	{
 		ERROR(", without `");

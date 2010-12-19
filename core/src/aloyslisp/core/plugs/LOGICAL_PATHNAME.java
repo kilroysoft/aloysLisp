@@ -19,18 +19,28 @@
 //--------------------------------------------------------------------------
 // history
 //--------------------------------------------------------------------------
-// IP 10 nov. 2010 Creation
+// IP 18 déc. 2010 Creation
 //--------------------------------------------------------------------------
 
-package aloyslisp.core.types;
+package aloyslisp.core.plugs;
+
+import aloyslisp.core.types.tLOGICAL_PATHNAME;
 
 /**
- * tCOMPILED_FUNCTION
+ * LOGICAL_PATHNAME
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  *
  */
-public interface tCOMPILED_FUNCTION extends tFUNCTION, tFUNCTION_DESIGNATOR
+public class LOGICAL_PATHNAME extends PATHNAME implements tLOGICAL_PATHNAME
 {
+
+	/**
+	 * 
+	 */
+	public LOGICAL_PATHNAME()
+	{
+		// TODO Auto-generated constructor stub
+	}
 
 }

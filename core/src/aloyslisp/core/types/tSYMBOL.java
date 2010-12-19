@@ -43,7 +43,7 @@ package aloyslisp.core.types;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public interface tSYMBOL extends tATOM
+public interface tSYMBOL extends tATOM, tFUNCTION_DESIGNATOR
 {
 	/**
 	 * Create a copy of the symbol plus copy of value define and copy of plist.

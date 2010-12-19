@@ -70,6 +70,7 @@ public class Lisp
 				debug(ex);
 
 				e.init();
+				break;
 			}
 		}
 	}
@@ -80,7 +81,7 @@ public class Lisp
 	public static void debug(Exception ex)
 	{
 		System.err.println(ex.getLocalizedMessage());
-		System.err.println("*trace = " + sym("*trace*").SYMBOL_VALUE());
+		System.err.println("*trace* = " + sym("*trace*").SYMBOL_VALUE());
 		if (sym("*trace*").SYMBOL_VALUE() != NIL)
 		{
 			ex.printStackTrace();

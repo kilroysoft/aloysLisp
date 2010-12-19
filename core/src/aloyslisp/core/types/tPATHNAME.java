@@ -19,18 +19,18 @@
 //--------------------------------------------------------------------------
 // history
 //--------------------------------------------------------------------------
-// IP 10 nov. 2010 Creation
+// IP 16 déc. 2010 Creation
 //--------------------------------------------------------------------------
 
 package aloyslisp.core.types;
 
 /**
- * tCOMPILED_FUNCTION
+ * tPATHNAME
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  *
  */
-public interface tCOMPILED_FUNCTION extends tFUNCTION, tFUNCTION_DESIGNATOR
+public interface tPATHNAME extends tATOM
 {
 
 }

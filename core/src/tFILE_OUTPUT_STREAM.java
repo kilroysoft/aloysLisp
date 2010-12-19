@@ -1,3 +1,6 @@
+import aloyslisp.core.types.tFILE_STREAM;
+import aloyslisp.core.types.tOUTPUT_STREAM;
+
 /**
  * aloysLisp. 
  * <p>A LISP interpreter, compiler and library.
@@ -19,18 +22,16 @@
 //--------------------------------------------------------------------------
 // history
 //--------------------------------------------------------------------------
-// IP 10 nov. 2010 Creation
+// IP 16 déc. 2010 Creation
 //--------------------------------------------------------------------------
 
-package aloyslisp.core.types;
-
 /**
- * tCOMPILED_FUNCTION
+ * tFILE_OUTPUT_STREAM
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  *
  */
-public interface tCOMPILED_FUNCTION extends tFUNCTION, tFUNCTION_DESIGNATOR
+public interface tFILE_OUTPUT_STREAM extends tFILE_STREAM, tOUTPUT_STREAM
 {
 
 }

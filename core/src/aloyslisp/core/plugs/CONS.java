@@ -100,17 +100,23 @@ public class CONS extends CELL implements tCONS
 		tLIST walk = NIL;
 		for (Object cell : list)
 		{
-			// System.out.println("append : " + cell);
 			tT newCell;
 			if (cell == null)
 				newCell = NIL;
+			else if (cell.getClass().isArray())
+			{
+				newCell = list(cell);
+				System.out.println("list : " + newCell);
+			}
 			else if (cell instanceof tT)
 				newCell = (tT) cell;
 			else if (cell instanceof String)
+			{
 				if (decl)
 					newCell = sym((String) cell);
 				else
 					newCell = str((String) cell);
+			}
 			else if (cell instanceof Boolean)
 				newCell = bool((Boolean) cell);
 			else if (cell instanceof Integer)
@@ -119,10 +125,12 @@ public class CONS extends CELL implements tCONS
 				newCell = nLong((Long) cell);
 			else if (cell instanceof Float)
 				newCell = nFloat((Float) cell);
+			else if (cell instanceof Character)
+				newCell = c((Character) cell);
 			else
 			{
-				throw new LispException("Bad type creating a list CONS() : "
-						+ cell);
+				throw new LispException("Bad type creating a list CONS(...) : "
+						+ cell.getClass().getCanonicalName());
 			}
 
 			walk = new CONS(newCell, walk);
@@ -362,7 +370,7 @@ public class CONS extends CELL implements tCONS
 			res += sep;
 			sep = " ";
 			tT car = walk.CAR();
-			res += car.printable();
+			res += car == null ? "*(null)*" : car.printable();
 
 			walk = walk.CDR();
 		}

@@ -118,7 +118,7 @@ public class SpecialForms
 		}
 
 		tFUNCTION def = new BLOCK_FUNCTION((tSYMBOL) name, argList,
-				list((Object) func));
+				list((Object[]) func));
 		((tSYMBOL) name).SET_SYMBOL_FUNCTION(def);
 
 		return new tT[]
@@ -147,7 +147,7 @@ public class SpecialForms
 			tFUNCTION func = ((tSYMBOL) aFunc).SYMBOL_FUNCTION();
 			if (func == null)
 			{
-				System.out.println(cl.dump());
+				// System.out.println(cl.dump());
 				throw new LispException(aFunc + " is not a function");
 			}
 			res = func;
@@ -398,7 +398,7 @@ public class SpecialForms
 	 * @param func
 	 * @return
 	 */
-	@Static(name = "lisp::function")
+	@Static(name = "lisp::let")
 	@Special
 	public static tT[] LET( //
 			@Arg(name = "lisp::args") tLIST args, //

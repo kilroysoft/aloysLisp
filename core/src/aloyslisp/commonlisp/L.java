@@ -29,16 +29,10 @@
 
 package aloyslisp.commonlisp;
 
-import java.io.File;
-import java.io.FilenameFilter;
-import java.io.IOException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Enumeration;
-import java.util.List;
-import java.util.jar.JarEntry;
-import java.util.jar.JarFile;
+import java.io.*;
+import java.net.*;
+import java.util.*;
+import java.util.jar.*;
 
 import aloyslisp.core.common.*;
 import aloyslisp.core.exec.*;
@@ -136,11 +130,11 @@ public class L extends Primitives
 	/*
 	 * All standard streams
 	 */
-	private static final tSTREAM	in						= new INPUT_STREAM(
+	private static final tSTREAM	in						= new FILE_INPUT_STREAM(
 																	System.in);
-	private static final tSTREAM	out						= new OUTPUT_STREAM(
+	private static final tSTREAM	out						= new FILE_OUTPUT_STREAM(
 																	System.out);
-	private static final tSTREAM	err						= new OUTPUT_STREAM(
+	private static final tSTREAM	err						= new FILE_OUTPUT_STREAM(
 																	System.err);
 	private static final tSTREAM	terminal				= in;
 	private static final tSTREAM	query					= terminal;

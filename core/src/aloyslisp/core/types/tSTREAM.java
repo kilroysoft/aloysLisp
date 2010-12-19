@@ -29,6 +29,8 @@
 
 package aloyslisp.core.types;
 
+import aloyslisp.core.annotations.*;
+
 /**
  * tSTREAM
  * 
@@ -41,11 +43,24 @@ public interface tSTREAM extends tATOM
 	/**
 	 * @return
 	 */
-	public boolean OPEN_STREAM_P();
+	@Function(name = "open-stream-p")
+	public Boolean OPEN_STREAM_P( //
+			@Arg(name = "stream") tSTREAM stream);
+
+	/**
+	 * @param stream
+	 * @return
+	 */
+	@Function(name = "close")
+	public Boolean CLOSE( //
+			@Arg(name = "stream") tSTREAM stream, //
+			@Key(name = "abort") Boolean abort);
 
 	/**
 	 * @return
 	 */
-	public tT STREAM_ELEMENT_TYPE();
+	@Function(name = "stream-element-type")
+	public tT STREAM_ELEMENT_TYPE( //
+			@Arg(name = "stream") tSTREAM stream);
 
 }
