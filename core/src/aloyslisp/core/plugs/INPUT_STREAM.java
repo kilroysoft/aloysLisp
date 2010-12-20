@@ -186,7 +186,6 @@ public abstract class INPUT_STREAM extends STREAM implements tINPUT_STREAM
 			tT function = charMacro[0];
 			if (function instanceof tSYMBOL)
 			{
-				trace = true;
 				trace("Symbol macrochar = " + function + " "
 						+ function.DESCRIBE());
 				function = ((tSYMBOL) function).SYMBOL_FUNCTION();

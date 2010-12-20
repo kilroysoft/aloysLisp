@@ -62,7 +62,6 @@ public class CONS extends CELL implements tCONS
 	 * @param car
 	 * @param cdr
 	 */
-	@Construct(name = "cons")
 	public CONS(tT car, tT cdr)
 	{
 		SET_CAR(car);
@@ -74,7 +73,6 @@ public class CONS extends CELL implements tCONS
 	 * 
 	 * @param list
 	 */
-	@Construct(name = "list")
 	public CONS(Object... list)
 	{
 		initCons(false, list);

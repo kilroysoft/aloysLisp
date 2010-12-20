@@ -119,12 +119,18 @@ public class L extends Primitives
 	/**
 	 * Base definition of NIL
 	 */
-	public static NIL				NIL						= new NIL();
+	public static final NIL			NIL						= new NIL();
 	static
 	{
 		// Nil is directly put in package
 		currPackage().put("nil", NIL);
 		NIL.setExported(true);
+	}
+
+	public static final tSYMBOL		T						= sym("T");
+	static
+	{
+		T.SET_SYMBOL_VALUE(T).setConstant(true).setExported(true);
 	}
 
 	/*
@@ -208,12 +214,6 @@ public class L extends Primitives
 																			true)
 																	.SET_SYMBOL_VALUE(
 																			terminal);
-
-	public static tSYMBOL			T						= sym("T");
-	static
-	{
-		T.SET_SYMBOL_VALUE(T).setConstant(true).setExported(true);
-	}
 
 	/**
 	 * Special variables for write

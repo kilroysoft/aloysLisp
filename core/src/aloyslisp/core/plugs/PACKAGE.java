@@ -253,8 +253,8 @@ public class PACKAGE extends CELL implements tPACKAGE
 		{
 			sym = new SYMBOL(symbol, this);
 			put(symbol, (tSYMBOL) sym);
-			System.out.println("------------------->INTERN : " + this+"::"+symbol + " = "
-					+ sym);
+			trace("------------------->INTERN : " + this + "::" + symbol
+					+ " = " + sym);
 		}
 		return (tSYMBOL) sym;
 	}

@@ -1,6 +1,3 @@
-import aloyslisp.core.types.tFILE_STREAM;
-import aloyslisp.core.types.tOUTPUT_STREAM;
-
 /**
  * aloysLisp. 
  * <p>A LISP interpreter, compiler and library.
@@ -22,16 +19,31 @@ import aloyslisp.core.types.tOUTPUT_STREAM;
 //--------------------------------------------------------------------------
 // history
 //--------------------------------------------------------------------------
-// IP 16 déc. 2010 Creation
+// IP 20 déc. 2010 Creation
 //--------------------------------------------------------------------------
 
+package aloyslisp.core.conditions;
+
+import aloyslisp.core.plugs.CELL;
+import aloyslisp.core.types.tT;
+
 /**
- * tFILE_OUTPUT_STREAM
+ * CONDITION
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  *
  */
-public interface tFILE_OUTPUT_STREAM extends tFILE_STREAM, tOUTPUT_STREAM
+public class CONDITION extends CELL
 {
+
+	/* (non-Javadoc)
+	 * @see aloyslisp.core.types.tT#COERCE(aloyslisp.core.types.tT)
+	 */
+	@Override
+	public tT COERCE(tT type)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

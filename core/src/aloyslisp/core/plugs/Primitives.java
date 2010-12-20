@@ -163,20 +163,18 @@ public class Primitives
 			@Arg(name = "class") String cls)
 	{
 		// Search method
-		Class<?> c;
+		Class<?> clas;
 		try
 		{
-			c = (Class<?>) Class.forName(cls);
+			clas = (Class<?>) Class.forName(cls);
 		}
 		catch (ClassNotFoundException e1)
 		{
 			// ERROR("%%global : System error ~s not found", str(cls));
-			System.err.println(FORMAT("%%global : System error ~s not found",
-					str(cls)));
 			return false;
 		}
 
-		Method[] meth = c.getMethods();
+		Method[] meth = clas.getMethods();
 		for (Method m : meth)
 		{
 
@@ -192,24 +190,27 @@ public class Primitives
 			{
 				if (special == null)
 					// Static normal function
-					func = new STATIC(c, m.getName(), argsDecl(notes),
+					func = new STATIC(clas, m.getName(), argsDecl(notes),
 							stat.doc(), declareArgs());
 				else
 					// Static normal function
-					func = new SPECIAL_OPERATOR(c, m.getName(),
+					func = new SPECIAL_OPERATOR(clas, m.getName(),
 							argsDecl(notes), stat.doc(), declareArgs());
 				sym(stat.name()).SET_SYMBOL_FUNCTION(func);
 			}
 			else if (f != null)
 			{
 				// Object primitive
-				func = new PRIMITIVE(c, m.getName(), argsDecl(notes), f.doc(),
-						declareArgs());
+				func = new PRIMITIVE(clas, m.getName(), argsDecl(notes),
+						f.doc(), declareArgs());
 				func.setBaseArg(noArgsBase(notes));
 				sym(f.name()).SET_SYMBOL_FUNCTION(func);
 			}
 			else
+			{
+				System.out.println("INVALID FUNCTION : " + m.getName());
 				continue;
+			}
 
 			if (prefix != null)
 				func.setPrefix(prefix.prefix());
@@ -320,7 +321,6 @@ public class Primitives
 				}
 				else if (a instanceof BaseArg)
 				{
-					System.out.println("-----------> base arg = " + base);
 					return base;
 				}
 			}

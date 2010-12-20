@@ -113,7 +113,7 @@ public class READTABLE extends CELL implements tREADTABLE
 		// default value
 		caseVal = CaseType.DOWNCASE;
 
-		System.out.println("-------->" + sym("%comment-reader").DESCRIBE());
+		trace("-------->" + sym("%comment-reader").DESCRIBE());
 
 		// standard macro char
 		SET_MACRO_CHARACTER('"', sym("sys::%string-reader"), false, this);

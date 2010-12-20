@@ -235,7 +235,7 @@ public abstract class CELL implements tT
 	protected void trace(String msg)
 	{
 		if (trace)
-			System.out.println(msg);
+			System.err.println(msg);
 	}
 
 	// MAIN GLOBAL LISP FUNCTIONS

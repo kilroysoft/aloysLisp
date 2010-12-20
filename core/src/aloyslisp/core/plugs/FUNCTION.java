@@ -80,6 +80,8 @@ public abstract class FUNCTION extends CELL implements tFUNCTION
 	public FUNCTION(boolean external, Class<?> c, tSYMBOL name, tLIST args,
 			tLIST func)
 	{
+		// trace = true;
+
 		// Class is null so we call internal impl function on this class
 		String f = "IMPL";
 		if (c == null)
@@ -91,13 +93,15 @@ public abstract class FUNCTION extends CELL implements tFUNCTION
 			f = name.SYMBOL_NAME();
 
 		intern = new Arguments(name, args, func);
-		System.out.println("Name = " + name + " new Name = " + f + " Class = "
+		trace("Name = " + name + " new Name = " + f + " Class = "
 				+ c.getCanonicalName());
 		if (!setFunctionCall(c, f))
 		{
 			System.err.println("Function " + f + " not found in class "
 					+ c.getCanonicalName());
 		}
+		intern.setName(name);
+
 	}
 
 	/*
@@ -142,11 +146,6 @@ public abstract class FUNCTION extends CELL implements tFUNCTION
 		if (this instanceof tBLOCK_FUNCTION)
 			e.newClosure();
 
-		intern.pushBlock(args);
-		args = intern.getValues();
-		// trace arguments
-		System.out.println(this + "\n->" + method.getName() + " " + args);
-
 		try
 		{
 			Object[] newArgs = null;
@@ -164,31 +163,58 @@ public abstract class FUNCTION extends CELL implements tFUNCTION
 			{
 				if (baseArg >= 0)
 				{
+					// object is in the argument list, no change in arguments
+					intern.pushBlock(args);
+					args = intern.getValues();
 					newArgs = tranformArgs(method.getParameterTypes(), args);
 					actObj = args.ELT(baseArg);
 				}
 				else
 				{
-					newArgs = tranformArgs(method.getParameterTypes(),
-							(tLIST) args.CDR());
+					// First argument is the object, real args follow
 					actObj = args.CAR();
+					intern.pushBlock((tLIST) args.CDR());
+					args = intern.getValues();
+					newArgs = tranformArgs(method.getParameterTypes(), args);
 				}
 			}
 			else
+			{
+				// static function arguments are kept
+				intern.pushBlock(args);
 				newArgs = tranformArgs(method.getParameterTypes(), args);
+			}
 
 			// Call function
-			// System.out.println("exec(" + method.getName() + " (" + actObj
-			// + ") " + args + ")");
+			trace("exec(" + intern.getName() + " (" + actObj + ") " + args
+					+ ")");
+
 			Object ret = method.invoke(actObj, newArgs);
 
 			// if function return multiple values
-			if (ret instanceof tT[])
-				res = (tT[]) ret;
-			else
+			if (ret == null)
+			{
 				// return value as tT
+				trace(" => From (" + intern.getName() + ") => " + null);
+				res = new tT[] {};
+			}
+			else if (ret instanceof tT[])
+			{
+				if (((tT[]) ret).length > 0)
+					trace(" => From (" + intern.getName() + ") => "
+							+ ((Object[]) ret)[0]);
+				else
+					trace(" PROBLEME => From (" + intern.getName() + ") => "
+							+ ret);
+				res = (tT[]) ret;
+			}
+			else
+			{
+				// return value as tT
+				trace(" => From (" + intern.getName() + ") => " + ret);
 				res = new tT[]
 				{ normalize(ret) };
+			}
 		}
 		catch (IllegalArgumentException e)
 		{
@@ -395,7 +421,6 @@ public abstract class FUNCTION extends CELL implements tFUNCTION
 			if (m.getName().equalsIgnoreCase(name))
 			{
 				method = m;
-				intern.setName(sym(name));
 				return true;
 			}
 		}
@@ -441,19 +466,21 @@ public abstract class FUNCTION extends CELL implements tFUNCTION
 	 */
 	public Object transform(Object arg, Class<?> cl)
 	{
+		Object res = null;
+
 		// Direct assign works
 		if (tT.class.isAssignableFrom(cl))
 			if (cl.isAssignableFrom(arg.getClass()))
 			{
-				return arg;
+				res = arg;
 			}
 			else if (arg instanceof Boolean)
 			{
-				return (Boolean) arg ? T : NIL;
+				res = ((Boolean) arg) ? T : NIL;
 			}
 			else if (arg instanceof String)
 			{
-				return str((String) arg);
+				res = str((String) arg);
 			}
 			else
 			{
@@ -465,42 +492,47 @@ public abstract class FUNCTION extends CELL implements tFUNCTION
 
 		if (cl == Boolean.class)
 		{
-			return arg != NIL;
+			res = arg != NIL;
 		}
 
 		if (cl == Integer.class && arg instanceof tNUMBER)
 		{
-			return ((tNUMBER) arg).intValue();
+			res = ((tNUMBER) arg).intValue();
 		}
 
 		if (cl == Long.class && arg instanceof tNUMBER)
 		{
-			return ((tNUMBER) arg).longValue();
+			res = ((tNUMBER) arg).longValue();
 		}
 
 		if (cl == Float.class && arg instanceof tNUMBER)
 		{
-			return ((tNUMBER) arg).floatValue();
+			res = ((tNUMBER) arg).floatValue();
 		}
 
 		if (cl == Double.class && arg instanceof tNUMBER)
 		{
-			return ((tNUMBER) arg).doubleValue();
+			res = ((tNUMBER) arg).doubleValue();
 		}
 
 		if (cl == String.class && arg instanceof tSTRING)
 		{
-			return ((tSTRING) arg).getString();
+			res = ((tSTRING) arg).getString();
 		}
 
 		if (cl == Character.class && arg instanceof tCHARACTER)
 		{
-			return ((tCHARACTER) arg).getChar();
+			res = ((tCHARACTER) arg).getChar();
 		}
 
-		System.out.println("transform " + arg.getClass() + "->" + cl);
-		throw new LispException("2Argument " + arg + " should be of type "
-				+ cl.getSimpleName());
+		trace(" ~~~> " + arg + " (" + arg.getClass().getSimpleName() + ") -> "
+				+ res + " (" + cl.getSimpleName() + ")");
+
+		if (res == null)
+			throw new LispException("Argument " + arg + " should be of type "
+					+ cl.getSimpleName());
+
+		return res;
 	}
 
 	/**
