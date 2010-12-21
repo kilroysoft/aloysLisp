@@ -4,6 +4,7 @@ aloyslisp.commonlisp.common_lisp
 aloyslisp.commonlisp.system
 aloyslisp.core.annotations
 aloyslisp.core.common
+aloyslisp.core.conditions
 aloyslisp.core.exec
 aloyslisp.core.plugs
 aloyslisp.core.types
