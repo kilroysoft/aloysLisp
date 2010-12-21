@@ -29,8 +29,6 @@
 
 package aloyslisp.core.plugs;
 
-import static aloyslisp.commonlisp.L.T;
-
 import java.io.*;
 
 import aloyslisp.core.common.*;
@@ -47,7 +45,7 @@ public class FILE_INPUT_STREAM extends INPUT_STREAM implements
 		tFILE_INPUT_STREAM
 {
 	private PushbackReader	reader	= null;
-	private tPATHNAME		path	= null;
+	// TODO private tPATHNAME		path	= null;
 
 	/**
 	 * Use standard input
@@ -196,8 +194,10 @@ public class FILE_INPUT_STREAM extends INPUT_STREAM implements
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see aloyslisp.core.types.tINPUT_STREAM#CLEAR_INPUT(aloyslisp.core.types.tINPUT_STREAM)
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.types.tINPUT_STREAM#CLEAR_INPUT(aloyslisp.core.types.
+	 * tINPUT_STREAM)
 	 */
 	@Override
 	public tT CLEAR_INPUT(tINPUT_STREAM stream)
@@ -206,8 +206,11 @@ public class FILE_INPUT_STREAM extends INPUT_STREAM implements
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see aloyslisp.core.types.tINPUT_STREAM#READ_BYTE(aloyslisp.core.types.tINPUT_STREAM, java.lang.Boolean, aloyslisp.core.types.tT, java.lang.Boolean)
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.types.tINPUT_STREAM#READ_BYTE(aloyslisp.core.types.
+	 * tINPUT_STREAM, java.lang.Boolean, aloyslisp.core.types.tT,
+	 * java.lang.Boolean)
 	 */
 	@Override
 	public Integer READ_BYTE(tINPUT_STREAM stream, Boolean eofErrorP,
@@ -217,8 +220,12 @@ public class FILE_INPUT_STREAM extends INPUT_STREAM implements
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see aloyslisp.core.types.tINPUT_STREAM#READ_SEQUENCE(aloyslisp.core.types.tSEQUENCE, aloyslisp.core.types.tINPUT_STREAM, java.lang.Integer, java.lang.Integer)
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * aloyslisp.core.types.tINPUT_STREAM#READ_SEQUENCE(aloyslisp.core.types
+	 * .tSEQUENCE, aloyslisp.core.types.tINPUT_STREAM, java.lang.Integer,
+	 * java.lang.Integer)
 	 */
 	@Override
 	public tT READ_SEQUENCE(tSEQUENCE sequence, tINPUT_STREAM stream,
@@ -228,8 +235,11 @@ public class FILE_INPUT_STREAM extends INPUT_STREAM implements
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see aloyslisp.core.types.tINPUT_STREAM#READ_LINE(aloyslisp.core.types.tINPUT_STREAM, java.lang.Boolean, aloyslisp.core.types.tT, java.lang.Boolean)
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.types.tINPUT_STREAM#READ_LINE(aloyslisp.core.types.
+	 * tINPUT_STREAM, java.lang.Boolean, aloyslisp.core.types.tT,
+	 * java.lang.Boolean)
 	 */
 	@Override
 	public tT[] READ_LINE(tINPUT_STREAM stream, Boolean eofErrorP, tT eofValue,

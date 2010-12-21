@@ -325,7 +325,7 @@ public abstract class NUMBER extends CELL implements tNUMBER, Cloneable
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tNUMBER#acos()
 	 */
-	public tNUMBER acos()
+	public tNUMBER ACOS()
 	{
 		return DOUBLE.make(Math.acos(getValue().doubleValue()));
 	}
@@ -334,7 +334,7 @@ public abstract class NUMBER extends CELL implements tNUMBER, Cloneable
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tNUMBER#asin()
 	 */
-	public tNUMBER asin()
+	public tNUMBER ASIN()
 	{
 		return DOUBLE.make(Math.asin(getValue().doubleValue()));
 	}
@@ -343,7 +343,7 @@ public abstract class NUMBER extends CELL implements tNUMBER, Cloneable
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tNUMBER#atan()
 	 */
-	public tNUMBER atan()
+	public tNUMBER ATAN()
 	{
 		return DOUBLE.make(Math.atan(getValue().doubleValue()));
 	}
@@ -352,7 +352,7 @@ public abstract class NUMBER extends CELL implements tNUMBER, Cloneable
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tNUMBER#atan(aloyslisp.core.types.tNUMBER)
 	 */
-	public tNUMBER atan(tNUMBER b)
+	public tNUMBER ATAN(tNUMBER b)
 	{
 		return DOUBLE.make(Math.atan2(getValue().doubleValue(), b.getValue()
 				.doubleValue()));
@@ -362,7 +362,7 @@ public abstract class NUMBER extends CELL implements tNUMBER, Cloneable
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tNUMBER#ceiling()
 	 */
-	public tNUMBER ceiling()
+	public tNUMBER CEILING()
 	{
 		return DOUBLE.make(Math.ceil(getValue().doubleValue()));
 	}
@@ -371,16 +371,26 @@ public abstract class NUMBER extends CELL implements tNUMBER, Cloneable
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tNUMBER#cos()
 	 */
-	public tNUMBER cos()
+	public tNUMBER COS()
 	{
 		return DOUBLE.make(Math.cos(getValue().doubleValue()));
 	}
 
 	/*
 	 * (non-Javadoc)
+	 * @see aloyslisp.core.types.tNUMBER#cos()
+	 */
+	public tNUMBER CIS()
+	{
+		return COMPLEX.make(Math.cos(getValue().doubleValue()),
+				Math.sin(getValue().doubleValue()));
+	}
+
+	/*
+	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tNUMBER#exp()
 	 */
-	public tNUMBER exp()
+	public tNUMBER EXP()
 	{
 		return DOUBLE.make(Math.exp(getValue().doubleValue()));
 	}
@@ -389,7 +399,7 @@ public abstract class NUMBER extends CELL implements tNUMBER, Cloneable
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tNUMBER#floor()
 	 */
-	public tNUMBER floor()
+	public tNUMBER FLOOR()
 	{
 		return DOUBLE.make(Math.floor(getValue().doubleValue()));
 	}
@@ -409,7 +419,7 @@ public abstract class NUMBER extends CELL implements tNUMBER, Cloneable
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tNUMBER#log()
 	 */
-	public tNUMBER log()
+	public tNUMBER LOG()
 	{
 		return DOUBLE.make(Math.log(getValue().doubleValue()));
 	}
@@ -418,7 +428,7 @@ public abstract class NUMBER extends CELL implements tNUMBER, Cloneable
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tNUMBER#expt(aloyslisp.core.types.tNUMBER)
 	 */
-	public tNUMBER expt(tNUMBER b)
+	public tNUMBER EXPT(tNUMBER b)
 	{
 		return DOUBLE.make(Math.pow(getValue().doubleValue(), b.getValue()
 				.doubleValue()));
@@ -428,16 +438,21 @@ public abstract class NUMBER extends CELL implements tNUMBER, Cloneable
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tNUMBER#random()
 	 */
-	public tNUMBER random()
+	public tNUMBER RANDOM(tT randomState)
 	{
-		return DOUBLE.make(Math.random());
+		tNUMBER res = DOUBLE.make(Math.random()).MULTIPLY(this);
+		if (this instanceof tINTEGER)
+		{
+			res = res.FLOOR();
+		}
+		return res;
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tNUMBER#sin()
 	 */
-	public tNUMBER sin()
+	public tNUMBER SIN()
 	{
 		return DOUBLE.make(Math.sin(getValue().doubleValue()));
 	}
@@ -446,7 +461,7 @@ public abstract class NUMBER extends CELL implements tNUMBER, Cloneable
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tNUMBER#sqrt()
 	 */
-	public tNUMBER sqrt()
+	public tNUMBER SQRT()
 	{
 		return DOUBLE.make(Math.sqrt(getValue().doubleValue()));
 	}
@@ -455,7 +470,7 @@ public abstract class NUMBER extends CELL implements tNUMBER, Cloneable
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tNUMBER#tan()
 	 */
-	public tNUMBER tan()
+	public tNUMBER TAN()
 	{
 		return DOUBLE.make(Math.tan(getValue().doubleValue()));
 	}
@@ -514,7 +529,7 @@ public abstract class NUMBER extends CELL implements tNUMBER, Cloneable
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tNUMBER#add(aloyslisp.core.types.tT)
 	 */
-	public tNUMBER add(tT a)
+	public tNUMBER ADD(tT a)
 	{
 		if (a instanceof NUMBER)
 		{
@@ -530,7 +545,7 @@ public abstract class NUMBER extends CELL implements tNUMBER, Cloneable
 		if (a instanceof tCONS)
 		{
 			// loop
-			return add(a.CAR()).add(a.CDR());
+			return ADD(a.CAR()).ADD(a.CDR());
 		}
 
 		// error bad type
@@ -541,7 +556,7 @@ public abstract class NUMBER extends CELL implements tNUMBER, Cloneable
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tNUMBER#substract(aloyslisp.core.types.tT)
 	 */
-	public tNUMBER substract(tT a)
+	public tNUMBER SUBSTRACT(tT a)
 	{
 		if (a instanceof NUMBER)
 		{
@@ -551,13 +566,17 @@ public abstract class NUMBER extends CELL implements tNUMBER, Cloneable
 		}
 		if (a instanceof tNULL)
 		{
-			// end of process
-			return this;
+			// No argument return the opposite
+			return this.minus();
 		}
 		if (a instanceof tCONS)
 		{
-			// loop
-			return substract(a.CAR()).substract(a.CDR());
+			if (((tCONS) a).LENGTH() == 1)
+				// Last operand
+				return SUBSTRACT(a.CAR());
+			else
+				// Recurse
+				return SUBSTRACT(a.CAR()).SUBSTRACT(a.CDR());
 		}
 
 		// error bad type
@@ -588,7 +607,7 @@ public abstract class NUMBER extends CELL implements tNUMBER, Cloneable
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tNUMBER#multiply(aloyslisp.core.types.tT)
 	 */
-	public tNUMBER multiply(tT a)
+	public tNUMBER MULTIPLY(tT a)
 	{
 		if (a instanceof NUMBER)
 		{
@@ -604,7 +623,7 @@ public abstract class NUMBER extends CELL implements tNUMBER, Cloneable
 		if (a instanceof tCONS)
 		{
 			// loop
-			return multiply(a.CAR()).multiply(a.CDR());
+			return MULTIPLY(a.CAR()).MULTIPLY(a.CDR());
 		}
 
 		// error bad type
@@ -615,7 +634,7 @@ public abstract class NUMBER extends CELL implements tNUMBER, Cloneable
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tNUMBER#division(aloyslisp.core.types.tT)
 	 */
-	public tNUMBER division(tT a)
+	public tNUMBER DIVISION(tT a)
 	{
 		if (a instanceof NUMBER)
 		{
@@ -625,13 +644,17 @@ public abstract class NUMBER extends CELL implements tNUMBER, Cloneable
 		}
 		if (a instanceof tNULL)
 		{
-			// end of process
-			return this;
+			// No argument return the opposite
+			return this.inversion();
 		}
 		if (a instanceof tCONS)
 		{
-			// loop
-			return division(a.CAR()).division(a.CDR());
+			if (((tCONS) a).LENGTH() == 1)
+				// Last operand
+				return DIVISION(a.CAR());
+			else
+				// Recurse
+				return DIVISION(a.CAR()).DIVISION(a.CDR());
 		}
 
 		// error bad type
@@ -652,13 +675,17 @@ public abstract class NUMBER extends CELL implements tNUMBER, Cloneable
 		}
 		if (a instanceof tNULL)
 		{
-			// end of process
-			return this;
+			// No argument return the opposite
+			return this.inversion();
 		}
 		if (a instanceof tCONS)
 		{
-			// loop
-			return divide(a.CAR()).divide(a.CDR());
+			if (((tCONS) a).LENGTH() == 1)
+				// Last operand
+				return divide(a.CAR());
+			else
+				// Recurse
+				return divide(a.CAR()).divide(a.CDR());
 		}
 
 		// error bad type
@@ -669,7 +696,7 @@ public abstract class NUMBER extends CELL implements tNUMBER, Cloneable
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tNUMBER#mod(aloyslisp.core.types.tT)
 	 */
-	public tNUMBER mod(tT a)
+	public tNUMBER MOD(tT a)
 	{
 		if (a instanceof NUMBER)
 		{
@@ -685,7 +712,7 @@ public abstract class NUMBER extends CELL implements tNUMBER, Cloneable
 		if (a instanceof tCONS)
 		{
 			// loop
-			return mod(a.CAR()).mod(a.CDR());
+			return MOD(a.CAR()).MOD(a.CDR());
 		}
 
 		// error bad type
@@ -696,7 +723,7 @@ public abstract class NUMBER extends CELL implements tNUMBER, Cloneable
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tNUMBER#lcm(aloyslisp.core.types.tT)
 	 */
-	public tNUMBER lcm(tT a)
+	public tNUMBER LCM(tT a)
 	{
 		if (a instanceof NUMBER)
 		{
@@ -711,8 +738,12 @@ public abstract class NUMBER extends CELL implements tNUMBER, Cloneable
 		}
 		if (a instanceof tCONS)
 		{
-			// loop
-			return lcm(a.CAR()).lcm(a.CDR());
+			if (((tCONS) a).LENGTH() == 1)
+				// Last operand
+				return LCM(a.CAR());
+			else
+				// Recurse
+				return LCM(a.CAR()).LCM(a.CDR());
 		}
 
 		// error bad type
@@ -723,7 +754,7 @@ public abstract class NUMBER extends CELL implements tNUMBER, Cloneable
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tNUMBER#gcd(aloyslisp.core.types.tT)
 	 */
-	public tNUMBER gcd(tT a)
+	public tNUMBER GCD(tT a)
 	{
 		if (a instanceof NUMBER)
 		{
@@ -738,8 +769,12 @@ public abstract class NUMBER extends CELL implements tNUMBER, Cloneable
 		}
 		if (a instanceof tCONS)
 		{
-			// loop
-			return gcd(a.CAR()).gcd(a.CDR());
+			if (((tCONS) a).LENGTH() == 1)
+				// Last operand
+				return GCD(a.CAR());
+			else
+				// Recurse
+				return GCD(a.CAR()).GCD(a.CDR());
 		}
 
 		// error bad type
@@ -750,7 +785,7 @@ public abstract class NUMBER extends CELL implements tNUMBER, Cloneable
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tNUMBER#conjugate()
 	 */
-	public tNUMBER conjugate()
+	public tNUMBER CONJUGATE()
 	{
 		IMathFuncs oper = getOper(this);
 		return oper.conjugate(this);
@@ -760,7 +795,7 @@ public abstract class NUMBER extends CELL implements tNUMBER, Cloneable
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tNUMBER#real()
 	 */
-	public tNUMBER real()
+	public tNUMBER REALPART()
 	{
 		IMathFuncs oper = getOper(this);
 		return oper.realpart(this);
@@ -770,7 +805,7 @@ public abstract class NUMBER extends CELL implements tNUMBER, Cloneable
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tNUMBER#imag()
 	 */
-	public tNUMBER imag()
+	public tNUMBER IMAGPART()
 	{
 		IMathFuncs oper = getOper(this);
 		return oper.imagpart(this);
@@ -790,7 +825,7 @@ public abstract class NUMBER extends CELL implements tNUMBER, Cloneable
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tNUMBER#numerator()
 	 */
-	public tNUMBER numerator()
+	public tNUMBER NUMERATOR()
 	{
 		IMathFuncs oper = getOper(this);
 		return oper.numerator(this);
@@ -800,7 +835,7 @@ public abstract class NUMBER extends CELL implements tNUMBER, Cloneable
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tNUMBER#denominator()
 	 */
-	public tNUMBER denominator()
+	public tNUMBER DENOMINATOR()
 	{
 		IMathFuncs oper = getOper(this);
 		return oper.denominator(this);
@@ -810,7 +845,7 @@ public abstract class NUMBER extends CELL implements tNUMBER, Cloneable
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tNUMBER#logand(aloyslisp.core.types.tT)
 	 */
-	public tNUMBER logand(tT a)
+	public tNUMBER LOGAND(tT a)
 	{
 		if (a instanceof NUMBER)
 		{
@@ -825,8 +860,12 @@ public abstract class NUMBER extends CELL implements tNUMBER, Cloneable
 		}
 		if (a instanceof tCONS)
 		{
-			// loop
-			return logand(a.CAR()).logand(a.CDR());
+			if (((tCONS) a).LENGTH() == 1)
+				// Last operand
+				return LOGAND(a.CAR());
+			else
+				// Recurse
+				return LOGAND(a.CAR()).LOGAND(a.CDR());
 		}
 
 		// error bad type
@@ -837,7 +876,7 @@ public abstract class NUMBER extends CELL implements tNUMBER, Cloneable
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tNUMBER#logior(aloyslisp.core.types.tT)
 	 */
-	public tNUMBER logior(tT a)
+	public tNUMBER LOGIOR(tT a)
 	{
 		if (a instanceof NUMBER)
 		{
@@ -852,8 +891,12 @@ public abstract class NUMBER extends CELL implements tNUMBER, Cloneable
 		}
 		if (a instanceof tCONS)
 		{
-			// loop
-			return logior(a.CAR()).logior(a.CDR());
+			if (((tCONS) a).LENGTH() == 1)
+				// Last operand
+				return LOGIOR(a.CAR());
+			else
+				// Recurse
+				return LOGIOR(a.CAR()).LOGIOR(a.CDR());
 		}
 
 		// error bad type
@@ -864,7 +907,7 @@ public abstract class NUMBER extends CELL implements tNUMBER, Cloneable
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tNUMBER#logxor(aloyslisp.core.types.tT)
 	 */
-	public tNUMBER logxor(tT a)
+	public tNUMBER LOGXOR(tT a)
 	{
 		if (a instanceof NUMBER)
 		{
@@ -879,8 +922,12 @@ public abstract class NUMBER extends CELL implements tNUMBER, Cloneable
 		}
 		if (a instanceof tCONS)
 		{
-			// loop
-			return logxor(a.CAR()).logxor(a.CDR());
+			if (((tCONS) a).LENGTH() == 1)
+				// Last operand
+				return LOGXOR(a.CAR());
+			else
+				// Recurse
+				return LOGXOR(a.CAR()).LOGXOR(a.CDR());
 		}
 
 		// error bad type
@@ -891,7 +938,7 @@ public abstract class NUMBER extends CELL implements tNUMBER, Cloneable
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tNUMBER#complement()
 	 */
-	public tNUMBER lognot()
+	public tNUMBER LOGNOT()
 	{
 		IMathFuncs oper = getOper(this);
 		return oper.lognot(this);
@@ -922,22 +969,64 @@ public abstract class NUMBER extends CELL implements tNUMBER, Cloneable
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tNUMBER#equality(aloyslisp.core.types.tNUMBER)
 	 */
-	public boolean equality(tNUMBER a)
+	public boolean EQN(tT a)
 	{
-		// TODO list management and tT return value
-		IMathFuncs oper = getOper(this, a);
-		return oper.equal(this, a);
+		if (a instanceof NUMBER)
+		{
+			// normal addition
+			IMathFuncs oper = getOper(this, (tNUMBER) a);
+			return oper.equal(this, (tNUMBER) a);
+		}
+		if (a instanceof tNULL)
+		{
+			// end of process
+			return true;
+		}
+		if (a instanceof tCONS)
+		{
+			tNUMBER first = (tNUMBER) a.CAR();
+			if (((tCONS) a).LENGTH() == 1)
+				// Last operand
+				return EQN(first);
+			else
+				// Recurse
+				return EQN(a.CAR()) && first.EQN(a.CDR());
+		}
+
+		// error bad type
+		throw new LispErrorBadArgumentType("=", this, "NUMBER");
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tNUMBER#greather(aloyslisp.core.types.tNUMBER)
 	 */
-	public boolean greather(tNUMBER a)
+	public boolean GT(tT a)
 	{
-		// TODO list management and tT return value
-		IMathFuncs oper = getOper(this, a);
-		return oper.greather(this, a);
+		if (a instanceof NUMBER)
+		{
+			// normal addition
+			IMathFuncs oper = getOper(this, (tNUMBER) a);
+			return oper.greather(this, (tNUMBER) a);
+		}
+		if (a instanceof tNULL)
+		{
+			// end of process
+			return true;
+		}
+		if (a instanceof tCONS)
+		{
+			tNUMBER first = (tNUMBER) a.CAR();
+			if (((tCONS) a).LENGTH() == 1)
+				// Last operand
+				return GT(first);
+			else
+				// Recurse
+				return GT(a.CAR()) && first.GT(a.CDR());
+		}
+
+		// error bad type
+		throw new LispErrorBadArgumentType(">", this, "NUMBER");
 	}
 
 	/*
@@ -945,22 +1034,64 @@ public abstract class NUMBER extends CELL implements tNUMBER, Cloneable
 	 * @see
 	 * aloyslisp.core.types.tNUMBER#greatherEqual(aloyslisp.core.types.tNUMBER)
 	 */
-	public boolean greatherEqual(tNUMBER a)
+	public boolean GE(tT a)
 	{
-		// TODO list management and tT return value
-		IMathFuncs oper = getOper(this, a);
-		return oper.greatherEqual(this, a);
+		if (a instanceof NUMBER)
+		{
+			// normal addition
+			IMathFuncs oper = getOper(this, (tNUMBER) a);
+			return oper.greatherEqual(this, (tNUMBER) a);
+		}
+		if (a instanceof tNULL)
+		{
+			// end of process
+			return true;
+		}
+		if (a instanceof tCONS)
+		{
+			tNUMBER first = (tNUMBER) a.CAR();
+			if (((tCONS) a).LENGTH() == 1)
+				// Last operand
+				return GE(first);
+			else
+				// Recurse
+				return GE(a.CAR()) && first.GE(a.CDR());
+		}
+
+		// error bad type
+		throw new LispErrorBadArgumentType(">=", this, "NUMBER");
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tNUMBER#lower(aloyslisp.core.types.tNUMBER)
 	 */
-	public boolean lower(tNUMBER a)
+	public boolean LT(tT a)
 	{
-		// TODO list management and tT return value
-		IMathFuncs oper = getOper(this, a);
-		return oper.lower(this, a);
+		if (a instanceof NUMBER)
+		{
+			// normal addition
+			IMathFuncs oper = getOper(this, (tNUMBER) a);
+			return oper.lower(this, (tNUMBER) a);
+		}
+		if (a instanceof tNULL)
+		{
+			// end of process
+			return true;
+		}
+		if (a instanceof tCONS)
+		{
+			tNUMBER first = (tNUMBER) a.CAR();
+			if (((tCONS) a).LENGTH() == 1)
+				// Last operand
+				return LT(first);
+			else
+				// Recurse
+				return LT(a.CAR()) && first.LT(a.CDR());
+		}
+
+		// error bad type
+		throw new LispErrorBadArgumentType("<", this, "NUMBER");
 	}
 
 	/*
@@ -968,18 +1099,39 @@ public abstract class NUMBER extends CELL implements tNUMBER, Cloneable
 	 * @see
 	 * aloyslisp.core.types.tNUMBER#lowerEqual(aloyslisp.core.types.tNUMBER)
 	 */
-	public boolean lowerEqual(tNUMBER a)
+	public boolean LE(tT a)
 	{
-		// TODO list management and tT return value
-		IMathFuncs oper = getOper(this, a);
-		return oper.lowerEqual(this, a);
+		if (a instanceof NUMBER)
+		{
+			// normal addition
+			IMathFuncs oper = getOper(this, (tNUMBER) a);
+			return oper.lowerEqual(this, (tNUMBER) a);
+		}
+		if (a instanceof tNULL)
+		{
+			// end of process
+			return true;
+		}
+		if (a instanceof tCONS)
+		{
+			tNUMBER first = (tNUMBER) a.CAR();
+			if (((tCONS) a).LENGTH() == 1)
+				// Last operand
+				return LE(first);
+			else
+				// Recurse
+				return LE(a.CAR()) && first.LE(a.CDR());
+		}
+
+		// error bad type
+		throw new LispErrorBadArgumentType("<=", this, "NUMBER");
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tNUMBER#abs()
 	 */
-	public tNUMBER abs()
+	public tNUMBER ABS()
 	{
 		IMathFuncs oper = getOper(this);
 		return oper.abs(this);
@@ -989,7 +1141,7 @@ public abstract class NUMBER extends CELL implements tNUMBER, Cloneable
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tNUMBER#max(aloyslisp.core.types.tT)
 	 */
-	public tNUMBER max(tT a)
+	public tNUMBER MAX(tT a)
 	{
 		if (a instanceof NUMBER)
 		{
@@ -1005,7 +1157,7 @@ public abstract class NUMBER extends CELL implements tNUMBER, Cloneable
 		if (a instanceof tCONS)
 		{
 			// loop
-			return max(a.CAR()).max(a.CDR());
+			return MAX(a.CAR()).MAX(a.CDR());
 		}
 
 		// error bad type
@@ -1016,7 +1168,7 @@ public abstract class NUMBER extends CELL implements tNUMBER, Cloneable
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tNUMBER#min(aloyslisp.core.types.tT)
 	 */
-	public tNUMBER min(tT a)
+	public tNUMBER MIN(tT a)
 	{
 		if (a instanceof NUMBER)
 		{
@@ -1032,7 +1184,7 @@ public abstract class NUMBER extends CELL implements tNUMBER, Cloneable
 		if (a instanceof tCONS)
 		{
 			// loop
-			return min(a.CAR()).min(a.CDR());
+			return MIN(a.CAR()).MIN(a.CDR());
 		}
 
 		// error bad type
@@ -1043,10 +1195,20 @@ public abstract class NUMBER extends CELL implements tNUMBER, Cloneable
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tNUMBER#round()
 	 */
-	public tNUMBER round()
+	public tNUMBER ROUND()
 	{
 		IMathFuncs oper = getOper(this);
 		return oper.round(this);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.types.tNUMBER#truncate()
+	 */
+	public tNUMBER TRUNCATE()
+	{
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	/*
@@ -1057,6 +1219,6 @@ public abstract class NUMBER extends CELL implements tNUMBER, Cloneable
 	{
 		if (this.getClass() != cell.getClass())
 			return false;
-		return this.equality((NUMBER) cell);
+		return this.EQN((NUMBER) cell);
 	}
 }

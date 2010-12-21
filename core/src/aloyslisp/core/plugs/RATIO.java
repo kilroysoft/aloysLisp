@@ -127,9 +127,9 @@ public class RATIO extends PMath<NumRatio> implements tRATIO
 		RATIO op2 = make(b);
 
 		return make(
-				op1.numerator().multiply(op2.denominator())
-						.add(op2.numerator().multiply(op1.denominator())), op1
-						.denominator().multiply(op2.denominator()));
+				op1.NUMERATOR().MULTIPLY(op2.DENOMINATOR())
+						.ADD(op2.NUMERATOR().MULTIPLY(op1.DENOMINATOR())), op1
+						.DENOMINATOR().MULTIPLY(op2.DENOMINATOR()));
 	}
 
 	/*
@@ -153,7 +153,7 @@ public class RATIO extends PMath<NumRatio> implements tRATIO
 	{
 		RATIO op1 = make(a);
 
-		return make(op1.numerator().minus(), op1.denominator());
+		return make(op1.NUMERATOR().minus(), op1.DENOMINATOR());
 	}
 
 	/*
@@ -166,7 +166,7 @@ public class RATIO extends PMath<NumRatio> implements tRATIO
 	{
 		RATIO op1 = make(a);
 
-		return make(op1.denominator(), op1.numerator());
+		return make(op1.DENOMINATOR(), op1.NUMERATOR());
 	}
 
 	/*
@@ -180,8 +180,8 @@ public class RATIO extends PMath<NumRatio> implements tRATIO
 		RATIO op1 = make(a);
 		RATIO op2 = make(b);
 
-		return make(op1.numerator().multiply(op2.numerator()), op1
-				.denominator().multiply(op2.denominator()));
+		return make(op1.NUMERATOR().MULTIPLY(op2.NUMERATOR()), op1
+				.DENOMINATOR().MULTIPLY(op2.DENOMINATOR()));
 	}
 
 	/*
@@ -192,7 +192,7 @@ public class RATIO extends PMath<NumRatio> implements tRATIO
 	 */
 	public tNUMBER division(tNUMBER a, tNUMBER b)
 	{
-		return a.multiply(b.inversion());
+		return a.MULTIPLY(b.inversion());
 	}
 
 	/*
@@ -326,8 +326,8 @@ public class RATIO extends PMath<NumRatio> implements tRATIO
 	{
 		RATIO op1 = make(a);
 
-		return op1.numerator().toBase(base) + "/"
-				+ op1.denominator().toBase(base);
+		return op1.NUMERATOR().toBase(base) + "/"
+				+ op1.DENOMINATOR().toBase(base);
 	}
 
 	/*
@@ -383,7 +383,7 @@ public class RATIO extends PMath<NumRatio> implements tRATIO
 	{
 		RATIO op1 = make(a);
 
-		return make(abs(op1.numerator()), op1.denominator());
+		return make(abs(op1.NUMERATOR()), op1.DENOMINATOR());
 	}
 
 	/*
@@ -394,7 +394,7 @@ public class RATIO extends PMath<NumRatio> implements tRATIO
 	 */
 	public tNUMBER max(tNUMBER a, tNUMBER b)
 	{
-		return a.greather(b) ? a : b;
+		return a.GT(b) ? a : b;
 	}
 
 	/*
@@ -405,7 +405,7 @@ public class RATIO extends PMath<NumRatio> implements tRATIO
 	 */
 	public tNUMBER min(tNUMBER a, tNUMBER b)
 	{
-		return a.greather(b) ? b : a;
+		return a.GT(b) ? b : a;
 	}
 
 	/*
@@ -437,26 +437,6 @@ public class RATIO extends PMath<NumRatio> implements tRATIO
 	public tT COERCE(tT type)
 	{
 		// IMPLEMENT Coerce
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.types.tNUMBER#truncate()
-	 */
-	public tNUMBER truncate()
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.types.tNUMBER#cis()
-	 */
-	public tNUMBER cis()
-	{
-		// TODO Auto-generated method stub
 		return null;
 	}
 

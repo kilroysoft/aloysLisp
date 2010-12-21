@@ -30,8 +30,8 @@
 
 package aloyslisp.core.types;
 
-import aloyslisp.core.common.NumComplex;
-import aloyslisp.core.common.NumRatio;
+import aloyslisp.core.common.*;
+import aloyslisp.core.annotations.*;
 
 /**
  * IValue
@@ -135,104 +135,392 @@ public interface tNUMBER extends tATOM
 	 */
 	public short shortValue();
 
-	public tNUMBER acos();
+	/**
+	 * Arc Cosine
+	 * 
+	 * @return
+	 */
+	@Function(name = "acos")
+	public tNUMBER ACOS();
 
-	public tNUMBER asin();
+	/**
+	 * Arc Sine
+	 * 
+	 * @return
+	 */
+	@Function(name = "asin")
+	public tNUMBER ASIN();
 
-	public tNUMBER atan();
+	/**
+	 * Arc Tangent
+	 * 
+	 * @return
+	 */
+	public tNUMBER ATAN();
 
-	public tNUMBER atan(tNUMBER b);
+	/**
+	 * Arc Tangent
+	 * 
+	 * @param num2
+	 * @return
+	 */
+	@Function(name = "atan")
+	public tNUMBER ATAN( //
+			@Opt(name = "number2") tNUMBER num2);
 
-	public tNUMBER ceiling();
+	/**
+	 * Ceiling
+	 * 
+	 * @return
+	 */
+	@Function(name = "ceiling")
+	public tNUMBER CEILING();
 
-	public tNUMBER truncate();
+	/**
+	 * Truncate
+	 * 
+	 * @return
+	 */
+	@Function(name = "truncate")
+	public tNUMBER TRUNCATE();
 
-	public tNUMBER cos();
+	/**
+	 * Cosine
+	 * 
+	 * @return
+	 */
+	@Function(name = "cos")
+	public tNUMBER COS();
 
-	public tNUMBER cis();
+	/**
+	 * Complex value of argument part modulo 1 #C((cos val) (sin val))
+	 * 
+	 * @return
+	 */
+	@Function(name = "cis")
+	public tNUMBER CIS();
 
-	public tNUMBER exp();
+	/**
+	 * Exponential base e
+	 * 
+	 * @return
+	 */
+	@Function(name = "exp")
+	public tNUMBER EXP();
 
-	public tNUMBER floor();
+	/**
+	 * Floor
+	 * 
+	 * @return
+	 */
+	@Function(name = "floor")
+	public tNUMBER FLOOR();
 
 	public tNUMBER IEEEremainder(tNUMBER b);
 
-	public tNUMBER log();
+	/**
+	 * Logarithm
+	 * 
+	 * @return
+	 *         TODO add optional base
+	 */
+	@Function(name = "log")
+	public tNUMBER LOG();
 
-	public tNUMBER expt(tNUMBER b);
+	/**
+	 * Power
+	 * 
+	 * @param b
+	 * @return
+	 */
+	@Function(name = "expt")
+	public tNUMBER EXPT( //
+			@Arg(name = "power-number") tNUMBER power);
 
-	public tNUMBER random();
+	/**
+	 * Random value
+	 * 
+	 * @param randomState
+	 * @return
+	 */
+	@Function(name = "random")
+	public tNUMBER RANDOM( //
+			@Opt(name = "random-state") tT randomState);
 
-	public tNUMBER sin();
+	/**
+	 * Sine
+	 * 
+	 * @return
+	 */
+	@Function(name = "sin")
+	public tNUMBER SIN();
 
-	public tNUMBER sqrt();
+	/**
+	 * Square root
+	 * 
+	 * @return
+	 */
+	@Function(name = "sqrt")
+	public tNUMBER SQRT();
 
-	public tNUMBER tan();
+	/**
+	 * Tangent
+	 * 
+	 * @return
+	 */
+	@Function(name = "tan")
+	public tNUMBER TAN();
 
 	public tNUMBER toDegrees();
 
 	public tNUMBER toRadians();
 
-	public tNUMBER add(tT a);
+	/**
+	 * Addition
+	 * 
+	 * @param a
+	 * @return
+	 */
+	@Function(name = "+")
+	public tNUMBER ADD( //
+			@Rest(name = "operands") tT operands);
 
-	public tNUMBER substract(tT a);
+	/**
+	 * Substraction
+	 * 
+	 * @param operands
+	 * @return
+	 */
+	@Function(name = "-")
+	public tNUMBER SUBSTRACT( //
+			@Rest(name = "operands") tT operands);
 
 	public tNUMBER minus();
 
 	public tNUMBER inversion();
 
-	public tNUMBER multiply(tT a);
+	/**
+	 * Multiply
+	 * 
+	 * @param a
+	 * @return
+	 */
+	@Function(name = "*")
+	public tNUMBER MULTIPLY( //
+			@Rest(name = "operands") tT operands);
 
-	public tNUMBER division(tT a);
+	/**
+	 * Division
+	 * 
+	 * @param operands
+	 * @return
+	 */
+	@Function(name = "/")
+	public tNUMBER DIVISION( //
+			@Rest(name = "operands") tT operands);
 
 	public tNUMBER divide(tT a);
 
-	public tNUMBER mod(tT a);
+	/**
+	 * Modulus
+	 * 
+	 * @param operands
+	 * @return
+	 */
+	@Function(name = "mod")
+	public tNUMBER MOD( //
+			@Rest(name = "operands") tT operands);
 
-	public tNUMBER conjugate();
+	/**
+	 * Conjugate
+	 * 
+	 * @return
+	 */
+	@Function(name = "conjugate")
+	public tNUMBER CONJUGATE();
 
-	public tNUMBER real();
+	/**
+	 * Real part
+	 * 
+	 * @return
+	 */
+	@Function(name = "realpart")
+	public tNUMBER REALPART();
 
 	public tNUMBER phase();
 
-	public tNUMBER imag();
+	/**
+	 * Imaginary part
+	 * 
+	 * @return
+	 */
+	@Function(name = "imagpart")
+	public tNUMBER IMAGPART();
 
-	public tNUMBER numerator();
+	/**
+	 * Numerator of rational value
+	 * 
+	 * @return
+	 */
+	@Function(name = "numerator")
+	public tNUMBER NUMERATOR();
 
-	public tNUMBER denominator();
+	/**
+	 * Denominator
+	 * 
+	 * @return
+	 */
+	@Function(name = "denominator")
+	public tNUMBER DENOMINATOR();
 
-	public tNUMBER lcm(tT a);
+	/**
+	 * Least common multiple
+	 * 
+	 * @param a
+	 * @return
+	 */
+	@Function(name = "lcm")
+	public tNUMBER LCM( //
+			@Rest(name = "integers") tT integers);
 
-	public tNUMBER gcd(tT a);
+	/**
+	 * Greatest common denominator
+	 * 
+	 * @param integers
+	 * @return
+	 */
+	@Function(name = "gcd")
+	public tNUMBER GCD( //
+			@Rest(name = "integers") tT integers);
 
-	public tNUMBER logand(tT a);
+	/**
+	 * Logical and
+	 * 
+	 * @param integers
+	 * @return
+	 */
+	@Function(name = "logand")
+	public tNUMBER LOGAND( //
+			@Rest(name = "integers") tT integers);
 
-	public tNUMBER logior(tT a);
+	/**
+	 * Logical or
+	 * 
+	 * @param integers
+	 * @return
+	 */
+	@Function(name = "logior")
+	public tNUMBER LOGIOR( //
+			@Rest(name = "integers") tT integers);
 
-	public tNUMBER logxor(tT a);
+	/**
+	 * Logical xor
+	 * 
+	 * @param integers
+	 * @return
+	 */
+	@Function(name = "logxor")
+	public tNUMBER LOGXOR( //
+			@Rest(name = "integers") tT integers);
 
-	public tNUMBER lognot();
+	/**
+	 * Logical not
+	 * 
+	 * @return
+	 */
+	@Function(name = "lognot")
+	public tNUMBER LOGNOT();
 
 	public String toBase(int base);
 
 	public tNUMBER fromBase(String a, Integer base);
 
-	public boolean equality(tNUMBER a);
+	/**
+	 * Equal numeric
+	 * 
+	 * @param integers
+	 * @return
+	 */
+	@Function(name = "=")
+	public boolean EQN( //
+			@Rest(name = "ops") tT ops);
 
-	public boolean greather(tNUMBER a);
+	/**
+	 * Greater than
+	 * 
+	 * @param ops
+	 * @return
+	 */
+	@Function(name = ">")
+	public boolean GT( //
+			@Rest(name = "ops") tT ops);
 
-	public boolean greatherEqual(tNUMBER a);
+	/**
+	 * Greater or equal
+	 * 
+	 * @param ops
+	 * @return
+	 */
+	@Function(name = ">=")
+	public boolean GE( //
+			@Rest(name = "ops") tT ops);
 
-	public boolean lower(tNUMBER a);
+	/**
+	 * Lower
+	 * 
+	 * @param ops
+	 * @return
+	 */
+	@Function(name = "<")
+	public boolean LT( //
+			@Rest(name = "ops") tT ops);
 
-	public boolean lowerEqual(tNUMBER a);
+	/**
+	 * Lower or equal
+	 * 
+	 * @param ops
+	 * @return
+	 */
+	@Function(name = "<=")
+	public boolean LE( //
+			@Rest(name = "ops") tT ops);
 
-	public tNUMBER abs();
+	/**
+	 * Absolute value
+	 * 
+	 * @param number
+	 * @return
+	 */
+	@Function(name = "abs")
+	public tNUMBER ABS();
 
-	public tNUMBER max(tT a);
+	/**
+	 * Maximum
+	 * 
+	 * @param ops
+	 * @return
+	 */
+	@Function(name = "max")
+	public tNUMBER MAX( //
+			@Rest(name = "ops") tT ops);
 
-	public tNUMBER min(tT a);
+	/**
+	 * Minimum
+	 * 
+	 * @param ops
+	 * @return
+	 */
+	@Function(name = "min")
+	public tNUMBER MIN( //
+			@Rest(name = "ops") tT ops);
 
-	public tNUMBER round();
+	/**
+	 * Round
+	 * 
+	 * @param number
+	 * @return
+	 */
+	@Function(name = "round")
+	public tNUMBER ROUND();
 
 }

@@ -670,4 +670,16 @@ public class Arguments
 		this.func = func;
 	}
 
+	/**
+	 * Position of rest in arguments. -1 if no rest
+	 * 
+	 * @return
+	 */
+	public Integer getPosRest()
+	{
+		if (rest == null)
+			return -1;
+
+		return args.LENGTH() + keyArgs.size();
+	}
 }

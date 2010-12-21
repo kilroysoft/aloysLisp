@@ -366,26 +366,6 @@ public class FLOAT extends PMath<Float> implements tSHORT_FLOAT, tSINGLE_FLOAT
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.types.tNUMBER#truncate()
-	 */
-	public tNUMBER truncate()
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.types.tNUMBER#cis()
-	 */
-	public tNUMBER cis()
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
 	 * @see
 	 * aloyslisp.core.plugs.numbers.IMathFuncs#lcm(aloyslisp.core.types.tNUMBER,
 	 * aloyslisp.core.types.tNUMBER)

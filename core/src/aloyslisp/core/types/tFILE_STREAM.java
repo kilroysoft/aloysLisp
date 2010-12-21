@@ -29,8 +29,6 @@
 
 package aloyslisp.core.types;
 
-import aloyslisp.core.annotations.*;
-
 /**
  * FILE_STREAM
  * 

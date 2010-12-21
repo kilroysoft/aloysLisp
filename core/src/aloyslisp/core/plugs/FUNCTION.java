@@ -437,19 +437,29 @@ public abstract class FUNCTION extends CELL implements tFUNCTION
 	{
 		// Transform arguments
 		int i = 0;
+		int posRest = intern.getPosRest();
 		Object[] newArgs = new Object[paramTypes.length];
+
 		// System.out.println("Args : " + arg);
+
 		for (Class<?> classArg : paramTypes)
 		{
 			if (classArg.isArray())
 			{
-				// manage rest of args as an array
+				// manage rest of args as an array, tT... argument.
 				newArgs[i] = arg.getArray();
 				arg = NIL;
 				continue;
 			}
 			else
-				newArgs[i] = transform(arg.CAR(), classArg);
+			{
+				if (i == posRest)
+					// rest as list in an argument
+					newArgs[i] = transform(arg, classArg);
+				else
+					// normal arg
+					newArgs[i] = transform(arg.CAR(), classArg);
+			}
 
 			arg = (tLIST) arg.CDR();
 			i++;

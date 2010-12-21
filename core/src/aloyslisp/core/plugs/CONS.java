@@ -33,7 +33,6 @@ package aloyslisp.core.plugs;
 import java.util.*;
 
 import static aloyslisp.commonlisp.L.*;
-import aloyslisp.core.annotations.*;
 import aloyslisp.core.common.*;
 import aloyslisp.core.types.*;
 

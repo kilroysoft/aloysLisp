@@ -105,7 +105,7 @@ public class NumRatio extends Number
 	 */
 	public tNUMBER ratio()
 	{
-		return num.division(den);
+		return num.DIVISION(den);
 	}
 
 	/*
@@ -172,7 +172,7 @@ public class NumRatio extends Number
 		while (!(b.EQUAL(new INTEGER(0))))
 		{
 			// System.out.println("a = " + a + ", b= " + b);
-			k = a.mod(b);
+			k = a.MOD(b);
 			a = b;
 			b = k;
 		}

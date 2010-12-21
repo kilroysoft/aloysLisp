@@ -5,25 +5,33 @@ To do
 - All non lisp functions on objects are private or protected or global.
 - At last write all the base functions !!!
 - Manage *xxx* variables for output of objects.
-- Environment as dynamic values.
+- Environment as dynamic object.
 - Debug environment.
-- Interface hooks (debug). Execute, continue, breakpoints.
+- Interface hooks (debug). Execute, continue, breakpoints, Environment stack.
 - Compilation.... (as soon as possible)
-- Add Interactive stream
+- Add Missing streams.
 - FUNCTIONS implements SPECIAL_FORM as functions can be function designators and not MACROS and SPECIAL_FORMS.....
-- MACROS implements SPECIAL_FORM
+- MACROS implements SPECIAL_FORM, not the contrary.
 - Add CONDITION class
 - Refactor printable() in a more standard way.
+- Verify rest arguments management in java function tT... as array, tT (tLIST ?) as tLIST
+- Automatic documentation creation (Wiki) by the programm itself. 
+	- Doc for Java version of syntax of LISP Function (by type or classes and globally alphabeticaly)
+	- Doc for LISP version of syntax of LISP Function
+	- List of function to be implemented.
 
 Doing
 =====
-- All this stuff is intended to move to a more general lisp object model.
+- Manage NUMBER Functions with no arguments (identity) +, *, logand, logior, logxor, logeqv
 - Clean-up all instantiation process.
 - Create type objects.
 
 Current state
 =============
-- Added tFUNCTION_DESIGNATOR (type (and SYMBOL LAMBDA-FUNCTION SYSTEM-FUNCTION)) to confirm
+- All this stuff is intended to move to a more general lisp object model.
+- Adding NUMBER functions
+- Suppressed @Construct annotation. Replaced by factory static functions.
+- Added tFUNCTION_DESIGNATOR (type (and SYMBOL LAMBDA-FUNCTION SYSTEM-FUNCTION)) to confirm and test.
 - Rewrite ALL Stream lisp functions.
 - Define clear documentation about function.
 - Function library as blank classes.

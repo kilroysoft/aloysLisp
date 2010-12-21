@@ -112,7 +112,8 @@ public class COMPLEX extends PMath<NumComplex> implements tCOMPLEX
 		COMPLEX op1 = make(a);
 		COMPLEX op2 = make(b);
 
-		return make(op1.real().add(op2.real()), op1.imag().add(op2.imag()));
+		return make(op1.REALPART().ADD(op2.REALPART()),
+				op1.IMAGPART().ADD(op2.IMAGPART()));
 	}
 
 	/*
@@ -126,8 +127,8 @@ public class COMPLEX extends PMath<NumComplex> implements tCOMPLEX
 		COMPLEX op1 = make(a);
 		COMPLEX op2 = make(b);
 
-		return make(op1.real().substract(op2.real()),
-				op1.imag().substract(op2.imag()));
+		return make(op1.REALPART().SUBSTRACT(op2.REALPART()), op1.IMAGPART()
+				.SUBSTRACT(op2.IMAGPART()));
 	}
 
 	/*
@@ -140,7 +141,7 @@ public class COMPLEX extends PMath<NumComplex> implements tCOMPLEX
 	{
 		COMPLEX op1 = make(a);
 
-		return make(op1.real().minus(), op1.imag().minus());
+		return make(op1.REALPART().minus(), op1.IMAGPART().minus());
 	}
 
 	/*
@@ -151,7 +152,7 @@ public class COMPLEX extends PMath<NumComplex> implements tCOMPLEX
 	 */
 	public tNUMBER inversion(tNUMBER a)
 	{
-		return make(one).division(make(a));
+		return make(one).DIVISION(make(a));
 	}
 
 	/*
@@ -162,9 +163,9 @@ public class COMPLEX extends PMath<NumComplex> implements tCOMPLEX
 	 */
 	public tNUMBER multiply(tNUMBER a, tNUMBER b)
 	{
-		tNUMBER arg = a.phase().add(b.phase());
-		tNUMBER abs = a.abs().multiply(b.abs());
-		return make(abs.multiply(arg.sin()), abs.multiply(arg.cos()));
+		tNUMBER arg = a.phase().ADD(b.phase());
+		tNUMBER abs = a.ABS().MULTIPLY(b.ABS());
+		return make(abs.MULTIPLY(arg.SIN()), abs.MULTIPLY(arg.COS()));
 	}
 
 	/*
@@ -175,9 +176,9 @@ public class COMPLEX extends PMath<NumComplex> implements tCOMPLEX
 	 */
 	public tNUMBER division(tNUMBER a, tNUMBER b)
 	{
-		tNUMBER arg = a.phase().substract(b.phase());
-		tNUMBER abs = a.abs().division(b.abs());
-		return make(abs.multiply(arg.sin()), abs.multiply(arg.cos()));
+		tNUMBER arg = a.phase().SUBSTRACT(b.phase());
+		tNUMBER abs = a.ABS().DIVISION(b.ABS());
+		return make(abs.MULTIPLY(arg.SIN()), abs.MULTIPLY(arg.COS()));
 	}
 
 	/*
@@ -364,7 +365,7 @@ public class COMPLEX extends PMath<NumComplex> implements tCOMPLEX
 	 */
 	public tNUMBER abs(tNUMBER a)
 	{
-		return make(a.real().abs(), a.imag().abs());
+		return make(a.REALPART().ABS(), a.IMAGPART().ABS());
 	}
 
 	/*
@@ -434,26 +435,6 @@ public class COMPLEX extends PMath<NumComplex> implements tCOMPLEX
 		if (!(this instanceof NUMBER))
 			throw new LispErrorFunctionCannotApplyOn("coerce", this);
 		return new COMPLEX(this.complexValue());
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.types.tNUMBER#truncate()
-	 */
-	public tNUMBER truncate()
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.types.tNUMBER#cis()
-	 */
-	public tNUMBER cis()
-	{
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	/*
