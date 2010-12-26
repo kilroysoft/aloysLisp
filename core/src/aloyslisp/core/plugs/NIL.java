@@ -33,7 +33,8 @@ package aloyslisp.core.plugs;
 import java.util.Iterator;
 
 import static aloyslisp.commonlisp.L.*;
-import aloyslisp.core.common.*;
+import aloyslisp.core.conditions.LispErrorFunctionCannotApplyOn;
+import aloyslisp.core.math.*;
 import aloyslisp.core.types.*;
 
 /**

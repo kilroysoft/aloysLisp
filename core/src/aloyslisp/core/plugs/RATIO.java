@@ -29,7 +29,8 @@
 
 package aloyslisp.core.plugs;
 
-import aloyslisp.core.common.*;
+import aloyslisp.core.conditions.LispErrorFunctionCannotApplyOn;
+import aloyslisp.core.math.*;
 import aloyslisp.core.types.*;
 
 /**
@@ -39,7 +40,7 @@ import aloyslisp.core.types.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class RATIO extends PMath<NumRatio> implements tRATIO
+public class RATIO extends NUMBER implements tRATIO
 {
 
 	/**
@@ -70,9 +71,9 @@ public class RATIO extends PMath<NumRatio> implements tRATIO
 	 * @param num
 	 * @param den
 	 */
-	public RATIO(Number num, Number den)
+	public RATIO(NumInteger num, NumInteger den)
 	{
-		super(new NumRatio(LONG.make(num), LONG.make(den)));
+		super(new NumRatio(num, den));
 	}
 
 	/**
@@ -84,7 +85,7 @@ public class RATIO extends PMath<NumRatio> implements tRATIO
 	}
 
 	/**
-	 * Coerce to double
+	 * Coerce to ratio
 	 * 
 	 * @param val
 	 * @return
@@ -95,24 +96,13 @@ public class RATIO extends PMath<NumRatio> implements tRATIO
 	}
 
 	/**
-	 * Coerce to double
-	 * 
-	 * @param val
-	 * @return
-	 */
-	public static RATIO make(Number num, Number den)
-	{
-		return new RATIO(num, den);
-	}
-
-	/**
 	 * @param num
 	 * @param den
 	 * @return
 	 */
 	public static RATIO make(tNUMBER num, tNUMBER den)
 	{
-		return new RATIO(num, den);
+		return new RATIO(num.integerValue(), den.integerValue());
 	}
 
 	/*
@@ -349,7 +339,7 @@ public class RATIO extends PMath<NumRatio> implements tRATIO
 	 */
 	public boolean equal(tNUMBER a, tNUMBER b)
 	{
-		return a.getValue().doubleValue() == b.getValue().doubleValue();
+		return a.getValue().getDoubleValue() == b.getValue().getDoubleValue();
 	}
 
 	/*
@@ -360,7 +350,7 @@ public class RATIO extends PMath<NumRatio> implements tRATIO
 	 */
 	public boolean greather(tNUMBER a, tNUMBER b)
 	{
-		return a.getValue().doubleValue() > b.getValue().doubleValue();
+		return a.getValue().getDoubleValue() > b.getValue().getDoubleValue();
 	}
 
 	/*
@@ -371,7 +361,7 @@ public class RATIO extends PMath<NumRatio> implements tRATIO
 	 */
 	public boolean lower(tNUMBER a, tNUMBER b)
 	{
-		return a.getValue().doubleValue() < b.getValue().doubleValue();
+		return a.getValue().getDoubleValue() < b.getValue().getDoubleValue();
 	}
 
 	/*
@@ -416,7 +406,7 @@ public class RATIO extends PMath<NumRatio> implements tRATIO
 	 */
 	public tNUMBER round(tNUMBER a)
 	{
-		return LONG.make(Math.round(a.doubleValue()));
+		return INTEGER.make(Math.round(a.doubleValue()));
 	}
 
 	/*

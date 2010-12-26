@@ -24,75 +24,104 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 12 oct. 2010 Creation
+// IP 23 déc. 2010 Creation
 // --------------------------------------------------------------------------
 
-package aloyslisp.core.common;
+package aloyslisp.core.math;
 
-import aloyslisp.core.plugs.*;
-import aloyslisp.core.types.*;
-import static aloyslisp.commonlisp.L.*;
+import aloyslisp.core.types.tNUMBER;
 
 /**
- * PMath
+ * NumShort
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public abstract class PMath<Cast extends Number> extends NUMBER implements
-		IMath<Cast>, IMathFuncs
+public class NumShort implements IFloat
 {
-	/**
-	 * @param val
-	 */
-	public PMath(Number val)
+	public short	value;
+
+	public NumShort(short init)
 	{
-		super(val);
+		value = init;
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.plugs.numbers.NUMBER#clone()
+	 * @see aloyslisp.core.math.INumber#ratioValue()
 	 */
-	public tNUMBER clone()
+	@Override
+	public NumRatio getRatioValue()
 	{
-		throw new LispErrorFunctionCannotApplyOn("clone", this);
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see
-	 * aloyslisp.core.plugs.numbers.IMathFuncs#greatherEqual(aloyslisp.core.
-	 * types.tNUMBER, aloyslisp.core.types.tNUMBER)
+	 * @see aloyslisp.core.math.INumber#complexValue()
 	 */
-	public boolean greatherEqual(tNUMBER a, tNUMBER b)
+	@Override
+	public NumComplex getComplexValue()
 	{
-		return !lower(a, b);
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see
-	 * aloyslisp.core.plugs.numbers.IMathFuncs#lowerEqual(aloyslisp.core.types
-	 * .tNUMBER, aloyslisp.core.types.tNUMBER)
+	 * @see aloyslisp.core.math.INumber#integerValue()
 	 */
-	public boolean lowerEqual(tNUMBER a, tNUMBER b)
+	@Override
+	public NumInteger getIntegerValue()
 	{
-		return !greather(a, b);
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see
-	 * aloyslisp.core.plugs.numbers.IMathFuncs#phase(aloyslisp.core.types.tNUMBER
-	 * )
+	 * @see aloyslisp.core.math.INumber#floatValue()
 	 */
-	public tNUMBER phase(tNUMBER a)
+	@Override
+	public NumFloat getFloatValue()
 	{
-		double val = a.doubleValue();
-		return val > 0 ? nInt(0) : nInt(180);
+		// TODO Auto-generated method stub
+		return null;
+	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.INumber#doubleValue()
+	 */
+	@Override
+	public NumDouble getDoubleValue()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.INumber#shortValue()
+	 */
+	@Override
+	public NumShort getShortValue()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.INumber#make()
+	 */
+	@Override
+	public tNUMBER make()
+	{
+		// create SHORT
+		return new SHORT(this);
 	}
 
 }

@@ -30,7 +30,8 @@
 package aloyslisp.core.exec;
 
 import static aloyslisp.commonlisp.L.*;
-import aloyslisp.core.common.*;
+import aloyslisp.core.conditions.LispException;
+import aloyslisp.core.math.*;
 import aloyslisp.core.plugs.*;
 import aloyslisp.core.types.*;
 

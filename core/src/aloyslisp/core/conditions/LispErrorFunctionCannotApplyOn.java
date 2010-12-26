@@ -24,33 +24,37 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 15 oct. 2010 Creation
+// IP 12 nov. 2010 Creation
 // --------------------------------------------------------------------------
 
-package aloyslisp.core.common;
+package aloyslisp.core.conditions;
+
+import aloyslisp.core.types.tT;
 
 /**
- * ReadException
+ * LispErrorFunctionCannotApplyOn
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class ReadException extends Exception
+public class LispErrorFunctionCannotApplyOn extends LispException
 {
 
 	/**
 	 * 
 	 */
-	private static final long	serialVersionUID	= 8819794288959324209L;
+	private static final long	serialVersionUID	= 5746282197320687493L;
 
 	/**
 	 * @param message
-	 * @param cause
 	 */
-	public ReadException(String message, Throwable cause)
+	public LispErrorFunctionCannotApplyOn(String function, tT object)
 	{
-		super(message, cause);
+		super(function
+				+ " cannot apply on "
+				+ ((object == null) ? "null" : object.getClass()
+						.getSimpleName()) + " : " + object);
 	}
 
 }

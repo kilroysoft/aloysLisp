@@ -24,18 +24,19 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 12 oct. 2010 Creation
+// IP 16 déc. 2010 Creation
 // --------------------------------------------------------------------------
 
-package aloyslisp.core.common;
+package aloyslisp.core.types;
 
 /**
- * IMath
+ * tPATHNAME_DESIGNATOR
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public interface IMath<Cast extends Number>
+public interface tPATHNAME_DESIGNATOR extends tSYMBOL, tSTRING, tCHARACTER
 {
+
 }

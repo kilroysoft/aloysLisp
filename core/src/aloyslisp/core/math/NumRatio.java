@@ -28,11 +28,10 @@
 // BUG Math functions doesn't work
 // --------------------------------------------------------------------------
 
-package aloyslisp.core.common;
+package aloyslisp.core.math;
 
 import static aloyslisp.commonlisp.L.*;
-import aloyslisp.core.plugs.INTEGER;
-import aloyslisp.core.plugs.LONG;
+import aloyslisp.core.plugs.*;
 import aloyslisp.core.types.*;
 
 /**
@@ -42,7 +41,7 @@ import aloyslisp.core.types.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class NumRatio extends Number
+public class NumRatio implements IRational
 {
 	/**
 	 * 
@@ -52,43 +51,41 @@ public class NumRatio extends Number
 	/**
 	 * 
 	 */
-	public tNUMBER				num;
+	public NumInteger			num;
 
 	/**
 	 * 
 	 */
-	public tNUMBER				den;
+	public NumInteger			den;
 
 	/**
 	 * 
 	 */
 	public NumRatio()
 	{
-		this.num = new INTEGER(1);
-		this.den = new INTEGER(1);
+		this.num = new NumInteger(1);
+		this.den = new NumInteger(1);
 	}
 
 	/**
 	 * @param num
 	 * @param den
 	 */
-	public NumRatio(tNUMBER num, tNUMBER den)
+	public NumRatio(NumInteger num, NumInteger den)
 	{
-		tNUMBER pgcd = PGCD(num, den);
-		num = num.divide(pgcd);
-		den = den.divide(pgcd);
+		NumInteger pgcd = new NumInteger(num.gcd(den));
+		this.num = new NumInteger(num.divide(pgcd));
+		this.den = new NumInteger(den.divide(pgcd));
+	}
+
+	/**
+	 * @param num
+	 * @param den
+	 */
+	public NumRatio(NumInteger num)
+	{
 		this.num = num;
-		this.den = den;
-	}
-
-	/**
-	 * @param num
-	 * @param den
-	 */
-	public NumRatio(Number num, Number den)
-	{
-		this.num = LONG.make(num.longValue());
-		this.den = LONG.make(den.longValue());
+		this.den = new NumInteger(1);
 	}
 
 	/*
@@ -105,49 +102,40 @@ public class NumRatio extends Number
 	 */
 	public tNUMBER ratio()
 	{
-		return num.DIVISION(den);
+		return num.make().DIVISION(den.make());
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see java.lang.Number#intValue()
+	 * @see java.lang.Number#integerValue()
 	 */
-	public int intValue()
+	public NumInteger getIntegerValue()
 	{
-		return ratio().getValue().intValue();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see java.lang.Number#longValue()
-	 */
-	public long longValue()
-	{
-		return ratio().getValue().longValue();
+		return ratio().getValue().getIntegerValue();
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * @see java.lang.Number#floatValue()
 	 */
-	public float floatValue()
+	public NumFloat getFloatValue()
 	{
-		return ratio().getValue().floatValue();
+		return ratio().getValue().getFloatValue();
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * @see java.lang.Number#doubleValue()
 	 */
-	public double doubleValue()
+	public NumDouble getDoubleValue()
 	{
-		return ratio().getValue().doubleValue();
+		return ratio().getValue().getDoubleValue();
 	}
 
 	/**
 	 * @return
 	 */
-	public NumRatio ratioValue()
+	public NumRatio getRatioValue()
 	{
 		return this;
 	}
@@ -155,29 +143,20 @@ public class NumRatio extends Number
 	/**
 	 * @return
 	 */
-	public NumComplex complexValue()
+	public NumComplex getComplexValue()
 	{
 		return new NumComplex(this.ratio(), nInt(0));
 	}
 
-	/**
-	 * @param a
-	 * @param b
-	 * @return
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.INumber#shortValue()
 	 */
-	private tNUMBER PGCD(tNUMBER a, tNUMBER b)
+	@Override
+	public NumShort getShortValue()
 	{
-		tNUMBER k;
-
-		while (!(b.EQUAL(new INTEGER(0))))
-		{
-			// System.out.println("a = " + a + ", b= " + b);
-			k = a.MOD(b);
-			a = b;
-			b = k;
-		}
-
-		return a;
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }

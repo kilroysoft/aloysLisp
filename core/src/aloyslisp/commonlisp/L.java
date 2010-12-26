@@ -34,8 +34,9 @@ import java.net.*;
 import java.util.*;
 import java.util.jar.*;
 
-import aloyslisp.core.common.*;
+import aloyslisp.core.conditions.LispException;
 import aloyslisp.core.exec.*;
+import aloyslisp.core.math.*;
 import aloyslisp.core.plugs.*;
 import aloyslisp.core.types.*;
 
@@ -535,9 +536,9 @@ public class L extends Primitives
 	 * @param value
 	 * @return
 	 */
-	public static LONG nLong(Number value)
+	public static INTEGER nLong(Number value)
 	{
-		return LONG.make(value);
+		return INTEGER.make(value);
 	}
 
 	/**

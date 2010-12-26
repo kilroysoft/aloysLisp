@@ -29,8 +29,8 @@
 
 package aloyslisp.core.plugs;
 
-import static aloyslisp.commonlisp.L.*;
-import aloyslisp.core.common.PMath;
+import static aloyslisp.commonlisp.L.nInt;
+import aloyslisp.core.math.*;
 import aloyslisp.core.types.*;
 
 /**
@@ -40,21 +40,28 @@ import aloyslisp.core.types.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class INTEGER extends PMath<Integer> implements tFIXNUM
+public class INTEGER extends NumInteger implements tFIXNUM, tBIGNUM
 {
-
 	/**
 	 * @param val
 	 */
-	public INTEGER(Integer val)
+	public INTEGER(int val)
 	{
-		super(val);
+		super(new NumInteger(val));
 	}
 
 	/**
 	 * @param val
 	 */
-	public INTEGER(Number val)
+	public INTEGER(long val)
+	{
+		super(new NumInteger(val));
+	}
+
+	/**
+	 * @param val
+	 */
+	public INTEGER(INumber val)
 	{
 		super(val);
 	}
@@ -65,9 +72,9 @@ public class INTEGER extends PMath<Integer> implements tFIXNUM
 	 * @param val
 	 * @return
 	 */
-	public static INTEGER make(Number val)
+	public static INTEGER make(INumber val)
 	{
-		return new INTEGER(val.intValue());
+		return new INTEGER(val.getIntegerValue());
 	}
 
 	/*
@@ -78,7 +85,7 @@ public class INTEGER extends PMath<Integer> implements tFIXNUM
 	 */
 	public tNUMBER add(tNUMBER a, tNUMBER b)
 	{
-		return make(a.getValue().intValue() + b.getValue().intValue());
+		return a.getValue().add(b.getValue());
 	}
 
 	/*
@@ -89,7 +96,7 @@ public class INTEGER extends PMath<Integer> implements tFIXNUM
 	 */
 	public tNUMBER substract(tNUMBER a, tNUMBER b)
 	{
-		return make(a.getValue().intValue() - b.getValue().intValue());
+		return make(a.getValue().getIntegerValue() - b.getValue().getIntegerValue());
 	}
 
 	/*
@@ -100,7 +107,7 @@ public class INTEGER extends PMath<Integer> implements tFIXNUM
 	 */
 	public tNUMBER minus(tNUMBER a)
 	{
-		return make(-a.getValue().intValue());
+		return make(-a.getValue().getIntegerValue());
 	}
 
 	/*
@@ -122,7 +129,7 @@ public class INTEGER extends PMath<Integer> implements tFIXNUM
 	 */
 	public tNUMBER multiply(tNUMBER a, tNUMBER b)
 	{
-		return make(a.getValue().intValue() * b.getValue().intValue());
+		return make(a.getValue().getIntegerValue() * b.getValue().getIntegerValue());
 	}
 
 	/*
@@ -144,7 +151,8 @@ public class INTEGER extends PMath<Integer> implements tFIXNUM
 	 */
 	public tNUMBER divide(tNUMBER a, tNUMBER b)
 	{
-		return make(a.getValue().intValue() / (Integer) b.getValue().intValue());
+		return make(a.getValue().getIntegerValue()
+				/ (Long) b.getValue().getIntegerValue());
 	}
 
 	/*
@@ -155,7 +163,7 @@ public class INTEGER extends PMath<Integer> implements tFIXNUM
 	 */
 	public tNUMBER mod(tNUMBER a, tNUMBER b)
 	{
-		return make(a.getValue().intValue() % b.getValue().intValue());
+		return make(a.getValue().getIntegerValue() % b.getValue().getIntegerValue());
 	}
 
 	/*
@@ -221,7 +229,7 @@ public class INTEGER extends PMath<Integer> implements tFIXNUM
 	 */
 	public tNUMBER logand(tNUMBER a, tNUMBER b)
 	{
-		return make(a.getValue().intValue() & b.getValue().intValue());
+		return make(a.getValue().getIntegerValue() & b.getValue().getIntegerValue());
 	}
 
 	/*
@@ -232,7 +240,7 @@ public class INTEGER extends PMath<Integer> implements tFIXNUM
 	 */
 	public tNUMBER logior(tNUMBER a, tNUMBER b)
 	{
-		return make(a.getValue().intValue() | b.getValue().intValue());
+		return make(a.getValue().getIntegerValue() | b.getValue().getIntegerValue());
 	}
 
 	/*
@@ -243,7 +251,7 @@ public class INTEGER extends PMath<Integer> implements tFIXNUM
 	 */
 	public tNUMBER logxor(tNUMBER a, tNUMBER b)
 	{
-		return make(a.getValue().intValue() ^ b.getValue().intValue());
+		return make(a.getValue().getIntegerValue() ^ b.getValue().getIntegerValue());
 	}
 
 	/*
@@ -254,7 +262,7 @@ public class INTEGER extends PMath<Integer> implements tFIXNUM
 	 */
 	public tNUMBER lognot(tNUMBER a)
 	{
-		return make(a.getValue().intValue());
+		return make(~a.getValue().getIntegerValue());
 	}
 
 	/*
@@ -265,7 +273,7 @@ public class INTEGER extends PMath<Integer> implements tFIXNUM
 	 */
 	public String toBase(tNUMBER a, Integer base)
 	{
-		// TODO toBase should be a real radix verssion
+		// TODO toBase
 		return a.printable();
 	}
 
@@ -276,7 +284,7 @@ public class INTEGER extends PMath<Integer> implements tFIXNUM
 	 */
 	public tNUMBER fromBase(String a, Integer base)
 	{
-		// TODO fromBase implementation
+		// TODO fromBase
 		return null;
 	}
 
@@ -288,7 +296,7 @@ public class INTEGER extends PMath<Integer> implements tFIXNUM
 	 */
 	public boolean equal(tNUMBER a, tNUMBER b)
 	{
-		return a.getValue().intValue() == b.getValue().intValue();
+		return a.getValue().getIntegerValue() == b.getValue().getIntegerValue();
 	}
 
 	/*
@@ -299,7 +307,7 @@ public class INTEGER extends PMath<Integer> implements tFIXNUM
 	 */
 	public boolean greather(tNUMBER a, tNUMBER b)
 	{
-		return a.getValue().intValue() > b.getValue().intValue();
+		return a.getValue().getIntegerValue() > b.getValue().getIntegerValue();
 	}
 
 	/*
@@ -310,7 +318,7 @@ public class INTEGER extends PMath<Integer> implements tFIXNUM
 	 */
 	public boolean lower(tNUMBER a, tNUMBER b)
 	{
-		return a.getValue().intValue() < b.getValue().intValue();
+		return a.getValue().getIntegerValue() < b.getValue().getIntegerValue();
 	}
 
 	/*
@@ -320,7 +328,7 @@ public class INTEGER extends PMath<Integer> implements tFIXNUM
 	 */
 	public tNUMBER abs(tNUMBER a)
 	{
-		return make(Math.abs(a.getValue().intValue()));
+		return make(Math.abs(a.getValue().getIntegerValue()));
 	}
 
 	/*
@@ -331,7 +339,8 @@ public class INTEGER extends PMath<Integer> implements tFIXNUM
 	 */
 	public tNUMBER max(tNUMBER a, tNUMBER b)
 	{
-		return make(Math.max(a.getValue().intValue(), b.getValue().intValue()));
+		return make(Math.max(a.getValue().getIntegerValue(), b.getValue()
+				.getIntegerValue()));
 	}
 
 	/*
@@ -342,7 +351,8 @@ public class INTEGER extends PMath<Integer> implements tFIXNUM
 	 */
 	public tNUMBER min(tNUMBER a, tNUMBER b)
 	{
-		return make(Math.min(a.getValue().intValue(), b.getValue().intValue()));
+		return make(Math.min(a.getValue().getIntegerValue(), b.getValue()
+				.getIntegerValue()));
 	}
 
 	/*

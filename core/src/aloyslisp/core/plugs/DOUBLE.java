@@ -29,7 +29,8 @@
 
 package aloyslisp.core.plugs;
 
-import aloyslisp.core.common.*;
+import aloyslisp.core.conditions.LispErrorFunctionCannotApplyOn;
+import aloyslisp.core.math.*;
 import aloyslisp.core.types.*;
 
 /**
@@ -52,7 +53,7 @@ public class DOUBLE extends PMath<Double> implements tDOUBLE_FLOAT, tLONG_FLOAT
 	/**
 	 * @param val
 	 */
-	public DOUBLE(Number val)
+	public DOUBLE(INumber val)
 	{
 		super(val);
 	}
@@ -63,9 +64,9 @@ public class DOUBLE extends PMath<Double> implements tDOUBLE_FLOAT, tLONG_FLOAT
 	 * @param val
 	 * @return
 	 */
-	public static DOUBLE make(Number val)
+	public static DOUBLE make(INumber val)
 	{
-		return new DOUBLE(val.doubleValue());
+		return new DOUBLE(val.getDoubleValue());
 	}
 
 	/*
@@ -76,7 +77,7 @@ public class DOUBLE extends PMath<Double> implements tDOUBLE_FLOAT, tLONG_FLOAT
 	 */
 	public tNUMBER add(tNUMBER a, tNUMBER b)
 	{
-		return make(a.getValue().doubleValue() + b.getValue().doubleValue());
+		return make(a.getValue().getDoubleValue() + b.getValue().getDoubleValue());
 	}
 
 	/*
@@ -87,7 +88,7 @@ public class DOUBLE extends PMath<Double> implements tDOUBLE_FLOAT, tLONG_FLOAT
 	 */
 	public tNUMBER substract(tNUMBER a, tNUMBER b)
 	{
-		return make(a.getValue().doubleValue() - b.getValue().doubleValue());
+		return make(a.getValue().getDoubleValue() - b.getValue().getDoubleValue());
 	}
 
 	/*
@@ -98,7 +99,7 @@ public class DOUBLE extends PMath<Double> implements tDOUBLE_FLOAT, tLONG_FLOAT
 	 */
 	public tNUMBER minus(tNUMBER a)
 	{
-		return make(-a.getValue().doubleValue());
+		return make(-a.getValue().getDoubleValue());
 	}
 
 	/*
@@ -109,7 +110,7 @@ public class DOUBLE extends PMath<Double> implements tDOUBLE_FLOAT, tLONG_FLOAT
 	 */
 	public tNUMBER inversion(tNUMBER a)
 	{
-		return make(1.0 / a.getValue().doubleValue());
+		return make(1.0 / a.getValue().getDoubleValue());
 	}
 
 	/*
@@ -120,7 +121,7 @@ public class DOUBLE extends PMath<Double> implements tDOUBLE_FLOAT, tLONG_FLOAT
 	 */
 	public tNUMBER multiply(tNUMBER a, tNUMBER b)
 	{
-		return make(a.getValue().doubleValue() * b.getValue().doubleValue());
+		return make(a.getValue().getDoubleValue() * b.getValue().getDoubleValue());
 	}
 
 	/*
@@ -131,7 +132,7 @@ public class DOUBLE extends PMath<Double> implements tDOUBLE_FLOAT, tLONG_FLOAT
 	 */
 	public tNUMBER division(tNUMBER a, tNUMBER b)
 	{
-		return make(a.getValue().doubleValue() / b.getValue().doubleValue());
+		return make(a.getValue().getDoubleValue() / b.getValue().getDoubleValue());
 	}
 
 	/*
@@ -142,7 +143,7 @@ public class DOUBLE extends PMath<Double> implements tDOUBLE_FLOAT, tLONG_FLOAT
 	 */
 	public tNUMBER divide(tNUMBER a, tNUMBER b)
 	{
-		return make(a.getValue().doubleValue() / b.getValue().doubleValue());
+		return make(a.getValue().getDoubleValue() / b.getValue().getDoubleValue());
 	}
 
 	/*
@@ -153,7 +154,7 @@ public class DOUBLE extends PMath<Double> implements tDOUBLE_FLOAT, tLONG_FLOAT
 	 */
 	public tNUMBER mod(tNUMBER a, tNUMBER b)
 	{
-		return make(a.getValue().doubleValue() % b.getValue().doubleValue());
+		return make(a.getValue().getDoubleValue() % b.getValue().getDoubleValue());
 	}
 
 	/*
@@ -284,7 +285,7 @@ public class DOUBLE extends PMath<Double> implements tDOUBLE_FLOAT, tLONG_FLOAT
 	 */
 	public boolean equal(tNUMBER a, tNUMBER b)
 	{
-		return a.getValue().doubleValue() == b.getValue().doubleValue();
+		return a.getValue().getDoubleValue() == b.getValue().getDoubleValue();
 	}
 
 	/*
@@ -295,7 +296,7 @@ public class DOUBLE extends PMath<Double> implements tDOUBLE_FLOAT, tLONG_FLOAT
 	 */
 	public boolean greather(tNUMBER a, tNUMBER b)
 	{
-		return a.getValue().doubleValue() > b.getValue().doubleValue();
+		return a.getValue().getDoubleValue() > b.getValue().getDoubleValue();
 	}
 
 	/*
@@ -306,7 +307,7 @@ public class DOUBLE extends PMath<Double> implements tDOUBLE_FLOAT, tLONG_FLOAT
 	 */
 	public boolean lower(tNUMBER a, tNUMBER b)
 	{
-		return a.getValue().doubleValue() < b.getValue().doubleValue();
+		return a.getValue().getDoubleValue() < b.getValue().getDoubleValue();
 	}
 
 	/*
@@ -316,7 +317,7 @@ public class DOUBLE extends PMath<Double> implements tDOUBLE_FLOAT, tLONG_FLOAT
 	 */
 	public tNUMBER abs(tNUMBER a)
 	{
-		return make(Math.abs(a.getValue().doubleValue()));
+		return make(Math.abs(a.getValue().getDoubleValue()));
 	}
 
 	/*
@@ -327,8 +328,8 @@ public class DOUBLE extends PMath<Double> implements tDOUBLE_FLOAT, tLONG_FLOAT
 	 */
 	public tNUMBER max(tNUMBER a, tNUMBER b)
 	{
-		return make(Math.max(a.getValue().doubleValue(), b.getValue()
-				.doubleValue()));
+		return make(Math.max(a.getValue().getDoubleValue(), b.getValue()
+				.getDoubleValue()));
 	}
 
 	/*
@@ -339,8 +340,8 @@ public class DOUBLE extends PMath<Double> implements tDOUBLE_FLOAT, tLONG_FLOAT
 	 */
 	public tNUMBER min(tNUMBER a, tNUMBER b)
 	{
-		return make(Math.min(a.getValue().doubleValue(), b.getValue()
-				.doubleValue()));
+		return make(Math.min(a.getValue().getDoubleValue(), b.getValue()
+				.getDoubleValue()));
 	}
 
 	/*
@@ -351,7 +352,7 @@ public class DOUBLE extends PMath<Double> implements tDOUBLE_FLOAT, tLONG_FLOAT
 	 */
 	public tNUMBER round(tNUMBER a)
 	{
-		return make(Math.round(a.getValue().doubleValue()));
+		return make(Math.round(a.getValue().getDoubleValue()));
 	}
 
 	/*

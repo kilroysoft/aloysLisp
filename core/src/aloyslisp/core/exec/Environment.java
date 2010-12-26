@@ -29,7 +29,8 @@
 
 package aloyslisp.core.exec;
 
-import aloyslisp.core.common.*;
+import aloyslisp.core.conditions.LispException;
+import aloyslisp.core.math.*;
 import aloyslisp.core.types.*;
 
 /**

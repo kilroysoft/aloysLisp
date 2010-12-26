@@ -24,21 +24,22 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 10 nov. 2010 Creation
+// IP 25 déc. 2010 Creation
 // --------------------------------------------------------------------------
 
-package aloyslisp.core.types;
+package aloyslisp.core.plugs;
 
-import aloyslisp.core.math.IReal;
+import aloyslisp.core.math.*;
+import aloyslisp.core.types.*;
 
 /**
- * tREAL
+ * REAL
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public interface tREAL extends tNUMBER, IReal
+public class REAL extends NUMBER implements tREAL
 {
 
 }

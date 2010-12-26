@@ -24,21 +24,30 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 10 nov. 2010 Creation
+// IP 12 nov. 2010 Creation
 // --------------------------------------------------------------------------
 
-package aloyslisp.core.types;
-
-import aloyslisp.core.math.IReal;
+package aloyslisp.core.conditions;
 
 /**
- * tREAL
+ * LispException
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
- * 
  */
-public interface tREAL extends tNUMBER, IReal
+public class LispException extends RuntimeException
 {
+	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= 7785621250806132893L;
+
+	/**
+	 * @param message
+	 */
+	public LispException(String message)
+	{
+		super(message);
+	}
 
 }

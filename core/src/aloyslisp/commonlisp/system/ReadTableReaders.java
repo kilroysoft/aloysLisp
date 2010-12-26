@@ -33,7 +33,8 @@ import static aloyslisp.commonlisp.L.*;
 
 import java.io.EOFException;
 
-import aloyslisp.core.common.*;
+import aloyslisp.core.conditions.LispException;
+import aloyslisp.core.math.*;
 import aloyslisp.core.plugs.*;
 import aloyslisp.core.annotations.*;
 import aloyslisp.core.types.*;

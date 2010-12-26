@@ -63,7 +63,7 @@ public abstract class STREAM extends CELL implements tSTREAM
 	 */
 	@Special
 	@Static(name = "open")
-	public static tT OPEN(tFILE_DESIGNATOR fileSpec, tSYMBOL direction,
+	public static tT OPEN(tPATHNAME_DESIGNATOR fileSpec, tSYMBOL direction,
 			tSYMBOL ifExists, tSYMBOL ifDoesNotExists, tT externalFormat)
 	{
 		// TODO Auto-generated method stub

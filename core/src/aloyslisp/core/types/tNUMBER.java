@@ -30,7 +30,7 @@
 
 package aloyslisp.core.types;
 
-import aloyslisp.core.common.*;
+import aloyslisp.core.math.*;
 import aloyslisp.core.annotations.*;
 
 /**
@@ -40,14 +40,14 @@ import aloyslisp.core.annotations.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public interface tNUMBER extends tATOM
+public interface tNUMBER extends tATOM, INumber
 {
 	/**
 	 * Get the numeric object
 	 * 
 	 * @return Value of PValue
 	 */
-	public Number getValue();
+	public INumber getValue();
 
 	/**
 	 * @return
@@ -86,16 +86,7 @@ public interface tNUMBER extends tATOM
 	 * @return the numeric value represented by this object after conversion
 	 *         to type <code>int</code>.
 	 */
-	public abstract int intValue();
-
-	/**
-	 * Returns the value of the specified number as a <code>long</code>.
-	 * This may involve rounding or truncation.
-	 * 
-	 * @return the numeric value represented by this object after conversion
-	 *         to type <code>long</code>.
-	 */
-	public abstract long longValue();
+	public abstract NumInteger integerValue();
 
 	/**
 	 * Returns the value of the specified number as a <code>float</code>.
@@ -104,7 +95,7 @@ public interface tNUMBER extends tATOM
 	 * @return the numeric value represented by this object after conversion
 	 *         to type <code>float</code>.
 	 */
-	public abstract float floatValue();
+	public abstract NumFloat floatValue();
 
 	/**
 	 * Returns the value of the specified number as a <code>double</code>.
@@ -113,17 +104,7 @@ public interface tNUMBER extends tATOM
 	 * @return the numeric value represented by this object after conversion
 	 *         to type <code>double</code>.
 	 */
-	public abstract double doubleValue();
-
-	/**
-	 * Returns the value of the specified number as a <code>byte</code>.
-	 * This may involve rounding or truncation.
-	 * 
-	 * @return the numeric value represented by this object after conversion
-	 *         to type <code>byte</code>.
-	 * @since JDK1.1
-	 */
-	public byte byteValue();
+	public abstract NumDouble doubleValue();
 
 	/**
 	 * Returns the value of the specified number as a <code>short</code>.
@@ -133,7 +114,7 @@ public interface tNUMBER extends tATOM
 	 *         to type <code>short</code>.
 	 * @since JDK1.1
 	 */
-	public short shortValue();
+	public NumShort shortValue();
 
 	/**
 	 * Arc Cosine
@@ -169,22 +150,6 @@ public interface tNUMBER extends tATOM
 			@Opt(name = "number2") tNUMBER num2);
 
 	/**
-	 * Ceiling
-	 * 
-	 * @return
-	 */
-	@Function(name = "ceiling")
-	public tNUMBER CEILING();
-
-	/**
-	 * Truncate
-	 * 
-	 * @return
-	 */
-	@Function(name = "truncate")
-	public tNUMBER TRUNCATE();
-
-	/**
 	 * Cosine
 	 * 
 	 * @return
@@ -207,16 +172,6 @@ public interface tNUMBER extends tATOM
 	 */
 	@Function(name = "exp")
 	public tNUMBER EXP();
-
-	/**
-	 * Floor
-	 * 
-	 * @return
-	 */
-	@Function(name = "floor")
-	public tNUMBER FLOOR();
-
-	public tNUMBER IEEEremainder(tNUMBER b);
 
 	/**
 	 * Logarithm
@@ -331,6 +286,8 @@ public interface tNUMBER extends tATOM
 	public tNUMBER MOD( //
 			@Rest(name = "operands") tT operands);
 
+	public tNUMBER IEEEremainder(tNUMBER b);
+
 	/**
 	 * Conjugate
 	 * 
@@ -347,7 +304,13 @@ public interface tNUMBER extends tATOM
 	@Function(name = "realpart")
 	public tNUMBER REALPART();
 
-	public tNUMBER phase();
+	/**
+	 * Phase of complex
+	 * 
+	 * @return
+	 */
+	@Function(name = "phase")
+	public tNUMBER PHASE();
 
 	/**
 	 * Imaginary part
@@ -514,6 +477,74 @@ public interface tNUMBER extends tATOM
 	public tNUMBER MIN( //
 			@Rest(name = "ops") tT ops);
 
+	/********************************************************************************************
+	 * TO BE IMPLEMENTED :
+	 * 
+	 * <= lisp
+	 * >= lisp
+	 * /= lisp
+	 * minusp lisp
+	 * plusp lisp
+	 * zerop lisp
+	 * ffloor lisp
+	 * fceiling lisp
+	 * ftruncate lisp
+	 * fround lisp
+	 * sinh
+	 * cosh
+	 * tanh
+	 * asinh
+	 * acosh
+	 * atanh
+	 * 1+ lisp
+	 * 1- lisp
+	 * evenp ->integer
+	 * oddp ->integer
+	 * incf macro
+	 * decf macro
+	 * rem
+	 * signum rational, float, complex
+	 * isqrt positive integer
+	 * ash
+	 * integer-length
+	 * parse-integer
+	 * boole
+	 * logcount
+	 * logbitp
+	 * logtest
+	 * byte
+	 * byte-size
+	 * byte-position
+	 * deposit-field
+	 * dpb
+	 * ldb
+	 * ldb-test
+	 * mask-field
+	 * 
+	 * float
+	 * rational
+	 * rationalize
+	 * complex
+	 * 
+	 * 
+	 */
+
+	/**
+	 * Ceiling
+	 * 
+	 * @return
+	 */
+	@Function(name = "ceiling")
+	public tNUMBER CEILING();
+
+	/**
+	 * Truncate
+	 * 
+	 * @return
+	 */
+	@Function(name = "truncate")
+	public tNUMBER TRUNCATE();
+
 	/**
 	 * Round
 	 * 
@@ -522,5 +553,13 @@ public interface tNUMBER extends tATOM
 	 */
 	@Function(name = "round")
 	public tNUMBER ROUND();
+
+	/**
+	 * Floor
+	 * 
+	 * @return
+	 */
+	@Function(name = "floor")
+	public tNUMBER FLOOR();
 
 }

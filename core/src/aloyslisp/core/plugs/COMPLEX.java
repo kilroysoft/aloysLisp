@@ -30,7 +30,8 @@
 package aloyslisp.core.plugs;
 
 import static aloyslisp.commonlisp.L.*;
-import aloyslisp.core.common.*;
+import aloyslisp.core.conditions.LispErrorFunctionCannotApplyOn;
+import aloyslisp.core.math.*;
 import aloyslisp.core.types.*;
 
 /**
@@ -54,16 +55,16 @@ public class COMPLEX extends PMath<NumComplex> implements tCOMPLEX
 	/**
 	 * @param val
 	 */
-	public COMPLEX(Number real, Number imag)
+	public COMPLEX(INumber real, INumber imag)
 	{
-		super(new NumComplex(nDouble(real.doubleValue()),
-				nDouble(imag.doubleValue())));
+		super(new NumComplex(nDouble(real.getDoubleValue()),
+				nDouble(imag.getDoubleValue())));
 	}
 
 	/**
 	 * @param a
 	 */
-	public COMPLEX(Number a)
+	public COMPLEX(INumber a)
 	{
 		super(a);
 	}
@@ -85,9 +86,9 @@ public class COMPLEX extends PMath<NumComplex> implements tCOMPLEX
 	 * @param imag
 	 * @return
 	 */
-	public static COMPLEX make(Number real, Number imag)
+	public static COMPLEX make(Object real, Object imag)
 	{
-		return new COMPLEX(real, imag);
+		return new COMPLEX((INumber) real, (INumber) imag);
 	}
 
 	/**
@@ -163,7 +164,7 @@ public class COMPLEX extends PMath<NumComplex> implements tCOMPLEX
 	 */
 	public tNUMBER multiply(tNUMBER a, tNUMBER b)
 	{
-		tNUMBER arg = a.phase().ADD(b.phase());
+		tNUMBER arg = a.PHASE().ADD(b.PHASE());
 		tNUMBER abs = a.ABS().MULTIPLY(b.ABS());
 		return make(abs.MULTIPLY(arg.SIN()), abs.MULTIPLY(arg.COS()));
 	}
@@ -176,7 +177,7 @@ public class COMPLEX extends PMath<NumComplex> implements tCOMPLEX
 	 */
 	public tNUMBER division(tNUMBER a, tNUMBER b)
 	{
-		tNUMBER arg = a.phase().SUBSTRACT(b.phase());
+		tNUMBER arg = a.PHASE().SUBSTRACT(b.PHASE());
 		tNUMBER abs = a.ABS().DIVISION(b.ABS());
 		return make(abs.MULTIPLY(arg.SIN()), abs.MULTIPLY(arg.COS()));
 	}
@@ -333,7 +334,7 @@ public class COMPLEX extends PMath<NumComplex> implements tCOMPLEX
 	 */
 	public boolean equal(tNUMBER a, tNUMBER b)
 	{
-		return a.getValue().intValue() == b.getValue().intValue();
+		return a.getValue().getIntegerValue() == b.getValue().getIntegerValue();
 	}
 
 	/*

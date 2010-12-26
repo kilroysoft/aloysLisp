@@ -22,12 +22,13 @@ To do
 
 Doing
 =====
-- Manage NUMBER Functions with no arguments (identity) +, *, logand, logior, logxor, logeqv
+- Complete rewrite of NUMBERs structure and functions.
 - Clean-up all instantiation process.
 - Create type objects.
 
 Current state
 =============
+- Pass to an unified version of integer as BigInteger.
 - All this stuff is intended to move to a more general lisp object model.
 - Adding NUMBER functions
 - Suppressed @Construct annotation. Replaced by factory static functions.

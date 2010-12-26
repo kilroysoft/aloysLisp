@@ -24,37 +24,24 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 12 nov. 2010 Creation
+// IP 23 déc. 2010 Creation
 // --------------------------------------------------------------------------
 
-package aloyslisp.core.common;
-
-import aloyslisp.core.types.tT;
+package aloyslisp.core.math;
 
 /**
- * LispErrorFunctionCannotApplyOn
+ * IComplex
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class LispErrorFunctionCannotApplyOn extends LispException
+public interface IComplex extends INumber
 {
-
-	/**
-	 * 
+	/* *******************************************************************
+	 * ACCESSORS
 	 */
-	private static final long	serialVersionUID	= 5746282197320687493L;
-
-	/**
-	 * @param message
+	/* *******************************************************************
+	 * FUNCTIONS
 	 */
-	public LispErrorFunctionCannotApplyOn(String function, tT object)
-	{
-		super(function
-				+ " cannot apply on "
-				+ ((object == null) ? "null" : object.getClass()
-						.getSimpleName()) + " : " + object);
-	}
-
 }

@@ -27,27 +27,32 @@
 // IP 12 nov. 2010 Creation
 // --------------------------------------------------------------------------
 
-package aloyslisp.core.common;
+package aloyslisp.core.conditions;
+
+import aloyslisp.core.types.*;
 
 /**
- * LispException
+ * LispErrorBadArgumentType
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
+ * 
  */
-public class LispException extends RuntimeException
+public class LispErrorBadArgumentType extends LispException
 {
+
 	/**
 	 * 
 	 */
-	private static final long	serialVersionUID	= 7785621250806132893L;
+	private static final long	serialVersionUID	= -4971263313120166811L;
 
 	/**
 	 * @param message
 	 */
-	public LispException(String message)
+	public LispErrorBadArgumentType(String func, tT obj, String type)
 	{
-		super(message);
+		super("Bad argument type " + obj.getClass().getSimpleName()
+				+ " for function " + func + " should be " + type + " : " + obj);
 	}
 
 }

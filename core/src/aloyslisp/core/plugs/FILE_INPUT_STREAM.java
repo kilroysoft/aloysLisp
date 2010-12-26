@@ -31,7 +31,8 @@ package aloyslisp.core.plugs;
 
 import java.io.*;
 
-import aloyslisp.core.common.*;
+import aloyslisp.core.conditions.LispException;
+import aloyslisp.core.math.*;
 import aloyslisp.core.types.*;
 
 /**
@@ -61,7 +62,7 @@ public class FILE_INPUT_STREAM extends INPUT_STREAM implements
 	/**
 	 * @param file
 	 */
-	public FILE_INPUT_STREAM(tFILE_DESIGNATOR file)
+	public FILE_INPUT_STREAM(tPATHNAME_DESIGNATOR file)
 	{
 		// reader = new PushbackReader(new InputStreamReader(file));
 	}

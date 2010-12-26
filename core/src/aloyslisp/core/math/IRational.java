@@ -24,35 +24,37 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 12 nov. 2010 Creation
+// IP 23 déc. 2010 Creation
 // --------------------------------------------------------------------------
 
-package aloyslisp.core.common;
-
-import aloyslisp.core.types.*;
+package aloyslisp.core.math;
 
 /**
- * LispErrorBadArgumentType
+ * IRational
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class LispErrorBadArgumentType extends LispException
+public interface IRational extends IReal
 {
 
+	/* *******************************************************************
+	 * FUNCTIONS RATIO
+	 */
 	/**
+	 * Numerator (for ratio) a/b -> a
 	 * 
+	 * @param a
+	 * @return
 	 */
-	private static final long	serialVersionUID	= -4971263313120166811L;
+	public NumInteger num();
 
 	/**
-	 * @param message
+	 * Denumerator (for ratio) a/b -> b
+	 * 
+	 * @param a
+	 * @return
 	 */
-	public LispErrorBadArgumentType(String func, tT obj, String type)
-	{
-		super("Bad argument type " + obj.getClass().getSimpleName()
-				+ " for function " + func + " should be " + type + " : " + obj);
-	}
-
+	public NumInteger den();
 }

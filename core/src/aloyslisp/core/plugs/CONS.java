@@ -33,7 +33,8 @@ package aloyslisp.core.plugs;
 import java.util.*;
 
 import static aloyslisp.commonlisp.L.*;
-import aloyslisp.core.common.*;
+import aloyslisp.core.conditions.LispException;
+import aloyslisp.core.math.*;
 import aloyslisp.core.types.*;
 
 /**

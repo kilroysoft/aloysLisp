@@ -31,8 +31,9 @@ package aloyslisp.commonlisp.common_lisp;
 
 import static aloyslisp.commonlisp.L.*;
 import aloyslisp.core.annotations.*;
-import aloyslisp.core.common.*;
+import aloyslisp.core.conditions.LispException;
 import aloyslisp.core.exec.*;
+import aloyslisp.core.math.*;
 import aloyslisp.core.plugs.*;
 import aloyslisp.core.types.*;
 

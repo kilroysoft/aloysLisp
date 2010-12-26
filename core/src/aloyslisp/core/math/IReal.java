@@ -19,18 +19,17 @@
 //--------------------------------------------------------------------------
 // history
 //--------------------------------------------------------------------------
-// IP 16 déc. 2010 Creation
+// IP 25 déc. 2010 Creation
 //--------------------------------------------------------------------------
 
-package aloyslisp.core.types;
+package aloyslisp.core.math;
 
 /**
- * tFILE_DESIGNATOR
+ * IReal
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  *
  */
-public interface tFILE_DESIGNATOR extends tFILE_STREAM, tSTRING
+public interface IReal extends INumber
 {
-
 }

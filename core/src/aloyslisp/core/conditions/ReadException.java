@@ -24,21 +24,33 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 10 nov. 2010 Creation
+// IP 15 oct. 2010 Creation
 // --------------------------------------------------------------------------
 
-package aloyslisp.core.types;
-
-import aloyslisp.core.math.IReal;
+package aloyslisp.core.conditions;
 
 /**
- * tREAL
+ * ReadException
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public interface tREAL extends tNUMBER, IReal
+public class ReadException extends Exception
 {
+
+	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= 8819794288959324209L;
+
+	/**
+	 * @param message
+	 * @param cause
+	 */
+	public ReadException(String message, Throwable cause)
+	{
+		super(message, cause);
+	}
 
 }

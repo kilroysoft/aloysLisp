@@ -34,8 +34,9 @@ import static aloyslisp.commonlisp.L.*;
 
 import java.lang.reflect.*;
 
-import aloyslisp.core.common.*;
+import aloyslisp.core.conditions.LispException;
 import aloyslisp.core.exec.*;
+import aloyslisp.core.math.*;
 import aloyslisp.core.types.*;
 
 /**
@@ -185,6 +186,10 @@ public abstract class FUNCTION extends CELL implements tFUNCTION
 				newArgs = tranformArgs(method.getParameterTypes(), args);
 			}
 
+			// Suppress the execution environment if special
+			if (this instanceof tSPECIAL_OPERATOR)
+				e.popBlock();
+
 			// Call function
 			trace("exec(" + intern.getName() + " (" + actObj + ") " + args
 					+ ")");
@@ -241,7 +246,8 @@ public abstract class FUNCTION extends CELL implements tFUNCTION
 			throw new LispException(e.getLocalizedMessage());
 		}
 
-		e.popBlock();
+		if (!(this instanceof tSPECIAL_OPERATOR))
+			e.popBlock();
 
 		return res;
 	}
@@ -507,12 +513,12 @@ public abstract class FUNCTION extends CELL implements tFUNCTION
 
 		if (cl == Integer.class && arg instanceof tNUMBER)
 		{
-			res = ((tNUMBER) arg).intValue();
+			res = ((tNUMBER) arg).integerValue();
 		}
 
 		if (cl == Long.class && arg instanceof tNUMBER)
 		{
-			res = ((tNUMBER) arg).longValue();
+			res = ((tNUMBER) arg).getIntegerValue();
 		}
 
 		if (cl == Float.class && arg instanceof tNUMBER)

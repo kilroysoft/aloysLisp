@@ -29,7 +29,8 @@
 
 package aloyslisp.core.plugs;
 
-import aloyslisp.core.common.*;
+import aloyslisp.core.conditions.LispErrorFunctionCannotApplyOn;
+import aloyslisp.core.math.*;
 import aloyslisp.core.types.*;
 
 /**
@@ -39,7 +40,7 @@ import aloyslisp.core.types.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class FLOAT extends PMath<Float> implements tSHORT_FLOAT, tSINGLE_FLOAT
+public class FLOAT extends NUMBER implements tSHORT_FLOAT, tSINGLE_FLOAT
 {
 	/**
 	 * @param val
@@ -52,7 +53,7 @@ public class FLOAT extends PMath<Float> implements tSHORT_FLOAT, tSINGLE_FLOAT
 	/**
 	 * @param val
 	 */
-	public FLOAT(Number val)
+	public FLOAT(INumber val)
 	{
 		super(val);
 	}
@@ -63,9 +64,9 @@ public class FLOAT extends PMath<Float> implements tSHORT_FLOAT, tSINGLE_FLOAT
 	 * @param val
 	 * @return
 	 */
-	public static FLOAT make(Number val)
+	public static FLOAT make(INumber val)
 	{
-		return new FLOAT(val.floatValue());
+		return new FLOAT(val.getFloatValue());
 	}
 
 	/*
@@ -76,7 +77,7 @@ public class FLOAT extends PMath<Float> implements tSHORT_FLOAT, tSINGLE_FLOAT
 	 */
 	public tNUMBER add(tNUMBER a, tNUMBER b)
 	{
-		return make(a.getValue().floatValue() + b.getValue().floatValue());
+		return make(a.getValue().getFloatValue() + b.getValue().getFloatValue());
 	}
 
 	/*
@@ -87,7 +88,7 @@ public class FLOAT extends PMath<Float> implements tSHORT_FLOAT, tSINGLE_FLOAT
 	 */
 	public tNUMBER substract(tNUMBER a, tNUMBER b)
 	{
-		return make(a.getValue().floatValue() - b.getValue().floatValue());
+		return make(a.getValue().getFloatValue() - b.getValue().getFloatValue());
 	}
 
 	/*
@@ -98,7 +99,7 @@ public class FLOAT extends PMath<Float> implements tSHORT_FLOAT, tSINGLE_FLOAT
 	 */
 	public tNUMBER minus(tNUMBER a)
 	{
-		return make(-a.getValue().floatValue());
+		return make(-a.getValue().getFloatValue());
 	}
 
 	/*
@@ -109,7 +110,7 @@ public class FLOAT extends PMath<Float> implements tSHORT_FLOAT, tSINGLE_FLOAT
 	 */
 	public tNUMBER inversion(tNUMBER a)
 	{
-		return make(1.0 / a.getValue().floatValue());
+		return make(1.0 / a.getValue().getFloatValue());
 	}
 
 	/*
@@ -120,7 +121,7 @@ public class FLOAT extends PMath<Float> implements tSHORT_FLOAT, tSINGLE_FLOAT
 	 */
 	public tNUMBER multiply(tNUMBER a, tNUMBER b)
 	{
-		return make(a.getValue().floatValue() * b.getValue().floatValue());
+		return make(a.getValue().getFloatValue() * b.getValue().getFloatValue());
 	}
 
 	/*
@@ -131,7 +132,7 @@ public class FLOAT extends PMath<Float> implements tSHORT_FLOAT, tSINGLE_FLOAT
 	 */
 	public tNUMBER division(tNUMBER a, tNUMBER b)
 	{
-		return make(a.getValue().floatValue() / b.getValue().floatValue());
+		return make(a.getValue().getFloatValue() / b.getValue().getFloatValue());
 	}
 
 	/*
@@ -142,7 +143,8 @@ public class FLOAT extends PMath<Float> implements tSHORT_FLOAT, tSINGLE_FLOAT
 	 */
 	public tNUMBER divide(tNUMBER a, tNUMBER b)
 	{
-		return make(a.getValue().doubleValue() / b.getValue().floatValue());
+		return make(a.getValue().getDoubleValue()
+				/ b.getValue().getFloatValue());
 	}
 
 	/*
@@ -153,7 +155,7 @@ public class FLOAT extends PMath<Float> implements tSHORT_FLOAT, tSINGLE_FLOAT
 	 */
 	public tNUMBER mod(tNUMBER a, tNUMBER b)
 	{
-		return make(a.getValue().floatValue() % b.getValue().floatValue());
+		return make(a.getValue().getFloatValue() % b.getValue().getFloatValue());
 	}
 
 	/*
@@ -284,7 +286,7 @@ public class FLOAT extends PMath<Float> implements tSHORT_FLOAT, tSINGLE_FLOAT
 	 */
 	public boolean equal(tNUMBER a, tNUMBER b)
 	{
-		return a.getValue().floatValue() == b.getValue().floatValue();
+		return a.getValue().getFloatValue() == b.getValue().getFloatValue();
 	}
 
 	/*
@@ -295,7 +297,7 @@ public class FLOAT extends PMath<Float> implements tSHORT_FLOAT, tSINGLE_FLOAT
 	 */
 	public boolean greather(tNUMBER a, tNUMBER b)
 	{
-		return a.getValue().floatValue() > b.getValue().floatValue();
+		return a.getValue().getFloatValue() > b.getValue().getFloatValue();
 	}
 
 	/*
@@ -306,7 +308,7 @@ public class FLOAT extends PMath<Float> implements tSHORT_FLOAT, tSINGLE_FLOAT
 	 */
 	public boolean lower(tNUMBER a, tNUMBER b)
 	{
-		return a.getValue().floatValue() < b.getValue().floatValue();
+		return a.getValue().getFloatValue() < b.getValue().getFloatValue();
 	}
 
 	/*
@@ -316,7 +318,7 @@ public class FLOAT extends PMath<Float> implements tSHORT_FLOAT, tSINGLE_FLOAT
 	 */
 	public tNUMBER abs(tNUMBER a)
 	{
-		return make(Math.abs(a.getValue().floatValue()));
+		return make(Math.abs(a.getValue().getFloatValue()));
 	}
 
 	/*
@@ -327,8 +329,8 @@ public class FLOAT extends PMath<Float> implements tSHORT_FLOAT, tSINGLE_FLOAT
 	 */
 	public tNUMBER max(tNUMBER a, tNUMBER b)
 	{
-		return make(Math.max(a.getValue().floatValue(), b.getValue()
-				.floatValue()));
+		return make(Math.max(a.getValue().getFloatValue(), b.getValue()
+				.getFloatValue()));
 	}
 
 	/*
@@ -339,8 +341,8 @@ public class FLOAT extends PMath<Float> implements tSHORT_FLOAT, tSINGLE_FLOAT
 	 */
 	public tNUMBER min(tNUMBER a, tNUMBER b)
 	{
-		return make(Math.min(a.getValue().floatValue(), b.getValue()
-				.floatValue()));
+		return make(Math.min(a.getValue().getFloatValue(), b.getValue()
+				.getFloatValue()));
 	}
 
 	/*
@@ -351,7 +353,7 @@ public class FLOAT extends PMath<Float> implements tSHORT_FLOAT, tSINGLE_FLOAT
 	 */
 	public tNUMBER round(tNUMBER a)
 	{
-		return make(Math.round(a.getValue().floatValue()));
+		return make(Math.round(a.getValue().getFloatValue()));
 	}
 
 	/*

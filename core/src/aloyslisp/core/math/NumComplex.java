@@ -27,9 +27,11 @@
 // IP 16 oct. 2010 Creation
 // --------------------------------------------------------------------------
 
-package aloyslisp.core.common;
+package aloyslisp.core.math;
 
 import static aloyslisp.commonlisp.L.*;
+import aloyslisp.core.conditions.*;
+import aloyslisp.core.plugs.*;
 import aloyslisp.core.types.*;
 
 /**
@@ -39,7 +41,7 @@ import aloyslisp.core.types.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class NumComplex extends Number
+public class NumComplex implements IComplex
 {
 
 	/**
@@ -90,7 +92,7 @@ public class NumComplex extends Number
 	/**
 	 * @return
 	 */
-	public NumRatio ratioValue()
+	public NumRatio getRatioValue()
 	{
 		return getReal().ratioValue();
 	}
@@ -98,45 +100,56 @@ public class NumComplex extends Number
 	/**
 	 * @return
 	 */
-	public NumComplex complexValue()
+	public NumComplex getComplexValue()
 	{
 		return this;
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see java.lang.Number#intValue()
+	 * @see java.lang.Number#integerValue()
 	 */
-	public int intValue()
+	public NumInteger getIntegerValue()
 	{
-		return getReal().getValue().intValue();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see java.lang.Number#longValue()
-	 */
-	public long longValue()
-	{
-		return getReal().getValue().longValue();
+		return getReal().getValue().getIntegerValue();
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * @see java.lang.Number#floatValue()
 	 */
-	public float floatValue()
+	public NumFloat getFloatValue()
 	{
-		return getReal().getValue().floatValue();
+		return getReal().getValue().getFloatValue();
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * @see java.lang.Number#doubleValue()
 	 */
-	public double doubleValue()
+	public NumDouble getDoubleValue()
 	{
-		return getReal().getValue().doubleValue();
+		return getReal().getValue().getDoubleValue();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.INumber#shortValue()
+	 */
+	@Override
+	public NumShort getShortValue()
+	{
+		return getReal().getValue().getShortValue();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.INumber#make()
+	 */
+	@Override
+	public tNUMBER make()
+	{
+		return new COMPLEX(this);
 	}
 
 }

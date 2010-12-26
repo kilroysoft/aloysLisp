@@ -32,7 +32,8 @@ package aloyslisp.core.plugs;
 import static aloyslisp.commonlisp.L.*;
 import java.util.*;
 
-import aloyslisp.core.common.*;
+import aloyslisp.core.conditions.*;
+import aloyslisp.core.math.*;
 import aloyslisp.core.types.*;
 
 /**
@@ -42,7 +43,7 @@ import aloyslisp.core.types.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public abstract class NUMBER extends CELL implements tNUMBER, Cloneable
+public abstract class NUMBER extends CELL implements tNUMBER
 {
 	/**
 	 * Table of operator according to weight
@@ -62,7 +63,7 @@ public abstract class NUMBER extends CELL implements tNUMBER, Cloneable
 													one, // byte
 			one, // short
 			one, // int
-			new LONG(0L), // long
+			new INTEGER(0L), // long
 			new RATIO(), // fractional
 			new FLOAT((float) 0), // float
 			new DOUBLE((double) 0), // double
@@ -88,14 +89,14 @@ public abstract class NUMBER extends CELL implements tNUMBER, Cloneable
 	/**
 	 * Numeric value, can't be changed
 	 */
-	public Number							value;
+	public INumber							value;
 
 	/**
 	 * Constructor
 	 * 
 	 * @param val
 	 */
-	public NUMBER(Number val)
+	public NUMBER(INumber val)
 	{
 		value = val;
 	}
@@ -107,7 +108,7 @@ public abstract class NUMBER extends CELL implements tNUMBER, Cloneable
 	 */
 	public NUMBER(int val)
 	{
-		value = val;
+		value = new NumInteger(val);
 	}
 
 	/**
@@ -115,7 +116,31 @@ public abstract class NUMBER extends CELL implements tNUMBER, Cloneable
 	 */
 	public NUMBER(long val)
 	{
-		value = val;
+		value = new NumInteger(val);
+	}
+
+	/**
+	 * @param val
+	 */
+	public NUMBER(float val)
+	{
+		value = new NumFloat(val);
+	}
+
+	/**
+	 * @param val
+	 */
+	public NUMBER(short val)
+	{
+		value = new NumShort(val);
+	}
+
+	/**
+	 * @param val
+	 */
+	public NUMBER(double val)
+	{
+		value = new NumDouble(val);
 	}
 
 	/**
@@ -128,22 +153,27 @@ public abstract class NUMBER extends CELL implements tNUMBER, Cloneable
 		if (nb.matches("^(-|\\+)?\\d*\\.\\d+([esfdlESFDL](-|\\+)?\\d+)?$")
 				|| nb.matches("^(-|\\+)?\\d+(\\.\\d*)?[esfdlESFDL](-|\\+)?\\d+$"))
 		{
+			System.out.println("nb = " + nb);
 			// double
-			if (nb.matches("[ldLD]"))
+			if (nb.matches("^[^ldLD]*[ldLD].*$"))
 			{
-				nb = nb.replace("[ldLD]", "e") + "d";
+				System.out.println("nb = " + nb);
+				nb = nb.replaceFirst("[ldLD]", "e") + "d";
+				System.out.println("nb = " + nb);
 				return new DOUBLE(Double.valueOf(nb));
 			}
 
 			// float
-			if (nb.matches("[esfESF]"))
+			if (nb.matches("^[^esfESF]*[esfESF].*$"))
 			{
-				nb = nb.replace("[esfESF]", "e") + "f";
+				System.out.println("nb = " + nb);
+				nb = nb.replaceFirst("[esfESF]", "e") + "f";
+				System.out.println("nb = " + nb);
 			}
 			return new FLOAT(Float.valueOf(nb));
 		}
 
-		int base = ((tNUMBER) readBase.SYMBOL_VALUE()).getValue().intValue();
+		int base = ((tNUMBER) readBase.SYMBOL_VALUE()).getValue().getIntegerValue();
 		if (base < 2 || base > 37)
 			base = 10;
 		String strBase = "[0-";
@@ -169,7 +199,7 @@ public abstract class NUMBER extends CELL implements tNUMBER, Cloneable
 			}
 			catch (NumberFormatException e)
 			{
-				return new LONG(Long.parseLong(nb, base));
+				return new INTEGER(Long.parseLong(nb, base));
 			}
 		}
 		return null;
@@ -188,7 +218,7 @@ public abstract class NUMBER extends CELL implements tNUMBER, Cloneable
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tNUMBER#getValue()
 	 */
-	public Number getValue()
+	public INumber getValue()
 	{
 		return value;
 	}
@@ -222,56 +252,38 @@ public abstract class NUMBER extends CELL implements tNUMBER, Cloneable
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.types.tNUMBER#intValue()
+	 * @see aloyslisp.core.types.tNUMBER#integerValue()
 	 */
-	public int intValue()
+	public NumInteger integerValue()
 	{
-		return value.intValue();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.types.tNUMBER#longValue()
-	 */
-	public long longValue()
-	{
-		return value.longValue();
+		return ((INumber) value).getIntegerValue();
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tNUMBER#floatValue()
 	 */
-	public float floatValue()
+	public NumFloat floatValue()
 	{
-		return value.floatValue();
+		return value.getFloatValue();
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tNUMBER#doubleValue()
 	 */
-	public double doubleValue()
+	public NumDouble doubleValue()
 	{
-		return value.doubleValue();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.types.tNUMBER#byteValue()
-	 */
-	public byte byteValue()
-	{
-		return value.byteValue();
+		return ((INumber) value).getDoubleValue();
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tNUMBER#shortValue()
 	 */
-	public short shortValue()
+	public NumShort shortValue()
 	{
-		return value.shortValue();
+		return ((INumber) value).getShortValue();
 	}
 
 	/*
@@ -281,11 +293,11 @@ public abstract class NUMBER extends CELL implements tNUMBER, Cloneable
 	public NumRatio ratioValue()
 	{
 		if (value instanceof NumComplex)
-			return new NumRatio(((NumComplex) value).getReal(), nInt(1));
+			return new NumRatio(((NumComplex) value).getReal().make(), nInt(1));
 		else if (value instanceof NumRatio)
 			return (NumRatio) value;
 		else
-			return new NumRatio(nLong(value.longValue()), nInt(1));
+			return new NumRatio(nLong(((INumber) value).getIntegerValue()), nInt(1));
 
 	}
 
@@ -296,11 +308,13 @@ public abstract class NUMBER extends CELL implements tNUMBER, Cloneable
 	public NumComplex complexValue()
 	{
 		if (value instanceof NumRatio)
-			return new NumComplex(nDouble(value.doubleValue()), nInt(0));
+			return new NumComplex(nDouble(((INumber) value).getDoubleValue()),
+					nInt(0));
 		else if (value instanceof NumComplex)
 			return (NumComplex) value;
 		else
-			return new NumComplex(nDouble(value.doubleValue()), nInt(0));
+			return new NumComplex(nDouble(((INumber) value).getDoubleValue()),
+					nInt(0));
 	}
 
 	/*
@@ -327,7 +341,7 @@ public abstract class NUMBER extends CELL implements tNUMBER, Cloneable
 	 */
 	public tNUMBER ACOS()
 	{
-		return DOUBLE.make(Math.acos(getValue().doubleValue()));
+		return new DOUBLE(Math.acos(getValue().getDoubleValue().value));
 	}
 
 	/*
@@ -336,7 +350,7 @@ public abstract class NUMBER extends CELL implements tNUMBER, Cloneable
 	 */
 	public tNUMBER ASIN()
 	{
-		return DOUBLE.make(Math.asin(getValue().doubleValue()));
+		return new DOUBLE(Math.asin(getValue().getDoubleValue().value));
 	}
 
 	/*
@@ -345,7 +359,7 @@ public abstract class NUMBER extends CELL implements tNUMBER, Cloneable
 	 */
 	public tNUMBER ATAN()
 	{
-		return DOUBLE.make(Math.atan(getValue().doubleValue()));
+		return new DOUBLE(Math.atan(getValue().getDoubleValue().value));
 	}
 
 	/*
@@ -354,8 +368,8 @@ public abstract class NUMBER extends CELL implements tNUMBER, Cloneable
 	 */
 	public tNUMBER ATAN(tNUMBER b)
 	{
-		return DOUBLE.make(Math.atan2(getValue().doubleValue(), b.getValue()
-				.doubleValue()));
+		return new DOUBLE(Math.atan2(getValue().getDoubleValue().value, b
+				.getValue().getDoubleValue().value));
 	}
 
 	/*
@@ -364,7 +378,7 @@ public abstract class NUMBER extends CELL implements tNUMBER, Cloneable
 	 */
 	public tNUMBER CEILING()
 	{
-		return DOUBLE.make(Math.ceil(getValue().doubleValue()));
+		return DOUBLE.make(Math.ceil(getValue().getDoubleValue()));
 	}
 
 	/*
@@ -373,7 +387,7 @@ public abstract class NUMBER extends CELL implements tNUMBER, Cloneable
 	 */
 	public tNUMBER COS()
 	{
-		return DOUBLE.make(Math.cos(getValue().doubleValue()));
+		return DOUBLE.make(Math.cos(getValue().getDoubleValue()));
 	}
 
 	/*
@@ -382,8 +396,8 @@ public abstract class NUMBER extends CELL implements tNUMBER, Cloneable
 	 */
 	public tNUMBER CIS()
 	{
-		return COMPLEX.make(Math.cos(getValue().doubleValue()),
-				Math.sin(getValue().doubleValue()));
+		return COMPLEX.make(Math.cos(getValue().getDoubleValue()),
+				Math.sin(getValue().getDoubleValue()));
 	}
 
 	/*
@@ -392,7 +406,7 @@ public abstract class NUMBER extends CELL implements tNUMBER, Cloneable
 	 */
 	public tNUMBER EXP()
 	{
-		return DOUBLE.make(Math.exp(getValue().doubleValue()));
+		return DOUBLE.make(Math.exp(getValue().getDoubleValue()));
 	}
 
 	/*
@@ -401,7 +415,7 @@ public abstract class NUMBER extends CELL implements tNUMBER, Cloneable
 	 */
 	public tNUMBER FLOOR()
 	{
-		return DOUBLE.make(Math.floor(getValue().doubleValue()));
+		return DOUBLE.make(Math.floor(getValue().getDoubleValue()));
 	}
 
 	/*
@@ -411,8 +425,8 @@ public abstract class NUMBER extends CELL implements tNUMBER, Cloneable
 	 */
 	public tNUMBER IEEEremainder(tNUMBER b)
 	{
-		return DOUBLE.make(Math.IEEEremainder(getValue().doubleValue(), b
-				.getValue().doubleValue()));
+		return DOUBLE.make(Math.IEEEremainder(getValue().getDoubleValue(), b
+				.getValue().getDoubleValue()));
 	}
 
 	/*
@@ -421,7 +435,7 @@ public abstract class NUMBER extends CELL implements tNUMBER, Cloneable
 	 */
 	public tNUMBER LOG()
 	{
-		return DOUBLE.make(Math.log(getValue().doubleValue()));
+		return DOUBLE.make(Math.log(getValue().getDoubleValue()));
 	}
 
 	/*
@@ -430,8 +444,8 @@ public abstract class NUMBER extends CELL implements tNUMBER, Cloneable
 	 */
 	public tNUMBER EXPT(tNUMBER b)
 	{
-		return DOUBLE.make(Math.pow(getValue().doubleValue(), b.getValue()
-				.doubleValue()));
+		return DOUBLE.make(Math.pow(getValue().getDoubleValue(), b.getValue()
+				.getDoubleValue()));
 	}
 
 	/*
@@ -454,7 +468,7 @@ public abstract class NUMBER extends CELL implements tNUMBER, Cloneable
 	 */
 	public tNUMBER SIN()
 	{
-		return DOUBLE.make(Math.sin(getValue().doubleValue()));
+		return DOUBLE.make(Math.sin(getValue().getDoubleValue()));
 	}
 
 	/*
@@ -463,7 +477,7 @@ public abstract class NUMBER extends CELL implements tNUMBER, Cloneable
 	 */
 	public tNUMBER SQRT()
 	{
-		return DOUBLE.make(Math.sqrt(getValue().doubleValue()));
+		return DOUBLE.make(Math.sqrt(getValue().getDoubleValue()));
 	}
 
 	/*
@@ -472,7 +486,7 @@ public abstract class NUMBER extends CELL implements tNUMBER, Cloneable
 	 */
 	public tNUMBER TAN()
 	{
-		return DOUBLE.make(Math.tan(getValue().doubleValue()));
+		return DOUBLE.make(Math.tan(getValue().getDoubleValue()));
 	}
 
 	/*
@@ -481,7 +495,7 @@ public abstract class NUMBER extends CELL implements tNUMBER, Cloneable
 	 */
 	public tNUMBER toDegrees()
 	{
-		return DOUBLE.make(Math.toDegrees(getValue().doubleValue()));
+		return DOUBLE.make(Math.toDegrees(getValue().getDoubleValue()));
 	}
 
 	/*
@@ -490,7 +504,7 @@ public abstract class NUMBER extends CELL implements tNUMBER, Cloneable
 	 */
 	public tNUMBER toRadians()
 	{
-		return DOUBLE.make(Math.toRadians(getValue().doubleValue()));
+		return DOUBLE.make(Math.toRadians(getValue().getDoubleValue()));
 	}
 
 	/**
@@ -815,7 +829,7 @@ public abstract class NUMBER extends CELL implements tNUMBER, Cloneable
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tNUMBER#phase()
 	 */
-	public tNUMBER phase()
+	public tNUMBER PHASE()
 	{
 		IMathFuncs oper = getOper(this);
 		return oper.phase(this);
@@ -1221,4 +1235,5 @@ public abstract class NUMBER extends CELL implements tNUMBER, Cloneable
 			return false;
 		return this.EQN((NUMBER) cell);
 	}
+
 }
