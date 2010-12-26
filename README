@@ -14,16 +14,16 @@ PREAMBLE
 ========
 
 I liked a lot LISP language in my first programming age. Well, time flies like
-an arrow, thirty years ago. There was no internet and grabbing infos was an hard
+an arrow, thirty years ago. There was no Internet and grabbing infos was an hard
 work in libraries. As a beginning stage, I analysed a PROLOG interpreter in LISP
-I had found in some unix server at Polytechnical School of Lausanne. But there was 
+I had found in some Unix server at Polytechnic School of Lausanne. But there was 
 no LISP interpreter available.
 
 The first one I tried was Acorn LISP on the BBC computer. Try is not the right word
-this one was very basic but efficient, so I dissassemble the ROM and discover the 
-beautifull concept of a self-written language. Once the basic structure found, the 
+this one was very basic but efficient, so I disassemble the ROM and discover the 
+beautiful concept of a self-written language. Once the basic structure found, the 
 first program to create was a rom disassembler takig the LISP internal structure.
-For the begining in BASIC, and afterward in LISP.
+For the beginning in BASIC, and afterward in LISP.
 
 Some time ago, I discoverd that LISP had had some improvements with COMMON-LISP, Scheme
 and other implementation. As I needed LISP for some musical analysis and text generation,
@@ -50,7 +50,7 @@ MAJOR AXES
 =============================
 
 Only base LISP objects are defined with their base functions. Main goal is not efficiency
-but simplicity, readability and code independance. 
+but simplicity, readability and code independence. 
 
 2. Java and LISP programming
 ============================
@@ -68,7 +68,7 @@ from source code using annotation information.
 
 As LISP and java programming interface to LISP objects are someway homomorphic, it's
 more efficient to generate binary code as JVM code through the Java compiler and not
-through an intermediary b-code. A lot of optimisation will be managed by java itself
+through an intermediary b-code. A lot of optimization will be managed by java itself
 as will be garbage collection.
 
 Compiled code using Java form dynamic variables management will be done in a Java way.
