@@ -36,7 +36,6 @@ import java.util.*;
 
 import aloyslisp.core.conditions.LispException;
 import aloyslisp.core.math.*;
-import aloyslisp.core.types.*;
 
 /**
  * PACKAGE

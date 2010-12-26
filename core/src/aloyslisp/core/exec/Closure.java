@@ -29,7 +29,9 @@
 
 package aloyslisp.core.exec;
 
-import aloyslisp.core.types.*;
+import aloyslisp.core.plugs.tSYMBOL;
+import aloyslisp.core.plugs.tT;
+import aloyslisp.core.sequences.tLIST;
 
 /**
  * Closure

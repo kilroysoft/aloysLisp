@@ -37,7 +37,10 @@ import aloyslisp.core.conditions.LispException;
 import aloyslisp.core.math.*;
 import aloyslisp.core.plugs.*;
 import aloyslisp.core.annotations.*;
-import aloyslisp.core.types.*;
+import aloyslisp.core.sequences.tCONS;
+import aloyslisp.core.sequences.tLIST;
+import aloyslisp.core.streams.CHARACTER;
+import aloyslisp.core.streams.tINPUT_STREAM;
 
 /**
  * ReadTableReaders

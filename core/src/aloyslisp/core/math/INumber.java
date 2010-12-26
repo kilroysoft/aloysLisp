@@ -29,7 +29,6 @@
 
 package aloyslisp.core.math;
 
-import aloyslisp.core.types.tNUMBER;
 
 /**
  * INumber

@@ -25,7 +25,7 @@
 package aloyslisp.core.conditions;
 
 import aloyslisp.core.plugs.CELL;
-import aloyslisp.core.types.tT;
+import aloyslisp.core.plugs.tT;
 
 /**
  * CONDITION

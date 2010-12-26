@@ -29,7 +29,7 @@
 
 package aloyslisp.core.conditions;
 
-import aloyslisp.core.types.*;
+import aloyslisp.core.plugs.tT;
 
 /**
  * LispErrorBadArgumentType

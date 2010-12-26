@@ -35,7 +35,6 @@ import java.util.*;
 import aloyslisp.core.conditions.LispException;
 import aloyslisp.core.math.*;
 import aloyslisp.core.plugs.*;
-import aloyslisp.core.types.*;
 
 /**
  * PEnviron

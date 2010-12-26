@@ -38,6 +38,16 @@ import aloyslisp.core.conditions.LispException;
 import aloyslisp.core.exec.*;
 import aloyslisp.core.math.*;
 import aloyslisp.core.plugs.*;
+import aloyslisp.core.sequences.CONS;
+import aloyslisp.core.sequences.STRING;
+import aloyslisp.core.sequences.tLIST;
+import aloyslisp.core.sequences.tSTRING;
+import aloyslisp.core.streams.CHARACTER;
+import aloyslisp.core.streams.FILE_INPUT_STREAM;
+import aloyslisp.core.streams.FILE_OUTPUT_STREAM;
+import aloyslisp.core.streams.READTABLE;
+import aloyslisp.core.streams.tCHARACTER;
+import aloyslisp.core.streams.tSTREAM;
 import aloyslisp.core.types.*;
 
 /**

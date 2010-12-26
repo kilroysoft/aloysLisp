@@ -33,8 +33,10 @@
 package aloyslisp.core.exec;
 
 import static aloyslisp.commonlisp.L.*;
+import aloyslisp.core.functions.FUNCTION;
+import aloyslisp.core.functions.tFUNCTION;
 import aloyslisp.core.plugs.*;
-import aloyslisp.core.types.*;
+import aloyslisp.core.sequences.tLIST;
 
 /**
  * Symbol

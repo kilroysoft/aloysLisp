@@ -29,8 +29,6 @@
 
 package aloyslisp.core.math;
 
-import aloyslisp.core.plugs.FLOAT;
-import aloyslisp.core.types.tNUMBER;
 
 /**
  * NumFloat

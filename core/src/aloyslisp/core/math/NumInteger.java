@@ -32,7 +32,6 @@ package aloyslisp.core.math;
 import java.math.BigInteger;
 
 import aloyslisp.core.plugs.*;
-import aloyslisp.core.types.tNUMBER;
 
 /**
  * NumInteger
