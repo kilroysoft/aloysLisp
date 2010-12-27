@@ -29,6 +29,7 @@
 
 package aloyslisp.core.math;
 
+import aloyslisp.core.numbers.*;
 
 /**
  * NumShort
@@ -37,13 +38,56 @@ package aloyslisp.core.math;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class NumShort implements IFloat
+public class NumShort extends NumReal implements IFloat
 {
 	public short	value;
 
-	public NumShort(short init)
+	/**
+	 * @param init
+	 */
+	public NumShort(Integer init)
 	{
-		value = init;
+		value = init.shortValue();
+	}
+
+	/**
+	 * @param init
+	 */
+	public NumShort(Long init)
+	{
+		value = init.shortValue();
+	}
+
+	/**
+	 * @param init
+	 */
+	public NumShort(Short init)
+	{
+		value = init.shortValue();
+	}
+
+	/**
+	 * @param init
+	 */
+	public NumShort(Float init)
+	{
+		value = init.shortValue();
+	}
+
+	/**
+	 * @param init
+	 */
+	public NumShort(Double init)
+	{
+		value = init.shortValue();
+	}
+
+	/**
+	 * @param init
+	 */
+	public NumShort(INumber init)
+	{
+		value = init.getShortValue().value;
 	}
 
 	/*
@@ -117,10 +161,213 @@ public class NumShort implements IFloat
 	 * @see aloyslisp.core.math.INumber#make()
 	 */
 	@Override
-	public tNUMBER make()
+	public SHORT make()
 	{
 		// create SHORT
 		return new SHORT(this);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.IReal#equal(aloyslisp.core.math.INumber)
+	 */
+	@Override
+	public boolean equal(INumber op)
+	{
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.IReal#greater(aloyslisp.core.math.INumber)
+	 */
+	@Override
+	public boolean greater(INumber op)
+	{
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.IReal#lower(aloyslisp.core.math.INumber)
+	 */
+	@Override
+	public boolean lower(INumber op)
+	{
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.IReal#rational()
+	 */
+	@Override
+	public IRational rational()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.IReal#rationalize()
+	 */
+	@Override
+	public IRational rationalize()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.INumber#add(aloyslisp.core.math.INumber)
+	 */
+	@Override
+	public INumber add(INumber op)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.INumber#substract(aloyslisp.core.math.INumber)
+	 */
+	@Override
+	public INumber substract(INumber op)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.INumber#minus()
+	 */
+	@Override
+	public INumber minus()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.INumber#inversion()
+	 */
+	@Override
+	public INumber inversion()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.INumber#multiply(aloyslisp.core.math.INumber)
+	 */
+	@Override
+	public INumber multiply(INumber op)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.INumber#division(aloyslisp.core.math.INumber)
+	 */
+	@Override
+	public INumber division(INumber op)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.IFloat#decode_float(aloyslisp.core.math.IFloat)
+	 */
+	@Override
+	public IFloat[] decode_float(IFloat f)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * aloyslisp.core.math.IFloat#integer_decode_float(aloyslisp.core.math.IFloat
+	 * )
+	 */
+	@Override
+	public IFloat[] integer_decode_float(IFloat f)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.IFloat#scale_float(aloyslisp.core.math.IFloat,
+	 * aloyslisp.core.math.IInteger)
+	 */
+	@Override
+	public IFloat scale_float(IFloat f, IInteger scale)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.IFloat#float_radix(aloyslisp.core.math.IFloat)
+	 */
+	@Override
+	public IFloat float_radix(IFloat f)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.IFloat#float_sign(aloyslisp.core.math.IFloat,
+	 * aloyslisp.core.math.IFloat)
+	 */
+	@Override
+	public IFloat float_sign(IFloat f, IFloat f2)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.IFloat#float_digits(aloyslisp.core.math.IFloat)
+	 */
+	@Override
+	public IInteger float_digits(IFloat f)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * aloyslisp.core.math.IFloat#float_precision(aloyslisp.core.math.IFloat)
+	 */
+	@Override
+	public IInteger float_precision(IFloat f)
+	{
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

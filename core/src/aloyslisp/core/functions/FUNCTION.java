@@ -37,6 +37,7 @@ import java.lang.reflect.*;
 import aloyslisp.core.conditions.LispException;
 import aloyslisp.core.exec.*;
 import aloyslisp.core.math.*;
+import aloyslisp.core.numbers.tNUMBER;
 import aloyslisp.core.plugs.CELL;
 import aloyslisp.core.plugs.tSYMBOL;
 import aloyslisp.core.plugs.tT;

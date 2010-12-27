@@ -22,18 +22,17 @@
 // IP 10 nov. 2010 Creation
 //--------------------------------------------------------------------------
 
-package aloyslisp.core.math;
+package aloyslisp.core.numbers;
 
-import aloyslisp.core.annotations.Type;
+
 
 /**
- * tBIGNUM
+ * tCOMPLEX
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  *
  */
-@Type(name = "bignum", test = "bignump")
-public interface tBIGNUM extends tINTEGER
+public interface tCOMPLEX extends tNUMBER
 {
 
 }

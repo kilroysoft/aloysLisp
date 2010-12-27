@@ -24,219 +24,130 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 16 oct. 2010 Creation
+// IP 26 déc. 2010 Creation
 // --------------------------------------------------------------------------
 
 package aloyslisp.core.math;
 
-import static aloyslisp.commonlisp.L.*;
-import aloyslisp.core.conditions.*;
 import aloyslisp.core.numbers.*;
 
 /**
- * NumComplex
+ * NumReal
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class NumComplex implements IComplex
+public abstract class NumReal extends NumNumber implements IReal
 {
 
-	/**
-	 * 
-	 */
-	private static final long	serialVersionUID	= 5745108518875400131L;
-
-	/**
-	 * 
-	 */
-	public tNUMBER				real;
-
-	/**
-	 * 
-	 */
-	public tNUMBER				imag;
-
-	/**
-	 * 
-	 */
-	/**
-	 * @param real
-	 * @param imag
-	 */
-	public NumComplex(tNUMBER real, tNUMBER imag)
-	{
-		this.real = real;
-		this.imag = imag;
-	}
-
 	/*
 	 * (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
-	public String toString()
-	{
-		return "#C(" + real + " " + imag + ")";
-	}
-
-	/**
-	 * @return
-	 */
-	public NumRatio getRatioValue()
-	{
-		if (!imag.EQUAL(nInt(0)))
-		{
-			throw new LispException("Can't convert complex to ratio");
-		}
-		return realpart().getRatioValue();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#getComplexValue()
-	 */
-	public NumComplex getComplexValue()
-	{
-		return this;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#getIntegerValue()
-	 */
-	public NumInteger getIntegerValue()
-	{
-		if (!imag.EQUAL(nInt(0)))
-		{
-			throw new LispException("Can't convert complex to integer");
-		}
-		return realpart().getIntegerValue();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#getFloatValue()
-	 */
-	public NumFloat getFloatValue()
-	{
-		if (!imag.EQUAL(nInt(0)))
-		{
-			throw new LispException("Can't convert complex to float");
-		}
-		return realpart().getFloatValue();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#getDoubleValue()
-	 */
-	public NumDouble getDoubleValue()
-	{
-		if (!imag.EQUAL(nInt(0)))
-		{
-			throw new LispException("Can't convert complex to double");
-		}
-		return realpart().getDoubleValue();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#getShortValue()
-	 */
-	public NumShort getShortValue()
-	{
-		if (!imag.EQUAL(nInt(0)))
-		{
-			throw new LispException("Can't convert complex to short");
-		}
-		return realpart().getShortValue();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#make()
-	 */
-	public COMPLEX make()
-	{
-		return new COMPLEX(this);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#coerce(aloyslisp.core.math.INumber)
+	 * @see aloyslisp.core.math.IReal#mod(aloyslisp.core.math.IReal)
 	 */
 	@Override
-	public INumber coerce(INumber var)
+	public IReal mod(IReal op)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return getDoubleValue().mod(op);
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#add(aloyslisp.core.math.INumber)
+	 * @see aloyslisp.core.math.IReal#rem(aloyslisp.core.math.IReal)
 	 */
 	@Override
-	public INumber add(INumber op)
+	public IReal rem(IReal op)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return getDoubleValue().rem(op);
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#substract(aloyslisp.core.math.INumber)
+	 * @see aloyslisp.core.math.IReal#floor(aloyslisp.core.math.IReal)
 	 */
 	@Override
-	public INumber substract(INumber op)
+	public IReal[] floor()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return getDoubleValue().floor();
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#minus()
+	 * @see aloyslisp.core.math.IReal#floor(aloyslisp.core.math.IReal)
 	 */
 	@Override
-	public INumber minus()
+	public IReal[] floor(IReal op)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return getDoubleValue().floor(op);
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#inversion()
+	 * @see aloyslisp.core.math.IReal#ceiling(aloyslisp.core.math.IReal)
 	 */
 	@Override
-	public INumber inversion()
+	public IReal[] ceiling()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return getDoubleValue().ceiling();
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#multiply(aloyslisp.core.math.INumber)
+	 * @see aloyslisp.core.math.IReal#ceiling(aloyslisp.core.math.IReal)
 	 */
 	@Override
-	public INumber multiply(INumber op)
+	public IReal[] ceiling(IReal op)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return getDoubleValue().ceiling(op);
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#division(aloyslisp.core.math.INumber)
+	 * @see aloyslisp.core.math.IReal#truncate(aloyslisp.core.math.IReal)
 	 */
 	@Override
-	public INumber division(INumber op)
+	public IReal[] truncate()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return getDoubleValue().truncate();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.IReal#truncate(aloyslisp.core.math.IReal)
+	 */
+	@Override
+	public IReal[] truncate(IReal op)
+	{
+		return getDoubleValue().truncate(op);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.IReal#round(aloyslisp.core.math.IReal)
+	 */
+	@Override
+	public IReal[] round()
+	{
+		return getDoubleValue().round();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.IReal#round(aloyslisp.core.math.IReal)
+	 */
+	@Override
+	public IReal[] round(IReal op)
+	{
+		return getDoubleValue().round(op);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.INumber#abs()
+	 */
+	public IReal abs()
+	{
+		return lower(ZERO) ? (IReal) minus() : this;
 	}
 
 	/*
@@ -246,8 +157,7 @@ public class NumComplex implements IComplex
 	@Override
 	public INumber realpart()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return this;
 	}
 
 	/*
@@ -257,8 +167,7 @@ public class NumComplex implements IComplex
 	@Override
 	public INumber imagpart()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return ZERO;
 	}
 
 	/*
@@ -268,8 +177,7 @@ public class NumComplex implements IComplex
 	@Override
 	public INumber conjugate()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return this;
 	}
 
 	/*
@@ -279,19 +187,8 @@ public class NumComplex implements IComplex
 	@Override
 	public INumber phase()
 	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#abs()
-	 */
-	@Override
-	public IReal abs()
-	{
-		// TODO Auto-generated method stub
-		return null;
+		INumber res = ONE.coerce(this);
+		return minusp() ? res.minus() : res;
 	}
 
 	/*
@@ -301,19 +198,17 @@ public class NumComplex implements IComplex
 	@Override
 	public boolean zerop()
 	{
-		// TODO Auto-generated method stub
-		return false;
+		return equal(ZERO);
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#cis()
+	 * @see aloyslisp.core.math.INumber#sin()
 	 */
 	@Override
 	public INumber cis()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return getDoubleValue().cis();
 	}
 
 	/*
@@ -323,8 +218,7 @@ public class NumComplex implements IComplex
 	@Override
 	public INumber sin()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return getDoubleValue().sin();
 	}
 
 	/*
@@ -334,8 +228,7 @@ public class NumComplex implements IComplex
 	@Override
 	public INumber cos()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return getDoubleValue().cos();
 	}
 
 	/*
@@ -345,8 +238,7 @@ public class NumComplex implements IComplex
 	@Override
 	public INumber tan()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return getDoubleValue().tan();
 	}
 
 	/*
@@ -356,8 +248,7 @@ public class NumComplex implements IComplex
 	@Override
 	public INumber asin()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return getDoubleValue().asin();
 	}
 
 	/*
@@ -367,8 +258,7 @@ public class NumComplex implements IComplex
 	@Override
 	public INumber acos()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return getDoubleValue().acos();
 	}
 
 	/*
@@ -378,19 +268,17 @@ public class NumComplex implements IComplex
 	@Override
 	public INumber atan()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return getDoubleValue().atan();
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#atan(aloyslisp.core.math.IReal)
+	 * @see aloyslisp.core.math.INumber#atan(aloyslisp.core.math.INumber)
 	 */
 	@Override
 	public INumber atan(IReal opt)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return getDoubleValue().atan(opt);
 	}
 
 	/*
@@ -400,8 +288,7 @@ public class NumComplex implements IComplex
 	@Override
 	public INumber sinh()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return getDoubleValue().sinh();
 	}
 
 	/*
@@ -411,8 +298,7 @@ public class NumComplex implements IComplex
 	@Override
 	public INumber cosh()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return getDoubleValue().cosh();
 	}
 
 	/*
@@ -422,8 +308,7 @@ public class NumComplex implements IComplex
 	@Override
 	public INumber tanh()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return getDoubleValue().tanh();
 	}
 
 	/*
@@ -433,8 +318,7 @@ public class NumComplex implements IComplex
 	@Override
 	public INumber asinh()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return getDoubleValue().asinh();
 	}
 
 	/*
@@ -444,8 +328,7 @@ public class NumComplex implements IComplex
 	@Override
 	public INumber acosh()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return getDoubleValue().acosh();
 	}
 
 	/*
@@ -455,8 +338,7 @@ public class NumComplex implements IComplex
 	@Override
 	public INumber atanh()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return getDoubleValue().atanh();
 	}
 
 	/*
@@ -466,8 +348,7 @@ public class NumComplex implements IComplex
 	@Override
 	public INumber log()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return getDoubleValue().log();
 	}
 
 	/*
@@ -477,8 +358,7 @@ public class NumComplex implements IComplex
 	@Override
 	public INumber sqrt()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return getDoubleValue().sqrt();
 	}
 
 	/*
@@ -488,8 +368,7 @@ public class NumComplex implements IComplex
 	@Override
 	public INumber exp()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return getDoubleValue().exp();
 	}
 
 	/*
@@ -499,8 +378,7 @@ public class NumComplex implements IComplex
 	@Override
 	public INumber expt(INumber power)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return getDoubleValue().expt(power);
 	}
 
 	/*
@@ -510,8 +388,7 @@ public class NumComplex implements IComplex
 	@Override
 	public INumber random()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return getDoubleValue().random();
 	}
 
 	/*
@@ -522,8 +399,27 @@ public class NumComplex implements IComplex
 	@Override
 	public INumber random(tRANDOM_STATE st)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return getDoubleValue().random(st);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.IReal#minusp()
+	 */
+	@Override
+	public boolean minusp()
+	{
+		return lower(ZERO);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.IReal#plusp()
+	 */
+	@Override
+	public boolean plusp()
+	{
+		return greater(ZERO);
 	}
 
 }

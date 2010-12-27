@@ -19,19 +19,20 @@
 //--------------------------------------------------------------------------
 // history
 //--------------------------------------------------------------------------
-// IP 10 nov. 2010 Creation
+// IP 11 nov. 2010 Creation
 //--------------------------------------------------------------------------
 
-package aloyslisp.core.math;
+package aloyslisp.core.numbers;
 
+import aloyslisp.core.plugs.tATOM;
 
 /**
- * tCOMPLEX
+ * tRANDOM_STATE
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  *
  */
-public interface tCOMPLEX extends tNUMBER
+public interface tRANDOM_STATE extends tATOM
 {
 
 }

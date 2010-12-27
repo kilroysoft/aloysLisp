@@ -31,8 +31,7 @@
 package aloyslisp.core.math;
 
 import static aloyslisp.commonlisp.L.*;
-import aloyslisp.core.plugs.*;
-import aloyslisp.core.types.*;
+import aloyslisp.core.numbers.*;
 
 /**
  * NumRatio
@@ -41,7 +40,7 @@ import aloyslisp.core.types.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class NumRatio implements IRational
+public class NumRatio extends NumReal implements IRational
 {
 	/**
 	 * 
@@ -51,12 +50,12 @@ public class NumRatio implements IRational
 	/**
 	 * 
 	 */
-	public NumInteger			num;
+	public IInteger				num;
 
 	/**
 	 * 
 	 */
-	public NumInteger			den;
+	public IInteger				den;
 
 	/**
 	 * 
@@ -71,11 +70,11 @@ public class NumRatio implements IRational
 	 * @param num
 	 * @param den
 	 */
-	public NumRatio(NumInteger num, NumInteger den)
+	public NumRatio(IInteger num, IInteger den)
 	{
-		NumInteger pgcd = new NumInteger(num.gcd(den));
-		this.num = new NumInteger(num.divide(pgcd));
-		this.den = new NumInteger(den.divide(pgcd));
+		IInteger pgcd = num.gcd(den).getIntegerValue();
+		this.num = num.division(pgcd).getIntegerValue();
+		this.den = den.division(pgcd).getIntegerValue();
 	}
 
 	/**
@@ -155,8 +154,160 @@ public class NumRatio implements IRational
 	@Override
 	public NumShort getShortValue()
 	{
+		return new NumShort(0);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.IReal#equal(aloyslisp.core.math.INumber)
+	 */
+	@Override
+	public boolean equal(INumber op)
+	{
 		// TODO Auto-generated method stub
-		return 0;
+		return false;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.IReal#greater(aloyslisp.core.math.INumber)
+	 */
+	@Override
+	public boolean greater(INumber op)
+	{
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.IReal#lower(aloyslisp.core.math.INumber)
+	 */
+	@Override
+	public boolean lower(INumber op)
+	{
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.IReal#rational()
+	 */
+	@Override
+	public IRational rational()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.IReal#rationalize()
+	 */
+	@Override
+	public IRational rationalize()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.INumber#make()
+	 */
+	@Override
+	public RATIO make()
+	{
+		return new RATIO(this);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.INumber#add(aloyslisp.core.math.INumber)
+	 */
+	@Override
+	public INumber add(INumber op)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.INumber#substract(aloyslisp.core.math.INumber)
+	 */
+	@Override
+	public INumber substract(INumber op)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.INumber#minus()
+	 */
+	@Override
+	public INumber minus()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.INumber#inversion()
+	 */
+	@Override
+	public INumber inversion()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.INumber#multiply(aloyslisp.core.math.INumber)
+	 */
+	@Override
+	public INumber multiply(INumber op)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.INumber#division(aloyslisp.core.math.INumber)
+	 */
+	@Override
+	public INumber division(INumber op)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.IRational#numerator()
+	 */
+	@Override
+	public NumInteger numerator()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.IRational#denominator()
+	 */
+	@Override
+	public NumInteger denominator()
+	{
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

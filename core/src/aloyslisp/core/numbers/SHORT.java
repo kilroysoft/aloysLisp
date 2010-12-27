@@ -19,19 +19,29 @@
 //--------------------------------------------------------------------------
 // history
 //--------------------------------------------------------------------------
-// IP 10 nov. 2010 Creation
+// IP 26 déc. 2010 Creation
 //--------------------------------------------------------------------------
 
-package aloyslisp.core.math;
+package aloyslisp.core.numbers;
 
+import aloyslisp.core.math.INumber;
 
 /**
- * tFIXNUM
+ * SHORT
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  *
  */
-public interface tFIXNUM extends tINTEGER
+public class SHORT extends REAL implements tSHORT_FLOAT
 {
+
+	/**
+	 * @param val
+	 */
+	public SHORT(INumber val)
+	{
+		super(val);
+		// TODO Auto-generated constructor stub
+	}
 
 }

@@ -29,7 +29,16 @@
 
 package aloyslisp.core.math;
 
+import aloyslisp.core.numbers.tNUMBER;
+import aloyslisp.core.numbers.tRANDOM_STATE;
 
+/**
+ * INumber
+ * 
+ * @author Ivan Pierre {ivan@kilroysoft.ch}
+ * @author George Kilroy {george@kilroysoft.ch}
+ * 
+ */
 /**
  * INumber
  * 
@@ -42,6 +51,15 @@ public interface INumber
 	/* *******************************************************************
 	 * CONVERTORS
 	 */
+
+	/**
+	 * Convert to variable type if of higher weight
+	 * 
+	 * @param var
+	 * @return
+	 */
+	public INumber coerce(INumber var);
+
 	/**
 	 * Convert to ratio
 	 * 
@@ -149,26 +167,6 @@ public interface INumber
 	 */
 	public INumber division(INumber op);
 
-	/**
-	 * Integer division truncate(a / b)
-	 * Semms not to be used in LISP standard. Use ceil, floor, truncate, round
-	 * instead
-	 * 
-	 * @param a
-	 * @param b
-	 * @return
-	 */
-	public INumber divide(INumber op);
-
-	/**
-	 * Modulo a mod b
-	 * 
-	 * @param a
-	 * @param b
-	 * @return
-	 */
-	public INumber mod(INumber op);
-
 	/* *******************************************************************
 	 * ACCESSORS
 	 */
@@ -190,44 +188,6 @@ public interface INumber
 	public INumber imagpart();
 
 	/* *******************************************************************
-	 * COMPARATORS
-	 */
-	/**
-	 * Test equality a == b
-	 * 
-	 * @param op
-	 * @return
-	 */
-	public boolean equal(INumber op);
-
-	/**
-	 * Test greater a > b
-	 * 
-	 * @param op
-	 * @return
-	 */
-	public boolean greather(INumber op);
-
-	/**
-	 * Test lower a < b
-	 * 
-	 * @param op
-	 * @return
-	 */
-	public boolean lower(INumber op);
-
-	/* *******************************************************************
-	 * FUNCTIONS
-	 */
-	/**
-	 * Absolute value ||a||, mod for complex
-	 * 
-	 * @param a
-	 * @return
-	 */
-	public tNUMBER abs(INumber a);
-
-	/* *******************************************************************
 	 * FUNCTIONS COMPLEX
 	 */
 	/**
@@ -244,6 +204,123 @@ public interface INumber
 	 * @param a
 	 * @return
 	 */
-	public IFloat phase();
+	public INumber phase();
+
+	/* *******************************************************************
+	 * FUNCTIONS
+	 */
+	/**
+	 * Absolute value ||a||, mod for complex
+	 * 
+	 * @return
+	 */
+	public IReal abs();
+
+	/**
+	 * @return
+	 */
+	public boolean zerop();
+
+	/**
+	 * @return
+	 */
+	public INumber cis();
+
+	/**
+	 * @return
+	 */
+	public INumber sin();
+
+	/**
+	 * @return
+	 */
+	public INumber cos();
+
+	/**
+	 * @return
+	 */
+	public INumber tan();
+
+	/**
+	 * @return
+	 */
+	public INumber asin();
+
+	/**
+	 * @return
+	 */
+	public INumber acos();
+
+	/**
+	 * @return
+	 */
+	public INumber atan();
+
+	/**
+	 * @param opt
+	 * @return
+	 */
+	public INumber atan(IReal opt);
+
+	/**
+	 * @return
+	 */
+	public INumber sinh();
+
+	/**
+	 * @return
+	 */
+	public INumber cosh();
+
+	/**
+	 * @return
+	 */
+	public INumber tanh();
+
+	/**
+	 * @return
+	 */
+	public INumber asinh();
+
+	/**
+	 * @return
+	 */
+	public INumber acosh();
+
+	/**
+	 * @return
+	 */
+	public INumber atanh();
+
+	/**
+	 * @return
+	 */
+	public INumber log();
+
+	/**
+	 * @return
+	 */
+	public INumber sqrt();
+
+	/**
+	 * @return
+	 */
+	public INumber exp();
+
+	/**
+	 * @param power
+	 * @return
+	 */
+	public INumber expt(INumber power);
+
+	/**
+	 * @return
+	 */
+	public INumber random();
+
+	/**
+	 * @return
+	 */
+	public INumber random(tRANDOM_STATE st);
 
 }

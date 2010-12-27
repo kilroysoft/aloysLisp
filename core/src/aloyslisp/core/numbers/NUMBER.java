@@ -27,16 +27,15 @@
 // IP 11 sept. 2010 Creation
 // --------------------------------------------------------------------------
 
-package aloyslisp.core.math;
+package aloyslisp.core.numbers;
 
 import static aloyslisp.commonlisp.L.*;
 import java.util.*;
 
 import aloyslisp.core.conditions.*;
-import aloyslisp.core.plugs.CELL;
-import aloyslisp.core.plugs.tNULL;
-import aloyslisp.core.plugs.tT;
-import aloyslisp.core.sequences.tCONS;
+import aloyslisp.core.math.*;
+import aloyslisp.core.plugs.*;
+import aloyslisp.core.sequences.*;
 
 /**
  * NUMBER
@@ -47,51 +46,7 @@ import aloyslisp.core.sequences.tCONS;
  */
 public abstract class NUMBER extends CELL implements tNUMBER
 {
-	/**
-	 * Table of operator according to weight
-	 */
-	protected static INTEGER				zero	= new INTEGER(0);
-
-	/**
-	 * 
-	 */
-	protected static INTEGER				one		= new INTEGER(1);
-
-	/**
-	 * 
-	 */
-	static final IMathFuncs[]				oper	=
-													{//
-													one, // byte
-			one, // short
-			one, // int
-			new INTEGER(0L), // long
-			new RATIO(), // fractional
-			new FLOAT((float) 0), // float
-			new DOUBLE((double) 0), // double
-			new COMPLEX(one, one), // complex
-													};
-	/**
-	 * Types of numbers by wheight
-	 */
-	static final HashMap<String, Integer>	types	= new HashMap<String, Integer>();
-
-	static
-	{
-		types.put("Byte", 0);
-		types.put("Short", 1);
-		types.put("Integer", 2);
-		types.put("Long", 3);
-		types.put("NumRatio", 4);
-		types.put("Float", 5);
-		types.put("Double", 6);
-		types.put("NumComplex", 7);
-	}
-
-	/**
-	 * Numeric value, can't be changed
-	 */
-	public INumber							value;
+	public INumber	value;
 
 	/**
 	 * Constructor
@@ -101,48 +56,6 @@ public abstract class NUMBER extends CELL implements tNUMBER
 	public NUMBER(INumber val)
 	{
 		value = val;
-	}
-
-	/**
-	 * Constructor
-	 * 
-	 * @param val
-	 */
-	public NUMBER(int val)
-	{
-		value = new NumInteger(val);
-	}
-
-	/**
-	 * @param val
-	 */
-	public NUMBER(long val)
-	{
-		value = new NumInteger(val);
-	}
-
-	/**
-	 * @param val
-	 */
-	public NUMBER(float val)
-	{
-		value = new NumFloat(val);
-	}
-
-	/**
-	 * @param val
-	 */
-	public NUMBER(short val)
-	{
-		value = new NumShort(val);
-	}
-
-	/**
-	 * @param val
-	 */
-	public NUMBER(double val)
-	{
-		value = new NumDouble(val);
 	}
 
 	/**
@@ -175,7 +88,8 @@ public abstract class NUMBER extends CELL implements tNUMBER
 			return new FLOAT(Float.valueOf(nb));
 		}
 
-		int base = ((tNUMBER) readBase.SYMBOL_VALUE()).getValue().getIntegerValue();
+		int base = ((tNUMBER) readBase.SYMBOL_VALUE()).getValue()
+				.getIntegerValue();
 		if (base < 2 || base > 37)
 			base = 10;
 		String strBase = "[0-";
@@ -209,15 +123,6 @@ public abstract class NUMBER extends CELL implements tNUMBER
 
 	/*
 	 * (non-Javadoc)
-	 * @see java.lang.Object#clone()
-	 */
-	public tNUMBER clone()
-	{
-		throw new LispErrorFunctionCannotApplyOn("clone", this);
-	}
-
-	/*
-	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tNUMBER#getValue()
 	 */
 	public INumber getValue()
@@ -236,87 +141,56 @@ public abstract class NUMBER extends CELL implements tNUMBER
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.types.tNUMBER#getWeight()
-	 */
-	public Integer getWeight()
-	{
-		return types.get(value.getClass().getSimpleName());
-	}
-
-	/**
-	 * @param weight
-	 * @return
-	 */
-	static IMathFuncs oper(Integer weight)
-	{
-		return oper[weight];
-	}
-
-	/*
-	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tNUMBER#integerValue()
 	 */
-	public NumInteger integerValue()
+	public INTEGER integerValue()
 	{
-		return ((INumber) value).getIntegerValue();
+		return new INTEGER(value.getIntegerValue());
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tNUMBER#floatValue()
 	 */
-	public NumFloat floatValue()
+	public FLOAT floatValue()
 	{
-		return value.getFloatValue();
+		return new FLOAT(value.getFloatValue());
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tNUMBER#doubleValue()
 	 */
-	public NumDouble doubleValue()
+	public DOUBLE doubleValue()
 	{
-		return ((INumber) value).getDoubleValue();
+		return new DOUBLE(value.getDoubleValue());
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tNUMBER#shortValue()
 	 */
-	public NumShort shortValue()
+	public SHORT shortValue()
 	{
-		return ((INumber) value).getShortValue();
+		return new SHORT(value.getShortValue());
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tNUMBER#ratioValue()
 	 */
-	public NumRatio ratioValue()
+	public RATIO ratioValue()
 	{
-		if (value instanceof NumComplex)
-			return new NumRatio(((NumComplex) value).getReal().make(), nInt(1));
-		else if (value instanceof NumRatio)
-			return (NumRatio) value;
-		else
-			return new NumRatio(nLong(((INumber) value).getIntegerValue()), nInt(1));
-
+		return new RATIO(value.getRatioValue());
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tNUMBER#complexValue()
 	 */
-	public NumComplex complexValue()
+	public COMPLEX complexValue()
 	{
-		if (value instanceof NumRatio)
-			return new NumComplex(nDouble(((INumber) value).getDoubleValue()),
-					nInt(0));
-		else if (value instanceof NumComplex)
-			return (NumComplex) value;
-		else
-			return new NumComplex(nDouble(((INumber) value).getDoubleValue()),
-					nInt(0));
+		return new COMPLEX(value.getComplexValue());
 	}
 
 	/*
@@ -343,7 +217,7 @@ public abstract class NUMBER extends CELL implements tNUMBER
 	 */
 	public tNUMBER ACOS()
 	{
-		return new DOUBLE(Math.acos(getValue().getDoubleValue().value));
+		return value.acos().make();
 	}
 
 	/*
@@ -352,7 +226,7 @@ public abstract class NUMBER extends CELL implements tNUMBER
 	 */
 	public tNUMBER ASIN()
 	{
-		return new DOUBLE(Math.asin(getValue().getDoubleValue().value));
+		return value.asin().make();
 	}
 
 	/*
@@ -361,26 +235,16 @@ public abstract class NUMBER extends CELL implements tNUMBER
 	 */
 	public tNUMBER ATAN()
 	{
-		return new DOUBLE(Math.atan(getValue().getDoubleValue().value));
+		return value.atan().make();
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tNUMBER#atan(aloyslisp.core.types.tNUMBER)
 	 */
-	public tNUMBER ATAN(tNUMBER b)
+	public tNUMBER ATAN(tREAL b)
 	{
-		return new DOUBLE(Math.atan2(getValue().getDoubleValue().value, b
-				.getValue().getDoubleValue().value));
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.types.tNUMBER#ceiling()
-	 */
-	public tNUMBER CEILING()
-	{
-		return DOUBLE.make(Math.ceil(getValue().getDoubleValue()));
+		return value.atan((IReal) b.getValue()).make();
 	}
 
 	/*
@@ -389,7 +253,7 @@ public abstract class NUMBER extends CELL implements tNUMBER
 	 */
 	public tNUMBER COS()
 	{
-		return DOUBLE.make(Math.cos(getValue().getDoubleValue()));
+		return value.cos().make();
 	}
 
 	/*
@@ -398,8 +262,7 @@ public abstract class NUMBER extends CELL implements tNUMBER
 	 */
 	public tNUMBER CIS()
 	{
-		return COMPLEX.make(Math.cos(getValue().getDoubleValue()),
-				Math.sin(getValue().getDoubleValue()));
+		return value.cis().make();
 	}
 
 	/*
@@ -408,16 +271,7 @@ public abstract class NUMBER extends CELL implements tNUMBER
 	 */
 	public tNUMBER EXP()
 	{
-		return DOUBLE.make(Math.exp(getValue().getDoubleValue()));
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.types.tNUMBER#floor()
-	 */
-	public tNUMBER FLOOR()
-	{
-		return DOUBLE.make(Math.floor(getValue().getDoubleValue()));
+		return value.exp().make();
 	}
 
 	/*
@@ -437,7 +291,7 @@ public abstract class NUMBER extends CELL implements tNUMBER
 	 */
 	public tNUMBER LOG()
 	{
-		return DOUBLE.make(Math.log(getValue().getDoubleValue()));
+		return value.log().make();
 	}
 
 	/*
@@ -446,8 +300,7 @@ public abstract class NUMBER extends CELL implements tNUMBER
 	 */
 	public tNUMBER EXPT(tNUMBER b)
 	{
-		return DOUBLE.make(Math.pow(getValue().getDoubleValue(), b.getValue()
-				.getDoubleValue()));
+		return value.expt(b.getValue()).make();
 	}
 
 	/*
@@ -456,12 +309,10 @@ public abstract class NUMBER extends CELL implements tNUMBER
 	 */
 	public tNUMBER RANDOM(tT randomState)
 	{
-		tNUMBER res = DOUBLE.make(Math.random()).MULTIPLY(this);
-		if (this instanceof tINTEGER)
-		{
-			res = res.FLOOR();
-		}
-		return res;
+		if (randomState instanceof tRANDOM_STATE)
+			return value.random((tRANDOM_STATE) randomState).make();
+		else
+			return value.random().make();
 	}
 
 	/*
@@ -470,7 +321,7 @@ public abstract class NUMBER extends CELL implements tNUMBER
 	 */
 	public tNUMBER SIN()
 	{
-		return DOUBLE.make(Math.sin(getValue().getDoubleValue()));
+		return value.sin().make();
 	}
 
 	/*
@@ -479,7 +330,7 @@ public abstract class NUMBER extends CELL implements tNUMBER
 	 */
 	public tNUMBER SQRT()
 	{
-		return DOUBLE.make(Math.sqrt(getValue().getDoubleValue()));
+		return value.sqrt().make();
 	}
 
 	/*
@@ -488,7 +339,7 @@ public abstract class NUMBER extends CELL implements tNUMBER
 	 */
 	public tNUMBER TAN()
 	{
-		return DOUBLE.make(Math.tan(getValue().getDoubleValue()));
+		return value.tan().make();
 	}
 
 	/*
@@ -509,38 +360,6 @@ public abstract class NUMBER extends CELL implements tNUMBER
 		return DOUBLE.make(Math.toRadians(getValue().getDoubleValue()));
 	}
 
-	/**
-	 * @param a
-	 * @param b
-	 * @return
-	 */
-	private IMathFuncs getOper(tNUMBER a, tNUMBER b)
-	{
-		return oper(Math.max(a.getWeight(), b.getWeight()));
-	}
-
-	/**
-	 * @param a
-	 * @return
-	 */
-	private IMathFuncs getOper(tNUMBER a)
-	{
-		return oper(a.getWeight());
-	}
-
-	/**
-	 * Just an operator to proceed
-	 */
-	static final IMathFuncs	funcs	= new INTEGER(0);
-
-	/**
-	 * @return
-	 */
-	private IMathFuncs getOper()
-	{
-		return funcs;
-	}
-
 	/*
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tNUMBER#add(aloyslisp.core.types.tT)
@@ -550,8 +369,8 @@ public abstract class NUMBER extends CELL implements tNUMBER
 		if (a instanceof NUMBER)
 		{
 			// normal addition
-			INumber oper = getOper(this, (tNUMBER) a);
-			return oper.add(this, (tNUMBER) a);
+			INumber oper = value.coerce(((tNUMBER) a).getValue());
+			return oper.add(((tNUMBER) a).getValue()).make();
 		}
 		if (a instanceof tNULL)
 		{
@@ -577,8 +396,8 @@ public abstract class NUMBER extends CELL implements tNUMBER
 		if (a instanceof NUMBER)
 		{
 			// normal addition
-			IMathFuncs oper = getOper(this, (tNUMBER) a);
-			return oper.substract(this, (tNUMBER) a);
+			INumber oper = value.coerce(((tNUMBER) a).getValue());
+			return oper.substract(((tNUMBER) a).getValue()).make();
 		}
 		if (a instanceof tNULL)
 		{
@@ -628,8 +447,8 @@ public abstract class NUMBER extends CELL implements tNUMBER
 		if (a instanceof NUMBER)
 		{
 			// normal addition
-			IMathFuncs oper = getOper(this, (tNUMBER) a);
-			return oper.multiply(this, (tNUMBER) a);
+			INumber oper = value.coerce(((tNUMBER) a).getValue());
+			return oper.multiply(((tNUMBER) a).getValue()).make();
 		}
 		if (a instanceof tNULL)
 		{
@@ -655,8 +474,8 @@ public abstract class NUMBER extends CELL implements tNUMBER
 		if (a instanceof NUMBER)
 		{
 			// normal addition
-			IMathFuncs oper = getOper(this, (tNUMBER) a);
-			return oper.division(this, (tNUMBER) a);
+			INumber oper = value.coerce(((tNUMBER) a).getValue());
+			return oper.division(((tNUMBER) a).getValue()).make();
 		}
 		if (a instanceof tNULL)
 		{
@@ -675,126 +494,6 @@ public abstract class NUMBER extends CELL implements tNUMBER
 
 		// error bad type
 		throw new LispErrorBadArgumentType("/", this, "NUMBER");
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.types.tNUMBER#divide(aloyslisp.core.types.tT)
-	 */
-	public tNUMBER divide(tT a)
-	{
-		if (a instanceof NUMBER)
-		{
-			// normal addition
-			IMathFuncs oper = getOper(this, (tNUMBER) a);
-			return oper.divide(this, (tNUMBER) a);
-		}
-		if (a instanceof tNULL)
-		{
-			// No argument return the opposite
-			return this.inversion();
-		}
-		if (a instanceof tCONS)
-		{
-			if (((tCONS) a).LENGTH() == 1)
-				// Last operand
-				return divide(a.CAR());
-			else
-				// Recurse
-				return divide(a.CAR()).divide(a.CDR());
-		}
-
-		// error bad type
-		throw new LispErrorBadArgumentType("divide", this, "NUMBER");
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.types.tNUMBER#mod(aloyslisp.core.types.tT)
-	 */
-	public tNUMBER MOD(tT a)
-	{
-		if (a instanceof NUMBER)
-		{
-			// normal addition
-			IMathFuncs oper = getOper(this, (tNUMBER) a);
-			return oper.mod(this, (tNUMBER) a);
-		}
-		if (a instanceof tNULL)
-		{
-			// end of process
-			return this;
-		}
-		if (a instanceof tCONS)
-		{
-			// loop
-			return MOD(a.CAR()).MOD(a.CDR());
-		}
-
-		// error bad type
-		throw new LispErrorBadArgumentType("-", this, "NUMBER");
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.types.tNUMBER#lcm(aloyslisp.core.types.tT)
-	 */
-	public tNUMBER LCM(tT a)
-	{
-		if (a instanceof NUMBER)
-		{
-			// normal addition
-			IMathFuncs oper = getOper(this, (tNUMBER) a);
-			return oper.lcm(this, (tNUMBER) a);
-		}
-		if (a instanceof tNULL)
-		{
-			// end of process
-			return this;
-		}
-		if (a instanceof tCONS)
-		{
-			if (((tCONS) a).LENGTH() == 1)
-				// Last operand
-				return LCM(a.CAR());
-			else
-				// Recurse
-				return LCM(a.CAR()).LCM(a.CDR());
-		}
-
-		// error bad type
-		throw new LispErrorBadArgumentType("lcm", this, "NUMBER");
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.types.tNUMBER#gcd(aloyslisp.core.types.tT)
-	 */
-	public tNUMBER GCD(tT a)
-	{
-		if (a instanceof NUMBER)
-		{
-			// normal addition
-			IMathFuncs oper = getOper(this, (tNUMBER) a);
-			return oper.gcd(this, (tNUMBER) a);
-		}
-		if (a instanceof tNULL)
-		{
-			// end of process
-			return this;
-		}
-		if (a instanceof tCONS)
-		{
-			if (((tCONS) a).LENGTH() == 1)
-				// Last operand
-				return GCD(a.CAR());
-			else
-				// Recurse
-				return GCD(a.CAR()).GCD(a.CDR());
-		}
-
-		// error bad type
-		throw new LispErrorBadArgumentType("gcd", this, "NUMBER");
 	}
 
 	/*
@@ -1151,80 +850,6 @@ public abstract class NUMBER extends CELL implements tNUMBER
 	{
 		IMathFuncs oper = getOper(this);
 		return oper.abs(this);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.types.tNUMBER#max(aloyslisp.core.types.tT)
-	 */
-	public tNUMBER MAX(tT a)
-	{
-		if (a instanceof NUMBER)
-		{
-			// normal addition
-			IMathFuncs oper = getOper(this, (tNUMBER) a);
-			return oper.max(this, (tNUMBER) a);
-		}
-		if (a instanceof tNULL)
-		{
-			// end of process
-			return this;
-		}
-		if (a instanceof tCONS)
-		{
-			// loop
-			return MAX(a.CAR()).MAX(a.CDR());
-		}
-
-		// error bad type
-		throw new LispErrorBadArgumentType("max", this, "NUMBER");
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.types.tNUMBER#min(aloyslisp.core.types.tT)
-	 */
-	public tNUMBER MIN(tT a)
-	{
-		if (a instanceof NUMBER)
-		{
-			// normal addition
-			IMathFuncs oper = getOper(this, (tNUMBER) a);
-			return oper.min(this, (tNUMBER) a);
-		}
-		if (a instanceof tNULL)
-		{
-			// end of process
-			return this;
-		}
-		if (a instanceof tCONS)
-		{
-			// loop
-			return MIN(a.CAR()).MIN(a.CDR());
-		}
-
-		// error bad type
-		throw new LispErrorBadArgumentType("min", this, "NUMBER");
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.types.tNUMBER#round()
-	 */
-	public tNUMBER ROUND()
-	{
-		IMathFuncs oper = getOper(this);
-		return oper.round(this);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.types.tNUMBER#truncate()
-	 */
-	public tNUMBER TRUNCATE()
-	{
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	/*

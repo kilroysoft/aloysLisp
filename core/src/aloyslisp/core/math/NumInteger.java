@@ -31,7 +31,7 @@ package aloyslisp.core.math;
 
 import java.math.BigInteger;
 
-import aloyslisp.core.plugs.*;
+import aloyslisp.core.numbers.*;
 
 /**
  * NumInteger
@@ -40,7 +40,7 @@ import aloyslisp.core.plugs.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class NumInteger implements IInteger
+public class NumInteger extends NumReal implements IInteger
 {
 	private BigInteger	val;
 
@@ -72,10 +72,14 @@ public class NumInteger implements IInteger
 	 * Get number from a string representation in base radix
 	 * 
 	 * @param val
+	 * @param start
+	 * @param end
 	 * @param radix
+	 * @param junk
 	 * @return
 	 */
-	public static NumInteger makeRadix(String val, Integer radix)
+	public static NumInteger parse_integer(String val, Integer start,
+			Integer end, Integer radix, Boolean junk)
 	{
 		return new NumInteger(new BigInteger(val, radix));
 	}
@@ -145,9 +149,381 @@ public class NumInteger implements IInteger
 	 * @see aloyslisp.core.math.INumber#make()
 	 */
 	@Override
-	public tNUMBER make()
+	public INTEGER make()
 	{
 		return new INTEGER(this);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.IReal#equal(aloyslisp.core.math.INumber)
+	 */
+	@Override
+	public boolean equal(INumber op)
+	{
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.IReal#greater(aloyslisp.core.math.INumber)
+	 */
+	@Override
+	public boolean greater(INumber op)
+	{
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.IReal#lower(aloyslisp.core.math.INumber)
+	 */
+	@Override
+	public boolean lower(INumber op)
+	{
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.IReal#rational()
+	 */
+	@Override
+	public IRational rational()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.IReal#rationalize()
+	 */
+	@Override
+	public IRational rationalize()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.INumber#add(aloyslisp.core.math.INumber)
+	 */
+	@Override
+	public INumber add(INumber op)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.INumber#substract(aloyslisp.core.math.INumber)
+	 */
+	@Override
+	public INumber substract(INumber op)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.INumber#minus()
+	 */
+	@Override
+	public INumber minus()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.INumber#inversion()
+	 */
+	@Override
+	public INumber inversion()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.INumber#multiply(aloyslisp.core.math.INumber)
+	 */
+	@Override
+	public INumber multiply(INumber op)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.INumber#division(aloyslisp.core.math.INumber)
+	 */
+	@Override
+	public INumber division(INumber op)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.IInteger#lcm(aloyslisp.core.math.IInteger)
+	 */
+	@Override
+	public IInteger lcm(IInteger op)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.IInteger#gcd(aloyslisp.core.math.IInteger)
+	 */
+	@Override
+	public IInteger gcd(IInteger op)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.IInteger#logand(aloyslisp.core.math.IInteger)
+	 */
+	@Override
+	public IInteger logand(IInteger op)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.IInteger#lognand(aloyslisp.core.math.IInteger)
+	 */
+	@Override
+	public IInteger lognand(IInteger op)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.IInteger#logandc1(aloyslisp.core.math.IInteger)
+	 */
+	@Override
+	public IInteger logandc1(IInteger op)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.IInteger#logandc2(aloyslisp.core.math.IInteger)
+	 */
+	@Override
+	public IInteger logandc2(IInteger op)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.IInteger#logior(aloyslisp.core.math.IInteger)
+	 */
+	@Override
+	public IInteger logior(IInteger op)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.IInteger#logorc1(aloyslisp.core.math.IInteger)
+	 */
+	@Override
+	public IInteger logorc1(IInteger op)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.IInteger#logorc2(aloyslisp.core.math.IInteger)
+	 */
+	@Override
+	public IInteger logorc2(IInteger op)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.IInteger#logxor(aloyslisp.core.math.IInteger)
+	 */
+	@Override
+	public IInteger logxor(IInteger op)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.IInteger#logeqv(aloyslisp.core.math.IInteger)
+	 */
+	@Override
+	public IInteger logeqv(IInteger op)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.IInteger#lognot()
+	 */
+	@Override
+	public IInteger lognot()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.IInteger#toBase(java.lang.Integer)
+	 */
+	@Override
+	public String toBase(Integer radix)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.IInteger#logtest(aloyslisp.core.math.IInteger)
+	 */
+	@Override
+	public IInteger logtest(IInteger op)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.IInteger#logcount(aloyslisp.core.math.IInteger)
+	 */
+	@Override
+	public IInteger logcount(IInteger op)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.IInteger#logbitp(aloyslisp.core.math.IInteger)
+	 */
+	@Override
+	public IInteger logbitp(IInteger op)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.IInteger#ash(aloyslisp.core.math.IInteger)
+	 */
+	@Override
+	public IInteger ash(IInteger count)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.IInteger#evenp()
+	 */
+	@Override
+	public boolean evenp()
+	{
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.IInteger#oddp()
+	 */
+	@Override
+	public boolean oddp()
+	{
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.IInteger#isqrt()
+	 */
+	@Override
+	public IInteger isqrt()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.IInteger#integer_length()
+	 */
+	@Override
+	public IInteger integer_length()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see aloyslisp.core.math.IRational#numerator()
+	 */
+	@Override
+	public NumInteger numerator()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see aloyslisp.core.math.IRational#denominator()
+	 */
+	@Override
+	public NumInteger denominator()
+	{
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

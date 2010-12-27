@@ -24,37 +24,21 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 23 déc. 2010 Creation
+// IP 10 nov. 2010 Creation
 // --------------------------------------------------------------------------
 
-package aloyslisp.core.math;
+package aloyslisp.core.numbers;
+
+
 
 /**
- * IRational
+ * tRATIONAL
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public interface IRational extends IReal
+public interface tRATIONAL extends tREAL
 {
 
-	/* *******************************************************************
-	 * FUNCTIONS RATIO
-	 */
-	/**
-	 * Numerator (for ratio) a/b -> a
-	 * 
-	 * @param a
-	 * @return
-	 */
-	public NumInteger numerator();
-
-	/**
-	 * Denumerator (for ratio) a/b -> b
-	 * 
-	 * @param a
-	 * @return
-	 */
-	public NumInteger denominator();
 }

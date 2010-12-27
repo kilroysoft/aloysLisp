@@ -22,16 +22,17 @@
 // IP 10 nov. 2010 Creation
 //--------------------------------------------------------------------------
 
-package aloyslisp.core.math;
+package aloyslisp.core.numbers;
+
 
 
 /**
- * tINTEGER
+ * tSHORT_FLOAT
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  *
  */
-public interface tINTEGER extends tRATIONAL
+public interface tSHORT_FLOAT extends tFLOAT
 {
 
 }

@@ -43,6 +43,104 @@ public interface IInteger extends IRational
 	 */
 
 	/* *******************************************************************
+	 * OPERATOR
+	 */
+	/**
+	 * Less common multiplicand
+	 * 
+	 * @param op
+	 * @return
+	 */
+	public IInteger lcm(IInteger op);
+
+	/**
+	 * Greather common denumerator
+	 * 
+	 * @param op
+	 * @return
+	 */
+	public IInteger gcd(IInteger op);
+
+	/**
+	 * Arithmetic AND
+	 * 
+	 * @param op
+	 * @return
+	 */
+	public IInteger logand(IInteger op);
+
+	/**
+	 * Arithmetic NAND
+	 * 
+	 * @param op
+	 * @return
+	 */
+	public IInteger lognand(IInteger op);
+
+	/**
+	 * Arithmetic NAND COMPLEMENT 1
+	 * 
+	 * @param op
+	 * @return
+	 */
+	public IInteger logandc1(IInteger op);
+
+	/**
+	 * Arithmetic AND COMPLEMENT 2
+	 * 
+	 * @param op
+	 * @return
+	 */
+	public IInteger logandc2(IInteger op);
+
+	/**
+	 * Arithmetic OR
+	 * 
+	 * @param op
+	 * @return
+	 */
+	public IInteger logior(IInteger op);
+
+	/**
+	 * Arithmetic OR COMPLEMENT 1
+	 * 
+	 * @param op
+	 * @return
+	 */
+	public IInteger logorc1(IInteger op);
+
+	/**
+	 * Arithmetic OR COMPLEMENT 2
+	 * 
+	 * @param op
+	 * @return
+	 */
+	public IInteger logorc2(IInteger op);
+
+	/**
+	 * Arithmetic XOR
+	 * 
+	 * @param op
+	 * @return
+	 */
+	public IInteger logxor(IInteger op);
+
+	/**
+	 * Arithmetic EQUIVALENCE
+	 * 
+	 * @param op
+	 * @return
+	 */
+	public IInteger logeqv(IInteger op);
+
+	/**
+	 * Arithmetic NOT (complement to 0)
+	 * 
+	 * @return
+	 */
+	public IInteger lognot();
+
+	/* *******************************************************************
 	 * FUNCTIONS
 	 */
 	/**
@@ -54,99 +152,56 @@ public interface IInteger extends IRational
 	public String toBase(Integer radix);
 
 	/**
-	 * Less common multiplicand
+	 * Arithmetic bit pattern test
 	 * 
-	 * @param b
+	 * @param op
 	 * @return
 	 */
-	public IInteger lcm(IInteger b);
+	public IInteger logtest(IInteger op);
 
 	/**
-	 * Greather common denumerator
+	 * Arithmetic bit count
 	 * 
-	 * @param b
+	 * @param op
 	 * @return
 	 */
-	public IInteger gcd(IInteger b);
+	public IInteger logcount(IInteger op);
 
 	/**
-	 * Arithmetic AND
+	 * Arithmetic bit test
 	 * 
-	 * @param b
+	 * @param op
 	 * @return
 	 */
-	public IInteger logand(IInteger b);
+	public IInteger logbitp(IInteger op);
 
 	/**
-	 * Arithmetic NAND
+	 * Arithmetic bit shift
 	 * 
-	 * @param b
+	 * @param count
 	 * @return
 	 */
-	public IInteger lognand(IInteger b);
+	public IInteger ash(IInteger count);
 
 	/**
-	 * Arithmetic NAND COMPLEMENT 1
-	 * 
-	 * @param b
 	 * @return
 	 */
-	public IInteger logandc1(IInteger b);
+	public boolean evenp();
 
 	/**
-	 * Arithmetic AND COMPLEMENT 2
-	 * 
-	 * @param b
 	 * @return
 	 */
-	public IInteger logandc2(IInteger b);
+	public boolean oddp();
 
 	/**
-	 * Arithmetic OR
-	 * 
-	 * @param b
 	 * @return
 	 */
-	public IInteger logior(IInteger b);
+	public IInteger isqrt();
 
 	/**
-	 * Arithmetic OR COMPLEMENT 1
-	 * 
-	 * @param b
 	 * @return
 	 */
-	public IInteger logorc1(IInteger b);
+	public IInteger integer_length();
 
-	/**
-	 * Arithmetic OR COMPLEMENT 2
-	 * 
-	 * @param b
-	 * @return
-	 */
-	public IInteger logorc2(IInteger b);
-
-	/**
-	 * Arithmetic XOR
-	 * 
-	 * @param b
-	 * @return
-	 */
-	public IInteger logxor(IInteger b);
-
-	/**
-	 * Arithmetic EQUIVATEN
-	 * 
-	 * @param b
-	 * @return
-	 */
-	public IInteger logeqv(IInteger b);
-
-	/**
-	 * Arithmetic NOT (complement to 0)
-	 * 
-	 * @param b
-	 * @return
-	 */
-	public IInteger lognot();
-
+	
 }

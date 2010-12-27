@@ -24,22 +24,42 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 25 déc. 2010 Creation
+// IP 10 nov. 2010 Creation
 // --------------------------------------------------------------------------
 
-package aloyslisp.core.math;
+package aloyslisp.core.numbers;
 
-import aloyslisp.core.math.*;
-import aloyslisp.core.types.*;
+import aloyslisp.core.annotations.Function;
+import aloyslisp.core.annotations.Rest;
+import aloyslisp.core.plugs.tT;
 
 /**
- * REAL
+ * tINTEGER
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class REAL extends NUMBER implements tREAL
+public interface tINTEGER extends tRATIONAL
 {
+	/**
+	 * Least common multiple
+	 * 
+	 * @param a
+	 * @return
+	 */
+	@Function(name = "lcm")
+	public tINTEGER LCM( //
+			@Rest(name = "integers") tT integers);
+
+	/**
+	 * Greatest common denominator
+	 * 
+	 * @param integers
+	 * @return
+	 */
+	@Function(name = "gcd")
+	public tINTEGER GCD( //
+			@Rest(name = "integers") tT integers);
 
 }

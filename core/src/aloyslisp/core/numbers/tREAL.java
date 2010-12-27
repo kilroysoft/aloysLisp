@@ -24,37 +24,89 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 23 déc. 2010 Creation
+// IP 10 nov. 2010 Creation
 // --------------------------------------------------------------------------
 
-package aloyslisp.core.math;
+package aloyslisp.core.numbers;
+
+import aloyslisp.core.annotations.*;
+import aloyslisp.core.plugs.*;
 
 /**
- * IRational
+ * tREAL
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public interface IRational extends IReal
+public interface tREAL extends tNUMBER
 {
 
-	/* *******************************************************************
-	 * FUNCTIONS RATIO
-	 */
 	/**
-	 * Numerator (for ratio) a/b -> a
+	 * Maximum
 	 * 
-	 * @param a
+	 * @param ops
 	 * @return
 	 */
-	public NumInteger numerator();
+	@Function(name = "max")
+	public tREAL MAX( //
+			@Rest(name = "ops") tT ops);
 
 	/**
-	 * Denumerator (for ratio) a/b -> b
+	 * Minimum
 	 * 
-	 * @param a
+	 * @param ops
 	 * @return
 	 */
-	public NumInteger denominator();
+	@Function(name = "min")
+	public tREAL MIN( //
+			@Rest(name = "ops") tT ops);
+
+	/**
+	 * Ceiling
+	 * 
+	 * @return
+	 */
+	@Function(name = "ceiling")
+	public tNUMBER[] CEILING( //
+			@Opt(name = "div", def = "1") tREAL div);
+
+	/**
+	 * Truncate
+	 * 
+	 * @return
+	 */
+	@Function(name = "truncate")
+	public tNUMBER[] TRUNCATE( //
+			@Opt(name = "div", def = "1") tREAL div);
+
+	/**
+	 * Round
+	 * 
+	 * @param number
+	 * @return
+	 */
+	@Function(name = "round")
+	public tNUMBER[] ROUND( //
+			@Opt(name = "div", def = "1") tREAL div);
+
+	/**
+	 * Floor
+	 * 
+	 * @return
+	 */
+	@Function(name = "floor")
+	public tNUMBER[] FLOOR( //
+			@Opt(name = "div", def = "1") tREAL div);
+
+	/**
+	 * Modulus
+	 * 
+	 * @param operands
+	 * @return
+	 */
+	@Function(name = "mod")
+	public tREAL MOD( //
+			@Rest(name = "operands") tT operands);
+
 }

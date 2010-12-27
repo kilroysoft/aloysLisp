@@ -22,16 +22,18 @@
 // IP 10 nov. 2010 Creation
 //--------------------------------------------------------------------------
 
-package aloyslisp.core.math;
+package aloyslisp.core.numbers;
 
+import aloyslisp.core.annotations.Type;
 
 /**
- * tDOUBLE_FLOAT
+ * tBIGNUM
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  *
  */
-public interface tDOUBLE_FLOAT extends tFLOAT
+@Type(name = "bignum", test = "bignump")
+public interface tBIGNUM extends tINTEGER
 {
 
 }

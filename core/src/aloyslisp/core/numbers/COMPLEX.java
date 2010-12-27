@@ -24,20 +24,45 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 10 nov. 2010 Creation
+// IP 15 oct. 2010 Creation
 // --------------------------------------------------------------------------
 
-package aloyslisp.core.math;
+package aloyslisp.core.numbers;
 
+import aloyslisp.core.math.*;
 
 /**
- * tFLOAT
+ * COMPLEX
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public interface tFLOAT extends tREAL
+public class COMPLEX extends NUMBER implements tCOMPLEX
 {
+
+	/**
+	 * @param val
+	 */
+	public COMPLEX(tNUMBER real, tNUMBER imag)
+	{
+		super(new NumComplex(real, imag));
+	}
+
+	/**
+	 * @param val
+	 */
+	public COMPLEX(INumber real, INumber imag)
+	{
+		super(new NumComplex(real.make(), imag.make()));
+	}
+
+	/**
+	 * @param a
+	 */
+	public COMPLEX(IComplex a)
+	{
+		super(a);
+	}
 
 }

@@ -36,6 +36,7 @@ import aloyslisp.core.annotations.*;
 import aloyslisp.core.conditions.LispException;
 import aloyslisp.core.functions.tFUNCTION;
 import aloyslisp.core.math.*;
+import aloyslisp.core.numbers.NUMBER;
 import aloyslisp.core.plugs.tSYMBOL;
 import aloyslisp.core.plugs.tT;
 import aloyslisp.core.sequences.tSTRING;

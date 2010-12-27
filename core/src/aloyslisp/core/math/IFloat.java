@@ -32,5 +32,48 @@ package aloyslisp.core.math;
  */
 public interface IFloat extends IReal
 {
-
+	/**
+	 * @param f
+	 * @return
+	 */
+	public IFloat[] decode_float(IFloat f);
+	
+	/**
+	 * @param f
+	 * @return
+	 */
+	public IFloat[] integer_decode_float(IFloat f);
+	
+	/**
+	 * @param f
+	 * @param scale
+	 * @return
+	 */
+	public IFloat scale_float(IFloat f, IInteger scale);
+	
+	/**
+	 * @param f
+	 * @return
+	 */
+	public IFloat float_radix(IFloat f);
+	
+	/**
+	 * @param f
+	 * @param f2
+	 * @return
+	 */
+	public IFloat float_sign(IFloat f, IFloat f2);
+	
+	/**
+	 * @param f
+	 * @return
+	 */
+	public IInteger float_digits(IFloat f);
+	
+	/**
+	 * @param f
+	 * @return
+	 */
+	public IInteger float_precision(IFloat f);
+	
 }

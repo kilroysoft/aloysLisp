@@ -24,37 +24,36 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 23 déc. 2010 Creation
+// IP 12 oct. 2010 Creation
 // --------------------------------------------------------------------------
 
-package aloyslisp.core.math;
+package aloyslisp.core.numbers;
+
+import aloyslisp.core.math.*;
 
 /**
- * IRational
+ * DOUBLE
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public interface IRational extends IReal
+public class DOUBLE extends REAL implements tDOUBLE_FLOAT, tLONG_FLOAT
 {
-
-	/* *******************************************************************
-	 * FUNCTIONS RATIO
-	 */
 	/**
-	 * Numerator (for ratio) a/b -> a
-	 * 
-	 * @param a
-	 * @return
+	 * @param val
 	 */
-	public NumInteger numerator();
+	public DOUBLE(Double val)
+	{
+		super(new NumDouble(val));
+	}
 
 	/**
-	 * Denumerator (for ratio) a/b -> b
-	 * 
-	 * @param a
-	 * @return
+	 * @param val
 	 */
-	public NumInteger denominator();
+	public DOUBLE(IFloat val)
+	{
+		super(val);
+	}
+
 }

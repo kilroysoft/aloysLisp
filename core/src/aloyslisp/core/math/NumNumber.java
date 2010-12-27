@@ -24,20 +24,32 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 10 nov. 2010 Creation
+// IP 26 déc. 2010 Creation
 // --------------------------------------------------------------------------
 
 package aloyslisp.core.math;
 
-
 /**
- * tREAL
+ * NumNumber
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public interface tREAL extends tNUMBER, IReal
+public abstract class NumNumber implements INumber
 {
+
+	public static final NumInteger	ONE		= new NumInteger(1);
+
+	public static final NumInteger	ZERO	= new NumInteger(0);
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.INumber#coerce(aloyslisp.core.math.INumber)
+	 */
+	public INumber coerce(INumber var)
+	{
+		return null;
+	}
 
 }

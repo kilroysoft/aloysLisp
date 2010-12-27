@@ -22,16 +22,17 @@
 // IP 10 nov. 2010 Creation
 //--------------------------------------------------------------------------
 
-package aloyslisp.core.math;
+package aloyslisp.core.numbers;
+
 
 
 /**
- * tSINGLE_FLOAT
+ * tDOUBLE_FLOAT
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  *
  */
-public interface tSINGLE_FLOAT extends tFLOAT
+public interface tDOUBLE_FLOAT extends tFLOAT
 {
 
 }

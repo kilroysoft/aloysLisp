@@ -28,7 +28,7 @@
 // IMPLEMENT complete interface for numerical model
 // --------------------------------------------------------------------------
 
-package aloyslisp.core.math;
+package aloyslisp.core.numbers;
 
 import aloyslisp.core.math.*;
 import aloyslisp.core.plugs.tATOM;
@@ -42,7 +42,7 @@ import aloyslisp.core.annotations.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public interface tNUMBER extends tATOM, INumber
+public interface tNUMBER extends tATOM
 {
 	/**
 	 * Get the numeric object
@@ -52,25 +52,13 @@ public interface tNUMBER extends tATOM, INumber
 	public INumber getValue();
 
 	/**
-	 * @return
-	 */
-	public tNUMBER clone();
-
-	/**
-	 * Get the weight of the value Class
-	 * 
-	 * @return
-	 */
-	public Integer getWeight();
-
-	/**
 	 * Returns the value of the specified number as an <code>NumComplex</code>.
 	 * This may involve rounding or truncation.
 	 * 
 	 * @return the numeric value represented by this object after conversion
 	 *         to type <code>NumComplex</code>.
 	 */
-	public abstract NumComplex complexValue();
+	public COMPLEX complexValue();
 
 	/**
 	 * Returns the value of the specified number as a <code>NumRatio</code>.
@@ -79,7 +67,7 @@ public interface tNUMBER extends tATOM, INumber
 	 * @return the numeric value represented by this object after conversion
 	 *         to type <code>NumRatio</code>.
 	 */
-	public abstract NumRatio ratioValue();
+	public RATIO ratioValue();
 
 	/**
 	 * Returns the value of the specified number as an <code>int</code>.
@@ -88,7 +76,7 @@ public interface tNUMBER extends tATOM, INumber
 	 * @return the numeric value represented by this object after conversion
 	 *         to type <code>int</code>.
 	 */
-	public abstract NumInteger integerValue();
+	public INTEGER integerValue();
 
 	/**
 	 * Returns the value of the specified number as a <code>float</code>.
@@ -97,7 +85,7 @@ public interface tNUMBER extends tATOM, INumber
 	 * @return the numeric value represented by this object after conversion
 	 *         to type <code>float</code>.
 	 */
-	public abstract NumFloat floatValue();
+	public FLOAT floatValue();
 
 	/**
 	 * Returns the value of the specified number as a <code>double</code>.
@@ -106,7 +94,7 @@ public interface tNUMBER extends tATOM, INumber
 	 * @return the numeric value represented by this object after conversion
 	 *         to type <code>double</code>.
 	 */
-	public abstract NumDouble doubleValue();
+	public DOUBLE doubleValue();
 
 	/**
 	 * Returns the value of the specified number as a <code>short</code>.
@@ -116,7 +104,7 @@ public interface tNUMBER extends tATOM, INumber
 	 *         to type <code>short</code>.
 	 * @since JDK1.1
 	 */
-	public NumShort shortValue();
+	public SHORT shortValue();
 
 	/**
 	 * Arc Cosine
@@ -149,7 +137,7 @@ public interface tNUMBER extends tATOM, INumber
 	 */
 	@Function(name = "atan")
 	public tNUMBER ATAN( //
-			@Opt(name = "number2") tNUMBER num2);
+			@Opt(name = "number2") tREAL num2);
 
 	/**
 	 * Cosine
@@ -276,18 +264,6 @@ public interface tNUMBER extends tATOM, INumber
 	public tNUMBER DIVISION( //
 			@Rest(name = "operands") tT operands);
 
-	public tNUMBER divide(tT a);
-
-	/**
-	 * Modulus
-	 * 
-	 * @param operands
-	 * @return
-	 */
-	@Function(name = "mod")
-	public tNUMBER MOD( //
-			@Rest(name = "operands") tT operands);
-
 	public tNUMBER IEEEremainder(tNUMBER b);
 
 	/**
@@ -337,26 +313,6 @@ public interface tNUMBER extends tATOM, INumber
 	 */
 	@Function(name = "denominator")
 	public tNUMBER DENOMINATOR();
-
-	/**
-	 * Least common multiple
-	 * 
-	 * @param a
-	 * @return
-	 */
-	@Function(name = "lcm")
-	public tNUMBER LCM( //
-			@Rest(name = "integers") tT integers);
-
-	/**
-	 * Greatest common denominator
-	 * 
-	 * @param integers
-	 * @return
-	 */
-	@Function(name = "gcd")
-	public tNUMBER GCD( //
-			@Rest(name = "integers") tT integers);
 
 	/**
 	 * Logical and
@@ -459,26 +415,6 @@ public interface tNUMBER extends tATOM, INumber
 	@Function(name = "abs")
 	public tNUMBER ABS();
 
-	/**
-	 * Maximum
-	 * 
-	 * @param ops
-	 * @return
-	 */
-	@Function(name = "max")
-	public tNUMBER MAX( //
-			@Rest(name = "ops") tT ops);
-
-	/**
-	 * Minimum
-	 * 
-	 * @param ops
-	 * @return
-	 */
-	@Function(name = "min")
-	public tNUMBER MIN( //
-			@Rest(name = "ops") tT ops);
-
 	/********************************************************************************************
 	 * TO BE IMPLEMENTED :
 	 * 
@@ -530,38 +466,5 @@ public interface tNUMBER extends tATOM, INumber
 	 * 
 	 * 
 	 */
-
-	/**
-	 * Ceiling
-	 * 
-	 * @return
-	 */
-	@Function(name = "ceiling")
-	public tNUMBER CEILING();
-
-	/**
-	 * Truncate
-	 * 
-	 * @return
-	 */
-	@Function(name = "truncate")
-	public tNUMBER TRUNCATE();
-
-	/**
-	 * Round
-	 * 
-	 * @param number
-	 * @return
-	 */
-	@Function(name = "round")
-	public tNUMBER ROUND();
-
-	/**
-	 * Floor
-	 * 
-	 * @return
-	 */
-	@Function(name = "floor")
-	public tNUMBER FLOOR();
 
 }

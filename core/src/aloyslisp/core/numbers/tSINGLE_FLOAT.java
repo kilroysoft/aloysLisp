@@ -19,20 +19,20 @@
 //--------------------------------------------------------------------------
 // history
 //--------------------------------------------------------------------------
-// IP 11 nov. 2010 Creation
+// IP 10 nov. 2010 Creation
 //--------------------------------------------------------------------------
 
-package aloyslisp.core.math;
+package aloyslisp.core.numbers;
 
-import aloyslisp.core.plugs.tATOM;
+
 
 /**
- * tRANDOM_STATE
+ * tSINGLE_FLOAT
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  *
  */
-public interface tRANDOM_STATE extends tATOM
+public interface tSINGLE_FLOAT extends tFLOAT
 {
 
 }

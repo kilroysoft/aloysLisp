@@ -24,37 +24,73 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 23 déc. 2010 Creation
+// IP 15 oct. 2010 Creation
 // --------------------------------------------------------------------------
 
-package aloyslisp.core.math;
+package aloyslisp.core.numbers;
+
+import aloyslisp.core.math.*;
 
 /**
- * IRational
+ * RATIO
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public interface IRational extends IReal
+public class RATIO extends REAL implements tRATIO
 {
 
-	/* *******************************************************************
-	 * FUNCTIONS RATIO
-	 */
 	/**
-	 * Numerator (for ratio) a/b -> a
-	 * 
-	 * @param a
-	 * @return
+	 * @param num
+	 * @param den
 	 */
-	public NumInteger numerator();
+	public RATIO(tINTEGER num, tINTEGER den)
+	{
+		super(new NumRatio(num.getValue().getIntegerValue(), den.getValue()
+				.getIntegerValue()));
+	}
 
 	/**
-	 * Denumerator (for ratio) a/b -> b
-	 * 
-	 * @param a
-	 * @return
+	 * @param num
+	 * @param den
 	 */
-	public NumInteger denominator();
+	public RATIO(IInteger num, IInteger den)
+	{
+		super(new NumRatio(num, den));
+	}
+
+	/**
+	 * @param num
+	 * @param den
+	 */
+	public RATIO(tNUMBER val)
+	{
+		super(val.getValue().getRatioValue());
+	}
+
+	/**
+	 */
+	public RATIO()
+	{
+		super(new NumRatio());
+	}
+
+	/**
+	 * @param num
+	 * @param den
+	 */
+	public RATIO(NumInteger num, NumInteger den)
+	{
+		super(new NumRatio(num, den));
+	}
+
+	/**
+	 * @param val
+	 */
+	public RATIO(NumRatio val)
+	{
+		super(val);
+	}
+
 }

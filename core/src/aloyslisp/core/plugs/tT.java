@@ -52,15 +52,6 @@ public interface tT
 	public tT copy();
 
 	/**
-	 * Convert object to type
-	 * 
-	 * @return converted object
-	 */
-	@Function(name = "coerce")
-	public tT COERCE( //
-			@Arg(name = "type") tT type);
-
-	/**
 	 * Evaluate the cell
 	 * 
 	 * @return Value as an array (functions can give back multiple values)
