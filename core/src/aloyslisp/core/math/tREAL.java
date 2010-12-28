@@ -29,6 +29,7 @@
 
 package aloyslisp.core.math;
 
+import aloyslisp.core.annotations.*;
 import aloyslisp.core.plugs.tT;
 
 /**
@@ -40,6 +41,21 @@ import aloyslisp.core.plugs.tT;
  */
 public interface tREAL extends tNUMBER
 {
+
+	/**
+	 * @return
+	 */
+	public Double doubleValue();
+
+	/**
+	 * @return
+	 */
+	public Short shortValue();
+
+	/**
+	 * @return
+	 */
+	public Float floatValue();
 
 	/* *******************************************************************
 	 * COMPARATORS
@@ -184,7 +200,9 @@ public interface tREAL extends tNUMBER
 	 * @param op
 	 * @return
 	 */
-	public boolean EQUAL(tT op);
+	@Function(name = "=")
+	public boolean EQUAL( //
+			@Rest(name = "op") tT op);
 
 	/**
 	 * Test greater a > b
@@ -192,7 +210,9 @@ public interface tREAL extends tNUMBER
 	 * @param op
 	 * @return
 	 */
-	public boolean GREATER(tT op);
+	@Function(name = ">")
+	public boolean GREATER( //
+			@Rest(name = "op") tT op);
 
 	/**
 	 * Test lower a < b
@@ -200,16 +220,20 @@ public interface tREAL extends tNUMBER
 	 * @param op
 	 * @return
 	 */
-	public boolean LOWER(tT op);
+	@Function(name = "<")
+	public boolean LOWER( //
+			@Rest(name = "op") tT op);
 
 	/**
 	 * @return
 	 */
+	@Function(name = "minusp")
 	public boolean MINUSP();
 
 	/**
 	 * @return
 	 */
+	@Function(name = "plusp")
 	public boolean PLUSP();
 
 	/* *******************************************************************
@@ -218,11 +242,13 @@ public interface tREAL extends tNUMBER
 	/**
 	 * @return
 	 */
+	@Function(name = "rational")
 	public tRATIONAL RATIONAL();
 
 	/**
 	 * @return
 	 */
+	@Function(name = "rationalize")
 	public tRATIONAL RATIONALIZE();
 
 	/* *******************************************************************
@@ -234,7 +260,9 @@ public interface tREAL extends tNUMBER
 	 * @param op
 	 * @return
 	 */
-	public tREAL MOD(tREAL op);
+	@Function(name = "mod")
+	public tREAL MOD( //
+			@Arg(name = "op") tREAL op);
 
 	/**
 	 * Remainder
@@ -242,14 +270,9 @@ public interface tREAL extends tNUMBER
 	 * @param op
 	 * @return
 	 */
-	public tREAL REM(tREAL op);
-
-	/**
-	 * Floor
-	 * 
-	 * @return
-	 */
-	public tREAL[] FLOOR();
+	@Function(name = "rem")
+	public tREAL REM( //
+			@Arg(name = "op") tREAL op);
 
 	/**
 	 * Floor
@@ -257,14 +280,9 @@ public interface tREAL extends tNUMBER
 	 * @param op
 	 * @return
 	 */
-	public tREAL[] FLOOR(tREAL op);
-
-	/**
-	 * Ceiling
-	 * 
-	 * @return
-	 */
-	public tREAL[] CEILING();
+	@Function(name = "floor")
+	public tREAL[] FLOOR( //
+			@Opt(name = "div") tT div);
 
 	/**
 	 * Ceiling
@@ -272,7 +290,9 @@ public interface tREAL extends tNUMBER
 	 * @param op
 	 * @return
 	 */
-	public tREAL[] CEILING(tREAL op);
+	@Function(name = "ceiling")
+	public tREAL[] CEILING( //
+			@Opt(name = "div") tT div);
 
 	/**
 	 * Truncate
@@ -280,15 +300,9 @@ public interface tREAL extends tNUMBER
 	 * @param op
 	 * @return
 	 */
-	public tREAL[] TRUNCATE();
-
-	/**
-	 * Truncate
-	 * 
-	 * @param op
-	 * @return
-	 */
-	public tREAL[] TRUNCATE(tREAL op);
+	@Function(name = "truncate")
+	public tREAL[] TRUNCATE( //
+			@Opt(name = "div") tT div);
 
 	/**
 	 * Round
@@ -296,14 +310,8 @@ public interface tREAL extends tNUMBER
 	 * @param op
 	 * @return
 	 */
-	public tREAL[] ROUND();
-
-	/**
-	 * Round
-	 * 
-	 * @param op
-	 * @return
-	 */
-	public tREAL[] ROUND(tREAL op);
+	@Function(name = "round")
+	public tREAL[] ROUND( //
+			@Opt(name = "div") tT div);
 
 }

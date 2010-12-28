@@ -242,7 +242,7 @@ public abstract class FLOAT extends REAL implements tFLOAT
 	 * @see aloyslisp.core.math.tFLOAT#decode_float(aloyslisp.core.math.tFLOAT)
 	 */
 	@Override
-	public tFLOAT[] decode_float(tFLOAT f)
+	public tFLOAT[] decode_float()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -255,7 +255,7 @@ public abstract class FLOAT extends REAL implements tFLOAT
 	 * )
 	 */
 	@Override
-	public tFLOAT[] integer_decode_float(tFLOAT f)
+	public tFLOAT[] integer_decode_float()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -267,7 +267,7 @@ public abstract class FLOAT extends REAL implements tFLOAT
 	 * aloyslisp.core.math.tINTEGER)
 	 */
 	@Override
-	public tFLOAT scale_float(tFLOAT f, tINTEGER scale)
+	public tFLOAT scale_float(tINTEGER scale)
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -278,7 +278,7 @@ public abstract class FLOAT extends REAL implements tFLOAT
 	 * @see aloyslisp.core.math.tFLOAT#float_radix(aloyslisp.core.math.tFLOAT)
 	 */
 	@Override
-	public tFLOAT float_radix(tFLOAT f)
+	public tFLOAT float_radix()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -290,7 +290,7 @@ public abstract class FLOAT extends REAL implements tFLOAT
 	 * aloyslisp.core.math.tFLOAT)
 	 */
 	@Override
-	public tFLOAT float_sign(tFLOAT f, tFLOAT f2)
+	public tFLOAT float_sign(tFLOAT f2)
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -301,7 +301,7 @@ public abstract class FLOAT extends REAL implements tFLOAT
 	 * @see aloyslisp.core.math.tFLOAT#float_digits(aloyslisp.core.math.tFLOAT)
 	 */
 	@Override
-	public tINTEGER float_digits(tFLOAT f)
+	public tINTEGER float_digits()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -313,7 +313,7 @@ public abstract class FLOAT extends REAL implements tFLOAT
 	 * aloyslisp.core.math.tFLOAT#float_precision(aloyslisp.core.math.tFLOAT)
 	 */
 	@Override
-	public tINTEGER float_precision(tFLOAT f)
+	public tINTEGER float_precision()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -324,7 +324,7 @@ public abstract class FLOAT extends REAL implements tFLOAT
 	 * @see aloyslisp.core.math.tFLOAT#DECODE_FLOAT(aloyslisp.core.math.tFLOAT)
 	 */
 	@Override
-	public tFLOAT[] DECODE_FLOAT(tFLOAT f)
+	public tFLOAT[] DECODE_FLOAT()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -337,7 +337,7 @@ public abstract class FLOAT extends REAL implements tFLOAT
 	 * )
 	 */
 	@Override
-	public tFLOAT[] INTEGER_DECODE_FLOAT(tFLOAT f)
+	public tFLOAT[] INTEGER_DECODE_FLOAT()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -349,7 +349,7 @@ public abstract class FLOAT extends REAL implements tFLOAT
 	 * aloyslisp.core.math.tINTEGER)
 	 */
 	@Override
-	public tFLOAT SCALE_FLOAT(tFLOAT f, tINTEGER scale)
+	public tFLOAT SCALE_FLOAT(tINTEGER scale)
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -360,7 +360,7 @@ public abstract class FLOAT extends REAL implements tFLOAT
 	 * @see aloyslisp.core.math.tFLOAT#FLOAT_RADIX(aloyslisp.core.math.tFLOAT)
 	 */
 	@Override
-	public tFLOAT FLOAT_RADIX(tFLOAT f)
+	public tFLOAT FLOAT_RADIX()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -372,7 +372,7 @@ public abstract class FLOAT extends REAL implements tFLOAT
 	 * aloyslisp.core.math.tFLOAT)
 	 */
 	@Override
-	public tFLOAT FLOAT_SIGN(tFLOAT f, tFLOAT f2)
+	public tFLOAT FLOAT_SIGN(tFLOAT f2)
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -383,7 +383,7 @@ public abstract class FLOAT extends REAL implements tFLOAT
 	 * @see aloyslisp.core.math.tFLOAT#FLOAT_DIGITS(aloyslisp.core.math.tFLOAT)
 	 */
 	@Override
-	public tINTEGER FLOAT_DIGITS(tFLOAT f)
+	public tINTEGER FLOAT_DIGITS()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -395,7 +395,7 @@ public abstract class FLOAT extends REAL implements tFLOAT
 	 * aloyslisp.core.math.tFLOAT#FLOAT_PRECISION(aloyslisp.core.math.tFLOAT)
 	 */
 	@Override
-	public tINTEGER FLOAT_PRECISION(tFLOAT f)
+	public tINTEGER FLOAT_PRECISION()
 	{
 		// TODO Auto-generated method stub
 		return null;

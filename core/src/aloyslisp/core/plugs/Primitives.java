@@ -176,6 +176,8 @@ public class Primitives
 			return false;
 		}
 
+		// test if class is a type or a class
+		Boolean type = (clas.getModifiers() & Modifier.INTERFACE) != 0;
 		Method[] meth = clas.getMethods();
 		for (Method m : meth)
 		{
@@ -198,6 +200,7 @@ public class Primitives
 					// Static normal function
 					func = new SPECIAL_OPERATOR(clas, m.getName(),
 							argsDecl(notes), stat.doc(), declareArgs());
+				writeMissing(m.getName(), notes);
 				sym(stat.name()).SET_SYMBOL_FUNCTION(func);
 			}
 			else if (f != null)
@@ -206,11 +209,22 @@ public class Primitives
 				func = new PRIMITIVE(clas, m.getName(), argsDecl(notes),
 						f.doc(), declareArgs());
 				func.setBaseArg(noArgsBase(notes));
+				writeMissing(m.getName(), notes);
 				sym(f.name()).SET_SYMBOL_FUNCTION(func);
 			}
 			else
 			{
-				System.out.println("INVALID FUNCTION : " + m.getName());
+				if (m.getName().matches("[A-Z_\\*\\%]*"))
+				{
+					if (type)
+						System.out.println("NON DECLARED LISP METHOD : "
+								+ m.getName());
+					else if ((m.getModifiers() & Modifier.STATIC) != 0)
+						System.out.println("NON DECLARED LISP STATIC : "
+								+ m.getDeclaringClass() + " " + clas + " "
+								+ m.getName());
+				}
+
 				continue;
 			}
 
@@ -228,6 +242,22 @@ public class Primitives
 	private static tLIST declareArgs()
 	{
 		return NIL;
+	}
+
+	/**
+	 * @param notes
+	 * @return
+	 */
+	private static void writeMissing(String name, Annotation[][] notes)
+	{
+		for (Annotation[] note : notes)
+		{
+			if (note.length == 0)
+			{
+				System.out.println("Args not defined in " + name);
+				break;
+			}
+		}
 	}
 
 	/**

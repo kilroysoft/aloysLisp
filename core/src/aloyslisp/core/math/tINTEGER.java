@@ -29,6 +29,7 @@
 
 package aloyslisp.core.math;
 
+import aloyslisp.core.annotations.*;
 import aloyslisp.core.plugs.tT;
 
 /**
@@ -40,6 +41,16 @@ import aloyslisp.core.plugs.tT;
  */
 public interface tINTEGER extends tRATIONAL
 {
+	/**
+	 * @return
+	 */
+	public Integer integerValue();
+
+	/**
+	 * @return
+	 */
+	public Long longValue();
+
 	/* *******************************************************************
 	 * OPERATOR
 	 */
@@ -213,7 +224,9 @@ public interface tINTEGER extends tRATIONAL
 	 * @param op
 	 * @return
 	 */
-	public tINTEGER LCM(tT op);
+	@Function(name = "lcm")
+	public tINTEGER LCM( //
+			@Rest(name = "op") tT op);
 
 	/**
 	 * Greather common denumerator
@@ -221,7 +234,9 @@ public interface tINTEGER extends tRATIONAL
 	 * @param op
 	 * @return
 	 */
-	public tINTEGER GCD(tT op);
+	@Function(name = "gcd")
+	public tINTEGER GCD( //
+			@Rest(name = "op") tT op);
 
 	/**
 	 * Arithmetic AND
@@ -229,7 +244,9 @@ public interface tINTEGER extends tRATIONAL
 	 * @param op
 	 * @return
 	 */
-	public tINTEGER LOGAND(tT op);
+	@Function(name = "logand")
+	public tINTEGER LOGAND( //
+			@Rest(name = "op") tT op);
 
 	/**
 	 * Arithmetic NAND
@@ -237,7 +254,9 @@ public interface tINTEGER extends tRATIONAL
 	 * @param op
 	 * @return
 	 */
-	public tINTEGER LOGNAND(tINTEGER op);
+	@Function(name = "lognand")
+	public tINTEGER LOGNAND( //
+			@Arg(name = "op") tINTEGER op);
 
 	/**
 	 * Arithmetic NAND COMPLEMENT 1
@@ -245,7 +264,9 @@ public interface tINTEGER extends tRATIONAL
 	 * @param op
 	 * @return
 	 */
-	public tINTEGER LOGANDC1(tINTEGER op);
+	@Function(name = "logandc1")
+	public tINTEGER LOGANDC1( //
+			@Arg(name = "op") tINTEGER op);
 
 	/**
 	 * Arithmetic AND COMPLEMENT 2
@@ -253,7 +274,9 @@ public interface tINTEGER extends tRATIONAL
 	 * @param op
 	 * @return
 	 */
-	public tINTEGER LOGANDC2(tINTEGER op);
+	@Function(name = "logandc2")
+	public tINTEGER LOGANDC2( //
+			@Arg(name = "op") tINTEGER op);
 
 	/**
 	 * Arithmetic OR
@@ -261,7 +284,9 @@ public interface tINTEGER extends tRATIONAL
 	 * @param op
 	 * @return
 	 */
-	public tINTEGER LOGIOR(tT op);
+	@Function(name = "logior")
+	public tINTEGER LOGIOR( //
+			@Rest(name = "op") tT op);
 
 	/**
 	 * Arithmetic OR COMPLEMENT 1
@@ -269,7 +294,9 @@ public interface tINTEGER extends tRATIONAL
 	 * @param op
 	 * @return
 	 */
-	public tINTEGER LOGORC1(tINTEGER op);
+	@Function(name = "logorc1")
+	public tINTEGER LOGORC1( //
+			@Arg(name = "op") tINTEGER op);
 
 	/**
 	 * Arithmetic OR COMPLEMENT 2
@@ -277,7 +304,9 @@ public interface tINTEGER extends tRATIONAL
 	 * @param op
 	 * @return
 	 */
-	public tINTEGER LOGORC2(tINTEGER op);
+	@Function(name = "logorc2")
+	public tINTEGER LOGORC2( //
+			@Arg(name = "op") tINTEGER op);
 
 	/**
 	 * Arithmetic XOR
@@ -285,7 +314,9 @@ public interface tINTEGER extends tRATIONAL
 	 * @param op
 	 * @return
 	 */
-	public tINTEGER LOGXOR(tT op);
+	@Function(name = "logxor")
+	public tINTEGER LOGXOR( //
+			@Rest(name = "op") tT op);
 
 	/**
 	 * Arithmetic EQUIVALENCE
@@ -293,13 +324,16 @@ public interface tINTEGER extends tRATIONAL
 	 * @param op
 	 * @return
 	 */
-	public tINTEGER LOGEQV(tT op);
+	@Function(name = "logeqv")
+	public tINTEGER LOGEQV( //
+			@Rest(name = "op") tT op);
 
 	/**
 	 * Arithmetic NOT (complement to 0)
 	 * 
 	 * @return
 	 */
+	@Function(name = "lognot")
 	public tINTEGER LOGNOT();
 
 	/* *******************************************************************
@@ -311,7 +345,8 @@ public interface tINTEGER extends tRATIONAL
 	 * @param op
 	 * @return
 	 */
-	public tINTEGER LOGCOUNT(tINTEGER op);
+	@Function(name = "logcount")
+	public tINTEGER LOGCOUNT();
 
 	/**
 	 * Arithmetic bit test
@@ -319,7 +354,9 @@ public interface tINTEGER extends tRATIONAL
 	 * @param op
 	 * @return
 	 */
-	public tINTEGER LOGBITP(tINTEGER op);
+	@Function(name = "logbitp")
+	public tINTEGER LOGBITP( //
+			@Arg(name = "op") tINTEGER op);
 
 	/**
 	 * Arithmetic bit shift
@@ -327,26 +364,32 @@ public interface tINTEGER extends tRATIONAL
 	 * @param count
 	 * @return
 	 */
-	public tINTEGER ASH(tINTEGER count);
+	@Function(name = "ash")
+	public tINTEGER ASH( //
+			@Arg(name = "op") tINTEGER op);
 
 	/**
 	 * @return
 	 */
+	@Function(name = "evenp")
 	public boolean EVENP();
 
 	/**
 	 * @return
 	 */
+	@Function(name = "oddp")
 	public boolean ODDP();
 
 	/**
 	 * @return
 	 */
+	@Function(name = "isqrt")
 	public tINTEGER ISQRT();
 
 	/**
 	 * @return
 	 */
+	@Function(name = "integer-length")
 	public tINTEGER INTEGER_LENGTH();
 
 }

@@ -291,7 +291,7 @@ public class SHORT_FLOAT extends FLOAT implements tSHORT_FLOAT
 	 * @see aloyslisp.core.math.tFLOAT#decode_float(aloyslisp.core.math.tFLOAT)
 	 */
 	@Override
-	public tFLOAT[] decode_float(tFLOAT f)
+	public tFLOAT[] decode_float()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -304,7 +304,7 @@ public class SHORT_FLOAT extends FLOAT implements tSHORT_FLOAT
 	 * )
 	 */
 	@Override
-	public tFLOAT[] integer_decode_float(tFLOAT f)
+	public tFLOAT[] integer_decode_float()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -316,7 +316,7 @@ public class SHORT_FLOAT extends FLOAT implements tSHORT_FLOAT
 	 * aloyslisp.core.math.tINTEGER)
 	 */
 	@Override
-	public tFLOAT scale_float(tFLOAT f, tINTEGER scale)
+	public tFLOAT scale_float(tINTEGER scale)
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -327,7 +327,7 @@ public class SHORT_FLOAT extends FLOAT implements tSHORT_FLOAT
 	 * @see aloyslisp.core.math.tFLOAT#float_radix(aloyslisp.core.math.tFLOAT)
 	 */
 	@Override
-	public tFLOAT float_radix(tFLOAT f)
+	public tFLOAT float_radix()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -339,7 +339,7 @@ public class SHORT_FLOAT extends FLOAT implements tSHORT_FLOAT
 	 * aloyslisp.core.math.tFLOAT)
 	 */
 	@Override
-	public tFLOAT float_sign(tFLOAT f, tFLOAT f2)
+	public tFLOAT float_sign(tFLOAT f2)
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -350,7 +350,7 @@ public class SHORT_FLOAT extends FLOAT implements tSHORT_FLOAT
 	 * @see aloyslisp.core.math.tFLOAT#float_digits(aloyslisp.core.math.tFLOAT)
 	 */
 	@Override
-	public tINTEGER float_digits(tFLOAT f)
+	public tINTEGER float_digits()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -362,7 +362,7 @@ public class SHORT_FLOAT extends FLOAT implements tSHORT_FLOAT
 	 * aloyslisp.core.math.tFLOAT#float_precision(aloyslisp.core.math.tFLOAT)
 	 */
 	@Override
-	public tINTEGER float_precision(tFLOAT f)
+	public tINTEGER float_precision()
 	{
 		// TODO Auto-generated method stub
 		return null;

@@ -29,10 +29,9 @@
 
 package aloyslisp.core.plugs;
 
-import aloyslisp.core.functions.tFUNCTION;
-import aloyslisp.core.functions.tFUNCTION_DESIGNATOR;
-import aloyslisp.core.sequences.tLIST;
-
+import aloyslisp.core.annotations.*;
+import aloyslisp.core.functions.*;
+import aloyslisp.core.sequences.*;
 
 /**
  * tSYMBOL
@@ -61,23 +60,27 @@ public interface tSYMBOL extends tATOM, tFUNCTION_DESIGNATOR
 	 * @param pack
 	 * @return
 	 */
-	public tSYMBOL SET_SYMBOL_PACKAGE(tT dictionary);
+	@Function(name = "set-symbol-package")
+	public tSYMBOL SET_SYMBOL_PACKAGE( //
+			@Arg(name = "pack") tT pack);
 
 	/**
 	 * @return
 	 */
+	@Function(name = "symbol-package")
 	public tPACKAGE SYMBOL_PACKAGE();
 
 	/**
 	 * @return
 	 */
+	@Function(name = "unintern")
 	public tSYMBOL UNINTERN();
 
 	/**
 	 * @param exported
 	 * @return
 	 */
-	public tSYMBOL setExported(boolean exported);
+	public tSYMBOL setExported(Boolean exported);
 
 	/**
 	 * @return
@@ -111,23 +114,32 @@ public interface tSYMBOL extends tATOM, tFUNCTION_DESIGNATOR
 	 * @param data
 	 * @return
 	 */
-	public tSYMBOL SET_GET(tT name, tT data);
+	@Function(name = "set-get")
+	public tSYMBOL SET_GET( //
+			@Arg(name = "name") tT name, //
+			@Arg(name = "data") tT data);
 
 	/**
 	 * @param name
 	 * @return
 	 */
-	public tT GET(tT name, tT def);
+	@Function(name = "get")
+	public tT GET( //
+			@Arg(name = "name") tT name, //
+			@Arg(name = "def") tT def);
 
 	/**
 	 * @param name
 	 * @return
 	 */
-	public tT REMPROP(tT name);
+	@Function(name = "remprop")
+	public tT REMPROP( //
+			@Arg(name = "name") tT name);
 
 	/**
 	 * @return
 	 */
+	@Function(name = "symbol-name")
 	public String SYMBOL_NAME();
 
 	/**
@@ -139,6 +151,7 @@ public interface tSYMBOL extends tATOM, tFUNCTION_DESIGNATOR
 	/**
 	 * @return
 	 */
+	@Function(name = "constantp")
 	public boolean CONSTANTP();
 
 	/**
@@ -151,27 +164,34 @@ public interface tSYMBOL extends tATOM, tFUNCTION_DESIGNATOR
 	 * @param value
 	 * @return
 	 */
-	public tSYMBOL SET_SYMBOL_VALUE(tT value);
+	@Function(name = "set-symbol-value")
+	public tSYMBOL SET_SYMBOL_VALUE( //
+			@Arg(name = "value") tT value);
 
 	/**
 	 * @param func
 	 * @return
 	 */
-	public tSYMBOL SET_SYMBOL_FUNCTION(tFUNCTION func);
+	@Function(name = "set-symbol-function")
+	public tSYMBOL SET_SYMBOL_FUNCTION( //
+			@Arg(name = "func") tFUNCTION func);
 
 	/**
 	 * @return
 	 */
+	@Function(name = "symbol-value")
 	public tT SYMBOL_VALUE();
 
 	/**
 	 * @return
 	 */
+	@Function(name = "symbol-function")
 	public tFUNCTION SYMBOL_FUNCTION();
 
 	/**
 	 * @return
 	 */
+	@Function(name = "fdefinition")
 	public tFUNCTION FDEFINITION();
 
 	/**
@@ -187,16 +207,19 @@ public interface tSYMBOL extends tATOM, tFUNCTION_DESIGNATOR
 	/**
 	 * @return
 	 */
+	@Function(name = "boundp")
 	public boolean BOUNDP();
 
 	/**
 	 * @return
 	 */
+	@Function(name = "fboundp")
 	public boolean FBOUNDP();
 
 	/**
 	 * @return
 	 */
+	@Function(name = "special-form-p")
 	public boolean SPECIAL_FORM_P();
 
 }

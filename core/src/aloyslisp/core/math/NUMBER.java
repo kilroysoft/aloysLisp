@@ -41,9 +41,24 @@ import aloyslisp.core.plugs.*;
 public abstract class NUMBER extends CELL implements tNUMBER
 {
 
+	/**
+	 * Constant 0
+	 */
 	public static final BIGNUM	ONE		= new BIGNUM(1);
 
+	/**
+	 * Constant 1
+	 */
 	public static final BIGNUM	ZERO	= new BIGNUM(0);
+
+	/**
+	 * @param number
+	 * @return
+	 */
+	public static tREAL create(String number)
+	{
+		return null;
+	}
 
 	/*
 	 * (non-Javadoc)
@@ -245,21 +260,10 @@ public abstract class NUMBER extends CELL implements tNUMBER
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#ATAN()
-	 */
-	@Override
-	public tNUMBER ATAN()
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
 	 * @see aloyslisp.core.math.tNUMBER#ATAN(aloyslisp.core.math.tREAL)
 	 */
 	@Override
-	public tNUMBER ATAN(tREAL opt)
+	public tNUMBER ATAN(tT opt)
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -377,22 +381,11 @@ public abstract class NUMBER extends CELL implements tNUMBER
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#RANDOM()
-	 */
-	@Override
-	public tNUMBER RANDOM()
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
 	 * @see
 	 * aloyslisp.core.math.tNUMBER#RANDOM(aloyslisp.core.numbers.tRANDOM_STATE)
 	 */
 	@Override
-	public tNUMBER RANDOM(tRANDOM_STATE st)
+	public tNUMBER RANDOM(tT st)
 	{
 		// TODO Auto-generated method stub
 		return null;

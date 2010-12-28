@@ -29,7 +29,8 @@
 
 package aloyslisp.core.math;
 
-import aloyslisp.core.plugs.tT;
+import aloyslisp.core.annotations.*;
+import aloyslisp.core.plugs.*;
 
 /**
  * tNUMBER
@@ -38,7 +39,7 @@ import aloyslisp.core.plugs.tT;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public interface tNUMBER
+public interface tNUMBER extends tATOM
 {
 	/* *******************************************************************
 	 * CONVERTORS
@@ -319,7 +320,9 @@ public interface tNUMBER
 	 * @param b
 	 * @return
 	 */
-	public tNUMBER ADD(tT op);
+	@Function(name = "+")
+	public tNUMBER ADD( //
+			@Rest(name = "op") tT op);
 
 	/**
 	 * Substract a - b
@@ -328,7 +331,9 @@ public interface tNUMBER
 	 * @param b
 	 * @return
 	 */
-	public tNUMBER SUBSTRACT(tT op);
+	@Function(name = "-")
+	public tNUMBER SUBSTRACT( //
+			@Rest(name = "op") tT op);
 
 	/**
 	 * Minus -a
@@ -336,6 +341,7 @@ public interface tNUMBER
 	 * @param a
 	 * @return
 	 */
+	@Function(name = "%minus")
 	public tNUMBER MINUS();
 
 	/**
@@ -344,6 +350,7 @@ public interface tNUMBER
 	 * @param a
 	 * @return
 	 */
+	@Function(name = "inversion")
 	public tNUMBER INVERSION();
 
 	/**
@@ -353,7 +360,9 @@ public interface tNUMBER
 	 * @param b
 	 * @return
 	 */
-	public tNUMBER MULTIPLY(tT op);
+	@Function(name = "*")
+	public tNUMBER MULTIPLY( //
+			@Rest(name = "op") tT op);
 
 	/**
 	 * Division a / b
@@ -362,7 +371,9 @@ public interface tNUMBER
 	 * @param b
 	 * @return
 	 */
-	public tNUMBER DIVISION(tT op);
+	@Function(name = "/")
+	public tNUMBER DIVISION( //
+			@Rest(name = "op") tT op);
 
 	/* *******************************************************************
 	 * ACCESSORS
@@ -374,6 +385,7 @@ public interface tNUMBER
 	 * @param a
 	 * @return
 	 */
+	@Function(name = "realpart")
 	public tNUMBER REALPART();
 
 	/**
@@ -382,6 +394,7 @@ public interface tNUMBER
 	 * @param a
 	 * @return
 	 */
+	@Function(name = "imagpart")
 	public tNUMBER IMAGPART();
 
 	/* *******************************************************************
@@ -393,6 +406,7 @@ public interface tNUMBER
 	 * @param a
 	 * @return
 	 */
+	@Function(name = "conjugate")
 	public tNUMBER CONJUGATE();
 
 	/**
@@ -401,6 +415,7 @@ public interface tNUMBER
 	 * @param a
 	 * @return
 	 */
+	@Function(name = "phase")
 	public tNUMBER PHASE();
 
 	/* *******************************************************************
@@ -411,113 +426,126 @@ public interface tNUMBER
 	 * 
 	 * @return
 	 */
+	@Function(name = "abs")
 	public tREAL ABS();
 
 	/**
 	 * @return
 	 */
+	@Function(name = "zerop")
 	public boolean ZEROP();
 
 	/**
 	 * @return
 	 */
+	@Function(name = "cis")
 	public tNUMBER CIS();
 
 	/**
 	 * @return
 	 */
+	@Function(name = "sin")
 	public tNUMBER SIN();
 
 	/**
 	 * @return
 	 */
+	@Function(name = "cos")
 	public tNUMBER COS();
 
 	/**
 	 * @return
 	 */
+	@Function(name = "tan")
 	public tNUMBER TAN();
 
 	/**
 	 * @return
 	 */
+	@Function(name = "asin")
 	public tNUMBER ASIN();
 
 	/**
 	 * @return
 	 */
+	@Function(name = "acos")
 	public tNUMBER ACOS();
-
-	/**
-	 * @return
-	 */
-	public tNUMBER ATAN();
 
 	/**
 	 * @param opt
 	 * @return
 	 */
-	public tNUMBER ATAN(tREAL opt);
+	@Function(name = "atan")
+	public tNUMBER ATAN( //
+			@Opt(name = "opt") tT opt);
 
 	/**
 	 * @return
 	 */
+	@Function(name = "sinh")
 	public tNUMBER SINH();
 
 	/**
 	 * @return
 	 */
+	@Function(name = "cosh")
 	public tNUMBER COSH();
 
 	/**
 	 * @return
 	 */
+	@Function(name = "tanh")
 	public tNUMBER TANH();
 
 	/**
 	 * @return
 	 */
+	@Function(name = "asinh")
 	public tNUMBER ASINH();
 
 	/**
 	 * @return
 	 */
+	@Function(name = "acosh")
 	public tNUMBER ACOSH();
 
 	/**
 	 * @return
 	 */
+	@Function(name = "atanh")
 	public tNUMBER ATANH();
 
 	/**
 	 * @return
 	 */
+	@Function(name = "log")
 	public tNUMBER LOG();
 
 	/**
 	 * @return
 	 */
+	@Function(name = "sqrt")
 	public tNUMBER SQRT();
 
 	/**
 	 * @return
 	 */
+	@Function(name = "exp")
 	public tNUMBER EXP();
 
 	/**
 	 * @param power
 	 * @return
 	 */
-	public tNUMBER EXPT(tNUMBER power);
+	@Function(name = "expt")
+	public tNUMBER EXPT( //
+			@Arg(name = "power") tNUMBER power);
 
 	/**
 	 * @return
 	 */
-	public tNUMBER RANDOM();
-
-	/**
-	 * @return
-	 */
-	public tNUMBER RANDOM(tRANDOM_STATE st);
+	@Function(name = "random")
+	public tNUMBER RANDOM( //
+			@Opt(name = "state") tT st);
 
 }

@@ -59,6 +59,7 @@ public interface tOUTPUT_STREAM extends tSTREAM
 	 * @param stream
 	 * @return
 	 */
+	@Function(name = "write-byte")
 	public Integer WRITE_BYTE(
 			@Arg(name = "val") Integer val, //
 			@BaseArg @Opt(name = "stream", def = "*standard-output*") tOUTPUT_STREAM stream);

@@ -29,6 +29,7 @@
 
 package aloyslisp.core.sequences;
 
+import aloyslisp.core.annotations.*;
 
 /**
  * tSTRING
@@ -47,31 +48,37 @@ public interface tSTRING extends tVECTOR
 	/**
 	 * @return
 	 */
+	@Function(name = "string-upcase")
 	public tSTRING STRING_UPCASE();
 
 	/**
 	 * @return
 	 */
+	@Function(name = "string-downcase")
 	public tSTRING STRING_DOWNCASE();
 
 	/**
 	 * @return
 	 */
+	@Function(name = "string-capitalize")
 	public tSTRING STRING_CAPITALIZE();
 
 	/**
 	 * @return
 	 */
+	@Function(name = "string-trim")
 	public tSTRING STRING_TRIM();
 
 	/**
 	 * @return
 	 */
+	@Function(name = "string-left-trim")
 	public tSTRING STRING_LEFT_TRIM();
 
 	/**
 	 * @return
 	 */
+	@Function(name = "string-right-trim")
 	public tSTRING STRING_RIGHT_TRIM();
 
 }

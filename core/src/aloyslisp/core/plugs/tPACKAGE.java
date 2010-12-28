@@ -31,6 +31,7 @@ package aloyslisp.core.plugs;
 
 import java.util.Map;
 
+import aloyslisp.core.annotations.*;
 
 /**
  * tPACKAGE
@@ -64,6 +65,8 @@ public interface tPACKAGE extends tATOM, Iterable<String>, Map<String, tSYMBOL>
 	 * @param pack
 	 * @return
 	 */
-	public tSYMBOL INTERN(String symbol);
+	@Function(name = "integer")
+	public tSYMBOL INTERN( //
+			@Arg(name = "symbol") String symbol);
 
 }

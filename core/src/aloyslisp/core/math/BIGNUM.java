@@ -40,7 +40,7 @@ import java.math.BigInteger;
  */
 public class BIGNUM extends INTEGER implements tBIG_INTEGER
 {
-	private BigInteger	val;
+	public BigInteger	val;
 
 	/**
 	 * @param init
@@ -48,6 +48,22 @@ public class BIGNUM extends INTEGER implements tBIG_INTEGER
 	public BIGNUM(BigInteger init)
 	{
 		val = new BigInteger(init.toString());
+	}
+
+	/**
+	 * @param init
+	 */
+	public BIGNUM(String init)
+	{
+		val = new BigInteger(init);
+	}
+
+	/**
+	 * @param init
+	 */
+	public BIGNUM(String init, Integer radix)
+	{
+		val = new BigInteger(init, radix);
 	}
 
 	/**
@@ -87,8 +103,8 @@ public class BIGNUM extends INTEGER implements tBIG_INTEGER
 	 * @param junk
 	 * @return
 	 */
-	public static BIGNUM parse_integer(String val, Integer start,
-			Integer end, Integer radix, Boolean junk)
+	public static BIGNUM parse_integer(String val, Integer start, Integer end,
+			Integer radix, Boolean junk)
 	{
 		return new BIGNUM(new BigInteger(val, radix));
 	}

@@ -239,6 +239,7 @@ public abstract class FUNCTION extends CELL implements tFUNCTION
 			{
 				e.getCause().printStackTrace();
 			}
+			e.getCause().printStackTrace();
 			throw new LispException(e.getCause().getLocalizedMessage());
 		}
 		catch (RuntimeException e)
@@ -502,24 +503,29 @@ public abstract class FUNCTION extends CELL implements tFUNCTION
 			res = arg != NIL;
 		}
 
-		if (cl == Integer.class && arg instanceof tNUMBER)
+		if (cl == Integer.class && arg instanceof tINTEGER)
 		{
-			res = ((tNUMBER) arg).integerValue();
+			res = ((tINTEGER) arg).integerValue();
 		}
 
-		if (cl == Long.class && arg instanceof tNUMBER)
+		if (cl == Long.class && arg instanceof tINTEGER)
 		{
-			res = ((tNUMBER) arg).integerValue();
+			res = ((tINTEGER) arg).integerValue();
 		}
 
-		if (cl == Float.class && arg instanceof tNUMBER)
+		if (cl == Float.class && arg instanceof tREAL)
 		{
-			res = ((tNUMBER) arg).floatValue();
+			res = ((tREAL) arg).floatValue();
 		}
 
-		if (cl == Double.class && arg instanceof tNUMBER)
+		if (cl == Double.class && arg instanceof tREAL)
 		{
-			res = ((tNUMBER) arg).doubleValue();
+			res = ((tREAL) arg).doubleValue();
+		}
+
+		if (cl == Short.class && arg instanceof tREAL)
+		{
+			res = ((tREAL) arg).shortValue();
 		}
 
 		if (cl == String.class && arg instanceof tSTRING)

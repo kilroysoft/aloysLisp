@@ -29,6 +29,7 @@
 
 package aloyslisp.core.sequences;
 
+import aloyslisp.core.annotations.*;
 import aloyslisp.core.plugs.tT;
 
 /**
@@ -46,27 +47,36 @@ public interface tSEQUENCE extends tT, Iterable<tT>
 	/**
 	 * @return
 	 */
+	@Function(name = "length")
 	public Integer LENGTH();
 
 	/**
 	 * @param pos
 	 * @return
 	 */
-	public tT ELT(Integer pos);
+	@Function(name = "elt")
+	public tT ELT( //
+			@Arg(name = "pos") Integer pos);
 
 	/**
 	 * @param pos
 	 * @param value
 	 * @return
 	 */
-	public tSEQUENCE SET_ELT(Integer pos, tT value);
+	@Function(name = "set-elt")
+	public tSEQUENCE SET_ELT( //
+			@Arg(name = "pos") Integer pos, //
+			@Arg(name = "value") tT value);
 
 	/**
 	 * @param start
 	 * @param end
 	 * @return
 	 */
-	public tSEQUENCE SUBSEQ(Integer start, Integer end);
+	@Function(name = "subseq")
+	public tSEQUENCE SUBSEQ( //
+			@Arg(name = "start") Integer start, //
+			@Opt(name = "end") Integer end);
 
 	/**
 	 * @param start
@@ -74,7 +84,11 @@ public interface tSEQUENCE extends tT, Iterable<tT>
 	 * @param value
 	 * @return
 	 */
-	public tSEQUENCE SET_SUBSEQ(Integer start, Integer end, tT value);
+	@Function(name = "set-subseq")
+	public tSEQUENCE SET_SUBSEQ( //
+			@Arg(name = "start") Integer start, //
+			@Arg(name = "end") Integer end, //
+			@Arg(name = "value") tT value);
 
 	/**
 	 * Reverse the list.
@@ -82,6 +96,7 @@ public interface tSEQUENCE extends tT, Iterable<tT>
 	 * @param list
 	 * @return
 	 */
+	@Function(name = "reverse")
 	public tSEQUENCE REVERSE();
 
 	/**
@@ -89,6 +104,7 @@ public interface tSEQUENCE extends tT, Iterable<tT>
 	 * 
 	 * @return
 	 */
+	@Function(name = "nreverse")
 	public tSEQUENCE NREVERSE();
 
 	/**

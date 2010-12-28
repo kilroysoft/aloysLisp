@@ -213,7 +213,7 @@ public class CONS extends CELL implements tCONS
 	public tT[] EVAL()
 	{
 		tT func = FUNCTION.SYMBOL_FUNCTION().e(car)[0];
-		// System.out.println("executing " + func);
+		// trace("executing " + func);
 		if (func instanceof tMACRO_FUNCTION)
 		{
 			// Expand macros

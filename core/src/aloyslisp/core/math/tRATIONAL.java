@@ -29,6 +29,8 @@
 
 package aloyslisp.core.math;
 
+import aloyslisp.core.annotations.Function;
+
 /**
  * tRATIONAL
  * 
@@ -67,6 +69,7 @@ public interface tRATIONAL extends tREAL
 	 * 
 	 * @return
 	 */
+	@Function(name = "numerator")
 	public tINTEGER NUMERATOR();
 
 	/**
@@ -74,6 +77,7 @@ public interface tRATIONAL extends tREAL
 	 * 
 	 * @return
 	 */
+	@Function(name = "denominator")
 	public tINTEGER DENOMINATOR();
 
 }

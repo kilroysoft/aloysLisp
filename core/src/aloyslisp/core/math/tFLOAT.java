@@ -1,34 +1,42 @@
 /**
- * aloysLisp. 
- * <p>A LISP interpreter, compiler and library.
- * <p>Copyright (C) 2010 kilroySoft <aloyslisp@kilroysoft.ch>
- *
- * <p>This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * <p>This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * <p>You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * aloysLisp.
+ * <p>
+ * A LISP interpreter, compiler and library.
+ * <p>
+ * Copyright (C) 2010 kilroySoft <aloyslisp@kilroysoft.ch>
+ * 
+ * <p>
+ * This program is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation, either version 3 of the License, or (at your option) any later
+ * version.
+ * 
+ * <p>
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
+ * 
+ * <p>
+ * You should have received a copy of the GNU General Public License along with
+ * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-//--------------------------------------------------------------------------
+// --------------------------------------------------------------------------
 // history
-//--------------------------------------------------------------------------
+// --------------------------------------------------------------------------
 // IP 25 déc. 2010 Creation
-//--------------------------------------------------------------------------
+// --------------------------------------------------------------------------
 
 package aloyslisp.core.math;
 
+import aloyslisp.core.annotations.*;
+
 /**
  * tFLOAT
+ * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
- *
+ * 
  */
 public interface tFLOAT extends tREAL
 {
@@ -36,46 +44,47 @@ public interface tFLOAT extends tREAL
 	 * @param f
 	 * @return
 	 */
-	public tFLOAT[] decode_float(tFLOAT f);
-	
+	public tFLOAT[] decode_float();
+
 	/**
 	 * @param f
 	 * @return
 	 */
-	public tFLOAT[] integer_decode_float(tFLOAT f);
-	
+	public tFLOAT[] integer_decode_float();
+
 	/**
 	 * @param f
 	 * @param scale
 	 * @return
 	 */
-	public tFLOAT scale_float(tFLOAT f, tINTEGER scale);
-	
+	public tFLOAT scale_float( //
+			tINTEGER scale);
+
 	/**
 	 * @param f
 	 * @return
 	 */
-	public tFLOAT float_radix(tFLOAT f);
-	
+	public tFLOAT float_radix();
+
 	/**
 	 * @param f
 	 * @param f2
 	 * @return
 	 */
-	public tFLOAT float_sign(tFLOAT f, tFLOAT f2);
-	
+	public tFLOAT float_sign(tFLOAT f2);
+
 	/**
 	 * @param f
 	 * @return
 	 */
-	public tINTEGER float_digits(tFLOAT f);
-	
+	public tINTEGER float_digits();
+
 	/**
 	 * @param f
 	 * @return
 	 */
-	public tINTEGER float_precision(tFLOAT f);
-	
+	public tINTEGER float_precision();
+
 	/*************************************************************
 	 * LISP FUNCTION
 	 */
@@ -83,44 +92,54 @@ public interface tFLOAT extends tREAL
 	 * @param f
 	 * @return
 	 */
-	public tFLOAT[] DECODE_FLOAT(tFLOAT f);
-	
+	@Function(name = "decode-float")
+	public tFLOAT[] DECODE_FLOAT();
+
 	/**
 	 * @param f
 	 * @return
 	 */
-	public tFLOAT[] INTEGER_DECODE_FLOAT(tFLOAT f);
-	
+	//
+	@Function(name = "integer-decode-float")
+	public tFLOAT[] INTEGER_DECODE_FLOAT();
+
 	/**
 	 * @param f
 	 * @param scale
 	 * @return
 	 */
-	public tFLOAT SCALE_FLOAT(tFLOAT f, tINTEGER scale);
-	
+	@Function(name = "scale-float")
+	public tFLOAT SCALE_FLOAT( //
+			@Arg(name = "scale") tINTEGER scale);
+
 	/**
 	 * @param f
 	 * @return
 	 */
-	public tFLOAT FLOAT_RADIX(tFLOAT f);
-	
+	@Function(name = "float-radix")
+	public tFLOAT FLOAT_RADIX();
+
 	/**
 	 * @param f
 	 * @param f2
 	 * @return
 	 */
-	public tFLOAT FLOAT_SIGN(tFLOAT f, tFLOAT f2);
-	
+	@Function(name = "float-sign")
+	public tFLOAT FLOAT_SIGN( //
+			@Opt(name = "scale") tFLOAT f2);
+
 	/**
 	 * @param f
 	 * @return
 	 */
-	public tINTEGER FLOAT_DIGITS(tFLOAT f);
-	
+	@Function(name = "float-digits")
+	public tINTEGER FLOAT_DIGITS();
+
 	/**
 	 * @param f
 	 * @return
 	 */
-	public tINTEGER FLOAT_PRECISION(tFLOAT f);
-	
+	@Function(name = "float-precision")
+	public tINTEGER FLOAT_PRECISION();
+
 }

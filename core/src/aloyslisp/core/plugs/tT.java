@@ -115,6 +115,7 @@ public interface tT
 	 * @return
 	 */
 	// definition in tSYMBOL
+	@Function(name = "car")
 	public tT CAR();
 
 	/**
@@ -125,6 +126,7 @@ public interface tT
 	 * @return
 	 */
 	// definition in tSYMBOL
+	@Function(name = "cdr")
 	public tT CDR();
 
 	/**
@@ -177,7 +179,8 @@ public interface tT
 	 * @return
 	 */
 	@Function(name = "%istype")
-	public boolean pISTYPE(tSYMBOL type);
+	public boolean pISTYPE( //
+			@Arg(name = "type") tSYMBOL type);
 
 	/**
 	 * Test if cell is constant

@@ -33,6 +33,7 @@ package aloyslisp.core.plugs;
 import static aloyslisp.commonlisp.L.*;
 import aloyslisp.core.conditions.*;
 import aloyslisp.core.exec.*;
+import aloyslisp.core.annotations.*;
 import aloyslisp.core.functions.*;
 import aloyslisp.core.sequences.*;
 
@@ -126,7 +127,7 @@ public class SYMBOL extends CELL implements tSYMBOL
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tSYMBOL#setExported(boolean)
 	 */
-	public tSYMBOL setExported(boolean exported)
+	public tSYMBOL setExported(Boolean exported)
 	{
 		this.exported = exported;
 		return this;
@@ -692,27 +693,24 @@ public class SYMBOL extends CELL implements tSYMBOL
 	}
 
 	/**
-	 * @param args
-	 * @return
-	 */
-	public static tT EXPORT(tT args)
-	{
-		return EXPORT(args, currPackage());
-	}
-
-	/**
 	 * @param symbol
 	 * @param pack
 	 * @return
 	 *         IMPLEMENT EXPORT
 	 */
-	public static tT EXPORT(tT symbol, tT pack)
+	@Static(name = "export")
+	public static tT EXPORT( //
+			@Arg(name = "symbol") tT symbol, //
+			@Opt(name = "pack") tT pack)
 	{
 		if (pack != NIL)
 			pack = PACKAGE.find_package(pack);
 
 		// tPACKAGE p = (tPACKAGE) ((pack == NIL) ? currPackage() : pack);
 
+		if (symbol instanceof tLIST)
+		{
+		}
 		if (symbol instanceof tSYMBOL)
 		{
 		}

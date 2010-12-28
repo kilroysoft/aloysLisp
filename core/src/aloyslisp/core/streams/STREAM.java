@@ -51,7 +51,9 @@ public abstract class STREAM extends CELL implements tSTREAM
 	 */
 	@Special
 	@Static(name = "with-open-stream")
-	public static tT WITH_OPEN_STREAM(tLIST stream, tT... form)
+	public static tT WITH_OPEN_STREAM( //
+			@Arg(name = "stream") tLIST stream, //
+			@Rest(name = "form") tT... form)
 	{
 		return null;
 	}
@@ -66,8 +68,12 @@ public abstract class STREAM extends CELL implements tSTREAM
 	 */
 	@Special
 	@Static(name = "open")
-	public static tT OPEN(tPATHNAME_DESIGNATOR fileSpec, tSYMBOL direction,
-			tSYMBOL ifExists, tSYMBOL ifDoesNotExists, tT externalFormat)
+	public static tT OPEN( //
+			@Arg(name = "filespec") tPATHNAME_DESIGNATOR fileSpec, //
+			@Arg(name = "direction") tSYMBOL direction, //
+			@Opt(name = "if-exists") tSYMBOL ifExists, //
+			@Opt(name = "is-does-not-exists") tSYMBOL ifDoesNotExists, //
+			@Opt(name = "external-format") tT externalFormat)
 	{
 		// TODO Auto-generated method stub
 		return null;

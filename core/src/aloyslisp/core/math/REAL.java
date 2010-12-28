@@ -83,6 +83,33 @@ public abstract class REAL extends NUMBER implements tREAL
 
 	/*
 	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tREAL#doubleValue()
+	 */
+	public Double doubleValue()
+	{
+		return getDoubleValue().value;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tREAL#shortValue()
+	 */
+	public Short shortValue()
+	{
+		return getShortValue().value;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tREAL#floatValue()
+	 */
+	public Float floatValue()
+	{
+		return getFloatValue().value;
+	}
+
+	/*
+	 * (non-Javadoc)
 	 * @see aloyslisp.core.math.tREAL#ceiling(aloyslisp.core.math.tREAL)
 	 */
 	@Override
@@ -512,32 +539,10 @@ public abstract class REAL extends NUMBER implements tREAL
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tREAL#FLOOR()
-	 */
-	@Override
-	public tREAL[] FLOOR()
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
 	 * @see aloyslisp.core.math.tREAL#FLOOR(aloyslisp.core.math.tREAL)
 	 */
 	@Override
-	public tREAL[] FLOOR(tREAL op)
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tREAL#CEILING()
-	 */
-	@Override
-	public tREAL[] CEILING()
+	public tREAL[] FLOOR(tT op)
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -548,18 +553,7 @@ public abstract class REAL extends NUMBER implements tREAL
 	 * @see aloyslisp.core.math.tREAL#CEILING(aloyslisp.core.math.tREAL)
 	 */
 	@Override
-	public tREAL[] CEILING(tREAL op)
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tREAL#TRUNCATE()
-	 */
-	@Override
-	public tREAL[] TRUNCATE()
+	public tREAL[] CEILING(tT op)
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -570,18 +564,7 @@ public abstract class REAL extends NUMBER implements tREAL
 	 * @see aloyslisp.core.math.tREAL#TRUNCATE(aloyslisp.core.math.tREAL)
 	 */
 	@Override
-	public tREAL[] TRUNCATE(tREAL op)
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tREAL#ROUND()
-	 */
-	@Override
-	public tREAL[] ROUND()
+	public tREAL[] TRUNCATE(tT op)
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -592,7 +575,7 @@ public abstract class REAL extends NUMBER implements tREAL
 	 * @see aloyslisp.core.math.tREAL#ROUND(aloyslisp.core.math.tREAL)
 	 */
 	@Override
-	public tREAL[] ROUND(tREAL op)
+	public tREAL[] ROUND(tT op)
 	{
 		// TODO Auto-generated method stub
 		return null;

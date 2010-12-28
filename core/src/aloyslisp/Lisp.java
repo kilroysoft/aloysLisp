@@ -48,8 +48,14 @@ public class Lisp
 	 */
 	public static void main(String[] args)
 	{
+		loadClasses("aloyslisp.core.annotations");
+		loadClasses("aloyslisp.core.conditions");
+		loadClasses("aloyslisp.core.exec");
+		loadClasses("aloyslisp.core.functions");
+		loadClasses("aloyslisp.core.math");
 		loadClasses("aloyslisp.core.plugs");
-		loadClasses("aloyslisp.core.types");
+		loadClasses("aloyslisp.core.sequences");
+		loadClasses("aloyslisp.core.streams");
 		loadClasses("aloyslisp.commonlisp.common_lisp");
 		loadClasses("aloyslisp.commonlisp.system");
 		sym("lisp::load").e(str("class.lisp"));

@@ -35,7 +35,7 @@ import static aloyslisp.commonlisp.L.*;
 import aloyslisp.core.annotations.*;
 import aloyslisp.core.conditions.*;
 import aloyslisp.core.functions.*;
-import aloyslisp.core.numbers.*;
+import aloyslisp.core.math.NUMBER;
 import aloyslisp.core.plugs.*;
 import aloyslisp.core.sequences.*;
 

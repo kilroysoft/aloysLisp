@@ -243,7 +243,7 @@ public class SpecialForms
 	@Static(name = "lisp::quote")
 	@Special
 	public static tT QUOTE( //
-			@Rest(name = "lisp::cell") tT cell)
+			@Arg(name = "lisp::cell") tT cell)
 	{
 		return cell;
 	}

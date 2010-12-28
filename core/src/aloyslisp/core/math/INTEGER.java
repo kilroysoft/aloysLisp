@@ -42,6 +42,24 @@ public abstract class INTEGER extends RATIONAL implements tINTEGER
 {
 	/*
 	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tINTEGER#integerValue()
+	 */
+	public Integer integerValue()
+	{
+		return getIntegerValue().val.intValue();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tINTEGER#longValue()
+	 */
+	public Long longValue()
+	{
+		return getIntegerValue().val.longValue();
+	}
+
+	/*
+	 * (non-Javadoc)
 	 * @see aloyslisp.core.math.tINTEGER#LCM(aloyslisp.core.plugs.tT)
 	 */
 	@Override
@@ -177,7 +195,7 @@ public abstract class INTEGER extends RATIONAL implements tINTEGER
 	 * @see aloyslisp.core.math.tINTEGER#LOGCOUNT(aloyslisp.core.math.tINTEGER)
 	 */
 	@Override
-	public tINTEGER LOGCOUNT(tINTEGER op)
+	public tINTEGER LOGCOUNT()
 	{
 		// TODO Auto-generated method stub
 		return null;
