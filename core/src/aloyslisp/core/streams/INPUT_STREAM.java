@@ -33,13 +33,11 @@ import java.io.*;
 
 import static aloyslisp.commonlisp.L.*;
 import aloyslisp.core.annotations.*;
-import aloyslisp.core.conditions.LispException;
-import aloyslisp.core.functions.tFUNCTION;
-import aloyslisp.core.math.*;
-import aloyslisp.core.numbers.NUMBER;
-import aloyslisp.core.plugs.tSYMBOL;
-import aloyslisp.core.plugs.tT;
-import aloyslisp.core.sequences.tSTRING;
+import aloyslisp.core.conditions.*;
+import aloyslisp.core.functions.*;
+import aloyslisp.core.numbers.*;
+import aloyslisp.core.plugs.*;
+import aloyslisp.core.sequences.*;
 
 /**
  * INPUT_STREAM
@@ -251,17 +249,6 @@ public abstract class INPUT_STREAM extends STREAM implements tINPUT_STREAM
 			return null;
 
 		return atom;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.types.tT#coerce(aloyslisp.core.types.tT)
-	 */
-	@Override
-	public tT COERCE(tT type)
-	{
-		// IMPLEMENT Coerce
-		return null;
 	}
 
 	/*

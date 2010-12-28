@@ -25,55 +25,102 @@
 package aloyslisp.core.math;
 
 /**
- * IFloat
+ * tFLOAT
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  *
  */
-public interface IFloat extends IReal
+public interface tFLOAT extends tREAL
 {
 	/**
 	 * @param f
 	 * @return
 	 */
-	public IFloat[] decode_float(IFloat f);
+	public tFLOAT[] decode_float(tFLOAT f);
 	
 	/**
 	 * @param f
 	 * @return
 	 */
-	public IFloat[] integer_decode_float(IFloat f);
+	public tFLOAT[] integer_decode_float(tFLOAT f);
 	
 	/**
 	 * @param f
 	 * @param scale
 	 * @return
 	 */
-	public IFloat scale_float(IFloat f, IInteger scale);
+	public tFLOAT scale_float(tFLOAT f, tINTEGER scale);
 	
 	/**
 	 * @param f
 	 * @return
 	 */
-	public IFloat float_radix(IFloat f);
+	public tFLOAT float_radix(tFLOAT f);
 	
 	/**
 	 * @param f
 	 * @param f2
 	 * @return
 	 */
-	public IFloat float_sign(IFloat f, IFloat f2);
+	public tFLOAT float_sign(tFLOAT f, tFLOAT f2);
 	
 	/**
 	 * @param f
 	 * @return
 	 */
-	public IInteger float_digits(IFloat f);
+	public tINTEGER float_digits(tFLOAT f);
 	
 	/**
 	 * @param f
 	 * @return
 	 */
-	public IInteger float_precision(IFloat f);
+	public tINTEGER float_precision(tFLOAT f);
+	
+	/*************************************************************
+	 * LISP FUNCTION
+	 */
+	/**
+	 * @param f
+	 * @return
+	 */
+	public tFLOAT[] DECODE_FLOAT(tFLOAT f);
+	
+	/**
+	 * @param f
+	 * @return
+	 */
+	public tFLOAT[] INTEGER_DECODE_FLOAT(tFLOAT f);
+	
+	/**
+	 * @param f
+	 * @param scale
+	 * @return
+	 */
+	public tFLOAT SCALE_FLOAT(tFLOAT f, tINTEGER scale);
+	
+	/**
+	 * @param f
+	 * @return
+	 */
+	public tFLOAT FLOAT_RADIX(tFLOAT f);
+	
+	/**
+	 * @param f
+	 * @param f2
+	 * @return
+	 */
+	public tFLOAT FLOAT_SIGN(tFLOAT f, tFLOAT f2);
+	
+	/**
+	 * @param f
+	 * @return
+	 */
+	public tINTEGER FLOAT_DIGITS(tFLOAT f);
+	
+	/**
+	 * @param f
+	 * @return
+	 */
+	public tINTEGER FLOAT_PRECISION(tFLOAT f);
 	
 }

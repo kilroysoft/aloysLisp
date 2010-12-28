@@ -30,17 +30,14 @@
 
 package aloyslisp.core.math;
 
-import static aloyslisp.commonlisp.L.*;
-import aloyslisp.core.numbers.*;
-
 /**
- * NumRatio
+ * RATIO
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class NumRatio extends NumReal implements IRational
+public class RATIO extends RATIONAL implements tRATIO
 {
 	/**
 	 * 
@@ -50,29 +47,29 @@ public class NumRatio extends NumReal implements IRational
 	/**
 	 * 
 	 */
-	public IInteger				num;
+	public tINTEGER				num;
 
 	/**
 	 * 
 	 */
-	public IInteger				den;
+	public tINTEGER				den;
 
 	/**
 	 * 
 	 */
-	public NumRatio()
+	public RATIO()
 	{
-		this.num = new NumInteger(1);
-		this.den = new NumInteger(1);
+		this.num = new BIGNUM(1);
+		this.den = new BIGNUM(1);
 	}
 
 	/**
 	 * @param num
 	 * @param den
 	 */
-	public NumRatio(IInteger num, IInteger den)
+	public RATIO(tINTEGER num, tINTEGER den)
 	{
-		IInteger pgcd = num.gcd(den).getIntegerValue();
+		tINTEGER pgcd = num.gcd(den).getIntegerValue();
 		this.num = num.division(pgcd).getIntegerValue();
 		this.den = den.division(pgcd).getIntegerValue();
 	}
@@ -81,10 +78,21 @@ public class NumRatio extends NumReal implements IRational
 	 * @param num
 	 * @param den
 	 */
-	public NumRatio(NumInteger num)
+	public RATIO(BIGNUM num)
 	{
 		this.num = num;
-		this.den = new NumInteger(1);
+		this.den = new BIGNUM(1);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tNUMBER#coerce(aloyslisp.core.math.tNUMBER)
+	 */
+	@Override
+	public tNUMBER coerce(tNUMBER var)
+	{
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	/*
@@ -101,40 +109,40 @@ public class NumRatio extends NumReal implements IRational
 	 */
 	public tNUMBER ratio()
 	{
-		return num.make().DIVISION(den.make());
+		return num.division(den);
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * @see java.lang.Number#integerValue()
 	 */
-	public NumInteger getIntegerValue()
+	public BIGNUM getIntegerValue()
 	{
-		return ratio().getValue().getIntegerValue();
+		return ratio().getIntegerValue();
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * @see java.lang.Number#floatValue()
 	 */
-	public NumFloat getFloatValue()
+	public SINGLE_FLOAT getFloatValue()
 	{
-		return ratio().getValue().getFloatValue();
+		return ratio().getFloatValue();
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * @see java.lang.Number#doubleValue()
 	 */
-	public NumDouble getDoubleValue()
+	public DOUBLE_FLOAT getDoubleValue()
 	{
-		return ratio().getValue().getDoubleValue();
+		return ratio().getDoubleValue();
 	}
 
 	/**
 	 * @return
 	 */
-	public NumRatio getRatioValue()
+	public RATIO getRatioValue()
 	{
 		return this;
 	}
@@ -142,38 +150,27 @@ public class NumRatio extends NumReal implements IRational
 	/**
 	 * @return
 	 */
-	public NumComplex getComplexValue()
+	public COMPLEX getComplexValue()
 	{
-		return new NumComplex(this.ratio(), nInt(0));
+		return new COMPLEX(this, ZERO);
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#shortValue()
+	 * @see aloyslisp.core.math.tNUMBER#shortValue()
 	 */
 	@Override
-	public NumShort getShortValue()
+	public SHORT_FLOAT getShortValue()
 	{
-		return new NumShort(0);
+		return ratio().getShortValue();
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.IReal#equal(aloyslisp.core.math.INumber)
+	 * @see aloyslisp.core.math.tREAL#equal(aloyslisp.core.math.tNUMBER)
 	 */
 	@Override
-	public boolean equal(INumber op)
-	{
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.IReal#greater(aloyslisp.core.math.INumber)
-	 */
-	@Override
-	public boolean greater(INumber op)
+	public boolean equal(tNUMBER op)
 	{
 		// TODO Auto-generated method stub
 		return false;
@@ -181,10 +178,10 @@ public class NumRatio extends NumReal implements IRational
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.IReal#lower(aloyslisp.core.math.INumber)
+	 * @see aloyslisp.core.math.tREAL#greater(aloyslisp.core.math.tNUMBER)
 	 */
 	@Override
-	public boolean lower(INumber op)
+	public boolean greater(tNUMBER op)
 	{
 		// TODO Auto-generated method stub
 		return false;
@@ -192,10 +189,21 @@ public class NumRatio extends NumReal implements IRational
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.IReal#rational()
+	 * @see aloyslisp.core.math.tREAL#lower(aloyslisp.core.math.tNUMBER)
 	 */
 	@Override
-	public IRational rational()
+	public boolean lower(tNUMBER op)
+	{
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tREAL#rational()
+	 */
+	@Override
+	public tRATIONAL rational()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -203,10 +211,10 @@ public class NumRatio extends NumReal implements IRational
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.IReal#rationalize()
+	 * @see aloyslisp.core.math.tREAL#rationalize()
 	 */
 	@Override
-	public IRational rationalize()
+	public tRATIONAL rationalize()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -214,20 +222,10 @@ public class NumRatio extends NumReal implements IRational
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#make()
+	 * @see aloyslisp.core.math.tNUMBER#add(aloyslisp.core.math.tNUMBER)
 	 */
 	@Override
-	public RATIO make()
-	{
-		return new RATIO(this);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#add(aloyslisp.core.math.INumber)
-	 */
-	@Override
-	public INumber add(INumber op)
+	public tNUMBER add(tNUMBER op)
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -235,10 +233,10 @@ public class NumRatio extends NumReal implements IRational
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#substract(aloyslisp.core.math.INumber)
+	 * @see aloyslisp.core.math.tNUMBER#substract(aloyslisp.core.math.tNUMBER)
 	 */
 	@Override
-	public INumber substract(INumber op)
+	public tNUMBER substract(tNUMBER op)
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -246,10 +244,10 @@ public class NumRatio extends NumReal implements IRational
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#minus()
+	 * @see aloyslisp.core.math.tNUMBER#minus()
 	 */
 	@Override
-	public INumber minus()
+	public tNUMBER minus()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -257,10 +255,10 @@ public class NumRatio extends NumReal implements IRational
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#inversion()
+	 * @see aloyslisp.core.math.tNUMBER#inversion()
 	 */
 	@Override
-	public INumber inversion()
+	public tNUMBER inversion()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -268,10 +266,10 @@ public class NumRatio extends NumReal implements IRational
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#multiply(aloyslisp.core.math.INumber)
+	 * @see aloyslisp.core.math.tNUMBER#multiply(aloyslisp.core.math.tNUMBER)
 	 */
 	@Override
-	public INumber multiply(INumber op)
+	public tNUMBER multiply(tNUMBER op)
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -279,10 +277,10 @@ public class NumRatio extends NumReal implements IRational
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#division(aloyslisp.core.math.INumber)
+	 * @see aloyslisp.core.math.tNUMBER#division(aloyslisp.core.math.tNUMBER)
 	 */
 	@Override
-	public INumber division(INumber op)
+	public tNUMBER division(tNUMBER op)
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -290,10 +288,10 @@ public class NumRatio extends NumReal implements IRational
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.IRational#numerator()
+	 * @see aloyslisp.core.math.tRATIONAL#numerator()
 	 */
 	@Override
-	public NumInteger numerator()
+	public BIGNUM numerator()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -301,10 +299,10 @@ public class NumRatio extends NumReal implements IRational
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.IRational#denominator()
+	 * @see aloyslisp.core.math.tRATIONAL#denominator()
 	 */
 	@Override
-	public NumInteger denominator()
+	public BIGNUM denominator()
 	{
 		// TODO Auto-generated method stub
 		return null;

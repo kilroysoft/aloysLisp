@@ -37,24 +37,9 @@ import java.util.jar.*;
 import aloyslisp.core.conditions.LispException;
 import aloyslisp.core.exec.*;
 import aloyslisp.core.math.*;
-import aloyslisp.core.numbers.COMPLEX;
-import aloyslisp.core.numbers.DOUBLE;
-import aloyslisp.core.numbers.FLOAT;
-import aloyslisp.core.numbers.INTEGER;
-import aloyslisp.core.numbers.RATIO;
-import aloyslisp.core.numbers.tNUMBER;
 import aloyslisp.core.plugs.*;
-import aloyslisp.core.sequences.CONS;
-import aloyslisp.core.sequences.STRING;
-import aloyslisp.core.sequences.tLIST;
-import aloyslisp.core.sequences.tSTRING;
-import aloyslisp.core.streams.CHARACTER;
-import aloyslisp.core.streams.FILE_INPUT_STREAM;
-import aloyslisp.core.streams.FILE_OUTPUT_STREAM;
-import aloyslisp.core.streams.READTABLE;
-import aloyslisp.core.streams.tCHARACTER;
-import aloyslisp.core.streams.tSTREAM;
-import aloyslisp.core.types.*;
+import aloyslisp.core.sequences.*;
+import aloyslisp.core.streams.*;
 
 /**
  * Base environment en global functions of Common Lisp
@@ -260,7 +245,7 @@ public class L extends Primitives
 																	.setSpecial(
 																			true)
 																	.SET_SYMBOL_VALUE(
-																			INTEGER.make(10));
+																			nInt(10));
 
 	public static tSYMBOL			printCircle				= sym(
 																	"*print-circle*")
@@ -543,36 +528,47 @@ public class L extends Primitives
 	 * @param value
 	 * @return
 	 */
-	public static INTEGER nInt(Number value)
+	public static INTEGER nInt(Integer value)
 	{
-		return INTEGER.make(value);
+		return new BIGNUM(value);
+	}
+
+	/**
+	 * Create a numeric cell
+	 * 
+	 * @param value
+	 * @return
+	 */
+	public static BIGNUM nInt(Long value)
+	{
+		return new BIGNUM(value);
 	}
 
 	/**
 	 * @param value
 	 * @return
 	 */
-	public static INTEGER nLong(Number value)
+	public static SINGLE_FLOAT nFloat(Float value)
 	{
-		return INTEGER.make(value);
+		return new SINGLE_FLOAT(value);
 	}
 
 	/**
 	 * @param value
 	 * @return
 	 */
-	public static FLOAT nFloat(Number value)
+	public static DOUBLE_FLOAT nDouble(Double value)
 	{
-		return FLOAT.make(value);
+		return new DOUBLE_FLOAT(value);
 	}
 
 	/**
 	 * @param value
 	 * @return
 	 */
-	public static DOUBLE nDouble(Number value)
+	public static SHORT_FLOAT nShort(Short value)
 	{
-		return DOUBLE.make(value);
+		return new SHORT_FLOAT(value);
 	}
 
 	/**
@@ -580,19 +576,9 @@ public class L extends Primitives
 	 * @param imag
 	 * @return
 	 */
-	public static COMPLEX nComplex(tNUMBER real, tNUMBER imag)
+	public static COMPLEX nComplex(tREAL real, tREAL imag)
 	{
-		return COMPLEX.make(real, imag);
-	}
-
-	/**
-	 * @param real
-	 * @param imag
-	 * @return
-	 */
-	public static COMPLEX nComplex(Number real, Number imag)
-	{
-		return COMPLEX.make(real, imag);
+		return new COMPLEX(real, imag);
 	}
 
 	/**
@@ -602,17 +588,7 @@ public class L extends Primitives
 	 */
 	public static RATIO mRatio(tNUMBER num, tNUMBER den)
 	{
-		return RATIO.make(num, den);
-	}
-
-	/**
-	 * @param num
-	 * @param den
-	 * @return
-	 */
-	public static RATIO mRatio(Number num, Number den)
-	{
-		return RATIO.make(num, den);
+		return new RATIO(num.getIntegerValue(), den.getIntegerValue());
 	}
 
 	/**

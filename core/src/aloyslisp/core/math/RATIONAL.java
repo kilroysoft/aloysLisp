@@ -24,24 +24,36 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 23 déc. 2010 Creation
+// IP 28 déc. 2010 Creation
 // --------------------------------------------------------------------------
 
 package aloyslisp.core.math;
 
 /**
- * IComplex
+ * RATIONAL
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public interface IComplex extends INumber
+public abstract class RATIONAL extends REAL implements tRATIONAL
 {
-	/* *******************************************************************
-	 * ACCESSORS
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tRATIONAL#NUMERATOR()
 	 */
-	/* *******************************************************************
-	 * FUNCTIONS
+	public tINTEGER NUMERATOR()
+	{
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tRATIONAL#DENOMINATOR()
 	 */
+	public tINTEGER DENOMINATOR()
+	{
+		return null;
+	}
+
 }

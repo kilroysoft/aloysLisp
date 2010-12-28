@@ -221,15 +221,4 @@ public class Symbol extends CELL
 		return (res = SYMBOL_VALUE()) != null && res instanceof tFUNCTION;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.types.tT#COERCE(aloyslisp.core.types.tT)
-	 */
-	@Override
-	public tT COERCE(tT type)
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

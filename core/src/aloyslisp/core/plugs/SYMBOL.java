@@ -31,13 +31,10 @@
 package aloyslisp.core.plugs;
 
 import static aloyslisp.commonlisp.L.*;
-import aloyslisp.core.conditions.LispErrorFunctionCannotApplyOn;
-import aloyslisp.core.conditions.LispException;
+import aloyslisp.core.conditions.*;
 import aloyslisp.core.exec.*;
-import aloyslisp.core.functions.tFUNCTION;
-import aloyslisp.core.math.*;
-import aloyslisp.core.sequences.tLIST;
-import aloyslisp.core.sequences.tSTRING;
+import aloyslisp.core.functions.*;
+import aloyslisp.core.sequences.*;
 
 /**
  * SYMBOL
@@ -670,17 +667,6 @@ public class SYMBOL extends CELL implements tSYMBOL
 	{
 		return printable() + " " + pack + " " + getValue() + " " + fGetValue()
 				+ " " + pList;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.types.tT#coerce(aloyslisp.core.types.tT)
-	 */
-	@Override
-	public tT COERCE(tT type)
-	{
-		// IMPLEMENT Coerce
-		return null;
 	}
 
 	/*

@@ -24,38 +24,33 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 23 déc. 2010 Creation
+// IP 26 déc. 2010 Creation
 // --------------------------------------------------------------------------
 
 package aloyslisp.core.math;
 
-import aloyslisp.core.numbers.*;
+import aloyslisp.core.plugs.*;
 
 /**
- * NumFloat
+ * NUMBER
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class NumFloat extends NumReal implements IFloat
+public abstract class NUMBER extends CELL implements tNUMBER
 {
-	public float	value;
 
-	/**
-	 * @param init
-	 */
-	public NumFloat(float init)
-	{
-		value = init;
-	}
+	public static final BIGNUM	ONE		= new BIGNUM(1);
+
+	public static final BIGNUM	ZERO	= new BIGNUM(0);
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#ratioValue()
+	 * @see aloyslisp.core.math.tNUMBER#ADD(aloyslisp.core.plugs.tT)
 	 */
 	@Override
-	public NumRatio getRatioValue()
+	public tNUMBER ADD(tT op)
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -63,10 +58,10 @@ public class NumFloat extends NumReal implements IFloat
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#complexValue()
+	 * @see aloyslisp.core.math.tNUMBER#SUBSTRACT(aloyslisp.core.plugs.tT)
 	 */
 	@Override
-	public NumComplex getComplexValue()
+	public tNUMBER SUBSTRACT(tT op)
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -74,10 +69,10 @@ public class NumFloat extends NumReal implements IFloat
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#integerValue()
+	 * @see aloyslisp.core.math.tNUMBER#MINUS()
 	 */
 	@Override
-	public NumInteger getIntegerValue()
+	public tNUMBER MINUS()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -85,10 +80,10 @@ public class NumFloat extends NumReal implements IFloat
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#floatValue()
+	 * @see aloyslisp.core.math.tNUMBER#INVERSION()
 	 */
 	@Override
-	public NumFloat getFloatValue()
+	public tNUMBER INVERSION()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -96,10 +91,10 @@ public class NumFloat extends NumReal implements IFloat
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#doubleValue()
+	 * @see aloyslisp.core.math.tNUMBER#MULTIPLY(aloyslisp.core.plugs.tT)
 	 */
 	@Override
-	public NumDouble getDoubleValue()
+	public tNUMBER MULTIPLY(tT op)
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -107,10 +102,10 @@ public class NumFloat extends NumReal implements IFloat
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#shortValue()
+	 * @see aloyslisp.core.math.tNUMBER#DIVISION(aloyslisp.core.plugs.tT)
 	 */
 	@Override
-	public NumShort getShortValue()
+	public tNUMBER DIVISION(tT op)
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -118,20 +113,65 @@ public class NumFloat extends NumReal implements IFloat
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#make()
+	 * @see aloyslisp.core.math.tNUMBER#REALPART()
 	 */
 	@Override
-	public FLOAT make()
+	public tNUMBER REALPART()
 	{
-		return new FLOAT(this);
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.IReal#equal(aloyslisp.core.math.INumber)
+	 * @see aloyslisp.core.math.tNUMBER#IMAGPART()
 	 */
 	@Override
-	public boolean equal(INumber op)
+	public tNUMBER IMAGPART()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tNUMBER#CONJUGATE()
+	 */
+	@Override
+	public tNUMBER CONJUGATE()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tNUMBER#PHASE()
+	 */
+	@Override
+	public tNUMBER PHASE()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tNUMBER#ABS()
+	 */
+	@Override
+	public tREAL ABS()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tNUMBER#ZEROP()
+	 */
+	@Override
+	public boolean ZEROP()
 	{
 		// TODO Auto-generated method stub
 		return false;
@@ -139,32 +179,10 @@ public class NumFloat extends NumReal implements IFloat
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.IReal#greater(aloyslisp.core.math.INumber)
+	 * @see aloyslisp.core.math.tNUMBER#CIS()
 	 */
 	@Override
-	public boolean greater(INumber op)
-	{
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.IReal#lower(aloyslisp.core.math.INumber)
-	 */
-	@Override
-	public boolean lower(INumber op)
-	{
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.IReal#rational()
-	 */
-	@Override
-	public IRational rational()
+	public tNUMBER CIS()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -172,10 +190,10 @@ public class NumFloat extends NumReal implements IFloat
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.IReal#rationalize()
+	 * @see aloyslisp.core.math.tNUMBER#SIN()
 	 */
 	@Override
-	public IRational rationalize()
+	public tNUMBER SIN()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -183,10 +201,10 @@ public class NumFloat extends NumReal implements IFloat
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#add(aloyslisp.core.math.INumber)
+	 * @see aloyslisp.core.math.tNUMBER#COS()
 	 */
 	@Override
-	public INumber add(INumber op)
+	public tNUMBER COS()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -194,10 +212,10 @@ public class NumFloat extends NumReal implements IFloat
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#substract(aloyslisp.core.math.INumber)
+	 * @see aloyslisp.core.math.tNUMBER#TAN()
 	 */
 	@Override
-	public INumber substract(INumber op)
+	public tNUMBER TAN()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -205,10 +223,10 @@ public class NumFloat extends NumReal implements IFloat
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#minus()
+	 * @see aloyslisp.core.math.tNUMBER#ASIN()
 	 */
 	@Override
-	public INumber minus()
+	public tNUMBER ASIN()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -216,10 +234,10 @@ public class NumFloat extends NumReal implements IFloat
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#inversion()
+	 * @see aloyslisp.core.math.tNUMBER#ACOS()
 	 */
 	@Override
-	public INumber inversion()
+	public tNUMBER ACOS()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -227,10 +245,10 @@ public class NumFloat extends NumReal implements IFloat
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#multiply(aloyslisp.core.math.INumber)
+	 * @see aloyslisp.core.math.tNUMBER#ATAN()
 	 */
 	@Override
-	public INumber multiply(INumber op)
+	public tNUMBER ATAN()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -238,10 +256,10 @@ public class NumFloat extends NumReal implements IFloat
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#division(aloyslisp.core.math.INumber)
+	 * @see aloyslisp.core.math.tNUMBER#ATAN(aloyslisp.core.math.tREAL)
 	 */
 	@Override
-	public INumber division(INumber op)
+	public tNUMBER ATAN(tREAL opt)
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -249,10 +267,120 @@ public class NumFloat extends NumReal implements IFloat
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.IFloat#decode_float(aloyslisp.core.math.IFloat)
+	 * @see aloyslisp.core.math.tNUMBER#SINH()
 	 */
 	@Override
-	public IFloat[] decode_float(IFloat f)
+	public tNUMBER SINH()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tNUMBER#COSH()
+	 */
+	@Override
+	public tNUMBER COSH()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tNUMBER#TANH()
+	 */
+	@Override
+	public tNUMBER TANH()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tNUMBER#ASINH()
+	 */
+	@Override
+	public tNUMBER ASINH()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tNUMBER#ACOSH()
+	 */
+	@Override
+	public tNUMBER ACOSH()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tNUMBER#ATANH()
+	 */
+	@Override
+	public tNUMBER ATANH()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tNUMBER#LOG()
+	 */
+	@Override
+	public tNUMBER LOG()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tNUMBER#SQRT()
+	 */
+	@Override
+	public tNUMBER SQRT()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tNUMBER#EXP()
+	 */
+	@Override
+	public tNUMBER EXP()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tNUMBER#EXPT(aloyslisp.core.math.tNUMBER)
+	 */
+	@Override
+	public tNUMBER EXPT(tNUMBER power)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tNUMBER#RANDOM()
+	 */
+	@Override
+	public tNUMBER RANDOM()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -261,69 +389,10 @@ public class NumFloat extends NumReal implements IFloat
 	/*
 	 * (non-Javadoc)
 	 * @see
-	 * aloyslisp.core.math.IFloat#integer_decode_float(aloyslisp.core.math.IFloat
-	 * )
+	 * aloyslisp.core.math.tNUMBER#RANDOM(aloyslisp.core.numbers.tRANDOM_STATE)
 	 */
 	@Override
-	public IFloat[] integer_decode_float(IFloat f)
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.IFloat#scale_float(aloyslisp.core.math.IFloat,
-	 * aloyslisp.core.math.IInteger)
-	 */
-	@Override
-	public IFloat scale_float(IFloat f, IInteger scale)
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.IFloat#float_radix(aloyslisp.core.math.IFloat)
-	 */
-	@Override
-	public IFloat float_radix(IFloat f)
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.IFloat#float_sign(aloyslisp.core.math.IFloat,
-	 * aloyslisp.core.math.IFloat)
-	 */
-	@Override
-	public IFloat float_sign(IFloat f, IFloat f2)
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.IFloat#float_digits(aloyslisp.core.math.IFloat)
-	 */
-	@Override
-	public IInteger float_digits(IFloat f)
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see
-	 * aloyslisp.core.math.IFloat#float_precision(aloyslisp.core.math.IFloat)
-	 */
-	@Override
-	public IInteger float_precision(IFloat f)
+	public tNUMBER RANDOM(tRANDOM_STATE st)
 	{
 		// TODO Auto-generated method stub
 		return null;

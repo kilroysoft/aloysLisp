@@ -107,17 +107,6 @@ public abstract class OUTPUT_STREAM extends STREAM implements tOUTPUT_STREAM
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.types.tT#coerce(aloyslisp.core.types.tT)
-	 */
-	@Override
-	public tT COERCE(tT type)
-	{
-		// IMPLEMENT Coerce
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tSTREAM#STREAM_ELEMENT_TYPE()
 	 */
 	@Override

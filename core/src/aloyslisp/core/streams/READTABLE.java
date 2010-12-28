@@ -39,13 +39,10 @@ import java.util.*;
 
 import static aloyslisp.commonlisp.L.*;
 import aloyslisp.core.annotations.*;
-import aloyslisp.core.conditions.LispException;
-import aloyslisp.core.functions.tFUNCTION_DESIGNATOR;
-import aloyslisp.core.math.*;
-import aloyslisp.core.plugs.CELL;
-import aloyslisp.core.plugs.tSYMBOL;
-import aloyslisp.core.plugs.tT;
-import aloyslisp.core.sequences.tLIST;
+import aloyslisp.core.conditions.*;
+import aloyslisp.core.functions.*;
+import aloyslisp.core.plugs.*;
+import aloyslisp.core.sequences.*;
 
 /**
  * READTABLE
@@ -400,17 +397,6 @@ public class READTABLE extends CELL implements tREADTABLE
 			default:
 				throw new LispException("bad tableReader case : " + caseVal);
 		}
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.types.tT#coerce(aloyslisp.core.types.tT)
-	 */
-	@Override
-	public tT COERCE(tT type)
-	{
-		// IMPLEMENT Coerce
-		return null;
 	}
 
 	/*

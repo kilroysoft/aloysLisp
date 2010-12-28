@@ -30,11 +30,9 @@
 package aloyslisp.core.streams;
 
 import static aloyslisp.commonlisp.L.*;
-import aloyslisp.core.conditions.LispException;
-import aloyslisp.core.math.*;
-import aloyslisp.core.plugs.CELL;
-import aloyslisp.core.plugs.tT;
-import aloyslisp.core.sequences.tSTRING;
+import aloyslisp.core.conditions.*;
+import aloyslisp.core.plugs.*;
+import aloyslisp.core.sequences.*;
 
 /**
  * CHARACTER
@@ -192,7 +190,8 @@ public class CHARACTER extends CELL implements tCHARACTER
 		return null;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tCHARACTER#CHAR_INT()
 	 */
 	public tT CHAR_INT()

@@ -31,16 +31,11 @@ package aloyslisp.commonlisp.common_lisp;
 
 import static aloyslisp.commonlisp.L.*;
 import aloyslisp.core.annotations.*;
-import aloyslisp.core.conditions.LispException;
+import aloyslisp.core.conditions.*;
 import aloyslisp.core.exec.*;
-import aloyslisp.core.functions.BLOCK_FUNCTION;
-import aloyslisp.core.functions.LAMBDA_FUNCTION;
-import aloyslisp.core.functions.MACRO_FUNCTION;
-import aloyslisp.core.functions.tFUNCTION;
-import aloyslisp.core.math.*;
+import aloyslisp.core.functions.*;
 import aloyslisp.core.plugs.*;
-import aloyslisp.core.sequences.tCONS;
-import aloyslisp.core.sequences.tLIST;
+import aloyslisp.core.sequences.*;
 
 /**
  * sBLOCK

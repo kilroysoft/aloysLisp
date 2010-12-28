@@ -35,7 +35,6 @@ import static aloyslisp.commonlisp.L.*;
 import java.util.*;
 
 import aloyslisp.core.conditions.LispException;
-import aloyslisp.core.math.*;
 
 /**
  * PACKAGE
@@ -191,17 +190,6 @@ public class PACKAGE extends CELL implements tPACKAGE
 			return str;
 
 		return str.toUpperCase();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.types.tT#coerce(aloyslisp.core.types.tT)
-	 */
-	@Override
-	public tT COERCE(tT type)
-	{
-		// IMPLEMENT Coerce
-		return null;
 	}
 
 	/**

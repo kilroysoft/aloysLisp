@@ -30,11 +30,8 @@
 package aloyslisp.core.exec;
 
 import aloyslisp.core.conditions.LispException;
-import aloyslisp.core.math.*;
-import aloyslisp.core.plugs.tSYMBOL;
-import aloyslisp.core.plugs.tT;
-import aloyslisp.core.sequences.tCONS;
-import aloyslisp.core.sequences.tLIST;
+import aloyslisp.core.plugs.*;
+import aloyslisp.core.sequences.*;
 
 /**
  * Environment

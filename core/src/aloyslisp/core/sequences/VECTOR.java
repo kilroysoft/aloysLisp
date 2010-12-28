@@ -32,7 +32,6 @@ package aloyslisp.core.sequences;
 import java.util.*;
 
 import aloyslisp.core.conditions.LispException;
-import aloyslisp.core.math.*;
 import aloyslisp.core.plugs.CELL;
 import aloyslisp.core.plugs.tT;
 
@@ -270,17 +269,6 @@ public class VECTOR extends CELL implements tVECTOR
 	public boolean EQUAL(tT cell)
 	{
 		return EQ(cell);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.types.tT#coerce(aloyslisp.core.types.tT)
-	 */
-	@Override
-	public tT COERCE(tT type)
-	{
-		// IMPLEMENT Coerce
-		return null;
 	}
 
 	/*

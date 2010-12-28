@@ -34,14 +34,8 @@ import java.util.*;
 
 import static aloyslisp.commonlisp.L.*;
 import aloyslisp.core.conditions.LispException;
-import aloyslisp.core.functions.FUNCTION;
-import aloyslisp.core.functions.tFUNCTION;
-import aloyslisp.core.functions.tMACRO_FUNCTION;
-import aloyslisp.core.math.*;
-import aloyslisp.core.plugs.CELL;
-import aloyslisp.core.plugs.NIL;
-import aloyslisp.core.plugs.tSYMBOL;
-import aloyslisp.core.plugs.tT;
+import aloyslisp.core.functions.*;
+import aloyslisp.core.plugs.*;
 
 /**
  * CONS
@@ -125,8 +119,6 @@ public class CONS extends CELL implements tCONS
 				newCell = bool((Boolean) cell);
 			else if (cell instanceof Integer)
 				newCell = nInt((Integer) cell);
-			else if (cell instanceof Long)
-				newCell = nLong((Long) cell);
 			else if (cell instanceof Float)
 				newCell = nFloat((Float) cell);
 			else if (cell instanceof Character)

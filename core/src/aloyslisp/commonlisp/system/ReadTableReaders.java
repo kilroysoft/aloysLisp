@@ -34,13 +34,10 @@ import static aloyslisp.commonlisp.L.*;
 import java.io.EOFException;
 
 import aloyslisp.core.conditions.LispException;
-import aloyslisp.core.math.*;
 import aloyslisp.core.plugs.*;
 import aloyslisp.core.annotations.*;
-import aloyslisp.core.sequences.tCONS;
-import aloyslisp.core.sequences.tLIST;
-import aloyslisp.core.streams.CHARACTER;
-import aloyslisp.core.streams.tINPUT_STREAM;
+import aloyslisp.core.sequences.*;
+import aloyslisp.core.streams.*;
 
 /**
  * ReadTableReaders

@@ -30,31 +30,18 @@
 package aloyslisp.core.math;
 
 /**
- * IRational
+ * tCOMPLEX
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public interface IRational extends IReal
+public interface tCOMPLEX extends tNUMBER
 {
-
 	/* *******************************************************************
-	 * FUNCTIONS RATIO
+	 * ACCESSORS
 	 */
-	/**
-	 * Numerator (for ratio) a/b -> a
-	 * 
-	 * @param a
-	 * @return
+	/* *******************************************************************
+	 * FUNCTIONS
 	 */
-	public NumInteger numerator();
-
-	/**
-	 * Denumerator (for ratio) a/b -> b
-	 * 
-	 * @param a
-	 * @return
-	 */
-	public NumInteger denominator();
 }

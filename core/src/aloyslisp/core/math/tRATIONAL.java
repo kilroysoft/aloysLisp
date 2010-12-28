@@ -24,32 +24,56 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 26 déc. 2010 Creation
+// IP 23 déc. 2010 Creation
 // --------------------------------------------------------------------------
 
 package aloyslisp.core.math;
 
 /**
- * NumNumber
+ * tRATIONAL
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public abstract class NumNumber implements INumber
+public interface tRATIONAL extends tREAL
 {
 
-	public static final NumInteger	ONE		= new NumInteger(1);
-
-	public static final NumInteger	ZERO	= new NumInteger(0);
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#coerce(aloyslisp.core.math.INumber)
+	/* *******************************************************************
+	 * FUNCTIONS RATIO
 	 */
-	public INumber coerce(INumber var)
-	{
-		return null;
-	}
+	/**
+	 * Numerator (for ratio) a/b -> a
+	 * 
+	 * @return
+	 */
+	public tINTEGER numerator();
+
+	/**
+	 * Denumerator (for ratio) a/b -> b
+	 * 
+	 * @return
+	 */
+	public tINTEGER denominator();
+
+	/**********************************************************************
+	 * LISP FUNCTIONS
+	 */
+	/* *******************************************************************
+	 * FUNCTIONS RATIO
+	 */
+	/**
+	 * Numerator (for ratio) a/b -> a
+	 * 
+	 * @return
+	 */
+	public tINTEGER NUMERATOR();
+
+	/**
+	 * Denumerator (for ratio) a/b -> b
+	 * 
+	 * @return
+	 */
+	public tINTEGER DENOMINATOR();
 
 }

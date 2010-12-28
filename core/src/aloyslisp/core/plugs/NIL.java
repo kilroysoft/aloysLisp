@@ -33,11 +33,9 @@ package aloyslisp.core.plugs;
 import java.util.Iterator;
 
 import static aloyslisp.commonlisp.L.*;
-import aloyslisp.core.conditions.LispErrorFunctionCannotApplyOn;
-import aloyslisp.core.functions.tFUNCTION;
-import aloyslisp.core.math.*;
-import aloyslisp.core.sequences.tLIST;
-import aloyslisp.core.sequences.tSEQUENCE;
+import aloyslisp.core.conditions.*;
+import aloyslisp.core.functions.*;
+import aloyslisp.core.sequences.*;
 
 /**
  * NIL

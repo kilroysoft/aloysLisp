@@ -29,14 +29,16 @@
 
 package aloyslisp.core.math;
 
+import aloyslisp.core.plugs.tT;
+
 /**
- * IReal
+ * tREAL
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public interface IReal extends INumber
+public interface tREAL extends tNUMBER
 {
 
 	/* *******************************************************************
@@ -48,7 +50,7 @@ public interface IReal extends INumber
 	 * @param op
 	 * @return
 	 */
-	public boolean equal(INumber op);
+	public boolean equal(tNUMBER op);
 
 	/**
 	 * Test greater a > b
@@ -56,7 +58,7 @@ public interface IReal extends INumber
 	 * @param op
 	 * @return
 	 */
-	public boolean greater(INumber op);
+	public boolean greater(tNUMBER op);
 
 	/**
 	 * Test lower a < b
@@ -64,7 +66,7 @@ public interface IReal extends INumber
 	 * @param op
 	 * @return
 	 */
-	public boolean lower(INumber op);
+	public boolean lower(tNUMBER op);
 
 	/**
 	 * @return
@@ -82,12 +84,12 @@ public interface IReal extends INumber
 	/**
 	 * @return
 	 */
-	public IRational rational();
+	public tRATIONAL rational();
 
 	/**
 	 * @return
 	 */
-	public IRational rationalize();
+	public tRATIONAL rationalize();
 
 	/* *******************************************************************
 	 * FUNCTIONS
@@ -98,7 +100,7 @@ public interface IReal extends INumber
 	 * @param op
 	 * @return
 	 */
-	public IReal mod(IReal op);
+	public tREAL mod(tREAL op);
 
 	/**
 	 * Remainder
@@ -106,14 +108,14 @@ public interface IReal extends INumber
 	 * @param op
 	 * @return
 	 */
-	public IReal rem(IReal op);
+	public tREAL rem(tREAL op);
 
 	/**
 	 * Floor
 	 * 
 	 * @return
 	 */
-	public IReal[] floor();
+	public tREAL[] floor();
 
 	/**
 	 * Floor
@@ -121,14 +123,14 @@ public interface IReal extends INumber
 	 * @param op
 	 * @return
 	 */
-	public IReal[] floor(IReal op);
+	public tREAL[] floor(tREAL op);
 
 	/**
 	 * Ceiling
 	 * 
 	 * @return
 	 */
-	public IReal[] ceiling();
+	public tREAL[] ceiling();
 
 	/**
 	 * Ceiling
@@ -136,7 +138,7 @@ public interface IReal extends INumber
 	 * @param op
 	 * @return
 	 */
-	public IReal[] ceiling(IReal op);
+	public tREAL[] ceiling(tREAL op);
 
 	/**
 	 * Truncate
@@ -144,7 +146,7 @@ public interface IReal extends INumber
 	 * @param op
 	 * @return
 	 */
-	public IReal[] truncate();
+	public tREAL[] truncate();
 
 	/**
 	 * Truncate
@@ -152,7 +154,7 @@ public interface IReal extends INumber
 	 * @param op
 	 * @return
 	 */
-	public IReal[] truncate(IReal op);
+	public tREAL[] truncate(tREAL op);
 
 	/**
 	 * Round
@@ -160,7 +162,7 @@ public interface IReal extends INumber
 	 * @param op
 	 * @return
 	 */
-	public IReal[] round();
+	public tREAL[] round();
 
 	/**
 	 * Round
@@ -168,6 +170,140 @@ public interface IReal extends INumber
 	 * @param op
 	 * @return
 	 */
-	public IReal[] round(IReal op);
+	public tREAL[] round(tREAL op);
+
+	/****************************************************************
+	 * LISP FUNCTIONS
+	 */
+	/* *******************************************************************
+	 * COMPARATORS
+	 */
+	/**
+	 * Test equality a == b
+	 * 
+	 * @param op
+	 * @return
+	 */
+	public boolean EQUAL(tT op);
+
+	/**
+	 * Test greater a > b
+	 * 
+	 * @param op
+	 * @return
+	 */
+	public boolean GREATER(tT op);
+
+	/**
+	 * Test lower a < b
+	 * 
+	 * @param op
+	 * @return
+	 */
+	public boolean LOWER(tT op);
+
+	/**
+	 * @return
+	 */
+	public boolean MINUSP();
+
+	/**
+	 * @return
+	 */
+	public boolean PLUSP();
+
+	/* *******************************************************************
+	 * RATIONAL
+	 */
+	/**
+	 * @return
+	 */
+	public tRATIONAL RATIONAL();
+
+	/**
+	 * @return
+	 */
+	public tRATIONAL RATIONALIZE();
+
+	/* *******************************************************************
+	 * FUNCTIONS
+	 */
+	/**
+	 * Modulo
+	 * 
+	 * @param op
+	 * @return
+	 */
+	public tREAL MOD(tREAL op);
+
+	/**
+	 * Remainder
+	 * 
+	 * @param op
+	 * @return
+	 */
+	public tREAL REM(tREAL op);
+
+	/**
+	 * Floor
+	 * 
+	 * @return
+	 */
+	public tREAL[] FLOOR();
+
+	/**
+	 * Floor
+	 * 
+	 * @param op
+	 * @return
+	 */
+	public tREAL[] FLOOR(tREAL op);
+
+	/**
+	 * Ceiling
+	 * 
+	 * @return
+	 */
+	public tREAL[] CEILING();
+
+	/**
+	 * Ceiling
+	 * 
+	 * @param op
+	 * @return
+	 */
+	public tREAL[] CEILING(tREAL op);
+
+	/**
+	 * Truncate
+	 * 
+	 * @param op
+	 * @return
+	 */
+	public tREAL[] TRUNCATE();
+
+	/**
+	 * Truncate
+	 * 
+	 * @param op
+	 * @return
+	 */
+	public tREAL[] TRUNCATE(tREAL op);
+
+	/**
+	 * Round
+	 * 
+	 * @param op
+	 * @return
+	 */
+	public tREAL[] ROUND();
+
+	/**
+	 * Round
+	 * 
+	 * @param op
+	 * @return
+	 */
+	public tREAL[] ROUND(tREAL op);
 
 }

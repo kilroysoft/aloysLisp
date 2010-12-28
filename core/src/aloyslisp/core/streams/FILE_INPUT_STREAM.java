@@ -32,9 +32,8 @@ package aloyslisp.core.streams;
 import java.io.*;
 
 import aloyslisp.core.conditions.LispException;
-import aloyslisp.core.math.*;
-import aloyslisp.core.plugs.tT;
-import aloyslisp.core.sequences.tSEQUENCE;
+import aloyslisp.core.plugs.*;
+import aloyslisp.core.sequences.*;
 
 /**
  * FILE_INPUT_STREAM
@@ -47,7 +46,8 @@ public class FILE_INPUT_STREAM extends INPUT_STREAM implements
 		tFILE_INPUT_STREAM
 {
 	private PushbackReader	reader	= null;
-	// TODO private tPATHNAME		path	= null;
+
+	// TODO private tPATHNAME path = null;
 
 	/**
 	 * Use standard input

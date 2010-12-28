@@ -36,16 +36,10 @@ import java.lang.reflect.*;
 
 import static aloyslisp.commonlisp.L.*;
 import aloyslisp.core.annotations.*;
-import aloyslisp.core.conditions.LispException;
-import aloyslisp.core.functions.PRIMITIVE;
-import aloyslisp.core.functions.SPECIAL_OPERATOR;
-import aloyslisp.core.functions.STATIC;
-import aloyslisp.core.functions.tFUNCTION;
-import aloyslisp.core.math.*;
-import aloyslisp.core.sequences.CONS;
-import aloyslisp.core.sequences.tLIST;
-import aloyslisp.core.sequences.tSTRING;
-import aloyslisp.core.streams.tCHARACTER;
+import aloyslisp.core.conditions.*;
+import aloyslisp.core.functions.*;
+import aloyslisp.core.sequences.*;
+import aloyslisp.core.streams.*;
 
 /**
  * Primitives

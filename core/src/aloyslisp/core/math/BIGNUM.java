@@ -31,23 +31,21 @@ package aloyslisp.core.math;
 
 import java.math.BigInteger;
 
-import aloyslisp.core.numbers.*;
-
 /**
- * NumInteger
+ * BIGNUM
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class NumInteger extends NumReal implements IInteger
+public class BIGNUM extends INTEGER implements tBIG_INTEGER
 {
 	private BigInteger	val;
 
 	/**
 	 * @param init
 	 */
-	public NumInteger(BigInteger init)
+	public BIGNUM(BigInteger init)
 	{
 		val = new BigInteger(init.toString());
 	}
@@ -55,7 +53,7 @@ public class NumInteger extends NumReal implements IInteger
 	/**
 	 * @param init
 	 */
-	public NumInteger(Integer init)
+	public BIGNUM(Integer init)
 	{
 		val = new BigInteger(init.toString());
 	}
@@ -63,9 +61,20 @@ public class NumInteger extends NumReal implements IInteger
 	/**
 	 * @param init
 	 */
-	public NumInteger(Long init)
+	public BIGNUM(Long init)
 	{
 		val = new BigInteger(init.toString());
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tNUMBER#coerce(aloyslisp.core.math.tNUMBER)
+	 */
+	@Override
+	public tNUMBER coerce(tNUMBER var)
+	{
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	/**
@@ -78,88 +87,78 @@ public class NumInteger extends NumReal implements IInteger
 	 * @param junk
 	 * @return
 	 */
-	public static NumInteger parse_integer(String val, Integer start,
+	public static BIGNUM parse_integer(String val, Integer start,
 			Integer end, Integer radix, Boolean junk)
 	{
-		return new NumInteger(new BigInteger(val, radix));
+		return new BIGNUM(new BigInteger(val, radix));
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#ratioValue()
+	 * @see aloyslisp.core.math.tNUMBER#ratioValue()
 	 */
 	@Override
-	public NumRatio getRatioValue()
+	public RATIO getRatioValue()
 	{
-		return new NumRatio(this);
+		return new RATIO(this);
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#complexValue()
+	 * @see aloyslisp.core.math.tNUMBER#complexValue()
 	 */
 	@Override
-	public NumComplex getComplexValue()
+	public COMPLEX getComplexValue()
 	{
-		return new NumComplex(new INTEGER(this), new INTEGER(0));
+		return new COMPLEX(this, ZERO);
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#integerValue()
+	 * @see aloyslisp.core.math.tNUMBER#integerValue()
 	 */
 	@Override
-	public NumInteger getIntegerValue()
+	public BIGNUM getIntegerValue()
 	{
 		return this;
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#floatValue()
+	 * @see aloyslisp.core.math.tNUMBER#floatValue()
 	 */
 	@Override
-	public NumFloat getFloatValue()
+	public SINGLE_FLOAT getFloatValue()
 	{
-		return new NumFloat(val.floatValue());
+		return new SINGLE_FLOAT(val.floatValue());
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#doubleValue()
+	 * @see aloyslisp.core.math.tNUMBER#doubleValue()
 	 */
 	@Override
-	public NumDouble getDoubleValue()
+	public DOUBLE_FLOAT getDoubleValue()
 	{
-		return new NumDouble(val.doubleValue());
+		return new DOUBLE_FLOAT(val.doubleValue());
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#shortValue()
+	 * @see aloyslisp.core.math.tNUMBER#shortValue()
 	 */
 	@Override
-	public NumShort getShortValue()
+	public SHORT_FLOAT getShortValue()
 	{
-		return new NumShort(val.shortValue());
+		return new SHORT_FLOAT(val.shortValue());
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#make()
+	 * @see aloyslisp.core.math.tREAL#equal(aloyslisp.core.math.tNUMBER)
 	 */
 	@Override
-	public INTEGER make()
-	{
-		return new INTEGER(this);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.IReal#equal(aloyslisp.core.math.INumber)
-	 */
-	@Override
-	public boolean equal(INumber op)
+	public boolean equal(tNUMBER op)
 	{
 		// TODO Auto-generated method stub
 		return false;
@@ -167,10 +166,10 @@ public class NumInteger extends NumReal implements IInteger
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.IReal#greater(aloyslisp.core.math.INumber)
+	 * @see aloyslisp.core.math.tREAL#greater(aloyslisp.core.math.tNUMBER)
 	 */
 	@Override
-	public boolean greater(INumber op)
+	public boolean greater(tNUMBER op)
 	{
 		// TODO Auto-generated method stub
 		return false;
@@ -178,10 +177,10 @@ public class NumInteger extends NumReal implements IInteger
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.IReal#lower(aloyslisp.core.math.INumber)
+	 * @see aloyslisp.core.math.tREAL#lower(aloyslisp.core.math.tNUMBER)
 	 */
 	@Override
-	public boolean lower(INumber op)
+	public boolean lower(tNUMBER op)
 	{
 		// TODO Auto-generated method stub
 		return false;
@@ -189,10 +188,10 @@ public class NumInteger extends NumReal implements IInteger
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.IReal#rational()
+	 * @see aloyslisp.core.math.tREAL#rational()
 	 */
 	@Override
-	public IRational rational()
+	public tRATIONAL rational()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -200,10 +199,10 @@ public class NumInteger extends NumReal implements IInteger
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.IReal#rationalize()
+	 * @see aloyslisp.core.math.tREAL#rationalize()
 	 */
 	@Override
-	public IRational rationalize()
+	public tRATIONAL rationalize()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -211,10 +210,10 @@ public class NumInteger extends NumReal implements IInteger
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#add(aloyslisp.core.math.INumber)
+	 * @see aloyslisp.core.math.tNUMBER#add(aloyslisp.core.math.tNUMBER)
 	 */
 	@Override
-	public INumber add(INumber op)
+	public tNUMBER add(tNUMBER op)
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -222,10 +221,10 @@ public class NumInteger extends NumReal implements IInteger
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#substract(aloyslisp.core.math.INumber)
+	 * @see aloyslisp.core.math.tNUMBER#substract(aloyslisp.core.math.tNUMBER)
 	 */
 	@Override
-	public INumber substract(INumber op)
+	public tNUMBER substract(tNUMBER op)
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -233,10 +232,10 @@ public class NumInteger extends NumReal implements IInteger
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#minus()
+	 * @see aloyslisp.core.math.tNUMBER#minus()
 	 */
 	@Override
-	public INumber minus()
+	public tNUMBER minus()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -244,10 +243,10 @@ public class NumInteger extends NumReal implements IInteger
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#inversion()
+	 * @see aloyslisp.core.math.tNUMBER#inversion()
 	 */
 	@Override
-	public INumber inversion()
+	public tNUMBER inversion()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -255,10 +254,10 @@ public class NumInteger extends NumReal implements IInteger
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#multiply(aloyslisp.core.math.INumber)
+	 * @see aloyslisp.core.math.tNUMBER#multiply(aloyslisp.core.math.tNUMBER)
 	 */
 	@Override
-	public INumber multiply(INumber op)
+	public tNUMBER multiply(tNUMBER op)
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -266,10 +265,10 @@ public class NumInteger extends NumReal implements IInteger
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#division(aloyslisp.core.math.INumber)
+	 * @see aloyslisp.core.math.tNUMBER#division(aloyslisp.core.math.tNUMBER)
 	 */
 	@Override
-	public INumber division(INumber op)
+	public tNUMBER division(tNUMBER op)
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -277,10 +276,10 @@ public class NumInteger extends NumReal implements IInteger
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.IInteger#lcm(aloyslisp.core.math.IInteger)
+	 * @see aloyslisp.core.math.tINTEGER#lcm(aloyslisp.core.math.tINTEGER)
 	 */
 	@Override
-	public IInteger lcm(IInteger op)
+	public tINTEGER lcm(tINTEGER op)
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -288,10 +287,10 @@ public class NumInteger extends NumReal implements IInteger
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.IInteger#gcd(aloyslisp.core.math.IInteger)
+	 * @see aloyslisp.core.math.tINTEGER#gcd(aloyslisp.core.math.tINTEGER)
 	 */
 	@Override
-	public IInteger gcd(IInteger op)
+	public tINTEGER gcd(tINTEGER op)
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -299,10 +298,10 @@ public class NumInteger extends NumReal implements IInteger
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.IInteger#logand(aloyslisp.core.math.IInteger)
+	 * @see aloyslisp.core.math.tINTEGER#logand(aloyslisp.core.math.tINTEGER)
 	 */
 	@Override
-	public IInteger logand(IInteger op)
+	public tINTEGER logand(tINTEGER op)
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -310,10 +309,10 @@ public class NumInteger extends NumReal implements IInteger
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.IInteger#lognand(aloyslisp.core.math.IInteger)
+	 * @see aloyslisp.core.math.tINTEGER#lognand(aloyslisp.core.math.tINTEGER)
 	 */
 	@Override
-	public IInteger lognand(IInteger op)
+	public tINTEGER lognand(tINTEGER op)
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -321,10 +320,10 @@ public class NumInteger extends NumReal implements IInteger
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.IInteger#logandc1(aloyslisp.core.math.IInteger)
+	 * @see aloyslisp.core.math.tINTEGER#logandc1(aloyslisp.core.math.tINTEGER)
 	 */
 	@Override
-	public IInteger logandc1(IInteger op)
+	public tINTEGER logandc1(tINTEGER op)
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -332,10 +331,10 @@ public class NumInteger extends NumReal implements IInteger
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.IInteger#logandc2(aloyslisp.core.math.IInteger)
+	 * @see aloyslisp.core.math.tINTEGER#logandc2(aloyslisp.core.math.tINTEGER)
 	 */
 	@Override
-	public IInteger logandc2(IInteger op)
+	public tINTEGER logandc2(tINTEGER op)
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -343,10 +342,10 @@ public class NumInteger extends NumReal implements IInteger
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.IInteger#logior(aloyslisp.core.math.IInteger)
+	 * @see aloyslisp.core.math.tINTEGER#logior(aloyslisp.core.math.tINTEGER)
 	 */
 	@Override
-	public IInteger logior(IInteger op)
+	public tINTEGER logior(tINTEGER op)
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -354,10 +353,10 @@ public class NumInteger extends NumReal implements IInteger
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.IInteger#logorc1(aloyslisp.core.math.IInteger)
+	 * @see aloyslisp.core.math.tINTEGER#logorc1(aloyslisp.core.math.tINTEGER)
 	 */
 	@Override
-	public IInteger logorc1(IInteger op)
+	public tINTEGER logorc1(tINTEGER op)
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -365,10 +364,10 @@ public class NumInteger extends NumReal implements IInteger
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.IInteger#logorc2(aloyslisp.core.math.IInteger)
+	 * @see aloyslisp.core.math.tINTEGER#logorc2(aloyslisp.core.math.tINTEGER)
 	 */
 	@Override
-	public IInteger logorc2(IInteger op)
+	public tINTEGER logorc2(tINTEGER op)
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -376,10 +375,10 @@ public class NumInteger extends NumReal implements IInteger
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.IInteger#logxor(aloyslisp.core.math.IInteger)
+	 * @see aloyslisp.core.math.tINTEGER#logxor(aloyslisp.core.math.tINTEGER)
 	 */
 	@Override
-	public IInteger logxor(IInteger op)
+	public tINTEGER logxor(tINTEGER op)
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -387,10 +386,10 @@ public class NumInteger extends NumReal implements IInteger
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.IInteger#logeqv(aloyslisp.core.math.IInteger)
+	 * @see aloyslisp.core.math.tINTEGER#logeqv(aloyslisp.core.math.tINTEGER)
 	 */
 	@Override
-	public IInteger logeqv(IInteger op)
+	public tINTEGER logeqv(tINTEGER op)
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -398,10 +397,10 @@ public class NumInteger extends NumReal implements IInteger
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.IInteger#lognot()
+	 * @see aloyslisp.core.math.tINTEGER#lognot()
 	 */
 	@Override
-	public IInteger lognot()
+	public tINTEGER lognot()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -409,7 +408,7 @@ public class NumInteger extends NumReal implements IInteger
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.IInteger#toBase(java.lang.Integer)
+	 * @see aloyslisp.core.math.tINTEGER#toBase(java.lang.Integer)
 	 */
 	@Override
 	public String toBase(Integer radix)
@@ -420,10 +419,10 @@ public class NumInteger extends NumReal implements IInteger
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.IInteger#logtest(aloyslisp.core.math.IInteger)
+	 * @see aloyslisp.core.math.tINTEGER#logtest(aloyslisp.core.math.tINTEGER)
 	 */
 	@Override
-	public IInteger logtest(IInteger op)
+	public tINTEGER logtest(tINTEGER op)
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -431,10 +430,10 @@ public class NumInteger extends NumReal implements IInteger
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.IInteger#logcount(aloyslisp.core.math.IInteger)
+	 * @see aloyslisp.core.math.tINTEGER#logcount(aloyslisp.core.math.tINTEGER)
 	 */
 	@Override
-	public IInteger logcount(IInteger op)
+	public tINTEGER logcount(tINTEGER op)
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -442,10 +441,10 @@ public class NumInteger extends NumReal implements IInteger
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.IInteger#logbitp(aloyslisp.core.math.IInteger)
+	 * @see aloyslisp.core.math.tINTEGER#logbitp(aloyslisp.core.math.tINTEGER)
 	 */
 	@Override
-	public IInteger logbitp(IInteger op)
+	public tINTEGER logbitp(tINTEGER op)
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -453,10 +452,10 @@ public class NumInteger extends NumReal implements IInteger
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.IInteger#ash(aloyslisp.core.math.IInteger)
+	 * @see aloyslisp.core.math.tINTEGER#ash(aloyslisp.core.math.tINTEGER)
 	 */
 	@Override
-	public IInteger ash(IInteger count)
+	public tINTEGER ash(tINTEGER count)
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -464,7 +463,7 @@ public class NumInteger extends NumReal implements IInteger
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.IInteger#evenp()
+	 * @see aloyslisp.core.math.tINTEGER#evenp()
 	 */
 	@Override
 	public boolean evenp()
@@ -475,7 +474,7 @@ public class NumInteger extends NumReal implements IInteger
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.IInteger#oddp()
+	 * @see aloyslisp.core.math.tINTEGER#oddp()
 	 */
 	@Override
 	public boolean oddp()
@@ -486,10 +485,10 @@ public class NumInteger extends NumReal implements IInteger
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.IInteger#isqrt()
+	 * @see aloyslisp.core.math.tINTEGER#isqrt()
 	 */
 	@Override
-	public IInteger isqrt()
+	public tINTEGER isqrt()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -497,30 +496,32 @@ public class NumInteger extends NumReal implements IInteger
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.IInteger#integer_length()
+	 * @see aloyslisp.core.math.tINTEGER#integer_length()
 	 */
 	@Override
-	public IInteger integer_length()
+	public tINTEGER integer_length()
 	{
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see aloyslisp.core.math.IRational#numerator()
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tRATIONAL#numerator()
 	 */
 	@Override
-	public NumInteger numerator()
+	public tINTEGER numerator()
 	{
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see aloyslisp.core.math.IRational#denominator()
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tRATIONAL#denominator()
 	 */
 	@Override
-	public NumInteger denominator()
+	public tINTEGER denominator()
 	{
 		// TODO Auto-generated method stub
 		return null;

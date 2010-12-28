@@ -97,15 +97,4 @@ public class LAMBDA_FUNCTION extends FUNCTION implements tLAMBDA_FUNCTION
 				+ intern.declare() + " " + intern.func();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.types.tT#coerce(aloyslisp.core.types.tT)
-	 */
-	@Override
-	public tT COERCE(tT type)
-	{
-		// IMPLEMENT Coerce
-		return null;
-	}
-
 }

@@ -19,20 +19,18 @@
 //--------------------------------------------------------------------------
 // history
 //--------------------------------------------------------------------------
-// IP 10 nov. 2010 Creation
+// IP 28 déc. 2010 Creation
 //--------------------------------------------------------------------------
 
-package aloyslisp.core.numbers;
-
-
+package aloyslisp.core.math;
 
 /**
- * tLONG_FLOAT
+ * tBIG_INTEGER
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  *
  */
-public interface tLONG_FLOAT extends tFLOAT
+public interface tBIG_INTEGER extends tINTEGER
 {
 
 }

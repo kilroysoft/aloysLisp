@@ -31,16 +31,15 @@ package aloyslisp.core.math;
 
 import static aloyslisp.commonlisp.L.*;
 import aloyslisp.core.conditions.*;
-import aloyslisp.core.numbers.*;
 
 /**
- * NumComplex
+ * COMPLEX
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class NumComplex implements IComplex
+public class COMPLEX extends NUMBER implements tCOMPLEX
 {
 
 	/**
@@ -51,12 +50,12 @@ public class NumComplex implements IComplex
 	/**
 	 * 
 	 */
-	public tNUMBER				real;
+	public tREAL				real;
 
 	/**
 	 * 
 	 */
-	public tNUMBER				imag;
+	public tREAL				imag;
 
 	/**
 	 * 
@@ -65,7 +64,7 @@ public class NumComplex implements IComplex
 	 * @param real
 	 * @param imag
 	 */
-	public NumComplex(tNUMBER real, tNUMBER imag)
+	public COMPLEX(tREAL real, tREAL imag)
 	{
 		this.real = real;
 		this.imag = imag;
@@ -83,7 +82,7 @@ public class NumComplex implements IComplex
 	/**
 	 * @return
 	 */
-	public NumRatio getRatioValue()
+	public RATIO getRatioValue()
 	{
 		if (!imag.EQUAL(nInt(0)))
 		{
@@ -94,18 +93,18 @@ public class NumComplex implements IComplex
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#getComplexValue()
+	 * @see aloyslisp.core.math.tNUMBER#getComplexValue()
 	 */
-	public NumComplex getComplexValue()
+	public COMPLEX getComplexValue()
 	{
 		return this;
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#getIntegerValue()
+	 * @see aloyslisp.core.math.tNUMBER#getIntegerValue()
 	 */
-	public NumInteger getIntegerValue()
+	public BIGNUM getIntegerValue()
 	{
 		if (!imag.EQUAL(nInt(0)))
 		{
@@ -116,9 +115,9 @@ public class NumComplex implements IComplex
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#getFloatValue()
+	 * @see aloyslisp.core.math.tNUMBER#getFloatValue()
 	 */
-	public NumFloat getFloatValue()
+	public SINGLE_FLOAT getFloatValue()
 	{
 		if (!imag.EQUAL(nInt(0)))
 		{
@@ -129,9 +128,9 @@ public class NumComplex implements IComplex
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#getDoubleValue()
+	 * @see aloyslisp.core.math.tNUMBER#getDoubleValue()
 	 */
-	public NumDouble getDoubleValue()
+	public DOUBLE_FLOAT getDoubleValue()
 	{
 		if (!imag.EQUAL(nInt(0)))
 		{
@@ -142,9 +141,9 @@ public class NumComplex implements IComplex
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#getShortValue()
+	 * @see aloyslisp.core.math.tNUMBER#getShortValue()
 	 */
-	public NumShort getShortValue()
+	public SHORT_FLOAT getShortValue()
 	{
 		if (!imag.EQUAL(nInt(0)))
 		{
@@ -155,19 +154,10 @@ public class NumComplex implements IComplex
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#make()
-	 */
-	public COMPLEX make()
-	{
-		return new COMPLEX(this);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#coerce(aloyslisp.core.math.INumber)
+	 * @see aloyslisp.core.math.tNUMBER#coerce(aloyslisp.core.math.tNUMBER)
 	 */
 	@Override
-	public INumber coerce(INumber var)
+	public tNUMBER coerce(tNUMBER var)
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -175,10 +165,10 @@ public class NumComplex implements IComplex
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#add(aloyslisp.core.math.INumber)
+	 * @see aloyslisp.core.math.tNUMBER#add(aloyslisp.core.math.tNUMBER)
 	 */
 	@Override
-	public INumber add(INumber op)
+	public tNUMBER add(tNUMBER op)
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -186,10 +176,10 @@ public class NumComplex implements IComplex
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#substract(aloyslisp.core.math.INumber)
+	 * @see aloyslisp.core.math.tNUMBER#substract(aloyslisp.core.math.tNUMBER)
 	 */
 	@Override
-	public INumber substract(INumber op)
+	public tNUMBER substract(tNUMBER op)
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -197,10 +187,10 @@ public class NumComplex implements IComplex
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#minus()
+	 * @see aloyslisp.core.math.tNUMBER#minus()
 	 */
 	@Override
-	public INumber minus()
+	public tNUMBER minus()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -208,10 +198,10 @@ public class NumComplex implements IComplex
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#inversion()
+	 * @see aloyslisp.core.math.tNUMBER#inversion()
 	 */
 	@Override
-	public INumber inversion()
+	public tNUMBER inversion()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -219,10 +209,10 @@ public class NumComplex implements IComplex
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#multiply(aloyslisp.core.math.INumber)
+	 * @see aloyslisp.core.math.tNUMBER#multiply(aloyslisp.core.math.tNUMBER)
 	 */
 	@Override
-	public INumber multiply(INumber op)
+	public tNUMBER multiply(tNUMBER op)
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -230,10 +220,10 @@ public class NumComplex implements IComplex
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#division(aloyslisp.core.math.INumber)
+	 * @see aloyslisp.core.math.tNUMBER#division(aloyslisp.core.math.tNUMBER)
 	 */
 	@Override
-	public INumber division(INumber op)
+	public tNUMBER division(tNUMBER op)
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -241,10 +231,10 @@ public class NumComplex implements IComplex
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#realpart()
+	 * @see aloyslisp.core.math.tNUMBER#realpart()
 	 */
 	@Override
-	public INumber realpart()
+	public tNUMBER realpart()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -252,10 +242,10 @@ public class NumComplex implements IComplex
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#imagpart()
+	 * @see aloyslisp.core.math.tNUMBER#imagpart()
 	 */
 	@Override
-	public INumber imagpart()
+	public tNUMBER imagpart()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -263,10 +253,10 @@ public class NumComplex implements IComplex
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#conjugate()
+	 * @see aloyslisp.core.math.tNUMBER#conjugate()
 	 */
 	@Override
-	public INumber conjugate()
+	public tNUMBER conjugate()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -274,10 +264,10 @@ public class NumComplex implements IComplex
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#phase()
+	 * @see aloyslisp.core.math.tNUMBER#phase()
 	 */
 	@Override
-	public INumber phase()
+	public tNUMBER phase()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -285,10 +275,10 @@ public class NumComplex implements IComplex
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#abs()
+	 * @see aloyslisp.core.math.tNUMBER#abs()
 	 */
 	@Override
-	public IReal abs()
+	public tREAL abs()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -296,7 +286,7 @@ public class NumComplex implements IComplex
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#zerop()
+	 * @see aloyslisp.core.math.tNUMBER#zerop()
 	 */
 	@Override
 	public boolean zerop()
@@ -307,10 +297,10 @@ public class NumComplex implements IComplex
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#cis()
+	 * @see aloyslisp.core.math.tNUMBER#cis()
 	 */
 	@Override
-	public INumber cis()
+	public tNUMBER cis()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -318,10 +308,10 @@ public class NumComplex implements IComplex
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#sin()
+	 * @see aloyslisp.core.math.tNUMBER#sin()
 	 */
 	@Override
-	public INumber sin()
+	public tNUMBER sin()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -329,10 +319,10 @@ public class NumComplex implements IComplex
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#cos()
+	 * @see aloyslisp.core.math.tNUMBER#cos()
 	 */
 	@Override
-	public INumber cos()
+	public tNUMBER cos()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -340,10 +330,10 @@ public class NumComplex implements IComplex
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#tan()
+	 * @see aloyslisp.core.math.tNUMBER#tan()
 	 */
 	@Override
-	public INumber tan()
+	public tNUMBER tan()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -351,10 +341,10 @@ public class NumComplex implements IComplex
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#asin()
+	 * @see aloyslisp.core.math.tNUMBER#asin()
 	 */
 	@Override
-	public INumber asin()
+	public tNUMBER asin()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -362,10 +352,10 @@ public class NumComplex implements IComplex
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#acos()
+	 * @see aloyslisp.core.math.tNUMBER#acos()
 	 */
 	@Override
-	public INumber acos()
+	public tNUMBER acos()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -373,10 +363,10 @@ public class NumComplex implements IComplex
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#atan()
+	 * @see aloyslisp.core.math.tNUMBER#atan()
 	 */
 	@Override
-	public INumber atan()
+	public tNUMBER atan()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -384,10 +374,10 @@ public class NumComplex implements IComplex
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#atan(aloyslisp.core.math.IReal)
+	 * @see aloyslisp.core.math.tNUMBER#atan(aloyslisp.core.math.tREAL)
 	 */
 	@Override
-	public INumber atan(IReal opt)
+	public tNUMBER atan(tREAL opt)
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -395,10 +385,10 @@ public class NumComplex implements IComplex
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#sinh()
+	 * @see aloyslisp.core.math.tNUMBER#sinh()
 	 */
 	@Override
-	public INumber sinh()
+	public tNUMBER sinh()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -406,10 +396,10 @@ public class NumComplex implements IComplex
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#cosh()
+	 * @see aloyslisp.core.math.tNUMBER#cosh()
 	 */
 	@Override
-	public INumber cosh()
+	public tNUMBER cosh()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -417,10 +407,10 @@ public class NumComplex implements IComplex
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#tanh()
+	 * @see aloyslisp.core.math.tNUMBER#tanh()
 	 */
 	@Override
-	public INumber tanh()
+	public tNUMBER tanh()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -428,10 +418,10 @@ public class NumComplex implements IComplex
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#asinh()
+	 * @see aloyslisp.core.math.tNUMBER#asinh()
 	 */
 	@Override
-	public INumber asinh()
+	public tNUMBER asinh()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -439,10 +429,10 @@ public class NumComplex implements IComplex
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#acosh()
+	 * @see aloyslisp.core.math.tNUMBER#acosh()
 	 */
 	@Override
-	public INumber acosh()
+	public tNUMBER acosh()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -450,10 +440,10 @@ public class NumComplex implements IComplex
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#atanh()
+	 * @see aloyslisp.core.math.tNUMBER#atanh()
 	 */
 	@Override
-	public INumber atanh()
+	public tNUMBER atanh()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -461,10 +451,10 @@ public class NumComplex implements IComplex
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#log()
+	 * @see aloyslisp.core.math.tNUMBER#log()
 	 */
 	@Override
-	public INumber log()
+	public tNUMBER log()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -472,10 +462,10 @@ public class NumComplex implements IComplex
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#sqrt()
+	 * @see aloyslisp.core.math.tNUMBER#sqrt()
 	 */
 	@Override
-	public INumber sqrt()
+	public tNUMBER sqrt()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -483,10 +473,10 @@ public class NumComplex implements IComplex
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#exp()
+	 * @see aloyslisp.core.math.tNUMBER#exp()
 	 */
 	@Override
-	public INumber exp()
+	public tNUMBER exp()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -494,10 +484,10 @@ public class NumComplex implements IComplex
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#expt(aloyslisp.core.math.INumber)
+	 * @see aloyslisp.core.math.tNUMBER#expt(aloyslisp.core.math.tNUMBER)
 	 */
 	@Override
-	public INumber expt(INumber power)
+	public tNUMBER expt(tNUMBER power)
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -505,10 +495,10 @@ public class NumComplex implements IComplex
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#random()
+	 * @see aloyslisp.core.math.tNUMBER#random()
 	 */
 	@Override
-	public INumber random()
+	public tNUMBER random()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -517,10 +507,10 @@ public class NumComplex implements IComplex
 	/*
 	 * (non-Javadoc)
 	 * @see
-	 * aloyslisp.core.math.INumber#random(aloyslisp.core.numbers.tRANDOM_STATE)
+	 * aloyslisp.core.math.tNUMBER#random(aloyslisp.core.numbers.tRANDOM_STATE)
 	 */
 	@Override
-	public INumber random(tRANDOM_STATE st)
+	public tNUMBER random(tRANDOM_STATE st)
 	{
 		// TODO Auto-generated method stub
 		return null;

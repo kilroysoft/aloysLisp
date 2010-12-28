@@ -29,73 +29,31 @@
 
 package aloyslisp.core.math;
 
-import aloyslisp.core.numbers.*;
-
 /**
- * NumShort
+ * SINGLE_FLOAT
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class NumShort extends NumReal implements IFloat
+public class SINGLE_FLOAT extends FLOAT implements tSINGLE_FLOAT
 {
-	public short	value;
+	public float	value;
 
 	/**
 	 * @param init
 	 */
-	public NumShort(Integer init)
+	public SINGLE_FLOAT(float init)
 	{
-		value = init.shortValue();
-	}
-
-	/**
-	 * @param init
-	 */
-	public NumShort(Long init)
-	{
-		value = init.shortValue();
-	}
-
-	/**
-	 * @param init
-	 */
-	public NumShort(Short init)
-	{
-		value = init.shortValue();
-	}
-
-	/**
-	 * @param init
-	 */
-	public NumShort(Float init)
-	{
-		value = init.shortValue();
-	}
-
-	/**
-	 * @param init
-	 */
-	public NumShort(Double init)
-	{
-		value = init.shortValue();
-	}
-
-	/**
-	 * @param init
-	 */
-	public NumShort(INumber init)
-	{
-		value = init.getShortValue().value;
+		value = init;
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#ratioValue()
+	 * @see aloyslisp.core.math.tNUMBER#coerce(aloyslisp.core.math.tNUMBER)
 	 */
 	@Override
-	public NumRatio getRatioValue()
+	public tNUMBER coerce(tNUMBER var)
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -103,10 +61,10 @@ public class NumShort extends NumReal implements IFloat
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#complexValue()
+	 * @see aloyslisp.core.math.tNUMBER#ratioValue()
 	 */
 	@Override
-	public NumComplex getComplexValue()
+	public RATIO getRatioValue()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -114,10 +72,10 @@ public class NumShort extends NumReal implements IFloat
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#integerValue()
+	 * @see aloyslisp.core.math.tNUMBER#complexValue()
 	 */
 	@Override
-	public NumInteger getIntegerValue()
+	public COMPLEX getComplexValue()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -125,10 +83,10 @@ public class NumShort extends NumReal implements IFloat
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#floatValue()
+	 * @see aloyslisp.core.math.tNUMBER#integerValue()
 	 */
 	@Override
-	public NumFloat getFloatValue()
+	public BIGNUM getIntegerValue()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -136,10 +94,10 @@ public class NumShort extends NumReal implements IFloat
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#doubleValue()
+	 * @see aloyslisp.core.math.tNUMBER#floatValue()
 	 */
 	@Override
-	public NumDouble getDoubleValue()
+	public SINGLE_FLOAT getFloatValue()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -147,10 +105,10 @@ public class NumShort extends NumReal implements IFloat
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#shortValue()
+	 * @see aloyslisp.core.math.tNUMBER#doubleValue()
 	 */
 	@Override
-	public NumShort getShortValue()
+	public DOUBLE_FLOAT getDoubleValue()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -158,21 +116,21 @@ public class NumShort extends NumReal implements IFloat
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#make()
+	 * @see aloyslisp.core.math.tNUMBER#shortValue()
 	 */
 	@Override
-	public SHORT make()
+	public SHORT_FLOAT getShortValue()
 	{
-		// create SHORT
-		return new SHORT(this);
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.IReal#equal(aloyslisp.core.math.INumber)
+	 * @see aloyslisp.core.math.tREAL#equal(aloyslisp.core.math.tNUMBER)
 	 */
 	@Override
-	public boolean equal(INumber op)
+	public boolean equal(tNUMBER op)
 	{
 		// TODO Auto-generated method stub
 		return false;
@@ -180,10 +138,10 @@ public class NumShort extends NumReal implements IFloat
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.IReal#greater(aloyslisp.core.math.INumber)
+	 * @see aloyslisp.core.math.tREAL#greater(aloyslisp.core.math.tNUMBER)
 	 */
 	@Override
-	public boolean greater(INumber op)
+	public boolean greater(tNUMBER op)
 	{
 		// TODO Auto-generated method stub
 		return false;
@@ -191,10 +149,10 @@ public class NumShort extends NumReal implements IFloat
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.IReal#lower(aloyslisp.core.math.INumber)
+	 * @see aloyslisp.core.math.tREAL#lower(aloyslisp.core.math.tNUMBER)
 	 */
 	@Override
-	public boolean lower(INumber op)
+	public boolean lower(tNUMBER op)
 	{
 		// TODO Auto-generated method stub
 		return false;
@@ -202,10 +160,10 @@ public class NumShort extends NumReal implements IFloat
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.IReal#rational()
+	 * @see aloyslisp.core.math.tREAL#rational()
 	 */
 	@Override
-	public IRational rational()
+	public tRATIONAL rational()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -213,10 +171,10 @@ public class NumShort extends NumReal implements IFloat
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.IReal#rationalize()
+	 * @see aloyslisp.core.math.tREAL#rationalize()
 	 */
 	@Override
-	public IRational rationalize()
+	public tRATIONAL rationalize()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -224,10 +182,10 @@ public class NumShort extends NumReal implements IFloat
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#add(aloyslisp.core.math.INumber)
+	 * @see aloyslisp.core.math.tNUMBER#add(aloyslisp.core.math.tNUMBER)
 	 */
 	@Override
-	public INumber add(INumber op)
+	public tNUMBER add(tNUMBER op)
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -235,10 +193,10 @@ public class NumShort extends NumReal implements IFloat
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#substract(aloyslisp.core.math.INumber)
+	 * @see aloyslisp.core.math.tNUMBER#substract(aloyslisp.core.math.tNUMBER)
 	 */
 	@Override
-	public INumber substract(INumber op)
+	public tNUMBER substract(tNUMBER op)
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -246,10 +204,10 @@ public class NumShort extends NumReal implements IFloat
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#minus()
+	 * @see aloyslisp.core.math.tNUMBER#minus()
 	 */
 	@Override
-	public INumber minus()
+	public tNUMBER minus()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -257,10 +215,10 @@ public class NumShort extends NumReal implements IFloat
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#inversion()
+	 * @see aloyslisp.core.math.tNUMBER#inversion()
 	 */
 	@Override
-	public INumber inversion()
+	public tNUMBER inversion()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -268,10 +226,10 @@ public class NumShort extends NumReal implements IFloat
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#multiply(aloyslisp.core.math.INumber)
+	 * @see aloyslisp.core.math.tNUMBER#multiply(aloyslisp.core.math.tNUMBER)
 	 */
 	@Override
-	public INumber multiply(INumber op)
+	public tNUMBER multiply(tNUMBER op)
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -279,10 +237,10 @@ public class NumShort extends NumReal implements IFloat
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.INumber#division(aloyslisp.core.math.INumber)
+	 * @see aloyslisp.core.math.tNUMBER#division(aloyslisp.core.math.tNUMBER)
 	 */
 	@Override
-	public INumber division(INumber op)
+	public tNUMBER division(tNUMBER op)
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -290,10 +248,10 @@ public class NumShort extends NumReal implements IFloat
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.IFloat#decode_float(aloyslisp.core.math.IFloat)
+	 * @see aloyslisp.core.math.tFLOAT#decode_float(aloyslisp.core.math.tFLOAT)
 	 */
 	@Override
-	public IFloat[] decode_float(IFloat f)
+	public tFLOAT[] decode_float(tFLOAT f)
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -302,11 +260,11 @@ public class NumShort extends NumReal implements IFloat
 	/*
 	 * (non-Javadoc)
 	 * @see
-	 * aloyslisp.core.math.IFloat#integer_decode_float(aloyslisp.core.math.IFloat
+	 * aloyslisp.core.math.tFLOAT#integer_decode_float(aloyslisp.core.math.tFLOAT
 	 * )
 	 */
 	@Override
-	public IFloat[] integer_decode_float(IFloat f)
+	public tFLOAT[] integer_decode_float(tFLOAT f)
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -314,11 +272,11 @@ public class NumShort extends NumReal implements IFloat
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.IFloat#scale_float(aloyslisp.core.math.IFloat,
-	 * aloyslisp.core.math.IInteger)
+	 * @see aloyslisp.core.math.tFLOAT#scale_float(aloyslisp.core.math.tFLOAT,
+	 * aloyslisp.core.math.tINTEGER)
 	 */
 	@Override
-	public IFloat scale_float(IFloat f, IInteger scale)
+	public tFLOAT scale_float(tFLOAT f, tINTEGER scale)
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -326,10 +284,10 @@ public class NumShort extends NumReal implements IFloat
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.IFloat#float_radix(aloyslisp.core.math.IFloat)
+	 * @see aloyslisp.core.math.tFLOAT#float_radix(aloyslisp.core.math.tFLOAT)
 	 */
 	@Override
-	public IFloat float_radix(IFloat f)
+	public tFLOAT float_radix(tFLOAT f)
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -337,11 +295,11 @@ public class NumShort extends NumReal implements IFloat
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.IFloat#float_sign(aloyslisp.core.math.IFloat,
-	 * aloyslisp.core.math.IFloat)
+	 * @see aloyslisp.core.math.tFLOAT#float_sign(aloyslisp.core.math.tFLOAT,
+	 * aloyslisp.core.math.tFLOAT)
 	 */
 	@Override
-	public IFloat float_sign(IFloat f, IFloat f2)
+	public tFLOAT float_sign(tFLOAT f, tFLOAT f2)
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -349,10 +307,10 @@ public class NumShort extends NumReal implements IFloat
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.IFloat#float_digits(aloyslisp.core.math.IFloat)
+	 * @see aloyslisp.core.math.tFLOAT#float_digits(aloyslisp.core.math.tFLOAT)
 	 */
 	@Override
-	public IInteger float_digits(IFloat f)
+	public tINTEGER float_digits(tFLOAT f)
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -361,10 +319,10 @@ public class NumShort extends NumReal implements IFloat
 	/*
 	 * (non-Javadoc)
 	 * @see
-	 * aloyslisp.core.math.IFloat#float_precision(aloyslisp.core.math.IFloat)
+	 * aloyslisp.core.math.tFLOAT#float_precision(aloyslisp.core.math.tFLOAT)
 	 */
 	@Override
-	public IInteger float_precision(IFloat f)
+	public tINTEGER float_precision(tFLOAT f)
 	{
 		// TODO Auto-generated method stub
 		return null;

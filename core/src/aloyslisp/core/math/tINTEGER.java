@@ -29,19 +29,17 @@
 
 package aloyslisp.core.math;
 
+import aloyslisp.core.plugs.tT;
+
 /**
- * IInteger
+ * tINTEGER
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public interface IInteger extends IRational
+public interface tINTEGER extends tRATIONAL
 {
-	/* *******************************************************************
-	 * FACTORY
-	 */
-
 	/* *******************************************************************
 	 * OPERATOR
 	 */
@@ -51,7 +49,7 @@ public interface IInteger extends IRational
 	 * @param op
 	 * @return
 	 */
-	public IInteger lcm(IInteger op);
+	public tINTEGER lcm(tINTEGER op);
 
 	/**
 	 * Greather common denumerator
@@ -59,7 +57,7 @@ public interface IInteger extends IRational
 	 * @param op
 	 * @return
 	 */
-	public IInteger gcd(IInteger op);
+	public tINTEGER gcd(tINTEGER op);
 
 	/**
 	 * Arithmetic AND
@@ -67,7 +65,7 @@ public interface IInteger extends IRational
 	 * @param op
 	 * @return
 	 */
-	public IInteger logand(IInteger op);
+	public tINTEGER logand(tINTEGER op);
 
 	/**
 	 * Arithmetic NAND
@@ -75,7 +73,7 @@ public interface IInteger extends IRational
 	 * @param op
 	 * @return
 	 */
-	public IInteger lognand(IInteger op);
+	public tINTEGER lognand(tINTEGER op);
 
 	/**
 	 * Arithmetic NAND COMPLEMENT 1
@@ -83,7 +81,7 @@ public interface IInteger extends IRational
 	 * @param op
 	 * @return
 	 */
-	public IInteger logandc1(IInteger op);
+	public tINTEGER logandc1(tINTEGER op);
 
 	/**
 	 * Arithmetic AND COMPLEMENT 2
@@ -91,7 +89,7 @@ public interface IInteger extends IRational
 	 * @param op
 	 * @return
 	 */
-	public IInteger logandc2(IInteger op);
+	public tINTEGER logandc2(tINTEGER op);
 
 	/**
 	 * Arithmetic OR
@@ -99,7 +97,7 @@ public interface IInteger extends IRational
 	 * @param op
 	 * @return
 	 */
-	public IInteger logior(IInteger op);
+	public tINTEGER logior(tINTEGER op);
 
 	/**
 	 * Arithmetic OR COMPLEMENT 1
@@ -107,7 +105,7 @@ public interface IInteger extends IRational
 	 * @param op
 	 * @return
 	 */
-	public IInteger logorc1(IInteger op);
+	public tINTEGER logorc1(tINTEGER op);
 
 	/**
 	 * Arithmetic OR COMPLEMENT 2
@@ -115,7 +113,7 @@ public interface IInteger extends IRational
 	 * @param op
 	 * @return
 	 */
-	public IInteger logorc2(IInteger op);
+	public tINTEGER logorc2(tINTEGER op);
 
 	/**
 	 * Arithmetic XOR
@@ -123,7 +121,7 @@ public interface IInteger extends IRational
 	 * @param op
 	 * @return
 	 */
-	public IInteger logxor(IInteger op);
+	public tINTEGER logxor(tINTEGER op);
 
 	/**
 	 * Arithmetic EQUIVALENCE
@@ -131,14 +129,14 @@ public interface IInteger extends IRational
 	 * @param op
 	 * @return
 	 */
-	public IInteger logeqv(IInteger op);
+	public tINTEGER logeqv(tINTEGER op);
 
 	/**
 	 * Arithmetic NOT (complement to 0)
 	 * 
 	 * @return
 	 */
-	public IInteger lognot();
+	public tINTEGER lognot();
 
 	/* *******************************************************************
 	 * FUNCTIONS
@@ -157,7 +155,7 @@ public interface IInteger extends IRational
 	 * @param op
 	 * @return
 	 */
-	public IInteger logtest(IInteger op);
+	public tINTEGER logtest(tINTEGER op);
 
 	/**
 	 * Arithmetic bit count
@@ -165,7 +163,7 @@ public interface IInteger extends IRational
 	 * @param op
 	 * @return
 	 */
-	public IInteger logcount(IInteger op);
+	public tINTEGER logcount(tINTEGER op);
 
 	/**
 	 * Arithmetic bit test
@@ -173,7 +171,7 @@ public interface IInteger extends IRational
 	 * @param op
 	 * @return
 	 */
-	public IInteger logbitp(IInteger op);
+	public tINTEGER logbitp(tINTEGER op);
 
 	/**
 	 * Arithmetic bit shift
@@ -181,7 +179,7 @@ public interface IInteger extends IRational
 	 * @param count
 	 * @return
 	 */
-	public IInteger ash(IInteger count);
+	public tINTEGER ash(tINTEGER count);
 
 	/**
 	 * @return
@@ -196,12 +194,159 @@ public interface IInteger extends IRational
 	/**
 	 * @return
 	 */
-	public IInteger isqrt();
+	public tINTEGER isqrt();
 
 	/**
 	 * @return
 	 */
-	public IInteger integer_length();
+	public tINTEGER integer_length();
 
-	
+	/********************************************************
+	 * LISP FUNCTIONS
+	 */
+	/* *******************************************************************
+	 * OPERATOR
+	 */
+	/**
+	 * Less common multiplicand
+	 * 
+	 * @param op
+	 * @return
+	 */
+	public tINTEGER LCM(tT op);
+
+	/**
+	 * Greather common denumerator
+	 * 
+	 * @param op
+	 * @return
+	 */
+	public tINTEGER GCD(tT op);
+
+	/**
+	 * Arithmetic AND
+	 * 
+	 * @param op
+	 * @return
+	 */
+	public tINTEGER LOGAND(tT op);
+
+	/**
+	 * Arithmetic NAND
+	 * 
+	 * @param op
+	 * @return
+	 */
+	public tINTEGER LOGNAND(tINTEGER op);
+
+	/**
+	 * Arithmetic NAND COMPLEMENT 1
+	 * 
+	 * @param op
+	 * @return
+	 */
+	public tINTEGER LOGANDC1(tINTEGER op);
+
+	/**
+	 * Arithmetic AND COMPLEMENT 2
+	 * 
+	 * @param op
+	 * @return
+	 */
+	public tINTEGER LOGANDC2(tINTEGER op);
+
+	/**
+	 * Arithmetic OR
+	 * 
+	 * @param op
+	 * @return
+	 */
+	public tINTEGER LOGIOR(tT op);
+
+	/**
+	 * Arithmetic OR COMPLEMENT 1
+	 * 
+	 * @param op
+	 * @return
+	 */
+	public tINTEGER LOGORC1(tINTEGER op);
+
+	/**
+	 * Arithmetic OR COMPLEMENT 2
+	 * 
+	 * @param op
+	 * @return
+	 */
+	public tINTEGER LOGORC2(tINTEGER op);
+
+	/**
+	 * Arithmetic XOR
+	 * 
+	 * @param op
+	 * @return
+	 */
+	public tINTEGER LOGXOR(tT op);
+
+	/**
+	 * Arithmetic EQUIVALENCE
+	 * 
+	 * @param op
+	 * @return
+	 */
+	public tINTEGER LOGEQV(tT op);
+
+	/**
+	 * Arithmetic NOT (complement to 0)
+	 * 
+	 * @return
+	 */
+	public tINTEGER LOGNOT();
+
+	/* *******************************************************************
+	 * FUNCTIONS
+	 */
+	/**
+	 * Arithmetic bit count
+	 * 
+	 * @param op
+	 * @return
+	 */
+	public tINTEGER LOGCOUNT(tINTEGER op);
+
+	/**
+	 * Arithmetic bit test
+	 * 
+	 * @param op
+	 * @return
+	 */
+	public tINTEGER LOGBITP(tINTEGER op);
+
+	/**
+	 * Arithmetic bit shift
+	 * 
+	 * @param count
+	 * @return
+	 */
+	public tINTEGER ASH(tINTEGER count);
+
+	/**
+	 * @return
+	 */
+	public boolean EVENP();
+
+	/**
+	 * @return
+	 */
+	public boolean ODDP();
+
+	/**
+	 * @return
+	 */
+	public tINTEGER ISQRT();
+
+	/**
+	 * @return
+	 */
+	public tINTEGER INTEGER_LENGTH();
+
 }

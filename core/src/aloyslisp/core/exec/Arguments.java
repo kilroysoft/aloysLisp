@@ -40,12 +40,8 @@ import static aloyslisp.commonlisp.L.*;
 import java.util.*;
 
 import aloyslisp.core.conditions.LispException;
-import aloyslisp.core.math.*;
 import aloyslisp.core.plugs.*;
-import aloyslisp.core.sequences.CONS;
-import aloyslisp.core.sequences.tCONS;
-import aloyslisp.core.sequences.tLIST;
-import aloyslisp.core.sequences.tSTRING;
+import aloyslisp.core.sequences.*;
 
 /**
  * Arguments

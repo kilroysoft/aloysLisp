@@ -37,14 +37,9 @@ import java.lang.reflect.*;
 import aloyslisp.core.conditions.LispException;
 import aloyslisp.core.exec.*;
 import aloyslisp.core.math.*;
-import aloyslisp.core.numbers.tNUMBER;
-import aloyslisp.core.plugs.CELL;
-import aloyslisp.core.plugs.tSYMBOL;
-import aloyslisp.core.plugs.tT;
-import aloyslisp.core.sequences.tLIST;
-import aloyslisp.core.sequences.tSEQUENCE;
-import aloyslisp.core.sequences.tSTRING;
-import aloyslisp.core.streams.tCHARACTER;
+import aloyslisp.core.plugs.*;
+import aloyslisp.core.sequences.*;
+import aloyslisp.core.streams.*;
 
 /**
  * FUNCTION
@@ -407,17 +402,6 @@ public abstract class FUNCTION extends CELL implements tFUNCTION
 		return intern;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.types.tT#coerce(aloyslisp.core.types.tT)
-	 */
-	@Override
-	public tT COERCE(tT type)
-	{
-		// IMPLEMENT Coerce
-		return null;
-	}
-
 	/**
 	 * @param c
 	 * @param obj
@@ -525,7 +509,7 @@ public abstract class FUNCTION extends CELL implements tFUNCTION
 
 		if (cl == Long.class && arg instanceof tNUMBER)
 		{
-			res = ((tNUMBER) arg).getIntegerValue();
+			res = ((tNUMBER) arg).integerValue();
 		}
 
 		if (cl == Float.class && arg instanceof tNUMBER)
@@ -574,8 +558,6 @@ public abstract class FUNCTION extends CELL implements tFUNCTION
 			return bool((Boolean) cell);
 		else if (cell instanceof Integer)
 			return nInt((Integer) cell);
-		else if (cell instanceof Long)
-			return nLong((Long) cell);
 		else if (cell instanceof Float)
 			return nFloat((Float) cell);
 		else if (cell instanceof Double)
