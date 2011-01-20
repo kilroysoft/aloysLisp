@@ -24,38 +24,33 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 20 déc. 2010 Creation
+// IP 29 déc. 2010 Creation
 // --------------------------------------------------------------------------
 
 package aloyslisp.core.conditions;
 
+import aloyslisp.core.plugs.tT;
+import aloyslisp.core.sequences.tLIST;
+
 /**
- * CONDITION
+ * SIMPLE_ERROR
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class CONDITION extends LispException
+public class SIMPLE_ERROR extends SIMPLE_CONDITION
 {
 	private static final long	serialVersionUID	= 1L;
 
-	protected String message = "";
-	
 	/**
-	 * @param message
+	 * @param control
+	 * @param args
 	 */
-	public CONDITION()
+	public SIMPLE_ERROR(tT control, tLIST args)
 	{
-		super("");
-	}
-	
-	/* (non-Javadoc)
-	 * @see java.lang.Throwable#getMessage()
-	 */
-	public String getMessage()
-	{
-		return message;
+		super(control, args);
+		// TODO Auto-generated constructor stub
 	}
 
 }

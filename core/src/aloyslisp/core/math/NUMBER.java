@@ -29,7 +29,10 @@
 
 package aloyslisp.core.math;
 
+import static aloyslisp.commonlisp.L.*;
 import aloyslisp.core.plugs.*;
+import aloyslisp.core.sequences.*;
+import aloyslisp.core.conditions.*;
 
 /**
  * NUMBER
@@ -44,20 +47,319 @@ public abstract class NUMBER extends CELL implements tNUMBER
 	/**
 	 * Constant 0
 	 */
-	public static final BIGNUM	ONE		= new BIGNUM(1);
+	public static final BIGNUM			ZERO	= new BIGNUM(0);
 
 	/**
 	 * Constant 1
 	 */
-	public static final BIGNUM	ZERO	= new BIGNUM(0);
+	public static final BIGNUM			ONE		= new BIGNUM(1);
+
+	/**
+	 * Constant 2
+	 */
+	public static final BIGNUM			TWO		= new BIGNUM(2);
+
+	/**
+	 * Constant 10
+	 */
+	public static final BIGNUM			TEN		= new BIGNUM(10);
+
+	/**
+	 * Constant PI
+	 */
+	public static final DOUBLE_FLOAT	PI		= new DOUBLE_FLOAT(Math.PI);
+
+	/**
+	 * Constant E
+	 */
+	public static final DOUBLE_FLOAT	E		= new DOUBLE_FLOAT(Math.E);
+
+	/**
+	 * Constant I
+	 */
+	public static final COMPLEX			I		= new COMPLEX(ZERO, ONE);
+
+	/**
+	 * @return
+	 */
+	abstract tNUMBER complexifyValue();
+
+	/* *******************************************************************
+	 * OPERATORS
+	 */
+	/**
+	 * Test equality a == b
+	 * 
+	 * @param op
+	 * @return
+	 */
+	abstract boolean equalnum(tNUMBER op);
+
+	/**
+	 * Add a + b
+	 * 
+	 * @param a
+	 * @param b
+	 * @return
+	 */
+	abstract tNUMBER add(tNUMBER op);
+
+	/**
+	 * Substract a - b
+	 * 
+	 * @param a
+	 * @param b
+	 * @return
+	 */
+	abstract tNUMBER substract(tNUMBER op);
+
+	/**
+	 * Minus -a
+	 * 
+	 * @param a
+	 * @return
+	 */
+	abstract tNUMBER minus();
+
+	/**
+	 * Inversion 1/a
+	 * 
+	 * @param a
+	 * @return
+	 */
+	abstract tNUMBER inversion();
+
+	/**
+	 * Multiply a * b
+	 * 
+	 * @param a
+	 * @param b
+	 * @return
+	 */
+	abstract tNUMBER multiply(tNUMBER op);
+
+	/**
+	 * Division a / b
+	 * 
+	 * @param a
+	 * @param b
+	 * @return
+	 */
+	abstract tNUMBER division(tNUMBER op);
+
+	/* *******************************************************************
+	 * ACCESSORS
+	 */
+	/**
+	 * /**
+	 * Real value (for complex)
+	 * 
+	 * @param a
+	 * @return
+	 */
+	abstract tNUMBER realpart();
+
+	/**
+	 * Imaginary part (for complex) a + bi -> b
+	 * 
+	 * @param a
+	 * @return
+	 */
+	abstract tNUMBER imagpart();
+
+	/* *******************************************************************
+	 * FUNCTIONS COMPLEX
+	 */
+	/**
+	 * COMPLEX conjugate a + bi -> a - bi
+	 * 
+	 * @param a
+	 * @return
+	 */
+	abstract tNUMBER conjugate();
+
+	/**
+	 * Polar value (for complex)
+	 * 
+	 * @param a
+	 * @return
+	 */
+	abstract tNUMBER phase();
+
+	/* *******************************************************************
+	 * FUNCTIONS
+	 */
+	/**
+	 * Absolute value ||a||, mod for complex
+	 * 
+	 * @return
+	 */
+	abstract tREAL abs();
+
+	/**
+	 * @return
+	 */
+	abstract boolean zerop();
+
+	/**
+	 * @return
+	 */
+	abstract tNUMBER sin();
+
+	/**
+	 * @return
+	 */
+	abstract tNUMBER cos();
+
+	/**
+	 * @return
+	 */
+	abstract tNUMBER tan();
+
+	/**
+	 * @return
+	 */
+	abstract tNUMBER asin();
+
+	/**
+	 * @return
+	 */
+	abstract tNUMBER acos();
+
+	/**
+	 * @return
+	 */
+	abstract tNUMBER atan();
+
+	/**
+	 * @param opt
+	 * @return
+	 */
+	abstract tNUMBER atan(tREAL opt);
+
+	/**
+	 * @return
+	 */
+	abstract tNUMBER log();
+
+	/**
+	 * @return
+	 */
+	tNUMBER log(tREAL base)
+	{
+		if (base.ZEROP())
+			return ZERO;
+		return LOG().DIVISION(base.LOG());
+	}
+
+	/**
+	 * @return
+	 */
+	abstract tNUMBER sqrt();
+
+	/**
+	 * @return
+	 */
+	abstract tNUMBER exp();
+
+	/**
+	 * @param power
+	 * @return
+	 */
+	abstract tNUMBER expt(tNUMBER power);
 
 	/**
 	 * @param number
 	 * @return
 	 */
-	public static tREAL create(String number)
+	public static tREAL create(String nb)
 	{
+		// floating point
+		if (nb.matches("^(-|\\+)?\\d*\\.\\d+([esfdlESFDL](-|\\+)?\\d+)?$")
+				|| nb.matches("^(-|\\+)?\\d+(\\.\\d*)?[esfdlESFDL](-|\\+)?\\d+$"))
+		{
+			// double
+			if (nb.matches(".+[lL].+"))
+			{
+				nb = nb.replaceAll("[lL]", "e") + "d";
+				return new LONG_FLOAT(Double.valueOf(nb));
+			}
+
+			if (nb.matches(".+[ldLD].+"))
+			{
+				nb = nb.replaceAll("[dD]", "e") + "d";
+				return new DOUBLE_FLOAT(Double.valueOf(nb));
+			}
+
+			// short
+			if (nb.matches(".+[sS].+"))
+			{
+				nb = nb.replaceAll("[sS]", "e") + "f";
+				return new SHORT_FLOAT(Float.valueOf(nb));
+			}
+			// float
+			if (nb.matches(".+[efEF].+"))
+			{
+				nb = nb.replaceAll("[efEF]", "e") + "f";
+			}
+
+			// by default single float
+			return new SINGLE_FLOAT(Float.valueOf(nb));
+		}
+
+		int base = ((tNUMBER) readBase.SYMBOL_VALUE()).getIntegerValue()
+				.integerValue();
+		if (base < 2 || base > 37)
+			base = 10;
+		String strBase = "[0-";
+		if (base <= 10)
+			strBase += "" + (base - 1) + "]";
+		else
+		{
+			strBase += "9A-" + ('A' + (base - 11)) + "]";
+		}
+		// ratio
+		System.out.println("Match ..." + nb + ":" + "^[-\\+]?" + strBase + "+/"
+				+ strBase + "+$");
+		if (nb.matches("^[-\\+]?" + strBase + "+/" + strBase + "+"))
+		{
+			String[] rat = nb.split("/");
+			System.out.println("Match ..." + rat[0] + " / " + rat[1]);
+			return new RATIO(new BIGNUM(rat[0], base), new BIGNUM(rat[1], base));
+		}
+
+		// Integer
+		if (nb.matches("^[-\\+]?" + strBase + "+$"))
+		{
+			return new BIGNUM(nb, base);
+		}
+
 		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tNUMBER#EQUALNUM(aloyslisp.core.plugs.tT)
+	 */
+	public boolean EQUALNUM(tT op)
+	{
+		if (op instanceof tNUMBER)
+		{
+			return ((NUMBER) coerce((NUMBER) op)).equalnum((tNUMBER) op);
+		}
+		else if (op == NIL)
+		{
+			return true;
+		}
+		else if (op instanceof tLIST)
+		{
+			tLIST list = (tLIST) op;
+			if (!EQUALNUM(list.CAR()))
+				return false;
+			return EQUALNUM(list.CDR());
+		}
+
+		throw new TYPE_ERROR(op, sym("number"));
 	}
 
 	/*
@@ -67,8 +369,24 @@ public abstract class NUMBER extends CELL implements tNUMBER
 	@Override
 	public tNUMBER ADD(tT op)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		if (op instanceof tNUMBER)
+		{
+			return ((NUMBER) coerce((NUMBER) op)).add((tNUMBER) op);
+		}
+		else if (op == NIL)
+		{
+			return this;
+		}
+		else if (op instanceof tLIST)
+		{
+			tLIST list = (tLIST) op;
+			if (list.LENGTH() == 1)
+				return this.ADD((tNUMBER) list.CAR());
+			else
+				return this.ADD((tNUMBER) list.CAR()).ADD(list.CDR());
+		}
+
+		throw new TYPE_ERROR(op, sym("number"));
 	}
 
 	/*
@@ -78,8 +396,25 @@ public abstract class NUMBER extends CELL implements tNUMBER
 	@Override
 	public tNUMBER SUBSTRACT(tT op)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		if (op instanceof tNUMBER)
+		{
+			return ((NUMBER) coerce((NUMBER) op)).substract((tNUMBER) op);
+		}
+		else if (op == NIL)
+		{
+			return this;
+		}
+		else if (op instanceof tLIST)
+		{
+			tLIST list = (tLIST) op;
+			if (list.LENGTH() == 1)
+				return this.SUBSTRACT((tNUMBER) list.CAR());
+			else
+				return this.SUBSTRACT((tNUMBER) list.CAR()).SUBSTRACT(
+						list.CDR());
+		}
+
+		throw new TYPE_ERROR(op, sym("number"));
 	}
 
 	/*
@@ -89,8 +424,7 @@ public abstract class NUMBER extends CELL implements tNUMBER
 	@Override
 	public tNUMBER MINUS()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return minus();
 	}
 
 	/*
@@ -100,8 +434,7 @@ public abstract class NUMBER extends CELL implements tNUMBER
 	@Override
 	public tNUMBER INVERSION()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return inversion();
 	}
 
 	/*
@@ -111,8 +444,24 @@ public abstract class NUMBER extends CELL implements tNUMBER
 	@Override
 	public tNUMBER MULTIPLY(tT op)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		if (op instanceof tNUMBER)
+		{
+			return ((NUMBER) coerce((NUMBER) op)).multiply((tNUMBER) op);
+		}
+		else if (op == NIL)
+		{
+			return this;
+		}
+		else if (op instanceof tLIST)
+		{
+			tLIST list = (tLIST) op;
+			if (list.LENGTH() == 1)
+				return this.MULTIPLY((tNUMBER) list.CAR());
+			else
+				return this.MULTIPLY((tNUMBER) list.CAR()).MULTIPLY(list.CDR());
+		}
+
+		throw new TYPE_ERROR(op, sym("number"));
 	}
 
 	/*
@@ -122,8 +471,24 @@ public abstract class NUMBER extends CELL implements tNUMBER
 	@Override
 	public tNUMBER DIVISION(tT op)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		if (op instanceof tNUMBER)
+		{
+			return ((NUMBER) coerce((NUMBER) op)).division((tNUMBER) op);
+		}
+		else if (op == NIL)
+		{
+			return this;
+		}
+		else if (op instanceof tLIST)
+		{
+			tLIST list = (tLIST) op;
+			if (list.LENGTH() == 1)
+				return this.DIVISION((tNUMBER) list.CAR());
+			else
+				return this.DIVISION((tNUMBER) list.CAR()).DIVISION(list.CDR());
+		}
+
+		throw new TYPE_ERROR(op, sym("number"));
 	}
 
 	/*
@@ -133,8 +498,7 @@ public abstract class NUMBER extends CELL implements tNUMBER
 	@Override
 	public tNUMBER REALPART()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return realpart();
 	}
 
 	/*
@@ -144,8 +508,7 @@ public abstract class NUMBER extends CELL implements tNUMBER
 	@Override
 	public tNUMBER IMAGPART()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return imagpart();
 	}
 
 	/*
@@ -155,8 +518,7 @@ public abstract class NUMBER extends CELL implements tNUMBER
 	@Override
 	public tNUMBER CONJUGATE()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return conjugate();
 	}
 
 	/*
@@ -166,8 +528,7 @@ public abstract class NUMBER extends CELL implements tNUMBER
 	@Override
 	public tNUMBER PHASE()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return phase();
 	}
 
 	/*
@@ -177,8 +538,7 @@ public abstract class NUMBER extends CELL implements tNUMBER
 	@Override
 	public tREAL ABS()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return abs();
 	}
 
 	/*
@@ -188,19 +548,7 @@ public abstract class NUMBER extends CELL implements tNUMBER
 	@Override
 	public boolean ZEROP()
 	{
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#CIS()
-	 */
-	@Override
-	public tNUMBER CIS()
-	{
-		// TODO Auto-generated method stub
-		return null;
+		return zerop();
 	}
 
 	/*
@@ -210,8 +558,7 @@ public abstract class NUMBER extends CELL implements tNUMBER
 	@Override
 	public tNUMBER SIN()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return sin();
 	}
 
 	/*
@@ -221,8 +568,7 @@ public abstract class NUMBER extends CELL implements tNUMBER
 	@Override
 	public tNUMBER COS()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return cos();
 	}
 
 	/*
@@ -232,8 +578,7 @@ public abstract class NUMBER extends CELL implements tNUMBER
 	@Override
 	public tNUMBER TAN()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return tan();
 	}
 
 	/*
@@ -243,8 +588,7 @@ public abstract class NUMBER extends CELL implements tNUMBER
 	@Override
 	public tNUMBER ASIN()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return asin();
 	}
 
 	/*
@@ -254,8 +598,7 @@ public abstract class NUMBER extends CELL implements tNUMBER
 	@Override
 	public tNUMBER ACOS()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return acos();
 	}
 
 	/*
@@ -265,8 +608,16 @@ public abstract class NUMBER extends CELL implements tNUMBER
 	@Override
 	public tNUMBER ATAN(tT opt)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		if (opt == NIL)
+		{
+			return atan();
+		}
+		else if (opt instanceof tREAL)
+		{
+			return atan((tREAL) opt);
+		}
+
+		throw new TYPE_ERROR(opt, sym("real"));
 	}
 
 	/*
@@ -276,8 +627,8 @@ public abstract class NUMBER extends CELL implements tNUMBER
 	@Override
 	public tNUMBER SINH()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		tNUMBER xexp = this.EXP();
+		return xexp.SUBSTRACT(xexp.MINUS()).DIVISION(TWO);
 	}
 
 	/*
@@ -287,8 +638,8 @@ public abstract class NUMBER extends CELL implements tNUMBER
 	@Override
 	public tNUMBER COSH()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		tNUMBER xexp = this.EXP();
+		return xexp.ADD(xexp.MINUS()).DIVISION(TWO);
 	}
 
 	/*
@@ -298,8 +649,8 @@ public abstract class NUMBER extends CELL implements tNUMBER
 	@Override
 	public tNUMBER TANH()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		tNUMBER xexp = this.EXP();
+		return xexp.SUBSTRACT(xexp.MINUS()).DIVISION(xexp.ADD(xexp.MINUS()));
 	}
 
 	/*
@@ -309,8 +660,7 @@ public abstract class NUMBER extends CELL implements tNUMBER
 	@Override
 	public tNUMBER ASINH()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return this.ADD(ONE.ADD(this.EXPT(TWO))).LOG();
 	}
 
 	/*
@@ -320,8 +670,8 @@ public abstract class NUMBER extends CELL implements tNUMBER
 	@Override
 	public tNUMBER ACOSH()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return ADD(ONE).DIVISION(TWO).SQRT()
+				.ADD(SUBSTRACT(ONE).DIVISION(TWO).SQRT()).LOG().MULTIPLY(TWO);
 	}
 
 	/*
@@ -331,8 +681,8 @@ public abstract class NUMBER extends CELL implements tNUMBER
 	@Override
 	public tNUMBER ATANH()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return ADD(ONE).LOG().SUBSTRACT(ONE.SUBSTRACT(this).LOG())
+				.DIVISION(TWO);
 	}
 
 	/*
@@ -342,8 +692,7 @@ public abstract class NUMBER extends CELL implements tNUMBER
 	@Override
 	public tNUMBER LOG()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return log();
 	}
 
 	/*
@@ -353,8 +702,7 @@ public abstract class NUMBER extends CELL implements tNUMBER
 	@Override
 	public tNUMBER SQRT()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return sqrt();
 	}
 
 	/*
@@ -364,8 +712,7 @@ public abstract class NUMBER extends CELL implements tNUMBER
 	@Override
 	public tNUMBER EXP()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return exp();
 	}
 
 	/*
@@ -375,20 +722,7 @@ public abstract class NUMBER extends CELL implements tNUMBER
 	@Override
 	public tNUMBER EXPT(tNUMBER power)
 	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see
-	 * aloyslisp.core.math.tNUMBER#RANDOM(aloyslisp.core.numbers.tRANDOM_STATE)
-	 */
-	@Override
-	public tNUMBER RANDOM(tT st)
-	{
-		// TODO Auto-generated method stub
-		return null;
+		return expt(power);
 	}
 
 }

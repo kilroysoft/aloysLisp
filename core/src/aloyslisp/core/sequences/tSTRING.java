@@ -30,6 +30,8 @@
 package aloyslisp.core.sequences;
 
 import aloyslisp.core.annotations.*;
+import aloyslisp.core.math.*;
+import aloyslisp.core.plugs.*;
 
 /**
  * tSTRING
@@ -80,5 +82,21 @@ public interface tSTRING extends tVECTOR
 	 */
 	@Function(name = "string-right-trim")
 	public tSTRING STRING_RIGHT_TRIM();
+
+	/**
+	 * Get number from a string representation in base radix
+	 * 
+	 * @param val
+	 * @param start
+	 * @param end
+	 * @param radix
+	 * @param junk
+	 * @return
+	 */
+	@Function(name = "parse-integer")
+	public BIGNUM PARSE_INTEGER(@Opt(name = "start", def = "0") Integer start, //
+			@Opt(name = "end", def = "nil") tT end, //
+			@Opt(name = "radix", def = "*read-base*") Integer radix, //
+			@Opt(name = "junk", def = "nil") Boolean junk);
 
 }

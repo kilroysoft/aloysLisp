@@ -180,7 +180,7 @@ public class NIL extends SYMBOL implements tNULL
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.plugs.atoms.SYMBOL#printable()
 	 */
-	public String printable()
+	public String toString()
 	{
 		return "nil";
 	}

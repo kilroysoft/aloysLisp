@@ -344,7 +344,7 @@ public class CONS extends CELL implements tCONS
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.plugs.CELL#printable()
 	 */
-	public String printable()
+	public String toString()
 	{
 		tT func = CAR();
 		String mac = null;
@@ -366,7 +366,7 @@ public class CONS extends CELL implements tCONS
 			res += sep;
 			sep = " ";
 			tT car = walk.CAR();
-			res += car == null ? "*(null)*" : car.printable();
+			res += car == null ? "*(null)*" : car.toString();
 
 			walk = walk.CDR();
 		}
@@ -375,7 +375,7 @@ public class CONS extends CELL implements tCONS
 		if (!(walk instanceof NIL))
 		{
 			res += " . ";
-			res += walk.printable();
+			res += walk.toString();
 		}
 
 		if (mac == null)

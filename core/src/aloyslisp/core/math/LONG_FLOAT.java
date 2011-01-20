@@ -24,38 +24,26 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 20 déc. 2010 Creation
+// IP 5 janv. 2011 Creation
 // --------------------------------------------------------------------------
 
-package aloyslisp.core.conditions;
+package aloyslisp.core.math;
 
 /**
- * CONDITION
+ * LONG_FLOAT
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
- * 
  */
-public class CONDITION extends LispException
+public class LONG_FLOAT extends DOUBLE_FLOAT
 {
-	private static final long	serialVersionUID	= 1L;
 
-	protected String message = "";
-	
 	/**
-	 * @param message
+	 * @param init
 	 */
-	public CONDITION()
+	public LONG_FLOAT(double init)
 	{
-		super("");
-	}
-	
-	/* (non-Javadoc)
-	 * @see java.lang.Throwable#getMessage()
-	 */
-	public String getMessage()
-	{
-		return message;
+		super(init);
 	}
 
 }

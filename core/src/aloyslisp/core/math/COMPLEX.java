@@ -154,13 +154,34 @@ public class COMPLEX extends NUMBER implements tCOMPLEX
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#coerce(aloyslisp.core.math.tNUMBER)
+	 * @see aloyslisp.core.math.NUMBER#complexifyValue()
 	 */
 	@Override
-	public tNUMBER coerce(tNUMBER var)
+	public tNUMBER complexifyValue()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		if (imag instanceof INTEGER && imag.EQUALNUM(ZERO))
+			return real;
+
+		return this;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tNUMBER#coerce(aloyslisp.core.math.tNUMBER)
+	 */
+	public NUMBER coerce(tNUMBER var)
+	{
+		return this;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tNUMBER#equalnum(aloyslisp.core.math.tNUMBER)
+	 */
+	boolean equalnum(tNUMBER op)
+	{
+		COMPLEX op2 = op.getComplexValue();
+		return real.EQUALNUM(op2.real) && imag.EQUALNUM(op2.imag);
 	}
 
 	/*
@@ -168,10 +189,11 @@ public class COMPLEX extends NUMBER implements tCOMPLEX
 	 * @see aloyslisp.core.math.tNUMBER#add(aloyslisp.core.math.tNUMBER)
 	 */
 	@Override
-	public tNUMBER add(tNUMBER op)
+	tNUMBER add(tNUMBER op)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		COMPLEX op2 = op.getComplexValue();
+		return new COMPLEX((tREAL) real.ADD(op2.real),
+				(tREAL) imag.ADD(op2.imag)).complexifyValue();
 	}
 
 	/*
@@ -179,10 +201,11 @@ public class COMPLEX extends NUMBER implements tCOMPLEX
 	 * @see aloyslisp.core.math.tNUMBER#substract(aloyslisp.core.math.tNUMBER)
 	 */
 	@Override
-	public tNUMBER substract(tNUMBER op)
+	tNUMBER substract(tNUMBER op)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		COMPLEX op2 = op.getComplexValue();
+		return new COMPLEX((tREAL) real.SUBSTRACT(op2.real),
+				(tREAL) imag.SUBSTRACT(op2.imag)).complexifyValue();
 	}
 
 	/*
@@ -190,10 +213,10 @@ public class COMPLEX extends NUMBER implements tCOMPLEX
 	 * @see aloyslisp.core.math.tNUMBER#minus()
 	 */
 	@Override
-	public tNUMBER minus()
+	tNUMBER minus()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return new COMPLEX((tREAL) real.MINUS(), (tREAL) imag.MINUS())
+				.complexifyValue();
 	}
 
 	/*
@@ -201,10 +224,12 @@ public class COMPLEX extends NUMBER implements tCOMPLEX
 	 * @see aloyslisp.core.math.tNUMBER#inversion()
 	 */
 	@Override
-	public tNUMBER inversion()
+	tNUMBER inversion()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		tNUMBER phase = (tREAL) PHASE().MINUS();
+		tNUMBER mod = ABS();
+		return new COMPLEX((tREAL) mod.MULTIPLY(phase.COS()),
+				(tREAL) mod.MULTIPLY(phase.SIN())).complexifyValue();
 	}
 
 	/*
@@ -212,10 +237,15 @@ public class COMPLEX extends NUMBER implements tCOMPLEX
 	 * @see aloyslisp.core.math.tNUMBER#multiply(aloyslisp.core.math.tNUMBER)
 	 */
 	@Override
-	public tNUMBER multiply(tNUMBER op)
+	tNUMBER multiply(tNUMBER op)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		tNUMBER phase = (tREAL) PHASE().MINUS();
+		tNUMBER mod = ABS();
+		COMPLEX op2 = (COMPLEX) op.coerce(this);
+		phase = (tREAL) phase.ADD(op2.PHASE().MINUS());
+		mod = mod.MULTIPLY(op2.ABS());
+		return new COMPLEX((tREAL) mod.MULTIPLY(phase.COS()),
+				(tREAL) mod.MULTIPLY(phase.SIN())).complexifyValue();
 	}
 
 	/*
@@ -223,10 +253,15 @@ public class COMPLEX extends NUMBER implements tCOMPLEX
 	 * @see aloyslisp.core.math.tNUMBER#division(aloyslisp.core.math.tNUMBER)
 	 */
 	@Override
-	public tNUMBER division(tNUMBER op)
+	tNUMBER division(tNUMBER op)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		tNUMBER phase = (tREAL) PHASE().MINUS();
+		tNUMBER mod = ABS();
+		COMPLEX op2 = (COMPLEX) op.coerce(this);
+		phase = (tREAL) phase.SUBSTRACT(op2.PHASE().MINUS());
+		mod = mod.DIVISION(op2.ABS());
+		return new COMPLEX((tREAL) mod.MULTIPLY(phase.COS()),
+				(tREAL) mod.MULTIPLY(phase.SIN())).complexifyValue();
 	}
 
 	/*
@@ -234,10 +269,9 @@ public class COMPLEX extends NUMBER implements tCOMPLEX
 	 * @see aloyslisp.core.math.tNUMBER#realpart()
 	 */
 	@Override
-	public tNUMBER realpart()
+	tNUMBER realpart()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return real;
 	}
 
 	/*
@@ -245,10 +279,9 @@ public class COMPLEX extends NUMBER implements tCOMPLEX
 	 * @see aloyslisp.core.math.tNUMBER#imagpart()
 	 */
 	@Override
-	public tNUMBER imagpart()
+	tNUMBER imagpart()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return imag;
 	}
 
 	/*
@@ -256,10 +289,9 @@ public class COMPLEX extends NUMBER implements tCOMPLEX
 	 * @see aloyslisp.core.math.tNUMBER#conjugate()
 	 */
 	@Override
-	public tNUMBER conjugate()
+	tNUMBER conjugate()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return new COMPLEX(real, (tREAL) imag.MINUS()).complexifyValue();
 	}
 
 	/*
@@ -267,10 +299,9 @@ public class COMPLEX extends NUMBER implements tCOMPLEX
 	 * @see aloyslisp.core.math.tNUMBER#phase()
 	 */
 	@Override
-	public tNUMBER phase()
+	tNUMBER phase()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return real.ATAN(imag);
 	}
 
 	/*
@@ -278,10 +309,9 @@ public class COMPLEX extends NUMBER implements tCOMPLEX
 	 * @see aloyslisp.core.math.tNUMBER#abs()
 	 */
 	@Override
-	public tREAL abs()
+	tREAL abs()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return (tREAL) real.EXPT(TWO).ADD(imag.EXPT(TWO)).SQRT();
 	}
 
 	/*
@@ -289,21 +319,9 @@ public class COMPLEX extends NUMBER implements tCOMPLEX
 	 * @see aloyslisp.core.math.tNUMBER#zerop()
 	 */
 	@Override
-	public boolean zerop()
+	boolean zerop()
 	{
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#cis()
-	 */
-	@Override
-	public tNUMBER cis()
-	{
-		// TODO Auto-generated method stub
-		return null;
+		return real.EQUALNUM(ZERO) && imag.EQUALNUM(ZERO);
 	}
 
 	/*
@@ -311,10 +329,10 @@ public class COMPLEX extends NUMBER implements tCOMPLEX
 	 * @see aloyslisp.core.math.tNUMBER#sin()
 	 */
 	@Override
-	public tNUMBER sin()
+	tNUMBER sin()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		tNUMBER eix = MULTIPLY(I).EXP();
+		return eix.SUBSTRACT(eix.INVERSION()).DIVISION(TWO.MULTIPLY(I));
 	}
 
 	/*
@@ -322,10 +340,10 @@ public class COMPLEX extends NUMBER implements tCOMPLEX
 	 * @see aloyslisp.core.math.tNUMBER#cos()
 	 */
 	@Override
-	public tNUMBER cos()
+	tNUMBER cos()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		tNUMBER eix = MULTIPLY(I).EXP();
+		return eix.ADD(eix.INVERSION()).DIVISION(TWO);
 	}
 
 	/*
@@ -333,10 +351,11 @@ public class COMPLEX extends NUMBER implements tCOMPLEX
 	 * @see aloyslisp.core.math.tNUMBER#tan()
 	 */
 	@Override
-	public tNUMBER tan()
+	tNUMBER tan()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		tNUMBER eix = MULTIPLY(I).EXP();
+		tNUMBER e_ix = eix.INVERSION();
+		return eix.SUBSTRACT(e_ix).DIVISION(eix.ADD(e_ix).DIVISION(I));
 	}
 
 	/*
@@ -344,10 +363,10 @@ public class COMPLEX extends NUMBER implements tCOMPLEX
 	 * @see aloyslisp.core.math.tNUMBER#asin()
 	 */
 	@Override
-	public tNUMBER asin()
+	tNUMBER asin()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return MULTIPLY(this).MINUS().SQRT().ADD(this.MULTIPLY(I)).LOG()
+				.MULTIPLY(I).MINUS();
 	}
 
 	/*
@@ -355,10 +374,9 @@ public class COMPLEX extends NUMBER implements tCOMPLEX
 	 * @see aloyslisp.core.math.tNUMBER#acos()
 	 */
 	@Override
-	public tNUMBER acos()
+	tNUMBER acos()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return PI.DIVISION(TWO).SUBSTRACT(ASIN());
 	}
 
 	/*
@@ -366,10 +384,11 @@ public class COMPLEX extends NUMBER implements tCOMPLEX
 	 * @see aloyslisp.core.math.tNUMBER#atan()
 	 */
 	@Override
-	public tNUMBER atan()
+	tNUMBER atan()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		tNUMBER iy = MULTIPLY(I);
+		return ONE.ADD(iy).SUBSTRACT(ONE.SUBSTRACT(iy)).DIVISION(TWO)
+				.MULTIPLY(I);
 	}
 
 	/*
@@ -377,76 +396,9 @@ public class COMPLEX extends NUMBER implements tCOMPLEX
 	 * @see aloyslisp.core.math.tNUMBER#atan(aloyslisp.core.math.tREAL)
 	 */
 	@Override
-	public tNUMBER atan(tREAL opt)
+	tNUMBER atan(tREAL opt)
 	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#sinh()
-	 */
-	@Override
-	public tNUMBER sinh()
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#cosh()
-	 */
-	@Override
-	public tNUMBER cosh()
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#tanh()
-	 */
-	@Override
-	public tNUMBER tanh()
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#asinh()
-	 */
-	@Override
-	public tNUMBER asinh()
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#acosh()
-	 */
-	@Override
-	public tNUMBER acosh()
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#atanh()
-	 */
-	@Override
-	public tNUMBER atanh()
-	{
-		// TODO Auto-generated method stub
-		return null;
+		throw new LispException("ATAN optional arg should be REAL");
 	}
 
 	/*
@@ -454,10 +406,10 @@ public class COMPLEX extends NUMBER implements tCOMPLEX
 	 * @see aloyslisp.core.math.tNUMBER#log()
 	 */
 	@Override
-	public tNUMBER log()
+	tNUMBER log()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return new COMPLEX((tREAL) real.ABS().LOG(), (tREAL) PHASE())
+				.complexifyValue();
 	}
 
 	/*
@@ -465,10 +417,12 @@ public class COMPLEX extends NUMBER implements tCOMPLEX
 	 * @see aloyslisp.core.math.tNUMBER#sqrt()
 	 */
 	@Override
-	public tNUMBER sqrt()
+	tNUMBER sqrt()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return new COMPLEX((tREAL) realpart().ADD(ABS()).SQRT()
+				.MULTIPLY(TWO.INVERSION()).MULTIPLY(TWO.SQRT()),
+				(tREAL) imagpart().SUBSTRACT(ABS()).SQRT()
+						.MULTIPLY(TWO.INVERSION()).MULTIPLY(TWO.SQRT()));
 	}
 
 	/*
@@ -476,10 +430,9 @@ public class COMPLEX extends NUMBER implements tCOMPLEX
 	 * @see aloyslisp.core.math.tNUMBER#exp()
 	 */
 	@Override
-	public tNUMBER exp()
+	tNUMBER exp()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return E.EXPT(this);
 	}
 
 	/*
@@ -487,30 +440,7 @@ public class COMPLEX extends NUMBER implements tCOMPLEX
 	 * @see aloyslisp.core.math.tNUMBER#expt(aloyslisp.core.math.tNUMBER)
 	 */
 	@Override
-	public tNUMBER expt(tNUMBER power)
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#random()
-	 */
-	@Override
-	public tNUMBER random()
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see
-	 * aloyslisp.core.math.tNUMBER#random(aloyslisp.core.numbers.tRANDOM_STATE)
-	 */
-	@Override
-	public tNUMBER random(tRANDOM_STATE st)
+	tNUMBER expt(tNUMBER power)
 	{
 		// TODO Auto-generated method stub
 		return null;

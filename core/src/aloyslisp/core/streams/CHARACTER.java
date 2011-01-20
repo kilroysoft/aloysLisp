@@ -82,7 +82,7 @@ public class CHARACTER extends CELL implements tCHARACTER
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.plugs.CELL#printable()
 	 */
-	public String printable()
+	public String toString()
 	{
 		return "" + value;
 	}

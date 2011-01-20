@@ -239,7 +239,6 @@ public abstract class FUNCTION extends CELL implements tFUNCTION
 			{
 				e.getCause().printStackTrace();
 			}
-			e.getCause().printStackTrace();
 			throw new LispException(e.getCause().getLocalizedMessage());
 		}
 		catch (RuntimeException e)
@@ -279,7 +278,7 @@ public abstract class FUNCTION extends CELL implements tFUNCTION
 	 * @see aloyslisp.core.plugs.Cell#printable()
 	 */
 	@Override
-	public String printable()
+	public String toString()
 	{
 		return "#<" + printableStruct() + ">";
 	}
@@ -505,27 +504,22 @@ public abstract class FUNCTION extends CELL implements tFUNCTION
 
 		if (cl == Integer.class && arg instanceof tINTEGER)
 		{
-			res = ((tINTEGER) arg).integerValue();
+			res = ((INTEGER) arg).integerValue();
 		}
 
 		if (cl == Long.class && arg instanceof tINTEGER)
 		{
-			res = ((tINTEGER) arg).integerValue();
+			res = ((INTEGER) arg).integerValue();
 		}
 
 		if (cl == Float.class && arg instanceof tREAL)
 		{
-			res = ((tREAL) arg).floatValue();
+			res = ((REAL) arg).floatValue();
 		}
 
 		if (cl == Double.class && arg instanceof tREAL)
 		{
-			res = ((tREAL) arg).doubleValue();
-		}
-
-		if (cl == Short.class && arg instanceof tREAL)
-		{
-			res = ((tREAL) arg).shortValue();
+			res = ((REAL) arg).doubleValue();
 		}
 
 		if (cl == String.class && arg instanceof tSTRING)
@@ -544,7 +538,6 @@ public abstract class FUNCTION extends CELL implements tFUNCTION
 		if (res == null)
 			throw new LispException("Argument " + arg + " should be of type "
 					+ cl.getSimpleName());
-
 		return res;
 	}
 

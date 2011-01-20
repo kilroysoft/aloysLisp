@@ -24,38 +24,31 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 20 déc. 2010 Creation
+// IP 29 déc. 2010 Creation
 // --------------------------------------------------------------------------
 
 package aloyslisp.core.conditions;
 
+import aloyslisp.core.streams.tPATHNAME_DESIGNATOR;
+
 /**
- * CONDITION
+ * READER_ERROR
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class CONDITION extends LispException
+public class READER_ERROR extends PARSE_ERROR
 {
 	private static final long	serialVersionUID	= 1L;
 
-	protected String message = "";
-	
 	/**
-	 * @param message
+	 * @param path
 	 */
-	public CONDITION()
+	public READER_ERROR(tPATHNAME_DESIGNATOR path)
 	{
-		super("");
-	}
-	
-	/* (non-Javadoc)
-	 * @see java.lang.Throwable#getMessage()
-	 */
-	public String getMessage()
-	{
-		return message;
+		super(path);
+		message += "Reader error.";
 	}
 
 }

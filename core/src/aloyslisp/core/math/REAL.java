@@ -29,7 +29,10 @@
 
 package aloyslisp.core.math;
 
-import aloyslisp.core.plugs.tT;
+import static aloyslisp.commonlisp.L.*;
+import aloyslisp.core.conditions.*;
+import aloyslisp.core.plugs.*;
+import aloyslisp.core.sequences.*;
 
 /**
  * REAL
@@ -41,45 +44,37 @@ import aloyslisp.core.plugs.tT;
 public abstract class REAL extends NUMBER implements tREAL
 {
 
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tREAL#mod(aloyslisp.core.math.tREAL)
+	/* *******************************************************************
+	 * COMPARATORS
 	 */
-	@Override
-	public tREAL mod(tREAL op)
-	{
-		return getDoubleValue().mod(op);
-	}
+	/**
+	 * Test greater a > b
+	 * 
+	 * @param op
+	 * @return
+	 */
+	abstract boolean greater(tREAL op);
 
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tREAL#rem(aloyslisp.core.math.tREAL)
+	/**
+	 * Test lower a < b
+	 * 
+	 * @param op
+	 * @return
 	 */
-	@Override
-	public tREAL rem(tREAL op)
-	{
-		return getDoubleValue().rem(op);
-	}
+	abstract boolean lower(tREAL op);
 
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tREAL#floor(aloyslisp.core.math.tREAL)
+	/* *******************************************************************
+	 * RATIONAL
 	 */
-	@Override
-	public tREAL[] floor()
-	{
-		return getDoubleValue().floor();
-	}
+	/**
+	 * @return
+	 */
+	abstract tRATIONAL rational();
 
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tREAL#floor(aloyslisp.core.math.tREAL)
+	/**
+	 * @return
 	 */
-	@Override
-	public tREAL[] floor(tREAL op)
-	{
-		return getDoubleValue().floor(op);
-	}
+	abstract tRATIONAL rationalize();
 
 	/*
 	 * (non-Javadoc)
@@ -92,11 +87,11 @@ public abstract class REAL extends NUMBER implements tREAL
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tREAL#shortValue()
+	 * @see aloyslisp.core.math.NUMBER#complexifyValue()
 	 */
-	public Short shortValue()
+	public tNUMBER complexifyValue()
 	{
-		return getShortValue().value;
+		return this;
 	}
 
 	/*
@@ -108,134 +103,132 @@ public abstract class REAL extends NUMBER implements tREAL
 		return getFloatValue().value;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tREAL#ceiling(aloyslisp.core.math.tREAL)
+	/**
+	 * @param op
+	 * @return
 	 */
-	@Override
-	public tREAL[] ceiling()
+	tREAL mod(tREAL op)
 	{
-		return getDoubleValue().ceiling();
+		tREAL[] rest = FLOOR(op);
+		return rest[1];
+	}
+
+	/**
+	 * @param op
+	 * @return
+	 */
+	tREAL rem(tREAL op)
+	{
+		tREAL[] rest = TRUNCATE(op);
+		return rest[1];
+	}
+
+	tREAL[] floor()
+	{
+		return FLOOR(ONE);
+	}
+
+	tREAL[] floor(tREAL op)
+	{
+		tINTEGER quotient = new BIGNUM(
+				((Double) Math.floor(DIVISION(op.getDoubleValue())
+						.getDoubleValue().doubleValue())).toString());
+		return new tREAL[]
+		{ quotient, (tREAL) this.SUBSTRACT(quotient.MULTIPLY(op)) };
+	}
+
+	tREAL[] ceiling()
+	{
+		return CEILING(ONE);
+	}
+
+	tREAL[] ceiling(tREAL op)
+	{
+		tINTEGER quotient = new BIGNUM(
+				((Double) Math.ceil(DIVISION(op.getDoubleValue())
+						.getDoubleValue().doubleValue())).toString());
+		return new tREAL[]
+		{ quotient, (tREAL) this.SUBSTRACT(quotient.MULTIPLY(op)) };
+	}
+
+	tREAL[] truncate()
+	{
+		return TRUNCATE(ONE);
+	}
+
+	tREAL[] truncate(tREAL op)
+	{
+		tINTEGER quotient = DIVISION(op.getDoubleValue()).getIntegerValue();
+		return new tREAL[]
+		{ quotient, (tREAL) this.SUBSTRACT(quotient.MULTIPLY(op)) };
+	}
+
+	tREAL[] round()
+	{
+		return ROUND(ONE);
+	}
+
+	tREAL[] round(tREAL op)
+	{
+		tINTEGER quotient = new BIGNUM(Math.round(DIVISION(op.getDoubleValue())
+				.getDoubleValue().doubleValue()));
+		return new tREAL[]
+		{ quotient, (tREAL) this.SUBSTRACT(quotient.MULTIPLY(op)) };
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tREAL#ceiling(aloyslisp.core.math.tREAL)
+	 * @see aloyslisp.core.math.NUMBER#abs()
 	 */
-	@Override
-	public tREAL[] ceiling(tREAL op)
-	{
-		return getDoubleValue().ceiling(op);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tREAL#truncate(aloyslisp.core.math.tREAL)
-	 */
-	@Override
-	public tREAL[] truncate()
-	{
-		return getDoubleValue().truncate();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tREAL#truncate(aloyslisp.core.math.tREAL)
-	 */
-	@Override
-	public tREAL[] truncate(tREAL op)
-	{
-		return getDoubleValue().truncate(op);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tREAL#round(aloyslisp.core.math.tREAL)
-	 */
-	@Override
-	public tREAL[] round()
-	{
-		return getDoubleValue().round();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tREAL#round(aloyslisp.core.math.tREAL)
-	 */
-	@Override
-	public tREAL[] round(tREAL op)
-	{
-		return getDoubleValue().round(op);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#abs()
-	 */
-	public tREAL abs()
+	tREAL abs()
 	{
 		return lower(ZERO) ? (tREAL) minus() : this;
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#realpart()
+	 * @see aloyslisp.core.math.NUMBER#realpart()
 	 */
-	@Override
-	public tNUMBER realpart()
+	tNUMBER realpart()
 	{
 		return this;
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#imagpart()
+	 * @see aloyslisp.core.math.NUMBER#imagpart()
 	 */
-	@Override
-	public tNUMBER imagpart()
+	tNUMBER imagpart()
 	{
 		return ZERO;
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#conjugate()
+	 * @see aloyslisp.core.math.NUMBER#conjugate()
 	 */
-	@Override
-	public tNUMBER conjugate()
+	tNUMBER conjugate()
 	{
 		return this;
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#phase()
+	 * @see aloyslisp.core.math.NUMBER#phase()
 	 */
-	@Override
-	public tNUMBER phase()
+	tNUMBER phase()
 	{
 		tNUMBER res = ONE.coerce(this);
-		return minusp() ? res.minus() : res;
+		return MINUSP() ? res.MINUS() : res;
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#zerop()
+	 * @see aloyslisp.core.math.NUMBER#zerop()
 	 */
-	@Override
-	public boolean zerop()
+	boolean zerop()
 	{
-		return equal(ZERO);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#sin()
-	 */
-	@Override
-	public tNUMBER cis()
-	{
-		return getDoubleValue().cis();
+		return EQUALNUM(ZERO);
 	}
 
 	/*
@@ -243,9 +236,13 @@ public abstract class REAL extends NUMBER implements tREAL
 	 * @see aloyslisp.core.math.tNUMBER#sin()
 	 */
 	@Override
-	public tNUMBER sin()
+	tNUMBER sin()
 	{
-		return getDoubleValue().sin();
+		Double res = Math.sin(getDoubleValue().doubleValue());
+		if (this instanceof DOUBLE_FLOAT)
+			return new DOUBLE_FLOAT(res);
+		else
+			return new SINGLE_FLOAT(res.floatValue());
 	}
 
 	/*
@@ -253,9 +250,13 @@ public abstract class REAL extends NUMBER implements tREAL
 	 * @see aloyslisp.core.math.tNUMBER#cos()
 	 */
 	@Override
-	public tNUMBER cos()
+	tNUMBER cos()
 	{
-		return getDoubleValue().cos();
+		Double res = Math.cos(getDoubleValue().doubleValue());
+		if (this instanceof DOUBLE_FLOAT)
+			return new DOUBLE_FLOAT(res);
+		else
+			return new SINGLE_FLOAT(res.floatValue());
 	}
 
 	/*
@@ -263,9 +264,13 @@ public abstract class REAL extends NUMBER implements tREAL
 	 * @see aloyslisp.core.math.tNUMBER#tan()
 	 */
 	@Override
-	public tNUMBER tan()
+	tNUMBER tan()
 	{
-		return getDoubleValue().tan();
+		Double res = Math.tan(getDoubleValue().doubleValue());
+		if (this instanceof DOUBLE_FLOAT)
+			return new DOUBLE_FLOAT(res);
+		else
+			return new SINGLE_FLOAT(res.floatValue());
 	}
 
 	/*
@@ -273,9 +278,13 @@ public abstract class REAL extends NUMBER implements tREAL
 	 * @see aloyslisp.core.math.tNUMBER#asin()
 	 */
 	@Override
-	public tNUMBER asin()
+	tNUMBER asin()
 	{
-		return getDoubleValue().asin();
+		Double res = Math.asin(getDoubleValue().doubleValue());
+		if (this instanceof DOUBLE_FLOAT)
+			return new DOUBLE_FLOAT(res);
+		else
+			return new SINGLE_FLOAT(res.floatValue());
 	}
 
 	/*
@@ -283,9 +292,13 @@ public abstract class REAL extends NUMBER implements tREAL
 	 * @see aloyslisp.core.math.tNUMBER#acos()
 	 */
 	@Override
-	public tNUMBER acos()
+	tNUMBER acos()
 	{
-		return getDoubleValue().acos();
+		Double res = Math.acos(getDoubleValue().doubleValue());
+		if (this instanceof DOUBLE_FLOAT)
+			return new DOUBLE_FLOAT(res);
+		else
+			return new SINGLE_FLOAT(res.floatValue());
 	}
 
 	/*
@@ -293,9 +306,13 @@ public abstract class REAL extends NUMBER implements tREAL
 	 * @see aloyslisp.core.math.tNUMBER#atan()
 	 */
 	@Override
-	public tNUMBER atan()
+	tNUMBER atan()
 	{
-		return getDoubleValue().atan();
+		Double res = Math.atan(getDoubleValue().doubleValue());
+		if (this instanceof DOUBLE_FLOAT)
+			return new DOUBLE_FLOAT(res);
+		else
+			return new SINGLE_FLOAT(res.floatValue());
 	}
 
 	/*
@@ -303,69 +320,14 @@ public abstract class REAL extends NUMBER implements tREAL
 	 * @see aloyslisp.core.math.tNUMBER#atan(aloyslisp.core.math.tNUMBER)
 	 */
 	@Override
-	public tNUMBER atan(tREAL opt)
+	tNUMBER atan(tREAL opt)
 	{
-		return getDoubleValue().atan(opt);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#sinh()
-	 */
-	@Override
-	public tNUMBER sinh()
-	{
-		return getDoubleValue().sinh();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#cosh()
-	 */
-	@Override
-	public tNUMBER cosh()
-	{
-		return getDoubleValue().cosh();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#tanh()
-	 */
-	@Override
-	public tNUMBER tanh()
-	{
-		return getDoubleValue().tanh();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#asinh()
-	 */
-	@Override
-	public tNUMBER asinh()
-	{
-		return getDoubleValue().asinh();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#acosh()
-	 */
-	@Override
-	public tNUMBER acosh()
-	{
-		return getDoubleValue().acosh();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#atanh()
-	 */
-	@Override
-	public tNUMBER atanh()
-	{
-		return getDoubleValue().atanh();
+		// TODO crectly write the atan
+		Double res = Math.atan(getDoubleValue().doubleValue());
+		if (this instanceof DOUBLE_FLOAT)
+			return new DOUBLE_FLOAT(res);
+		else
+			return new SINGLE_FLOAT(res.floatValue());
 	}
 
 	/*
@@ -373,9 +335,13 @@ public abstract class REAL extends NUMBER implements tREAL
 	 * @see aloyslisp.core.math.tNUMBER#log()
 	 */
 	@Override
-	public tNUMBER log()
+	tNUMBER log()
 	{
-		return getDoubleValue().log();
+		Double res = Math.log(getDoubleValue().doubleValue());
+		if (this instanceof DOUBLE_FLOAT)
+			return new DOUBLE_FLOAT(res);
+		else
+			return new SINGLE_FLOAT(res.floatValue());
 	}
 
 	/*
@@ -383,9 +349,13 @@ public abstract class REAL extends NUMBER implements tREAL
 	 * @see aloyslisp.core.math.tNUMBER#sqrt()
 	 */
 	@Override
-	public tNUMBER sqrt()
+	tNUMBER sqrt()
 	{
-		return getDoubleValue().sqrt();
+		Double res = Math.sqrt(getDoubleValue().doubleValue());
+		if (this instanceof DOUBLE_FLOAT)
+			return new DOUBLE_FLOAT(res);
+		else
+			return new SINGLE_FLOAT(res.floatValue());
 	}
 
 	/*
@@ -393,9 +363,13 @@ public abstract class REAL extends NUMBER implements tREAL
 	 * @see aloyslisp.core.math.tNUMBER#exp()
 	 */
 	@Override
-	public tNUMBER exp()
+	tNUMBER exp()
 	{
-		return getDoubleValue().exp();
+		Double res = Math.exp(getDoubleValue().doubleValue());
+		if (this instanceof DOUBLE_FLOAT)
+			return new DOUBLE_FLOAT(res);
+		else
+			return new SINGLE_FLOAT(res.floatValue());
 	}
 
 	/*
@@ -403,50 +377,48 @@ public abstract class REAL extends NUMBER implements tREAL
 	 * @see aloyslisp.core.math.tNUMBER#expt(aloyslisp.core.math.tNUMBER)
 	 */
 	@Override
-	public tNUMBER expt(tNUMBER power)
+	tNUMBER expt(tNUMBER power)
 	{
-		return getDoubleValue().expt(power);
+		// TODO add power as integer
+		Double res = Math.pow(getDoubleValue().doubleValue(),
+				power.getDoubleValue().value);
+		if (this instanceof DOUBLE_FLOAT)
+			return new DOUBLE_FLOAT(res);
+		else
+			return new SINGLE_FLOAT(res.floatValue());
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#random()
+	/**
+	 * @return
 	 */
-	@Override
-	public tNUMBER random()
+	tNUMBER random()
 	{
-		return getDoubleValue().random();
+		return MULTIPLY(new DOUBLE_FLOAT(Math.random())).coerce(this);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see
-	 * aloyslisp.core.math.tNUMBER#random(aloyslisp.core.numbers.tRANDOM_STATE)
+	/**
+	 * @param st
+	 * @return
 	 */
-	@Override
-	public tNUMBER random(tRANDOM_STATE st)
+	tNUMBER random(tRANDOM_STATE st)
 	{
-		return getDoubleValue().random(st);
+		return MULTIPLY(new DOUBLE_FLOAT(Math.random())).coerce(this);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tREAL#minusp()
+	/**
+	 * @return
 	 */
-	@Override
-	public boolean minusp()
+	boolean minusp()
 	{
-		return lower(ZERO);
+		return LOWER(ZERO);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tREAL#plusp()
+	/**
+	 * @return
 	 */
-	@Override
-	public boolean plusp()
+	boolean plusp()
 	{
-		return greater(ZERO);
+		return GREATER(ZERO);
 	}
 
 	/*
@@ -456,8 +428,23 @@ public abstract class REAL extends NUMBER implements tREAL
 	@Override
 	public boolean GREATER(tT op)
 	{
-		// TODO Auto-generated method stub
-		return false;
+		if (op instanceof tREAL)
+		{
+			return ((REAL) coerce((REAL) op)).greater((tREAL) op);
+		}
+		else if (op == NIL)
+		{
+			return true;
+		}
+		else if (op instanceof tLIST)
+		{
+			tLIST list = (tLIST) op;
+			if (!GREATER(list.CAR()))
+				return false;
+			return GREATER(list.CDR());
+		}
+
+		throw new TYPE_ERROR(op, sym("real"));
 	}
 
 	/*
@@ -467,8 +454,23 @@ public abstract class REAL extends NUMBER implements tREAL
 	@Override
 	public boolean LOWER(tT op)
 	{
-		// TODO Auto-generated method stub
-		return false;
+		if (op instanceof tREAL)
+		{
+			return ((REAL) coerce((REAL) op)).lower((tREAL) op);
+		}
+		else if (op == NIL)
+		{
+			return true;
+		}
+		else if (op instanceof tLIST)
+		{
+			tLIST list = (tLIST) op;
+			if (!GREATER(list.CAR()))
+				return false;
+			return GREATER(list.CDR());
+		}
+
+		throw new TYPE_ERROR(op, sym("real"));
 	}
 
 	/*
@@ -478,8 +480,7 @@ public abstract class REAL extends NUMBER implements tREAL
 	@Override
 	public boolean MINUSP()
 	{
-		// TODO Auto-generated method stub
-		return false;
+		return minusp();
 	}
 
 	/*
@@ -489,8 +490,7 @@ public abstract class REAL extends NUMBER implements tREAL
 	@Override
 	public boolean PLUSP()
 	{
-		// TODO Auto-generated method stub
-		return false;
+		return plusp();
 	}
 
 	/*
@@ -500,8 +500,7 @@ public abstract class REAL extends NUMBER implements tREAL
 	@Override
 	public tRATIONAL RATIONAL()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return rational();
 	}
 
 	/*
@@ -511,8 +510,7 @@ public abstract class REAL extends NUMBER implements tREAL
 	@Override
 	public tRATIONAL RATIONALIZE()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return rationalize();
 	}
 
 	/*
@@ -522,8 +520,7 @@ public abstract class REAL extends NUMBER implements tREAL
 	@Override
 	public tREAL MOD(tREAL op)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return mod(op);
 	}
 
 	/*
@@ -533,8 +530,7 @@ public abstract class REAL extends NUMBER implements tREAL
 	@Override
 	public tREAL REM(tREAL op)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return rem(op);
 	}
 
 	/*
@@ -544,8 +540,12 @@ public abstract class REAL extends NUMBER implements tREAL
 	@Override
 	public tREAL[] FLOOR(tT op)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		if (op == NIL)
+			return floor();
+		else if (op instanceof tREAL)
+			return floor((tREAL) op);
+
+		throw new TYPE_ERROR(op, sym("real"));
 	}
 
 	/*
@@ -555,8 +555,12 @@ public abstract class REAL extends NUMBER implements tREAL
 	@Override
 	public tREAL[] CEILING(tT op)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		if (op == NIL)
+			return ceiling();
+		else if (op instanceof tREAL)
+			return ceiling((tREAL) op);
+
+		throw new TYPE_ERROR(op, sym("real"));
 	}
 
 	/*
@@ -566,8 +570,12 @@ public abstract class REAL extends NUMBER implements tREAL
 	@Override
 	public tREAL[] TRUNCATE(tT op)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		if (op == NIL)
+			return truncate();
+		else if (op instanceof tREAL)
+			return truncate((tREAL) op);
+
+		throw new TYPE_ERROR(op, sym("real"));
 	}
 
 	/*
@@ -577,8 +585,37 @@ public abstract class REAL extends NUMBER implements tREAL
 	@Override
 	public tREAL[] ROUND(tT op)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		if (op == NIL)
+			return round();
+		else if (op instanceof tREAL)
+			return round((tREAL) op);
+
+		throw new TYPE_ERROR(op, sym("real"));
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tREAL#CIS()
+	 */
+	public tCOMPLEX CIS()
+	{
+		return new COMPLEX((tREAL) COS(), (tREAL) SIN());
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * aloyslisp.core.math.tNUMBER#RANDOM(aloyslisp.core.numbers.tRANDOM_STATE)
+	 */
+	@Override
+	public tNUMBER RANDOM(tT st)
+	{
+		if (st == NIL)
+			return random();
+		else if (st instanceof tRANDOM_STATE)
+			return random((tRANDOM_STATE) st);
+
+		throw new TYPE_ERROR(st, sym("random-state"));
 	}
 
 }

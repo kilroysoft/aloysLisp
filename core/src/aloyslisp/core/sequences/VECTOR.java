@@ -143,7 +143,7 @@ public class VECTOR extends CELL implements tVECTOR
 	 * @see aloyslisp.core.plugs.Cell#printable()
 	 */
 	@Override
-	public String printable()
+	public String toString()
 	{
 		String res = "#(";
 		String sep = "";
@@ -152,7 +152,7 @@ public class VECTOR extends CELL implements tVECTOR
 		{
 			res += sep;
 			sep = " ";
-			res += walk.printable();
+			res += walk.toString();
 		}
 
 		res += ")";

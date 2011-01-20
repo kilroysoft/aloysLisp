@@ -24,38 +24,32 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 20 déc. 2010 Creation
+// IP 28 déc. 2010 Creation
 // --------------------------------------------------------------------------
 
 package aloyslisp.core.conditions;
 
+import aloyslisp.core.streams.tPATHNAME_DESIGNATOR;
+
 /**
- * CONDITION
+ * PARSE_ERROR
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class CONDITION extends LispException
+public class PARSE_ERROR extends ERROR
 {
-	private static final long	serialVersionUID	= 1L;
+	private static final long		serialVersionUID	= 1L;
+	protected tPATHNAME_DESIGNATOR	path;
 
-	protected String message = "";
-	
 	/**
-	 * @param message
+	 * 
 	 */
-	public CONDITION()
+	public PARSE_ERROR(tPATHNAME_DESIGNATOR path)
 	{
-		super("");
-	}
-	
-	/* (non-Javadoc)
-	 * @see java.lang.Throwable#getMessage()
-	 */
-	public String getMessage()
-	{
-		return message;
+		this.path = path;
+		message += "Parse error : " + path;
 	}
 
 }

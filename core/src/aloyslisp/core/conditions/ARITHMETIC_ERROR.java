@@ -24,38 +24,35 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 20 déc. 2010 Creation
+// IP 29 déc. 2010 Creation
 // --------------------------------------------------------------------------
 
 package aloyslisp.core.conditions;
 
+import aloyslisp.core.plugs.tT;
+
 /**
- * CONDITION
+ * ARITHMETIC_ERROR
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class CONDITION extends LispException
+public class ARITHMETIC_ERROR extends ERROR
 {
 	private static final long	serialVersionUID	= 1L;
+	protected tT				operation;
+	protected tT				operands;
 
-	protected String message = "";
-	
 	/**
-	 * @param message
+	 * 
 	 */
-	public CONDITION()
+	public ARITHMETIC_ERROR(tT operation, tT operands)
 	{
-		super("");
-	}
-	
-	/* (non-Javadoc)
-	 * @see java.lang.Throwable#getMessage()
-	 */
-	public String getMessage()
-	{
-		return message;
+		this.operation = operation;
+		this.operands = operands;
+		message += " Arithmetic error with " + operation + " on " + operands
+				+ ".";
 	}
 
 }

@@ -66,7 +66,7 @@ public abstract class CELL implements tT
 	 */
 	public String DESCRIBE()
 	{
-		return printable();
+		return toString();
 	}
 
 	/*
@@ -210,19 +210,10 @@ public abstract class CELL implements tT
 
 	/*
 	 * (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
-	public String toString()
-	{
-		return printable();
-	}
-
-	/*
-	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tT#printable()
 	 */
 	@Override
-	public String printable()
+	public String toString()
 	{
 		return "#<" + getClass().getSimpleName() + ">";
 	}

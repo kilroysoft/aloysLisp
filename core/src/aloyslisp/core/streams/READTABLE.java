@@ -231,7 +231,7 @@ public class READTABLE extends CELL implements tREADTABLE
 	 * @see aloyslisp.core.plugs.Cell#printable()
 	 */
 	@Override
-	public String printable()
+	public String toString()
 	{
 		return "#<READTABLE " + this.caseVal + ">";
 	}

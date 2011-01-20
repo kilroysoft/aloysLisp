@@ -52,7 +52,7 @@ public abstract class PEnviron extends CELL implements tATOM,
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.plugs.CELL#printable()
 	 */
-	public String printable()
+	public String toString()
 	{
 		return "#<ENVIRONMENT " + name + ">";
 	}

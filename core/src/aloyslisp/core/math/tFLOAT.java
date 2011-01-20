@@ -30,6 +30,7 @@
 package aloyslisp.core.math;
 
 import aloyslisp.core.annotations.*;
+import aloyslisp.core.plugs.tT;
 
 /**
  * tFLOAT
@@ -40,51 +41,6 @@ import aloyslisp.core.annotations.*;
  */
 public interface tFLOAT extends tREAL
 {
-	/**
-	 * @param f
-	 * @return
-	 */
-	public tFLOAT[] decode_float();
-
-	/**
-	 * @param f
-	 * @return
-	 */
-	public tFLOAT[] integer_decode_float();
-
-	/**
-	 * @param f
-	 * @param scale
-	 * @return
-	 */
-	public tFLOAT scale_float( //
-			tINTEGER scale);
-
-	/**
-	 * @param f
-	 * @return
-	 */
-	public tFLOAT float_radix();
-
-	/**
-	 * @param f
-	 * @param f2
-	 * @return
-	 */
-	public tFLOAT float_sign(tFLOAT f2);
-
-	/**
-	 * @param f
-	 * @return
-	 */
-	public tINTEGER float_digits();
-
-	/**
-	 * @param f
-	 * @return
-	 */
-	public tINTEGER float_precision();
-
 	/*************************************************************
 	 * LISP FUNCTION
 	 */
@@ -93,7 +49,7 @@ public interface tFLOAT extends tREAL
 	 * @return
 	 */
 	@Function(name = "decode-float")
-	public tFLOAT[] DECODE_FLOAT();
+	public tT[] DECODE_FLOAT();
 
 	/**
 	 * @param f
@@ -101,7 +57,7 @@ public interface tFLOAT extends tREAL
 	 */
 	//
 	@Function(name = "integer-decode-float")
-	public tFLOAT[] INTEGER_DECODE_FLOAT();
+	public tT[] INTEGER_DECODE_FLOAT();
 
 	/**
 	 * @param f

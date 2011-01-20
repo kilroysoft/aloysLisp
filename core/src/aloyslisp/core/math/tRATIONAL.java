@@ -44,20 +44,6 @@ public interface tRATIONAL extends tREAL
 	/* *******************************************************************
 	 * FUNCTIONS RATIO
 	 */
-	/**
-	 * Numerator (for ratio) a/b -> a
-	 * 
-	 * @return
-	 */
-	public tINTEGER numerator();
-
-	/**
-	 * Denumerator (for ratio) a/b -> b
-	 * 
-	 * @return
-	 */
-	public tINTEGER denominator();
-
 	/**********************************************************************
 	 * LISP FUNCTIONS
 	 */

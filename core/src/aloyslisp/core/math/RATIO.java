@@ -30,6 +30,9 @@
 
 package aloyslisp.core.math;
 
+import static aloyslisp.commonlisp.L.sym;
+import aloyslisp.core.conditions.*;
+
 /**
  * RATIO
  * 
@@ -55,44 +58,24 @@ public class RATIO extends RATIONAL implements tRATIO
 	public tINTEGER				den;
 
 	/**
-	 * 
-	 */
-	public RATIO()
-	{
-		this.num = new BIGNUM(1);
-		this.den = new BIGNUM(1);
-	}
-
-	/**
 	 * @param num
 	 * @param den
 	 */
 	public RATIO(tINTEGER num, tINTEGER den)
 	{
-		tINTEGER pgcd = num.gcd(den).getIntegerValue();
-		this.num = num.division(pgcd).getIntegerValue();
-		this.den = den.division(pgcd).getIntegerValue();
+		tINTEGER pgcd = num.GCD(den).getIntegerValue();
+		this.num = num.DIVISION(pgcd).getIntegerValue();
+		this.den = den.DIVISION(pgcd).getIntegerValue();
 	}
 
 	/**
 	 * @param num
 	 * @param den
 	 */
-	public RATIO(BIGNUM num)
+	public RATIO(tINTEGER num)
 	{
 		this.num = num;
 		this.den = new BIGNUM(1);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#coerce(aloyslisp.core.math.tNUMBER)
-	 */
-	@Override
-	public tNUMBER coerce(tNUMBER var)
-	{
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	/*
@@ -101,15 +84,7 @@ public class RATIO extends RATIONAL implements tRATIO
 	 */
 	public String toString()
 	{
-		return num + "/" + den;
-	}
-
-	/**
-	 * @return
-	 */
-	public tNUMBER ratio()
-	{
-		return num.division(den);
+		return "" + num + "/" + den;
 	}
 
 	/*
@@ -118,7 +93,10 @@ public class RATIO extends RATIONAL implements tRATIO
 	 */
 	public BIGNUM getIntegerValue()
 	{
-		return ratio().getIntegerValue();
+		if (!den.EQ(ONE))
+			throw new ARITHMETIC_ERROR(this, sym("integer"));
+
+		return num.getIntegerValue();
 	}
 
 	/*
@@ -127,7 +105,7 @@ public class RATIO extends RATIONAL implements tRATIO
 	 */
 	public SINGLE_FLOAT getFloatValue()
 	{
-		return ratio().getFloatValue();
+		return num.getFloatValue().DIVISION(den).getFloatValue();
 	}
 
 	/*
@@ -136,7 +114,7 @@ public class RATIO extends RATIONAL implements tRATIO
 	 */
 	public DOUBLE_FLOAT getDoubleValue()
 	{
-		return ratio().getDoubleValue();
+		return num.getDoubleValue().DIVISION(den).getDoubleValue();
 	}
 
 	/**
@@ -162,7 +140,41 @@ public class RATIO extends RATIONAL implements tRATIO
 	@Override
 	public SHORT_FLOAT getShortValue()
 	{
-		return ratio().getShortValue();
+		return num.getShortValue().DIVISION(den).getShortValue();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.RATIONAL#getRationalValue()
+	 */
+	@Override
+	public tRATIONAL rationalizeValue()
+	{
+		if (den.EQUALNUM(ONE))
+			return num;
+
+		return this;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tNUMBER#coerce(aloyslisp.core.math.tNUMBER)
+	 */
+	public NUMBER coerce(tNUMBER var)
+	{
+		if (var instanceof SINGLE_FLOAT)
+			return getFloatValue();
+
+		if (var instanceof DOUBLE_FLOAT)
+			return getDoubleValue();
+
+		if (var instanceof SHORT_FLOAT)
+			return getShortValue();
+
+		if (var instanceof COMPLEX)
+			return getComplexValue();
+
+		return this;
 	}
 
 	/*
@@ -170,10 +182,11 @@ public class RATIO extends RATIONAL implements tRATIO
 	 * @see aloyslisp.core.math.tREAL#equal(aloyslisp.core.math.tNUMBER)
 	 */
 	@Override
-	public boolean equal(tNUMBER op)
+	boolean equalnum(tNUMBER op)
 	{
-		// TODO Auto-generated method stub
-		return false;
+		RATIO op2 = op.getRatioValue();
+		return ((tINTEGER) num.MULTIPLY(op2.den)).EQUALNUM(den
+				.MULTIPLY(op2.num));
 	}
 
 	/*
@@ -181,10 +194,11 @@ public class RATIO extends RATIONAL implements tRATIO
 	 * @see aloyslisp.core.math.tREAL#greater(aloyslisp.core.math.tNUMBER)
 	 */
 	@Override
-	public boolean greater(tNUMBER op)
+	boolean greater(tREAL op)
 	{
-		// TODO Auto-generated method stub
-		return false;
+		RATIO op2 = op.getRatioValue();
+		return ((tINTEGER) num.MULTIPLY(op2.den))
+				.GREATER(den.MULTIPLY(op2.num));
 	}
 
 	/*
@@ -192,32 +206,10 @@ public class RATIO extends RATIONAL implements tRATIO
 	 * @see aloyslisp.core.math.tREAL#lower(aloyslisp.core.math.tNUMBER)
 	 */
 	@Override
-	public boolean lower(tNUMBER op)
+	boolean lower(tREAL op)
 	{
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tREAL#rational()
-	 */
-	@Override
-	public tRATIONAL rational()
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tREAL#rationalize()
-	 */
-	@Override
-	public tRATIONAL rationalize()
-	{
-		// TODO Auto-generated method stub
-		return null;
+		RATIO op2 = op.getRatioValue();
+		return ((tINTEGER) num.MULTIPLY(op2.den)).LOWER(den.MULTIPLY(op2.num));
 	}
 
 	/*
@@ -225,10 +217,12 @@ public class RATIO extends RATIONAL implements tRATIO
 	 * @see aloyslisp.core.math.tNUMBER#add(aloyslisp.core.math.tNUMBER)
 	 */
 	@Override
-	public tNUMBER add(tNUMBER op)
+	tNUMBER add(tNUMBER op)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		RATIO op2 = op.getRatioValue();
+		return new RATIO((tINTEGER) num.MULTIPLY(op2.den).ADD(
+				den.MULTIPLY(op2.num)), (tINTEGER) den.MULTIPLY(op2.den))
+				.rationalizeValue();
 	}
 
 	/*
@@ -236,10 +230,9 @@ public class RATIO extends RATIONAL implements tRATIO
 	 * @see aloyslisp.core.math.tNUMBER#substract(aloyslisp.core.math.tNUMBER)
 	 */
 	@Override
-	public tNUMBER substract(tNUMBER op)
+	tNUMBER substract(tNUMBER op)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return ADD(op.MINUS());
 	}
 
 	/*
@@ -247,10 +240,9 @@ public class RATIO extends RATIONAL implements tRATIO
 	 * @see aloyslisp.core.math.tNUMBER#minus()
 	 */
 	@Override
-	public tNUMBER minus()
+	tNUMBER minus()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return new RATIO((tINTEGER) num.MINUS(), den).rationalizeValue();
 	}
 
 	/*
@@ -258,10 +250,9 @@ public class RATIO extends RATIONAL implements tRATIO
 	 * @see aloyslisp.core.math.tNUMBER#inversion()
 	 */
 	@Override
-	public tNUMBER inversion()
+	tNUMBER inversion()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return new RATIO(den, num).rationalizeValue();
 	}
 
 	/*
@@ -269,10 +260,11 @@ public class RATIO extends RATIONAL implements tRATIO
 	 * @see aloyslisp.core.math.tNUMBER#multiply(aloyslisp.core.math.tNUMBER)
 	 */
 	@Override
-	public tNUMBER multiply(tNUMBER op)
+	tNUMBER multiply(tNUMBER op)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		RATIO op2 = op.getRatioValue();
+		return new RATIO((tINTEGER) num.MULTIPLY(op2.num),
+				(tINTEGER) den.MULTIPLY(op2.den)).rationalizeValue();
 	}
 
 	/*
@@ -280,10 +272,9 @@ public class RATIO extends RATIONAL implements tRATIO
 	 * @see aloyslisp.core.math.tNUMBER#division(aloyslisp.core.math.tNUMBER)
 	 */
 	@Override
-	public tNUMBER division(tNUMBER op)
+	tNUMBER division(tNUMBER op)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return MULTIPLY(op.INVERSION());
 	}
 
 	/*
@@ -291,10 +282,9 @@ public class RATIO extends RATIONAL implements tRATIO
 	 * @see aloyslisp.core.math.tRATIONAL#numerator()
 	 */
 	@Override
-	public BIGNUM numerator()
+	tINTEGER numerator()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return num;
 	}
 
 	/*
@@ -302,10 +292,9 @@ public class RATIO extends RATIONAL implements tRATIO
 	 * @see aloyslisp.core.math.tRATIONAL#denominator()
 	 */
 	@Override
-	public BIGNUM denominator()
+	tINTEGER denominator()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return den;
 	}
 
 }

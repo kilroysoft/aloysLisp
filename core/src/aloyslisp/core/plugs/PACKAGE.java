@@ -101,7 +101,7 @@ public class PACKAGE extends CELL implements tPACKAGE
 	 * @see aloyslisp.core.plugs.Cell#printable()
 	 */
 	@Override
-	public String printable()
+	public String toString()
 	{
 		return "#<PACKAGE " + name + ">";
 	}

@@ -100,7 +100,7 @@ public abstract class OUTPUT_STREAM extends STREAM implements tOUTPUT_STREAM
 	 * @see aloyslisp.core.plugs.Cell#printable()
 	 */
 	@Override
-	public String printable()
+	public String toString()
 	{
 		return "<#OUTPUT " + this.getClass().getSimpleName() + ">";
 	}
@@ -122,7 +122,7 @@ public abstract class OUTPUT_STREAM extends STREAM implements tOUTPUT_STREAM
 	 */
 	public tT WRITE(tT obj, tOUTPUT_STREAM stream)
 	{
-		return WRITE_STRING(str(obj.printable()), stream, NIL, NIL);
+		return WRITE_STRING(str(obj.toString()), stream, NIL, NIL);
 	}
 
 	/*

@@ -98,7 +98,7 @@ public abstract class INPUT_STREAM extends STREAM implements tINPUT_STREAM
 	 * @see aloyslisp.core.plugs.Cell#printable()
 	 */
 	@Override
-	public String printable()
+	public String toString()
 	{
 		return "<#INPUT-STREAM " + this.getClass().getSimpleName() + ">";
 	}
@@ -277,7 +277,7 @@ public abstract class INPUT_STREAM extends STREAM implements tINPUT_STREAM
 		if (file instanceof tINPUT_STREAM)
 		{
 			in = (tINPUT_STREAM) file;
-			name = in.printable();
+			name = in.toString();
 		}
 		else
 		{

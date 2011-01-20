@@ -24,38 +24,33 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 20 déc. 2010 Creation
+// IP 28 déc. 2010 Creation
 // --------------------------------------------------------------------------
 
 package aloyslisp.core.conditions;
 
+import aloyslisp.core.plugs.tT;
+
 /**
- * CONDITION
+ * CELL_ERROR
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class CONDITION extends LispException
+public class CELL_ERROR extends ERROR
 {
 	private static final long	serialVersionUID	= 1L;
 
-	protected String message = "";
-	
+	protected tT				cell;
+
 	/**
-	 * @param message
+	 * 
 	 */
-	public CONDITION()
+	public CELL_ERROR(tT cell)
 	{
-		super("");
-	}
-	
-	/* (non-Javadoc)
-	 * @see java.lang.Throwable#getMessage()
-	 */
-	public String getMessage()
-	{
-		return message;
+		this.cell = cell;
+		message += " Cell " + cell;
 	}
 
 }

@@ -29,6 +29,8 @@
 
 package aloyslisp.core.math;
 
+import aloyslisp.core.plugs.tT;
+
 /**
  * SINGLE_FLOAT
  * 
@@ -50,46 +52,12 @@ public class SINGLE_FLOAT extends FLOAT implements tSINGLE_FLOAT
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#coerce(aloyslisp.core.math.tNUMBER)
-	 */
-	@Override
-	public tNUMBER coerce(tNUMBER var)
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#ratioValue()
-	 */
-	@Override
-	public RATIO getRatioValue()
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
 	 * @see aloyslisp.core.math.tNUMBER#complexValue()
 	 */
 	@Override
 	public COMPLEX getComplexValue()
 	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#integerValue()
-	 */
-	@Override
-	public BIGNUM getIntegerValue()
-	{
-		// TODO Auto-generated method stub
-		return null;
+		return new COMPLEX(this, ZERO);
 	}
 
 	/*
@@ -99,8 +67,7 @@ public class SINGLE_FLOAT extends FLOAT implements tSINGLE_FLOAT
 	@Override
 	public SINGLE_FLOAT getFloatValue()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return new SINGLE_FLOAT(value);
 	}
 
 	/*
@@ -110,8 +77,7 @@ public class SINGLE_FLOAT extends FLOAT implements tSINGLE_FLOAT
 	@Override
 	public DOUBLE_FLOAT getDoubleValue()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return new DOUBLE_FLOAT(value);
 	}
 
 	/*
@@ -121,8 +87,22 @@ public class SINGLE_FLOAT extends FLOAT implements tSINGLE_FLOAT
 	@Override
 	public SHORT_FLOAT getShortValue()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return new SHORT_FLOAT(value);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tNUMBER#coerce(aloyslisp.core.math.tNUMBER)
+	 */
+	public NUMBER coerce(tNUMBER var)
+	{
+		if (var instanceof DOUBLE_FLOAT)
+			return getDoubleValue();
+
+		if (var instanceof COMPLEX)
+			return getComplexValue();
+
+		return this;
 	}
 
 	/*
@@ -130,10 +110,9 @@ public class SINGLE_FLOAT extends FLOAT implements tSINGLE_FLOAT
 	 * @see aloyslisp.core.math.tREAL#equal(aloyslisp.core.math.tNUMBER)
 	 */
 	@Override
-	public boolean equal(tNUMBER op)
+	boolean equalnum(tNUMBER op)
 	{
-		// TODO Auto-generated method stub
-		return false;
+		return value == op.getFloatValue().floatValue();
 	}
 
 	/*
@@ -141,10 +120,9 @@ public class SINGLE_FLOAT extends FLOAT implements tSINGLE_FLOAT
 	 * @see aloyslisp.core.math.tREAL#greater(aloyslisp.core.math.tNUMBER)
 	 */
 	@Override
-	public boolean greater(tNUMBER op)
+	boolean greater(tREAL op)
 	{
-		// TODO Auto-generated method stub
-		return false;
+		return value > op.getFloatValue().floatValue();
 	}
 
 	/*
@@ -152,10 +130,9 @@ public class SINGLE_FLOAT extends FLOAT implements tSINGLE_FLOAT
 	 * @see aloyslisp.core.math.tREAL#lower(aloyslisp.core.math.tNUMBER)
 	 */
 	@Override
-	public boolean lower(tNUMBER op)
+	boolean lower(tREAL op)
 	{
-		// TODO Auto-generated method stub
-		return false;
+		return value < op.getFloatValue().floatValue();
 	}
 
 	/*
@@ -163,7 +140,7 @@ public class SINGLE_FLOAT extends FLOAT implements tSINGLE_FLOAT
 	 * @see aloyslisp.core.math.tREAL#rational()
 	 */
 	@Override
-	public tRATIONAL rational()
+	tRATIONAL rational()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -174,7 +151,7 @@ public class SINGLE_FLOAT extends FLOAT implements tSINGLE_FLOAT
 	 * @see aloyslisp.core.math.tREAL#rationalize()
 	 */
 	@Override
-	public tRATIONAL rationalize()
+	tRATIONAL rationalize()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -185,10 +162,9 @@ public class SINGLE_FLOAT extends FLOAT implements tSINGLE_FLOAT
 	 * @see aloyslisp.core.math.tNUMBER#add(aloyslisp.core.math.tNUMBER)
 	 */
 	@Override
-	public tNUMBER add(tNUMBER op)
+	tNUMBER add(tNUMBER op)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return new SINGLE_FLOAT(value + op.getFloatValue().floatValue());
 	}
 
 	/*
@@ -196,10 +172,9 @@ public class SINGLE_FLOAT extends FLOAT implements tSINGLE_FLOAT
 	 * @see aloyslisp.core.math.tNUMBER#substract(aloyslisp.core.math.tNUMBER)
 	 */
 	@Override
-	public tNUMBER substract(tNUMBER op)
+	tNUMBER substract(tNUMBER op)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return new SINGLE_FLOAT(value - op.getFloatValue().floatValue());
 	}
 
 	/*
@@ -207,10 +182,9 @@ public class SINGLE_FLOAT extends FLOAT implements tSINGLE_FLOAT
 	 * @see aloyslisp.core.math.tNUMBER#minus()
 	 */
 	@Override
-	public tNUMBER minus()
+	tNUMBER minus()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return new SINGLE_FLOAT(-value);
 	}
 
 	/*
@@ -218,10 +192,9 @@ public class SINGLE_FLOAT extends FLOAT implements tSINGLE_FLOAT
 	 * @see aloyslisp.core.math.tNUMBER#inversion()
 	 */
 	@Override
-	public tNUMBER inversion()
+	tNUMBER inversion()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return new SINGLE_FLOAT(1 / value);
 	}
 
 	/*
@@ -229,10 +202,9 @@ public class SINGLE_FLOAT extends FLOAT implements tSINGLE_FLOAT
 	 * @see aloyslisp.core.math.tNUMBER#multiply(aloyslisp.core.math.tNUMBER)
 	 */
 	@Override
-	public tNUMBER multiply(tNUMBER op)
+	tNUMBER multiply(tNUMBER op)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return new SINGLE_FLOAT(value * op.getFloatValue().floatValue());
 	}
 
 	/*
@@ -240,10 +212,9 @@ public class SINGLE_FLOAT extends FLOAT implements tSINGLE_FLOAT
 	 * @see aloyslisp.core.math.tNUMBER#division(aloyslisp.core.math.tNUMBER)
 	 */
 	@Override
-	public tNUMBER division(tNUMBER op)
+	tNUMBER division(tNUMBER op)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return new SINGLE_FLOAT(value / op.getFloatValue().floatValue());
 	}
 
 	/*
@@ -251,7 +222,7 @@ public class SINGLE_FLOAT extends FLOAT implements tSINGLE_FLOAT
 	 * @see aloyslisp.core.math.tFLOAT#decode_float(aloyslisp.core.math.tFLOAT)
 	 */
 	@Override
-	public tFLOAT[] decode_float()
+	tT[] decode_float()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -264,7 +235,7 @@ public class SINGLE_FLOAT extends FLOAT implements tSINGLE_FLOAT
 	 * )
 	 */
 	@Override
-	public tFLOAT[] integer_decode_float()
+	tT[] integer_decode_float()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -276,7 +247,7 @@ public class SINGLE_FLOAT extends FLOAT implements tSINGLE_FLOAT
 	 * aloyslisp.core.math.tINTEGER)
 	 */
 	@Override
-	public tFLOAT scale_float(tINTEGER scale)
+	tFLOAT scale_float(tINTEGER scale)
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -287,7 +258,7 @@ public class SINGLE_FLOAT extends FLOAT implements tSINGLE_FLOAT
 	 * @see aloyslisp.core.math.tFLOAT#float_radix(aloyslisp.core.math.tFLOAT)
 	 */
 	@Override
-	public tFLOAT float_radix()
+	tFLOAT float_radix()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -299,7 +270,7 @@ public class SINGLE_FLOAT extends FLOAT implements tSINGLE_FLOAT
 	 * aloyslisp.core.math.tFLOAT)
 	 */
 	@Override
-	public tFLOAT float_sign(tFLOAT f2)
+	tFLOAT float_sign(tFLOAT f2)
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -310,7 +281,7 @@ public class SINGLE_FLOAT extends FLOAT implements tSINGLE_FLOAT
 	 * @see aloyslisp.core.math.tFLOAT#float_digits(aloyslisp.core.math.tFLOAT)
 	 */
 	@Override
-	public tINTEGER float_digits()
+	tINTEGER float_digits()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -322,7 +293,7 @@ public class SINGLE_FLOAT extends FLOAT implements tSINGLE_FLOAT
 	 * aloyslisp.core.math.tFLOAT#float_precision(aloyslisp.core.math.tFLOAT)
 	 */
 	@Override
-	public tINTEGER float_precision()
+	tINTEGER float_precision()
 	{
 		// TODO Auto-generated method stub
 		return null;

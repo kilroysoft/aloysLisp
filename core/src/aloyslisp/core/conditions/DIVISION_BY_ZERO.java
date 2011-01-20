@@ -24,38 +24,32 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 20 déc. 2010 Creation
+// IP 29 déc. 2010 Creation
 // --------------------------------------------------------------------------
 
 package aloyslisp.core.conditions;
 
+import aloyslisp.core.plugs.tT;
+
 /**
- * CONDITION
+ * DIVISION_BY_ZERO
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class CONDITION extends LispException
+public class DIVISION_BY_ZERO extends ARITHMETIC_ERROR
 {
 	private static final long	serialVersionUID	= 1L;
 
-	protected String message = "";
-	
 	/**
-	 * @param message
+	 * @param operation
+	 * @param operands
 	 */
-	public CONDITION()
+	public DIVISION_BY_ZERO(tT operation, tT operands)
 	{
-		super("");
-	}
-	
-	/* (non-Javadoc)
-	 * @see java.lang.Throwable#getMessage()
-	 */
-	public String getMessage()
-	{
-		return message;
+		super(operation, operands);
+		message += " Division by zero.";
 	}
 
 }

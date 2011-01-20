@@ -24,38 +24,28 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 20 déc. 2010 Creation
+// IP 29 déc. 2010 Creation
 // --------------------------------------------------------------------------
 
 package aloyslisp.core.conditions;
 
 /**
- * CONDITION
+ * PROGRAM_ERROR
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class CONDITION extends LispException
+public class PROGRAM_ERROR extends ERROR
 {
 	private static final long	serialVersionUID	= 1L;
 
-	protected String message = "";
-	
 	/**
-	 * @param message
+	 * 
 	 */
-	public CONDITION()
+	public PROGRAM_ERROR()
 	{
-		super("");
-	}
-	
-	/* (non-Javadoc)
-	 * @see java.lang.Throwable#getMessage()
-	 */
-	public String getMessage()
-	{
-		return message;
+		message += "Program error :";
 	}
 
 }

@@ -29,7 +29,11 @@
 
 package aloyslisp.core.math;
 
+import static aloyslisp.commonlisp.L.NIL;
+import static aloyslisp.commonlisp.L.sym;
+import aloyslisp.core.conditions.TYPE_ERROR;
 import aloyslisp.core.plugs.tT;
+import aloyslisp.core.sequences.tLIST;
 
 /**
  * INTEGER
@@ -58,6 +62,167 @@ public abstract class INTEGER extends RATIONAL implements tINTEGER
 		return getIntegerValue().val.longValue();
 	}
 
+	/* *******************************************************************
+	 * OPERATOR
+	 */
+	/**
+	 * Less common multiplicand
+	 * 
+	 * @param op
+	 * @return
+	 */
+	abstract tINTEGER lcm(tINTEGER op);
+
+	/**
+	 * Greather common denumerator
+	 * 
+	 * @param op
+	 * @return
+	 */
+	abstract tINTEGER gcd(tINTEGER op);
+
+	/**
+	 * Arithmetic AND
+	 * 
+	 * @param op
+	 * @return
+	 */
+	abstract tINTEGER logand(tINTEGER op);
+
+	/**
+	 * Arithmetic NAND
+	 * 
+	 * @param op
+	 * @return
+	 */
+	abstract tINTEGER lognand(tINTEGER op);
+
+	/**
+	 * Arithmetic NAND COMPLEMENT 1
+	 * 
+	 * @param op
+	 * @return
+	 */
+	abstract tINTEGER logandc1(tINTEGER op);
+
+	/**
+	 * Arithmetic AND COMPLEMENT 2
+	 * 
+	 * @param op
+	 * @return
+	 */
+	abstract tINTEGER logandc2(tINTEGER op);
+
+	/**
+	 * Arithmetic OR
+	 * 
+	 * @param op
+	 * @return
+	 */
+	abstract tINTEGER logior(tINTEGER op);
+
+	/**
+	 * Arithmetic OR COMPLEMENT 1
+	 * 
+	 * @param op
+	 * @return
+	 */
+	abstract tINTEGER logorc1(tINTEGER op);
+
+	/**
+	 * Arithmetic OR COMPLEMENT 2
+	 * 
+	 * @param op
+	 * @return
+	 */
+	abstract tINTEGER logorc2(tINTEGER op);
+
+	/**
+	 * Arithmetic XOR
+	 * 
+	 * @param op
+	 * @return
+	 */
+	abstract tINTEGER logxor(tINTEGER op);
+
+	/**
+	 * Arithmetic EQUIVALENCE
+	 * 
+	 * @param op
+	 * @return
+	 */
+	abstract tINTEGER logeqv(tINTEGER op);
+
+	/**
+	 * Arithmetic NOT (complement to 0)
+	 * 
+	 * @return
+	 */
+	abstract tINTEGER lognot();
+
+	/* *******************************************************************
+	 * FUNCTIONS
+	 */
+	/**
+	 * Get string representation of number with base radix (for integers)
+	 * 
+	 * @param radix
+	 * @return
+	 */
+	abstract String toBase(Integer radix);
+
+	/**
+	 * Arithmetic bit pattern test
+	 * 
+	 * @param op
+	 * @return
+	 */
+	abstract Boolean logtest(tINTEGER op);
+
+	/**
+	 * Arithmetic bit count
+	 * 
+	 * @param op
+	 * @return
+	 */
+	abstract tINTEGER logcount();
+
+	/**
+	 * Arithmetic bit test
+	 * 
+	 * @param op
+	 * @return
+	 */
+	abstract Boolean logbitp(tINTEGER op);
+
+	/**
+	 * Arithmetic bit shift
+	 * 
+	 * @param count
+	 * @return
+	 */
+	abstract tINTEGER ash(tINTEGER count);
+
+	/**
+	 * @return
+	 */
+	abstract boolean evenp();
+
+	/**
+	 * @return
+	 */
+	abstract boolean oddp();
+
+	/**
+	 * @return
+	 */
+	abstract tINTEGER isqrt();
+
+	/**
+	 * @return
+	 */
+	abstract tINTEGER integer_length();
+
 	/*
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.math.tINTEGER#LCM(aloyslisp.core.plugs.tT)
@@ -65,8 +230,24 @@ public abstract class INTEGER extends RATIONAL implements tINTEGER
 	@Override
 	public tINTEGER LCM(tT op)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		if (op instanceof tINTEGER)
+		{
+			return ((INTEGER) coerce((INTEGER) op)).lcm((tINTEGER) op);
+		}
+		else if (op == NIL)
+		{
+			return this;
+		}
+		else if (op instanceof tLIST)
+		{
+			tLIST list = (tLIST) op;
+			if (list.LENGTH() == 1)
+				return this.LCM((tNUMBER) list.CAR());
+			else
+				return this.LCM((tNUMBER) list.CAR()).LCM(list.CDR());
+		}
+
+		throw new TYPE_ERROR(op, sym("integer"));
 	}
 
 	/*
@@ -76,8 +257,24 @@ public abstract class INTEGER extends RATIONAL implements tINTEGER
 	@Override
 	public tINTEGER GCD(tT op)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		if (op instanceof tINTEGER)
+		{
+			return ((INTEGER) coerce((INTEGER) op)).gcd((tINTEGER) op);
+		}
+		else if (op == NIL)
+		{
+			return this;
+		}
+		else if (op instanceof tLIST)
+		{
+			tLIST list = (tLIST) op;
+			if (list.LENGTH() == 1)
+				return this.GCD((tNUMBER) list.CAR());
+			else
+				return this.GCD((tNUMBER) list.CAR()).GCD(list.CDR());
+		}
+
+		throw new TYPE_ERROR(op, sym("integer"));
 	}
 
 	/*
@@ -87,8 +284,24 @@ public abstract class INTEGER extends RATIONAL implements tINTEGER
 	@Override
 	public tINTEGER LOGAND(tT op)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		if (op instanceof tINTEGER)
+		{
+			return ((INTEGER) coerce((INTEGER) op)).logand((tINTEGER) op);
+		}
+		else if (op == NIL)
+		{
+			return this;
+		}
+		else if (op instanceof tLIST)
+		{
+			tLIST list = (tLIST) op;
+			if (list.LENGTH() == 1)
+				return this.LOGAND((tNUMBER) list.CAR());
+			else
+				return this.LOGAND((tNUMBER) list.CAR()).LOGAND(list.CDR());
+		}
+
+		throw new TYPE_ERROR(op, sym("integer"));
 	}
 
 	/*
@@ -98,8 +311,7 @@ public abstract class INTEGER extends RATIONAL implements tINTEGER
 	@Override
 	public tINTEGER LOGNAND(tINTEGER op)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return ((INTEGER) coerce((INTEGER) op)).lognand(op);
 	}
 
 	/*
@@ -109,8 +321,7 @@ public abstract class INTEGER extends RATIONAL implements tINTEGER
 	@Override
 	public tINTEGER LOGANDC1(tINTEGER op)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return ((INTEGER) coerce((INTEGER) op)).logandc1(op);
 	}
 
 	/*
@@ -120,8 +331,7 @@ public abstract class INTEGER extends RATIONAL implements tINTEGER
 	@Override
 	public tINTEGER LOGANDC2(tINTEGER op)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return ((INTEGER) coerce((INTEGER) op)).logandc2(op);
 	}
 
 	/*
@@ -131,8 +341,24 @@ public abstract class INTEGER extends RATIONAL implements tINTEGER
 	@Override
 	public tINTEGER LOGIOR(tT op)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		if (op instanceof tINTEGER)
+		{
+			return ((INTEGER) coerce((INTEGER) op)).logior((tINTEGER) op);
+		}
+		else if (op == NIL)
+		{
+			return this;
+		}
+		else if (op instanceof tLIST)
+		{
+			tLIST list = (tLIST) op;
+			if (list.LENGTH() == 1)
+				return this.LOGIOR((tNUMBER) list.CAR());
+			else
+				return this.LOGIOR((tNUMBER) list.CAR()).LOGIOR(list.CDR());
+		}
+
+		throw new TYPE_ERROR(op, sym("integer"));
 	}
 
 	/*
@@ -142,8 +368,7 @@ public abstract class INTEGER extends RATIONAL implements tINTEGER
 	@Override
 	public tINTEGER LOGORC1(tINTEGER op)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return ((INTEGER) coerce((INTEGER) op)).logorc1(op);
 	}
 
 	/*
@@ -153,8 +378,7 @@ public abstract class INTEGER extends RATIONAL implements tINTEGER
 	@Override
 	public tINTEGER LOGORC2(tINTEGER op)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return ((INTEGER) coerce((INTEGER) op)).logorc2(op);
 	}
 
 	/*
@@ -164,8 +388,24 @@ public abstract class INTEGER extends RATIONAL implements tINTEGER
 	@Override
 	public tINTEGER LOGXOR(tT op)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		if (op instanceof tINTEGER)
+		{
+			return ((INTEGER) coerce((INTEGER) op)).logxor((tINTEGER) op);
+		}
+		else if (op == NIL)
+		{
+			return this;
+		}
+		else if (op instanceof tLIST)
+		{
+			tLIST list = (tLIST) op;
+			if (list.LENGTH() == 1)
+				return this.LOGXOR((tNUMBER) list.CAR());
+			else
+				return this.LOGXOR((tNUMBER) list.CAR()).LOGXOR(list.CDR());
+		}
+
+		throw new TYPE_ERROR(op, sym("integer"));
 	}
 
 	/*
@@ -175,8 +415,24 @@ public abstract class INTEGER extends RATIONAL implements tINTEGER
 	@Override
 	public tINTEGER LOGEQV(tT op)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		if (op instanceof tINTEGER)
+		{
+			return ((INTEGER) coerce((INTEGER) op)).logeqv((tINTEGER) op);
+		}
+		else if (op == NIL)
+		{
+			return this;
+		}
+		else if (op instanceof tLIST)
+		{
+			tLIST list = (tLIST) op;
+			if (list.LENGTH() == 1)
+				return this.LOGEQV((tNUMBER) list.CAR());
+			else
+				return this.LOGEQV((tNUMBER) list.CAR()).LOGEQV(list.CDR());
+		}
+
+		throw new TYPE_ERROR(op, sym("integer"));
 	}
 
 	/*
@@ -186,8 +442,7 @@ public abstract class INTEGER extends RATIONAL implements tINTEGER
 	@Override
 	public tINTEGER LOGNOT()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return lognot();
 	}
 
 	/*
@@ -197,8 +452,16 @@ public abstract class INTEGER extends RATIONAL implements tINTEGER
 	@Override
 	public tINTEGER LOGCOUNT()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return logcount();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tINTEGER#LOGTEST(aloyslisp.core.math.tINTEGER)
+	 */
+	public Boolean LOGTEST(tINTEGER op)
+	{
+		return logtest(op);
 	}
 
 	/*
@@ -206,10 +469,9 @@ public abstract class INTEGER extends RATIONAL implements tINTEGER
 	 * @see aloyslisp.core.math.tINTEGER#LOGBITP(aloyslisp.core.math.tINTEGER)
 	 */
 	@Override
-	public tINTEGER LOGBITP(tINTEGER op)
+	public Boolean LOGBITP(tINTEGER op)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return logbitp(op);
 	}
 
 	/*
@@ -219,8 +481,7 @@ public abstract class INTEGER extends RATIONAL implements tINTEGER
 	@Override
 	public tINTEGER ASH(tINTEGER count)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return ash(count);
 	}
 
 	/*
@@ -230,8 +491,7 @@ public abstract class INTEGER extends RATIONAL implements tINTEGER
 	@Override
 	public boolean EVENP()
 	{
-		// TODO Auto-generated method stub
-		return false;
+		return evenp();
 	}
 
 	/*
@@ -241,8 +501,7 @@ public abstract class INTEGER extends RATIONAL implements tINTEGER
 	@Override
 	public boolean ODDP()
 	{
-		// TODO Auto-generated method stub
-		return false;
+		return oddp();
 	}
 
 	/*
@@ -252,8 +511,7 @@ public abstract class INTEGER extends RATIONAL implements tINTEGER
 	@Override
 	public tINTEGER ISQRT()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return isqrt();
 	}
 
 	/*
@@ -263,8 +521,7 @@ public abstract class INTEGER extends RATIONAL implements tINTEGER
 	@Override
 	public tINTEGER INTEGER_LENGTH()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return integer_length();
 	}
 
 }

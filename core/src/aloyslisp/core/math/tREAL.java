@@ -42,168 +42,12 @@ import aloyslisp.core.plugs.tT;
 public interface tREAL extends tNUMBER
 {
 
-	/**
-	 * @return
-	 */
-	public Double doubleValue();
-
-	/**
-	 * @return
-	 */
-	public Short shortValue();
-
-	/**
-	 * @return
-	 */
-	public Float floatValue();
-
-	/* *******************************************************************
-	 * COMPARATORS
-	 */
-	/**
-	 * Test equality a == b
-	 * 
-	 * @param op
-	 * @return
-	 */
-	public boolean equal(tNUMBER op);
-
-	/**
-	 * Test greater a > b
-	 * 
-	 * @param op
-	 * @return
-	 */
-	public boolean greater(tNUMBER op);
-
-	/**
-	 * Test lower a < b
-	 * 
-	 * @param op
-	 * @return
-	 */
-	public boolean lower(tNUMBER op);
-
-	/**
-	 * @return
-	 */
-	public boolean minusp();
-
-	/**
-	 * @return
-	 */
-	public boolean plusp();
-
-	/* *******************************************************************
-	 * RATIONAL
-	 */
-	/**
-	 * @return
-	 */
-	public tRATIONAL rational();
-
-	/**
-	 * @return
-	 */
-	public tRATIONAL rationalize();
-
-	/* *******************************************************************
-	 * FUNCTIONS
-	 */
-	/**
-	 * Modulo
-	 * 
-	 * @param op
-	 * @return
-	 */
-	public tREAL mod(tREAL op);
-
-	/**
-	 * Remainder
-	 * 
-	 * @param op
-	 * @return
-	 */
-	public tREAL rem(tREAL op);
-
-	/**
-	 * Floor
-	 * 
-	 * @return
-	 */
-	public tREAL[] floor();
-
-	/**
-	 * Floor
-	 * 
-	 * @param op
-	 * @return
-	 */
-	public tREAL[] floor(tREAL op);
-
-	/**
-	 * Ceiling
-	 * 
-	 * @return
-	 */
-	public tREAL[] ceiling();
-
-	/**
-	 * Ceiling
-	 * 
-	 * @param op
-	 * @return
-	 */
-	public tREAL[] ceiling(tREAL op);
-
-	/**
-	 * Truncate
-	 * 
-	 * @param op
-	 * @return
-	 */
-	public tREAL[] truncate();
-
-	/**
-	 * Truncate
-	 * 
-	 * @param op
-	 * @return
-	 */
-	public tREAL[] truncate(tREAL op);
-
-	/**
-	 * Round
-	 * 
-	 * @param op
-	 * @return
-	 */
-	public tREAL[] round();
-
-	/**
-	 * Round
-	 * 
-	 * @param op
-	 * @return
-	 */
-	public tREAL[] round(tREAL op);
-
 	/****************************************************************
 	 * LISP FUNCTIONS
 	 */
 	/* *******************************************************************
 	 * COMPARATORS
 	 */
-	/**
-	 * Test equality a == b
-	 * 
-	 * @param op
-	 * @return
-	 */
-	@Function(name = "=")
-	public boolean EQUAL( //
-			@Rest(name = "op") tT op);
-
 	/**
 	 * Test greater a > b
 	 * 
@@ -313,5 +157,18 @@ public interface tREAL extends tNUMBER
 	@Function(name = "round")
 	public tREAL[] ROUND( //
 			@Opt(name = "div") tT div);
+
+	/**
+	 * @return
+	 */
+	@Function(name = "cis")
+	public tNUMBER CIS();
+
+	/**
+	 * @return
+	 */
+	@Function(name = "random")
+	public tNUMBER RANDOM( //
+			@Opt(name = "state") tT st);
 
 }

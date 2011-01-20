@@ -81,7 +81,7 @@ public interface tT
 	 * 
 	 * @return Printable form
 	 */
-	public String printable();
+	public String toString();
 
 	/**
 	 * Return describe string

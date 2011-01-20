@@ -548,7 +548,7 @@ public class SYMBOL extends CELL implements tSYMBOL
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.plugs.CELL#printable()
 	 */
-	public String printable()
+	public String toString()
 	{
 		if (pack == null)
 			return "#:" + name;
@@ -666,7 +666,7 @@ public class SYMBOL extends CELL implements tSYMBOL
 	 */
 	public String DESCRIBE()
 	{
-		return printable() + " " + pack + " " + getValue() + " " + fGetValue()
+		return toString() + " " + pack + " " + getValue() + " " + fGetValue()
 				+ " " + pList;
 	}
 

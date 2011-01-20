@@ -24,38 +24,31 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 20 déc. 2010 Creation
+// IP 28 déc. 2010 Creation
 // --------------------------------------------------------------------------
 
 package aloyslisp.core.conditions;
 
+import aloyslisp.core.plugs.tT;
+
 /**
- * CONDITION
+ * UNBOUND_VARIABLE
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class CONDITION extends LispException
+public class UNBOUND_VARIABLE extends CELL_ERROR
 {
 	private static final long	serialVersionUID	= 1L;
 
-	protected String message = "";
-	
 	/**
-	 * @param message
+	 * @param cell
 	 */
-	public CONDITION()
+	public UNBOUND_VARIABLE(tT cell)
 	{
-		super("");
-	}
-	
-	/* (non-Javadoc)
-	 * @see java.lang.Throwable#getMessage()
-	 */
-	public String getMessage()
-	{
-		return message;
+		super(cell);
+		message += " Unbound variable.";
 	}
 
 }

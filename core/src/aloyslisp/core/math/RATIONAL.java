@@ -38,13 +38,52 @@ package aloyslisp.core.math;
  */
 public abstract class RATIONAL extends REAL implements tRATIONAL
 {
+	/**
+	 * Numerator (for ratio) a/b -> a
+	 * 
+	 * @return
+	 */
+	abstract tINTEGER numerator();
+
+	/**
+	 * Denumerator (for ratio) a/b -> b
+	 * 
+	 * @return
+	 */
+	abstract tINTEGER denominator();
+
+	/**
+	 * @return
+	 */
+	abstract tRATIONAL rationalizeValue();
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tREAL#rational()
+	 */
+	@Override
+	tRATIONAL rational()
+	{
+		return this;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tREAL#rationalize()
+	 */
+	@Override
+	tRATIONAL rationalize()
+	{
+		return this;
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.math.tRATIONAL#NUMERATOR()
 	 */
 	public tINTEGER NUMERATOR()
 	{
-		return null;
+		return numerator();
 	}
 
 	/*
@@ -53,7 +92,7 @@ public abstract class RATIONAL extends REAL implements tRATIONAL
 	 */
 	public tINTEGER DENOMINATOR()
 	{
-		return null;
+		return denominator();
 	}
 
 }

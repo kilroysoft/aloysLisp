@@ -84,29 +84,11 @@ public class BIGNUM extends INTEGER implements tBIG_INTEGER
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#coerce(aloyslisp.core.math.tNUMBER)
+	 * @see aloyslisp.core.plugs.CELL#toString()
 	 */
-	@Override
-	public tNUMBER coerce(tNUMBER var)
+	public String toString()
 	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/**
-	 * Get number from a string representation in base radix
-	 * 
-	 * @param val
-	 * @param start
-	 * @param end
-	 * @param radix
-	 * @param junk
-	 * @return
-	 */
-	public static BIGNUM parse_integer(String val, Integer start, Integer end,
-			Integer radix, Boolean junk)
-	{
-		return new BIGNUM(new BigInteger(val, radix));
+		return val.toString(10);
 	}
 
 	/*
@@ -171,123 +153,35 @@ public class BIGNUM extends INTEGER implements tBIG_INTEGER
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tREAL#equal(aloyslisp.core.math.tNUMBER)
+	 * @see aloyslisp.core.math.RATIONAL#getRationalValue()
 	 */
-	@Override
-	public boolean equal(tNUMBER op)
+	public tRATIONAL rationalizeValue()
 	{
-		// TODO Auto-generated method stub
-		return false;
+		return this;
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tREAL#greater(aloyslisp.core.math.tNUMBER)
+	 * @see aloyslisp.core.math.tNUMBER#coerce(aloyslisp.core.math.tNUMBER)
 	 */
-	@Override
-	public boolean greater(tNUMBER op)
+	public NUMBER coerce(tNUMBER var)
 	{
-		// TODO Auto-generated method stub
-		return false;
-	}
+		if (var instanceof RATIO)
+			return getRatioValue();
 
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tREAL#lower(aloyslisp.core.math.tNUMBER)
-	 */
-	@Override
-	public boolean lower(tNUMBER op)
-	{
-		// TODO Auto-generated method stub
-		return false;
-	}
+		if (var instanceof SINGLE_FLOAT)
+			return getFloatValue();
 
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tREAL#rational()
-	 */
-	@Override
-	public tRATIONAL rational()
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
+		if (var instanceof DOUBLE_FLOAT)
+			return getDoubleValue();
 
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tREAL#rationalize()
-	 */
-	@Override
-	public tRATIONAL rationalize()
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
+		if (var instanceof SHORT_FLOAT)
+			return getShortValue();
 
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#add(aloyslisp.core.math.tNUMBER)
-	 */
-	@Override
-	public tNUMBER add(tNUMBER op)
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
+		if (var instanceof COMPLEX)
+			return getComplexValue();
 
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#substract(aloyslisp.core.math.tNUMBER)
-	 */
-	@Override
-	public tNUMBER substract(tNUMBER op)
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#minus()
-	 */
-	@Override
-	public tNUMBER minus()
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#inversion()
-	 */
-	@Override
-	public tNUMBER inversion()
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#multiply(aloyslisp.core.math.tNUMBER)
-	 */
-	@Override
-	public tNUMBER multiply(tNUMBER op)
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#division(aloyslisp.core.math.tNUMBER)
-	 */
-	@Override
-	public tNUMBER division(tNUMBER op)
-	{
-		// TODO Auto-generated method stub
-		return null;
+		return this;
 	}
 
 	/*
@@ -295,7 +189,7 @@ public class BIGNUM extends INTEGER implements tBIG_INTEGER
 	 * @see aloyslisp.core.math.tINTEGER#lcm(aloyslisp.core.math.tINTEGER)
 	 */
 	@Override
-	public tINTEGER lcm(tINTEGER op)
+	tINTEGER lcm(tINTEGER op)
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -306,10 +200,9 @@ public class BIGNUM extends INTEGER implements tBIG_INTEGER
 	 * @see aloyslisp.core.math.tINTEGER#gcd(aloyslisp.core.math.tINTEGER)
 	 */
 	@Override
-	public tINTEGER gcd(tINTEGER op)
+	tINTEGER gcd(tINTEGER op)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return new BIGNUM(val.gcd(((BIGNUM) op).val));
 	}
 
 	/*
@@ -317,10 +210,9 @@ public class BIGNUM extends INTEGER implements tBIG_INTEGER
 	 * @see aloyslisp.core.math.tINTEGER#logand(aloyslisp.core.math.tINTEGER)
 	 */
 	@Override
-	public tINTEGER logand(tINTEGER op)
+	tINTEGER logand(tINTEGER op)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return new BIGNUM(val.and(((BIGNUM) op).val));
 	}
 
 	/*
@@ -328,10 +220,9 @@ public class BIGNUM extends INTEGER implements tBIG_INTEGER
 	 * @see aloyslisp.core.math.tINTEGER#lognand(aloyslisp.core.math.tINTEGER)
 	 */
 	@Override
-	public tINTEGER lognand(tINTEGER op)
+	tINTEGER lognand(tINTEGER op)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return new BIGNUM(val.and(((BIGNUM) op).val).not());
 	}
 
 	/*
@@ -339,10 +230,9 @@ public class BIGNUM extends INTEGER implements tBIG_INTEGER
 	 * @see aloyslisp.core.math.tINTEGER#logandc1(aloyslisp.core.math.tINTEGER)
 	 */
 	@Override
-	public tINTEGER logandc1(tINTEGER op)
+	tINTEGER logandc1(tINTEGER op)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return new BIGNUM(val.not().and(((BIGNUM) op).val));
 	}
 
 	/*
@@ -350,10 +240,9 @@ public class BIGNUM extends INTEGER implements tBIG_INTEGER
 	 * @see aloyslisp.core.math.tINTEGER#logandc2(aloyslisp.core.math.tINTEGER)
 	 */
 	@Override
-	public tINTEGER logandc2(tINTEGER op)
+	tINTEGER logandc2(tINTEGER op)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return new BIGNUM(val.and(((BIGNUM) op).val.not()));
 	}
 
 	/*
@@ -361,10 +250,9 @@ public class BIGNUM extends INTEGER implements tBIG_INTEGER
 	 * @see aloyslisp.core.math.tINTEGER#logior(aloyslisp.core.math.tINTEGER)
 	 */
 	@Override
-	public tINTEGER logior(tINTEGER op)
+	tINTEGER logior(tINTEGER op)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return new BIGNUM(val.or(((BIGNUM) op).val));
 	}
 
 	/*
@@ -372,10 +260,9 @@ public class BIGNUM extends INTEGER implements tBIG_INTEGER
 	 * @see aloyslisp.core.math.tINTEGER#logorc1(aloyslisp.core.math.tINTEGER)
 	 */
 	@Override
-	public tINTEGER logorc1(tINTEGER op)
+	tINTEGER logorc1(tINTEGER op)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return new BIGNUM(val.not().or(((BIGNUM) op).val));
 	}
 
 	/*
@@ -383,10 +270,9 @@ public class BIGNUM extends INTEGER implements tBIG_INTEGER
 	 * @see aloyslisp.core.math.tINTEGER#logorc2(aloyslisp.core.math.tINTEGER)
 	 */
 	@Override
-	public tINTEGER logorc2(tINTEGER op)
+	tINTEGER logorc2(tINTEGER op)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return new BIGNUM(val.or(((BIGNUM) op).val.not()));
 	}
 
 	/*
@@ -394,10 +280,9 @@ public class BIGNUM extends INTEGER implements tBIG_INTEGER
 	 * @see aloyslisp.core.math.tINTEGER#logxor(aloyslisp.core.math.tINTEGER)
 	 */
 	@Override
-	public tINTEGER logxor(tINTEGER op)
+	tINTEGER logxor(tINTEGER op)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return new BIGNUM(val.xor(((BIGNUM) op).val));
 	}
 
 	/*
@@ -405,10 +290,9 @@ public class BIGNUM extends INTEGER implements tBIG_INTEGER
 	 * @see aloyslisp.core.math.tINTEGER#logeqv(aloyslisp.core.math.tINTEGER)
 	 */
 	@Override
-	public tINTEGER logeqv(tINTEGER op)
+	tINTEGER logeqv(tINTEGER op)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return new BIGNUM(val.xor(((BIGNUM) op).val).not());
 	}
 
 	/*
@@ -416,10 +300,25 @@ public class BIGNUM extends INTEGER implements tBIG_INTEGER
 	 * @see aloyslisp.core.math.tINTEGER#lognot()
 	 */
 	@Override
-	public tINTEGER lognot()
+	tINTEGER lognot()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return new BIGNUM(val.not());
+	}
+
+	/**
+	 * Get number from a string representation in base radix
+	 * 
+	 * @param val
+	 * @param start
+	 * @param end
+	 * @param radix
+	 * @param junk
+	 * @return
+	 */
+	public static BIGNUM parse_integer(String val, Integer start, Integer end,
+			Integer radix, Boolean junk)
+	{
+		return new BIGNUM(new BigInteger(val, radix));
 	}
 
 	/*
@@ -427,10 +326,9 @@ public class BIGNUM extends INTEGER implements tBIG_INTEGER
 	 * @see aloyslisp.core.math.tINTEGER#toBase(java.lang.Integer)
 	 */
 	@Override
-	public String toBase(Integer radix)
+	String toBase(Integer radix)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return val.toString(radix);
 	}
 
 	/*
@@ -438,7 +336,7 @@ public class BIGNUM extends INTEGER implements tBIG_INTEGER
 	 * @see aloyslisp.core.math.tINTEGER#logtest(aloyslisp.core.math.tINTEGER)
 	 */
 	@Override
-	public tINTEGER logtest(tINTEGER op)
+	Boolean logtest(tINTEGER op)
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -446,13 +344,12 @@ public class BIGNUM extends INTEGER implements tBIG_INTEGER
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tINTEGER#logcount(aloyslisp.core.math.tINTEGER)
+	 * @see aloyslisp.core.math.tINTEGER#logcount()
 	 */
 	@Override
-	public tINTEGER logcount(tINTEGER op)
+	tINTEGER logcount()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return new BIGNUM(val.bitCount());
 	}
 
 	/*
@@ -460,10 +357,9 @@ public class BIGNUM extends INTEGER implements tBIG_INTEGER
 	 * @see aloyslisp.core.math.tINTEGER#logbitp(aloyslisp.core.math.tINTEGER)
 	 */
 	@Override
-	public tINTEGER logbitp(tINTEGER op)
+	Boolean logbitp(tINTEGER op)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return val.testBit(op.getIntegerValue().val.intValue());
 	}
 
 	/*
@@ -471,10 +367,15 @@ public class BIGNUM extends INTEGER implements tBIG_INTEGER
 	 * @see aloyslisp.core.math.tINTEGER#ash(aloyslisp.core.math.tINTEGER)
 	 */
 	@Override
-	public tINTEGER ash(tINTEGER count)
+	tINTEGER ash(tINTEGER count)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		if (count.MINUSP())
+			return new BIGNUM(
+					val.shiftRight(count.MINUS().getIntegerValue().val
+							.intValue()));
+		else
+			return new BIGNUM(val.shiftLeft(count.getIntegerValue().val
+					.intValue()));
 	}
 
 	/*
@@ -482,10 +383,9 @@ public class BIGNUM extends INTEGER implements tBIG_INTEGER
 	 * @see aloyslisp.core.math.tINTEGER#evenp()
 	 */
 	@Override
-	public boolean evenp()
+	boolean evenp()
 	{
-		// TODO Auto-generated method stub
-		return false;
+		return val.mod(new BigInteger("2")).intValue() == 0;
 	}
 
 	/*
@@ -493,10 +393,9 @@ public class BIGNUM extends INTEGER implements tBIG_INTEGER
 	 * @see aloyslisp.core.math.tINTEGER#oddp()
 	 */
 	@Override
-	public boolean oddp()
+	boolean oddp()
 	{
-		// TODO Auto-generated method stub
-		return false;
+		return val.mod(new BigInteger("2")).intValue() != 0;
 	}
 
 	/*
@@ -504,7 +403,7 @@ public class BIGNUM extends INTEGER implements tBIG_INTEGER
 	 * @see aloyslisp.core.math.tINTEGER#isqrt()
 	 */
 	@Override
-	public tINTEGER isqrt()
+	tINTEGER isqrt()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -515,7 +414,7 @@ public class BIGNUM extends INTEGER implements tBIG_INTEGER
 	 * @see aloyslisp.core.math.tINTEGER#integer_length()
 	 */
 	@Override
-	public tINTEGER integer_length()
+	tINTEGER integer_length()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -526,10 +425,9 @@ public class BIGNUM extends INTEGER implements tBIG_INTEGER
 	 * @see aloyslisp.core.math.tRATIONAL#numerator()
 	 */
 	@Override
-	public tINTEGER numerator()
+	tINTEGER numerator()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return this;
 	}
 
 	/*
@@ -537,10 +435,104 @@ public class BIGNUM extends INTEGER implements tBIG_INTEGER
 	 * @see aloyslisp.core.math.tRATIONAL#denominator()
 	 */
 	@Override
-	public tINTEGER denominator()
+	tINTEGER denominator()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return ONE;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.REAL#greater(aloyslisp.core.math.tREAL)
+	 */
+	@Override
+	boolean greater(tREAL op)
+	{
+		return val.compareTo(op.getIntegerValue().val) > 0;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.REAL#lower(aloyslisp.core.math.tREAL)
+	 */
+	@Override
+	boolean lower(tREAL op)
+	{
+		return val.compareTo(op.getIntegerValue().val) < 0;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.NUMBER#equalnum(aloyslisp.core.math.tNUMBER)
+	 */
+	@Override
+	boolean equalnum(tNUMBER op)
+	{
+		return val.compareTo(op.getIntegerValue().val) == 0;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.NUMBER#add(aloyslisp.core.math.tNUMBER)
+	 */
+	@Override
+	tNUMBER add(tNUMBER op)
+	{
+		return new BIGNUM(val.add(op.getIntegerValue().val));
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.NUMBER#substract(aloyslisp.core.math.tNUMBER)
+	 */
+	@Override
+	tNUMBER substract(tNUMBER op)
+	{
+		return new BIGNUM(val.subtract(op.getIntegerValue().val));
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.NUMBER#minus()
+	 */
+	@Override
+	tNUMBER minus()
+	{
+		return new BIGNUM(val.negate());
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.NUMBER#inversion()
+	 */
+	@Override
+	tNUMBER inversion()
+	{
+		return new RATIO(ONE, this);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.NUMBER#multiply(aloyslisp.core.math.tNUMBER)
+	 */
+	@Override
+	tNUMBER multiply(tNUMBER op)
+	{
+		return new BIGNUM(val.multiply(op.getIntegerValue().val));
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.NUMBER#division(aloyslisp.core.math.tNUMBER)
+	 */
+	@Override
+	tNUMBER division(tNUMBER op)
+	{
+		if (op.getIntegerValue().EQUALNUM(ONE))
+			return this;
+		if (MOD(op.getIntegerValue()).EQUALNUM(ZERO))
+			return new BIGNUM(val.divide(op.getIntegerValue().val));
+		else
+			return new RATIO(this, op.getIntegerValue());
 	}
 
 }

@@ -24,38 +24,34 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 20 déc. 2010 Creation
+// IP 29 déc. 2010 Creation
 // --------------------------------------------------------------------------
 
 package aloyslisp.core.conditions;
 
+import aloyslisp.core.plugs.tT;
+
 /**
- * CONDITION
+ * TYPE_ERROR
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class CONDITION extends LispException
+public class TYPE_ERROR extends ERROR
 {
 	private static final long	serialVersionUID	= 1L;
+	protected tT				datum;
+	protected tT				expected;
 
-	protected String message = "";
-	
 	/**
-	 * @param message
+	 * 
 	 */
-	public CONDITION()
+	public TYPE_ERROR(tT datum, tT expected)
 	{
-		super("");
-	}
-	
-	/* (non-Javadoc)
-	 * @see java.lang.Throwable#getMessage()
-	 */
-	public String getMessage()
-	{
-		return message;
+		this.datum = datum;
+		this.expected = expected;
+		message += " Type error on " + datum + ". " + expected + " expected.";
 	}
 
 }

@@ -41,177 +41,6 @@ import aloyslisp.core.plugs.tT;
  */
 public interface tINTEGER extends tRATIONAL
 {
-	/**
-	 * @return
-	 */
-	public Integer integerValue();
-
-	/**
-	 * @return
-	 */
-	public Long longValue();
-
-	/* *******************************************************************
-	 * OPERATOR
-	 */
-	/**
-	 * Less common multiplicand
-	 * 
-	 * @param op
-	 * @return
-	 */
-	public tINTEGER lcm(tINTEGER op);
-
-	/**
-	 * Greather common denumerator
-	 * 
-	 * @param op
-	 * @return
-	 */
-	public tINTEGER gcd(tINTEGER op);
-
-	/**
-	 * Arithmetic AND
-	 * 
-	 * @param op
-	 * @return
-	 */
-	public tINTEGER logand(tINTEGER op);
-
-	/**
-	 * Arithmetic NAND
-	 * 
-	 * @param op
-	 * @return
-	 */
-	public tINTEGER lognand(tINTEGER op);
-
-	/**
-	 * Arithmetic NAND COMPLEMENT 1
-	 * 
-	 * @param op
-	 * @return
-	 */
-	public tINTEGER logandc1(tINTEGER op);
-
-	/**
-	 * Arithmetic AND COMPLEMENT 2
-	 * 
-	 * @param op
-	 * @return
-	 */
-	public tINTEGER logandc2(tINTEGER op);
-
-	/**
-	 * Arithmetic OR
-	 * 
-	 * @param op
-	 * @return
-	 */
-	public tINTEGER logior(tINTEGER op);
-
-	/**
-	 * Arithmetic OR COMPLEMENT 1
-	 * 
-	 * @param op
-	 * @return
-	 */
-	public tINTEGER logorc1(tINTEGER op);
-
-	/**
-	 * Arithmetic OR COMPLEMENT 2
-	 * 
-	 * @param op
-	 * @return
-	 */
-	public tINTEGER logorc2(tINTEGER op);
-
-	/**
-	 * Arithmetic XOR
-	 * 
-	 * @param op
-	 * @return
-	 */
-	public tINTEGER logxor(tINTEGER op);
-
-	/**
-	 * Arithmetic EQUIVALENCE
-	 * 
-	 * @param op
-	 * @return
-	 */
-	public tINTEGER logeqv(tINTEGER op);
-
-	/**
-	 * Arithmetic NOT (complement to 0)
-	 * 
-	 * @return
-	 */
-	public tINTEGER lognot();
-
-	/* *******************************************************************
-	 * FUNCTIONS
-	 */
-	/**
-	 * Get string representation of number with base radix (for integers)
-	 * 
-	 * @param radix
-	 * @return
-	 */
-	public String toBase(Integer radix);
-
-	/**
-	 * Arithmetic bit pattern test
-	 * 
-	 * @param op
-	 * @return
-	 */
-	public tINTEGER logtest(tINTEGER op);
-
-	/**
-	 * Arithmetic bit count
-	 * 
-	 * @param op
-	 * @return
-	 */
-	public tINTEGER logcount(tINTEGER op);
-
-	/**
-	 * Arithmetic bit test
-	 * 
-	 * @param op
-	 * @return
-	 */
-	public tINTEGER logbitp(tINTEGER op);
-
-	/**
-	 * Arithmetic bit shift
-	 * 
-	 * @param count
-	 * @return
-	 */
-	public tINTEGER ash(tINTEGER count);
-
-	/**
-	 * @return
-	 */
-	public boolean evenp();
-
-	/**
-	 * @return
-	 */
-	public boolean oddp();
-
-	/**
-	 * @return
-	 */
-	public tINTEGER isqrt();
-
-	/**
-	 * @return
-	 */
-	public tINTEGER integer_length();
-
 	/********************************************************
 	 * LISP FUNCTIONS
 	 */
@@ -354,8 +183,18 @@ public interface tINTEGER extends tRATIONAL
 	 * @param op
 	 * @return
 	 */
+	@Function(name = "logtest")
+	public Boolean LOGTEST( //
+			@Arg(name = "op") tINTEGER op);
+
+	/**
+	 * Arithmetic bit test
+	 * 
+	 * @param op
+	 * @return
+	 */
 	@Function(name = "logbitp")
-	public tINTEGER LOGBITP( //
+	public Boolean LOGBITP( //
 			@Arg(name = "op") tINTEGER op);
 
 	/**

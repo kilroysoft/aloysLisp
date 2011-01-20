@@ -24,38 +24,33 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 20 déc. 2010 Creation
+// IP 29 déc. 2010 Creation
 // --------------------------------------------------------------------------
 
 package aloyslisp.core.conditions;
 
+import aloyslisp.core.streams.tSTREAM;
+
 /**
- * CONDITION
+ * STREAM_ERROR
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class CONDITION extends LispException
+public class STREAM_ERROR extends ERROR
 {
 	private static final long	serialVersionUID	= 1L;
+	protected tSTREAM			stream;
 
-	protected String message = "";
-	
 	/**
-	 * @param message
+	 * 
 	 */
-	public CONDITION()
+	public STREAM_ERROR(tSTREAM stream)
 	{
-		super("");
-	}
-	
-	/* (non-Javadoc)
-	 * @see java.lang.Throwable#getMessage()
-	 */
-	public String getMessage()
-	{
-		return message;
+		super();
+		this.stream = stream;
+		message += " Stream error on " + stream + ".";
 	}
 
 }

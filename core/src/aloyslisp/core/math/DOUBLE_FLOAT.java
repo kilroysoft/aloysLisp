@@ -29,6 +29,8 @@
 
 package aloyslisp.core.math;
 
+import aloyslisp.core.plugs.tT;
+
 /**
  * DOUBLE_FLOAT
  * 
@@ -38,7 +40,7 @@ package aloyslisp.core.math;
  */
 public class DOUBLE_FLOAT extends FLOAT implements tDOUBLE_FLOAT
 {
-	public double	value;
+	public Double	value;
 
 	/**
 	 * @param init
@@ -50,24 +52,16 @@ public class DOUBLE_FLOAT extends FLOAT implements tDOUBLE_FLOAT
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#coerce(aloyslisp.core.math.tNUMBER)
-	 */
-	@Override
-	public tNUMBER coerce(tNUMBER var)
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
 	 * @see aloyslisp.core.math.tNUMBER#ratioValue()
 	 */
 	@Override
 	public RATIO getRatioValue()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		// TODO some to reflect about
+		tRATIONAL rat = rationalize();
+		if (rat instanceof tRATIO)
+			return (RATIO) rat;
+		return new RATIO((tINTEGER) rat, ONE);
 	}
 
 	/*
@@ -77,8 +71,7 @@ public class DOUBLE_FLOAT extends FLOAT implements tDOUBLE_FLOAT
 	@Override
 	public COMPLEX getComplexValue()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return new COMPLEX(this, ZERO);
 	}
 
 	/*
@@ -88,8 +81,8 @@ public class DOUBLE_FLOAT extends FLOAT implements tDOUBLE_FLOAT
 	@Override
 	public BIGNUM getIntegerValue()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		// TODO to think about
+		return FLOOR(ONE)[0].getIntegerValue();
 	}
 
 	/*
@@ -99,8 +92,7 @@ public class DOUBLE_FLOAT extends FLOAT implements tDOUBLE_FLOAT
 	@Override
 	public SINGLE_FLOAT getFloatValue()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return new SINGLE_FLOAT(value.floatValue());
 	}
 
 	/*
@@ -110,8 +102,7 @@ public class DOUBLE_FLOAT extends FLOAT implements tDOUBLE_FLOAT
 	@Override
 	public DOUBLE_FLOAT getDoubleValue()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return this;
 	}
 
 	/*
@@ -121,16 +112,27 @@ public class DOUBLE_FLOAT extends FLOAT implements tDOUBLE_FLOAT
 	@Override
 	public SHORT_FLOAT getShortValue()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return new SHORT_FLOAT(value.shortValue());
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tREAL#mod(aloyslisp.core.math.tREAL)
+	 * @see aloyslisp.core.math.tNUMBER#coerce(aloyslisp.core.math.tNUMBER)
+	 */
+	public NUMBER coerce(tNUMBER var)
+	{
+		if (var instanceof COMPLEX)
+			return getComplexValue();
+
+		return this;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tFLOAT#decode_float()
 	 */
 	@Override
-	public tREAL mod(tREAL op)
+	tT[] decode_float()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -138,10 +140,10 @@ public class DOUBLE_FLOAT extends FLOAT implements tDOUBLE_FLOAT
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tREAL#rem(aloyslisp.core.math.tREAL)
+	 * @see aloyslisp.core.math.tFLOAT#integer_decode_float()
 	 */
 	@Override
-	public tREAL rem(tREAL op)
+	tT[] integer_decode_float()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -149,20 +151,10 @@ public class DOUBLE_FLOAT extends FLOAT implements tDOUBLE_FLOAT
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tREAL#floor(aloyslisp.core.math.tREAL)
+	 * @see aloyslisp.core.math.tFLOAT#scale_float(aloyslisp.core.math.tINTEGER)
 	 */
 	@Override
-	public tREAL[] floor()
-	{
-		return floor(ONE);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tREAL#floor(aloyslisp.core.math.tREAL)
-	 */
-	@Override
-	public tREAL[] floor(tREAL op)
+	tFLOAT scale_float(tINTEGER scale)
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -170,20 +162,10 @@ public class DOUBLE_FLOAT extends FLOAT implements tDOUBLE_FLOAT
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tREAL#ceiling(aloyslisp.core.math.tREAL)
+	 * @see aloyslisp.core.math.tFLOAT#float_radix()
 	 */
 	@Override
-	public tREAL[] ceiling()
-	{
-		return ceiling(ONE);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tREAL#ceiling(aloyslisp.core.math.tREAL)
-	 */
-	@Override
-	public tREAL[] ceiling(tREAL op)
+	tFLOAT float_radix()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -191,20 +173,10 @@ public class DOUBLE_FLOAT extends FLOAT implements tDOUBLE_FLOAT
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tREAL#truncate(aloyslisp.core.math.tREAL)
+	 * @see aloyslisp.core.math.tFLOAT#float_sign(aloyslisp.core.math.tFLOAT)
 	 */
 	@Override
-	public tREAL[] truncate()
-	{
-		return truncate(ONE);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tREAL#truncate(aloyslisp.core.math.tREAL)
-	 */
-	@Override
-	public tREAL[] truncate(tREAL op)
+	tFLOAT float_sign(tFLOAT f2)
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -212,20 +184,10 @@ public class DOUBLE_FLOAT extends FLOAT implements tDOUBLE_FLOAT
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tREAL#round(aloyslisp.core.math.tREAL)
+	 * @see aloyslisp.core.math.tFLOAT#float_digits()
 	 */
 	@Override
-	public tREAL[] round()
-	{
-		return round(ONE);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tREAL#round(aloyslisp.core.math.tREAL)
-	 */
-	@Override
-	public tREAL[] round(tREAL op)
+	tINTEGER float_digits()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -233,57 +195,33 @@ public class DOUBLE_FLOAT extends FLOAT implements tDOUBLE_FLOAT
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tREAL#equal(aloyslisp.core.math.tNUMBER)
+	 * @see aloyslisp.core.math.tFLOAT#float_precision()
 	 */
 	@Override
-	public boolean equal(tNUMBER op)
+	tINTEGER float_precision()
 	{
 		// TODO Auto-generated method stub
-		return false;
+		return null;
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tREAL#greater(aloyslisp.core.math.tNUMBER)
+	 * @see aloyslisp.core.math.tREAL#greater(aloyslisp.core.math.tREAL)
 	 */
 	@Override
-	public boolean greater(tNUMBER op)
+	boolean greater(tREAL op)
 	{
-		// TODO Auto-generated method stub
-		return false;
+		return value > op.getFloatValue().doubleValue();
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tREAL#lower(aloyslisp.core.math.tNUMBER)
+	 * @see aloyslisp.core.math.tREAL#lower(aloyslisp.core.math.tREAL)
 	 */
 	@Override
-	public boolean lower(tNUMBER op)
+	boolean lower(tREAL op)
 	{
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tREAL#minusp()
-	 */
-	@Override
-	public boolean minusp()
-	{
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tREAL#plusp()
-	 */
-	@Override
-	public boolean plusp()
-	{
-		// TODO Auto-generated method stub
-		return false;
+		return value < op.getFloatValue().doubleValue();
 	}
 
 	/*
@@ -291,7 +229,7 @@ public class DOUBLE_FLOAT extends FLOAT implements tDOUBLE_FLOAT
 	 * @see aloyslisp.core.math.tREAL#rational()
 	 */
 	@Override
-	public tRATIONAL rational()
+	tRATIONAL rational()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -302,10 +240,20 @@ public class DOUBLE_FLOAT extends FLOAT implements tDOUBLE_FLOAT
 	 * @see aloyslisp.core.math.tREAL#rationalize()
 	 */
 	@Override
-	public tRATIONAL rationalize()
+	tRATIONAL rationalize()
 	{
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tNUMBER#equalnum(aloyslisp.core.math.tNUMBER)
+	 */
+	@Override
+	boolean equalnum(tNUMBER op)
+	{
+		return value == op.getFloatValue().doubleValue();
 	}
 
 	/*
@@ -313,10 +261,9 @@ public class DOUBLE_FLOAT extends FLOAT implements tDOUBLE_FLOAT
 	 * @see aloyslisp.core.math.tNUMBER#add(aloyslisp.core.math.tNUMBER)
 	 */
 	@Override
-	public tNUMBER add(tNUMBER op)
+	tNUMBER add(tNUMBER op)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return new DOUBLE_FLOAT(value + op.getDoubleValue().doubleValue());
 	}
 
 	/*
@@ -324,10 +271,9 @@ public class DOUBLE_FLOAT extends FLOAT implements tDOUBLE_FLOAT
 	 * @see aloyslisp.core.math.tNUMBER#substract(aloyslisp.core.math.tNUMBER)
 	 */
 	@Override
-	public tNUMBER substract(tNUMBER op)
+	tNUMBER substract(tNUMBER op)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return new DOUBLE_FLOAT(value - op.getDoubleValue().doubleValue());
 	}
 
 	/*
@@ -335,10 +281,9 @@ public class DOUBLE_FLOAT extends FLOAT implements tDOUBLE_FLOAT
 	 * @see aloyslisp.core.math.tNUMBER#minus()
 	 */
 	@Override
-	public tNUMBER minus()
+	tNUMBER minus()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return new DOUBLE_FLOAT(-value);
 	}
 
 	/*
@@ -346,10 +291,9 @@ public class DOUBLE_FLOAT extends FLOAT implements tDOUBLE_FLOAT
 	 * @see aloyslisp.core.math.tNUMBER#inversion()
 	 */
 	@Override
-	public tNUMBER inversion()
+	tNUMBER inversion()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return new DOUBLE_FLOAT(1 / value);
 	}
 
 	/*
@@ -357,10 +301,9 @@ public class DOUBLE_FLOAT extends FLOAT implements tDOUBLE_FLOAT
 	 * @see aloyslisp.core.math.tNUMBER#multiply(aloyslisp.core.math.tNUMBER)
 	 */
 	@Override
-	public tNUMBER multiply(tNUMBER op)
+	tNUMBER multiply(tNUMBER op)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return new DOUBLE_FLOAT(value * op.getDoubleValue().doubleValue());
 	}
 
 	/*
@@ -368,379 +311,9 @@ public class DOUBLE_FLOAT extends FLOAT implements tDOUBLE_FLOAT
 	 * @see aloyslisp.core.math.tNUMBER#division(aloyslisp.core.math.tNUMBER)
 	 */
 	@Override
-	public tNUMBER division(tNUMBER op)
+	tNUMBER division(tNUMBER op)
 	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#realpart()
-	 */
-	@Override
-	public tNUMBER realpart()
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#imagpart()
-	 */
-	@Override
-	public tNUMBER imagpart()
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#conjugate()
-	 */
-	@Override
-	public tNUMBER conjugate()
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#phase()
-	 */
-	@Override
-	public tNUMBER phase()
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#abs()
-	 */
-	@Override
-	public tREAL abs()
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#zerop()
-	 */
-	@Override
-	public boolean zerop()
-	{
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#cis()
-	 */
-	@Override
-	public tNUMBER cis()
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#sin()
-	 */
-	@Override
-	public tNUMBER sin()
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#cos()
-	 */
-	@Override
-	public tNUMBER cos()
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#tan()
-	 */
-	@Override
-	public tNUMBER tan()
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#asin()
-	 */
-	@Override
-	public tNUMBER asin()
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#acos()
-	 */
-	@Override
-	public tNUMBER acos()
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#atan()
-	 */
-	@Override
-	public tNUMBER atan()
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#atan(aloyslisp.core.math.tREAL)
-	 */
-	@Override
-	public tNUMBER atan(tREAL opt)
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#sinh()
-	 */
-	@Override
-	public tNUMBER sinh()
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#cosh()
-	 */
-	@Override
-	public tNUMBER cosh()
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#tanh()
-	 */
-	@Override
-	public tNUMBER tanh()
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#asinh()
-	 */
-	@Override
-	public tNUMBER asinh()
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#acosh()
-	 */
-	@Override
-	public tNUMBER acosh()
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#atanh()
-	 */
-	@Override
-	public tNUMBER atanh()
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#log()
-	 */
-	@Override
-	public tNUMBER log()
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#sqrt()
-	 */
-	@Override
-	public tNUMBER sqrt()
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#exp()
-	 */
-	@Override
-	public tNUMBER exp()
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#expt(aloyslisp.core.math.tNUMBER)
-	 */
-	@Override
-	public tNUMBER expt(tNUMBER power)
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#random()
-	 */
-	@Override
-	public tNUMBER random()
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see
-	 * aloyslisp.core.math.tNUMBER#random(aloyslisp.core.numbers.tRANDOM_STATE)
-	 */
-	@Override
-	public tNUMBER random(tRANDOM_STATE st)
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tFLOAT#decode_float(aloyslisp.core.math.tFLOAT)
-	 */
-	@Override
-	public tFLOAT[] decode_float()
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see
-	 * aloyslisp.core.math.tFLOAT#integer_decode_float(aloyslisp.core.math.tFLOAT
-	 * )
-	 */
-	@Override
-	public tFLOAT[] integer_decode_float()
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tFLOAT#scale_float(aloyslisp.core.math.tFLOAT,
-	 * aloyslisp.core.math.tINTEGER)
-	 */
-	@Override
-	public tFLOAT scale_float(tINTEGER scale)
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tFLOAT#float_radix(aloyslisp.core.math.tFLOAT)
-	 */
-	@Override
-	public tFLOAT float_radix()
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tFLOAT#float_sign(aloyslisp.core.math.tFLOAT,
-	 * aloyslisp.core.math.tFLOAT)
-	 */
-	@Override
-	public tFLOAT float_sign(tFLOAT f2)
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tFLOAT#float_digits(aloyslisp.core.math.tFLOAT)
-	 */
-	@Override
-	public tINTEGER float_digits()
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see
-	 * aloyslisp.core.math.tFLOAT#float_precision(aloyslisp.core.math.tFLOAT)
-	 */
-	@Override
-	public tINTEGER float_precision()
-	{
-		// TODO Auto-generated method stub
-		return null;
+		return new DOUBLE_FLOAT(value / op.getDoubleValue().doubleValue());
 	}
 
 }

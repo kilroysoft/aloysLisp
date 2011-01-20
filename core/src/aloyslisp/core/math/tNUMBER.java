@@ -42,269 +42,55 @@ import aloyslisp.core.plugs.*;
 public interface tNUMBER extends tATOM
 {
 	/* *******************************************************************
-	 * CONVERTORS
+	 * CONVERTERS
 	 */
-
-	/**
-	 * Convert to variable type if of higher weight
-	 * 
-	 * @param var
-	 * @return
-	 */
-	public tNUMBER coerce(tNUMBER var);
-
 	/**
 	 * Convert to ratio
 	 * 
 	 * @return
 	 */
-	public RATIO getRatioValue();
+	abstract RATIO getRatioValue();
 
 	/**
 	 * Convert to complex
 	 * 
 	 * @return
 	 */
-	public COMPLEX getComplexValue();
+	abstract COMPLEX getComplexValue();
 
 	/**
 	 * Convert to integer
 	 * 
 	 * @return
 	 */
-	public BIGNUM getIntegerValue();
+	abstract BIGNUM getIntegerValue();
 
 	/**
 	 * Convert to float
 	 * 
 	 * @return
 	 */
-	public SINGLE_FLOAT getFloatValue();
+	abstract SINGLE_FLOAT getFloatValue();
 
 	/**
 	 * Convert to double
 	 * 
 	 * @return
 	 */
-	public DOUBLE_FLOAT getDoubleValue();
+	abstract DOUBLE_FLOAT getDoubleValue();
 
 	/**
 	 * Convert to short
 	 * 
 	 * @return
 	 */
-	public SHORT_FLOAT getShortValue();
-
-	/* *******************************************************************
-	 * OPERATORS
-	 */
-	/**
-	 * Add a + b
-	 * 
-	 * @param a
-	 * @param b
-	 * @return
-	 */
-	public tNUMBER add(tNUMBER op);
+	abstract SHORT_FLOAT getShortValue();
 
 	/**
-	 * Substract a - b
-	 * 
-	 * @param a
-	 * @param b
+	 * @param var
 	 * @return
 	 */
-	public tNUMBER substract(tNUMBER op);
-
-	/**
-	 * Minus -a
-	 * 
-	 * @param a
-	 * @return
-	 */
-	public tNUMBER minus();
-
-	/**
-	 * Inversion 1/a
-	 * 
-	 * @param a
-	 * @return
-	 */
-	public tNUMBER inversion();
-
-	/**
-	 * Multiply a * b
-	 * 
-	 * @param a
-	 * @param b
-	 * @return
-	 */
-	public tNUMBER multiply(tNUMBER op);
-
-	/**
-	 * Division a / b
-	 * 
-	 * @param a
-	 * @param b
-	 * @return
-	 */
-	public tNUMBER division(tNUMBER op);
-
-	/* *******************************************************************
-	 * ACCESSORS
-	 */
-	/**
-	 * /**
-	 * Real value (for complex)
-	 * 
-	 * @param a
-	 * @return
-	 */
-	public tNUMBER realpart();
-
-	/**
-	 * Imaginary part (for complex) a + bi -> b
-	 * 
-	 * @param a
-	 * @return
-	 */
-	public tNUMBER imagpart();
-
-	/* *******************************************************************
-	 * FUNCTIONS COMPLEX
-	 */
-	/**
-	 * COMPLEX conjugate a + bi -> a - bi
-	 * 
-	 * @param a
-	 * @return
-	 */
-	public tNUMBER conjugate();
-
-	/**
-	 * Polar value (for complex)
-	 * 
-	 * @param a
-	 * @return
-	 */
-	public tNUMBER phase();
-
-	/* *******************************************************************
-	 * FUNCTIONS
-	 */
-	/**
-	 * Absolute value ||a||, mod for complex
-	 * 
-	 * @return
-	 */
-	public tREAL abs();
-
-	/**
-	 * @return
-	 */
-	public boolean zerop();
-
-	/**
-	 * @return
-	 */
-	public tNUMBER cis();
-
-	/**
-	 * @return
-	 */
-	public tNUMBER sin();
-
-	/**
-	 * @return
-	 */
-	public tNUMBER cos();
-
-	/**
-	 * @return
-	 */
-	public tNUMBER tan();
-
-	/**
-	 * @return
-	 */
-	public tNUMBER asin();
-
-	/**
-	 * @return
-	 */
-	public tNUMBER acos();
-
-	/**
-	 * @return
-	 */
-	public tNUMBER atan();
-
-	/**
-	 * @param opt
-	 * @return
-	 */
-	public tNUMBER atan(tREAL opt);
-
-	/**
-	 * @return
-	 */
-	public tNUMBER sinh();
-
-	/**
-	 * @return
-	 */
-	public tNUMBER cosh();
-
-	/**
-	 * @return
-	 */
-	public tNUMBER tanh();
-
-	/**
-	 * @return
-	 */
-	public tNUMBER asinh();
-
-	/**
-	 * @return
-	 */
-	public tNUMBER acosh();
-
-	/**
-	 * @return
-	 */
-	public tNUMBER atanh();
-
-	/**
-	 * @return
-	 */
-	public tNUMBER log();
-
-	/**
-	 * @return
-	 */
-	public tNUMBER sqrt();
-
-	/**
-	 * @return
-	 */
-	public tNUMBER exp();
-
-	/**
-	 * @param power
-	 * @return
-	 */
-	public tNUMBER expt(tNUMBER power);
-
-	/**
-	 * @return
-	 */
-	public tNUMBER random();
-
-	/**
-	 * @return
-	 */
-	public tNUMBER random(tRANDOM_STATE st);
+	abstract public NUMBER coerce(tNUMBER var);
 
 	/****************************************************************
 	 * LISP FUNCTIONS
@@ -313,6 +99,16 @@ public interface tNUMBER extends tATOM
 	/* *******************************************************************
 	 * OPERATORS
 	 */
+	/**
+	 * Test equality a == b
+	 * 
+	 * @param op
+	 * @return
+	 */
+	@Function(name = "=")
+	public boolean EQUALNUM( //
+			@Rest(name = "op") tT op);
+
 	/**
 	 * Add a + b
 	 * 
@@ -438,12 +234,6 @@ public interface tNUMBER extends tATOM
 	/**
 	 * @return
 	 */
-	@Function(name = "cis")
-	public tNUMBER CIS();
-
-	/**
-	 * @return
-	 */
 	@Function(name = "sin")
 	public tNUMBER SIN();
 
@@ -540,12 +330,5 @@ public interface tNUMBER extends tATOM
 	@Function(name = "expt")
 	public tNUMBER EXPT( //
 			@Arg(name = "power") tNUMBER power);
-
-	/**
-	 * @return
-	 */
-	@Function(name = "random")
-	public tNUMBER RANDOM( //
-			@Opt(name = "state") tT st);
 
 }

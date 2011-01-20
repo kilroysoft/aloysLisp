@@ -30,6 +30,7 @@
 package aloyslisp.core.sequences;
 
 import static aloyslisp.commonlisp.L.*;
+import aloyslisp.core.math.BIGNUM;
 import aloyslisp.core.plugs.NIL;
 import aloyslisp.core.plugs.tT;
 import aloyslisp.core.streams.CHARACTER;
@@ -63,7 +64,7 @@ public class STRING extends VECTOR implements tSTRING
 	{
 		StringBuilder res = new StringBuilder("");
 		for (int i = 0; i < this.LENGTH(); i++)
-			res.append(ELT(i).printable());
+			res.append(ELT(i).toString());
 		return res.toString();
 	}
 
@@ -72,7 +73,7 @@ public class STRING extends VECTOR implements tSTRING
 	 * @see aloyslisp.core.plugs.Cell#printable()
 	 */
 	@Override
-	public String printable()
+	public String toString()
 	{
 		// System.out.println("String Escape : " + printEscape.get());
 		boolean esc = !(printEscape.SYMBOL_VALUE() instanceof NIL);
@@ -131,8 +132,7 @@ public class STRING extends VECTOR implements tSTRING
 	@Override
 	public tSTRING STRING_CAPITALIZE()
 	{
-		// TODO Capitalize
-		return null;
+		return this;
 	}
 
 	/*
@@ -152,7 +152,6 @@ public class STRING extends VECTOR implements tSTRING
 	@Override
 	public tSTRING STRING_LEFT_TRIM()
 	{
-		// TODO Left trim
 		return new STRING(getString().trim());
 	}
 
@@ -163,8 +162,20 @@ public class STRING extends VECTOR implements tSTRING
 	@Override
 	public tSTRING STRING_RIGHT_TRIM()
 	{
-		// TODO Right trim
 		return new STRING(getString().trim());
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.sequences.tSTRING#PARSE_INTEGER(java.lang.Integer,
+	 * aloyslisp.core.plugs.tT, java.lang.Integer, java.lang.Boolean)
+	 */
+	@Override
+	public BIGNUM PARSE_INTEGER(Integer start, tT end, Integer radix,
+			Boolean junk)
+	{
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

@@ -24,38 +24,30 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 20 déc. 2010 Creation
+// IP 29 déc. 2010 Creation
 // --------------------------------------------------------------------------
 
 package aloyslisp.core.conditions;
 
+import aloyslisp.core.streams.tSTREAM;
+
 /**
- * CONDITION
+ * END_OF_FILE
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class CONDITION extends LispException
+public class END_OF_FILE extends STREAM_ERROR
 {
 	private static final long	serialVersionUID	= 1L;
 
-	protected String message = "";
-	
 	/**
-	 * @param message
+	 * @param stream
 	 */
-	public CONDITION()
+	public END_OF_FILE(tSTREAM stream)
 	{
-		super("");
+		super(stream);
+		message += " End of file.";
 	}
-	
-	/* (non-Javadoc)
-	 * @see java.lang.Throwable#getMessage()
-	 */
-	public String getMessage()
-	{
-		return message;
-	}
-
 }
