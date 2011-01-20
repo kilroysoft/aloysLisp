@@ -19,15 +19,18 @@ To do
 	- Doc for Java version of syntax of LISP Function (by type or classes and globally alphabeticaly)
 	- Doc for LISP version of syntax of LISP Function
 	- List of function to be implemented.
+- Create type objects.
 
 Doing
 =====
-- Complete rewrite of NUMBERs structure and functions.
 - Clean-up all instantiation process.
-- Create type objects.
 
 Current state
 =============
+
+Version V120
+============
+- Complete rewrite of NUMBERs structure and functions.
 - Pass to an unified version of integer as BigInteger.
 - All this stuff is intended to move to a more general lisp object model.
 - Adding NUMBER functions
@@ -42,7 +45,7 @@ and command tags.
 - Change %global, %primitive, %construct as direct function call class.
 
 Version UB26
-=============
+============
 - Add %instantiate function to create %primitive and %global function call for general LISP functions
 - Add setf definition in plist :setf-func
 - Add type definition in plist :type-class

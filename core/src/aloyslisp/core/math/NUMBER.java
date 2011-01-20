@@ -319,13 +319,13 @@ public abstract class NUMBER extends CELL implements tNUMBER
 			strBase += "9A-" + ('A' + (base - 11)) + "]";
 		}
 		// ratio
-		System.out.println("Match ..." + nb + ":" + "^[-\\+]?" + strBase + "+/"
-				+ strBase + "+$");
+//		System.out.println("Match ..." + nb + ":" + "^[-\\+]?" + strBase + "+/"
+//				+ strBase + "+$");
 		if (nb.matches("^[-\\+]?" + strBase + "+/" + strBase + "+"))
 		{
 			String[] rat = nb.split("/");
-			System.out.println("Match ..." + rat[0] + " / " + rat[1]);
-			return new RATIO(new BIGNUM(rat[0], base), new BIGNUM(rat[1], base));
+//			System.out.println("Match ..." + rat[0] + " / " + rat[1]);
+			return new RATIO(new BIGNUM(rat[0], base), new BIGNUM(rat[1], base)).rationalizeValue();
 		}
 
 		// Integer

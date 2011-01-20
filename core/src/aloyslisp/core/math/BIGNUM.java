@@ -30,6 +30,9 @@
 package aloyslisp.core.math;
 
 import java.math.BigInteger;
+import static aloyslisp.commonlisp.L.*;
+
+import aloyslisp.core.conditions.ARITHMETIC_ERROR;
 
 /**
  * BIGNUM
@@ -55,7 +58,18 @@ public class BIGNUM extends INTEGER implements tBIG_INTEGER
 	 */
 	public BIGNUM(String init)
 	{
-		val = new BigInteger(init);
+		int pos = init.indexOf(".");
+		try
+		{
+			if (pos >= 0)
+				val = new BigInteger(init.substring(0, pos));
+			else
+				val = new BigInteger(init);
+		}
+		catch (Exception e)
+		{
+			throw new ARITHMETIC_ERROR(str(e.getLocalizedMessage()), str(init));
+		}
 	}
 
 	/**
@@ -507,7 +521,7 @@ public class BIGNUM extends INTEGER implements tBIG_INTEGER
 	@Override
 	tNUMBER inversion()
 	{
-		return new RATIO(ONE, this);
+		return new RATIO(ONE, this).rationalizeValue();
 	}
 
 	/*
@@ -532,7 +546,7 @@ public class BIGNUM extends INTEGER implements tBIG_INTEGER
 		if (MOD(op.getIntegerValue()).EQUALNUM(ZERO))
 			return new BIGNUM(val.divide(op.getIntegerValue().val));
 		else
-			return new RATIO(this, op.getIntegerValue());
+			return new RATIO(this, op.getIntegerValue()).rationalizeValue();
 	}
 
 }
