@@ -96,13 +96,13 @@ public abstract class CELL implements tT
 	 */
 	public tT[] MACROEXPAND()
 	{
-		tT[] res = MACROEXPAND1();
+		tT[] res = MACROEXPAND_1();
 		if (res[1] == NIL)
 			return res;
 
 		while (res[1] != NIL)
 		{
-			res = res[0].MACROEXPAND1();
+			res = res[0].MACROEXPAND_1();
 		}
 		res[1] = T;
 		return res;
@@ -112,7 +112,7 @@ public abstract class CELL implements tT
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tT#macroExpand1()
 	 */
-	public tT[] MACROEXPAND1()
+	public tT[] MACROEXPAND_1()
 	{
 		return new tT[]
 		{ this, NIL };

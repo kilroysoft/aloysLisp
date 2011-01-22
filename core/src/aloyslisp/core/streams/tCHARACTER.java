@@ -59,25 +59,25 @@ public interface tCHARACTER extends tATOM
 	/**
 	 * @return
 	 */
-	@Function(name = "char-upcase")
+	@Function(name = "char-upcase", doc = "f_char_u")
 	public tCHARACTER CHAR_UPCASE();
 
 	/**
 	 * @return
 	 */
-	@Function(name = "char-downcase")
+	@Function(name = "char-downcase", doc = "f_char_u")
 	public tCHARACTER CHAR_DOWNCASE();
 
 	/**
 	 * @return
 	 */
-	@Function(name = "char-name")
+	@Function(name = "char-name", doc = "f_char_n")
 	public tCHARACTER CHAR_NAME();
 
 	/**
 	 * @return
 	 */
-	@Function(name = "char-int")
+	@Function(name = "char-int", doc = "f_char_i")
 	public tT CHAR_INT();
 
 }

@@ -53,7 +53,7 @@ public @interface Function
 	 * 
 	 * @return
 	 */
-	String doc() default "";
+	String doc() default "TBD";
 
 	/**
 	 * Nbr mandatory arguments. -1 all.

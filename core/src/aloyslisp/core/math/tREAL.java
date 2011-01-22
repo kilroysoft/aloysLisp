@@ -54,7 +54,7 @@ public interface tREAL extends tNUMBER
 	 * @param op
 	 * @return
 	 */
-	@Function(name = ">")
+	@Function(name = ">", doc = "f_eq_sle")
 	public boolean GREATER( //
 			@Rest(name = "op") tT op);
 
@@ -64,20 +64,20 @@ public interface tREAL extends tNUMBER
 	 * @param op
 	 * @return
 	 */
-	@Function(name = "<")
+	@Function(name = "<", doc = "f_eq_sle")
 	public boolean LOWER( //
 			@Rest(name = "op") tT op);
 
 	/**
 	 * @return
 	 */
-	@Function(name = "minusp")
+	@Function(name = "minusp", doc = "f_minusp")
 	public boolean MINUSP();
 
 	/**
 	 * @return
 	 */
-	@Function(name = "plusp")
+	@Function(name = "plusp", doc = "f_minusp")
 	public boolean PLUSP();
 
 	/* *******************************************************************
@@ -86,13 +86,13 @@ public interface tREAL extends tNUMBER
 	/**
 	 * @return
 	 */
-	@Function(name = "rational")
+	@Function(name = "rational", doc = "f_ration")
 	public tRATIONAL RATIONAL();
 
 	/**
 	 * @return
 	 */
-	@Function(name = "rationalize")
+	@Function(name = "rationalize", doc = "f_ration")
 	public tRATIONAL RATIONALIZE();
 
 	/* *******************************************************************
@@ -104,7 +104,7 @@ public interface tREAL extends tNUMBER
 	 * @param op
 	 * @return
 	 */
-	@Function(name = "mod")
+	@Function(name = "mod", doc = "f_mod_r")
 	public tREAL MOD( //
 			@Arg(name = "op") tREAL op);
 
@@ -114,7 +114,7 @@ public interface tREAL extends tNUMBER
 	 * @param op
 	 * @return
 	 */
-	@Function(name = "rem")
+	@Function(name = "rem", doc = "f_mod_r")
 	public tREAL REM( //
 			@Arg(name = "op") tREAL op);
 
@@ -124,7 +124,7 @@ public interface tREAL extends tNUMBER
 	 * @param op
 	 * @return
 	 */
-	@Function(name = "floor")
+	@Function(name = "floor", doc = "f_floorc")
 	public tREAL[] FLOOR( //
 			@Opt(name = "div") tT div);
 
@@ -134,7 +134,7 @@ public interface tREAL extends tNUMBER
 	 * @param op
 	 * @return
 	 */
-	@Function(name = "ceiling")
+	@Function(name = "ceiling", doc = "f_floorc")
 	public tREAL[] CEILING( //
 			@Opt(name = "div") tT div);
 
@@ -144,7 +144,7 @@ public interface tREAL extends tNUMBER
 	 * @param op
 	 * @return
 	 */
-	@Function(name = "truncate")
+	@Function(name = "truncate", doc = "f_floorc")
 	public tREAL[] TRUNCATE( //
 			@Opt(name = "div") tT div);
 
@@ -154,20 +154,20 @@ public interface tREAL extends tNUMBER
 	 * @param op
 	 * @return
 	 */
-	@Function(name = "round")
+	@Function(name = "round", doc = "f_floorc")
 	public tREAL[] ROUND( //
 			@Opt(name = "div") tT div);
 
 	/**
 	 * @return
 	 */
-	@Function(name = "cis")
+	@Function(name = "cis", doc = "f_cis")
 	public tNUMBER CIS();
 
 	/**
 	 * @return
 	 */
-	@Function(name = "random")
+	@Function(name = "random", doc = "f_random")
 	public tNUMBER RANDOM( //
 			@Opt(name = "state") tT st);
 

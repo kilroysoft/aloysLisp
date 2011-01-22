@@ -52,6 +52,13 @@ public @interface Type
 	String name();
 
 	/**
+	 * Documentation string
+	 * 
+	 * @return
+	 */
+	String doc() default "TBD";
+
+	/**
 	 * Test function
 	 * 
 	 * @return

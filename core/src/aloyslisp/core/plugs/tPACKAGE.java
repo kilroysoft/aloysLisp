@@ -65,7 +65,7 @@ public interface tPACKAGE extends tATOM, Iterable<String>, Map<String, tSYMBOL>
 	 * @param pack
 	 * @return
 	 */
-	@Function(name = "integer")
+	@Function(name = "intern", doc = "f_intern")
 	public tSYMBOL INTERN( //
 			@Arg(name = "symbol") String symbol);
 

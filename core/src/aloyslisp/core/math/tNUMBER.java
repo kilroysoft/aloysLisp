@@ -105,7 +105,7 @@ public interface tNUMBER extends tATOM
 	 * @param op
 	 * @return
 	 */
-	@Function(name = "=")
+	@Function(name = "=", doc = "f_eq_sle")
 	public boolean EQUALNUM( //
 			@Rest(name = "op") tT op);
 
@@ -116,7 +116,7 @@ public interface tNUMBER extends tATOM
 	 * @param b
 	 * @return
 	 */
-	@Function(name = "+")
+	@Function(name = "+", doc = "f_pl")
 	public tNUMBER ADD( //
 			@Rest(name = "op") tT op);
 
@@ -127,7 +127,7 @@ public interface tNUMBER extends tATOM
 	 * @param b
 	 * @return
 	 */
-	@Function(name = "-")
+	@Function(name = "-", doc = "f__")
 	public tNUMBER SUBSTRACT( //
 			@Rest(name = "op") tT op);
 
@@ -146,7 +146,7 @@ public interface tNUMBER extends tATOM
 	 * @param a
 	 * @return
 	 */
-	@Function(name = "inversion")
+	@Function(name = "%inversion")
 	public tNUMBER INVERSION();
 
 	/**
@@ -156,7 +156,7 @@ public interface tNUMBER extends tATOM
 	 * @param b
 	 * @return
 	 */
-	@Function(name = "*")
+	@Function(name = "*", doc = "f_st")
 	public tNUMBER MULTIPLY( //
 			@Rest(name = "op") tT op);
 
@@ -167,7 +167,7 @@ public interface tNUMBER extends tATOM
 	 * @param b
 	 * @return
 	 */
-	@Function(name = "/")
+	@Function(name = "/", doc = "f_sl")
 	public tNUMBER DIVISION( //
 			@Rest(name = "op") tT op);
 
@@ -181,7 +181,7 @@ public interface tNUMBER extends tATOM
 	 * @param a
 	 * @return
 	 */
-	@Function(name = "realpart")
+	@Function(name = "realpart", doc = "f_realpa")
 	public tNUMBER REALPART();
 
 	/**
@@ -190,7 +190,7 @@ public interface tNUMBER extends tATOM
 	 * @param a
 	 * @return
 	 */
-	@Function(name = "imagpart")
+	@Function(name = "imagpart", doc = "f_realpa")
 	public tNUMBER IMAGPART();
 
 	/* *******************************************************************
@@ -202,7 +202,7 @@ public interface tNUMBER extends tATOM
 	 * @param a
 	 * @return
 	 */
-	@Function(name = "conjugate")
+	@Function(name = "conjugate", doc = "f_conjug")
 	public tNUMBER CONJUGATE();
 
 	/**
@@ -211,7 +211,7 @@ public interface tNUMBER extends tATOM
 	 * @param a
 	 * @return
 	 */
-	@Function(name = "phase")
+	@Function(name = "phase", doc = "f_phase")
 	public tNUMBER PHASE();
 
 	/* *******************************************************************
@@ -222,112 +222,112 @@ public interface tNUMBER extends tATOM
 	 * 
 	 * @return
 	 */
-	@Function(name = "abs")
+	@Function(name = "abs", doc = "f_abs")
 	public tREAL ABS();
 
 	/**
 	 * @return
 	 */
-	@Function(name = "zerop")
+	@Function(name = "zerop", doc = "f_zerop")
 	public boolean ZEROP();
 
 	/**
 	 * @return
 	 */
-	@Function(name = "sin")
+	@Function(name = "sin", doc = "f_sin_c")
 	public tNUMBER SIN();
 
 	/**
 	 * @return
 	 */
-	@Function(name = "cos")
+	@Function(name = "cos", doc = "f_sin_c")
 	public tNUMBER COS();
 
 	/**
 	 * @return
 	 */
-	@Function(name = "tan")
+	@Function(name = "tan", doc = "f_sin_c")
 	public tNUMBER TAN();
 
 	/**
 	 * @return
 	 */
-	@Function(name = "asin")
+	@Function(name = "asin", doc = "f_asin_")
 	public tNUMBER ASIN();
 
 	/**
 	 * @return
 	 */
-	@Function(name = "acos")
+	@Function(name = "acos", doc = "f_asin_")
 	public tNUMBER ACOS();
 
 	/**
 	 * @param opt
 	 * @return
 	 */
-	@Function(name = "atan")
+	@Function(name = "atan", doc = "f_asin_")
 	public tNUMBER ATAN( //
 			@Opt(name = "opt") tT opt);
 
 	/**
 	 * @return
 	 */
-	@Function(name = "sinh")
+	@Function(name = "sinh", doc = "f_sinh_")
 	public tNUMBER SINH();
 
 	/**
 	 * @return
 	 */
-	@Function(name = "cosh")
+	@Function(name = "cosh", doc = "f_sinh_")
 	public tNUMBER COSH();
 
 	/**
 	 * @return
 	 */
-	@Function(name = "tanh")
+	@Function(name = "tanh", doc = "f_sinh_")
 	public tNUMBER TANH();
 
 	/**
 	 * @return
 	 */
-	@Function(name = "asinh")
+	@Function(name = "asinh", doc = "f_sinh_")
 	public tNUMBER ASINH();
 
 	/**
 	 * @return
 	 */
-	@Function(name = "acosh")
+	@Function(name = "acosh", doc = "f_sinh_")
 	public tNUMBER ACOSH();
 
 	/**
 	 * @return
 	 */
-	@Function(name = "atanh")
+	@Function(name = "atanh", doc = "f_sinh_")
 	public tNUMBER ATANH();
 
 	/**
 	 * @return
 	 */
-	@Function(name = "log")
+	@Function(name = "log", doc = "f_log")
 	public tNUMBER LOG();
 
 	/**
 	 * @return
 	 */
-	@Function(name = "sqrt")
+	@Function(name = "sqrt", doc = "f_sqrt_")
 	public tNUMBER SQRT();
 
 	/**
 	 * @return
 	 */
-	@Function(name = "exp")
+	@Function(name = "exp", doc = "f_exp_e")
 	public tNUMBER EXP();
 
 	/**
 	 * @param power
 	 * @return
 	 */
-	@Function(name = "expt")
+	@Function(name = "expt", doc = "f_exp_e")
 	public tNUMBER EXPT( //
 			@Arg(name = "power") tNUMBER power);
 

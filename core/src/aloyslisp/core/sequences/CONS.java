@@ -226,7 +226,7 @@ public class CONS extends CELL implements tCONS
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.plugs.CELL#MACROEXPAND1()
 	 */
-	public tT[] MACROEXPAND1()
+	public tT[] MACROEXPAND_1()
 	{
 		tT func = FUNCTION.SYMBOL_FUNCTION().e(car)[0];
 		// System.out.println("executing " + func);

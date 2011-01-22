@@ -264,7 +264,7 @@ public abstract class INPUT_STREAM extends STREAM implements tINPUT_STREAM
 	/**
 	 * @return
 	 */
-	@Static(name = "load")
+	@Static(name = "load", doc = "f_load")
 	public static tT[] LOAD( //
 			@Arg(name = "file") tT file, //
 			@Opt(name = "verbose", def = "t") Boolean verbose, //

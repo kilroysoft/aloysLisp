@@ -64,7 +64,7 @@ public interface tREADTABLE extends tATOM
 	 * @param readtable
 	 * @return
 	 */
-	@Function(name = "make-dispatch-macro-character")
+	@Function(name = "make-dispatch-macro-character", doc = "f_mk_dis")
 	public tT MAKE_DISPATCH_MACRO_CHARACTER(
 			@Arg(name = "character") Character character, //
 			@Opt(name = "non-terminating-p", def = "nil") Boolean nonTerminatingP, //
@@ -80,7 +80,7 @@ public interface tREADTABLE extends tATOM
 	 * @param readtable
 	 * @return
 	 */
-	@Function(name = "set-dispatch-macro-character")
+	@Function(name = "set-dispatch-macro-character", doc = "f_set__1")
 	public tT SET_DISPATCH_MACRO_CHRACTER(
 			@Arg(name = "disp-char") Character disp, //
 			@Arg(name = "sub-char") Character sub, //
@@ -96,7 +96,7 @@ public interface tREADTABLE extends tATOM
 	 * @param readtable
 	 * @return
 	 */
-	@Function(name = "get-dispatch-macro-character")
+	@Function(name = "get-dispatch-macro-character", doc = "f_set__1")
 	public tFUNCTION_DESIGNATOR GET_DISPATCH_MACRO_CHARACTER(
 			@Arg(name = "disp-char") Character disp, //
 			@Arg(name = "sub-char") Character sub, //
@@ -111,7 +111,7 @@ public interface tREADTABLE extends tATOM
 	 * @param readtable
 	 * @return
 	 */
-	@Function(name = "set-macro-character")
+	@Function(name = "set-macro-character", doc = "f_set_ma")
 	public tT SET_MACRO_CHARACTER(
 			@Arg(name = "character") Character character, //
 			@Arg(name = "function") tFUNCTION_DESIGNATOR func,
@@ -125,7 +125,7 @@ public interface tREADTABLE extends tATOM
 	 * @param readtable
 	 * @return
 	 */
-	@Function(name = "get-macro-character")
+	@Function(name = "get-macro-character", doc = "f_set_ma")
 	public tT[] GET_MACRO_CHARACTER(
 			@Arg(name = "character") Character character, //
 			@BaseArg @Opt(name = "readtable", def = "*READTABLE*") tREADTABLE readtable);
@@ -136,7 +136,7 @@ public interface tREADTABLE extends tATOM
 	 * @param readtable
 	 * @return
 	 */
-	@Function(name = "readtable-case")
+	@Function(name = "readtable-case", doc = "f_rdtabl")
 	public tSYMBOL READTABLE_CASE(
 			@BaseArg @Opt(name = "readtable", def = "*READTABLE*") tREADTABLE readtable);
 
@@ -157,7 +157,7 @@ public interface tREADTABLE extends tATOM
 	 * @param toReadtable
 	 * @param fromReadtable
 	 */
-	@Function(name = "set-syntax-from-char")
+	@Function(name = "set-syntax-from-char", doc = "f_set_sy")
 	public void SET_SYNTAX_FROM_CHAR(
 			@Arg(name = "from-char") Character fromChar, //
 			@Arg(name = "to-char") Character toChar, //
@@ -169,7 +169,7 @@ public interface tREADTABLE extends tATOM
 	 * @param toReadtable
 	 * @return
 	 */
-	@Function(name = "copy-readtable")
+	@Function(name = "copy-readtable", doc = "f_cp_rdt")
 	public tREADTABLE COPY_READTABLE(
 			@BaseArg @Opt(name = "from-readtable", def = "*READTABLE*") tREADTABLE fromReadtable,
 			@Opt(name = "to-readtable", def = "nil") tT toReadtable);

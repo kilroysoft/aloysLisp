@@ -52,7 +52,7 @@ public class SpecialForms
 	 * @param func
 	 * @return
 	 */
-	@Static(name = "lisp::defmacro")
+	@Static(name = "lisp::defmacro", doc = "m_defmac")
 	@Special
 	public static tT DEFMACRO( //
 			@Arg(name = "lisp::name") tSYMBOL name, //
@@ -70,7 +70,7 @@ public class SpecialForms
 	 * @param func
 	 * @return
 	 */
-	@Static(name = "lisp::defun")
+	@Static(name = "lisp::defun", doc = "m_defun")
 	@Special
 	public static tT[] DEFUN( //
 			@Arg(name = "lisp::name") tSYMBOL name, //
@@ -130,7 +130,7 @@ public class SpecialForms
 	 * @param aFunc
 	 * @return
 	 */
-	@Static(name = "lisp::function")
+	@Static(name = "lisp::function", doc = "s_fn")
 	@Special
 	public static tT[] FUNCTION( //
 			@Arg(name = "lisp::func") tT aFunc)
@@ -211,7 +211,7 @@ public class SpecialForms
 	 * @param tag
 	 * @return
 	 */
-	@Static(name = "lisp::go")
+	@Static(name = "lisp::go", doc = "s_go")
 	@Special
 	public static tT[] GO( //
 			@Arg(name = "lisp::tag") tT tag)
@@ -226,7 +226,7 @@ public class SpecialForms
 	 * @param or
 	 * @return
 	 */
-	@Static(name = "lisp::if")
+	@Static(name = "lisp::if", doc = "s_if")
 	@Special
 	public static tT[] IF( //
 			@Arg(name = "lisp::cond") tT cond, //
@@ -240,7 +240,7 @@ public class SpecialForms
 	 * @param cell
 	 * @return
 	 */
-	@Static(name = "lisp::quote")
+	@Static(name = "lisp::quote", doc = "s_quote")
 	@Special
 	public static tT QUOTE( //
 			@Arg(name = "lisp::cell") tT cell)
@@ -253,7 +253,7 @@ public class SpecialForms
 	 * @param value
 	 * @return
 	 */
-	@Static(name = "lisp::return-from")
+	@Static(name = "lisp::return-from", doc = "s_ret_fr")
 	@Special
 	public static tT[] RETRURN_FROM( //
 			@Arg(name = "lisp::tag") tT tag, //
@@ -268,7 +268,7 @@ public class SpecialForms
 	 * @param value
 	 * @return
 	 */
-	@Static(name = "lisp::setf")
+	@Static(name = "lisp::setf", doc = "m_setf")
 	@Special
 	public static tT SETF( //
 			@Arg(name = "lisp::place") tT place, //
@@ -316,7 +316,7 @@ public class SpecialForms
 	 * @param args
 	 * @return
 	 */
-	@Static(name = "lisp::setq")
+	@Static(name = "lisp::setq", doc = "s_setq")
 	@Special
 	public static tT SETQ( //
 			@Rest(name = "args") tT... args)
@@ -363,7 +363,7 @@ public class SpecialForms
 	 * @param func
 	 * @return
 	 */
-	@Static(name = "lisp::tagbody")
+	@Static(name = "lisp::tagbody", doc = "s_tagbod")
 	@Special
 	public static tT[] TAGBODY( //
 			@Rest(name = "func") tT... func)
@@ -381,7 +381,7 @@ public class SpecialForms
 	 * @param block
 	 * @return
 	 */
-	@Static(name = "lisp::block")
+	@Static(name = "lisp::block", doc = "s_block")
 	@Special
 	public static tT[] BLOCK( //
 			@Arg(name = "lisp::name") tSYMBOL name, //
@@ -399,7 +399,7 @@ public class SpecialForms
 	 * @param func
 	 * @return
 	 */
-	@Static(name = "lisp::let")
+	@Static(name = "lisp::let", doc = "s_let_l")
 	@Special
 	public static tT[] LET( //
 			@Arg(name = "lisp::args") tLIST args, //
@@ -417,7 +417,7 @@ public class SpecialForms
 	 * @param rest
 	 * @return
 	 */
-	@Static(name = "lisp::prog1")
+	@Static(name = "lisp::prog1", doc = "m_prog1c")
 	@Special
 	public static tT PROG1( //
 			@Arg(name = "lisp::first") tT first, //
@@ -435,7 +435,7 @@ public class SpecialForms
 	 * @param block
 	 * @return
 	 */
-	@Static(name = "lisp::progn")
+	@Static(name = "lisp::progn", doc = "s_progn")
 	@Special
 	public static tT[] PROGN( //
 			@Rest(name = "lisp::block") tT... block)
@@ -453,7 +453,7 @@ public class SpecialForms
 	 * @param block
 	 * @return
 	 */
-	@Static(name = "lisp::prog")
+	@Static(name = "lisp::prog", doc = "m_prog_")
 	@Special
 	public static tT[] PROG( //
 			@Arg(name = "lisp::name") tSYMBOL name, //

@@ -45,7 +45,7 @@ public interface tSTREAM extends tATOM
 	/**
 	 * @return
 	 */
-	@Function(name = "open-stream-p")
+	@Function(name = "open-stream-p", doc = "f_open_s")
 	public Boolean OPEN_STREAM_P( //
 			@Arg(name = "stream") tSTREAM stream);
 
@@ -53,7 +53,7 @@ public interface tSTREAM extends tATOM
 	 * @param stream
 	 * @return
 	 */
-	@Function(name = "close")
+	@Function(name = "close", doc = "f_close")
 	public Boolean CLOSE( //
 			@Arg(name = "stream") tSTREAM stream, //
 			@Key(name = "abort") Boolean abort);
@@ -61,7 +61,7 @@ public interface tSTREAM extends tATOM
 	/**
 	 * @return
 	 */
-	@Function(name = "stream-element-type")
+	@Function(name = "stream-element-type", doc = "f_stm_el")
 	public tT STREAM_ELEMENT_TYPE( //
 			@Arg(name = "stream") tSTREAM stream);
 

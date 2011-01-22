@@ -53,7 +53,7 @@ public interface tINTEGER extends tRATIONAL
 	 * @param op
 	 * @return
 	 */
-	@Function(name = "lcm")
+	@Function(name = "lcm", doc = "f_lcm")
 	public tINTEGER LCM( //
 			@Rest(name = "op") tT op);
 
@@ -63,7 +63,7 @@ public interface tINTEGER extends tRATIONAL
 	 * @param op
 	 * @return
 	 */
-	@Function(name = "gcd")
+	@Function(name = "gcd", doc = "f_gcd")
 	public tINTEGER GCD( //
 			@Rest(name = "op") tT op);
 
@@ -73,7 +73,7 @@ public interface tINTEGER extends tRATIONAL
 	 * @param op
 	 * @return
 	 */
-	@Function(name = "logand")
+	@Function(name = "logand", doc = "f_logand")
 	public tINTEGER LOGAND( //
 			@Rest(name = "op") tT op);
 
@@ -83,7 +83,7 @@ public interface tINTEGER extends tRATIONAL
 	 * @param op
 	 * @return
 	 */
-	@Function(name = "lognand")
+	@Function(name = "lognand", doc = "f_logand")
 	public tINTEGER LOGNAND( //
 			@Arg(name = "op") tINTEGER op);
 
@@ -93,7 +93,7 @@ public interface tINTEGER extends tRATIONAL
 	 * @param op
 	 * @return
 	 */
-	@Function(name = "logandc1")
+	@Function(name = "logandc1", doc = "f_logand")
 	public tINTEGER LOGANDC1( //
 			@Arg(name = "op") tINTEGER op);
 
@@ -103,7 +103,7 @@ public interface tINTEGER extends tRATIONAL
 	 * @param op
 	 * @return
 	 */
-	@Function(name = "logandc2")
+	@Function(name = "logandc2", doc = "f_logand")
 	public tINTEGER LOGANDC2( //
 			@Arg(name = "op") tINTEGER op);
 
@@ -113,7 +113,7 @@ public interface tINTEGER extends tRATIONAL
 	 * @param op
 	 * @return
 	 */
-	@Function(name = "logior")
+	@Function(name = "logior", doc = "f_logand")
 	public tINTEGER LOGIOR( //
 			@Rest(name = "op") tT op);
 
@@ -123,7 +123,7 @@ public interface tINTEGER extends tRATIONAL
 	 * @param op
 	 * @return
 	 */
-	@Function(name = "logorc1")
+	@Function(name = "logorc1", doc = "f_logand")
 	public tINTEGER LOGORC1( //
 			@Arg(name = "op") tINTEGER op);
 
@@ -133,7 +133,7 @@ public interface tINTEGER extends tRATIONAL
 	 * @param op
 	 * @return
 	 */
-	@Function(name = "logorc2")
+	@Function(name = "logorc2", doc = "f_logand")
 	public tINTEGER LOGORC2( //
 			@Arg(name = "op") tINTEGER op);
 
@@ -143,7 +143,7 @@ public interface tINTEGER extends tRATIONAL
 	 * @param op
 	 * @return
 	 */
-	@Function(name = "logxor")
+	@Function(name = "logxor", doc = "f_logand")
 	public tINTEGER LOGXOR( //
 			@Rest(name = "op") tT op);
 
@@ -153,7 +153,7 @@ public interface tINTEGER extends tRATIONAL
 	 * @param op
 	 * @return
 	 */
-	@Function(name = "logeqv")
+	@Function(name = "logeqv", doc = "f_logand")
 	public tINTEGER LOGEQV( //
 			@Rest(name = "op") tT op);
 
@@ -162,7 +162,7 @@ public interface tINTEGER extends tRATIONAL
 	 * 
 	 * @return
 	 */
-	@Function(name = "lognot")
+	@Function(name = "lognot", doc = "f_logand")
 	public tINTEGER LOGNOT();
 
 	/* *******************************************************************
@@ -174,7 +174,7 @@ public interface tINTEGER extends tRATIONAL
 	 * @param op
 	 * @return
 	 */
-	@Function(name = "logcount")
+	@Function(name = "logcount", doc = "f_logcou")
 	public tINTEGER LOGCOUNT();
 
 	/**
@@ -183,7 +183,7 @@ public interface tINTEGER extends tRATIONAL
 	 * @param op
 	 * @return
 	 */
-	@Function(name = "logtest")
+	@Function(name = "logtest", doc = "f_logtes")
 	public Boolean LOGTEST( //
 			@Arg(name = "op") tINTEGER op);
 
@@ -193,7 +193,7 @@ public interface tINTEGER extends tRATIONAL
 	 * @param op
 	 * @return
 	 */
-	@Function(name = "logbitp")
+	@Function(name = "logbitp", doc = "f_logbtp")
 	public Boolean LOGBITP( //
 			@Arg(name = "op") tINTEGER op);
 
@@ -203,32 +203,32 @@ public interface tINTEGER extends tRATIONAL
 	 * @param count
 	 * @return
 	 */
-	@Function(name = "ash")
+	@Function(name = "ash", doc = "f_ash")
 	public tINTEGER ASH( //
 			@Arg(name = "op") tINTEGER op);
 
 	/**
 	 * @return
 	 */
-	@Function(name = "evenp")
+	@Function(name = "evenp", doc = "f_evenpc")
 	public boolean EVENP();
 
 	/**
 	 * @return
 	 */
-	@Function(name = "oddp")
+	@Function(name = "oddp", doc = "f_evenpc")
 	public boolean ODDP();
 
 	/**
 	 * @return
 	 */
-	@Function(name = "isqrt")
+	@Function(name = "isqrt", doc = "f_sqrt_")
 	public tINTEGER ISQRT();
 
 	/**
 	 * @return
 	 */
-	@Function(name = "integer-length")
+	@Function(name = "integer-length", doc = "f_intege")
 	public tINTEGER INTEGER_LENGTH();
 
 }

@@ -47,14 +47,14 @@ public interface tSEQUENCE extends tT, Iterable<tT>
 	/**
 	 * @return
 	 */
-	@Function(name = "length")
+	@Function(name = "length", doc = "f_length")
 	public Integer LENGTH();
 
 	/**
 	 * @param pos
 	 * @return
 	 */
-	@Function(name = "elt")
+	@Function(name = "elt", doc = "f_elt")
 	public tT ELT( //
 			@Arg(name = "pos") Integer pos);
 
@@ -73,7 +73,7 @@ public interface tSEQUENCE extends tT, Iterable<tT>
 	 * @param end
 	 * @return
 	 */
-	@Function(name = "subseq")
+	@Function(name = "subseq", doc = "f_subseq")
 	public tSEQUENCE SUBSEQ( //
 			@Arg(name = "start") Integer start, //
 			@Opt(name = "end") Integer end);
@@ -96,7 +96,7 @@ public interface tSEQUENCE extends tT, Iterable<tT>
 	 * @param list
 	 * @return
 	 */
-	@Function(name = "reverse")
+	@Function(name = "reverse", doc = "f_revers")
 	public tSEQUENCE REVERSE();
 
 	/**
@@ -104,7 +104,7 @@ public interface tSEQUENCE extends tT, Iterable<tT>
 	 * 
 	 * @return
 	 */
-	@Function(name = "nreverse")
+	@Function(name = "nreverse", doc = "f_revers")
 	public tSEQUENCE NREVERSE();
 
 	/**

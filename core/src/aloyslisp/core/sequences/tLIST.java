@@ -49,7 +49,7 @@ public interface tLIST extends tSEQUENCE
 	 * 
 	 * @return fCAR of cons
 	 */
-	@Function(name = "car")
+	@Function(name = "car", doc = "f_car_c")
 	public tT CAR();
 
 	/**
@@ -57,7 +57,7 @@ public interface tLIST extends tSEQUENCE
 	 * 
 	 * @return fCDR of cons
 	 */
-	@Function(name = "cdr")
+	@Function(name = "cdr", doc = "f_car_c")
 	public tT CDR();
 
 	/**
@@ -83,7 +83,7 @@ public interface tLIST extends tSEQUENCE
 	 * 
 	 * @return
 	 */
-	@Function(name = "endp")
+	@Function(name = "endp", doc = "f_endp")
 	public boolean ENDP();
 
 	/**
@@ -91,7 +91,7 @@ public interface tLIST extends tSEQUENCE
 	 * 
 	 * @return
 	 */
-	@Function(name = "last")
+	@Function(name = "last", doc = "f_last")
 	public tLIST LAST();
 
 	/**
@@ -107,7 +107,7 @@ public interface tLIST extends tSEQUENCE
 	 * 
 	 * @return
 	 */
-	@Function(name = "append")
+	@Function(name = "append", doc = "f_append")
 	public tT APPEND( //
 			@Arg(name = "item") tT item);
 

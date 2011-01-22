@@ -57,7 +57,7 @@ public class Primitives
 	 * @param args
 	 * @return
 	 */
-	@Static(name = "error")
+	@Static(name = "error", doc = "f_error")
 	public static String ERROR( //
 			@Arg(name = "mess") String message, //
 			@Rest(name = "args") tT... args)
@@ -72,7 +72,7 @@ public class Primitives
 	 * @param args
 	 * @return
 	 */
-	@Static(name = "format")
+	@Static(name = "format", doc = "f_format")
 	public static String FORMAT( //
 			@Arg(name = "format") String format, //
 			@Rest(name = "args") tT... args)
@@ -87,7 +87,7 @@ public class Primitives
 	 * @param name
 	 * @return
 	 */
-	@Static(name = "name-char")
+	@Static(name = "name-char", doc = "f_name_c")
 	public static tCHARACTER NAME_CHAR( //
 			@Arg(name = "name") tT name)
 	{
@@ -102,7 +102,7 @@ public class Primitives
 	 * @param pack
 	 * @return
 	 */
-	@Static(name = "name-char")
+	@Static(name = "find-package")
 	public static tT FIND_PACKAGE( //
 			@Arg(name = "pack") tT pack)
 	{
@@ -128,7 +128,7 @@ public class Primitives
 	 * @param list
 	 * @return
 	 */
-	@Static(name = "list")
+	@Static(name = "list", doc = "f_list")
 	public static tLIST LIST( //
 			@Rest(name = "list") Object... list)
 	{
@@ -140,7 +140,7 @@ public class Primitives
 	 * @param cdr
 	 * @return
 	 */
-	@Static(name = "cons")
+	@Static(name = "cons", doc = "f_cons")
 	public static tLIST CONS( //
 			@Arg(name = "car") tT car, //
 			@Arg(name = "cdr") tT cdr)
@@ -160,7 +160,7 @@ public class Primitives
 	 * @param cls
 	 * @return
 	 */
-	@Static(name = "instantiate")
+	@Static(name = "instantiate", doc="TBD")
 	public static Boolean INSTANTIATE( //
 			@Arg(name = "class") String cls)
 	{
@@ -209,6 +209,7 @@ public class Primitives
 				func = new PRIMITIVE(clas, m.getName(), argsDecl(notes),
 						f.doc(), declareArgs());
 				func.setBaseArg(noArgsBase(notes));
+				func.
 				writeMissing(m.getName(), notes);
 				sym(f.name()).SET_SYMBOL_FUNCTION(func);
 			}
@@ -230,6 +231,7 @@ public class Primitives
 
 			if (prefix != null)
 				func.setPrefix(prefix.prefix());
+			System.out.println(func);
 		}
 
 		return true;

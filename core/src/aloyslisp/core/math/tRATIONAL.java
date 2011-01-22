@@ -55,7 +55,7 @@ public interface tRATIONAL extends tREAL
 	 * 
 	 * @return
 	 */
-	@Function(name = "numerator")
+	@Function(name = "numerator", doc = "f_numera")
 	public tINTEGER NUMERATOR();
 
 	/**
@@ -63,7 +63,7 @@ public interface tRATIONAL extends tREAL
 	 * 
 	 * @return
 	 */
-	@Function(name = "denominator")
+	@Function(name = "denominator", doc = "f_numera")
 	public tINTEGER DENOMINATOR();
 
 }

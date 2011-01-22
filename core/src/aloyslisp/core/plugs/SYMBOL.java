@@ -686,7 +686,7 @@ public class SYMBOL extends CELL implements tSYMBOL
 	 * @see aloyslisp.core.types.tSYMBOL#special_form_p()
 	 */
 	@Override
-	public boolean SPECIAL_FORM_P()
+	public boolean SPECIAL_OPERATOR_P()
 	{
 		// TODO Auto-generated method stub
 		return false;
@@ -698,7 +698,7 @@ public class SYMBOL extends CELL implements tSYMBOL
 	 * @return
 	 *         IMPLEMENT EXPORT
 	 */
-	@Static(name = "export")
+	@Static(name = "export", doc = "f_export")
 	public static tT EXPORT( //
 			@Arg(name = "symbol") tT symbol, //
 			@Opt(name = "pack") tT pack)

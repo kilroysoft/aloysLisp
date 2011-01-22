@@ -53,27 +53,32 @@ public abstract class FUNCTION extends CELL implements tFUNCTION
 	/**
 	 * Representation of arguments of the function
 	 */
-	public Arguments	intern	= null;
+	public Arguments	intern			= null;
+
+	/**
+	 * Representation of arguments of the function
+	 */
+	public String		documentation	= null;
 
 	/**
 	 * String used to represent the function in case of macrochar transform
 	 */
-	public String		mac		= null;
+	public String		mac				= null;
 
 	/**
 	 * Java method to call, primitive, function, constructor or Lisp interpreter
 	 */
-	public Method		method	= null;
+	public Method		method			= null;
 
 	/**
 	 * Static object for static function
 	 */
-	tT					object	= null;
+	tT					object			= null;
 
 	/**
 	 * Number of argument used as base object for primitives
 	 */
-	Integer				baseArg	= -1;
+	Integer				baseArg			= -1;
 
 	/**
 	 * Creation with arguments detail

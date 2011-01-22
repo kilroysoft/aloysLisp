@@ -59,6 +59,7 @@ public interface tSYMBOL extends tATOM, tFUNCTION_DESIGNATOR
 	/**
 	 * @param pack
 	 * @return
+	 * @obsolete
 	 */
 	@Function(name = "set-symbol-package")
 	public tSYMBOL SET_SYMBOL_PACKAGE( //
@@ -67,13 +68,13 @@ public interface tSYMBOL extends tATOM, tFUNCTION_DESIGNATOR
 	/**
 	 * @return
 	 */
-	@Function(name = "symbol-package")
+	@Function(name = "symbol-package", doc = "f_symb_3")
 	public tPACKAGE SYMBOL_PACKAGE();
 
 	/**
 	 * @return
 	 */
-	@Function(name = "unintern")
+	@Function(name = "unintern", doc = "f_uninte")
 	public tSYMBOL UNINTERN();
 
 	/**
@@ -123,7 +124,7 @@ public interface tSYMBOL extends tATOM, tFUNCTION_DESIGNATOR
 	 * @param name
 	 * @return
 	 */
-	@Function(name = "get")
+	@Function(name = "get", doc = "f_get")
 	public tT GET( //
 			@Arg(name = "name") tT name, //
 			@Arg(name = "def") tT def);
@@ -132,14 +133,14 @@ public interface tSYMBOL extends tATOM, tFUNCTION_DESIGNATOR
 	 * @param name
 	 * @return
 	 */
-	@Function(name = "remprop")
+	@Function(name = "remprop", doc = "f_rempro")
 	public tT REMPROP( //
 			@Arg(name = "name") tT name);
 
 	/**
 	 * @return
 	 */
-	@Function(name = "symbol-name")
+	@Function(name = "symbol-name", doc = "f_symb_2")
 	public String SYMBOL_NAME();
 
 	/**
@@ -147,12 +148,6 @@ public interface tSYMBOL extends tATOM, tFUNCTION_DESIGNATOR
 	 * @return
 	 */
 	public tSYMBOL setConstant(boolean constant);
-
-	/**
-	 * @return
-	 */
-	@Function(name = "constantp")
-	public boolean CONSTANTP();
 
 	/**
 	 * @param args
@@ -179,19 +174,19 @@ public interface tSYMBOL extends tATOM, tFUNCTION_DESIGNATOR
 	/**
 	 * @return
 	 */
-	@Function(name = "symbol-value")
+	@Function(name = "symbol-value", doc = "f_symb_5")
 	public tT SYMBOL_VALUE();
 
 	/**
 	 * @return
 	 */
-	@Function(name = "symbol-function")
+	@Function(name = "symbol-function", doc = "f_symb_1")
 	public tFUNCTION SYMBOL_FUNCTION();
 
 	/**
 	 * @return
 	 */
-	@Function(name = "fdefinition")
+	@Function(name = "fdefinition", doc = "f_fdefin")
 	public tFUNCTION FDEFINITION();
 
 	/**
@@ -207,19 +202,19 @@ public interface tSYMBOL extends tATOM, tFUNCTION_DESIGNATOR
 	/**
 	 * @return
 	 */
-	@Function(name = "boundp")
+	@Function(name = "boundp", doc = "f_boundp")
 	public boolean BOUNDP();
 
 	/**
 	 * @return
 	 */
-	@Function(name = "fboundp")
+	@Function(name = "fboundp", doc = "f_fbound")
 	public boolean FBOUNDP();
 
 	/**
 	 * @return
 	 */
-	@Function(name = "special-form-p")
-	public boolean SPECIAL_FORM_P();
+	@Function(name = "special-operator-p", doc = "f_specia")
+	public boolean SPECIAL_OPERATOR_P();
 
 }

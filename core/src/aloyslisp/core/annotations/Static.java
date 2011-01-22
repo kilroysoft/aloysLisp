@@ -38,7 +38,8 @@ import java.lang.annotation.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-@Target({ElementType.METHOD, ElementType.CONSTRUCTOR })
+@Target(
+{ ElementType.METHOD, ElementType.CONSTRUCTOR })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Static
 {
@@ -54,7 +55,7 @@ public @interface Static
 	 * 
 	 * @return
 	 */
-	String doc() default "";
+	String doc() default "TBD";
 
 	/**
 	 * Nr mandatory arguments. -1 all.

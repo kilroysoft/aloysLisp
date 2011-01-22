@@ -52,7 +52,7 @@ public interface tINPUT_STREAM extends tSTREAM
 	 * @return
 	 * @throws EOFException
 	 */
-	@Function(name = "read")
+	@Function(name = "read", doc = "f_rd_rd")
 	public tT READ(
 			@BaseArg @Opt(name = "input-stream", def = "*standard-input*") tINPUT_STREAM stream, //
 			@Opt(name = "eof-error-p", def = "t") Boolean eofErrorP, //
@@ -68,7 +68,7 @@ public interface tINPUT_STREAM extends tSTREAM
 	 * @return
 	 * @throws EOFException
 	 */
-	@Function(name = "read-char")
+	@Function(name = "read-char", doc = "f_rd_cha")
 	public Character READ_CHAR( //
 			@BaseArg @Opt(name = "input-stream", def = "*standard-input*") tINPUT_STREAM stream, //
 			@Opt(name = "eof-error-p", def = "t") Boolean eofErrorP, //
@@ -85,7 +85,7 @@ public interface tINPUT_STREAM extends tSTREAM
 	 * @return
 	 * @throws EOFException
 	 */
-	@Function(name = "peek-char")
+	@Function(name = "peek-char", doc = "f_peek_c")
 	public Character PEEK_CHAR(
 			@Arg(name = "peek-type") tT peekType, //
 			@BaseArg @Opt(name = "input-stream", def = "*standard-input*") tINPUT_STREAM stream, //
@@ -99,7 +99,7 @@ public interface tINPUT_STREAM extends tSTREAM
 	 * @param car
 	 * @return
 	 */
-	@Function(name = "unread-char")
+	@Function(name = "unread-char", doc = "f_undr_c")
 	public Character UNREAD_CHAR(
 			@Arg(name = "character") Character character,
 			@BaseArg @Opt(name = "input-stream", def = "*standard-input*") tINPUT_STREAM stream);
@@ -108,7 +108,7 @@ public interface tINPUT_STREAM extends tSTREAM
 	 * @param stream
 	 * @return
 	 */
-	@Function(name = "listen")
+	@Function(name = "listen", doc = "f_listen")
 	public boolean LISTEN(
 			@BaseArg @Opt(name = "input-stream", def = "*standard-input*") tINPUT_STREAM stream);
 
@@ -116,7 +116,7 @@ public interface tINPUT_STREAM extends tSTREAM
 	 * @param stream
 	 * @return
 	 */
-	@Function(name = "clear-input")
+	@Function(name = "clear-input", doc = "f_clear_")
 	public tT CLEAR_INPUT(
 			@BaseArg @Opt(name = "input-stream", def = "*standard-input*") tINPUT_STREAM stream);
 
@@ -128,7 +128,7 @@ public interface tINPUT_STREAM extends tSTREAM
 	 * @return
 	 * @throws EOFException
 	 */
-	@Function(name = "read-byte")
+	@Function(name = "read-byte", doc = "f_rd_by")
 	public Integer READ_BYTE(
 			@BaseArg @Opt(name = "input-stream", def = "*standard-input*") tINPUT_STREAM stream, //
 			@Opt(name = "eof-error-p", def = "t") Boolean eofErrorP, //
@@ -144,7 +144,7 @@ public interface tINPUT_STREAM extends tSTREAM
 	 * @return
 	 * @throws EOFException
 	 */
-	@Function(name = "read-char-no-hang")
+	@Function(name = "read-char-no-hang", doc = "f_rd_c_1")
 	public Character READ_CHAR_NO_HANG(
 			@BaseArg @Opt(name = "input-stream", def = "*standard-input*") tINPUT_STREAM stream, //
 			@Opt(name = "eof-error-p", def = "t") Boolean eofErrorP, //
@@ -159,7 +159,7 @@ public interface tINPUT_STREAM extends tSTREAM
 	 * @param end
 	 * @return
 	 */
-	@Function(name = "read-sequence")
+	@Function(name = "read-sequence", doc = "f_rd_seq")
 	public tT READ_SEQUENCE( //
 			@Arg(name = "sequence") tSEQUENCE sequence, //
 			@BaseArg @Arg(name = "input-stream") tINPUT_STREAM stream, //
@@ -174,7 +174,7 @@ public interface tINPUT_STREAM extends tSTREAM
 	 * @return
 	 * @throws EOFException
 	 */
-	@Function(name = "read-line")
+	@Function(name = "read-line", doc = "f_rd_lin")
 	public tT[] READ_LINE(
 			@BaseArg @Opt(name = "input-stream", def = "*standard-input*") tINPUT_STREAM stream, //
 			@Opt(name = "eof-error-p", def = "t") Boolean eofErrorP, //

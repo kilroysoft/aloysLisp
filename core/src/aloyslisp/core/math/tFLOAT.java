@@ -48,7 +48,7 @@ public interface tFLOAT extends tREAL
 	 * @param f
 	 * @return
 	 */
-	@Function(name = "decode-float")
+	@Function(name = "decode-float", doc = "f_dec_fl")
 	public tT[] DECODE_FLOAT();
 
 	/**
@@ -56,7 +56,7 @@ public interface tFLOAT extends tREAL
 	 * @return
 	 */
 	//
-	@Function(name = "integer-decode-float")
+	@Function(name = "integer-decode-float", doc = "f_dec_fl")
 	public tT[] INTEGER_DECODE_FLOAT();
 
 	/**
@@ -64,7 +64,7 @@ public interface tFLOAT extends tREAL
 	 * @param scale
 	 * @return
 	 */
-	@Function(name = "scale-float")
+	@Function(name = "scale-float", doc = "f_dec_fl")
 	public tFLOAT SCALE_FLOAT( //
 			@Arg(name = "scale") tINTEGER scale);
 
@@ -72,7 +72,7 @@ public interface tFLOAT extends tREAL
 	 * @param f
 	 * @return
 	 */
-	@Function(name = "float-radix")
+	@Function(name = "float-radix", doc = "f_dec_fl")
 	public tFLOAT FLOAT_RADIX();
 
 	/**
@@ -80,7 +80,7 @@ public interface tFLOAT extends tREAL
 	 * @param f2
 	 * @return
 	 */
-	@Function(name = "float-sign")
+	@Function(name = "float-sign", doc = "f_dec_fl")
 	public tFLOAT FLOAT_SIGN( //
 			@Opt(name = "scale") tFLOAT f2);
 
@@ -88,14 +88,14 @@ public interface tFLOAT extends tREAL
 	 * @param f
 	 * @return
 	 */
-	@Function(name = "float-digits")
+	@Function(name = "float-digits", doc = "f_dec_fl")
 	public tINTEGER FLOAT_DIGITS();
 
 	/**
 	 * @param f
 	 * @return
 	 */
-	@Function(name = "float-precision")
+	@Function(name = "float-precision", doc = "f_dec_fl")
 	public tINTEGER FLOAT_PRECISION();
 
 }

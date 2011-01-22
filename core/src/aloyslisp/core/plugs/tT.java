@@ -56,7 +56,7 @@ public interface tT
 	 * 
 	 * @return Value as an array (functions can give back multiple values)
 	 */
-	@Function(name = "eval")
+	@Function(name = "eval", doc = "f_eval")
 	public tT[] EVAL();
 
 	/**
@@ -64,7 +64,7 @@ public interface tT
 	 * 
 	 * @return
 	 */
-	@Function(name = "compile")
+	@Function(name = "compile", doc = "f_cmp")
 	public String COMPILE();
 
 	/**
@@ -72,7 +72,7 @@ public interface tT
 	 * 
 	 * @return
 	 */
-	@Function(name = "evalcompile")
+	@Function(name = "evalcompile", doc = "TBD")
 	public String EVALCOMPILE();
 
 	/**
@@ -88,7 +88,7 @@ public interface tT
 	 * 
 	 * @return
 	 */
-	@Function(name = "describe")
+	@Function(name = "describe", doc = "f_descri")
 	public String DESCRIBE();
 
 	/**
@@ -96,7 +96,7 @@ public interface tT
 	 * 
 	 * @return
 	 */
-	@Function(name = "macroexpand")
+	@Function(name = "macroexpand", doc = "f_mexp_")
 	public tT[] MACROEXPAND();
 
 	/**
@@ -104,8 +104,8 @@ public interface tT
 	 * 
 	 * @return
 	 */
-	@Function(name = "macroexpand1")
-	public tT[] MACROEXPAND1();
+	@Function(name = "macroexpand-1", doc = "f_mexp_")
+	public tT[] MACROEXPAND_1();
 
 	/**
 	 * get car
@@ -115,7 +115,6 @@ public interface tT
 	 * @return
 	 */
 	// definition in tSYMBOL
-	@Function(name = "car")
 	public tT CAR();
 
 	/**
@@ -126,7 +125,6 @@ public interface tT
 	 * @return
 	 */
 	// definition in tSYMBOL
-	@Function(name = "cdr")
 	public tT CDR();
 
 	/**
@@ -135,7 +133,7 @@ public interface tT
 	 * @param cell
 	 * @return
 	 */
-	@Function(name = "eq")
+	@Function(name = "eq", doc = "f_eq")
 	public boolean EQ( //
 			@Arg(name = "cell") tT cell);
 
@@ -146,7 +144,7 @@ public interface tT
 	 * @return
 	 *         TODO will be removed for a lisp version
 	 */
-	@Function(name = "eql")
+	@Function(name = "eql", doc = "f_eql")
 	public boolean EQL( //
 			@Arg(name = "cell") tT cell);
 
@@ -157,7 +155,7 @@ public interface tT
 	 * @return
 	 *         TODO will be removed for a lisp version
 	 */
-	@Function(name = "equal")
+	@Function(name = "equal", doc = "f_equal")
 	public boolean EQUAL( //
 			@Arg(name = "cell") tT cell);
 
@@ -168,7 +166,7 @@ public interface tT
 	 * @return
 	 *         TODO will be removed for a lisp version
 	 */
-	@Function(name = "equalp")
+	@Function(name = "equalp", doc = "f_rqualp")
 	public boolean EQUALP( //
 			@Arg(name = "cell") tT cell);
 
@@ -178,7 +176,7 @@ public interface tT
 	 * @param type
 	 * @return
 	 */
-	@Function(name = "%istype")
+	@Function(name = "%istype", doc = "TBD")
 	public boolean pISTYPE( //
 			@Arg(name = "type") tSYMBOL type);
 
@@ -187,7 +185,7 @@ public interface tT
 	 * 
 	 * @return
 	 */
-	@Function(name = "constantp")
+	@Function(name = "constantp", doc = "f_consta")
 	public boolean CONSTANTP();
 
 }

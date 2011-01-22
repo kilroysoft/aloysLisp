@@ -50,7 +50,7 @@ public abstract class STREAM extends CELL implements tSTREAM
 	 * @return
 	 */
 	@Special
-	@Static(name = "with-open-stream")
+	@Static(name = "with-open-stream", doc = "m_w_op_1")
 	public static tT WITH_OPEN_STREAM( //
 			@Arg(name = "stream") tLIST stream, //
 			@Rest(name = "form") tT... form)
@@ -67,7 +67,7 @@ public abstract class STREAM extends CELL implements tSTREAM
 	 * @return
 	 */
 	@Special
-	@Static(name = "open")
+	@Static(name = "open", doc = "f_open")
 	public static tT OPEN( //
 			@Arg(name = "filespec") tPATHNAME_DESIGNATOR fileSpec, //
 			@Arg(name = "direction") tSYMBOL direction, //

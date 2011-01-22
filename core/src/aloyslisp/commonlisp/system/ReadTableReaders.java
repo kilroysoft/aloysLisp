@@ -58,7 +58,7 @@ public class ReadTableReaders
 	 * @param args
 	 * @return
 	 */
-	@Static(name = "sys::%backquote-reader")
+	@Static(name = "sys::%backquote-reader", doc = "02_df")
 	public static tT BACKQUOTE_READER( //
 			@Arg(name = "sys::stream") tINPUT_STREAM in, //
 			@Arg(name = "sys::char") Character car, //
@@ -81,7 +81,7 @@ public class ReadTableReaders
 	 * @param args
 	 * @return
 	 */
-	@Static(name = "sys::%character-reader")
+	@Static(name = "sys::%character-reader", doc = "02_dha")
 	public static tT CHARACTER_READER( //
 			@Arg(name = "sys::stream") tINPUT_STREAM in, //
 			@Arg(name = "sys::char") Character car, //
@@ -106,7 +106,7 @@ public class ReadTableReaders
 	 * @param args
 	 * @return
 	 */
-	@Static(name = "%comment-reader")
+	@Static(name = "%comment-reader", doc = "02_dd")
 	public static tT COMMENT_READER( //
 			@Arg(name = "stream") tINPUT_STREAM in, //
 			@Arg(name = "char") Character car, //
@@ -137,7 +137,7 @@ public class ReadTableReaders
 	 * @param args
 	 * @return
 	 */
-	@Static(name = "sys::%close-parent-reader")
+	@Static(name = "sys::%close-parent-reader", doc = "02_db")
 	public static tT CLOSE_PARENT_READER( //
 			@Arg(name = "sys::stream") tINPUT_STREAM in, //
 			@Arg(name = "sys::char") Character car, //
@@ -155,7 +155,7 @@ public class ReadTableReaders
 	 * @param args
 	 * @return
 	 */
-	@Static(name = "sys::%function-reader")
+	@Static(name = "sys::%function-reader", doc = "02_dhb")
 	public static tT FUNCTION_READER( //
 			@Arg(name = "sys::stream") tINPUT_STREAM in, //
 			@Arg(name = "sys::char") Character car, //
@@ -178,7 +178,7 @@ public class ReadTableReaders
 	 * @param args
 	 * @return
 	 */
-	@Static(name = "sys::%parent-reader")
+	@Static(name = "sys::%parent-reader", doc = "02_da")
 	public static tT PARENT_READER( //
 			@Arg(name = "sys::stream") tINPUT_STREAM in, //
 			@Arg(name = "sys::char") Character car, //
@@ -230,7 +230,7 @@ public class ReadTableReaders
 	 * @param args
 	 * @return
 	 */
-	@Static(name = "sys::%quote-reader")
+	@Static(name = "sys::%quote-reader", doc = "02_dc")
 	public static tT QUOTE_READER( //
 			@Arg(name = "sys::stream") tINPUT_STREAM in, //
 			@Arg(name = "sys::char") Character car, //
@@ -252,7 +252,7 @@ public class ReadTableReaders
 	 * @param args
 	 * @return
 	 */
-	@Static(name = "sys::%string-reader")
+	@Static(name = "sys::%string-reader", doc = "02_de")
 	public static tT STRING_READER( //
 			@Arg(name = "sys::stream") tINPUT_STREAM in, //
 			@Arg(name = "sys::char") Character car, //
@@ -288,7 +288,7 @@ public class ReadTableReaders
 	 * @param args
 	 * @return
 	 */
-	@Static(name = "sys::%unintern-reader")
+	@Static(name = "sys::%unintern-reader", doc = "02_dhe")
 	public static tT UNINTERN_READER( //
 			@Arg(name = "sys::stream") tINPUT_STREAM in, //
 			@Arg(name = "sys::char") Character car, //
@@ -319,7 +319,7 @@ public class ReadTableReaders
 	 * @param args
 	 * @return
 	 */
-	@Static(name = "sys::%unquote-reader")
+	@Static(name = "sys::%unquote-reader", doc = "02_df")
 	public static tT UNQUOTE_READER( //
 			@Arg(name = "sys::stream") tINPUT_STREAM in, //
 			@Arg(name = "sys::char") Character car, //
@@ -355,7 +355,7 @@ public class ReadTableReaders
 	 * @param args
 	 * @return
 	 */
-	@Static(name = "sys::%backquote")
+	@Static(name = "sys::%backquote", doc = "02_df")
 	@Special
 	@Mac(prefix = "`")
 	public static tT BACKQUOTE( //
@@ -430,7 +430,7 @@ public class ReadTableReaders
 	 * @param obj
 	 * @return
 	 */
-	@Static(name = "sys::%nsplice")
+	@Static(name = "sys::%nsplice", doc = "02_df")
 	@Mac(prefix = ",.")
 	public static tT NSPLICE( //
 			@Rest(name = "sys::obj") tT... obj)
@@ -443,7 +443,7 @@ public class ReadTableReaders
 	 * @param obj
 	 * @return
 	 */
-	@Static(name = "sys::%splice")
+	@Static(name = "sys::%splice", doc = "02_df")
 	@Mac(prefix = ",@")
 	public static tT SPLICE( //
 			@Rest(name = "sys::obj") tT... obj)
@@ -456,7 +456,7 @@ public class ReadTableReaders
 	 * @param obj
 	 * @return
 	 */
-	@Static(name = "sys::%unquote")
+	@Static(name = "sys::%unquote", doc = "02_df")
 	@Mac(prefix = ",")
 	public static tT UNQUOTE( //
 			@Rest(name = "sys::obj") tT... obj)

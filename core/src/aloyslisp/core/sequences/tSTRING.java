@@ -50,37 +50,37 @@ public interface tSTRING extends tVECTOR
 	/**
 	 * @return
 	 */
-	@Function(name = "string-upcase")
+	@Function(name = "string-upcase", doc = "f_stg_up")
 	public tSTRING STRING_UPCASE();
 
 	/**
 	 * @return
 	 */
-	@Function(name = "string-downcase")
+	@Function(name = "string-downcase", doc = "f_stg_up")
 	public tSTRING STRING_DOWNCASE();
 
 	/**
 	 * @return
 	 */
-	@Function(name = "string-capitalize")
+	@Function(name = "string-capitalize", doc = "f_stg_up")
 	public tSTRING STRING_CAPITALIZE();
 
 	/**
 	 * @return
 	 */
-	@Function(name = "string-trim")
+	@Function(name = "string-trim", doc = "f_stg_tr")
 	public tSTRING STRING_TRIM();
 
 	/**
 	 * @return
 	 */
-	@Function(name = "string-left-trim")
+	@Function(name = "string-left-trim", doc = "f_stg_tr")
 	public tSTRING STRING_LEFT_TRIM();
 
 	/**
 	 * @return
 	 */
-	@Function(name = "string-right-trim")
+	@Function(name = "string-right-trim", doc = "f_stg_tr")
 	public tSTRING STRING_RIGHT_TRIM();
 
 	/**
@@ -93,7 +93,7 @@ public interface tSTRING extends tVECTOR
 	 * @param junk
 	 * @return
 	 */
-	@Function(name = "parse-integer")
+	@Function(name = "parse-integer", doc = "f_parse_")
 	public BIGNUM PARSE_INTEGER(@Opt(name = "start", def = "0") Integer start, //
 			@Opt(name = "end", def = "nil") tT end, //
 			@Opt(name = "radix", def = "*read-base*") Integer radix, //

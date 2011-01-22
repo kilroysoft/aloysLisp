@@ -194,7 +194,7 @@ public class READTABLE extends CELL implements tREADTABLE
 	 * @return
 	 * @throws EOFException
 	 */
-	@Static(name = "read-delimited-list")
+	@Static(name = "read-delimited-list", doc = "f_rd_del")
 	public static tT READ_DELIMITED_LIST(
 			@Arg(name = "character") Character character, //
 			@BaseArg @Opt(name = "input-stream", def = "*standard-input*") tINPUT_STREAM stream, //
@@ -204,13 +204,13 @@ public class READTABLE extends CELL implements tREADTABLE
 		return null;
 	}
 
-	@Static(name = "read-preserving-whitespace")
+	@Static(name = "read-preserving-whitespace", doc = "f_rd_rd")
 	public static tT READ_PRESERVING_WHITESPACE()
 	{
 		return null;
 	}
 
-	@Static(name = "read-from string")
+	@Static(name = "read-from string", doc = "f_rd_fro")
 	public static tT READ_FROM_STRING()
 	{
 		return null;
