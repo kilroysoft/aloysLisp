@@ -58,43 +58,44 @@ public class L extends Primitives
 	/**
 	 * List of all packages
 	 */
-	public static tPACKAGE		packages	= new PACKAGE("Packages", false);
+	public static SymMap		packages	= new SymMap();
 
 	/**
 	 * Keywords
 	 */
-	public static tPACKAGE		key			= new PACKAGE("keyword", true);
+	public static tPACKAGE		key			= new PACKAGE("keyword");
 
 	/**
 	 * System implementation functions
 	 */
-	public static tPACKAGE		sys			= new PACKAGE("system", true);
+	public static tPACKAGE		sys			= new PACKAGE("system");
 
 	/**
 	 * Main lisp functions
 	 */
-	public static tPACKAGE		cl			= new PACKAGE("common-lisp", true);
+	public static tPACKAGE		cl			= new PACKAGE("common-lisp");
 
 	/**
 	 * Extensions
 	 */
-	public static tPACKAGE		ext			= new PACKAGE("ext", true);
+	public static tPACKAGE		ext			= new PACKAGE("ext");
 
-	{
-		packages.INTERN("common-lisp").SET_SYMBOL_VALUE(cl);
-		packages.INTERN("lisp").SET_SYMBOL_VALUE(cl);
-		packages.INTERN("cl").SET_SYMBOL_VALUE(cl);
-		packages.INTERN("system").SET_SYMBOL_VALUE(sys);
-		packages.INTERN("sys").SET_SYMBOL_VALUE(sys);
-		packages.INTERN("keyword").SET_SYMBOL_VALUE(key);
-		packages.INTERN("key").SET_SYMBOL_VALUE(key);
-		packages.INTERN("ext").SET_SYMBOL_VALUE(ext);
-	}
 	/**
 	 * Execution context for Closures
 	 */
 	public static Environment	e			= new Environment();
 
+	static
+	{
+		packages.put("common-lisp",
+				new SYMBOL("common-lisp").SET_SYMBOL_VALUE(cl));
+		packages.put("cl", new SYMBOL("cl").SET_SYMBOL_VALUE(cl));
+		packages.put("lisp", new SYMBOL("lisp").SET_SYMBOL_VALUE(cl));
+		packages.put("system", new SYMBOL("system").SET_SYMBOL_VALUE(sys));
+		packages.put("sys", new SYMBOL("sys").SET_SYMBOL_VALUE(sys));
+		packages.put("keyword", new SYMBOL("keyword").SET_SYMBOL_VALUE(key));
+		packages.put("key", new SYMBOL("key").SET_SYMBOL_VALUE(key));
+	}
 	/**
 	 * Current Package
 	 * *package* should be be first hardwired, because it's used to intern
@@ -107,7 +108,7 @@ public class L extends Primitives
 
 	static
 	{
-		cl.put("*package*", sPACKAGEs);
+		((PACKAGE) cl).external.put("*package*", sPACKAGEs);
 	}
 
 	/**
@@ -125,9 +126,18 @@ public class L extends Primitives
 	static
 	{
 		// Nil is directly put in package
-		currPackage().put("nil", NIL);
+		((PACKAGE) currPackage()).external.put("nil", NIL);
 		NIL.setExported(true);
 	}
+
+	/**
+	 * Base keys for package symbol postition
+	 */
+	public static final tSYMBOL		INHERITED				= key("INHERITED");
+
+	public static final tSYMBOL		EXTERNAL				= key("EXTERNAL");
+
+	public static final tSYMBOL		INTERNAL				= key("INTERNAL");
 
 	public static final tSYMBOL		T						= sym("T");
 	static
@@ -389,17 +399,17 @@ public class L extends Primitives
 																	.SET_SYMBOL_VALUE(
 																			NIL);
 
-	static
-	{
-		packages.INTERN("common-lisp").SET_SYMBOL_VALUE(cl);
-		packages.INTERN("lisp").SET_SYMBOL_VALUE(cl);
-		packages.INTERN("cl").SET_SYMBOL_VALUE(cl);
-		packages.INTERN("system").SET_SYMBOL_VALUE(sys);
-		packages.INTERN("sys").SET_SYMBOL_VALUE(sys);
-		packages.INTERN("keyword").SET_SYMBOL_VALUE(key);
-		packages.INTERN("key").SET_SYMBOL_VALUE(key);
-		packages.INTERN("ext").SET_SYMBOL_VALUE(ext);
-	}
+	// static
+	// {
+	// packages.INTERN("common-lisp").SET_SYMBOL_VALUE(cl);
+	// packages.INTERN("lisp").SET_SYMBOL_VALUE(cl);
+	// packages.INTERN("cl").SET_SYMBOL_VALUE(cl);
+	// packages.INTERN("system").SET_SYMBOL_VALUE(sys);
+	// packages.INTERN("sys").SET_SYMBOL_VALUE(sys);
+	// packages.INTERN("keyword").SET_SYMBOL_VALUE(key);
+	// packages.INTERN("key").SET_SYMBOL_VALUE(key);
+	// packages.INTERN("ext").SET_SYMBOL_VALUE(ext);
+	// }
 
 	public static tSYMBOL			readTable				= sym("*readtable*")
 																	.setExported(
@@ -441,7 +451,11 @@ public class L extends Primitives
 	 */
 	public static tSYMBOL getGlobal(String name)
 	{
-		return currPackage().get(name);
+		tSYMBOL[] res = currPackage().FIND_SYMBOL(name, null);
+		if (res[1] == NIL)
+			return null;
+		else
+			return res[0];
 	}
 
 	/**
@@ -623,7 +637,7 @@ public class L extends Primitives
 		}
 		if (name.startsWith(":"))
 		{
-			return key.INTERN(name.substring(1));
+			return key.INTERN(name.substring(1), null);
 		}
 		int pos = name.indexOf(":");
 		if (pos > 0)
@@ -646,10 +660,10 @@ public class L extends Primitives
 			{
 				pos++;
 			}
-			return pack.INTERN(name.substring(pos + 1, name.length()));
+			return pack.INTERN(name.substring(pos + 1, name.length()), null);
 		}
 		else
-			return currPackage().INTERN(name);
+			return currPackage().INTERN(name, null);
 	}
 
 	// /**
@@ -674,14 +688,14 @@ public class L extends Primitives
 	 * @param name
 	 * @return
 	 */
-	public static tSYMBOL sym(tT pack, String name)
+	public static tSYMBOL sym(tPACKAGE_DESIGNATOR pack, String name)
 	{
 		tT p = FIND_PACKAGE(pack);
 		if (p == null || p == NIL)
 		{
 			throw new LispException("Package " + pack + " not found");
 		}
-		return ((tPACKAGE) p).INTERN(name);
+		return ((tPACKAGE) p).INTERN(name, null);
 	}
 
 	/**
@@ -692,7 +706,8 @@ public class L extends Primitives
 	 */
 	public static tSYMBOL key(String name)
 	{
-		return sym(key, name);
+		return ((PACKAGE) key).external.put(name,
+				new SYMBOL(name).setConstant(true));
 	}
 
 	/**

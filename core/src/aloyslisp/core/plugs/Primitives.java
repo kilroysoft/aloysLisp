@@ -52,6 +52,19 @@ public class Primitives
 {
 
 	// STRING ???? //////////////////////////////////////////////////
+	@Static(name = "string", doc = "f_string")
+	public static String STRING( //
+			@Arg(name = "mess") tSTRING_DESIGNATOR str)
+	{
+		if (str instanceof tSTRING)
+			return ((STRING) str).getString();
+		if (str instanceof tSYMBOL)
+			return ((tSYMBOL) str).SYMBOL_NAME();
+		if (str instanceof tCHARACTER)
+			return "" + ((CHARACTER) str).getChar();
+		throw new LispException("Type error");
+	}
+
 	/**
 	 * @param message
 	 * @param args
@@ -104,20 +117,37 @@ public class Primitives
 	 */
 	@Static(name = "find-package")
 	public static tT FIND_PACKAGE( //
-			@Arg(name = "pack") tT pack)
+			@Arg(name = "pack") tPACKAGE_DESIGNATOR pack)
 	{
 		if (pack == null || pack == NIL)
 			return currPackage();
 		if (pack instanceof tPACKAGE)
 			return pack;
-		if (!(pack instanceof tSTRING) && !(pack instanceof tSYMBOL))
-			return NIL;
+		if (!(pack instanceof tSTRING_DESIGNATOR))
+			throw new LispException("Type error for " + pack);
 
-		tT packN = packages.get(((tSYMBOL) pack).SYMBOL_NAME());
+		tT packN = packages.get(STRING((tSTRING_DESIGNATOR) pack));
 		if (packN == null)
-			ERROR("FIND-PACKAGE : Package inconnu : ~s", pack);
+			throw new LispException("FIND-PACKAGE : Package inconnu : " + pack);
 
 		return ((tSYMBOL) packN).SYMBOL_VALUE();
+	}
+
+	// PATHNAME //////////////////////////////////////////////
+	/**
+	 * @param path
+	 * @return
+	 */
+	@Static(name = "pathname" doc="f_pn")
+	public static tPATHNAME PATHNAME(tPATHNAME_DESIGNATOR path)
+	{
+		if (path instanceof tPATHNAME)
+			return (tPATHNAME) path;
+
+		if (!(path instanceof tSTRING_DESIGNATOR))
+			throw new LispException("Type error for " + path);
+
+		return new PATHNAME(STRING(path));
 	}
 
 	// LIST //////////////////////////////////////////////
@@ -160,7 +190,7 @@ public class Primitives
 	 * @param cls
 	 * @return
 	 */
-	@Static(name = "instantiate", doc="TBD")
+	@Static(name = "instantiate", doc = "TBD")
 	public static Boolean INSTANTIATE( //
 			@Arg(name = "class") String cls)
 	{
@@ -209,7 +239,6 @@ public class Primitives
 				func = new PRIMITIVE(clas, m.getName(), argsDecl(notes),
 						f.doc(), declareArgs());
 				func.setBaseArg(noArgsBase(notes));
-				func.
 				writeMissing(m.getName(), notes);
 				sym(f.name()).SET_SYMBOL_FUNCTION(func);
 			}

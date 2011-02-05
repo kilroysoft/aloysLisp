@@ -29,7 +29,6 @@
 
 package aloyslisp.core.streams;
 
-
 /**
  * FILE_STREAM
  * 
@@ -39,4 +38,7 @@ package aloyslisp.core.streams;
  */
 public interface tFILE_STREAM extends tSTREAM
 {
+	public tPATHNAME setPathname(tPATHNAME_DESIGNATOR path);
+
+	public tPATHNAME getPathname();
 }

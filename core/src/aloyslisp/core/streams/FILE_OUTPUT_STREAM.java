@@ -29,10 +29,11 @@
 
 package aloyslisp.core.streams;
 
-import static aloyslisp.commonlisp.L.T;
+import static aloyslisp.commonlisp.L.*;
 
 import java.io.*;
 
+import aloyslisp.core.conditions.LispException;
 import aloyslisp.core.plugs.tT;
 
 /**
@@ -46,6 +47,7 @@ public class FILE_OUTPUT_STREAM extends OUTPUT_STREAM implements
 		tFILE_OUTPUT_STREAM
 {
 
+	private tPATHNAME		path	= null;
 	protected PrintStream	writer;
 
 	/**
@@ -57,7 +59,32 @@ public class FILE_OUTPUT_STREAM extends OUTPUT_STREAM implements
 	 */
 	public FILE_OUTPUT_STREAM(File file) throws FileNotFoundException
 	{
+		try
+		{
+			setPathname(str(file.getCanonicalPath()));
+		}
+		catch (IOException e)
+		{
+			throw new LispException("I/O error : " + e.getLocalizedMessage());
+		}
+		
 		writer = new PrintStream(file);
+	}
+
+	/**
+	 * @param file
+	 */
+	public FILE_OUTPUT_STREAM(tPATHNAME_DESIGNATOR file)
+	{
+		setPathname(file);
+		try
+		{
+			writer = new PrintStream(new File(((PATHNAME) path).getFile()));
+		}
+		catch (FileNotFoundException e)
+		{
+			throw new LispException("File not found " + e.getLocalizedMessage());
+		}
 	}
 
 	/**
@@ -140,14 +167,39 @@ public class FILE_OUTPUT_STREAM extends OUTPUT_STREAM implements
 		return true;
 	}
 
-	/* (non-Javadoc)
-	 * @see aloyslisp.core.types.tOUTPUT_STREAM#WRITE_BYTE(java.lang.Integer, aloyslisp.core.types.tOUTPUT_STREAM)
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.types.tOUTPUT_STREAM#WRITE_BYTE(java.lang.Integer,
+	 * aloyslisp.core.types.tOUTPUT_STREAM)
 	 */
 	@Override
 	public Integer WRITE_BYTE(Integer val, tOUTPUT_STREAM stream)
 	{
 		writer.write(val);
 		return val;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * aloyslisp.core.streams.tFILE_STREAM#setPathname(aloyslisp.core.streams
+	 * .tPATHNAME_DESIGNATOR)
+	 */
+	@Override
+	public tPATHNAME setPathname(tPATHNAME_DESIGNATOR path)
+	{
+		this.path = PATHNAME(path);
+		return this.path;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.streams.tFILE_STREAM#getPathname()
+	 */
+	@Override
+	public tPATHNAME getPathname()
+	{
+		return this.path;
 	}
 
 }

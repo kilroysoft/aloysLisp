@@ -32,6 +32,7 @@ package aloyslisp.core.sequences;
 import aloyslisp.core.annotations.*;
 import aloyslisp.core.math.*;
 import aloyslisp.core.plugs.*;
+import aloyslisp.core.streams.tPATHNAME_DESIGNATOR;
 
 /**
  * tSTRING
@@ -40,7 +41,8 @@ import aloyslisp.core.plugs.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public interface tSTRING extends tVECTOR
+public interface tSTRING extends tVECTOR, tPATHNAME_DESIGNATOR,
+		tPACKAGE_DESIGNATOR
 {
 	/**
 	 * @return string value

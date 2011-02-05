@@ -55,6 +55,12 @@ public class STRING extends VECTOR implements tSTRING
 		}
 	}
 
+	@SuppressWarnings("unchecked")
+	public String STRING()
+	{
+		return "";
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.plugs.IString#getString()

@@ -24,38 +24,21 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 18 déc. 2010 Creation
+// IP 26 janv. 2011 Creation
 // --------------------------------------------------------------------------
 
-package aloyslisp.core.streams;
+package aloyslisp.core.sequences;
 
 import aloyslisp.core.plugs.*;
 
 /**
- * PATHNAME
+ * tSTRING_DESIGNATOR
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class PATHNAME extends CELL implements tPATHNAME
+public interface tSTRING_DESIGNATOR extends tT
 {
-	String	file	= "";
-
-	/**
-	 * @param file
-	 */
-	public PATHNAME(String file)
-	{
-		this.file = file;
-	}
-
-	/**
-	 * @return
-	 */
-	public String getFile()
-	{
-		return file;
-	}
 
 }

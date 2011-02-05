@@ -48,37 +48,33 @@ import aloyslisp.core.streams.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public abstract class FUNCTION extends CELL implements tFUNCTION
+public abstract class FUNCTION extends CELL implements tFUNCTION,
+		tFUNCTION_DESIGNATOR
 {
 	/**
 	 * Representation of arguments of the function
 	 */
-	public Arguments	intern			= null;
-
-	/**
-	 * Representation of arguments of the function
-	 */
-	public String		documentation	= null;
+	public Arguments	intern	= null;
 
 	/**
 	 * String used to represent the function in case of macrochar transform
 	 */
-	public String		mac				= null;
+	public String		mac		= null;
 
 	/**
 	 * Java method to call, primitive, function, constructor or Lisp interpreter
 	 */
-	public Method		method			= null;
+	public Method		method	= null;
 
 	/**
 	 * Static object for static function
 	 */
-	tT					object			= null;
+	tT					object	= null;
 
 	/**
 	 * Number of argument used as base object for primitives
 	 */
-	Integer				baseArg			= -1;
+	Integer				baseArg	= -1;
 
 	/**
 	 * Creation with arguments detail
@@ -284,6 +280,11 @@ public abstract class FUNCTION extends CELL implements tFUNCTION
 	 */
 	@Override
 	public String toString()
+	{
+		return "#<" + printableStruct() + ">";
+	}
+
+	public String toDocString()
 	{
 		return "#<" + printableStruct() + ">";
 	}
@@ -527,9 +528,12 @@ public abstract class FUNCTION extends CELL implements tFUNCTION
 			res = ((REAL) arg).doubleValue();
 		}
 
-		if (cl == String.class && arg instanceof tSTRING)
+		if (cl == String.class)
 		{
-			res = ((tSTRING) arg).getString();
+			if (arg instanceof tSTRING)
+			{
+				res = ((tSTRING) arg).getString();
+			}
 		}
 
 		if (cl == Character.class && arg instanceof tCHARACTER)
@@ -537,12 +541,30 @@ public abstract class FUNCTION extends CELL implements tFUNCTION
 			res = ((tCHARACTER) arg).getChar();
 		}
 
+		if (res != null)
+			arg = res;
+
+		if ((cl == tPATHNAME_DESIGNATOR.class && arg instanceof tPATHNAME_DESIGNATOR))
+		{
+			res = PATHNAME((tPATHNAME_DESIGNATOR) arg);
+		}
+		else if ((cl == tPACKAGE_DESIGNATOR.class && arg instanceof tPACKAGE_DESIGNATOR))
+		{
+			res = FIND_PACKAGE((tPACKAGE_DESIGNATOR) arg);
+		}
+		else if ((cl == tSTRING_DESIGNATOR.class && arg instanceof tSTRING_DESIGNATOR))
+		{
+			res = STRING((tSTRING_DESIGNATOR) arg);
+		}
+
+		if (res == null)
+			throw new LispException("Argument " + arg + "("
+					+ arg.getClass().getSimpleName() + ")"
+					+ " should be of type " + cl.getSimpleName());
+
 		trace(" ~~~> " + arg + " (" + arg.getClass().getSimpleName() + ") -> "
 				+ res + " (" + cl.getSimpleName() + ")");
 
-		if (res == null)
-			throw new LispException("Argument " + arg + " should be of type "
-					+ cl.getSimpleName());
 		return res;
 	}
 

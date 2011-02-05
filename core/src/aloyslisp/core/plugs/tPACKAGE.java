@@ -29,8 +29,6 @@
 
 package aloyslisp.core.plugs;
 
-import java.util.Map;
-
 import aloyslisp.core.annotations.*;
 
 /**
@@ -40,7 +38,7 @@ import aloyslisp.core.annotations.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public interface tPACKAGE extends tATOM, Iterable<String>, Map<String, tSYMBOL>
+public interface tPACKAGE extends tATOM, tPACKAGE_DESIGNATOR
 {
 	/**
 	 * @param pack
@@ -49,24 +47,65 @@ public interface tPACKAGE extends tATOM, Iterable<String>, Map<String, tSYMBOL>
 	public boolean isInUseList(tPACKAGE pack);
 
 	/**
-	 * @return
-	 */
-	public String getName();
-
-	/**
 	 * APROPOS
 	 * 
 	 * @return
 	 */
 	public String dump();
 
+	// ////////////////////////////////////////////////////////////////////
+	// Static functions
+
+	// ////////////////////////////////////////////////////////////////////
+	// Member functions
 	/**
 	 * @param symbol
 	 * @param pack
 	 * @return
 	 */
 	@Function(name = "intern", doc = "f_intern")
-	public tSYMBOL INTERN( //
-			@Arg(name = "symbol") String symbol);
+	public tSYMBOL INTERN(
+			//
+			@Arg(name = "symbol") String symbol, //
+			@BaseArg @Opt(name = "package", def = "*package*") tPACKAGE_DESIGNATOR pack);
+
+	/**
+	 * @param symbol
+	 * @param pack
+	 * @return
+	 */
+	@Function(name = "unintern", doc = "f_uninte")
+	public tSYMBOL UNINTERN(
+			//
+			@Arg(name = "symbol") String symbol, //
+			@BaseArg @Opt(name = "package", def = "*package*") tPACKAGE_DESIGNATOR pack);
+
+	/**
+	 * @param symbol
+	 * @param pack
+	 * @return
+	 */
+	@Function(name = "find-symbol", doc = "f_find_s")
+	public tSYMBOL[] FIND_SYMBOL(
+			//
+			@Arg(name = "symbol") String symbol, //
+			@BaseArg @Opt(name = "package", def = "*package*") tPACKAGE_DESIGNATOR pack);
+
+	/**
+	 * @param symbol
+	 * @param pack
+	 * @return
+	 */
+	@Function(name = "import", doc = "f_import")
+	public tSYMBOL IMPORT(
+			//
+			@Arg(name = "symbol") tT symbol, //
+			@BaseArg @Opt(name = "package", def = "*package*") tPACKAGE_DESIGNATOR pack);
+
+	/**
+	 * @return
+	 */
+	@Function(name = "package-name", doc = "f_pkg_na")
+	public String PACKAGE_NAME();
 
 }

@@ -266,7 +266,7 @@ public abstract class INPUT_STREAM extends STREAM implements tINPUT_STREAM
 	 */
 	@Static(name = "load", doc = "f_load")
 	public static tT[] LOAD( //
-			@Arg(name = "file") tT file, //
+			@Arg(name = "file") tPATHNAME_DESIGNATOR file, //
 			@Opt(name = "verbose", def = "t") Boolean verbose, //
 			@Opt(name = "print", def = "t") Boolean print, //
 			@Opt(name = "not-exists", def = "nil") Boolean notExists)
@@ -281,35 +281,25 @@ public abstract class INPUT_STREAM extends STREAM implements tINPUT_STREAM
 		}
 		else
 		{
-			if (file instanceof tSTRING)
-				name = ((tSTRING) file).getString();
-			else if (file instanceof tSYMBOL)
-				name = ((tSYMBOL) file).SYMBOL_NAME();
-			else
-			{
-				throw new LispException(
-						"Filename should be a string or an atom");
-			}
-
 			try
 			{
-				in = new FILE_INPUT_STREAM(new FileInputStream(name));
+				in = new FILE_INPUT_STREAM(file);
 			}
-			catch (FileNotFoundException e)
+			catch (FILE_ERROR e)
 			{
 				if (notExists)
 				{
 					return new tT[]
 					{ NIL };
 				}
-				throw new LispException("Error opening " + name + " "
+				throw new LispException("Error opening " + file + " "
 						+ e.getLocalizedMessage());
 			}
 		}
 
 		if (verbose)
 		{
-			System.out.println("; Loading contents of file " + name);
+			System.out.println("; Loading contents of file " + file);
 		}
 
 		// while there's something to read
@@ -355,7 +345,7 @@ public abstract class INPUT_STREAM extends STREAM implements tINPUT_STREAM
 
 		if (verbose)
 		{
-			System.out.println("; Finished loading " + name);
+			System.out.println("; Finished loading " + file);
 		}
 		return new tT[]
 		{ T };

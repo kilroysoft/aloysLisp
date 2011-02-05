@@ -30,8 +30,8 @@
 package aloyslisp.core.streams;
 
 import aloyslisp.core.annotations.*;
-import aloyslisp.core.plugs.tATOM;
-import aloyslisp.core.plugs.tT;
+import aloyslisp.core.plugs.*;
+import aloyslisp.core.sequences.*;
 
 /**
  * tCHARACTER
@@ -40,7 +40,7 @@ import aloyslisp.core.plugs.tT;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public interface tCHARACTER extends tATOM
+public interface tCHARACTER extends tATOM, tSTRING_DESIGNATOR
 {
 	/**
 	 * Get char value

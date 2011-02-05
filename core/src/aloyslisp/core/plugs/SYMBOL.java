@@ -99,7 +99,7 @@ public class SYMBOL extends CELL implements tSYMBOL
 		// trace = true;
 		this.name = name;
 		this.value = null;
-		pack = currPackage();
+		pack = null;
 	}
 
 	/**
@@ -464,29 +464,13 @@ public class SYMBOL extends CELL implements tSYMBOL
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tSYMBOL#setPack(aloyslisp.core.types.tPACKAGE)
 	 */
-	public tSYMBOL SET_SYMBOL_PACKAGE(tT pack)
+	public tSYMBOL SET_SYMBOL_PACKAGE(tPACKAGE_DESIGNATOR pack)
 	{
 		if (pack != null)
-			pack = FIND_PACKAGE(pack);
+			this.pack = (tPACKAGE) FIND_PACKAGE(pack);
+		else
+			this.pack = null;
 
-		if (this.pack == pack)
-			return this;
-
-		if (this.pack != null)
-		{
-			this.pack.remove(SYMBOL_NAME());
-		}
-		if (pack != null)
-		{
-			if (pack == key)
-			{
-				value = this;
-				constant = true;
-			}
-
-			((tPACKAGE) pack).INTERN(name).SET_SYMBOL_VALUE(this);
-		}
-		this.pack = (tPACKAGE) pack;
 		return this;
 	}
 
@@ -502,14 +486,12 @@ public class SYMBOL extends CELL implements tSYMBOL
 	/*
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tSYMBOL#unsetPack()
+	 * @deprecated
 	 */
 	public tSYMBOL UNINTERN()
 	{
+		// TODO no remove....
 		// unintern symbol
-		if (pack != null)
-		{
-			pack.remove(SYMBOL_NAME());
-		}
 		pack = null;
 		return this;
 	}
@@ -581,7 +563,7 @@ public class SYMBOL extends CELL implements tSYMBOL
 	 */
 	public String COMPILE()
 	{
-		return "sym(\"" + pack.getName() + "::" + SYMBOL_NAME() + "\")";
+		return "sym(\"" + pack.PACKAGE_NAME() + "::" + SYMBOL_NAME() + "\")";
 	}
 
 	/*
@@ -697,6 +679,7 @@ public class SYMBOL extends CELL implements tSYMBOL
 	 * @param pack
 	 * @return
 	 *         IMPLEMENT EXPORT
+	 * @deprecated
 	 */
 	@Static(name = "export", doc = "f_export")
 	public static tT EXPORT( //
@@ -704,9 +687,7 @@ public class SYMBOL extends CELL implements tSYMBOL
 			@Opt(name = "pack") tT pack)
 	{
 		if (pack != NIL)
-			pack = PACKAGE.find_package(pack);
-
-		// tPACKAGE p = (tPACKAGE) ((pack == NIL) ? currPackage() : pack);
+			pack = (tPACKAGE) FIND_PACKAGE((tPACKAGE_DESIGNATOR) pack);
 
 		if (symbol instanceof tLIST)
 		{

@@ -31,9 +31,10 @@ package aloyslisp.core.streams;
 
 import java.io.*;
 
-import aloyslisp.core.conditions.LispException;
+import aloyslisp.core.conditions.*;
 import aloyslisp.core.plugs.*;
 import aloyslisp.core.sequences.*;
+import static aloyslisp.core.plugs.Primitives.*;
 
 /**
  * FILE_INPUT_STREAM
@@ -45,6 +46,7 @@ import aloyslisp.core.sequences.*;
 public class FILE_INPUT_STREAM extends INPUT_STREAM implements
 		tFILE_INPUT_STREAM
 {
+	private tPATHNAME		path	= null;
 	private PushbackReader	reader	= null;
 
 	// TODO private tPATHNAME path = null;
@@ -65,7 +67,16 @@ public class FILE_INPUT_STREAM extends INPUT_STREAM implements
 	 */
 	public FILE_INPUT_STREAM(tPATHNAME_DESIGNATOR file)
 	{
-		// reader = new PushbackReader(new InputStreamReader(file));
+		setPathname(file);
+		try
+		{
+			reader = new PushbackReader(new InputStreamReader(
+					new FileInputStream(((PATHNAME) path).getFile())));
+		}
+		catch (FileNotFoundException e)
+		{
+			throw new FILE_ERROR(path);
+		}
 	}
 
 	/**
@@ -249,6 +260,29 @@ public class FILE_INPUT_STREAM extends INPUT_STREAM implements
 	{
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * aloyslisp.core.streams.tFILE_STREAM#setPathname(aloyslisp.core.streams
+	 * .tPATHNAME_DESIGNATOR)
+	 */
+	@Override
+	public tPATHNAME setPathname(tPATHNAME_DESIGNATOR path)
+	{
+		this.path = PATHNAME(path);
+		return this.path;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.streams.tFILE_STREAM#getPathname()
+	 */
+	@Override
+	public tPATHNAME getPathname()
+	{
+		return this.path;
 	}
 
 }

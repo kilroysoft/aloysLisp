@@ -32,7 +32,7 @@ import aloyslisp.core.plugs.tATOM;
  * @author George Kilroy {george@kilroysoft.ch}
  *
  */
-public interface tPATHNAME extends tATOM
+public interface tPATHNAME extends tATOM, tPATHNAME_DESIGNATOR
 {
 
 }

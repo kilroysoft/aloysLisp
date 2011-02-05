@@ -47,7 +47,8 @@ import aloyslisp.core.sequences.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public interface tSYMBOL extends tATOM, tFUNCTION_DESIGNATOR
+public interface tSYMBOL extends tATOM, tFUNCTION_DESIGNATOR,
+		tSTRING_DESIGNATOR
 {
 	/**
 	 * Create a copy of the symbol plus copy of value define and copy of plist.
@@ -59,11 +60,10 @@ public interface tSYMBOL extends tATOM, tFUNCTION_DESIGNATOR
 	/**
 	 * @param pack
 	 * @return
-	 * @obsolete
 	 */
 	@Function(name = "set-symbol-package")
 	public tSYMBOL SET_SYMBOL_PACKAGE( //
-			@Arg(name = "pack") tT pack);
+			@Arg(name = "pack") tPACKAGE_DESIGNATOR pack);
 
 	/**
 	 * @return

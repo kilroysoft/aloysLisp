@@ -29,8 +29,7 @@
 
 package aloyslisp.core.streams;
 
-import aloyslisp.core.plugs.tSYMBOL;
-import aloyslisp.core.sequences.tSTRING;
+import aloyslisp.core.sequences.tSTRING_DESIGNATOR;
 
 /**
  * tPATHNAME_DESIGNATOR
@@ -39,7 +38,7 @@ import aloyslisp.core.sequences.tSTRING;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public interface tPATHNAME_DESIGNATOR extends tSYMBOL, tSTRING, tCHARACTER
+public interface tPATHNAME_DESIGNATOR extends tSTRING_DESIGNATOR
 {
 
 }
