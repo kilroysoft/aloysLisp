@@ -57,7 +57,7 @@ public interface tREADTABLE extends tATOM
 
 	/**
 	 * Set single macro char be a multiple or single macro char.
-	 * nonTerm = true (!NIL) -> multiple
+	 * nonTerm = true (!cNIL) -> multiple
 	 * 
 	 * @param character
 	 * @param nonTerminatingP
@@ -68,7 +68,7 @@ public interface tREADTABLE extends tATOM
 	public tT MAKE_DISPATCH_MACRO_CHARACTER(
 			@Arg(name = "character") Character character, //
 			@Opt(name = "non-terminating-p", def = "nil") Boolean nonTerminatingP, //
-			@BaseArg @Opt(name = "readtable", def = "*READTABLE*") tREADTABLE readtable);
+			@BaseArg @Opt(name = "readtable", def = "*cREADTABLE*") tREADTABLE readtable);
 
 	/**
 	 * Set macro char definition for multiple chars (in standard sharp macro
@@ -85,7 +85,7 @@ public interface tREADTABLE extends tATOM
 			@Arg(name = "disp-char") Character disp, //
 			@Arg(name = "sub-char") Character sub, //
 			@Arg(name = "function") tFUNCTION_DESIGNATOR func,
-			@BaseArg @Opt(name = "readtable", def = "*READTABLE*") tREADTABLE readtable);
+			@BaseArg @Opt(name = "readtable", def = "*cREADTABLE*") tREADTABLE readtable);
 
 	/**
 	 * Get macro char definition for multiple chars (in standard sharp macro
@@ -100,7 +100,7 @@ public interface tREADTABLE extends tATOM
 	public tFUNCTION_DESIGNATOR GET_DISPATCH_MACRO_CHARACTER(
 			@Arg(name = "disp-char") Character disp, //
 			@Arg(name = "sub-char") Character sub, //
-			@BaseArg @Opt(name = "readtable", def = "*READTABLE*") tREADTABLE readtable);
+			@BaseArg @Opt(name = "readtable", def = "*cREADTABLE*") tREADTABLE readtable);
 
 	/**
 	 * Set macro char definition for single char
@@ -116,7 +116,7 @@ public interface tREADTABLE extends tATOM
 			@Arg(name = "character") Character character, //
 			@Arg(name = "function") tFUNCTION_DESIGNATOR func,
 			@Opt(name = "non-terminating-p", def = "nil") Boolean nonTerminatingP, //
-			@BaseArg @Opt(name = "readtable", def = "*READTABLE*") tREADTABLE readtable);
+			@BaseArg @Opt(name = "readtable", def = "*cREADTABLE*") tREADTABLE readtable);
 
 	/**
 	 * Get macro char definition for single char
@@ -128,7 +128,7 @@ public interface tREADTABLE extends tATOM
 	@Function(name = "get-macro-character", doc = "f_set_ma")
 	public tT[] GET_MACRO_CHARACTER(
 			@Arg(name = "character") Character character, //
-			@BaseArg @Opt(name = "readtable", def = "*READTABLE*") tREADTABLE readtable);
+			@BaseArg @Opt(name = "readtable", def = "*cREADTABLE*") tREADTABLE readtable);
 
 	/**
 	 * return table case
@@ -138,7 +138,7 @@ public interface tREADTABLE extends tATOM
 	 */
 	@Function(name = "readtable-case", doc = "f_rdtabl")
 	public tSYMBOL READTABLE_CASE(
-			@BaseArg @Opt(name = "readtable", def = "*READTABLE*") tREADTABLE readtable);
+			@BaseArg @Opt(name = "readtable", def = "*cREADTABLE*") tREADTABLE readtable);
 
 	/**
 	 * Set table case
@@ -161,8 +161,8 @@ public interface tREADTABLE extends tATOM
 	public void SET_SYNTAX_FROM_CHAR(
 			@Arg(name = "from-char") Character fromChar, //
 			@Arg(name = "to-char") Character toChar, //
-			@BaseArg @Opt(name = "to-readtable", def = "*READTABLE*") tREADTABLE toReadtable,
-			@Opt(name = "from-readtable", def = "*READTABLE*") tREADTABLE fromReadtable);
+			@BaseArg @Opt(name = "to-readtable", def = "*cREADTABLE*") tREADTABLE toReadtable,
+			@Opt(name = "from-readtable", def = "*cREADTABLE*") tREADTABLE fromReadtable);
 
 	/**
 	 * @param fromReadtable
@@ -171,7 +171,7 @@ public interface tREADTABLE extends tATOM
 	 */
 	@Function(name = "copy-readtable", doc = "f_cp_rdt")
 	public tREADTABLE COPY_READTABLE(
-			@BaseArg @Opt(name = "from-readtable", def = "*READTABLE*") tREADTABLE fromReadtable,
+			@BaseArg @Opt(name = "from-readtable", def = "*cREADTABLE*") tREADTABLE fromReadtable,
 			@Opt(name = "to-readtable", def = "nil") tT toReadtable);
 
 	/**

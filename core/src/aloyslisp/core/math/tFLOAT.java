@@ -42,7 +42,7 @@ import aloyslisp.core.plugs.tT;
 public interface tFLOAT extends tREAL
 {
 	/*************************************************************
-	 * LISP FUNCTION
+	 * LISP cFUNCTION
 	 */
 	/**
 	 * @param f

@@ -32,8 +32,8 @@
 
 package aloyslisp.core.exec;
 
-import static aloyslisp.commonlisp.L.*;
-import aloyslisp.core.functions.FUNCTION;
+import static aloyslisp.packages.L.*;
+import aloyslisp.core.functions.cFUNCTION;
 import aloyslisp.core.functions.tFUNCTION;
 import aloyslisp.core.plugs.*;
 import aloyslisp.core.sequences.tLIST;
@@ -45,7 +45,7 @@ import aloyslisp.core.sequences.tLIST;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class Symbol extends CELL
+public class Symbol extends cCELL
 {
 	/**
 	 * 
@@ -111,7 +111,7 @@ public class Symbol extends CELL
 	 */
 	public tFUNCTION SYMBOL_FUNCTION()
 	{
-		if (value instanceof FUNCTION)
+		if (value instanceof cFUNCTION)
 			return (tFUNCTION) value;
 		else
 			return null;

@@ -29,7 +29,7 @@
 
 package aloyslisp.core.exec;
 
-import static aloyslisp.commonlisp.L.*;
+import static aloyslisp.packages.L.*;
 import aloyslisp.core.conditions.LispException;
 import aloyslisp.core.plugs.*;
 import aloyslisp.core.sequences.*;
@@ -72,7 +72,7 @@ public class Block extends PEnviron
 	 * Last instruction execution result
 	 * Used for returns values of blocks
 	 */
-	tT[]	res		= new CELL[]
+	tT[]	res		= new cCELL[]
 					{ NIL };
 
 	/**
@@ -158,7 +158,7 @@ public class Block extends PEnviron
 					e.goBlock = walk;
 
 					// last instruction of block so return
-					if (instr.CDR() instanceof NIL)
+					if (instr.CDR() instanceof cNIL)
 						return;
 
 					// next instruction is the goto place

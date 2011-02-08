@@ -42,13 +42,13 @@ public interface tRATIONAL extends tREAL
 {
 
 	/* *******************************************************************
-	 * FUNCTIONS RATIO
+	 * FUNCTIONS cRATIO
 	 */
 	/**********************************************************************
 	 * LISP FUNCTIONS
 	 */
 	/* *******************************************************************
-	 * FUNCTIONS RATIO
+	 * FUNCTIONS cRATIO
 	 */
 	/**
 	 * Numerator (for ratio) a/b -> a

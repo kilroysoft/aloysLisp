@@ -24,68 +24,75 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 15 sept. 2010 Creation
+// IP 28 déc. 2010 Creation
 // --------------------------------------------------------------------------
 
-package aloyslisp;
-
-import static aloyslisp.packages.L.*;
+package aloyslisp.core.math;
 
 /**
- * Lisp
+ * cRATIONAL
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class Lisp
+public abstract class cRATIONAL extends cREAL implements tRATIONAL
 {
-
 	/**
-	 * REPL
+	 * Numerator (for ratio) a/b -> a
 	 * 
-	 * @param args
+	 * @return
 	 */
-	public static void main(String[] args)
-	{
-		loadClasses("aloyslisp.core.annotations");
-		loadClasses("aloyslisp.core.conditions");
-		loadClasses("aloyslisp.core.exec");
-		loadClasses("aloyslisp.core.functions");
-		loadClasses("aloyslisp.core.math");
-		loadClasses("aloyslisp.core.plugs");
-		loadClasses("aloyslisp.core.sequences");
-		loadClasses("aloyslisp.core.streams");
-		loadClasses("aloyslisp.packages.common_lisp");
-		loadClasses("aloyslisp.packages.system");
-		sym("lisp::load").e(str("class.lisp"));
-
-		// loop recovering errors
-		for (;;)
-		{
-			try
-			{
-				sym("lisp::repl").e();
-			}
-			catch (Exception ex)
-			{
-				debug(ex);
-
-				e.init();
-			}
-		}
-	}
+	abstract tINTEGER numerator();
 
 	/**
-	 * @param ex
+	 * Denumerator (for ratio) a/b -> b
+	 * 
+	 * @return
 	 */
-	public static void debug(Exception ex)
+	abstract tINTEGER denominator();
+
+	/**
+	 * @return
+	 */
+	abstract tRATIONAL rationalizeValue();
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tREAL#rational()
+	 */
+	@Override
+	tRATIONAL rational()
 	{
-		System.err.println(ex.getLocalizedMessage());
-		System.err.println("*trace* = " + sym("*trace*").SYMBOL_VALUE());
-		if (sym("*trace*").SYMBOL_VALUE() != NIL)
-		{
-			ex.printStackTrace();
-		}
+		return this;
 	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tREAL#rationalize()
+	 */
+	@Override
+	tRATIONAL rationalize()
+	{
+		return this;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tRATIONAL#NUMERATOR()
+	 */
+	public tINTEGER NUMERATOR()
+	{
+		return numerator();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tRATIONAL#DENOMINATOR()
+	 */
+	public tINTEGER DENOMINATOR()
+	{
+		return denominator();
+	}
+
 }

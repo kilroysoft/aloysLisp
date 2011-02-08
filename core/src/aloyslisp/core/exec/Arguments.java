@@ -35,7 +35,7 @@
 
 package aloyslisp.core.exec;
 
-import static aloyslisp.commonlisp.L.*;
+import static aloyslisp.packages.L.*;
 
 import java.util.*;
 
@@ -227,7 +227,7 @@ public class Arguments
 			else if (beginWith(curr, "declare"))
 			{
 				// declare element
-				declare = new CONS(curr, declare);
+				declare = new cCONS(curr, declare);
 			}
 			else
 			{
@@ -481,7 +481,7 @@ public class Arguments
 					+ nbObl + " needed, " + nbArgs + "found." + getArgs());
 		}
 
-		// read keys loop over tCONS (stop on NIL)
+		// read keys loop over tCONS (stop on cNIL)
 		while (keyList instanceof tCONS)
 		{
 			if (keyList.LENGTH() < 2)

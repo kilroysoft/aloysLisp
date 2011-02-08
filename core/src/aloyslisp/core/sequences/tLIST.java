@@ -103,7 +103,7 @@ public interface tLIST extends tSEQUENCE
 			@Arg(name = "value") tT value);
 
 	/**
-	 * Append : write to the cdr of last cons (append to NIL -> item)
+	 * Append : write to the cdr of last cons (append to cNIL -> item)
 	 * 
 	 * @return
 	 */

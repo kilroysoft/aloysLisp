@@ -49,48 +49,48 @@ public interface tNUMBER extends tATOM
 	 * 
 	 * @return
 	 */
-	abstract RATIO getRatioValue();
+	abstract cRATIO getRatioValue();
 
 	/**
 	 * Convert to complex
 	 * 
 	 * @return
 	 */
-	abstract COMPLEX getComplexValue();
+	abstract cCOMPLEX getComplexValue();
 
 	/**
 	 * Convert to integer
 	 * 
 	 * @return
 	 */
-	abstract BIGNUM getIntegerValue();
+	abstract cBIGNUM getIntegerValue();
 
 	/**
 	 * Convert to float
 	 * 
 	 * @return
 	 */
-	abstract SINGLE_FLOAT getFloatValue();
+	abstract cSINGLE_FLOAT getFloatValue();
 
 	/**
 	 * Convert to double
 	 * 
 	 * @return
 	 */
-	abstract DOUBLE_FLOAT getDoubleValue();
+	abstract cDOUBLE_FLOAT getDoubleValue();
 
 	/**
 	 * Convert to short
 	 * 
 	 * @return
 	 */
-	abstract SHORT_FLOAT getShortValue();
+	abstract cSHORT_FLOAT getShortValue();
 
 	/**
 	 * @param var
 	 * @return
 	 */
-	abstract public NUMBER coerce(tNUMBER var);
+	abstract public cNUMBER coerce(tNUMBER var);
 
 	/****************************************************************
 	 * LISP FUNCTIONS
@@ -194,10 +194,10 @@ public interface tNUMBER extends tATOM
 	public tNUMBER IMAGPART();
 
 	/* *******************************************************************
-	 * FUNCTIONS COMPLEX
+	 * FUNCTIONS cCOMPLEX
 	 */
 	/**
-	 * COMPLEX conjugate a + bi -> a - bi
+	 * cCOMPLEX conjugate a + bi -> a - bi
 	 * 
 	 * @param a
 	 * @return

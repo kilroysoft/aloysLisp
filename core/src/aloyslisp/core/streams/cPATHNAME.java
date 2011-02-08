@@ -24,68 +24,61 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 15 sept. 2010 Creation
+// IP 18 déc. 2010 Creation
 // --------------------------------------------------------------------------
 
-package aloyslisp;
+package aloyslisp.core.streams;
 
-import static aloyslisp.packages.L.*;
+import aloyslisp.core.annotations.Static;
+import aloyslisp.core.conditions.LispException;
+import aloyslisp.core.plugs.*;
+import aloyslisp.core.sequences.cSTRING;
+import aloyslisp.core.sequences.tSTRING_DESIGNATOR;
 
 /**
- * Lisp
+ * cPATHNAME
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class Lisp
+public class cPATHNAME extends cCELL implements tPATHNAME
 {
+	String	file	= "";
 
 	/**
-	 * REPL
-	 * 
-	 * @param args
+	 * @param file
 	 */
-	public static void main(String[] args)
+	public cPATHNAME(String file)
 	{
-		loadClasses("aloyslisp.core.annotations");
-		loadClasses("aloyslisp.core.conditions");
-		loadClasses("aloyslisp.core.exec");
-		loadClasses("aloyslisp.core.functions");
-		loadClasses("aloyslisp.core.math");
-		loadClasses("aloyslisp.core.plugs");
-		loadClasses("aloyslisp.core.sequences");
-		loadClasses("aloyslisp.core.streams");
-		loadClasses("aloyslisp.packages.common_lisp");
-		loadClasses("aloyslisp.packages.system");
-		sym("lisp::load").e(str("class.lisp"));
-
-		// loop recovering errors
-		for (;;)
-		{
-			try
-			{
-				sym("lisp::repl").e();
-			}
-			catch (Exception ex)
-			{
-				debug(ex);
-
-				e.init();
-			}
-		}
+		this.file = file;
 	}
 
 	/**
-	 * @param ex
+	 * @return
 	 */
-	public static void debug(Exception ex)
+	public String getFile()
 	{
-		System.err.println(ex.getLocalizedMessage());
-		System.err.println("*trace* = " + sym("*trace*").SYMBOL_VALUE());
-		if (sym("*trace*").SYMBOL_VALUE() != NIL)
-		{
-			ex.printStackTrace();
-		}
+		return file;
 	}
+
+	/**
+	 * @param path
+	 * @return
+	 */
+	@Static(name = "pathname", doc = "f_pn")
+	public static tPATHNAME PATHNAME(tPATHNAME_DESIGNATOR path)
+	{
+		if (path instanceof tPATHNAME)
+			return (tPATHNAME) path;
+
+		if (path instanceof tFILE_STREAM)
+			return ((tFILE_STREAM) path).getPathname();
+
+		if (!(path instanceof tSTRING_DESIGNATOR))
+			throw new LispException("Type error for " + path);
+
+		return new cPATHNAME(cSTRING.STRING(path));
+	}
+
 }

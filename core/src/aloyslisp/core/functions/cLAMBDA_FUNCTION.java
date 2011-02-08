@@ -24,68 +24,77 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 15 sept. 2010 Creation
+// IP 27 oct. 2010 Creation
 // --------------------------------------------------------------------------
 
-package aloyslisp;
+package aloyslisp.core.functions;
 
 import static aloyslisp.packages.L.*;
+import aloyslisp.core.plugs.tSYMBOL;
+import aloyslisp.core.plugs.tT;
+import aloyslisp.core.sequences.tLIST;
 
 /**
- * Lisp
+ * cLAMBDA_FUNCTION
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class Lisp
+public class cLAMBDA_FUNCTION extends cFUNCTION implements tLAMBDA_FUNCTION
 {
 
 	/**
-	 * REPL
-	 * 
+	 * @param name
 	 * @param args
+	 * @param func
 	 */
-	public static void main(String[] args)
+	public cLAMBDA_FUNCTION(tSYMBOL name, tLIST args, tLIST func)
 	{
-		loadClasses("aloyslisp.core.annotations");
-		loadClasses("aloyslisp.core.conditions");
-		loadClasses("aloyslisp.core.exec");
-		loadClasses("aloyslisp.core.functions");
-		loadClasses("aloyslisp.core.math");
-		loadClasses("aloyslisp.core.plugs");
-		loadClasses("aloyslisp.core.sequences");
-		loadClasses("aloyslisp.core.streams");
-		loadClasses("aloyslisp.packages.common_lisp");
-		loadClasses("aloyslisp.packages.system");
-		sym("lisp::load").e(str("class.lisp"));
-
-		// loop recovering errors
-		for (;;)
-		{
-			try
-			{
-				sym("lisp::repl").e();
-			}
-			catch (Exception ex)
-			{
-				debug(ex);
-
-				e.init();
-			}
-		}
+		super(false, null, name, args, func);
 	}
 
 	/**
-	 * @param ex
+	 * Execute Lisp code
+	 * 
+	 * @return
 	 */
-	public static void debug(Exception ex)
+	public tT[] IMPL()
 	{
-		System.err.println(ex.getLocalizedMessage());
-		System.err.println("*trace* = " + sym("*trace*").SYMBOL_VALUE());
-		if (sym("*trace*").SYMBOL_VALUE() != NIL)
-		{
-			ex.printStackTrace();
-		}
+		return e.exec();
 	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.plugs.functions.IFunction#getFunction()
+	 */
+	@Override
+	public tLIST getFunction()
+	{
+		return intern.func();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * aloyslisp.core.plugs.functions.IFunction#setFunction(aloyslisp.core.plugs
+	 * .functions.ILispFunc)
+	 */
+	@Override
+	public void setFunction(tLIST func)
+	{
+		intern.setFunc(func);
+	}
+
+	/**
+	 * Internal printable value
+	 * 
+	 * @return
+	 */
+	protected String printableStruct()
+	{
+		return "LAMBDA " + intern.getArgs() + " " + intern.commentary() + " "
+				+ intern.declare() + " " + intern.func();
+	}
+
 }

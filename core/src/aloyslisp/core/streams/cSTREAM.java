@@ -24,68 +24,59 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 15 sept. 2010 Creation
+// IP 16 sept. 2010 Creation
 // --------------------------------------------------------------------------
 
-package aloyslisp;
+package aloyslisp.core.streams;
 
-import static aloyslisp.packages.L.*;
+import aloyslisp.core.annotations.*;
+import aloyslisp.core.plugs.cCELL;
+import aloyslisp.core.plugs.tSYMBOL;
+import aloyslisp.core.plugs.tT;
+import aloyslisp.core.sequences.tLIST;
 
 /**
- * Lisp
+ * cSTREAM
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
- * 
+ * @see http://hyper.aloys.li/Body/t_stream.htm
  */
-public class Lisp
+public abstract class cSTREAM extends cCELL implements tSTREAM
 {
-
 	/**
-	 * REPL
-	 * 
-	 * @param args
+	 * @param stream
+	 * @param form
+	 * @return
 	 */
-	public static void main(String[] args)
+	@Special
+	@Static(name = "with-open-stream", doc = "m_w_op_1")
+	public static tT WITH_OPEN_STREAM( //
+			@Arg(name = "stream") tLIST stream, //
+			@Rest(name = "form") tT... form)
 	{
-		loadClasses("aloyslisp.core.annotations");
-		loadClasses("aloyslisp.core.conditions");
-		loadClasses("aloyslisp.core.exec");
-		loadClasses("aloyslisp.core.functions");
-		loadClasses("aloyslisp.core.math");
-		loadClasses("aloyslisp.core.plugs");
-		loadClasses("aloyslisp.core.sequences");
-		loadClasses("aloyslisp.core.streams");
-		loadClasses("aloyslisp.packages.common_lisp");
-		loadClasses("aloyslisp.packages.system");
-		sym("lisp::load").e(str("class.lisp"));
-
-		// loop recovering errors
-		for (;;)
-		{
-			try
-			{
-				sym("lisp::repl").e();
-			}
-			catch (Exception ex)
-			{
-				debug(ex);
-
-				e.init();
-			}
-		}
+		return null;
 	}
 
 	/**
-	 * @param ex
+	 * @param fileSpec
+	 * @param direction
+	 * @param ifExists
+	 * @param ifDoesNotExists
+	 * @param externalFormat
+	 * @return
 	 */
-	public static void debug(Exception ex)
+	@Special
+	@Static(name = "open", doc = "f_open")
+	public static tT OPEN( //
+			@Arg(name = "filespec") tPATHNAME_DESIGNATOR fileSpec, //
+			@Arg(name = "direction") tSYMBOL direction, //
+			@Opt(name = "if-exists") tSYMBOL ifExists, //
+			@Opt(name = "is-does-not-exists") tSYMBOL ifDoesNotExists, //
+			@Opt(name = "external-format") tT externalFormat)
 	{
-		System.err.println(ex.getLocalizedMessage());
-		System.err.println("*trace* = " + sym("*trace*").SYMBOL_VALUE());
-		if (sym("*trace*").SYMBOL_VALUE() != NIL)
-		{
-			ex.printStackTrace();
-		}
+		// TODO Auto-generated method stub
+		return null;
 	}
+
 }

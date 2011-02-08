@@ -81,7 +81,7 @@ public interface tREAL extends tNUMBER
 	public boolean PLUSP();
 
 	/* *******************************************************************
-	 * RATIONAL
+	 * cRATIONAL
 	 */
 	/**
 	 * @return

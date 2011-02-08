@@ -42,7 +42,7 @@ import aloyslisp.core.plugs.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public abstract class PEnviron extends CELL implements tATOM,
+public abstract class PEnviron extends cCELL implements tATOM,
 		Iterable<tSYMBOL>, Map<tSYMBOL, Symbol>
 {
 
@@ -50,7 +50,7 @@ public abstract class PEnviron extends CELL implements tATOM,
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.plugs.CELL#printable()
+	 * @see aloyslisp.core.plugs.cCELL#printable()
 	 */
 	public String toString()
 	{
@@ -143,7 +143,7 @@ public abstract class PEnviron extends CELL implements tATOM,
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.plugs.CELL#DESCRIBE()
+	 * @see aloyslisp.core.plugs.cCELL#DESCRIBE()
 	 */
 	public String DESCRIBE()
 	{
@@ -169,7 +169,7 @@ public abstract class PEnviron extends CELL implements tATOM,
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.plugs.CELL#copy()
+	 * @see aloyslisp.core.plugs.cCELL#copy()
 	 */
 	@SuppressWarnings("unchecked")
 	public tT copy()

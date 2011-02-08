@@ -96,7 +96,7 @@ public interface tSTRING extends tVECTOR, tPATHNAME_DESIGNATOR,
 	 * @return
 	 */
 	@Function(name = "parse-integer", doc = "f_parse_")
-	public BIGNUM PARSE_INTEGER(@Opt(name = "start", def = "0") Integer start, //
+	public cBIGNUM PARSE_INTEGER(@Opt(name = "start", def = "0") Integer start, //
 			@Opt(name = "end", def = "nil") tT end, //
 			@Opt(name = "radix", def = "*read-base*") Integer radix, //
 			@Opt(name = "junk", def = "nil") Boolean junk);

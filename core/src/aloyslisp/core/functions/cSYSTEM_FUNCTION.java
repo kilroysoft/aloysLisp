@@ -24,68 +24,41 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 15 sept. 2010 Creation
+// IP 26 oct. 2010 Creation
 // --------------------------------------------------------------------------
 
-package aloyslisp;
+package aloyslisp.core.functions;
 
 import static aloyslisp.packages.L.*;
+import aloyslisp.core.sequences.tLIST;
 
 /**
- * Lisp
+ * cSYSTEM_FUNCTION
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class Lisp
+public abstract class cSYSTEM_FUNCTION extends cFUNCTION implements
+		tCOMPILED_FUNCTION
 {
-
 	/**
-	 * REPL
-	 * 
-	 * @param args
+	 * @param def
 	 */
-	public static void main(String[] args)
+	public cSYSTEM_FUNCTION(Class<?> cls, String name, tLIST args, String doc,
+			tLIST declare)
 	{
-		loadClasses("aloyslisp.core.annotations");
-		loadClasses("aloyslisp.core.conditions");
-		loadClasses("aloyslisp.core.exec");
-		loadClasses("aloyslisp.core.functions");
-		loadClasses("aloyslisp.core.math");
-		loadClasses("aloyslisp.core.plugs");
-		loadClasses("aloyslisp.core.sequences");
-		loadClasses("aloyslisp.core.streams");
-		loadClasses("aloyslisp.packages.common_lisp");
-		loadClasses("aloyslisp.packages.system");
-		sym("lisp::load").e(str("class.lisp"));
-
-		// loop recovering errors
-		for (;;)
-		{
-			try
-			{
-				sym("lisp::repl").e();
-			}
-			catch (Exception ex)
-			{
-				debug(ex);
-
-				e.init();
-			}
-		}
+		super(true, cls, sym(name), args, list(str(doc), declare));
 	}
 
-	/**
-	 * @param ex
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.plugs.functions.FUNCTION#printableStruct()
 	 */
-	public static void debug(Exception ex)
+	protected String printableStruct()
 	{
-		System.err.println(ex.getLocalizedMessage());
-		System.err.println("*trace* = " + sym("*trace*").SYMBOL_VALUE());
-		if (sym("*trace*").SYMBOL_VALUE() != NIL)
-		{
-			ex.printStackTrace();
-		}
+		return "SYSTEM " + getFuncName() + " " + intern.getArgs() + " "
+				+ intern.commentary() + " " + intern.declare();
 	}
+
 }
