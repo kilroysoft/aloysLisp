@@ -150,10 +150,10 @@ public abstract class cFUNCTION extends cCELL implements tFUNCTION,
 		if (this instanceof tBLOCK_FUNCTION)
 			e.newClosure();
 
+		Object[] newArgs = null;
+		tT actObj = object;
 		try
 		{
-			Object[] newArgs = null;
-			tT actObj = object;
 
 			// test method
 			if (method == null)
@@ -171,7 +171,7 @@ public abstract class cFUNCTION extends cCELL implements tFUNCTION,
 					intern.pushBlock(args);
 					args = intern.getValues();
 					newArgs = tranformArgs(method.getParameterTypes(), args);
-					actObj = args.ELT(baseArg);
+					actObj = (tT) newArgs[baseArg];
 				}
 				else
 				{
@@ -226,6 +226,19 @@ public abstract class cFUNCTION extends cCELL implements tFUNCTION,
 		}
 		catch (IllegalArgumentException e)
 		{
+			if (newArgs == null)
+				System.out.println("Arguments : null");
+			else
+			{
+				System.out.println("Function : " + intern.getStringName());
+				System.out.println("Object : " + actObj + " : ("
+						+ actObj.getClass().getSimpleName() + ")");
+				System.out.println("Method : " + method.toGenericString());
+				for (int i = 0; i < newArgs.length; i++)
+					System.out.println("Arg(" + i + ") : " + newArgs[i]
+							+ " : (" + newArgs[i].getClass().getSimpleName()
+							+ ")");
+			}
 			e.printStackTrace();
 			throw new LispException("Function " + intern.getStringName()
 					+ " bad arguments : " + e.getLocalizedMessage());
@@ -450,7 +463,7 @@ public abstract class cFUNCTION extends cCELL implements tFUNCTION,
 			if (classArg.isArray())
 			{
 				// manage rest of args as an array, tT... argument.
-				newArgs[i] = arg.getArray();
+				newArgs[i] = arg.VALUES_LIST();
 				arg = NIL;
 				continue;
 			}
@@ -498,8 +511,10 @@ public abstract class cFUNCTION extends cCELL implements tFUNCTION,
 			else
 			{
 				System.out.println("transform fn " + method.getName() + " arg "
-						+ arg + " : " + arg.getClass() + "->" + cl);
-				throw new LispException("1Argument " + arg
+						+ arg + " : " + arg.getClass().getSimpleName() + "->"
+						+ cl.getSimpleName());
+				throw new LispException("1Argument " + arg + " : "
+						+ arg.getClass().getSimpleName()
 						+ " should be of type " + cl.getSimpleName());
 			}
 

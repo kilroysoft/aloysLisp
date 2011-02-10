@@ -25,7 +25,7 @@
 // history
 // --------------------------------------------------------------------------
 // IP 9 sept. 2010 Creation
-// IMPLEMENT Insert Special print variables management for printable
+// IMPLEMENT Insert SpecialOp print variables management for printable
 // --------------------------------------------------------------------------
 
 package aloyslisp.core.plugs;

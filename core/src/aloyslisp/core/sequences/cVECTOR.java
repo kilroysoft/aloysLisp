@@ -251,7 +251,7 @@ public class cVECTOR extends cCELL implements tVECTOR
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tSEQUENCE#getArray()
 	 */
-	public tT[] getArray()
+	public tT[] VALUES_LIST()
 	{
 		tT[] res = new tT[LENGTH()];
 		int i = 0;

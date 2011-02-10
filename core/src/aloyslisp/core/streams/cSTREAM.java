@@ -49,7 +49,7 @@ public abstract class cSTREAM extends cCELL implements tSTREAM
 	 * @param form
 	 * @return
 	 */
-	@Special
+	@SpecialOp
 	@Static(name = "with-open-stream", doc = "m_w_op_1")
 	public static tT WITH_OPEN_STREAM( //
 			@Arg(name = "stream") tLIST stream, //
@@ -66,7 +66,7 @@ public abstract class cSTREAM extends cCELL implements tSTREAM
 	 * @param externalFormat
 	 * @return
 	 */
-	@Special
+	@SpecialOp
 	@Static(name = "open", doc = "f_open")
 	public static tT OPEN( //
 			@Arg(name = "filespec") tPATHNAME_DESIGNATOR fileSpec, //

@@ -733,7 +733,7 @@ public class cREADTABLE extends cCELL implements tREADTABLE
 	 * @return
 	 */
 	@Static(name = "sys::%backquote", doc = "02_df")
-	@Special
+	@SpecialOp
 	@Mac(prefix = "`")
 	public static tT BACKQUOTE( //
 			@Arg(name = "sys::obj") tT obj)

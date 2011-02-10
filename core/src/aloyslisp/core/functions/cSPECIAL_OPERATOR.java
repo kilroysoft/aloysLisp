@@ -25,33 +25,18 @@
 // history
 // --------------------------------------------------------------------------
 // IP 26 oct. 2010 Creation
-// TODO Rethink about Special form as a 2 way function and macro
+// TODO Rethink about SpecialOp form as a 2 way function and macro
 // transformations.
 // --------------------------------------------------------------------------
 
 package aloyslisp.core.functions;
 
-import static aloyslisp.packages.L.NIL;
-import static aloyslisp.packages.L.cons;
-import static aloyslisp.packages.L.e;
-import static aloyslisp.packages.L.key;
-import static aloyslisp.packages.L.list;
-import static aloyslisp.packages.L.setfKey;
-import static aloyslisp.packages.L.sym;
-import aloyslisp.core.annotations.Arg;
-import aloyslisp.core.annotations.Opt;
-import aloyslisp.core.annotations.Rest;
-import aloyslisp.core.annotations.Special;
-import aloyslisp.core.annotations.Static;
-import aloyslisp.core.conditions.LispException;
-import aloyslisp.core.exec.Arguments;
-import aloyslisp.core.plugs.cCELL;
-import aloyslisp.core.plugs.cNIL;
-import aloyslisp.core.plugs.tNULL;
-import aloyslisp.core.plugs.tSYMBOL;
-import aloyslisp.core.plugs.tT;
-import aloyslisp.core.sequences.tCONS;
-import aloyslisp.core.sequences.tLIST;
+import static aloyslisp.packages.L.*;
+import aloyslisp.core.annotations.*;
+import aloyslisp.core.conditions.*;
+import aloyslisp.core.exec.*;
+import aloyslisp.core.plugs.*;
+import aloyslisp.core.sequences.*;
 
 /**
  * cSPECIAL_OPERATOR
@@ -96,7 +81,7 @@ public class cSPECIAL_OPERATOR extends cSYSTEM_FUNCTION implements
 	 * @return
 	 */
 	@Static(name = "lisp::defmacro", doc = "m_defmac")
-	@Special
+	@SpecialOp
 	public static tT DEFMACRO( //
 			@Arg(name = "lisp::name") tSYMBOL name, //
 			@Arg(name = "lisp::args") tLIST args, //
@@ -114,7 +99,7 @@ public class cSPECIAL_OPERATOR extends cSYSTEM_FUNCTION implements
 	 * @return
 	 */
 	@Static(name = "lisp::defun", doc = "m_defun")
-	@Special
+	@SpecialOp
 	public static tT[] DEFUN( //
 			@Arg(name = "lisp::name") tSYMBOL name, //
 			@Arg(name = "lisp::args") tLIST argList, //
@@ -176,7 +161,8 @@ public class cSPECIAL_OPERATOR extends cSYSTEM_FUNCTION implements
 	 * @return
 	 */
 	@Static(name = "lisp::function", doc = "s_fn")
-	@Special
+	@Mac(prefix = "#'")
+	@SpecialOp
 	public static tT[] FUNCTION( //
 			@Arg(name = "lisp::func") tT aFunc)
 	{
@@ -257,7 +243,7 @@ public class cSPECIAL_OPERATOR extends cSYSTEM_FUNCTION implements
 	 * @return
 	 */
 	@Static(name = "lisp::go", doc = "s_go")
-	@Special
+	@SpecialOp
 	public static tT[] GO( //
 			@Arg(name = "lisp::tag") tT tag)
 	{
@@ -272,7 +258,7 @@ public class cSPECIAL_OPERATOR extends cSYSTEM_FUNCTION implements
 	 * @return
 	 */
 	@Static(name = "lisp::if", doc = "s_if")
-	@Special
+	@SpecialOp
 	public static tT[] IF( //
 			@Arg(name = "lisp::cond") tT cond, //
 			@Arg(name = "lisp::then") tT then, //
@@ -286,7 +272,7 @@ public class cSPECIAL_OPERATOR extends cSYSTEM_FUNCTION implements
 	 * @return
 	 */
 	@Static(name = "lisp::quote", doc = "s_quote")
-	@Special
+	@SpecialOp
 	public static tT QUOTE( //
 			@Arg(name = "lisp::cell") tT cell)
 	{
@@ -299,7 +285,7 @@ public class cSPECIAL_OPERATOR extends cSYSTEM_FUNCTION implements
 	 * @return
 	 */
 	@Static(name = "lisp::return-from", doc = "s_ret_fr")
-	@Special
+	@SpecialOp
 	public static tT[] RETRURN_FROM( //
 			@Arg(name = "lisp::tag") tT tag, //
 			@Opt(name = "lisp::value") tT value)
@@ -314,7 +300,7 @@ public class cSPECIAL_OPERATOR extends cSYSTEM_FUNCTION implements
 	 * @return
 	 */
 	@Static(name = "lisp::setf", doc = "m_setf")
-	@Special
+	@SpecialOp
 	public static tT SETF( //
 			@Arg(name = "lisp::place") tT place, //
 			@Arg(name = "lisp::value") tT value)
@@ -363,7 +349,7 @@ public class cSPECIAL_OPERATOR extends cSYSTEM_FUNCTION implements
 	 * @return
 	 */
 	@Static(name = "lisp::setq", doc = "s_setq")
-	@Special
+	@SpecialOp
 	public static tT SETQ( //
 			@Rest(name = "args") tT... args)
 	{
@@ -410,7 +396,7 @@ public class cSPECIAL_OPERATOR extends cSYSTEM_FUNCTION implements
 	 * @return
 	 */
 	@Static(name = "lisp::tagbody", doc = "s_tagbod")
-	@Special
+	@SpecialOp
 	public static tT[] TAGBODY( //
 			@Rest(name = "func") tT... func)
 	{
@@ -428,7 +414,7 @@ public class cSPECIAL_OPERATOR extends cSYSTEM_FUNCTION implements
 	 * @return
 	 */
 	@Static(name = "lisp::block", doc = "s_block")
-	@Special
+	@SpecialOp
 	public static tT[] BLOCK( //
 			@Arg(name = "lisp::name") tSYMBOL name, //
 			@Rest(name = "lisp::block") tT... block)
@@ -446,7 +432,7 @@ public class cSPECIAL_OPERATOR extends cSYSTEM_FUNCTION implements
 	 * @return
 	 */
 	@Static(name = "lisp::let", doc = "s_let_l")
-	@Special
+	@SpecialOp
 	public static tT[] LET( //
 			@Arg(name = "lisp::args") tLIST args, //
 			@Rest(name = "lisp::func") tT... func)
@@ -464,7 +450,7 @@ public class cSPECIAL_OPERATOR extends cSYSTEM_FUNCTION implements
 	 * @return
 	 */
 	@Static(name = "lisp::prog1", doc = "m_prog1c")
-	@Special
+	@SpecialOp
 	public static tT PROG1( //
 			@Arg(name = "lisp::first") tT first, //
 			@Rest(name = "lisp::rest") tT... rest)
@@ -478,11 +464,70 @@ public class cSPECIAL_OPERATOR extends cSYSTEM_FUNCTION implements
 	}
 
 	/*********************************************************************
+	 * @param first
+	 * @param rest
+	 * @return
+	 */
+	@Static(name = "lisp::multiple-value-prog1", doc = "s_mult_1")
+	@SpecialOp
+	public static tT[] MULTIPLE_VALUE_PROG1( //
+			@Arg(name = "lisp::first") tT first, //
+			@Rest(name = "lisp::rest") tT... rest)
+	{
+		Arguments arguments = new Arguments(NIL, NIL, list((Object[]) rest));
+		arguments.pushBlock(NIL);
+		tT[] res = new tT[] {};
+		try
+		{
+			res = first.EVAL();
+			e.exec();
+		}
+		finally
+		{
+			e.popBlock();
+		}
+		return res;
+	}
+
+	/*********************************************************************
+	 * @param func
+	 * @param block
+	 * @return
+	 */
+	@Static(name = "lisp::multiple-value-call", doc = "s_multip")
+	@SpecialOp
+	public static tT MULTIPLE_VALUE_CALL( //
+			@Arg(name = "lisp::func") tT func, //
+			@Rest(name = "lisp::block") tT... block)
+	{
+		tLIST res = NIL;
+		tT function = func.EVAL()[0];
+
+		if (!(function instanceof tFUNCTION))
+			throw new LispException("Not a function : " + function);
+
+		for (int i = 0; i < block.length; i++)
+		{
+			tT[] eval = block[i].EVAL();
+			for (int j = 0; j < eval.length; j++)
+			{
+				res = (tLIST) res.APPEND(list(quote(eval[j])));
+			}
+		}
+
+		tT cmd = list(function).APPEND(res);
+
+		System.out.println(cmd);
+
+		return cmd.EVAL()[0];
+	}
+
+	/*********************************************************************
 	 * @param block
 	 * @return
 	 */
 	@Static(name = "lisp::progn", doc = "s_progn")
-	@Special
+	@SpecialOp
 	public static tT[] PROGN( //
 			@Rest(name = "lisp::block") tT... block)
 	{
@@ -500,7 +545,7 @@ public class cSPECIAL_OPERATOR extends cSYSTEM_FUNCTION implements
 	 * @return
 	 */
 	@Static(name = "lisp::prog", doc = "m_prog_")
-	@Special
+	@SpecialOp
 	public static tT[] PROG( //
 			@Arg(name = "lisp::name") tSYMBOL name, //
 			@Arg(name = "lisp::args") tLIST args, //

@@ -296,7 +296,7 @@ public class cSYMBOL extends cCELL implements tSYMBOL
 	public tT SYMBOL_VALUE()
 	{
 		// keyworks are keywords
-		if (pack == key)
+		if (pack == cPACKAGE.key)
 			return this;
 
 		// in case of special we search in the environment. Dynamic *variables*.
@@ -331,7 +331,7 @@ public class cSYMBOL extends cCELL implements tSYMBOL
 	private tT getValue()
 	{
 		// keyworks are keywords
-		if (pack == key)
+		if (pack == cPACKAGE.key)
 			return this;
 
 		// in case of special we search in the environment. Dynamic *variables*.
@@ -485,19 +485,6 @@ public class cSYMBOL extends cCELL implements tSYMBOL
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.types.tSYMBOL#unsetPack()
-	 * @deprecated
-	 */
-	public tSYMBOL UNINTERN()
-	{
-		// TODO no remove....
-		// unintern symbol
-		pack = null;
-		return this;
-	}
-
-	/*
-	 * (non-Javadoc)
 	 * @see aloyslisp.core.plugs.cCELL#eval()
 	 */
 	public tT[] EVAL()
@@ -538,7 +525,7 @@ public class cSYMBOL extends cCELL implements tSYMBOL
 		boolean current = currPackage() == pack;
 		boolean reachable = current || currPackage().isInUseList(pack);
 
-		if (pack == key)
+		if (pack == cPACKAGE.key)
 			return (":" + name);
 
 		return (current ? "" : pack + (reachable ? ":" : "::")) + name;

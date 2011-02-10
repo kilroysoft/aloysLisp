@@ -64,7 +64,7 @@ public interface tPACKAGE extends tATOM, tPACKAGE_DESIGNATOR
 	 * @return
 	 */
 	@Function(name = "intern", doc = "f_intern")
-	public tSYMBOL INTERN(
+	public tSYMBOL[] INTERN(
 			//
 			@Arg(name = "symbol") String symbol, //
 			@BaseArg @Opt(name = "package", def = "*package*") tPACKAGE_DESIGNATOR pack);
@@ -92,14 +92,25 @@ public interface tPACKAGE extends tATOM, tPACKAGE_DESIGNATOR
 			@BaseArg @Opt(name = "package", def = "*package*") tPACKAGE_DESIGNATOR pack);
 
 	/**
-	 * @param symbol
+	 * @param symbols
 	 * @param pack
 	 * @return
 	 */
 	@Function(name = "import", doc = "f_import")
 	public tSYMBOL IMPORT(
 			//
-			@Arg(name = "symbol") tT symbol, //
+			@Arg(name = "symbols") tT symbols, //
+			@BaseArg @Opt(name = "package", def = "*package*") tPACKAGE_DESIGNATOR pack);
+
+	/**
+	 * @param symbols
+	 * @param pack
+	 * @return
+	 */
+	@Function(name = "export", doc = "f_export")
+	public tSYMBOL EXPORT(
+			//
+			@Arg(name = "symbols") tT symbols, //
 			@BaseArg @Opt(name = "package", def = "*package*") tPACKAGE_DESIGNATOR pack);
 
 	/**

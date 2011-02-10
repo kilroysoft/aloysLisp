@@ -112,6 +112,6 @@ public interface tSEQUENCE extends tT, Iterable<tT>
 	 * 
 	 * @return
 	 */
-	public tT[] getArray();
+	public tT[] VALUES_LIST();
 
 }

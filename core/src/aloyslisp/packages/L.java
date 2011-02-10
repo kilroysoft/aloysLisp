@@ -34,7 +34,7 @@ import java.net.*;
 import java.util.*;
 import java.util.jar.*;
 
-import aloyslisp.core.conditions.LispException;
+import aloyslisp.core.conditions.*;
 import aloyslisp.core.exec.*;
 import aloyslisp.core.math.*;
 import aloyslisp.core.plugs.*;
@@ -51,64 +51,25 @@ import aloyslisp.core.streams.*;
 public class L
 {
 	/**
-	 * 
-	 */
-	public static final String	clPath		= "aloyslisp.packages";
-
-	/**
-	 * List of all packages
-	 */
-	public static SymMap		packages	= new SymMap();
-
-	/**
-	 * Keywords
-	 */
-	public static tPACKAGE		key			= new cPACKAGE("keyword");
-
-	/**
-	 * System implementation functions
-	 */
-	public static tPACKAGE		sys			= new cPACKAGE("system");
-
-	/**
-	 * Main lisp functions
-	 */
-	public static tPACKAGE		cl			= new cPACKAGE("common-lisp");
-
-	/**
-	 * Extensions
-	 */
-	public static tPACKAGE		ext			= new cPACKAGE("ext");
-
-	/**
 	 * Execution context for Closures
 	 */
 	public static Environment	e			= new Environment();
 
-	static
-	{
-		packages.put("common-lisp",
-				new cSYMBOL("common-lisp").SET_SYMBOL_VALUE(cl));
-		packages.put("cl", new cSYMBOL("cl").SET_SYMBOL_VALUE(cl));
-		packages.put("lisp", new cSYMBOL("lisp").SET_SYMBOL_VALUE(cl));
-		packages.put("system", new cSYMBOL("system").SET_SYMBOL_VALUE(sys));
-		packages.put("sys", new cSYMBOL("sys").SET_SYMBOL_VALUE(sys));
-		packages.put("keyword", new cSYMBOL("keyword").SET_SYMBOL_VALUE(key));
-		packages.put("key", new cSYMBOL("key").SET_SYMBOL_VALUE(key));
-	}
 	/**
 	 * Current Package
 	 * *package* should be be first hardwired, because it's used to intern
 	 * symbols....
 	 */
-	public static tSYMBOL		sPACKAGEs	= new cSYMBOL("*package*", cl)
+	public static tSYMBOL		sPACKAGEs	= new cSYMBOL("*package*",
+													cPACKAGE.cl)
 													.setExported(true)
 													.setSpecial(true)
-													.SET_SYMBOL_VALUE(cl);
+													.SET_SYMBOL_VALUE(
+															cPACKAGE.cl);
 
 	static
 	{
-		((cPACKAGE) cl).external.put("*package*", sPACKAGEs);
+		((cPACKAGE) cPACKAGE.cl).external.put("*package*", sPACKAGEs);
 	}
 
 	/**
@@ -228,7 +189,7 @@ public class L
 																			terminal);
 
 	/**
-	 * Special variables for write
+	 * SpecialOp variables for write
 	 */
 	public static tSYMBOL			printEscape				= sym(
 																	"*print-escape*")
@@ -398,18 +359,6 @@ public class L
 																			true)
 																	.SET_SYMBOL_VALUE(
 																			NIL);
-
-	// static
-	// {
-	// packages.INTERN("common-lisp").SET_SYMBOL_VALUE(cl);
-	// packages.INTERN("lisp").SET_SYMBOL_VALUE(cl);
-	// packages.INTERN("cl").SET_SYMBOL_VALUE(cl);
-	// packages.INTERN("system").SET_SYMBOL_VALUE(sys);
-	// packages.INTERN("sys").SET_SYMBOL_VALUE(sys);
-	// packages.INTERN("keyword").SET_SYMBOL_VALUE(key);
-	// packages.INTERN("key").SET_SYMBOL_VALUE(key);
-	// packages.INTERN("ext").SET_SYMBOL_VALUE(ext);
-	// }
 
 	public static tSYMBOL			readTable				= sym("*readtable*")
 																	.setExported(
@@ -637,13 +586,13 @@ public class L
 		}
 		if (name.startsWith(":"))
 		{
-			return key.INTERN(name.substring(1), null);
+			return cPACKAGE.key.INTERN(name.substring(1), null)[0];
 		}
 		int pos = name.indexOf(":");
 		if (pos > 0)
 		{
 
-			tSYMBOL packName = packages.get(name.substring(0, pos));
+			tSYMBOL packName = cPACKAGE.packages.get(name.substring(0, pos));
 			if (packName == null)
 			{
 				throw new LispException("Package doesn't exist : "
@@ -660,10 +609,10 @@ public class L
 			{
 				pos++;
 			}
-			return pack.INTERN(name.substring(pos + 1, name.length()), null);
+			return pack.INTERN(name.substring(pos + 1, name.length()), null)[0];
 		}
 		else
-			return currPackage().INTERN(name, null);
+			return currPackage().INTERN(name, null)[0];
 	}
 
 	// /**
@@ -695,7 +644,7 @@ public class L
 		{
 			throw new LispException("Package " + pack + " not found");
 		}
-		return ((tPACKAGE) p).INTERN(name, null);
+		return ((tPACKAGE) p).INTERN(name, null)[0];
 	}
 
 	/**
@@ -706,7 +655,7 @@ public class L
 	 */
 	public static tSYMBOL key(String name)
 	{
-		return ((cPACKAGE) key).external.put(name,
+		return ((cPACKAGE) cPACKAGE.key).external.put(name,
 				new cSYMBOL(name).setConstant(true));
 	}
 
@@ -786,7 +735,7 @@ public class L
 			{
 				System.out.println("(INSTANCIATE " + clas.getCanonicalName()
 						+ ")");
-				cPACKAGE.INSTANTIATE(clas.getCanonicalName());
+				Library.INSTANTIATE(clas.getCanonicalName());
 			}
 		}
 		catch (ClassNotFoundException e)

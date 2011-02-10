@@ -32,28 +32,11 @@ package aloyslisp.core.plugs;
 
 import static aloyslisp.packages.L.*;
 
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
-
-import aloyslisp.core.annotations.Arg;
-import aloyslisp.core.annotations.BaseArg;
-import aloyslisp.core.annotations.Function;
-import aloyslisp.core.annotations.Key;
-import aloyslisp.core.annotations.Mac;
-import aloyslisp.core.annotations.Opt;
-import aloyslisp.core.annotations.Rest;
-import aloyslisp.core.annotations.Special;
-import aloyslisp.core.annotations.Static;
-import aloyslisp.core.conditions.LispException;
-import aloyslisp.core.exec.SymMap;
-import aloyslisp.core.functions.cPRIMITIVE;
-import aloyslisp.core.functions.cSPECIAL_OPERATOR;
-import aloyslisp.core.functions.cSTATIC;
-import aloyslisp.core.functions.tFUNCTION;
-import aloyslisp.core.sequences.cSTRING;
-import aloyslisp.core.sequences.tLIST;
-import aloyslisp.core.sequences.tSTRING_DESIGNATOR;
+import aloyslisp.core.annotations.*;
+import aloyslisp.core.conditions.*;
+import aloyslisp.core.exec.*;
+import aloyslisp.core.sequences.*;
+import aloyslisp.packages.L;
 
 /**
  * cPACKAGE
@@ -67,32 +50,67 @@ public class cPACKAGE extends cCELL implements tPACKAGE
 	/**
 	 * Package's name
 	 */
-	String			name;
+	String					name;
 
 	/**
 	 * Use list
 	 */
-	SymMap			uses;
+	SymMap					uses;
 
 	/**
 	 * Shadow variables
 	 */
-	SymMap			internal;
+	SymMap					internal;
 
 	/**
 	 * Shadow variables
 	 */
-	public SymMap	external;
+	public SymMap			external;
 
 	/**
 	 * Shadow variables
 	 */
-	SymMap			shadow;
+	SymMap					shadow;
 
 	/**
 	 * Case sensitivity
 	 */
-	boolean			caseSensitive	= false;
+	boolean					caseSensitive	= false;
+
+	/**
+	 * List of all packages
+	 */
+	public static SymMap	packages		= new SymMap();
+
+	/**
+	 * Keywords
+	 */
+	public static tPACKAGE	key				= new cPACKAGE("keyword");
+
+	/**
+	 * System implementation functions
+	 */
+	public static tPACKAGE	sys				= new cPACKAGE("system");
+
+	/**
+	 * Main lisp functions
+	 */
+	public static tPACKAGE	cl				= new cPACKAGE("common-lisp");
+
+	static
+	{
+		if (L.e == null)
+			e = new Environment();
+
+		packages.put("common-lisp",
+				new cSYMBOL("common-lisp").SET_SYMBOL_VALUE(cl));
+		packages.put("cl", new cSYMBOL("cl").SET_SYMBOL_VALUE(cl));
+		packages.put("lisp", new cSYMBOL("lisp").SET_SYMBOL_VALUE(cl));
+		packages.put("system", new cSYMBOL("system").SET_SYMBOL_VALUE(sys));
+		packages.put("sys", new cSYMBOL("sys").SET_SYMBOL_VALUE(sys));
+		packages.put("keyword", new cSYMBOL("keyword").SET_SYMBOL_VALUE(key));
+		packages.put("key", new cSYMBOL("key").SET_SYMBOL_VALUE(key));
+	}
 
 	/**
 	 * Package constructor
@@ -188,13 +206,14 @@ public class cPACKAGE extends cCELL implements tPACKAGE
 	 * aloyslisp.core.plugs.tPACKAGE_DESIGNATOR)
 	 */
 	@Override
-	public tSYMBOL INTERN(String symbol, tPACKAGE_DESIGNATOR pack)
+	public tSYMBOL[] INTERN(String symbol, tPACKAGE_DESIGNATOR pack)
 	{
 		tSYMBOL res[] = FIND_SYMBOL(symbol, null);
 		if (res[1] != NIL)
-			return res[0];
+			return res;
 
-		return internal.put(symbol, new cSYMBOL(symbol, this));
+		return new tSYMBOL[]
+		{ internal.put(symbol, new cSYMBOL(symbol, this)), NIL };
 	}
 
 	/*
@@ -346,6 +365,63 @@ public class cPACKAGE extends cCELL implements tPACKAGE
 
 	/*
 	 * (non-Javadoc)
+	 * @see aloyslisp.core.plugs.tPACKAGE#EXPORT(aloyslisp.core.plugs.tT,
+	 * aloyslisp.core.plugs.tPACKAGE_DESIGNATOR)
+	 */
+	public tSYMBOL EXPORT(tT symbol, tPACKAGE_DESIGNATOR pack)
+	{
+		if (symbol instanceof tLIST)
+		{
+			for (tT walk : (tLIST) symbol)
+			{
+				if (!(walk.CAR() instanceof tSYMBOL))
+					throw new LispException("Not a symbol");
+
+				tSYMBOL sym = (tSYMBOL) walk.CAR();
+				exp(sym, pack);
+			}
+		}
+		else if (symbol instanceof tSYMBOL)
+		{
+			exp((tSYMBOL) symbol, pack);
+		}
+		else
+			throw new LispException("Bad type for export");
+
+		return T;
+	}
+
+	/**
+	 * @param symbol
+	 * @param pack
+	 */
+	private void exp(tSYMBOL symbol, tPACKAGE_DESIGNATOR pack)
+	{
+		tSYMBOL[] sym = this.FIND_SYMBOL(symbol.SYMBOL_NAME(), null);
+
+		if (sym[1] == EXTERNAL)
+			return;
+
+		if (sym[1] == INTERNAL)
+		{
+			internal.remove(sym[0].SYMBOL_NAME());
+			external.put(sym[0].SYMBOL_NAME(), sym[0]);
+		}
+		else if (sym[1] == INHERITED)
+		{
+			external.put(sym[0].SYMBOL_NAME(), sym[0]);
+		}
+		else
+		{
+			if (symbol.SYMBOL_PACKAGE() == NIL)
+				symbol.SET_SYMBOL_PACKAGE(this);
+			external.put(symbol.SYMBOL_NAME(), symbol);
+		}
+		return;
+	}
+
+	/*
+	 * (non-Javadoc)
 	 * @see aloyslisp.core.plugs.collections.IPackage#getName()
 	 */
 	@Override
@@ -354,218 +430,4 @@ public class cPACKAGE extends cCELL implements tPACKAGE
 		return name;
 	}
 
-	/**
-	 * Read all lisp functions of the class and create appropriate package entry
-	 * 
-	 * There is different types of functions
-	 * <ul>
-	 * <li>@Function Normal Lisp objects function
-	 * <li>@Static Normal static function or constructor
-	 * </ul>
-	 * 
-	 * @param cls
-	 * @return
-	 */
-	@Static(name = "instantiate", doc = "TBD")
-	public static Boolean INSTANTIATE( //
-			@Arg(name = "class") String cls)
-	{
-		// Search method
-		Class<?> clas;
-		try
-		{
-			clas = (Class<?>) Class.forName(cls);
-		}
-		catch (ClassNotFoundException e1)
-		{
-			// ERROR("%%global : System error ~s not found", str(cls));
-			return false;
-		}
-
-		// test if class is a type or a class
-		Boolean type = (clas.getModifiers() & Modifier.INTERFACE) != 0;
-		Method[] meth = clas.getMethods();
-		for (Method m : meth)
-		{
-
-			// Get method data
-			Special special = m.getAnnotation(Special.class);
-			Mac prefix = m.getAnnotation(Mac.class);
-			Static stat = m.getAnnotation(Static.class);
-			Function f = m.getAnnotation(Function.class);
-			Annotation[][] notes = m.getParameterAnnotations();
-
-			tFUNCTION func;
-			if (stat != null)
-			{
-				if (special == null)
-					// Static normal function
-					func = new cSTATIC(clas, m.getName(), argsDecl(notes),
-							stat.doc(), declareArgs());
-				else
-					// Static normal function
-					func = new cSPECIAL_OPERATOR(clas, m.getName(),
-							argsDecl(notes), stat.doc(), declareArgs());
-				writeMissing(m.getName(), notes);
-				sym(stat.name()).SET_SYMBOL_FUNCTION(func);
-			}
-			else if (f != null)
-			{
-				// Object primitive
-				func = new cPRIMITIVE(clas, m.getName(), argsDecl(notes),
-						f.doc(), declareArgs());
-				func.setBaseArg(noArgsBase(notes));
-				writeMissing(m.getName(), notes);
-				sym(f.name()).SET_SYMBOL_FUNCTION(func);
-			}
-			else
-			{
-				if (m.getName().matches("[A-Z_\\*\\%]*"))
-				{
-					if (type)
-						System.out.println("NON DECLARED LISP METHOD : "
-								+ m.getName());
-					else if ((m.getModifiers() & Modifier.STATIC) != 0)
-						System.out.println("NON DECLARED LISP cSTATIC : "
-								+ m.getDeclaringClass() + " " + clas + " "
-								+ m.getName());
-				}
-
-				continue;
-			}
-
-			if (prefix != null)
-				func.setPrefix(prefix.prefix());
-			System.out.println(func);
-		}
-
-		return true;
-	}
-
-	/**
-	 * @param notes
-	 * @return
-	 */
-	private static tLIST declareArgs()
-	{
-		return NIL;
-	}
-
-	/**
-	 * @param notes
-	 * @return
-	 */
-	private static void writeMissing(String name, Annotation[][] notes)
-	{
-		for (Annotation[] note : notes)
-		{
-			if (note.length == 0)
-			{
-				System.out.println("Args not defined in " + name);
-				break;
-			}
-		}
-	}
-
-	/**
-	 * @param notes
-	 * @return
-	 */
-	private static tLIST argsDecl(Annotation[][] notes)
-	{
-		tLIST res = NIL;
-		res = (tLIST) res.APPEND(argsBase(notes, Arg.class, ""));
-		res = (tLIST) res.APPEND(argsBase(notes, Opt.class, "&optional"));
-		res = (tLIST) res.APPEND(argsBase(notes, Rest.class, "&rest"));
-		res = (tLIST) res.APPEND(argsBase(notes, Key.class, "&key"));
-		return res;
-	}
-
-	/**
-	 * @param notes
-	 * @param type
-	 * @param prefix
-	 * @return
-	 */
-	private static tLIST argsBase(Annotation[][] notes,
-			Class<? extends Annotation> type, String prefix)
-	{
-		tLIST res = NIL;
-		boolean call = prefix == null;
-
-		for (Annotation[] an : notes)
-		{
-			for (Annotation a : an)
-			{
-				tT arg = NIL;
-				if (type.isAssignableFrom(a.getClass()))
-				{
-					if (a instanceof Arg)
-					{
-						arg = sym(((Arg) a).name());
-						if (call)
-							arg = unquote(arg);
-					}
-					else if (a instanceof Opt)
-					{
-						arg = sym(((Opt) a).name());
-						if (call)
-							arg = unquote(arg);
-						else
-							arg = list(arg).APPEND(list(sym(((Opt) a).def())));
-					}
-					else if (a instanceof Key)
-					{
-						arg = sym(((Key) a).name());
-						if (call)
-							arg = unquote(arg);
-						else
-							arg = list(arg).APPEND(list(sym(((Key) a).def())));
-					}
-					else if (a instanceof Rest)
-					{
-						arg = sym(((Rest) a).name());
-						if (call)
-							arg = splice(arg);
-					}
-				}
-				if (arg != NIL)
-					res = (tLIST) res.APPEND(list(arg));
-			}
-		}
-
-		// If a prefix is given and
-		if (prefix != null && !prefix.equals("") && res.LENGTH() != 0)
-			res = (tLIST) decl(prefix).APPEND(res);
-
-		return res;
-	}
-
-	/**
-	 * @param notes
-	 * @return
-	 */
-	private static Integer noArgsBase(Annotation[][] notes)
-	{
-		int base = 0;
-
-		for (Annotation[] an : notes)
-		{
-			for (Annotation a : an)
-			{
-				if (a instanceof Arg || a instanceof Opt || a instanceof Key
-						|| a instanceof Rest)
-				{
-					base++;
-				}
-				else if (a instanceof BaseArg)
-				{
-					return base;
-				}
-			}
-		}
-
-		// First arg is discarded
-		return -1;
-	}
 }

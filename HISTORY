@@ -10,7 +10,8 @@ To do
 - Interface hooks (debug). Execute, continue, breakpoints, Environment stack.
 - Compilation.... (as soon as possible)
 - Add Missing streams.
-- FUNCTIONS implements SPECIAL_FORM as functions can be function designators and not MACROS and SPECIAL_FORMS.....
+- FUNCTIONS implements SPECIAL_FORM as functions can be function designators and not MACROS 
+  and SPECIAL_FORMS.....
 - MACROS implements SPECIAL_FORM, not the contrary.
 - Refactor printable() in a more standard way.
 - Verify rest arguments management in java function tT... as array, tT (tLIST ?) as tLIST
@@ -18,15 +19,23 @@ To do
 	- Doc for Java version of syntax of LISP Function (by type or classes and globally alphabeticaly)
 	- Doc for LISP version of syntax of LISP Function
 	- List of function to be implemented.
-- Create type objects.
+- Create type objects. (I think in some PLIST infos...)
+- Change atom parsing... especially for case control. Interning with INTERN.
+- Change FUNCTIONs management (a lot of work...), and error management...
+- Test for arguments in excess.
 
 Doing
 =====
-- Clean-up all instantiation process.
+- Clean-up all instantiation process (key arguments, rething the calling process)
 - Change PACKAGE and SYMBOL management (a lot of work...)
 
 Current state
 =============
+- Created new class aloyslisp.core.exec.Library to manage loading of class or jar definition 
+  of LISP functions (written or compiled). (SYS::INSTANTIATE java-class-path) create a new function 
+  symbol for every LISP function declared in the classe defined in some package address.
+- MULTIPLE-VALUE-CALL, MULTIPLE-VALUE-PROG1, VALUES-LIST
+- INTERNAL, IMPORT, EXPORT
 - Adding documentation information
 - Add CONDITION classes
 - Change class naming for base LISP classes XXXXXX -< cXXXXX, i.e. cINTEGER, cFUNCTION

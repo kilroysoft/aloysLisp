@@ -128,8 +128,9 @@ public class cCONS extends cCELL implements tCONS
 				newCell = c((Character) cell);
 			else
 			{
-				throw new LispException("Bad type creating a list cCONS(...) : "
-						+ cell.getClass().getCanonicalName());
+				throw new LispException(
+						"Bad type creating a list cCONS(...) : "
+								+ cell.getClass().getCanonicalName());
 			}
 
 			walk = new cCONS(newCell, walk);
@@ -562,7 +563,7 @@ public class cCONS extends cCELL implements tCONS
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tSEQUENCE#getArray()
 	 */
-	public tT[] getArray()
+	public tT[] VALUES_LIST()
 	{
 		tT[] res = new tT[LENGTH()];
 		int i = 0;

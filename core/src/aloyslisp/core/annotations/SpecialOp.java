@@ -24,7 +24,7 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 10 févr. 2011 Creation
+// IP 8 déc. 2010 Creation
 // --------------------------------------------------------------------------
 
 package aloyslisp.core.annotations;
@@ -32,15 +32,14 @@ package aloyslisp.core.annotations;
 import java.lang.annotation.*;
 
 /**
- * Special
+ * Defines function as a special form
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
- * 
  */
-@Target(ElementType.PARAMETER)
+@Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Special
+public @interface SpecialOp
 {
 
 }

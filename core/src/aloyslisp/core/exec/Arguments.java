@@ -446,7 +446,7 @@ public class Arguments
 			// is it a key ?
 			if (value instanceof tSYMBOL)
 			{
-				if (((tSYMBOL) value).SYMBOL_PACKAGE() == key)
+				if (((tSYMBOL) value).SYMBOL_PACKAGE() == cPACKAGE.key)
 					trace("Key ? " + value);
 
 				if (keyArgs.get((tSYMBOL) value) != null)

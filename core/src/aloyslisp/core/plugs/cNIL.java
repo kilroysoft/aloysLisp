@@ -456,7 +456,7 @@ public class cNIL extends cSYMBOL implements tNULL
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tSEQUENCE#getArray()
 	 */
-	public tT[] getArray()
+	public tT[] VALUES_LIST()
 	{
 		return new tT[] {};
 	}

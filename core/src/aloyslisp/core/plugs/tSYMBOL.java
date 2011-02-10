@@ -48,7 +48,7 @@ import aloyslisp.core.sequences.*;
  * 
  */
 public interface tSYMBOL extends tATOM, tFUNCTION_DESIGNATOR,
-		tSTRING_DESIGNATOR
+		tPACKAGE_DESIGNATOR
 {
 	/**
 	 * Create a copy of the symbol plus copy of value define and copy of plist.
@@ -70,12 +70,6 @@ public interface tSYMBOL extends tATOM, tFUNCTION_DESIGNATOR,
 	 */
 	@Function(name = "symbol-package", doc = "f_symb_3")
 	public tPACKAGE SYMBOL_PACKAGE();
-
-	/**
-	 * @return
-	 */
-	@Function(name = "unintern", doc = "f_uninte")
-	public tSYMBOL UNINTERN();
 
 	/**
 	 * @param exported
