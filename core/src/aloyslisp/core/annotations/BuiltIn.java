@@ -40,4 +40,9 @@ public @interface BuiltIn
 	 */
 	String name();
 
+	/**
+	 * @return
+	 */
+	String doc();
+
 }
