@@ -19,20 +19,27 @@
 //--------------------------------------------------------------------------
 // history
 //--------------------------------------------------------------------------
-// IP 28 déc. 2010 Creation
+// IP 11 févr. 2011 Creation
 //--------------------------------------------------------------------------
 
-package aloyslisp.core.math;
-
-import aloyslisp.core.plugs.*;
+package aloyslisp.core.plugs;
 
 /**
- * tRANDOM_STATE
+ * cBUILT_IN_CLASS
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  *
  */
-public interface tRANDOM_STATE extends tBUILD_IN_CLASS
+public class cBUILT_IN_CLASS extends cSTRUCTURE_OBJECT implements
+		tBUILD_IN_CLASS
 {
+
+	/**
+	 * 
+	 */
+	public cBUILT_IN_CLASS()
+	{
+		// TODO Auto-generated constructor stub
+	}
 
 }

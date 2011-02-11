@@ -42,8 +42,8 @@ import aloyslisp.core.plugs.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public abstract class PEnviron extends cCELL implements tATOM,
-		Iterable<tSYMBOL>, Map<tSYMBOL, Symbol>
+public abstract class PEnviron extends cCELL implements Iterable<tSYMBOL>,
+		Map<tSYMBOL, Symbol>
 {
 
 	protected tSYMBOL	name;

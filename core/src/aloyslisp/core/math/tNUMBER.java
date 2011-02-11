@@ -39,7 +39,7 @@ import aloyslisp.core.plugs.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public interface tNUMBER extends tATOM
+public interface tNUMBER extends tBUILD_IN_CLASS
 {
 	/* *******************************************************************
 	 * CONVERTERS

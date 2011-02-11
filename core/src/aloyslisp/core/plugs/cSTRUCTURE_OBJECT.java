@@ -24,21 +24,27 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 9 oct. 2010 Creation
+// IP 11 févr. 2011 Creation
 // --------------------------------------------------------------------------
 
-package aloyslisp.core.sequences;
-
-import aloyslisp.core.plugs.*;
+package aloyslisp.core.plugs;
 
 /**
- * tHASH_TABLE
+ * cSTRUCTURE_OBJECT
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public interface tHASH_TABLE extends tBUILD_IN_CLASS
+public class cSTRUCTURE_OBJECT extends cCELL implements tSTRUCTURE_OBJECT
 {
+
+	/**
+	 * 
+	 */
+	public cSTRUCTURE_OBJECT()
+	{
+		// TODO Auto-generated constructor stub
+	}
 
 }

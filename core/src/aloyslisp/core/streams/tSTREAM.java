@@ -30,8 +30,7 @@
 package aloyslisp.core.streams;
 
 import aloyslisp.core.annotations.*;
-import aloyslisp.core.plugs.tATOM;
-import aloyslisp.core.plugs.tT;
+import aloyslisp.core.plugs.*;
 
 /**
  * tSTREAM
@@ -40,7 +39,7 @@ import aloyslisp.core.plugs.tT;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public interface tSTREAM extends tATOM
+public interface tSTREAM extends tBUILD_IN_CLASS
 {
 	/**
 	 * @return

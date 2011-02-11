@@ -40,7 +40,7 @@ import aloyslisp.core.sequences.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public interface tCHARACTER extends tATOM, tSTRING_DESIGNATOR
+public interface tCHARACTER extends tBUILD_IN_CLASS, tSTRING_DESIGNATOR
 {
 	/**
 	 * Get char value

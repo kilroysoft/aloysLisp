@@ -19,20 +19,18 @@
 //--------------------------------------------------------------------------
 // history
 //--------------------------------------------------------------------------
-// IP 28 déc. 2010 Creation
+// IP 11 févr. 2011 Creation
 //--------------------------------------------------------------------------
 
-package aloyslisp.core.math;
-
-import aloyslisp.core.plugs.*;
+package aloyslisp.core.plugs;
 
 /**
- * tRANDOM_STATE
+ * tSTANDARD_CLASS
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  *
  */
-public interface tRANDOM_STATE extends tBUILD_IN_CLASS
+public interface tSTANDARD_CLASS extends tCLASS
 {
 
 }

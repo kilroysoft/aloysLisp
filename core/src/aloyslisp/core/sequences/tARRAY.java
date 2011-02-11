@@ -30,8 +30,7 @@
 package aloyslisp.core.sequences;
 
 import aloyslisp.core.annotations.Type;
-import aloyslisp.core.plugs.tATOM;
-import aloyslisp.core.plugs.tT;
+import aloyslisp.core.plugs.*;
 
 /**
  * tARRAY
@@ -41,7 +40,7 @@ import aloyslisp.core.plugs.tT;
  * 
  */
 @Type(name = "array", test = "arrayp")
-public interface tARRAY extends tATOM
+public interface tARRAY extends tBUILD_IN_CLASS
 {
 	/**
 	 * @return

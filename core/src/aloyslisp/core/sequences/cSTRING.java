@@ -190,7 +190,7 @@ public class cSTRING extends cVECTOR implements tSTRING
 	/*
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.sequences.tSTRING#PARSE_INTEGER(java.lang.Integer,
-	 * aloyslisp.core.plugs.tT, java.lang.Integer, java.lang.Boolean)
+	 * aloyslisp.core.plugs.java.lang.Integer, java.lang.Boolean)
 	 */
 	@Override
 	public cBIGNUM PARSE_INTEGER(Integer start, tT end, Integer radix,

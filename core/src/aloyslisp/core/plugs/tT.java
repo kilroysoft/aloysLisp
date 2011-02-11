@@ -188,4 +188,11 @@ public interface tT
 	@Function(name = "constantp", doc = "f_consta")
 	public boolean CONSTANTP();
 
+	/**
+	 * Return the class of object
+	 * @return
+	 */
+	@Function(name = "class-of", doc = "f_clas_1")
+	public tCLASS CLASS_OF();
+
 }

@@ -27,10 +27,14 @@ To do
 Doing
 =====
 - Clean-up all instantiation process (key arguments, rething the calling process)
-- Change PACKAGE and SYMBOL management (a lot of work...)
+- Implement PACKAGE and SYMBOL management (a lot of work...)
+- Implement CLASS and STRUCTURE functions for definition and instances
 
 Current state
 =============
+- CLASS, STANDARD_OBJECT, STANDARD_CLASS, BUILD_IN_CLASS + derivation of BUILD_IN_CLASSES for 
+  base Classes and object
+- STRUCTURE_CLASS, STRUCTURE_OBJECT
 - Created new class aloyslisp.core.exec.Library to manage loading of class or jar definition 
   of LISP functions (written or compiled). (SYS::INSTANTIATE java-class-path) create a new function 
   symbol for every LISP function declared in the classe defined in some package address.

@@ -47,7 +47,7 @@ import aloyslisp.core.sequences.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public interface tSYMBOL extends tATOM, tFUNCTION_DESIGNATOR,
+public interface tSYMBOL extends tBUILD_IN_CLASS, tFUNCTION_DESIGNATOR,
 		tPACKAGE_DESIGNATOR
 {
 	/**

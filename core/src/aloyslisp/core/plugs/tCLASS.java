@@ -24,22 +24,19 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 7 nov. 2010 Creation
+// IP 11 févr. 2011 Creation
 // --------------------------------------------------------------------------
 
 package aloyslisp.core.plugs;
 
-import aloyslisp.core.annotations.*;
-
 /**
- * tATOM
+ * tCLASS
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-@Type(name = "atom", test = "atom")
-public interface tATOM extends tT
+public interface tCLASS extends tT
 {
 
 }

@@ -38,7 +38,7 @@ import aloyslisp.core.annotations.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public interface tPACKAGE extends tATOM, tPACKAGE_DESIGNATOR
+public interface tPACKAGE extends tBUILD_IN_CLASS, tPACKAGE_DESIGNATOR
 {
 	/**
 	 * @param pack

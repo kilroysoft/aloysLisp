@@ -42,7 +42,7 @@ import aloyslisp.core.plugs.tT;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public interface tSEQUENCE extends tT, Iterable<tT>
+public interface tSEQUENCE extends Iterable<tT>, tT
 {
 	/**
 	 * @return

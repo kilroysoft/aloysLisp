@@ -24,21 +24,20 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 9 oct. 2010 Creation
+// IP 11 févr. 2011 Creation
 // --------------------------------------------------------------------------
 
-package aloyslisp.core.sequences;
-
-import aloyslisp.core.plugs.*;
+package aloyslisp.core.plugs;
 
 /**
- * tHASH_TABLE
+ * cSTANDARD_CLASS
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public interface tHASH_TABLE extends tBUILD_IN_CLASS
+public class cSTANDARD_CLASS extends cSTANDARD_OBJECT implements
+		tSTANDARD_CLASS
 {
 
 }

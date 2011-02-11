@@ -44,7 +44,7 @@ import aloyslisp.core.sequences.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public abstract class cCELL implements tT
+public abstract class cCELL implements tSTANDARD_OBJECT
 {
 
 	/**
@@ -209,6 +209,16 @@ public abstract class cCELL implements tT
 		{
 			throw new LispException("Unknown type : " + name);
 		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.plugs.tSTANDARD_OBJECT#CLASS_OF()
+	 */
+	public tCLASS CLASS_OF()
+	{
+		// TODO Implements CLASS_OF
+		return null;
 	}
 
 	/*

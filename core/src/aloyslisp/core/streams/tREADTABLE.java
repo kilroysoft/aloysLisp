@@ -30,10 +30,8 @@
 package aloyslisp.core.streams;
 
 import aloyslisp.core.annotations.*;
-import aloyslisp.core.functions.tFUNCTION_DESIGNATOR;
-import aloyslisp.core.plugs.tATOM;
-import aloyslisp.core.plugs.tSYMBOL;
-import aloyslisp.core.plugs.tT;
+import aloyslisp.core.functions.*;
+import aloyslisp.core.plugs.*;
 
 /**
  * tREADTABLE
@@ -42,7 +40,7 @@ import aloyslisp.core.plugs.tT;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public interface tREADTABLE extends tATOM
+public interface tREADTABLE extends tBUILD_IN_CLASS
 {
 	/**
 	 * Test if character is constituent

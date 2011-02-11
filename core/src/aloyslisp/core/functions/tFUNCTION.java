@@ -29,11 +29,8 @@
 
 package aloyslisp.core.functions;
 
-import aloyslisp.core.plugs.tATOM;
-import aloyslisp.core.plugs.tSYMBOL;
-import aloyslisp.core.plugs.tT;
-import aloyslisp.core.sequences.tLIST;
-
+import aloyslisp.core.plugs.*;
+import aloyslisp.core.sequences.*;
 
 /**
  * tLAMBDA_FUNCTION
@@ -42,7 +39,7 @@ import aloyslisp.core.sequences.tLIST;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public interface tFUNCTION extends tATOM
+public interface tFUNCTION extends tBUILD_IN_CLASS
 {
 	/**
 	 * Execute function with arguments as a cons
