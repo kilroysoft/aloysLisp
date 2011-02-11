@@ -8,5 +8,3 @@ aloyslisp.core.plugs
 aloyslisp.core.sequences
 aloyslisp.core.streams
 aloyslisp.packages
-aloyslisp.packages.common_lisp
-aloyslisp.packages.system
