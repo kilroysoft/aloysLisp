@@ -23,6 +23,7 @@ To do
 - Change atom parsing... especially for case control. Interning with INTERN.
 - Change FUNCTIONs management (a lot of work...), and error management...
 - Test for arguments in excess.
+- Change iterators for SEQUENCE classes (cons, array).
 
 Doing
 =====
@@ -32,6 +33,7 @@ Doing
 
 Current state
 =============
+- Generate function info of code (will be placed in a function.)
 - CLASS, STANDARD_OBJECT, STANDARD_CLASS, BUILD_IN_CLASS + derivation of BUILD_IN_CLASSES for 
   base Classes and object
 - STRUCTURE_CLASS, STRUCTURE_OBJECT

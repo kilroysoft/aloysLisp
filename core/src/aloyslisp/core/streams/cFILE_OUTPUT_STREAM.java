@@ -150,7 +150,7 @@ public class cFILE_OUTPUT_STREAM extends cOUTPUT_STREAM implements
 	 * @see aloyslisp.core.plugs.streams.IStream#isOpen()
 	 */
 	@Override
-	public Boolean OPEN_STREAM_P(tSTREAM stream)
+	public Boolean OPEN_STREAM_P()
 	{
 		return writer != null;
 	}
@@ -160,7 +160,7 @@ public class cFILE_OUTPUT_STREAM extends cOUTPUT_STREAM implements
 	 * @see aloyslisp.core.types.tSTREAM#CLOSE(aloyslisp.core.types.tSTREAM,
 	 * java.lang.Boolean)
 	 */
-	public Boolean CLOSE(tSTREAM stream, Boolean abort)
+	public Boolean CLOSE(Boolean abort)
 	{
 		writer.close();
 		writer = null;

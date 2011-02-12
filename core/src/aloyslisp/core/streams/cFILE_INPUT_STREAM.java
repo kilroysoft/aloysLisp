@@ -94,7 +94,7 @@ public class cFILE_INPUT_STREAM extends cINPUT_STREAM implements
 	 * @see
 	 * aloyslisp.core.types.tSTREAM#OPEN_STREAM_P(aloyslisp.core.types.tSTREAM)
 	 */
-	public Boolean OPEN_STREAM_P(tSTREAM stream)
+	public Boolean OPEN_STREAM_P()
 	{
 		return reader != null;
 	}
@@ -178,7 +178,7 @@ public class cFILE_INPUT_STREAM extends cINPUT_STREAM implements
 	 * @see aloyslisp.core.types.tSTREAM#CLOSE(aloyslisp.core.types.tSTREAM,
 	 * java.lang.Boolean)
 	 */
-	public Boolean CLOSE(tSTREAM stream, Boolean abort)
+	public Boolean CLOSE(Boolean abort)
 	{
 		try
 		{

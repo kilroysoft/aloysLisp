@@ -76,8 +76,6 @@ public class Library
 			return false;
 		}
 
-		// test if class is a type or a class
-		Boolean type = (clas.getModifiers() & Modifier.INTERFACE) != 0;
 		Method[] meth = clas.getMethods();
 		for (Method m : meth)
 		{
@@ -101,7 +99,7 @@ public class Library
 					func = new cSPECIAL_OPERATOR(clas, m.getName(),
 							argsDecl(notes), stat.doc(), declareArgs());
 				writeMissing(m.getName(), notes);
-				sym(stat.name()).SET_SYMBOL_FUNCTION(func);
+				func.setFuncName(sym(stat.name()).SET_SYMBOL_FUNCTION(func));
 			}
 			else if (f != null)
 			{
@@ -110,27 +108,46 @@ public class Library
 						f.doc(), declareArgs());
 				func.setBaseArg(noArgsBase(notes));
 				writeMissing(m.getName(), notes);
-				sym(f.name()).SET_SYMBOL_FUNCTION(func);
+				func.setFuncName(sym(f.name()).SET_SYMBOL_FUNCTION(func));
 			}
 			else
 			{
 				if (m.getName().matches("[A-Z_\\*\\%]*"))
 				{
-					if (type)
-						System.out.println("NON DECLARED LISP METHOD : "
-								+ m.getName());
-					else if ((m.getModifiers() & Modifier.STATIC) != 0)
-						System.out.println("NON DECLARED LISP cSTATIC : "
-								+ m.getDeclaringClass() + " " + clas + " "
-								+ m.getName());
+					// if (type)
+					// System.out.println("NON DECLARED LISP METHOD : "
+					// + m.getName());
+					// else if ((m.getModifiers() & Modifier.STATIC) != 0)
+					// System.out.println("NON DECLARED LISP cSTATIC : "
+					// + m.getDeclaringClass() + " " + clas + " "
+					// + m.getName());
+					// System.out.println();
 				}
 
 				continue;
 			}
 
-			if (prefix != null)
-				func.setPrefix(prefix.prefix());
-			System.out.println(func);
+			if (m.toString().contains(cls + "." + m.getName()))
+			{
+				System.out.println(((cFUNCTION) func).getLispDeclare());
+				System.out.println();
+				if (prefix != null)
+				{
+					func.setPrefix(prefix.prefix());
+					System.out.println(prefix.prefix() + "x -> (" + m.getName()
+							+ " x)");
+					System.out.println();
+				}
+				System.out.println("```java");
+				System.out.println(m.toString().replace(cls + ".", "")
+						.replaceAll("aloyslisp.core.", "")
+						.replaceAll("functions.", "").replaceAll("math.", "")
+						.replaceAll("plugs.", "").replaceAll("sequences.", "")
+						.replaceAll("streams.", "").replaceAll("packages.", "")
+						.replaceAll("java.lang.", "")
+						.replaceAll("#<cPACKAGE system>::", ""));
+				System.out.println("```\n");
+			}
 		}
 
 		return true;

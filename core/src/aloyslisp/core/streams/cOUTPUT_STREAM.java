@@ -110,7 +110,7 @@ public abstract class cOUTPUT_STREAM extends cSTREAM implements tOUTPUT_STREAM
 	 * @see aloyslisp.core.types.tSTREAM#STREAM_ELEMENT_TYPE()
 	 */
 	@Override
-	public tT STREAM_ELEMENT_TYPE(tSTREAM stream)
+	public tT STREAM_ELEMENT_TYPE()
 	{
 		// IMPLEMENT return value
 		return null;

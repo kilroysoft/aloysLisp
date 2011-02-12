@@ -726,15 +726,17 @@ public class L
 	 */
 	public static void loadClasses(String pkg)
 	{
-		System.out.println("Loading package " + pkg);
-		System.out.println("----------------------------------------");
+		System.out.println("= Package " + pkg + " =\n");
 		try
 		{
 			List<Class<?>> cla = getClasses(pkg);
 			for (Class<?> clas : cla)
 			{
-				System.out.println("(INSTANCIATE " + clas.getCanonicalName()
-						+ ")");
+				if (clas.isInterface())
+					System.out.print("=== Interface " + clas.getSimpleName());
+				else
+					System.out.print("=== Class " + clas.getSimpleName());
+				System.out.println(" ===\n");
 				Library.INSTANTIATE(clas.getCanonicalName());
 			}
 		}

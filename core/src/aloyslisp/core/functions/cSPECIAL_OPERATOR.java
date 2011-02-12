@@ -100,7 +100,7 @@ public class cSPECIAL_OPERATOR extends cSYSTEM_FUNCTION implements
 	 */
 	@Static(name = "lisp::defun", doc = "m_defun")
 	@SpecialOp
-	public static tT[] DEFUN( //
+	public static tT DEFUN( //
 			@Arg(name = "lisp::name") tSYMBOL name, //
 			@Arg(name = "lisp::args") tLIST argList, //
 			@Rest(name = "lisp::func") tT... func)
@@ -139,8 +139,7 @@ public class cSPECIAL_OPERATOR extends cSYSTEM_FUNCTION implements
 			//
 			((tSYMBOL) newFunc).SET_GET(setfKey, setfFunc);
 
-			return new tT[]
-			{ newFunc };
+			return newFunc;
 		}
 
 		if (!(name instanceof tSYMBOL))
@@ -152,8 +151,7 @@ public class cSPECIAL_OPERATOR extends cSYSTEM_FUNCTION implements
 				list((Object[]) func));
 		((tSYMBOL) name).SET_SYMBOL_FUNCTION(def);
 
-		return new tT[]
-		{ name };
+		return name;
 	}
 
 	/***********************************************************************
@@ -163,7 +161,7 @@ public class cSPECIAL_OPERATOR extends cSYSTEM_FUNCTION implements
 	@Static(name = "lisp::function", doc = "s_fn")
 	@Mac(prefix = "#'")
 	@SpecialOp
-	public static tT[] FUNCTION( //
+	public static tT FUNCTION( //
 			@Arg(name = "lisp::func") tT aFunc)
 	{
 		tT res = NIL;
@@ -200,8 +198,7 @@ public class cSPECIAL_OPERATOR extends cSYSTEM_FUNCTION implements
 		}
 
 		// System.out.println("function (real):" + res);
-		return new tT[]
-		{ res };
+		return res;
 	}
 
 	/**
@@ -244,11 +241,11 @@ public class cSPECIAL_OPERATOR extends cSYSTEM_FUNCTION implements
 	 */
 	@Static(name = "lisp::go", doc = "s_go")
 	@SpecialOp
-	public static tT[] GO( //
+	public static tT GO( //
 			@Arg(name = "lisp::tag") tT tag)
 	{
 		e.go(tag);
-		return new tT[] {};
+		return NIL;
 	}
 
 	/************************************************************
@@ -286,12 +283,12 @@ public class cSPECIAL_OPERATOR extends cSYSTEM_FUNCTION implements
 	 */
 	@Static(name = "lisp::return-from", doc = "s_ret_fr")
 	@SpecialOp
-	public static tT[] RETRURN_FROM( //
+	public static tT RETURN_FROM( //
 			@Arg(name = "lisp::tag") tT tag, //
 			@Opt(name = "lisp::value") tT value)
 	{
 		e.returnFrom(tag, value.EVAL());
-		return new tT[] {};
+		return NIL;
 	}
 
 	/*************************************************************
@@ -299,9 +296,9 @@ public class cSPECIAL_OPERATOR extends cSYSTEM_FUNCTION implements
 	 * @param value
 	 * @return
 	 */
-	@Static(name = "lisp::setf", doc = "m_setf")
+	@Static(name = "lisp::setf", doc = "m_setf_")
 	@SpecialOp
-	public static tT SETF( //
+	public static tT[] SETF( //
 			@Arg(name = "lisp::place") tT place, //
 			@Arg(name = "lisp::value") tT value)
 	{
@@ -311,7 +308,8 @@ public class cSPECIAL_OPERATOR extends cSYSTEM_FUNCTION implements
 		// if symbol it's a SETQ
 		if (place instanceof tSYMBOL)
 		{
-			return SETQ(place, value);
+			return new tT[]
+			{ SETQ(place, value) };
 		}
 
 		// test type validity for place
@@ -341,7 +339,7 @@ public class cSPECIAL_OPERATOR extends cSYSTEM_FUNCTION implements
 		// write to place
 		tLIST test = cons(newFunc,
 				((tCONS) ((tLIST) place.CDR().copy()).APPEND(list(value))));
-		return test.EVAL()[0];
+		return test.EVAL();
 	}
 
 	/*******************************************************************************
@@ -397,15 +395,15 @@ public class cSPECIAL_OPERATOR extends cSYSTEM_FUNCTION implements
 	 */
 	@Static(name = "lisp::tagbody", doc = "s_tagbod")
 	@SpecialOp
-	public static tT[] TAGBODY( //
+	public static tT TAGBODY( //
 			@Rest(name = "func") tT... func)
 	{
 		Arguments args = new Arguments(NIL, NIL, list((Object[]) func));
 		args.pushBlock(NIL);
 		e.tagBody();
-		tT res[] = e.exec();
+		e.exec();
 		e.popBlock();
-		return res;
+		return NIL;
 	}
 
 	/*******************************************************************************
@@ -496,7 +494,7 @@ public class cSPECIAL_OPERATOR extends cSYSTEM_FUNCTION implements
 	 */
 	@Static(name = "lisp::multiple-value-call", doc = "s_multip")
 	@SpecialOp
-	public static tT MULTIPLE_VALUE_CALL( //
+	public static tT[] MULTIPLE_VALUE_CALL( //
 			@Arg(name = "lisp::func") tT func, //
 			@Rest(name = "lisp::block") tT... block)
 	{
@@ -519,7 +517,7 @@ public class cSPECIAL_OPERATOR extends cSYSTEM_FUNCTION implements
 
 		System.out.println(cmd);
 
-		return cmd.EVAL()[0];
+		return cmd.EVAL();
 	}
 
 	/*********************************************************************

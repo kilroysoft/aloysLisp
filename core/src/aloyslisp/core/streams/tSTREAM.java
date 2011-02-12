@@ -45,8 +45,7 @@ public interface tSTREAM extends tBUILD_IN_CLASS
 	 * @return
 	 */
 	@Function(name = "open-stream-p", doc = "f_open_s")
-	public Boolean OPEN_STREAM_P( //
-			@Arg(name = "stream") tSTREAM stream);
+	public Boolean OPEN_STREAM_P();
 
 	/**
 	 * @param stream
@@ -54,14 +53,12 @@ public interface tSTREAM extends tBUILD_IN_CLASS
 	 */
 	@Function(name = "close", doc = "f_close")
 	public Boolean CLOSE( //
-			@Arg(name = "stream") tSTREAM stream, //
 			@Key(name = "abort") Boolean abort);
 
 	/**
 	 * @return
 	 */
 	@Function(name = "stream-element-type", doc = "f_stm_el")
-	public tT STREAM_ELEMENT_TYPE( //
-			@Arg(name = "stream") tSTREAM stream);
+	public tT STREAM_ELEMENT_TYPE();
 
 }

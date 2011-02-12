@@ -453,14 +453,9 @@ public class cCONS extends cCELL implements tCONS
 	 */
 	public Integer LENGTH()
 	{
-		tLIST walk = this;
-		Integer cnt = 1;
+		Integer cnt = 0;
 
-		while (!walk.ENDP())
-		{
-			walk = (tLIST) walk.CDR();
-			cnt++;
-		}
+		for (tLIST walk = this; walk != NIL; walk = (tLIST) walk.CDR(), cnt++);
 
 		return cnt;
 	}

@@ -610,4 +610,25 @@ public abstract class cFUNCTION extends cCELL implements tFUNCTION,
 				+ cell.getClass().getSimpleName() + " not managed");
 	}
 
+	/**
+	 * @return
+	 */
+	public String getLispDeclare()
+	{
+		String lFunc = intern.getName().SYMBOL_NAME();
+		tLIST res = list(intern.getName());
+		if (!(method.toString().contains("static")) && baseArg == -1)
+		{
+			res = (tLIST) res.APPEND(list(sym(method.getDeclaringClass()
+					.getSimpleName().substring(1))));
+		}
+		res = (tLIST) res.APPEND(intern.getArgs());
+		String decl = "* " + res.toString().replaceAll("w\\*", " \\*");
+		decl = decl.replaceFirst(
+				lFunc.replaceAll("\\*", "\\\\*").replaceAll("\\%", "\\\\%")
+						.replaceAll("\\+", "\\\\+"), "[[" + lFunc
+						+ "|http://hyper.aloys.li/Body/" + intern.commentary()
+						+ ".htm]]");
+		return decl.toLowerCase().replace("/body/", "/Body/");
+	}
 }
