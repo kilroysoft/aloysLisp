@@ -29,8 +29,8 @@
 
 package aloyslisp.core.math;
 
-import static aloyslisp.packages.L.*;
-import aloyslisp.core.plugs.*;
+import static aloyslisp.L.*;
+import aloyslisp.core.*;
 import aloyslisp.core.sequences.*;
 import aloyslisp.core.conditions.*;
 
@@ -339,7 +339,7 @@ public abstract class cNUMBER extends cCELL implements tNUMBER
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#EQUALNUM(aloyslisp.core.plugs.tT)
+	 * @see aloyslisp.core.math.tNUMBER#EQUALNUM(aloyslisp.core.tT)
 	 */
 	public boolean EQUALNUM(tT op)
 	{
@@ -364,7 +364,7 @@ public abstract class cNUMBER extends cCELL implements tNUMBER
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#ADD(aloyslisp.core.plugs.tT)
+	 * @see aloyslisp.core.math.tNUMBER#ADD(aloyslisp.core.tT)
 	 */
 	@Override
 	public tNUMBER ADD(tT op)
@@ -391,7 +391,7 @@ public abstract class cNUMBER extends cCELL implements tNUMBER
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#SUBSTRACT(aloyslisp.core.plugs.tT)
+	 * @see aloyslisp.core.math.tNUMBER#SUBSTRACT(aloyslisp.core.tT)
 	 */
 	@Override
 	public tNUMBER SUBSTRACT(tT op)
@@ -439,7 +439,7 @@ public abstract class cNUMBER extends cCELL implements tNUMBER
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#MULTIPLY(aloyslisp.core.plugs.tT)
+	 * @see aloyslisp.core.math.tNUMBER#MULTIPLY(aloyslisp.core.tT)
 	 */
 	@Override
 	public tNUMBER MULTIPLY(tT op)
@@ -466,7 +466,7 @@ public abstract class cNUMBER extends cCELL implements tNUMBER
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#DIVISION(aloyslisp.core.plugs.tT)
+	 * @see aloyslisp.core.math.tNUMBER#DIVISION(aloyslisp.core.tT)
 	 */
 	@Override
 	public tNUMBER DIVISION(tT op)

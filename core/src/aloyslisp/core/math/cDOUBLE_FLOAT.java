@@ -29,7 +29,7 @@
 
 package aloyslisp.core.math;
 
-import aloyslisp.core.plugs.tT;
+import aloyslisp.core.tT;
 
 /**
  * cDOUBLE_FLOAT
@@ -51,7 +51,7 @@ public class cDOUBLE_FLOAT extends cFLOAT implements tDOUBLE_FLOAT
 	}
 
 	/* (non-Javadoc)
-	 * @see aloyslisp.core.plugs.cCELL#toString()
+	 * @see aloyslisp.core.cCELL#toString()
 	 */
 	public String toString()
 	{

@@ -29,7 +29,7 @@
 
 package aloyslisp.core.functions;
 
-import static aloyslisp.packages.L.*;
+import static aloyslisp.L.*;
 import aloyslisp.core.sequences.tLIST;
 
 /**
@@ -53,7 +53,7 @@ public abstract class cSYSTEM_FUNCTION extends cFUNCTION implements
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.plugs.functions.FUNCTION#printableStruct()
+	 * @see aloyslisp.core.functions.FUNCTION#printableStruct()
 	 */
 	protected String printableStruct()
 	{

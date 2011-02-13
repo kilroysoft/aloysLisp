@@ -29,7 +29,7 @@
 
 package aloyslisp.core.functions;
 
-import aloyslisp.core.plugs.tT;
+import aloyslisp.core.tT;
 
 public interface tFUNCTION_DESIGNATOR extends tT
 {

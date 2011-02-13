@@ -29,9 +29,9 @@
 
 package aloyslisp.core.streams;
 
-import static aloyslisp.packages.L.*;
-import aloyslisp.core.plugs.tNULL;
-import aloyslisp.core.plugs.tT;
+import static aloyslisp.L.*;
+import aloyslisp.core.tT;
+import aloyslisp.core.packages.tNULL;
 import aloyslisp.core.sequences.tSTRING;
 
 /**
@@ -48,7 +48,7 @@ public abstract class cOUTPUT_STREAM extends cSTREAM implements tOUTPUT_STREAM
 	/*
 	 * (non-Javadoc)
 	 * @see
-	 * aloyslisp.core.plugs.streams.IOutputStream#writeString(java.lang.String)
+	 * aloyslisp.core.streams.IOutputStream#writeString(java.lang.String)
 	 */
 	@Override
 	public tT WRITE_STRING(tT str, tOUTPUT_STREAM stream, tT start, tT end)
@@ -56,6 +56,8 @@ public abstract class cOUTPUT_STREAM extends cSTREAM implements tOUTPUT_STREAM
 		// TODO manage start and end in WRITE_STRING
 		for (tT car : (tSTRING) str)
 		{
+			// System.out.println("(WRITE_CHAR " + ((tCHARACTER)
+			// car).getChar());
 			WRITE_CHAR(((tCHARACTER) car).getChar(), stream);
 		}
 		return str;
@@ -63,7 +65,7 @@ public abstract class cOUTPUT_STREAM extends cSTREAM implements tOUTPUT_STREAM
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.plugs.streams.IOutputStream#terpri()
+	 * @see aloyslisp.core.streams.IOutputStream#terpri()
 	 */
 	public tNULL TERPRI(tOUTPUT_STREAM stream)
 	{
@@ -75,7 +77,7 @@ public abstract class cOUTPUT_STREAM extends cSTREAM implements tOUTPUT_STREAM
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.plugs.streams.IOutputStream#freshLine()
+	 * @see aloyslisp.core.streams.IOutputStream#freshLine()
 	 */
 	@Override
 	public tT FRESH_LINE(tOUTPUT_STREAM stream)
@@ -87,7 +89,7 @@ public abstract class cOUTPUT_STREAM extends cSTREAM implements tOUTPUT_STREAM
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.plugs.Cell#copy()
+	 * @see aloyslisp.core.Cell#copy()
 	 */
 	@Override
 	public tT copy()
@@ -97,7 +99,7 @@ public abstract class cOUTPUT_STREAM extends cSTREAM implements tOUTPUT_STREAM
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.plugs.Cell#printable()
+	 * @see aloyslisp.core.Cell#printable()
 	 */
 	@Override
 	public String toString()
@@ -122,6 +124,7 @@ public abstract class cOUTPUT_STREAM extends cSTREAM implements tOUTPUT_STREAM
 	 */
 	public tT WRITE(tT obj, tOUTPUT_STREAM stream)
 	{
+		// System.out.println("(WRITE " + str(obj.toString()));
 		return WRITE_STRING(str(obj.toString()), stream, NIL, NIL);
 	}
 

@@ -29,7 +29,7 @@
 
 package aloyslisp.core.math;
 
-import aloyslisp.core.annotations.Function;
+import aloyslisp.annotations.Function;
 
 /**
  * tRATIONAL

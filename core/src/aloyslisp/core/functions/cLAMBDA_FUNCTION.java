@@ -29,9 +29,9 @@
 
 package aloyslisp.core.functions;
 
-import static aloyslisp.packages.L.*;
-import aloyslisp.core.plugs.tSYMBOL;
-import aloyslisp.core.plugs.tT;
+import static aloyslisp.L.*;
+import aloyslisp.core.tT;
+import aloyslisp.core.packages.tSYMBOL;
 import aloyslisp.core.sequences.tLIST;
 
 /**
@@ -66,7 +66,7 @@ public class cLAMBDA_FUNCTION extends cFUNCTION implements tLAMBDA_FUNCTION
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.plugs.functions.IFunction#getFunction()
+	 * @see aloyslisp.core.functions.IFunction#getFunction()
 	 */
 	@Override
 	public tLIST getFunction()
@@ -77,7 +77,7 @@ public class cLAMBDA_FUNCTION extends cFUNCTION implements tLAMBDA_FUNCTION
 	/*
 	 * (non-Javadoc)
 	 * @see
-	 * aloyslisp.core.plugs.functions.IFunction#setFunction(aloyslisp.core.plugs
+	 * aloyslisp.core.functions.IFunction#setFunction(aloyslisp.core
 	 * .functions.ILispFunc)
 	 */
 	@Override

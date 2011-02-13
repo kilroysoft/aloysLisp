@@ -29,7 +29,7 @@
 
 package aloyslisp.core.sequences;
 
-import aloyslisp.core.plugs.*;
+import aloyslisp.core.clos.*;
 
 /**
  * tHASH_TABLE

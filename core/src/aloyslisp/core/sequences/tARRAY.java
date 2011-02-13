@@ -29,8 +29,9 @@
 
 package aloyslisp.core.sequences;
 
-import aloyslisp.core.annotations.Type;
-import aloyslisp.core.plugs.*;
+import aloyslisp.annotations.Type;
+import aloyslisp.core.*;
+import aloyslisp.core.clos.tBUILD_IN_CLASS;
 
 /**
  * tARRAY

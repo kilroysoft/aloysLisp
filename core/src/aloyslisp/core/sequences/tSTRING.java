@@ -29,9 +29,10 @@
 
 package aloyslisp.core.sequences;
 
-import aloyslisp.core.annotations.*;
+import aloyslisp.annotations.*;
+import aloyslisp.core.*;
 import aloyslisp.core.math.*;
-import aloyslisp.core.plugs.*;
+import aloyslisp.core.packages.tPACKAGE_DESIGNATOR;
 import aloyslisp.core.streams.tPATHNAME_DESIGNATOR;
 
 /**

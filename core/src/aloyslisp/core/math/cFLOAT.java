@@ -29,8 +29,8 @@
 
 package aloyslisp.core.math;
 
+import aloyslisp.core.tT;
 import aloyslisp.core.conditions.LispException;
-import aloyslisp.core.plugs.tT;
 
 /**
  * cFLOAT

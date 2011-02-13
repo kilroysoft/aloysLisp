@@ -37,11 +37,13 @@ package aloyslisp.core.streams;
 import java.io.EOFException;
 import java.util.*;
 
-import static aloyslisp.packages.L.*;
-import aloyslisp.core.annotations.*;
+import static aloyslisp.L.*;
+import aloyslisp.annotations.*;
+import aloyslisp.core.*;
 import aloyslisp.core.conditions.*;
 import aloyslisp.core.functions.*;
-import aloyslisp.core.plugs.*;
+import aloyslisp.core.packages.cSYMBOL;
+import aloyslisp.core.packages.tSYMBOL;
 import aloyslisp.core.sequences.*;
 
 /**
@@ -218,7 +220,7 @@ public class cREADTABLE extends cCELL implements tREADTABLE
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.plugs.Cell#copy()
+	 * @see aloyslisp.core.Cell#copy()
 	 */
 	@Override
 	public tT copy()
@@ -228,7 +230,7 @@ public class cREADTABLE extends cCELL implements tREADTABLE
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.plugs.Cell#printable()
+	 * @see aloyslisp.core.Cell#printable()
 	 */
 	@Override
 	public String toString()

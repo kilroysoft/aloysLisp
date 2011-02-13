@@ -29,14 +29,14 @@
 
 package aloyslisp.core.sequences;
 
-import static aloyslisp.packages.L.*;
-import aloyslisp.core.annotations.Arg;
-import aloyslisp.core.annotations.Static;
+import static aloyslisp.L.*;
+import aloyslisp.annotations.Arg;
+import aloyslisp.annotations.Static;
+import aloyslisp.core.tT;
 import aloyslisp.core.conditions.LispException;
 import aloyslisp.core.math.cBIGNUM;
-import aloyslisp.core.plugs.cNIL;
-import aloyslisp.core.plugs.tSYMBOL;
-import aloyslisp.core.plugs.tT;
+import aloyslisp.core.packages.cNIL;
+import aloyslisp.core.packages.tSYMBOL;
 import aloyslisp.core.streams.cCHARACTER;
 import aloyslisp.core.streams.tCHARACTER;
 
@@ -79,7 +79,7 @@ public class cSTRING extends cVECTOR implements tSTRING
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.plugs.IString#getString()
+	 * @see aloyslisp.core.IString#getString()
 	 */
 	@Override
 	public String getString()
@@ -92,7 +92,7 @@ public class cSTRING extends cVECTOR implements tSTRING
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.plugs.Cell#printable()
+	 * @see aloyslisp.core.Cell#printable()
 	 */
 	@Override
 	public String toString()
@@ -190,7 +190,7 @@ public class cSTRING extends cVECTOR implements tSTRING
 	/*
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.sequences.tSTRING#PARSE_INTEGER(java.lang.Integer,
-	 * aloyslisp.core.plugs.java.lang.Integer, java.lang.Boolean)
+	 * aloyslisp.core.java.lang.Integer, java.lang.Boolean)
 	 */
 	@Override
 	public cBIGNUM PARSE_INTEGER(Integer start, tT end, Integer radix,

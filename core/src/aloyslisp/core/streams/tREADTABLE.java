@@ -29,9 +29,11 @@
 
 package aloyslisp.core.streams;
 
-import aloyslisp.core.annotations.*;
+import aloyslisp.annotations.*;
+import aloyslisp.core.*;
+import aloyslisp.core.clos.tBUILD_IN_CLASS;
 import aloyslisp.core.functions.*;
-import aloyslisp.core.plugs.*;
+import aloyslisp.core.packages.tSYMBOL;
 
 /**
  * tREADTABLE

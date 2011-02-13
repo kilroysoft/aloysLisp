@@ -30,7 +30,7 @@
 
 package aloyslisp.core.math;
 
-import static aloyslisp.packages.L.sym;
+import static aloyslisp.L.sym;
 import aloyslisp.core.conditions.*;
 
 /**

@@ -29,7 +29,7 @@
 
 package aloyslisp.core.conditions;
 
-import aloyslisp.core.plugs.tT;
+import aloyslisp.core.tT;
 
 /**
  * LispErrorFunctionCannotApplyOn

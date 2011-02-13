@@ -29,7 +29,7 @@
 
 package aloyslisp.core.streams;
 
-import aloyslisp.core.plugs.*;
+import aloyslisp.core.clos.*;
 
 /**
  * tPATHNAME

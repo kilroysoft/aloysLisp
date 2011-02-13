@@ -29,10 +29,10 @@
 
 package aloyslisp.core.math;
 
-import static aloyslisp.packages.L.NIL;
-import static aloyslisp.packages.L.sym;
+import static aloyslisp.L.NIL;
+import static aloyslisp.L.sym;
+import aloyslisp.core.tT;
 import aloyslisp.core.conditions.TYPE_ERROR;
-import aloyslisp.core.plugs.tT;
 import aloyslisp.core.sequences.tLIST;
 
 /**
@@ -225,7 +225,7 @@ public abstract class cINTEGER extends cRATIONAL implements tINTEGER
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tINTEGER#LCM(aloyslisp.core.plugs.tT)
+	 * @see aloyslisp.core.math.tINTEGER#LCM(aloyslisp.core.tT)
 	 */
 	@Override
 	public tINTEGER LCM(tT op)
@@ -252,7 +252,7 @@ public abstract class cINTEGER extends cRATIONAL implements tINTEGER
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tINTEGER#GCD(aloyslisp.core.plugs.tT)
+	 * @see aloyslisp.core.math.tINTEGER#GCD(aloyslisp.core.tT)
 	 */
 	@Override
 	public tINTEGER GCD(tT op)
@@ -279,7 +279,7 @@ public abstract class cINTEGER extends cRATIONAL implements tINTEGER
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tINTEGER#LOGAND(aloyslisp.core.plugs.tT)
+	 * @see aloyslisp.core.math.tINTEGER#LOGAND(aloyslisp.core.tT)
 	 */
 	@Override
 	public tINTEGER LOGAND(tT op)
@@ -336,7 +336,7 @@ public abstract class cINTEGER extends cRATIONAL implements tINTEGER
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tINTEGER#LOGIOR(aloyslisp.core.plugs.tT)
+	 * @see aloyslisp.core.math.tINTEGER#LOGIOR(aloyslisp.core.tT)
 	 */
 	@Override
 	public tINTEGER LOGIOR(tT op)
@@ -383,7 +383,7 @@ public abstract class cINTEGER extends cRATIONAL implements tINTEGER
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tINTEGER#LOGXOR(aloyslisp.core.plugs.tT)
+	 * @see aloyslisp.core.math.tINTEGER#LOGXOR(aloyslisp.core.tT)
 	 */
 	@Override
 	public tINTEGER LOGXOR(tT op)
@@ -410,7 +410,7 @@ public abstract class cINTEGER extends cRATIONAL implements tINTEGER
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tINTEGER#LOGEQV(aloyslisp.core.plugs.tT)
+	 * @see aloyslisp.core.math.tINTEGER#LOGEQV(aloyslisp.core.tT)
 	 */
 	@Override
 	public tINTEGER LOGEQV(tT op)

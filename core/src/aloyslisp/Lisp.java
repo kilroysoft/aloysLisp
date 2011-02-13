@@ -29,7 +29,7 @@
 
 package aloyslisp;
 
-import static aloyslisp.packages.L.*;
+import static aloyslisp.L.*;
 
 /**
  * Lisp
@@ -48,12 +48,12 @@ public class Lisp
 	 */
 	public static void main(String[] args)
 	{
-		loadClasses("aloyslisp.core.annotations");
+		loadClasses("aloyslisp.annotations");
 		loadClasses("aloyslisp.core.conditions");
-		loadClasses("aloyslisp.core.exec");
+		loadClasses("aloyslisp.exec");
 		loadClasses("aloyslisp.core.functions");
 		loadClasses("aloyslisp.core.math");
-		loadClasses("aloyslisp.core.plugs");
+		loadClasses("aloyslisp.core");
 		loadClasses("aloyslisp.core.sequences");
 		loadClasses("aloyslisp.core.streams");
 		loadClasses("aloyslisp.packages.common_lisp");

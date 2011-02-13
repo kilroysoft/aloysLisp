@@ -29,7 +29,7 @@
 
 package aloyslisp.core.functions;
 
-import aloyslisp.core.plugs.tSYMBOL;
+import aloyslisp.core.packages.tSYMBOL;
 import aloyslisp.core.sequences.tLIST;
 
 /**

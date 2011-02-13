@@ -31,12 +31,13 @@ package aloyslisp.core.streams;
 
 import java.io.*;
 
-import static aloyslisp.packages.L.*;
-import aloyslisp.core.annotations.*;
+import static aloyslisp.L.*;
+import aloyslisp.annotations.*;
+import aloyslisp.core.*;
 import aloyslisp.core.conditions.*;
 import aloyslisp.core.functions.*;
 import aloyslisp.core.math.*;
-import aloyslisp.core.plugs.*;
+import aloyslisp.core.packages.tSYMBOL;
 
 /**
  * cINPUT_STREAM
@@ -84,7 +85,7 @@ public abstract class cINPUT_STREAM extends cSTREAM implements tINPUT_STREAM
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.plugs.Cell#copy()
+	 * @see aloyslisp.core.Cell#copy()
 	 */
 	@Override
 	public tT copy()
@@ -94,7 +95,7 @@ public abstract class cINPUT_STREAM extends cSTREAM implements tINPUT_STREAM
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.plugs.Cell#printable()
+	 * @see aloyslisp.core.Cell#printable()
 	 */
 	@Override
 	public String toString()
@@ -208,7 +209,7 @@ public abstract class cINPUT_STREAM extends cSTREAM implements tINPUT_STREAM
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.plugs.streams.IInputStream#readAtom()
+	 * @see aloyslisp.core.streams.IInputStream#readAtom()
 	 */
 	public String readAtom(Boolean eofErrorP, tT eofValue, Boolean recursiveP)
 			throws EOFException
@@ -218,7 +219,7 @@ public abstract class cINPUT_STREAM extends cSTREAM implements tINPUT_STREAM
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.plugs.streams.IInputStream#readAtom(boolean)
+	 * @see aloyslisp.core.streams.IInputStream#readAtom(boolean)
 	 */
 	public String readAtom(Boolean firstEscaped, Boolean eofErrorP,
 			tT eofValue, Boolean recursiveP) throws EOFException

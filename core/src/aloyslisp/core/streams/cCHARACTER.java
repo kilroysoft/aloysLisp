@@ -29,11 +29,11 @@
 
 package aloyslisp.core.streams;
 
-import static aloyslisp.packages.L.*;
-import aloyslisp.core.annotations.Arg;
-import aloyslisp.core.annotations.Static;
+import static aloyslisp.L.*;
+import aloyslisp.annotations.Arg;
+import aloyslisp.annotations.Static;
+import aloyslisp.core.*;
 import aloyslisp.core.conditions.*;
-import aloyslisp.core.plugs.*;
 import aloyslisp.core.sequences.*;
 
 /**
@@ -82,7 +82,7 @@ public class cCHARACTER extends cCELL implements tCHARACTER
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.plugs.cCELL#printable()
+	 * @see aloyslisp.core.cCELL#printable()
 	 */
 	public String toString()
 	{
@@ -124,7 +124,7 @@ public class cCHARACTER extends cCELL implements tCHARACTER
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.plugs.cCELL#compile()
+	 * @see aloyslisp.core.cCELL#compile()
 	 */
 	public String COMPILE()
 	{
@@ -133,7 +133,7 @@ public class cCHARACTER extends cCELL implements tCHARACTER
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.plugs.cCELL#copy()
+	 * @see aloyslisp.core.cCELL#copy()
 	 */
 	public tT copy()
 	{
@@ -142,7 +142,7 @@ public class cCHARACTER extends cCELL implements tCHARACTER
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.plugs.cCELL#eql(aloyslisp.core.types.tT)
+	 * @see aloyslisp.core.cCELL#eql(aloyslisp.core.types.tT)
 	 */
 	public boolean EQL(tT cell)
 	{

@@ -58,7 +58,7 @@ public class cSTATIC extends cSYSTEM_FUNCTION
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.plugs.functions.FUNCTION#printableStruct()
+	 * @see aloyslisp.core.functions.FUNCTION#printableStruct()
 	 */
 	protected String printableStruct()
 	{

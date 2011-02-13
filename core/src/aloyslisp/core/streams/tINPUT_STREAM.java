@@ -31,8 +31,8 @@ package aloyslisp.core.streams;
 
 import java.io.*;
 
-import aloyslisp.core.annotations.*;
-import aloyslisp.core.plugs.tT;
+import aloyslisp.annotations.*;
+import aloyslisp.core.tT;
 import aloyslisp.core.sequences.tSEQUENCE;
 
 /**

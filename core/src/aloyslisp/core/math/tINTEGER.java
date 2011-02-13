@@ -29,8 +29,8 @@
 
 package aloyslisp.core.math;
 
-import aloyslisp.core.annotations.*;
-import aloyslisp.core.plugs.tT;
+import aloyslisp.annotations.*;
+import aloyslisp.core.tT;
 
 /**
  * tINTEGER

@@ -29,8 +29,8 @@
 
 package aloyslisp.core.sequences;
 
-import aloyslisp.core.annotations.*;
-import aloyslisp.core.plugs.tT;
+import aloyslisp.annotations.*;
+import aloyslisp.core.tT;
 
 ;
 

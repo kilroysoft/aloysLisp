@@ -29,9 +29,9 @@
 
 package aloyslisp.core.streams;
 
-import aloyslisp.core.annotations.*;
-import aloyslisp.core.plugs.tNULL;
-import aloyslisp.core.plugs.tT;
+import aloyslisp.annotations.*;
+import aloyslisp.core.tT;
+import aloyslisp.core.packages.tNULL;
 
 /**
  * IOutput

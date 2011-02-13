@@ -29,7 +29,7 @@
 
 package aloyslisp.core.math;
 
-import aloyslisp.core.plugs.tT;
+import aloyslisp.core.tT;
 
 /**
  * cSINGLE_FLOAT
@@ -52,7 +52,7 @@ public class cSINGLE_FLOAT extends cFLOAT implements tSINGLE_FLOAT
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.plugs.cCELL#toString()
+	 * @see aloyslisp.core.cCELL#toString()
 	 */
 	public String toString()
 	{

@@ -31,12 +31,15 @@
 
 package aloyslisp.core.functions;
 
-import static aloyslisp.packages.L.*;
-import aloyslisp.core.annotations.*;
+import static aloyslisp.L.*;
+import aloyslisp.annotations.*;
+import aloyslisp.core.*;
 import aloyslisp.core.conditions.*;
-import aloyslisp.core.exec.*;
-import aloyslisp.core.plugs.*;
+import aloyslisp.core.packages.cNIL;
+import aloyslisp.core.packages.tNULL;
+import aloyslisp.core.packages.tSYMBOL;
 import aloyslisp.core.sequences.*;
+import aloyslisp.exec.*;
 
 /**
  * cSPECIAL_OPERATOR
@@ -66,7 +69,7 @@ public class cSPECIAL_OPERATOR extends cSYSTEM_FUNCTION implements
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.plugs.functions.FUNCTION#printableStruct()
+	 * @see aloyslisp.core.functions.FUNCTION#printableStruct()
 	 */
 	protected String printableStruct()
 	{
@@ -369,7 +372,7 @@ public class cSPECIAL_OPERATOR extends cSYSTEM_FUNCTION implements
 			if (var == null)
 			{
 				// get var
-				var = cell.CAR();
+				var = cell;
 				if (!(var instanceof tSYMBOL))
 				{
 					cCELL.ERROR("SETQ : ~s should be a cSYMBOL", var);
@@ -378,7 +381,7 @@ public class cSPECIAL_OPERATOR extends cSYSTEM_FUNCTION implements
 			else
 			{
 				// get and set value
-				val = cell.CAR().EVAL()[0];
+				val = cell.EVAL()[0];
 				((tSYMBOL) var).SET_SYMBOL_VALUE(val);
 
 				// prepare to get next variable

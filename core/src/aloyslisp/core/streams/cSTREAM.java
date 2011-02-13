@@ -29,10 +29,10 @@
 
 package aloyslisp.core.streams;
 
-import aloyslisp.core.annotations.*;
-import aloyslisp.core.plugs.cCELL;
-import aloyslisp.core.plugs.tSYMBOL;
-import aloyslisp.core.plugs.tT;
+import aloyslisp.annotations.*;
+import aloyslisp.core.cCELL;
+import aloyslisp.core.tT;
+import aloyslisp.core.packages.tSYMBOL;
 import aloyslisp.core.sequences.tLIST;
 
 /**

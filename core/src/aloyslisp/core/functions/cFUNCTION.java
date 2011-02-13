@@ -30,16 +30,19 @@
 
 package aloyslisp.core.functions;
 
-import static aloyslisp.packages.L.*;
+import static aloyslisp.L.*;
 
 import java.lang.reflect.*;
 
+import aloyslisp.core.*;
 import aloyslisp.core.conditions.LispException;
-import aloyslisp.core.exec.*;
 import aloyslisp.core.math.*;
-import aloyslisp.core.plugs.*;
+import aloyslisp.core.packages.cPACKAGE;
+import aloyslisp.core.packages.tPACKAGE_DESIGNATOR;
+import aloyslisp.core.packages.tSYMBOL;
 import aloyslisp.core.sequences.*;
 import aloyslisp.core.streams.*;
+import aloyslisp.exec.*;
 
 /**
  * cFUNCTION
@@ -119,7 +122,7 @@ public abstract class cFUNCTION extends cCELL implements tFUNCTION,
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.plugs.IFunc#exec(aloyslisp.core.plugs.cCELL[])
+	 * @see aloyslisp.core.IFunc#exec(aloyslisp.core.cCELL[])
 	 */
 	@Override
 	public tT[] e(Object... args)
@@ -132,7 +135,7 @@ public abstract class cFUNCTION extends cCELL implements tFUNCTION,
 	/*
 	 * (non-Javadoc)
 	 * @see
-	 * aloyslisp.core.plugs.functions.IFunc#exec(aloyslisp.core.plugs.collections
+	 * aloyslisp.core.functions.IFunc#exec(aloyslisp.core.collections
 	 * .IList)
 	 */
 	public tT[] exec(tLIST args)
@@ -279,7 +282,7 @@ public abstract class cFUNCTION extends cCELL implements tFUNCTION,
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.plugs.Cell#copy()
+	 * @see aloyslisp.core.Cell#copy()
 	 */
 	@Override
 	public tT copy()
@@ -289,7 +292,7 @@ public abstract class cFUNCTION extends cCELL implements tFUNCTION,
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.plugs.Cell#printable()
+	 * @see aloyslisp.core.Cell#printable()
 	 */
 	@Override
 	public String toString()
@@ -328,8 +331,6 @@ public abstract class cFUNCTION extends cCELL implements tFUNCTION,
 		tSEQUENCE res = NIL;
 		for (tT arg : args)
 		{
-			arg = arg.CAR();
-
 			if (arg == null)
 			{
 				throw new LispException("Evaluation : null in arguments in "
@@ -353,7 +354,7 @@ public abstract class cFUNCTION extends cCELL implements tFUNCTION,
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.plugs.functions.IFunc#getName()
+	 * @see aloyslisp.core.functions.IFunc#getName()
 	 */
 	@Override
 	public tSYMBOL getFuncName()
@@ -363,7 +364,7 @@ public abstract class cFUNCTION extends cCELL implements tFUNCTION,
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.plugs.functions.IFunc#setName(java.lang.String)
+	 * @see aloyslisp.core.functions.IFunc#setName(java.lang.String)
 	 */
 	@Override
 	public void setFuncName(tSYMBOL name)
@@ -623,7 +624,7 @@ public abstract class cFUNCTION extends cCELL implements tFUNCTION,
 					.getSimpleName().substring(1))));
 		}
 		res = (tLIST) res.APPEND(intern.getArgs());
-		String decl = "* " + res.toString().replaceAll("w\\*", " \\*");
+		String decl = "* " + res.toString().replaceAll(" \\*", " \\\\*");
 		decl = decl.replaceFirst(
 				lFunc.replaceAll("\\*", "\\\\*").replaceAll("\\%", "\\\\%")
 						.replaceAll("\\+", "\\\\+"), "[[" + lFunc

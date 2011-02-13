@@ -29,8 +29,9 @@
 
 package aloyslisp.core.sequences;
 
-import aloyslisp.core.annotations.*;
-import aloyslisp.core.plugs.tT;
+import aloyslisp.annotations.*;
+import aloyslisp.core.tT;
+import aloyslisp.iterators.SEQUENCEIterator;
 
 /**
  * tSEQUENCE
@@ -42,8 +43,19 @@ import aloyslisp.core.plugs.tT;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public interface tSEQUENCE extends Iterable<tT>, tT
+public interface tSEQUENCE extends tT, Iterable<tT>
 {
+	/**
+	 * Return iterator over sequence.
+	 * 
+	 * @param sequence
+	 * @param destructive
+	 * @return
+	 */
+	public SEQUENCEIterator iterator(boolean destructive);
+
+	// ////////////////////////////////////////////////////////
+	// LISP Methods
 	/**
 	 * @return
 	 */
@@ -64,7 +76,7 @@ public interface tSEQUENCE extends Iterable<tT>, tT
 	 * @return
 	 */
 	@Function(name = "set-elt")
-	public tSEQUENCE SET_ELT( //
+	public tT SET_ELT( //
 			@Arg(name = "pos") Integer pos, //
 			@Arg(name = "value") tT value);
 

@@ -29,9 +29,9 @@
 
 package aloyslisp.core.streams;
 
-import aloyslisp.core.annotations.Static;
+import aloyslisp.annotations.Static;
+import aloyslisp.core.*;
 import aloyslisp.core.conditions.LispException;
-import aloyslisp.core.plugs.*;
 import aloyslisp.core.sequences.cSTRING;
 import aloyslisp.core.sequences.tSTRING_DESIGNATOR;
 

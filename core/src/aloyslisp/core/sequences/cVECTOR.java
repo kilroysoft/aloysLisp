@@ -31,9 +31,10 @@ package aloyslisp.core.sequences;
 
 import java.util.*;
 
-import aloyslisp.core.conditions.LispException;
-import aloyslisp.core.plugs.cCELL;
-import aloyslisp.core.plugs.tT;
+import static aloyslisp.L.*;
+import aloyslisp.core.*;
+import aloyslisp.core.conditions.*;
+import aloyslisp.iterators.*;
 
 /**
  * cVECTOR
@@ -44,9 +45,9 @@ import aloyslisp.core.plugs.tT;
  */
 public class cVECTOR extends cCELL implements tVECTOR
 {
-	private ArrayList<tT>	array;
+	public ArrayList<tT>	array;
 
-	private tT				type;
+	private tT				type	= T;
 
 	private int				base	= 0;
 
@@ -91,7 +92,7 @@ public class cVECTOR extends cCELL implements tVECTOR
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.plugs.cCELL#copy()
+	 * @see aloyslisp.core.cCELL#copy()
 	 */
 	public tT copy()
 	{
@@ -101,7 +102,7 @@ public class cVECTOR extends cCELL implements tVECTOR
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.plugs.IArray#get()
+	 * @see aloyslisp.core.sequences.tARRAY#get()
 	 */
 	public tT[] get()
 	{
@@ -110,7 +111,7 @@ public class cVECTOR extends cCELL implements tVECTOR
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.plugs.collections.IArray#getType()
+	 * @see aloyslisp.core.sequences.tARRAY#getType()
 	 */
 	public tT getType()
 	{
@@ -119,9 +120,7 @@ public class cVECTOR extends cCELL implements tVECTOR
 
 	/*
 	 * (non-Javadoc)
-	 * @see
-	 * aloyslisp.core.plugs.collections.IArray#setType(aloyslisp.core.plugs.
-	 * cCELL)
+	 * @see aloyslisp.core.sequences.tARRAY#setType(aloyslisp.core.tT)
 	 */
 	public tARRAY setType(tT type)
 	{
@@ -131,18 +130,8 @@ public class cVECTOR extends cCELL implements tVECTOR
 
 	/*
 	 * (non-Javadoc)
-	 * @see java.lang.Iterable#iterator()
+	 * @see aloyslisp.core.cCELL#toString()
 	 */
-	public Iterator<tT> iterator()
-	{
-		return array.iterator();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.plugs.Cell#printable()
-	 */
-	@Override
 	public String toString()
 	{
 		String res = "#(";
@@ -162,7 +151,7 @@ public class cVECTOR extends cCELL implements tVECTOR
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.plugs.collections.ISequence#length()
+	 * @see aloyslisp.core.sequences.tSEQUENCE#LENGTH()
 	 */
 	public Integer LENGTH()
 	{
@@ -171,7 +160,7 @@ public class cVECTOR extends cCELL implements tVECTOR
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.plugs.collections.ISequence#elt(java.lang.Integer)
+	 * @see aloyslisp.core.sequences.tSEQUENCE#ELT(java.lang.Integer)
 	 */
 	public tT ELT(Integer pos)
 	{
@@ -181,6 +170,11 @@ public class cVECTOR extends cCELL implements tVECTOR
 		return array.get(pos);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.sequences.tSEQUENCE#SET_ELT(java.lang.Integer,
+	 * aloyslisp.core.tT)
+	 */
 	public tSEQUENCE SET_ELT(Integer pos, tT value)
 	{
 		if (!testLimits(pos))
@@ -194,8 +188,6 @@ public class cVECTOR extends cCELL implements tVECTOR
 	}
 
 	/**
-	 * Verifiy index.
-	 * 
 	 * @param pos
 	 * @return
 	 */
@@ -218,7 +210,7 @@ public class cVECTOR extends cCELL implements tVECTOR
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.plugs.collections.ISequence#subseq(java.lang.Integer,
+	 * @see aloyslisp.core.sequences.tSEQUENCE#SUBSEQ(java.lang.Integer,
 	 * java.lang.Integer)
 	 */
 	public tSEQUENCE SUBSEQ(Integer start, Integer end)
@@ -229,7 +221,7 @@ public class cVECTOR extends cCELL implements tVECTOR
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.plugs.collections.ISequence#reverse()
+	 * @see aloyslisp.core.sequences.tSEQUENCE#REVERSE()
 	 */
 	public tSEQUENCE REVERSE()
 	{
@@ -239,7 +231,7 @@ public class cVECTOR extends cCELL implements tVECTOR
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.plugs.collections.ISequence#nreverse()
+	 * @see aloyslisp.core.sequences.tSEQUENCE#NREVERSE()
 	 */
 	public tSEQUENCE NREVERSE()
 	{
@@ -249,7 +241,7 @@ public class cVECTOR extends cCELL implements tVECTOR
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.types.tSEQUENCE#getArray()
+	 * @see aloyslisp.core.sequences.tSEQUENCE#VALUES_LIST()
 	 */
 	public tT[] VALUES_LIST()
 	{
@@ -264,7 +256,7 @@ public class cVECTOR extends cCELL implements tVECTOR
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.types.tT#equal(aloyslisp.core.types.tT)
+	 * @see aloyslisp.core.cCELL#EQUAL(aloyslisp.core.tT)
 	 */
 	public boolean EQUAL(tT cell)
 	{
@@ -273,14 +265,34 @@ public class cVECTOR extends cCELL implements tVECTOR
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.types.tSEQUENCE#SET_SUBSEQ(java.lang.Integer,
-	 * java.lang.Integer, aloyslisp.core.types.tT)
+	 * @see aloyslisp.core.sequences.tSEQUENCE#SET_SUBSEQ(java.lang.Integer,
+	 * java.lang.Integer, aloyslisp.core.tT)
 	 */
-	@Override
 	public tSEQUENCE SET_SUBSEQ(Integer start, Integer end, tT value)
 	{
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see java.lang.Iterable#iterator()
+	 */
+	public VECTORIterator iterator()
+	{
+		return iterator(false);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * aloyslisp.core.sequences.tSEQUENCE#sequenceIterator(aloyslisp.core.sequences
+	 * .tSEQUENCE, boolean)
+	 */
+	@Override
+	public VECTORIterator iterator(boolean destructive)
+	{
+		return new VECTORIterator(this, destructive);
 	}
 
 }

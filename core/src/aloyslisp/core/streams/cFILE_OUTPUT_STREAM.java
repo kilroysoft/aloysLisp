@@ -29,12 +29,12 @@
 
 package aloyslisp.core.streams;
 
-import static aloyslisp.packages.L.*;
+import static aloyslisp.L.*;
 
 import java.io.*;
 
+import aloyslisp.core.tT;
 import aloyslisp.core.conditions.LispException;
-import aloyslisp.core.plugs.tT;
 
 /**
  * cFILE_OUTPUT_STREAM
@@ -111,7 +111,7 @@ public class cFILE_OUTPUT_STREAM extends cOUTPUT_STREAM implements
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.plugs.streams.IOutputStream#forceOutput()
+	 * @see aloyslisp.core.streams.IOutputStream#forceOutput()
 	 */
 	@Override
 	public tT FORCE_OUTPUT(tOUTPUT_STREAM stream)
@@ -123,7 +123,7 @@ public class cFILE_OUTPUT_STREAM extends cOUTPUT_STREAM implements
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.plugs.streams.IOutputStream#clearOutput()
+	 * @see aloyslisp.core.streams.IOutputStream#clearOutput()
 	 */
 	@Override
 	public tT CLEAR_OUTPUT(tOUTPUT_STREAM stream)
@@ -135,7 +135,7 @@ public class cFILE_OUTPUT_STREAM extends cOUTPUT_STREAM implements
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.plugs.streams.IOutputStream#finishOutput()
+	 * @see aloyslisp.core.streams.IOutputStream#finishOutput()
 	 */
 	@Override
 	public tT FINISH_OUTPUT(tOUTPUT_STREAM stream)
@@ -147,7 +147,7 @@ public class cFILE_OUTPUT_STREAM extends cOUTPUT_STREAM implements
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.plugs.streams.IStream#isOpen()
+	 * @see aloyslisp.core.streams.IStream#isOpen()
 	 */
 	@Override
 	public Boolean OPEN_STREAM_P()

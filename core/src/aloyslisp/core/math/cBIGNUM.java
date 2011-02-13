@@ -31,9 +31,9 @@ package aloyslisp.core.math;
 
 import java.math.BigInteger;
 
-import static aloyslisp.packages.L.*;
+import static aloyslisp.L.*;
+import aloyslisp.core.*;
 import aloyslisp.core.conditions.*;
-import aloyslisp.core.plugs.*;
 
 /**
  * cBIGNUM
@@ -99,7 +99,7 @@ public class cBIGNUM extends cINTEGER implements tBIG_INTEGER
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.plugs.cCELL#toString()
+	 * @see aloyslisp.core.cCELL#toString()
 	 */
 	public String toString()
 	{

@@ -31,8 +31,8 @@ package aloyslisp.core.streams;
 
 import java.io.*;
 
+import aloyslisp.core.*;
 import aloyslisp.core.conditions.*;
-import aloyslisp.core.plugs.*;
 import aloyslisp.core.sequences.*;
 
 /**

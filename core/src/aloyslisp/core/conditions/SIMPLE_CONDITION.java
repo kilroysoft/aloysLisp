@@ -29,7 +29,7 @@
 
 package aloyslisp.core.conditions;
 
-import aloyslisp.core.plugs.*;
+import aloyslisp.core.*;
 import aloyslisp.core.sequences.*;
 
 /**

@@ -29,9 +29,9 @@
 
 package aloyslisp.core.math;
 
-import static aloyslisp.packages.L.*;
+import static aloyslisp.L.*;
+import aloyslisp.core.*;
 import aloyslisp.core.conditions.*;
-import aloyslisp.core.plugs.*;
 import aloyslisp.core.sequences.*;
 
 /**
@@ -423,7 +423,7 @@ public abstract class cREAL extends cNUMBER implements tREAL
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tREAL#GREATER(aloyslisp.core.plugs.tT)
+	 * @see aloyslisp.core.math.tREAL#GREATER(aloyslisp.core.tT)
 	 */
 	@Override
 	public boolean GREATER(tT op)
@@ -449,7 +449,7 @@ public abstract class cREAL extends cNUMBER implements tREAL
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tREAL#LOWER(aloyslisp.core.plugs.tT)
+	 * @see aloyslisp.core.math.tREAL#LOWER(aloyslisp.core.tT)
 	 */
 	@Override
 	public boolean LOWER(tT op)

@@ -29,8 +29,9 @@
 
 package aloyslisp.core.math;
 
-import aloyslisp.core.annotations.*;
-import aloyslisp.core.plugs.*;
+import aloyslisp.annotations.*;
+import aloyslisp.core.*;
+import aloyslisp.core.clos.tBUILD_IN_CLASS;
 
 /**
  * tNUMBER
