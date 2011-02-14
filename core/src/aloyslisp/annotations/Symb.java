@@ -24,7 +24,7 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 14 déc. 2010 Creation
+// IP 14 févr. 2011 Creation
 // --------------------------------------------------------------------------
 
 package aloyslisp.annotations;
@@ -32,18 +32,18 @@ package aloyslisp.annotations;
 import java.lang.annotation.*;
 
 /**
- * BuiltIn
+ * Symb
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-@Target(ElementType.TYPE)
+@Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface BuiltIn
+public @interface Symb
 {
 	/**
-	 * Name of built-in class
+	 * Name of symbol
 	 * 
 	 * @return
 	 */

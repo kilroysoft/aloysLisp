@@ -32,7 +32,9 @@ package aloyslisp.exec;
 
 import java.util.*;
 
-import aloyslisp.core.packages.tSYMBOL;
+import static aloyslisp.L.*;
+import aloyslisp.core.packages.*;
+import aloyslisp.core.sequences.*;
 
 /**
  * cPACKAGE
@@ -210,6 +212,24 @@ public class SymMap implements Iterable<String>, Map<String, tSYMBOL>
 	public Map<String, tSYMBOL> getMap()
 	{
 		return map;
+	}
+
+	/**
+	 * Return symbols as a list
+	 * 
+	 * @return
+	 */
+	public tLIST getList()
+	{
+		Collection<tSYMBOL> coll = values();
+		tLIST res = NIL;
+
+		for (tSYMBOL sym : coll)
+		{
+			res = new cCONS(sym, res);
+		}
+
+		return res;
 	}
 
 	/**

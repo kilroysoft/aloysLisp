@@ -24,7 +24,7 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 14 déc. 2010 Creation
+// IP 13 févr. 2011 Creation
 // --------------------------------------------------------------------------
 
 package aloyslisp.annotations;
@@ -32,28 +32,19 @@ package aloyslisp.annotations;
 import java.lang.annotation.*;
 
 /**
- * BuiltIn
+ * Defines an inline function.
+ * <p>
+ * Inline function is directly called during compilation. Say that if redefined
+ * the original function is called in previously compiled function using it.
+ * This is mostly used for base build-in functions of the core
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-@Target(ElementType.TYPE)
+@Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface BuiltIn
+public @interface Inline
 {
-	/**
-	 * Name of built-in class
-	 * 
-	 * @return
-	 */
-	String name();
-
-	/**
-	 * Documentation
-	 * 
-	 * @return
-	 */
-	String doc();
 
 }

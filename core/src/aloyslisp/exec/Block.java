@@ -31,9 +31,8 @@ package aloyslisp.exec;
 
 import static aloyslisp.L.*;
 import aloyslisp.core.*;
-import aloyslisp.core.conditions.LispException;
-import aloyslisp.core.packages.cNIL;
-import aloyslisp.core.packages.tSYMBOL;
+import aloyslisp.core.conditions.*;
+import aloyslisp.core.packages.*;
 import aloyslisp.core.sequences.*;
 import aloyslisp.iterators.LISTIterator;
 

@@ -21,6 +21,7 @@ To do
 
 Doing
 =====
+- Manage symbols annotations and link between SYMBOLs and Java variables.
 - Manage VECTORs and SIMPLE_VECTORs.
 - Automatic documentation creation (Wiki) by the programm itself. 
 	- Doc for Java version of syntax of LISP Function (by type or classes and globally alphabeticaly)

@@ -236,7 +236,7 @@ public abstract class cFUNCTION extends cCELL implements tFUNCTION,
 				System.out.println("Function : " + intern.getStringName());
 				System.out.println("Object : " + actObj + " : ("
 						+ actObj.getClass().getSimpleName() + ")");
-				System.out.println("Method : " + method.toGenericString());
+				System.out.println("Meth : " + method.toGenericString());
 				for (int i = 0; i < newArgs.length; i++)
 					System.out.println("Arg(" + i + ") : " + newArgs[i]
 							+ " : (" + newArgs[i].getClass().getSimpleName()

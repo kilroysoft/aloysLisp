@@ -24,15 +24,18 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 14 déc. 2010 Creation
+// IP 13 févr. 2011 Creation
 // --------------------------------------------------------------------------
 
 package aloyslisp.annotations;
 
-import java.lang.annotation.*;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
- * BuiltIn
+ * Standard
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
@@ -40,10 +43,10 @@ import java.lang.annotation.*;
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface BuiltIn
+public @interface Standard
 {
 	/**
-	 * Name of built-in class
+	 * Name of standardclass
 	 * 
 	 * @return
 	 */

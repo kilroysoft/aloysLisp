@@ -37,7 +37,7 @@ import aloyslisp.core.conditions.*;
 import aloyslisp.core.functions.*;
 import aloyslisp.core.sequences.*;
 import aloyslisp.exec.*;
-import aloyslisp.iterators.LISTIterator;
+import aloyslisp.iterators.*;
 
 /**
  * cSYMBOL
