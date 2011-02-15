@@ -29,7 +29,7 @@
 
 package aloyslisp.core.sequences;
 
-import static aloyslisp.L.*;
+import static aloyslisp.core.engine.L.*;
 import aloyslisp.annotations.Arg;
 import aloyslisp.annotations.Static;
 import aloyslisp.core.tT;
@@ -56,7 +56,7 @@ public class cSTRING extends cVECTOR implements tSTRING
 	{
 		for (int i = 0; i < string.length(); i++)
 		{
-			this.SET_ELT(i, new cCHARACTER(string.charAt(i)));
+			this.SET_ELT(new cCHARACTER(string.charAt(i)), i);
 		}
 	}
 

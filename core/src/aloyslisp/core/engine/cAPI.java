@@ -25,7 +25,7 @@
 // history
 // --------------------------------------------------------------------------
 // IP 22 oct. 2010 Creation
-// IP UB10 Arguments order mandatory, optional, rest, key
+// IP UB10 cAPI order mandatory, optional, rest, key
 // IP UB10 &aux variables
 // IP UB10 &allow-other-keys
 // IP UB10 Complete key definition ((keyword variable) default)
@@ -33,26 +33,25 @@
 // IP UB19 Transform class name for compiled function classes
 // --------------------------------------------------------------------------
 
-package aloyslisp.exec;
+package aloyslisp.core.engine;
 
-import static aloyslisp.L.*;
+import static aloyslisp.core.engine.L.*;
 
 import java.util.*;
 
 import aloyslisp.core.*;
-import aloyslisp.core.conditions.LispException;
-import aloyslisp.core.packages.cPACKAGE;
-import aloyslisp.core.packages.tSYMBOL;
+import aloyslisp.core.conditions.*;
+import aloyslisp.core.packages.*;
 import aloyslisp.core.sequences.*;
 
 /**
- * Arguments
+ * cAPI
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class Arguments
+public class cAPI
 {
 	/**
 	 * Name of environment
@@ -87,7 +86,7 @@ public class Arguments
 	/**
 	 * Rest of arguments
 	 */
-	Symbol						rest			= null;
+	cDYN_SYMBOL						rest			= null;
 
 	/**
 	 * Commentary on functions
@@ -158,7 +157,7 @@ public class Arguments
 	/**
 	 * @param args
 	 */
-	public Arguments(tSYMBOL name, tLIST args, tLIST func)
+	public cAPI(tSYMBOL name, tLIST args, tLIST func)
 	{
 		this.name = name;
 		this.orig = args;
@@ -305,26 +304,26 @@ public class Arguments
 						+ arguments + " at " + walk);
 			}
 
-			Symbol var;
+			cDYN_SYMBOL var;
 			switch (t)
 			{
 				case MANDATORY:
 					nbObl++;
-					var = new Symbol((tSYMBOL) walk, val);
+					var = new cDYN_SYMBOL((tSYMBOL) walk, val);
 					trace("add mandatory : " + walk + "=[" + var + ","
 							+ var.SYMBOL_VALUE() + "]" + t.name());
 					args = (tLIST) args.APPEND(list(var));
 					break;
 
 				case OPTIONAL:
-					var = new Symbol((tSYMBOL) walk, val);
+					var = new cDYN_SYMBOL((tSYMBOL) walk, val);
 					trace("add optional : " + walk + "=[" + var + ","
 							+ var.SYMBOL_VALUE() + "]" + t.name());
 					args = (tLIST) args.APPEND(list(var));
 					break;
 
 				case REST:
-					var = new Symbol((tSYMBOL) walk, val);
+					var = new cDYN_SYMBOL((tSYMBOL) walk, val);
 					trace("add rest : " + walk + "=[" + var + ","
 							+ var.SYMBOL_VALUE() + "]" + t.name());
 					rest = var;
@@ -359,7 +358,7 @@ public class Arguments
 								throw new LispException("key is not a symbol "
 										+ key);
 							}
-							// BUG this is false look for Symbol
+							// BUG this is false look for cDYN_SYMBOL
 							((tSYMBOL) assoc).SET_SYMBOL_VALUE(val);
 						}
 					}
@@ -377,7 +376,7 @@ public class Arguments
 					break;
 
 				case AUX:
-					var = new Symbol((tSYMBOL) walk, val);
+					var = new cDYN_SYMBOL((tSYMBOL) walk, val);
 					trace("add aux : " + walk + "=[" + var + ","
 							+ var.SYMBOL_VALUE() + "]" + t.name());
 					aux = (tLIST) args.APPEND(list(var));
@@ -399,13 +398,13 @@ public class Arguments
 		while (def instanceof tCONS)
 		{
 			// Evaluate default value if non special form
-			tT value = ((Symbol) def.CAR()).SYMBOL_VALUE();
+			tT value = ((cDYN_SYMBOL) def.CAR()).SYMBOL_VALUE();
 			if (!special && value != null)
 				value = value.EVAL()[0];
 
-			trace("args create : " + (Symbol) def.CAR() + "=" + value);
+			trace("args create : " + (cDYN_SYMBOL) def.CAR() + "=" + value);
 
-			e.intern(((Symbol) def.CAR()).getOrig(), value);
+			e.intern(((cDYN_SYMBOL) def.CAR()).getOrig(), value);
 			def = (tLIST) def.CDR();
 		}
 	}
@@ -464,7 +463,7 @@ public class Arguments
 			if (walk instanceof tCONS)
 			{
 				trace("intern var : " + walk.CAR() + "=" + value);
-				e.intern(((Symbol) walk.CAR()).getOrig(), value);
+				e.intern(((cDYN_SYMBOL) walk.CAR()).getOrig(), value);
 				walk = (tLIST) walk.CDR();
 			}
 			else
@@ -540,7 +539,7 @@ public class Arguments
 			// Taking arg list's CARs witch are symbols
 			// Using symbol to take in the environment the dynamic variable
 			// And appending the value
-			res = (tLIST) res.APPEND(list(e.arg(((Symbol) walk.CAR()).orig)
+			res = (tLIST) res.APPEND(list(e.arg(((cDYN_SYMBOL) walk.CAR()).orig)
 					.SYMBOL_VALUE()));
 			walk = (tLIST) walk.CDR();
 		}
@@ -563,7 +562,7 @@ public class Arguments
 	 */
 	public tT arg(int index)
 	{
-		Symbol res = e.arg(((Symbol) args.ELT(index)).getOrig());
+		cDYN_SYMBOL res = e.arg(((cDYN_SYMBOL) args.ELT(index)).getOrig());
 
 		if (res != null)
 		{
@@ -591,7 +590,7 @@ public class Arguments
 		}
 
 		// read in passed arguments (get variable in environment)
-		Symbol eVar = e.arg(var);
+		cDYN_SYMBOL eVar = e.arg(var);
 		tT def;
 
 		if (eVar != null)
@@ -609,7 +608,7 @@ public class Arguments
 	 */
 	public tLIST arg()
 	{
-		Symbol res = e.arg(rest.getOrig());
+		cDYN_SYMBOL res = e.arg(rest.getOrig());
 
 		if (res == null)
 			return NIL;

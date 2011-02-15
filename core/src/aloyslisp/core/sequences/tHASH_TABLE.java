@@ -29,7 +29,11 @@
 
 package aloyslisp.core.sequences;
 
+import aloyslisp.annotations.*;
+import aloyslisp.core.*;
 import aloyslisp.core.clos.*;
+import aloyslisp.core.functions.*;
+import aloyslisp.core.math.*;
 
 /**
  * tHASH_TABLE
@@ -40,5 +44,112 @@ import aloyslisp.core.clos.*;
  */
 public interface tHASH_TABLE extends tBUILD_IN_CLASS
 {
+	/**
+	 * @param test
+	 * @param size
+	 * @param rehashSize
+	 * @param rehashThreshold
+	 * @return
+	 */
+	@Function(name = "name-hash-table", doc = "f_mk_has")
+	public tHASH_TABLE MAKE_HASH_TABLE(
+			//
+			@Key(name = "test") tFUNCTION test, //
+			@Key(name = "size", def = "11") tINTEGER size, //
+			@Key(name = "rehash-size", def = "11") tINTEGER rehashSize, //
+			@Key(name = "rehash-threshosd", def = ".75") tINTEGER rehashThreshold //
+	);
+
+	/**
+	 * @return
+	 */
+	@Function(name = "hash-table-count", doc = "f_hash_1")
+	public tHASH_TABLE HASH_TABLE_COUNT( //
+	);
+
+	/**
+	 * @return
+	 */
+	@Function(name = "hash-table-rehash-size", doc = "f_hash_2")
+	public tINTEGER HASH_TABLE_REHASH_SIZE( //
+	);
+
+	/**
+	 * @return
+	 */
+	@Function(name = "hash-table-rehash-threshold", doc = "f_hash_3")
+	public tFLOAT HASH_TABLE_REHASH_THRESHOLD( //
+	);
+
+	/**
+	 * @return
+	 */
+	@Function(name = "hash-table-size", doc = "f_hash_4")
+	public tINTEGER HASH_TABLE_SIZE( //
+	);
+
+	/**
+	 * @return
+	 */
+	@Function(name = "hash-table-test", doc = "f_hash_4")
+	public tFUNCTION HASH_TABLE_TEST( //
+	);
+
+	/**
+	 * @param key
+	 * @param hashTable
+	 * @param def
+	 * @return
+	 */
+	@Function(name = "gethash", doc = "f_gethas")
+	public tT[] GETHASH( //
+			@Arg(name = "key") tT key, //
+			@BaseArg @Arg(name = "hash-table") tHASH_TABLE hashTable, //
+			@Opt(name = "default") tHASH_TABLE def //
+	);
+
+	/**
+	 * @param value
+	 * @param key
+	 * @param hashTable
+	 * @param def
+	 * @return
+	 */
+	@Function(name = "setf-gethash", doc = "f_gethas")
+	public tT SET_GETHASH( //
+			@Arg(name = "value") tT value, //
+			@Arg(name = "key") tT key, //
+			@BaseArg @Arg(name = "hash-table") tHASH_TABLE hashTable, //
+			@Opt(name = "default") tHASH_TABLE def //
+	);
+
+	/**
+	 * @param key
+	 * @param hashTable
+	 * @return
+	 */
+	@Function(name = "remhash", doc = "f_remhas")
+	public tT REMHASH( //
+			@Arg(name = "key") tT key, //
+			@BaseArg @Arg(name = "hash-table") tHASH_TABLE hashTable //
+	);
+
+	/**
+	 * @param func
+	 * @param hashTable
+	 * @return
+	 */
+	@Function(name = "maphash", doc = "f_maphas")
+	public tT MAPHASH( //
+			@Arg(name = "function") tFUNCTION func, //
+			@Arg(name = "hash-table") tHASH_TABLE hashTable //
+	);
+
+	/**
+	 * @return
+	 */
+	@Function(name = "clrhash", doc = "f_clrhas")
+	public tT CLRHASH( //
+	);
 
 }

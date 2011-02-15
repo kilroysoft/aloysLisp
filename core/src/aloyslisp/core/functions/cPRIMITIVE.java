@@ -56,4 +56,5 @@ public class cPRIMITIVE extends cSYSTEM_FUNCTION
 		return "cFUNCTION " + getFuncName() + " " + intern.getArgs() + " "
 				+ intern.commentary() + " " + intern.declare();
 	}
+
 }

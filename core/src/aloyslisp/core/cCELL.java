@@ -30,7 +30,7 @@
 
 package aloyslisp.core;
 
-import static aloyslisp.L.*;
+import static aloyslisp.core.engine.L.*;
 import aloyslisp.annotations.Arg;
 import aloyslisp.annotations.Rest;
 import aloyslisp.annotations.Static;
@@ -81,7 +81,7 @@ public abstract class cCELL implements tSTANDARD_OBJECT
 	 */
 	public String COMPILE()
 	{
-		// throw new LispException("Error no mean for Symbol(" + value +
+		// throw new LispException("Error no mean for cDYN_SYMBOL(" + value +
 		// ") compilation");
 		return "/* Error no mean for " + getClass().getCanonicalName()
 				+ "() */" + NIL.COMPILE();
@@ -295,6 +295,16 @@ public abstract class cCELL implements tSTANDARD_OBJECT
 		// This is a basic format with ony ~S and ~s tags
 		String tmpl = format.replaceAll("~[sS]", "%s");
 		return String.format(tmpl, (Object[]) args);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.tT#SXHASH()
+	 */
+	@Override
+	public Integer SXHASH()
+	{
+		return this.hashCode();
 	}
 
 }

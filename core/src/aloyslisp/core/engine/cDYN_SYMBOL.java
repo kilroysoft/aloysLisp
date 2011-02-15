@@ -30,9 +30,9 @@
 // IP UB20 Disconnect from tSYMBOL now own variable
 // --------------------------------------------------------------------------
 
-package aloyslisp.exec;
+package aloyslisp.core.engine;
 
-import static aloyslisp.L.*;
+import static aloyslisp.core.engine.L.*;
 import aloyslisp.core.*;
 import aloyslisp.core.functions.cFUNCTION;
 import aloyslisp.core.functions.tFUNCTION;
@@ -41,13 +41,13 @@ import aloyslisp.core.packages.tSYMBOL;
 import aloyslisp.core.sequences.tLIST;
 
 /**
- * Symbol
+ * cDYN_SYMBOL
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class Symbol extends cCELL
+public class cDYN_SYMBOL extends cCELL
 {
 	/**
 	 * 
@@ -72,7 +72,7 @@ public class Symbol extends cCELL
 	/**
 	 * @param name
 	 */
-	public Symbol(tSYMBOL orig, tT value)
+	public cDYN_SYMBOL(tSYMBOL orig, tT value)
 	{
 		this.orig = orig;
 		this.value = value;
@@ -221,6 +221,16 @@ public class Symbol extends cCELL
 	{
 		tT res;
 		return (res = SYMBOL_VALUE()) != null && res instanceof tFUNCTION;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.tT#SXHASH()
+	 */
+	@Override
+	public Integer SXHASH()
+	{
+		return orig.SXHASH();
 	}
 
 }

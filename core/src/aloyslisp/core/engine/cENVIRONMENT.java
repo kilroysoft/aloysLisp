@@ -27,9 +27,9 @@
 // IP 21 sept. 2010 Creation
 // --------------------------------------------------------------------------
 
-package aloyslisp.exec;
+package aloyslisp.core.engine;
 
-import static aloyslisp.L.*;
+import static aloyslisp.core.engine.L.*;
 import aloyslisp.core.*;
 import aloyslisp.core.conditions.*;
 import aloyslisp.core.packages.*;
@@ -37,54 +37,54 @@ import aloyslisp.core.sequences.*;
 import aloyslisp.iterators.LISTIterator;
 
 /**
- * Block
+ * cENVIRONMENT
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class Block extends PEnviron
+public class cENVIRONMENT extends PEnviron
 {
 	/**
 	 * Code starting point
 	 */
-	tSYMBOL	name;
+	tSYMBOL			name;
 
 	/**
 	 * Code starting point
 	 */
-	tLIST	code;
+	tLIST			code;
 
 	/**
 	 * Current interpretation pointer
 	 */
-	tLIST	ip;
+	tLIST			ip;
 
 	/**
 	 * External block
 	 */
-	Block	previous;
+	cENVIRONMENT	previous;
 
 	/**
 	 * There is tags in this block
 	 */
-	boolean	tagBody	= false;
+	boolean			tagBody	= false;
 
 	/**
 	 * Last instruction execution result
 	 * Used for returns values of blocks
 	 */
-	tT[]	res		= new cCELL[]
-					{ NIL };
+	tT[]			res		= new cCELL[]
+							{ NIL };
 
 	/**
-	 * Block constructor
+	 * cENVIRONMENT constructor
 	 * 
 	 * @param name
 	 * @param block
 	 * @param previous
 	 */
-	public Block(tSYMBOL name, tLIST block, Block previous)
+	public cENVIRONMENT(tSYMBOL name, tLIST block, cENVIRONMENT previous)
 	{
 		this.code = this.ip = block;
 		this.name = name;
@@ -148,7 +148,7 @@ public class Block extends PEnviron
 		e.ret = new tT[]
 		{ NIL };
 
-		Block walk = this;
+		cENVIRONMENT walk = this;
 		while (walk != null)
 		{
 			LISTIterator iter = (LISTIterator) walk.code.iterator();
@@ -157,7 +157,7 @@ public class Block extends PEnviron
 				tT step = iter.next();
 				if (label == step)
 				{
-					// Block to use for action
+					// cENVIRONMENT to use for action
 					e.goBlock = walk;
 
 					// last instruction of block so return
@@ -184,12 +184,12 @@ public class Block extends PEnviron
 	{
 		e.ret = value;
 
-		Block walk = this;
+		cENVIRONMENT walk = this;
 		while (walk != null)
 		{
 			if (walk.name == label)
 			{
-				// Block to use for action
+				// cENVIRONMENT to use for action
 				e.goBlock = walk;
 				return;
 			}
@@ -202,9 +202,9 @@ public class Block extends PEnviron
 	 * Read arguments in curent block
 	 * 
 	 * @param name
-	 * @return Block variable
+	 * @return cENVIRONMENT variable
 	 */
-	public Symbol arg(tSYMBOL name)
+	public cDYN_SYMBOL arg(tSYMBOL name)
 	{
 		return get(name);
 	}
@@ -213,11 +213,11 @@ public class Block extends PEnviron
 	 * Read only non compiled blocks
 	 * 
 	 * @param name
-	 * @return Block variable
+	 * @return cENVIRONMENT variable
 	 */
-	public Symbol read(tSYMBOL name)
+	public cDYN_SYMBOL read(tSYMBOL name)
 	{
-		Symbol res = null;
+		cDYN_SYMBOL res = null;
 
 		res = get(name);
 
@@ -235,11 +235,11 @@ public class Block extends PEnviron
 	 * Read in all environments
 	 * 
 	 * @param name
-	 * @return Block variable
+	 * @return cENVIRONMENT variable
 	 */
-	public Symbol sRead(tSYMBOL name)
+	public cDYN_SYMBOL sRead(tSYMBOL name)
 	{
-		Symbol res = null;
+		cDYN_SYMBOL res = null;
 
 		res = get(name);
 
@@ -265,9 +265,19 @@ public class Block extends PEnviron
 		if (all && previous != null)
 			res += previous.trace(all) + "\n";
 
-		res += "Block " + getName() + "\n" + super.dump();
+		res += "cENVIRONMENT " + getName() + "\n" + super.dump();
 
 		return res;
+	}
+
+	/* (non-Javadoc)
+	 * @see aloyslisp.core.tT#SXHASH()
+	 */
+	@Override
+	public Integer SXHASH()
+	{
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

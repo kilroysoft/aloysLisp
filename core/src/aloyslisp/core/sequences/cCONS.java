@@ -30,9 +30,7 @@
 
 package aloyslisp.core.sequences;
 
-import java.util.*;
-
-import static aloyslisp.L.*;
+import static aloyslisp.core.engine.L.*;
 import aloyslisp.annotations.*;
 import aloyslisp.core.*;
 import aloyslisp.core.conditions.*;
@@ -271,68 +269,6 @@ public class cCONS extends cCELL implements tCONS
 		{ this, NIL };
 	}
 
-	/**
-	 * LISTIterator
-	 * 
-	 * @author Ivan Pierre {ivan@kilroysoft.ch}
-	 * @author George Kilroy {george@kilroysoft.ch}
-	 * 
-	 */
-	private class ConsIterator implements Iterator<tT>
-	{
-		tT		walk;
-		boolean	first	= true;
-
-		/**
-		 * @param source
-		 */
-		public ConsIterator(tT source)
-		{
-			walk = source;
-		}
-
-		/*
-		 * (non-Javadoc)
-		 * @see java.util.Iterator#hasNext()
-		 */
-		@Override
-		public boolean hasNext()
-		{
-			if (first)
-			{
-				// We are in a cons the first is always true.
-				first = false;
-				return true;
-			}
-
-			// While cons in cdr, so only pure cons, not cNIL
-			return walk instanceof tCONS;
-		}
-
-		/*
-		 * (non-Javadoc)
-		 * @see java.util.Iterator#next()
-		 */
-		@Override
-		public tT next()
-		{
-			tT res = walk;
-			walk = walk.CDR();
-			return res;
-		}
-
-		/*
-		 * (non-Javadoc)
-		 * @see java.util.Iterator#remove()
-		 */
-		@Override
-		public void remove()
-		{
-			throw new LispException("can't remove in tCONS this way");
-		}
-
-	}
-
 	/*
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tSEQUENCE#REVERSE()
@@ -469,7 +405,7 @@ public class cCONS extends cCELL implements tCONS
 	 * @see aloyslisp.core.types.tSEQUENCE#SET_ELT(java.lang.Integer,
 	 * aloyslisp.core.types.tT)
 	 */
-	public tT SET_ELT(Integer pos, tT value)
+	public tT SET_ELT(tT value, Integer pos)
 	{
 		LISTIterator iter = (LISTIterator) iterator();
 		iter.go(pos);
@@ -492,7 +428,7 @@ public class cCONS extends cCELL implements tCONS
 	 * @see aloyslisp.core.types.tSEQUENCE#SET_SUBSEQ(java.lang.Integer,
 	 * java.lang.Integer, aloyslisp.core.types.tT)
 	 */
-	public tSEQUENCE SET_SUBSEQ(Integer start, Integer end, tT value)
+	public tSEQUENCE SET_SUBSEQ(tT value, Integer start, Integer end)
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -628,6 +564,16 @@ public class cCONS extends cCELL implements tCONS
 	public LISTIterator iterator(boolean destructive)
 	{
 		return new LISTIterator(this, destructive);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.tT#SXHASH()
+	 */
+	@Override
+	public Integer SXHASH()
+	{
+		return car.SXHASH() ^ cdr.SXHASH();
 	}
 
 }

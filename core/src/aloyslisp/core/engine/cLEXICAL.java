@@ -27,30 +27,30 @@
 // IP 21 sept. 2010 Creation
 // --------------------------------------------------------------------------
 
-package aloyslisp.exec;
+package aloyslisp.core.engine;
 
 import aloyslisp.core.tT;
 import aloyslisp.core.packages.tSYMBOL;
 import aloyslisp.core.sequences.tLIST;
 
 /**
- * Closure
+ * cLEXICAL
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class Closure
+public class cLEXICAL
 {
 	/**
-	 * Block stack pointer
+	 * cENVIRONMENT stack pointer
 	 */
-	Block	topBlock	= null;
+	cENVIRONMENT	topBlock	= null;
 
 	/**
-	 * Closure stack previous element
+	 * cLEXICAL stack previous element
 	 */
-	Closure	previous;
+	cLEXICAL	previous;
 
 	/**
 	 * Create a new closure
@@ -61,7 +61,7 @@ public class Closure
 	 * @param vals
 	 * @param top
 	 */
-	public Closure(Closure top)
+	public cLEXICAL(cLEXICAL top)
 	{
 		previous = top;
 	}
@@ -77,7 +77,7 @@ public class Closure
 	 */
 	public void newBlock(tSYMBOL name, tLIST block)
 	{
-		topBlock = new Block(name, block, topBlock);
+		topBlock = new cENVIRONMENT(name, block, topBlock);
 	}
 
 	/**
@@ -107,7 +107,7 @@ public class Closure
 	 * @param name
 	 * @return
 	 */
-	public Symbol arg(tSYMBOL name)
+	public cDYN_SYMBOL arg(tSYMBOL name)
 	{
 		if (topBlock == null)
 			return null;
@@ -121,7 +121,7 @@ public class Closure
 	 * @param name
 	 * @return
 	 */
-	public Symbol read(tSYMBOL name)
+	public cDYN_SYMBOL read(tSYMBOL name)
 	{
 		if (topBlock == null)
 			return null;
@@ -137,9 +137,9 @@ public class Closure
 	 * @param val
 	 * @return
 	 */
-	public Symbol write(tSYMBOL name, tT val)
+	public cDYN_SYMBOL write(tSYMBOL name, tT val)
 	{
-		Symbol atom = read(name);
+		cDYN_SYMBOL atom = read(name);
 		if (atom != null)
 		{
 			atom.SET_SYMBOL_VALUE(val);
@@ -154,9 +154,9 @@ public class Closure
 	 * @param name
 	 * @return
 	 */
-	public Symbol sRead(tSYMBOL name)
+	public cDYN_SYMBOL sRead(tSYMBOL name)
 	{
-		Symbol res = null;
+		cDYN_SYMBOL res = null;
 
 		if (topBlock != null)
 			res = topBlock.sRead(name);
@@ -175,7 +175,7 @@ public class Closure
 	 * @param name
 	 * @return
 	 */
-	public Symbol intern(tSYMBOL atom)
+	public cDYN_SYMBOL intern(tSYMBOL atom)
 	{
 		return topBlock.intern(atom);
 	}
@@ -187,13 +187,13 @@ public class Closure
 	 * @param value
 	 * @return
 	 */
-	public Symbol intern(tSYMBOL atom, tT value)
+	public cDYN_SYMBOL intern(tSYMBOL atom, tT value)
 	{
 		return topBlock.intern(atom, value);
 	}
 
 	/**
-	 * Wrapper for Block Trace
+	 * Wrapper for cENVIRONMENT Trace
 	 * 
 	 * @return
 	 */

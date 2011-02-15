@@ -29,7 +29,7 @@
 
 package aloyslisp.core.functions;
 
-import static aloyslisp.L.*;
+import static aloyslisp.core.engine.L.*;
 import aloyslisp.core.sequences.tLIST;
 
 /**

@@ -29,12 +29,13 @@
 
 package aloyslisp.core.streams;
 
-import static aloyslisp.L.*;
+import static aloyslisp.core.engine.L.*;
 
 import java.io.*;
 
 import aloyslisp.core.tT;
 import aloyslisp.core.conditions.LispException;
+import aloyslisp.core.engine.L;
 
 /**
  * cFILE_OUTPUT_STREAM
@@ -200,6 +201,16 @@ public class cFILE_OUTPUT_STREAM extends cOUTPUT_STREAM implements
 	public tPATHNAME getPathname()
 	{
 		return this.path;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.tT#SXHASH()
+	 */
+	@Override
+	public Integer SXHASH()
+	{
+		return path.SXHASH();
 	}
 
 }

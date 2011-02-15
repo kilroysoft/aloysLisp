@@ -27,9 +27,9 @@
 // IP 10 févr. 2011 Creation
 // --------------------------------------------------------------------------
 
-package aloyslisp.exec;
+package aloyslisp.core.engine;
 
-import static aloyslisp.L.*;
+import static aloyslisp.core.engine.L.*;
 
 import java.lang.annotation.*;
 import java.lang.reflect.*;
@@ -37,6 +37,7 @@ import java.lang.reflect.*;
 import aloyslisp.annotations.*;
 import aloyslisp.core.*;
 import aloyslisp.core.functions.*;
+import aloyslisp.core.packages.*;
 import aloyslisp.core.sequences.*;
 
 /**
@@ -76,15 +77,101 @@ public class Library
 			return false;
 		}
 
+		if (!InstFields(cls, clas))
+			return false;
+
+		if (!InstMethods(cls, clas))
+			return false;
+
+		return true;
+	}
+
+	/**
+	 * @param clas
+	 * @return
+	 */
+	public static Boolean InstFields(String cls, Class<?> clas)
+	{
+		Field[] fields = clas.getFields();
+		for (Field f : fields)
+		{
+			// Get method data
+			Symb symbol = f.getAnnotation(Symb.class);
+			if (symbol == null)
+				continue;
+
+			SpecialVar special = f.getAnnotation(SpecialVar.class);
+			boolean constant = f.toGenericString().contains(" final ");
+
+			tSYMBOL sym = sym(symbol.name());
+
+			if (constant)
+				sym.setConstant(true);
+			else if (special != null)
+				sym.setSpecial(true);
+
+			if (f.toString().contains(cls + "." + f.getName()))
+			{
+				String var = f.toString().replace(cls + ".", "")
+						.replaceAll("aloyslisp.core.", "")
+						.replaceAll("aloyslisp.", "")
+						.replaceAll("functions.", "").replaceAll("math.", "")
+						.replaceAll("plugs.", "").replaceAll("sequences.", "")
+						.replaceAll("streams.", "").replaceAll("packages.", "")
+						.replaceAll("java.lang.", "")
+						.replaceAll("#<cPACKAGE system>::", "");
+				String val = "";
+				try
+				{
+					val = f.get(null).toString();
+				}
+				catch (IllegalArgumentException e1)
+				{
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				catch (IllegalAccessException e1)
+				{
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
+				if (constant)
+					System.out.println("(constant " + sym + " " + val + ")");
+				else if (special != null)
+					System.out
+							.println("(defparameter " + sym + " " + val + ")");
+				else
+					System.out.println("(setq " + sym + " " + val + ")");
+
+				System.out.println(sym);
+				System.out.println();
+				System.out.println("```java");
+				System.out.println(var + " = " + val);
+				System.out.println("```\n");
+			}
+		}
+
+		return true;
+	}
+
+	/**
+	 * @param clas
+	 * @return
+	 */
+	public static Boolean InstMethods(String cls, Class<?> clas)
+	{
 		Method[] meth = clas.getMethods();
 		for (Method m : meth)
 		{
-
 			// Get method data
-			SpecialOp special = m.getAnnotation(SpecialOp.class);
-			Mac prefix = m.getAnnotation(Mac.class);
 			Static stat = m.getAnnotation(Static.class);
 			Function f = m.getAnnotation(Function.class);
+			if (stat == null && f == null)
+				continue;
+
+			SpecialOp special = m.getAnnotation(SpecialOp.class);
+			Mac prefix = m.getAnnotation(Mac.class);
 			Annotation[][] notes = m.getParameterAnnotations();
 
 			tFUNCTION func;

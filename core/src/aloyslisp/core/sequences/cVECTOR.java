@@ -31,7 +31,7 @@ package aloyslisp.core.sequences;
 
 import java.util.*;
 
-import static aloyslisp.L.*;
+import static aloyslisp.core.engine.L.*;
 import aloyslisp.core.*;
 import aloyslisp.core.conditions.*;
 import aloyslisp.iterators.*;
@@ -175,7 +175,7 @@ public class cVECTOR extends cCELL implements tVECTOR
 	 * @see aloyslisp.core.sequences.tSEQUENCE#SET_ELT(java.lang.Integer,
 	 * aloyslisp.core.tT)
 	 */
-	public tSEQUENCE SET_ELT(Integer pos, tT value)
+	public tSEQUENCE SET_ELT(tT value, Integer pos)
 	{
 		if (!testLimits(pos))
 			return null;
@@ -268,7 +268,7 @@ public class cVECTOR extends cCELL implements tVECTOR
 	 * @see aloyslisp.core.sequences.tSEQUENCE#SET_SUBSEQ(java.lang.Integer,
 	 * java.lang.Integer, aloyslisp.core.tT)
 	 */
-	public tSEQUENCE SET_SUBSEQ(Integer start, Integer end, tT value)
+	public tSEQUENCE SET_SUBSEQ(tT value, Integer start, Integer end)
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -293,6 +293,21 @@ public class cVECTOR extends cCELL implements tVECTOR
 	public VECTORIterator iterator(boolean destructive)
 	{
 		return new VECTORIterator(this, destructive);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.tT#SXHASH()
+	 */
+	@Override
+	public Integer SXHASH()
+	{
+		Integer res = 0;
+		for (tT elem : array)
+		{
+			res = res ^ elem.SXHASH();
+		}
+		return res;
 	}
 
 }

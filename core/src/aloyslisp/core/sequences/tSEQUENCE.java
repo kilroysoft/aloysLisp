@@ -77,8 +77,9 @@ public interface tSEQUENCE extends tT, Iterable<tT>
 	 */
 	@Function(name = "set-elt")
 	public tT SET_ELT( //
-			@Arg(name = "pos") Integer pos, //
-			@Arg(name = "value") tT value);
+			@Arg(name = "value") tT value, //
+			@Arg(name = "pos") Integer pos //
+	);
 
 	/**
 	 * @param start
@@ -98,9 +99,10 @@ public interface tSEQUENCE extends tT, Iterable<tT>
 	 */
 	@Function(name = "set-subseq")
 	public tSEQUENCE SET_SUBSEQ( //
+			@Arg(name = "value") tT value, //
 			@Arg(name = "start") Integer start, //
-			@Arg(name = "end") Integer end, //
-			@Arg(name = "value") tT value);
+			@Arg(name = "end") Integer end //
+	);
 
 	/**
 	 * Reverse the list.

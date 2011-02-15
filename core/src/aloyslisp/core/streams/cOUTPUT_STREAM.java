@@ -29,7 +29,7 @@
 
 package aloyslisp.core.streams;
 
-import static aloyslisp.L.*;
+import static aloyslisp.core.engine.L.*;
 import aloyslisp.core.tT;
 import aloyslisp.core.packages.tNULL;
 import aloyslisp.core.sequences.tSTRING;

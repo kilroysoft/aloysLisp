@@ -29,7 +29,7 @@
 
 package aloyslisp.core.streams;
 
-import static aloyslisp.L.*;
+import static aloyslisp.core.engine.L.*;
 import aloyslisp.annotations.Arg;
 import aloyslisp.annotations.Static;
 import aloyslisp.core.*;
@@ -252,6 +252,16 @@ public class cCHARACTER extends cCELL implements tCHARACTER
 		{
 			throw new LispException("Invalid char : " + name);
 		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.tT#SXHASH()
+	 */
+	@Override
+	public Integer SXHASH()
+	{
+		return str("" + value).SXHASH();
 	}
 
 }

@@ -29,7 +29,7 @@
 
 package aloyslisp.iterators;
 
-import static aloyslisp.L.*;
+import static aloyslisp.core.engine.L.*;
 import aloyslisp.core.*;
 import aloyslisp.core.conditions.LispException;
 import aloyslisp.core.sequences.*;

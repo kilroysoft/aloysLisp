@@ -32,7 +32,7 @@ package aloyslisp.core.packages;
 
 import java.util.Iterator;
 
-import static aloyslisp.L.*;
+import static aloyslisp.core.engine.L.*;
 import aloyslisp.core.tT;
 import aloyslisp.core.conditions.*;
 import aloyslisp.core.functions.*;
@@ -223,7 +223,7 @@ public class cNIL extends cSYMBOL implements tNULL
 	 * @see aloyslisp.core.types.tSEQUENCE#SET_ELT(java.lang.Integer,
 	 * aloyslisp.core.types.tT)
 	 */
-	public tLIST SET_ELT(Integer pos, tT value)
+	public tLIST SET_ELT(tT value, Integer pos)
 	{
 		throw new LispErrorFunctionCannotApplyOn("selt", this);
 	}
@@ -481,7 +481,7 @@ public class cNIL extends cSYMBOL implements tNULL
 	 * @see aloyslisp.core.types.tSEQUENCE#SET_SUBSEQ(java.lang.Integer,
 	 * java.lang.Integer, aloyslisp.core.types.tT)
 	 */
-	public tSEQUENCE SET_SUBSEQ(Integer start, Integer end, tT value)
+	public tSEQUENCE SET_SUBSEQ(tT value, Integer start, Integer end)
 	{
 		// TODO Auto-generated method stub
 		return null;

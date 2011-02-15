@@ -30,19 +30,19 @@
 
 package aloyslisp.core.functions;
 
-import static aloyslisp.L.*;
+import static aloyslisp.core.engine.L.*;
 
 import java.lang.reflect.*;
 
 import aloyslisp.core.*;
 import aloyslisp.core.conditions.LispException;
+import aloyslisp.core.engine.*;
 import aloyslisp.core.math.*;
 import aloyslisp.core.packages.cPACKAGE;
 import aloyslisp.core.packages.tPACKAGE_DESIGNATOR;
 import aloyslisp.core.packages.tSYMBOL;
 import aloyslisp.core.sequences.*;
 import aloyslisp.core.streams.*;
-import aloyslisp.exec.*;
 
 /**
  * cFUNCTION
@@ -57,7 +57,7 @@ public abstract class cFUNCTION extends cCELL implements tFUNCTION,
 	/**
 	 * Representation of arguments of the function
 	 */
-	public Arguments	intern	= null;
+	public cAPI	intern	= null;
 
 	/**
 	 * String used to represent the function in case of macrochar transform
@@ -99,7 +99,7 @@ public abstract class cFUNCTION extends cCELL implements tFUNCTION,
 		else
 			f = name.SYMBOL_NAME();
 
-		intern = new Arguments(name, args, func);
+		intern = new cAPI(name, args, func);
 		trace("Name = " + name + " new Name = " + f + " Class = "
 				+ c.getCanonicalName());
 		if (!setFunctionCall(c, f))
@@ -230,7 +230,7 @@ public abstract class cFUNCTION extends cCELL implements tFUNCTION,
 		catch (IllegalArgumentException e)
 		{
 			if (newArgs == null)
-				System.out.println("Arguments : null");
+				System.out.println("cAPI : null");
 			else
 			{
 				System.out.println("Function : " + intern.getStringName());
@@ -411,13 +411,13 @@ public abstract class cFUNCTION extends cCELL implements tFUNCTION,
 	 * @param args
 	 * @param def
 	 */
-	public Arguments newBlock(tSYMBOL name, tLIST args, tLIST def, tLIST vals)
+	public cAPI newBlock(tSYMBOL name, tLIST args, tLIST def, tLIST vals)
 	{
 		if (!(name == null || name instanceof tSYMBOL))
 		{
 			throw new LispException("Name of block is not an atom" + name);
 		}
-		Arguments intern = new Arguments(name, args, def);
+		cAPI intern = new cAPI(name, args, def);
 		intern.pushBlock(vals);
 		return intern;
 	}
@@ -632,4 +632,15 @@ public abstract class cFUNCTION extends cCELL implements tFUNCTION,
 						+ ".htm]]");
 		return decl.toLowerCase().replace("/body/", "/Body/");
 	}
+
+	/* (non-Javadoc)
+	 * @see aloyslisp.core.tT#SXHASH()
+	 */
+	@Override
+	public Integer SXHASH()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

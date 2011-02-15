@@ -37,7 +37,7 @@ package aloyslisp.core.streams;
 import java.io.EOFException;
 import java.util.*;
 
-import static aloyslisp.L.*;
+import static aloyslisp.core.engine.L.*;
 import aloyslisp.annotations.*;
 import aloyslisp.core.*;
 import aloyslisp.core.conditions.*;

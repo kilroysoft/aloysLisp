@@ -32,6 +32,7 @@ package aloyslisp.core.streams;
 import aloyslisp.annotations.Static;
 import aloyslisp.core.*;
 import aloyslisp.core.conditions.LispException;
+import aloyslisp.core.engine.L;
 import aloyslisp.core.sequences.cSTRING;
 import aloyslisp.core.sequences.tSTRING_DESIGNATOR;
 
@@ -79,6 +80,16 @@ public class cPATHNAME extends cCELL implements tPATHNAME
 			throw new LispException("Type error for " + path);
 
 		return new cPATHNAME(cSTRING.STRING(path));
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.tT#SXHASH()
+	 */
+	@Override
+	public Integer SXHASH()
+	{
+		return L.str(file).SXHASH();
 	}
 
 }

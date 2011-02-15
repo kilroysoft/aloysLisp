@@ -31,15 +31,15 @@
 
 package aloyslisp.core.functions;
 
-import static aloyslisp.L.*;
+import static aloyslisp.core.engine.L.*;
 import aloyslisp.annotations.*;
 import aloyslisp.core.*;
 import aloyslisp.core.conditions.*;
+import aloyslisp.core.engine.*;
 import aloyslisp.core.packages.cNIL;
 import aloyslisp.core.packages.tNULL;
 import aloyslisp.core.packages.tSYMBOL;
 import aloyslisp.core.sequences.*;
-import aloyslisp.exec.*;
 
 /**
  * cSPECIAL_OPERATOR
@@ -401,7 +401,7 @@ public class cSPECIAL_OPERATOR extends cSYSTEM_FUNCTION implements
 	public static tT TAGBODY( //
 			@Rest(name = "func") tT... func)
 	{
-		Arguments args = new Arguments(NIL, NIL, list((Object[]) func));
+		cAPI args = new cAPI(NIL, NIL, list((Object[]) func));
 		args.pushBlock(NIL);
 		e.tagBody();
 		e.exec();
@@ -420,7 +420,7 @@ public class cSPECIAL_OPERATOR extends cSYSTEM_FUNCTION implements
 			@Arg(name = "lisp::name") tSYMBOL name, //
 			@Rest(name = "lisp::block") tT... block)
 	{
-		Arguments args = new Arguments(name, NIL, list((Object[]) block));
+		cAPI args = new cAPI(name, NIL, list((Object[]) block));
 		args.pushBlock(NIL);
 		tT res[] = e.exec();
 		e.popBlock();
@@ -438,7 +438,7 @@ public class cSPECIAL_OPERATOR extends cSYSTEM_FUNCTION implements
 			@Arg(name = "lisp::args") tLIST args, //
 			@Rest(name = "lisp::func") tT... func)
 	{
-		Arguments arguments = new Arguments(NIL, args, list((Object[]) func));
+		cAPI arguments = new cAPI(NIL, args, list((Object[]) func));
 		arguments.pushBlock(NIL);
 		tT res[] = e.exec();
 		e.popBlock();
@@ -456,7 +456,7 @@ public class cSPECIAL_OPERATOR extends cSYSTEM_FUNCTION implements
 			@Arg(name = "lisp::first") tT first, //
 			@Rest(name = "lisp::rest") tT... rest)
 	{
-		Arguments arguments = new Arguments(NIL, NIL, list((Object[]) rest));
+		cAPI arguments = new cAPI(NIL, NIL, list((Object[]) rest));
 		arguments.pushBlock(NIL);
 		tT res = first.EVAL()[0];
 		e.exec();
@@ -475,7 +475,7 @@ public class cSPECIAL_OPERATOR extends cSYSTEM_FUNCTION implements
 			@Arg(name = "lisp::first") tT first, //
 			@Rest(name = "lisp::rest") tT... rest)
 	{
-		Arguments arguments = new Arguments(NIL, NIL, list((Object[]) rest));
+		cAPI arguments = new cAPI(NIL, NIL, list((Object[]) rest));
 		arguments.pushBlock(NIL);
 		tT[] res = new tT[] {};
 		try
@@ -532,7 +532,7 @@ public class cSPECIAL_OPERATOR extends cSYSTEM_FUNCTION implements
 	public static tT[] PROGN( //
 			@Rest(name = "lisp::block") tT... block)
 	{
-		Arguments arguments = new Arguments(NIL, NIL, list((Object[]) block));
+		cAPI arguments = new cAPI(NIL, NIL, list((Object[]) block));
 		arguments.pushBlock(NIL);
 		tT[] res = e.exec();
 		e.popBlock();
@@ -552,7 +552,7 @@ public class cSPECIAL_OPERATOR extends cSYSTEM_FUNCTION implements
 			@Arg(name = "lisp::args") tLIST args, //
 			@Rest(name = "lisp::block") tT... block)
 	{
-		Arguments arguments = new Arguments(name, args, list((Object[]) block));
+		cAPI arguments = new cAPI(name, args, list((Object[]) block));
 		arguments.pushBlock(NIL);
 		tT[] res = e.exec();
 		e.popBlock();

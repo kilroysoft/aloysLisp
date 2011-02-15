@@ -25,14 +25,14 @@
 // history
 // --------------------------------------------------------------------------
 // IP 13 sept. 2010 Creation
-// IP UB20 Disconnected from Environment
+// IP UB20 Disconnected from cTHREAD
 // --------------------------------------------------------------------------
 
-package aloyslisp.exec;
+package aloyslisp.core.engine;
 
 import java.util.*;
 
-import static aloyslisp.L.*;
+import static aloyslisp.core.engine.L.*;
 import aloyslisp.core.packages.*;
 import aloyslisp.core.sequences.*;
 

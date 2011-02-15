@@ -31,7 +31,7 @@ package aloyslisp.core.streams;
 
 import java.io.*;
 
-import static aloyslisp.L.*;
+import static aloyslisp.core.engine.L.*;
 import aloyslisp.annotations.*;
 import aloyslisp.core.*;
 import aloyslisp.core.conditions.*;
@@ -189,7 +189,7 @@ public abstract class cINPUT_STREAM extends cSTREAM implements tINPUT_STREAM
 			tT function = charMacro[0];
 			if (function instanceof tSYMBOL)
 			{
-				trace("Symbol macrochar = " + function + " "
+				trace("cDYN_SYMBOL macrochar = " + function + " "
 						+ function.DESCRIBE());
 				function = ((tSYMBOL) function).SYMBOL_FUNCTION();
 			}

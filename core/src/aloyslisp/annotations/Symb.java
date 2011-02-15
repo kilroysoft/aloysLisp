@@ -54,6 +54,6 @@ public @interface Symb
 	 * 
 	 * @return
 	 */
-	String doc();
+	String doc() default "TBD";
 
 }

@@ -27,7 +27,7 @@
 // IP 21 sept. 2010 Creation
 // --------------------------------------------------------------------------
 
-package aloyslisp.exec;
+package aloyslisp.core.engine;
 
 import aloyslisp.core.*;
 import aloyslisp.core.conditions.LispException;
@@ -35,18 +35,18 @@ import aloyslisp.core.packages.tSYMBOL;
 import aloyslisp.core.sequences.*;
 
 /**
- * Environment
+ * cTHREAD
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class Environment
+public class cTHREAD
 {
 	/**
-	 * Closure stack pointer
+	 * cLEXICAL stack pointer
 	 */
-	Closure			topClosure;
+	cLEXICAL			topClosure;
 
 	/**
 	 * Return value
@@ -54,9 +54,9 @@ public class Environment
 	public tT[]		ret		= null;
 
 	/**
-	 * Block to go (return-from) ou (go)
+	 * cENVIRONMENT to go (return-from) ou (go)
 	 */
-	public Block	goBlock	= null;
+	public cENVIRONMENT	goBlock	= null;
 
 	/**
 	 * New IP for go
@@ -68,7 +68,7 @@ public class Environment
 	 */
 	public void newClosure()
 	{
-		topClosure = new Closure(topClosure);
+		topClosure = new cLEXICAL(topClosure);
 	}
 
 	/**
@@ -136,7 +136,7 @@ public class Environment
 	 * @param name
 	 * @return
 	 */
-	public Symbol arg(tSYMBOL name)
+	public cDYN_SYMBOL arg(tSYMBOL name)
 	{
 		if (topClosure != null)
 			return topClosure.arg(name);
@@ -148,7 +148,7 @@ public class Environment
 	 * @param name
 	 * @return
 	 */
-	public Symbol read(tSYMBOL name)
+	public cDYN_SYMBOL read(tSYMBOL name)
 	{
 		if (topClosure != null)
 			return topClosure.read(name);
@@ -162,7 +162,7 @@ public class Environment
 	 */
 	public tT readVal(tSYMBOL name)
 	{
-		Symbol res = read(name);
+		cDYN_SYMBOL res = read(name);
 
 		if (res == null)
 			return null;
@@ -177,7 +177,7 @@ public class Environment
 	 */
 	public tSYMBOL writeVal(tSYMBOL name, tT value)
 	{
-		Symbol atom = read(name);
+		cDYN_SYMBOL atom = read(name);
 		if (atom == null)
 			return null;
 		return atom.SET_SYMBOL_VALUE(value);
@@ -190,7 +190,7 @@ public class Environment
 	 * @param name
 	 * @return
 	 */
-	public Symbol sRead(tSYMBOL name)
+	public cDYN_SYMBOL sRead(tSYMBOL name)
 	{
 		return topClosure.sRead(name);
 	}
@@ -200,7 +200,7 @@ public class Environment
 	 * @param val
 	 * @return
 	 */
-	public Symbol write(tSYMBOL name, tT val)
+	public cDYN_SYMBOL write(tSYMBOL name, tT val)
 	{
 		if (topClosure == null)
 			return null;
@@ -211,7 +211,7 @@ public class Environment
 	 * @param name
 	 * @return
 	 */
-	public Symbol intern(tSYMBOL atom)
+	public cDYN_SYMBOL intern(tSYMBOL atom)
 	{
 		return topClosure.intern(atom);
 	}
@@ -221,7 +221,7 @@ public class Environment
 	 * @param value
 	 * @return
 	 */
-	public Symbol intern(tSYMBOL atom, tT value)
+	public cDYN_SYMBOL intern(tSYMBOL atom, tT value)
 	{
 		return topClosure.intern(atom, value);
 	}

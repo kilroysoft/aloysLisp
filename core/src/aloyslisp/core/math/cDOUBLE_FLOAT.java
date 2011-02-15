@@ -30,6 +30,7 @@
 package aloyslisp.core.math;
 
 import aloyslisp.core.tT;
+import aloyslisp.core.engine.L;
 
 /**
  * cDOUBLE_FLOAT
@@ -322,6 +323,11 @@ public class cDOUBLE_FLOAT extends cFLOAT implements tDOUBLE_FLOAT
 	tNUMBER division(tNUMBER op)
 	{
 		return new cDOUBLE_FLOAT(value / op.getDoubleValue().doubleValue());
+	}
+
+	public Integer SXHASH()
+	{
+		return L.str(toString()).SXHASH();
 	}
 
 }

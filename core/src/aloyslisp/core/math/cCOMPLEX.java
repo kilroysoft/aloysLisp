@@ -29,7 +29,7 @@
 
 package aloyslisp.core.math;
 
-import static aloyslisp.L.*;
+import static aloyslisp.core.engine.L.*;
 import aloyslisp.core.conditions.*;
 
 /**
@@ -444,6 +444,15 @@ public class cCOMPLEX extends cNUMBER implements tCOMPLEX
 	{
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see aloyslisp.core.tT#SXHASH()
+	 */
+	@Override
+	public Integer SXHASH()
+	{
+		return real.SXHASH() ^ imag.SXHASH();
 	}
 
 }

@@ -25,20 +25,19 @@
 // history
 // --------------------------------------------------------------------------
 // IP 13 sept. 2010 Creation
-// IP UB20 Disconnected from Environment
+// IP UB20 Disconnected from cTHREAD
 // --------------------------------------------------------------------------
 
 package aloyslisp.core.packages;
 
-import static aloyslisp.L.*;
+import static aloyslisp.core.engine.L.*;
 
-import aloyslisp.L;
 import aloyslisp.annotations.*;
 import aloyslisp.core.cCELL;
 import aloyslisp.core.tT;
 import aloyslisp.core.conditions.*;
+import aloyslisp.core.engine.*;
 import aloyslisp.core.sequences.*;
-import aloyslisp.exec.*;
 
 /**
  * cPACKAGE
@@ -102,7 +101,7 @@ public class cPACKAGE extends cCELL implements tPACKAGE
 	static
 	{
 		if (L.e == null)
-			e = new Environment();
+			e = new cTHREAD();
 
 		packages.put("common-lisp",
 				new cSYMBOL("common-lisp").SET_SYMBOL_VALUE(cl));
@@ -430,6 +429,16 @@ public class cPACKAGE extends cCELL implements tPACKAGE
 	public String PACKAGE_NAME()
 	{
 		return name;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.tT#SXHASH()
+	 */
+	@Override
+	public Integer SXHASH()
+	{
+		return str(name).SXHASH();
 	}
 
 }

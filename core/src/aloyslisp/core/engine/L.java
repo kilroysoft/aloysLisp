@@ -27,7 +27,7 @@
 // IP 16 sept. 2010 Creation
 // --------------------------------------------------------------------------
 
-package aloyslisp;
+package aloyslisp.core.engine;
 
 import java.io.*;
 import java.net.*;
@@ -35,17 +35,12 @@ import java.util.*;
 import java.util.jar.*;
 
 import aloyslisp.core.*;
+import aloyslisp.annotations.*;
 import aloyslisp.core.conditions.*;
 import aloyslisp.core.math.*;
-import aloyslisp.core.packages.cNIL;
-import aloyslisp.core.packages.cPACKAGE;
-import aloyslisp.core.packages.cSYMBOL;
-import aloyslisp.core.packages.tPACKAGE;
-import aloyslisp.core.packages.tPACKAGE_DESIGNATOR;
-import aloyslisp.core.packages.tSYMBOL;
+import aloyslisp.core.packages.*;
 import aloyslisp.core.sequences.*;
 import aloyslisp.core.streams.*;
-import aloyslisp.exec.*;
 
 /**
  * Base environment en global functions of Common Lisp
@@ -59,7 +54,7 @@ public class L
 	/**
 	 * Execution context for Closures
 	 */
-	public static Environment	e			= new Environment();
+	public static cTHREAD	e			= new cTHREAD();
 
 	/**
 	 * Current Package
@@ -115,13 +110,15 @@ public class L
 	/*
 	 * All standard streams
 	 */
-	private static final tSTREAM	in						= new cFILE_INPUT_STREAM(
+	@Symb(name = "+in+")
+	public static tSTREAM			in						= new cFILE_INPUT_STREAM(
 																	System.in);
 	private static final tSTREAM	out						= new cFILE_OUTPUT_STREAM(
 																	System.out);
 	private static final tSTREAM	err						= new cFILE_OUTPUT_STREAM(
 																	System.err);
 	private static final tSTREAM	terminal				= in;
+
 	private static final tSTREAM	query					= terminal;
 
 	// Key for setf in PLIST
@@ -388,9 +385,9 @@ public class L
 	 * @param name
 	 * @return
 	 */
-	public static Symbol getAll(tSYMBOL name)
+	public static cDYN_SYMBOL getAll(tSYMBOL name)
 	{
-		Symbol res = e.arg(name);
+		cDYN_SYMBOL res = e.arg(name);
 
 		if (res == null)
 			res = e.read(name);
@@ -421,7 +418,7 @@ public class L
 	 */
 	public static tT arg(tSYMBOL name)
 	{
-		Symbol atom = e.arg(name);
+		cDYN_SYMBOL atom = e.arg(name);
 		if (atom == null)
 		{
 			throw new LispException("Argument " + name

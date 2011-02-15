@@ -284,4 +284,14 @@ public class cFILE_INPUT_STREAM extends cINPUT_STREAM implements
 		return this.path;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.tT#SXHASH()
+	 */
+	@Override
+	public Integer SXHASH()
+	{
+		return path.SXHASH();
+	}
+
 }

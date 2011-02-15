@@ -29,7 +29,7 @@
 
 package aloyslisp.core.math;
 
-import static aloyslisp.L.*;
+import static aloyslisp.core.engine.L.*;
 import aloyslisp.core.*;
 import aloyslisp.core.sequences.*;
 import aloyslisp.core.conditions.*;
@@ -77,7 +77,7 @@ public abstract class cNUMBER extends cCELL implements tNUMBER
 	/**
 	 * Constant I
 	 */
-	public static final cCOMPLEX			I		= new cCOMPLEX(ZERO, ONE);
+	public static final cCOMPLEX		I		= new cCOMPLEX(ZERO, ONE);
 
 	/**
 	 * @return
@@ -319,13 +319,15 @@ public abstract class cNUMBER extends cCELL implements tNUMBER
 			strBase += "9A-" + ('A' + (base - 11)) + "]";
 		}
 		// ratio
-//		System.out.println("Match ..." + nb + ":" + "^[-\\+]?" + strBase + "+/"
-//				+ strBase + "+$");
+		// System.out.println("Match ..." + nb + ":" + "^[-\\+]?" + strBase +
+		// "+/"
+		// + strBase + "+$");
 		if (nb.matches("^[-\\+]?" + strBase + "+/" + strBase + "+"))
 		{
 			String[] rat = nb.split("/");
-//			System.out.println("Match ..." + rat[0] + " / " + rat[1]);
-			return new cRATIO(new cBIGNUM(rat[0], base), new cBIGNUM(rat[1], base)).rationalizeValue();
+			// System.out.println("Match ..." + rat[0] + " / " + rat[1]);
+			return new cRATIO(new cBIGNUM(rat[0], base), new cBIGNUM(rat[1],
+					base)).rationalizeValue();
 		}
 
 		// Integer
@@ -723,6 +725,18 @@ public abstract class cNUMBER extends cCELL implements tNUMBER
 	public tNUMBER EXPT(tNUMBER power)
 	{
 		return expt(power);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.tT#SXHASH()
+	 */
+	@Override
+	public Integer SXHASH()
+	{
+		if (ZEROP())
+			return 0;
+		return getDoubleValue().SXHASH();
 	}
 
 }

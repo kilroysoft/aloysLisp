@@ -30,13 +30,13 @@
 
 package aloyslisp.core.packages;
 
-import static aloyslisp.L.*;
+import static aloyslisp.core.engine.L.*;
 import aloyslisp.annotations.*;
 import aloyslisp.core.*;
 import aloyslisp.core.conditions.*;
+import aloyslisp.core.engine.*;
 import aloyslisp.core.functions.*;
 import aloyslisp.core.sequences.*;
-import aloyslisp.exec.*;
 import aloyslisp.iterators.*;
 
 /**
@@ -273,7 +273,7 @@ public class cSYMBOL extends cCELL implements tSYMBOL
 		// in case of special we search in the environment *variables*
 		if (isSpecial())
 		{
-			Symbol atom = getAll(this);
+			cDYN_SYMBOL atom = getAll(this);
 
 			// If we fall back here, normal set
 			if (atom != null && !atom.SYMBOL_NAME().equals(this.SYMBOL_NAME()))
@@ -300,7 +300,7 @@ public class cSYMBOL extends cCELL implements tSYMBOL
 		if (isSpecial())
 		{
 			// If we fall back here, normal set
-			Symbol res = getAll(this);
+			cDYN_SYMBOL res = getAll(this);
 			if (res != null && !res.SYMBOL_NAME().equals(this.SYMBOL_NAME()))
 				return res.SYMBOL_VALUE();
 		}
@@ -314,7 +314,7 @@ public class cSYMBOL extends cCELL implements tSYMBOL
 		if (value == null)
 		{
 			e.trace();
-			throw new LispException("Symbol " + this + " has no value");
+			throw new LispException("cDYN_SYMBOL " + this + " has no value");
 		}
 
 		return value;
@@ -334,7 +334,7 @@ public class cSYMBOL extends cCELL implements tSYMBOL
 		// in case of special we search in the environment. Dynamic *variables*.
 		if (isSpecial())
 		{
-			Symbol res = getAll(this);
+			cDYN_SYMBOL res = getAll(this);
 			if (res != null && !res.SYMBOL_NAME().equals(this.SYMBOL_NAME()))
 				return res.SYMBOL_VALUE();
 		}
@@ -357,7 +357,7 @@ public class cSYMBOL extends cCELL implements tSYMBOL
 		// in case of special we search in the environment *variables*
 		if (isSpecial())
 		{
-			Symbol res = getAll(this);
+			cDYN_SYMBOL res = getAll(this);
 			if (res != null && !res.SYMBOL_NAME().equals(this.SYMBOL_NAME()))
 				return res.unset();
 		}
@@ -381,7 +381,7 @@ public class cSYMBOL extends cCELL implements tSYMBOL
 	 */
 	public tSYMBOL SET_SYMBOL_FUNCTION(tFUNCTION function)
 	{
-		Symbol func = e.read(this);
+		cDYN_SYMBOL func = e.read(this);
 
 		if (func != null)
 		{
@@ -398,7 +398,7 @@ public class cSYMBOL extends cCELL implements tSYMBOL
 	 */
 	public tFUNCTION SYMBOL_FUNCTION()
 	{
-		Symbol func = e.read(this);
+		cDYN_SYMBOL func = e.read(this);
 
 		if (func != null)
 		{
@@ -420,7 +420,7 @@ public class cSYMBOL extends cCELL implements tSYMBOL
 	 */
 	private tT fGetValue()
 	{
-		Symbol func = e.read(this);
+		cDYN_SYMBOL func = e.read(this);
 
 		if (func != null)
 			if (!(func.SYMBOL_VALUE() instanceof tFUNCTION))
@@ -437,7 +437,7 @@ public class cSYMBOL extends cCELL implements tSYMBOL
 	 */
 	public tSYMBOL fUnset()
 	{
-		Symbol atom = e.read(this);
+		cDYN_SYMBOL atom = e.read(this);
 
 		if (atom != null)
 		{
@@ -556,7 +556,7 @@ public class cSYMBOL extends cCELL implements tSYMBOL
 	 */
 	public tSYMBOL setSpecial(boolean special)
 	{
-		Symbol atom = e.read(this);
+		cDYN_SYMBOL atom = e.read(this);
 		if (atom != null)
 			return atom.setSpecial(special);
 
@@ -570,7 +570,7 @@ public class cSYMBOL extends cCELL implements tSYMBOL
 	 */
 	public boolean isSpecial()
 	{
-		Symbol atom = e.read(this);
+		cDYN_SYMBOL atom = e.read(this);
 		if (atom != null)
 			return atom.isSpecial();
 
@@ -688,6 +688,17 @@ public class cSYMBOL extends cCELL implements tSYMBOL
 			throw new LispErrorFunctionCannotApplyOn("EXPORT", symbol);
 		}
 		return NIL;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.tT#SXHASH()
+	 */
+	@Override
+	public Integer SXHASH()
+	{
+		// TODO Auto-generated method stub
+		return str(name).SXHASH();
 	}
 
 }

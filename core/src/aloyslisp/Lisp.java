@@ -29,7 +29,7 @@
 
 package aloyslisp;
 
-import static aloyslisp.L.*;
+import static aloyslisp.core.engine.L.*;
 
 /**
  * Lisp
@@ -50,7 +50,7 @@ public class Lisp
 	{
 		loadClasses("aloyslisp.annotations");
 		loadClasses("aloyslisp.core.conditions");
-		loadClasses("aloyslisp.exec");
+		loadClasses("aloyslisp.core.engine");
 		loadClasses("aloyslisp.core.functions");
 		loadClasses("aloyslisp.core.math");
 		loadClasses("aloyslisp.core");

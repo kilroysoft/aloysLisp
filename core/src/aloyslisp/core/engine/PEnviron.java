@@ -28,7 +28,7 @@
 // IP UB20 Disconnect environment from Package
 // --------------------------------------------------------------------------
 
-package aloyslisp.exec;
+package aloyslisp.core.engine;
 
 import java.util.*;
 
@@ -44,7 +44,7 @@ import aloyslisp.core.packages.tSYMBOL;
  * 
  */
 public abstract class PEnviron extends cCELL implements Iterable<tSYMBOL>,
-		Map<tSYMBOL, Symbol>
+		Map<tSYMBOL, cDYN_SYMBOL>
 {
 
 	protected tSYMBOL	name;
@@ -70,7 +70,7 @@ public abstract class PEnviron extends cCELL implements Iterable<tSYMBOL>,
 	 * (non-Javadoc)
 	 * @see java.util.Map#get(java.lang.Object)
 	 */
-	public Symbol get(Object key)
+	public cDYN_SYMBOL get(Object key)
 	{
 		return map.get((tSYMBOL) key);
 	}
@@ -79,7 +79,7 @@ public abstract class PEnviron extends cCELL implements Iterable<tSYMBOL>,
 	 * (non-Javadoc)
 	 * @see java.util.Map#put(java.lang.Object, java.lang.Object)
 	 */
-	public Symbol put(tSYMBOL key, Symbol value)
+	public cDYN_SYMBOL put(tSYMBOL key, cDYN_SYMBOL value)
 	{
 		// System.out.println("<#" + this.getClass().getSimpleName() + " put(" +
 		// key + "," + value + ")");
@@ -90,7 +90,7 @@ public abstract class PEnviron extends cCELL implements Iterable<tSYMBOL>,
 	 * (non-Javadoc)
 	 * @see java.util.Map#remove(java.lang.Object)
 	 */
-	public Symbol remove(Object key)
+	public cDYN_SYMBOL remove(Object key)
 	{
 		return map.remove((tSYMBOL) key);
 	}
@@ -99,14 +99,14 @@ public abstract class PEnviron extends cCELL implements Iterable<tSYMBOL>,
 	 * @param name
 	 * @return
 	 */
-	public Symbol intern(tSYMBOL name)
+	public cDYN_SYMBOL intern(tSYMBOL name)
 	{
 		// System.out.println("interm(" + name + ")");
-		Symbol atom = get(name);
+		cDYN_SYMBOL atom = get(name);
 		if (atom != null)
 			return atom;
 
-		atom = new Symbol(name, null);
+		atom = new cDYN_SYMBOL(name, null);
 		put(name, atom);
 		return atom;
 	}
@@ -116,10 +116,10 @@ public abstract class PEnviron extends cCELL implements Iterable<tSYMBOL>,
 	 * @param value
 	 * @return
 	 */
-	public Symbol intern(tSYMBOL name, tT value)
+	public cDYN_SYMBOL intern(tSYMBOL name, tT value)
 	{
 		// System.out.println("interm(" + name + "," + value + ")");
-		Symbol atom = intern(name);
+		cDYN_SYMBOL atom = intern(name);
 		atom.SET_SYMBOL_VALUE(value);
 		// System.out.println("interm(" + name + "," + value + ") = " +
 		// atom.describe());
@@ -133,7 +133,7 @@ public abstract class PEnviron extends cCELL implements Iterable<tSYMBOL>,
 	{
 		StringBuilder str = new StringBuilder();
 
-		for (Symbol var : map.values())
+		for (cDYN_SYMBOL var : map.values())
 		{
 			str.append(var.SYMBOL_NAME() + " " + var.SYMBOL_PACKAGE() + " "
 					+ var.SYMBOL_VALUE() + "\n");
@@ -166,7 +166,7 @@ public abstract class PEnviron extends cCELL implements Iterable<tSYMBOL>,
 	/**
 	 * 
 	 */
-	protected Map<tSYMBOL, Symbol>	map	= new HashMap<tSYMBOL, Symbol>();
+	protected Map<tSYMBOL, cDYN_SYMBOL>	map	= new HashMap<tSYMBOL, cDYN_SYMBOL>();
 
 	/*
 	 * (non-Javadoc)
@@ -175,11 +175,11 @@ public abstract class PEnviron extends cCELL implements Iterable<tSYMBOL>,
 	@SuppressWarnings("unchecked")
 	public tT copy()
 	{
-		Map<tSYMBOL, Symbol> res;
+		Map<tSYMBOL, cDYN_SYMBOL> res;
 
 		try
 		{
-			res = (Map<tSYMBOL, Symbol>) this.clone();
+			res = (Map<tSYMBOL, cDYN_SYMBOL>) this.clone();
 		}
 		catch (CloneNotSupportedException e)
 		{
@@ -188,7 +188,7 @@ public abstract class PEnviron extends cCELL implements Iterable<tSYMBOL>,
 		}
 
 		((PEnviron) res)
-				.setMap((Map<tSYMBOL, Symbol>) new LinkedHashMap<tSYMBOL, Symbol>(
+				.setMap((Map<tSYMBOL, cDYN_SYMBOL>) new LinkedHashMap<tSYMBOL, cDYN_SYMBOL>(
 						getMap()));
 		return (tT) res;
 	}
@@ -242,7 +242,7 @@ public abstract class PEnviron extends cCELL implements Iterable<tSYMBOL>,
 	 * (non-Javadoc)
 	 * @see java.util.Map#putAll(java.util.Map)
 	 */
-	public void putAll(Map<? extends tSYMBOL, ? extends Symbol> m)
+	public void putAll(Map<? extends tSYMBOL, ? extends cDYN_SYMBOL> m)
 	{
 		putAll(m);
 	}
@@ -269,7 +269,7 @@ public abstract class PEnviron extends cCELL implements Iterable<tSYMBOL>,
 	 * (non-Javadoc)
 	 * @see java.util.Map#values()
 	 */
-	public Collection<Symbol> values()
+	public Collection<cDYN_SYMBOL> values()
 	{
 		return map.values();
 	}
@@ -278,7 +278,7 @@ public abstract class PEnviron extends cCELL implements Iterable<tSYMBOL>,
 	 * (non-Javadoc)
 	 * @see java.util.Map#entrySet()
 	 */
-	public Set<Entry<tSYMBOL, Symbol>> entrySet()
+	public Set<Entry<tSYMBOL, cDYN_SYMBOL>> entrySet()
 	{
 		return entrySet();
 	}
@@ -286,7 +286,7 @@ public abstract class PEnviron extends cCELL implements Iterable<tSYMBOL>,
 	/**
 	 * @return
 	 */
-	public Map<tSYMBOL, Symbol> getMap()
+	public Map<tSYMBOL, cDYN_SYMBOL> getMap()
 	{
 		return map;
 	}
@@ -294,7 +294,7 @@ public abstract class PEnviron extends cCELL implements Iterable<tSYMBOL>,
 	/**
 	 * @param map
 	 */
-	public void setMap(Map<tSYMBOL, Symbol> map)
+	public void setMap(Map<tSYMBOL, cDYN_SYMBOL> map)
 	{
 		this.map = map;
 	}

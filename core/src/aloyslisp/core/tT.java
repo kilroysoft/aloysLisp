@@ -197,4 +197,10 @@ public interface tT
 	@Function(name = "class-of", doc = "f_clas_1")
 	public tCLASS CLASS_OF();
 
+	/**
+	 * @return
+	 */
+	@Function(name = "sxhash", doc = "f_sxhash")
+	public Integer SXHASH();
+
 }
