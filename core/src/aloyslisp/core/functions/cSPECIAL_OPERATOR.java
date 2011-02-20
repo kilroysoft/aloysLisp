@@ -63,7 +63,7 @@ public class cSPECIAL_OPERATOR extends cSYSTEM_FUNCTION implements
 			tLIST declare)
 	{
 		super(cls, name, decl, doc, declare);
-		this.setFunctionCall(cls, name);
+		api.setFunctionCall(cls, name);
 		object = this;
 	}
 
@@ -73,8 +73,8 @@ public class cSPECIAL_OPERATOR extends cSYSTEM_FUNCTION implements
 	 */
 	protected String printableStruct()
 	{
-		return "SPECIAL " + getFuncName() + " " + intern.getArgs() + " "
-				+ intern.commentary() + " " + intern.declare();
+		return "SPECIAL " + getFuncName() + " " + api.getArgs() + " "
+				+ api.commentary() + " " + api.declare();
 	}
 
 	/*********************************************************************************
@@ -305,14 +305,11 @@ public class cSPECIAL_OPERATOR extends cSYSTEM_FUNCTION implements
 			@Arg(name = "lisp::place") tT place, //
 			@Arg(name = "lisp::value") tT value)
 	{
-		// Evaluate value to set
-		value = value.EVAL()[0];
-
 		// if symbol it's a SETQ
 		if (place instanceof tSYMBOL)
 		{
 			return new tT[]
-			{ SETQ(place, value) };
+			{ SETQ(place, value.EVAL()[0]) };
 		}
 
 		// test type validity for place
@@ -340,8 +337,9 @@ public class cSPECIAL_OPERATOR extends cSYSTEM_FUNCTION implements
 		}
 
 		// write to place
-		tLIST test = cons(newFunc,
-				((tCONS) ((tLIST) place.CDR().copy()).APPEND(list(value))));
+		tLIST test = (tLIST) ((tLIST) list(newFunc).APPEND(list(value)))
+				.APPEND(place.CDR());
+		System.out.println("Setf tranform = " + test);
 		return test.EVAL();
 	}
 

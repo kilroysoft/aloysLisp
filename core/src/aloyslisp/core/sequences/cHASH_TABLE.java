@@ -33,9 +33,9 @@ package aloyslisp.core.sequences;
 import java.util.*;
 
 import aloyslisp.core.*;
-import aloyslisp.core.functions.tFUNCTION;
-import aloyslisp.core.math.tFLOAT;
-import aloyslisp.core.math.tINTEGER;
+import static aloyslisp.core.engine.L.*;
+import aloyslisp.core.functions.*;
+import aloyslisp.core.math.*;
 
 /**
  * cHASH_TABLE
@@ -50,12 +50,22 @@ public class cHASH_TABLE extends cCELL implements tHASH_TABLE
 
 	private tFUNCTION				test		= null;
 
-	private static tFUNCTION		currTest	= null;
+	private tINTEGER				size		= null;
 
-	public cHASH_TABLE(tFUNCTION test, int init, float load)
+	private tFLOAT					thresHold	= null;
+
+	/**
+	 * @param test
+	 * @param size
+	 * @param load
+	 */
+	public cHASH_TABLE(tFUNCTION test, tINTEGER size, tFLOAT load)
 	{
-		table = new LinkedHashMap<tT, tT>(init, load);
+		table = new LinkedHashMap<tT, tT>(((cINTEGER) size).integerValue(),
+				((cSINGLE_FLOAT) ((cFLOAT) load).getFloatValue()).value);
 		this.test = test;
+		this.size = size;
+		thresHold = load;
 	}
 
 	/*
@@ -66,11 +76,12 @@ public class cHASH_TABLE extends cCELL implements tHASH_TABLE
 	 * aloyslisp.core.math.tINTEGER)
 	 */
 	@Override
-	public tHASH_TABLE MAKE_HASH_TABLE(tFUNCTION test, tINTEGER size,
-			tINTEGER rehashSize, tINTEGER rehashThreshold)
+	public tHASH_TABLE MAKE_HASH_TABLE(tT test, tINTEGER size,
+			tINTEGER rehashSize, tFLOAT rehashThreshold)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		if (!(test instanceof tFUNCTION))
+			test = null;
+		return new cHASH_TABLE((tFUNCTION) test, size, rehashThreshold);
 	}
 
 	/*
@@ -78,10 +89,9 @@ public class cHASH_TABLE extends cCELL implements tHASH_TABLE
 	 * @see aloyslisp.core.sequences.tHASH_TABLE#HASH_TABLE_COUNT()
 	 */
 	@Override
-	public tHASH_TABLE HASH_TABLE_COUNT()
+	public tINTEGER HASH_TABLE_COUNT()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return nInt(table.size());
 	}
 
 	/*
@@ -91,8 +101,7 @@ public class cHASH_TABLE extends cCELL implements tHASH_TABLE
 	@Override
 	public tINTEGER HASH_TABLE_REHASH_SIZE()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return cBIGNUM.ZERO;
 	}
 
 	/*
@@ -102,8 +111,7 @@ public class cHASH_TABLE extends cCELL implements tHASH_TABLE
 	@Override
 	public tFLOAT HASH_TABLE_REHASH_THRESHOLD()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return thresHold;
 	}
 
 	/*
@@ -113,8 +121,7 @@ public class cHASH_TABLE extends cCELL implements tHASH_TABLE
 	@Override
 	public tINTEGER HASH_TABLE_SIZE()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return size;
 	}
 
 	/*
@@ -124,8 +131,10 @@ public class cHASH_TABLE extends cCELL implements tHASH_TABLE
 	@Override
 	public tFUNCTION HASH_TABLE_TEST()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		if (test == null)
+			return (sym("eql").SYMBOL_FUNCTION());
+		return test;
+
 	}
 
 	/*
@@ -135,10 +144,16 @@ public class cHASH_TABLE extends cCELL implements tHASH_TABLE
 	 * aloyslisp.core.sequences.tHASH_TABLE)
 	 */
 	@Override
-	public tT[] GETHASH(tT key, tHASH_TABLE hashTable, tHASH_TABLE def)
+	public tT[] GETHASH(tT key, tHASH_TABLE hashTable, tT def)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		currTest = test;
+		tT res = table.get(key);
+		if (res == null)
+			return new tT[]
+			{ def, NIL };
+		else
+			return new tT[]
+			{ res, T };
 	}
 
 	/*
@@ -148,11 +163,10 @@ public class cHASH_TABLE extends cCELL implements tHASH_TABLE
 	 * aloyslisp.core.sequences.tHASH_TABLE)
 	 */
 	@Override
-	public tT SET_GETHASH(tT value, tT key, tHASH_TABLE hashTable,
-			tHASH_TABLE def)
+	public tT SET_GETHASH(tT value, tT key, tHASH_TABLE hashTable, tT def)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		currTest = test;
+		return table.put(key, value);
 	}
 
 	/*
@@ -163,8 +177,8 @@ public class cHASH_TABLE extends cCELL implements tHASH_TABLE
 	@Override
 	public tT REMHASH(tT key, tHASH_TABLE hashTable)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		currTest = test;
+		return table.remove(key);
 	}
 
 	/*
@@ -176,7 +190,12 @@ public class cHASH_TABLE extends cCELL implements tHASH_TABLE
 	@Override
 	public tT MAPHASH(tFUNCTION func, tHASH_TABLE hashTable)
 	{
-		// TODO Auto-generated method stub
+		Set<tT> set = table.keySet();
+
+		for (tT elem : set)
+		{
+			func.e(elem, GETHASH(elem, null, NIL));
+		}
 		return null;
 	}
 
@@ -187,7 +206,7 @@ public class cHASH_TABLE extends cCELL implements tHASH_TABLE
 	@Override
 	public tT CLRHASH()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		table.clear();
+		return NIL;
 	}
 }

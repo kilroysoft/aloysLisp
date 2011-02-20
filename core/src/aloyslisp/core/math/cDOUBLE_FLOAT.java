@@ -325,9 +325,9 @@ public class cDOUBLE_FLOAT extends cFLOAT implements tDOUBLE_FLOAT
 		return new cDOUBLE_FLOAT(value / op.getDoubleValue().doubleValue());
 	}
 
-	public Integer SXHASH()
+	public int hashCode()
 	{
-		return L.str(toString()).SXHASH();
+		return L.str(toString()).hashCode();
 	}
 
 }

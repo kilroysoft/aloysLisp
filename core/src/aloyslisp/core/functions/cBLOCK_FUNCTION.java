@@ -52,9 +52,9 @@ public class cBLOCK_FUNCTION extends cLAMBDA_FUNCTION implements tBLOCK_FUNCTION
 
 	protected String printableStruct()
 	{
-		return "cFUNCTION " + intern.getName() + " " + intern.getArgs() + " "
-				+ intern.commentary() + " " + intern.declare() + " "
-				+ intern.func();
+		return "cFUNCTION " + api.getName() + " " + api.getArgs() + " "
+				+ api.commentary() + " " + api.declare() + " "
+				+ api.func();
 	}
 
 }

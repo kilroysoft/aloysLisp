@@ -71,7 +71,7 @@ public class cLAMBDA_FUNCTION extends cFUNCTION implements tLAMBDA_FUNCTION
 	@Override
 	public tLIST getFunction()
 	{
-		return intern.func();
+		return api.func();
 	}
 
 	/*
@@ -83,7 +83,7 @@ public class cLAMBDA_FUNCTION extends cFUNCTION implements tLAMBDA_FUNCTION
 	@Override
 	public void setFunction(tLIST func)
 	{
-		intern.setFunc(func);
+		api.setFunc(func);
 	}
 
 	/**
@@ -93,8 +93,8 @@ public class cLAMBDA_FUNCTION extends cFUNCTION implements tLAMBDA_FUNCTION
 	 */
 	protected String printableStruct()
 	{
-		return "LAMBDA " + intern.getArgs() + " " + intern.commentary() + " "
-				+ intern.declare() + " " + intern.func();
+		return "LAMBDA " + api.getArgs() + " " + api.commentary() + " "
+				+ api.declare() + " " + api.func();
 	}
 
 }

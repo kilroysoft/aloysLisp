@@ -270,14 +270,4 @@ public class cENVIRONMENT extends PEnviron
 		return res;
 	}
 
-	/* (non-Javadoc)
-	 * @see aloyslisp.core.tT#SXHASH()
-	 */
-	@Override
-	public Integer SXHASH()
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

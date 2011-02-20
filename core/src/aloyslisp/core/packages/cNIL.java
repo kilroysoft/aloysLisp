@@ -82,7 +82,7 @@ public class cNIL extends cSYMBOL implements tNULL
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tLIST#SET_CAR(aloyslisp.core.types.tT)
 	 */
-	public tLIST SET_CAR(tT newCell)
+	public tLIST SET_CAR(tT newCell, tLIST list)
 	{
 		throw new LispErrorFunctionCannotApplyOn("rplaca", this);
 	}
@@ -92,7 +92,7 @@ public class cNIL extends cSYMBOL implements tNULL
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tLIST#SET_CDR(aloyslisp.core.types.tT)
 	 */
-	public tLIST SET_CDR(tT newCell)
+	public tLIST SET_CDR(tT newCell, tLIST list)
 	{
 		throw new LispErrorFunctionCannotApplyOn("rplacd", this);
 	}

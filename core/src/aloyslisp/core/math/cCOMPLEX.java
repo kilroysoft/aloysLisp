@@ -447,12 +447,12 @@ public class cCOMPLEX extends cNUMBER implements tCOMPLEX
 	}
 
 	/* (non-Javadoc)
-	 * @see aloyslisp.core.tT#SXHASH()
+	 * @see aloyslisp.core.tT#hashCode()
 	 */
 	@Override
-	public Integer SXHASH()
+	public int hashCode()
 	{
-		return real.SXHASH() ^ imag.SXHASH();
+		return real.hashCode() ^ imag.hashCode();
 	}
 
 }

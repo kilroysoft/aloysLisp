@@ -51,20 +51,20 @@ public interface tHASH_TABLE extends tBUILD_IN_CLASS
 	 * @param rehashThreshold
 	 * @return
 	 */
-	@Function(name = "name-hash-table", doc = "f_mk_has")
+	@Function(name = "make-hash-table", doc = "f_mk_has")
 	public tHASH_TABLE MAKE_HASH_TABLE(
-			//
-			@Key(name = "test") tFUNCTION test, //
+	//
+			@Key(name = "test", def = "(function eql)") tT test, //
 			@Key(name = "size", def = "11") tINTEGER size, //
 			@Key(name = "rehash-size", def = "11") tINTEGER rehashSize, //
-			@Key(name = "rehash-threshosd", def = ".75") tINTEGER rehashThreshold //
+			@Key(name = "rehash-threshosd", def = ".75") tFLOAT rehashThreshold //
 	);
 
 	/**
 	 * @return
 	 */
 	@Function(name = "hash-table-count", doc = "f_hash_1")
-	public tHASH_TABLE HASH_TABLE_COUNT( //
+	public tINTEGER HASH_TABLE_COUNT( //
 	);
 
 	/**
@@ -105,7 +105,7 @@ public interface tHASH_TABLE extends tBUILD_IN_CLASS
 	public tT[] GETHASH( //
 			@Arg(name = "key") tT key, //
 			@BaseArg @Arg(name = "hash-table") tHASH_TABLE hashTable, //
-			@Opt(name = "default") tHASH_TABLE def //
+			@Opt(name = "default") tT def //
 	);
 
 	/**
@@ -120,7 +120,7 @@ public interface tHASH_TABLE extends tBUILD_IN_CLASS
 			@Arg(name = "value") tT value, //
 			@Arg(name = "key") tT key, //
 			@BaseArg @Arg(name = "hash-table") tHASH_TABLE hashTable, //
-			@Opt(name = "default") tHASH_TABLE def //
+			@Opt(name = "default") tT def //
 	);
 
 	/**

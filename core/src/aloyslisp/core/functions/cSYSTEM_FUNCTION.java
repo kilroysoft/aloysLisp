@@ -57,8 +57,8 @@ public abstract class cSYSTEM_FUNCTION extends cFUNCTION implements
 	 */
 	protected String printableStruct()
 	{
-		return "SYSTEM " + getFuncName() + " " + intern.getArgs() + " "
-				+ intern.commentary() + " " + intern.declare();
+		return "SYSTEM " + getFuncName() + " " + api.getArgs() + " "
+				+ api.commentary() + " " + api.declare();
 	}
 
 }

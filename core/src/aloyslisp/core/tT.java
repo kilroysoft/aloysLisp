@@ -192,6 +192,7 @@ public interface tT
 
 	/**
 	 * Return the class of object
+	 * 
 	 * @return
 	 */
 	@Function(name = "class-of", doc = "f_clas_1")

@@ -162,7 +162,7 @@ public class LISTIterator extends SEQUENCEIterator
 
 		save();
 
-		current = previous.SET_CDR(current.CDR());
+		current = previous.SET_CDR(current.CDR(), null);
 	}
 
 	/*
@@ -198,7 +198,7 @@ public class LISTIterator extends SEQUENCEIterator
 		save();
 
 		tLIST newCons = new cCONS(obj, current.CDR());
-		current.SET_CDR(newCons);
+		current.SET_CDR(newCons, null);
 		return null;
 	}
 
@@ -221,12 +221,12 @@ public class LISTIterator extends SEQUENCEIterator
 		if (current == NIL)
 		{
 			current = new cCONS(obj, NIL);
-			previous.SET_CDR(current);
+			previous.SET_CDR(current, null);
 			index++;
 			return obj;
 		}
 
-		current.SET_CAR(obj);
+		current.SET_CAR(obj, null);
 		return obj;
 	}
 

@@ -225,12 +225,17 @@ public class cDYN_SYMBOL extends cCELL
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.tT#SXHASH()
+	 * @see aloyslisp.core.tT#hashCode()
 	 */
 	@Override
-	public Integer SXHASH()
+	public int hashCode()
 	{
-		return orig.SXHASH();
+		return orig.hashCode();
+	}
+
+	public String toString()
+	{
+		return "#<DYN_SYMB " + orig + " " + value + ">";
 	}
 
 }

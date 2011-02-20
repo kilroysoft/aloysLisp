@@ -35,7 +35,6 @@ import java.io.*;
 
 import aloyslisp.core.tT;
 import aloyslisp.core.conditions.LispException;
-import aloyslisp.core.engine.L;
 
 /**
  * cFILE_OUTPUT_STREAM
@@ -205,12 +204,12 @@ public class cFILE_OUTPUT_STREAM extends cOUTPUT_STREAM implements
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.tT#SXHASH()
+	 * @see aloyslisp.core.tT#hashCode()
 	 */
 	@Override
-	public Integer SXHASH()
+	public int hashCode()
 	{
-		return path.SXHASH();
+		return path.hashCode();
 	}
 
 }

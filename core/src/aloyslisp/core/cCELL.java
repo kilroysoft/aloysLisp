@@ -31,13 +31,11 @@
 package aloyslisp.core;
 
 import static aloyslisp.core.engine.L.*;
-import aloyslisp.annotations.Arg;
-import aloyslisp.annotations.Rest;
-import aloyslisp.annotations.Static;
-import aloyslisp.core.clos.tCLASS;
-import aloyslisp.core.clos.tSTANDARD_OBJECT;
+import aloyslisp.annotations.*;
+import aloyslisp.core.clos.*;
 import aloyslisp.core.conditions.*;
-import aloyslisp.core.packages.tSYMBOL;
+import aloyslisp.core.functions.*;
+import aloyslisp.core.packages.*;
 import aloyslisp.core.sequences.*;
 
 /**
@@ -51,9 +49,14 @@ public abstract class cCELL implements tSTANDARD_OBJECT
 {
 
 	/**
+	 * Current function test for order
+	 */
+	public static tFUNCTION	currTest	= null;
+
+	/**
 	 * Enable trace() to be active
 	 */
-	protected boolean	trace	= false;
+	protected boolean		trace		= false;
 
 	/*
 	 * (non-Javadoc)
@@ -234,6 +237,19 @@ public abstract class cCELL implements tSTANDARD_OBJECT
 		return "#<" + getClass().getSimpleName() + ">";
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	public boolean equals(Object o)
+	{
+		if (!(o instanceof tT))
+			return super.equals(o);
+		if (currTest == null)
+			return EQL((tT) o);
+		return currTest.e((tT) o)[0] != NIL;
+	}
+
 	/**
 	 * Write trace on environment
 	 * 
@@ -299,7 +315,7 @@ public abstract class cCELL implements tSTANDARD_OBJECT
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.tT#SXHASH()
+	 * @see aloyslisp.core.tT#hashCode()
 	 */
 	@Override
 	public Integer SXHASH()

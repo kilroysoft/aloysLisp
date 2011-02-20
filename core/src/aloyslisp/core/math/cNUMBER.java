@@ -729,14 +729,14 @@ public abstract class cNUMBER extends cCELL implements tNUMBER
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.tT#SXHASH()
+	 * @see aloyslisp.core.tT#hashCode()
 	 */
 	@Override
-	public Integer SXHASH()
+	public int hashCode()
 	{
 		if (ZEROP())
 			return 0;
-		return getDoubleValue().SXHASH();
+		return getDoubleValue().hashCode();
 	}
 
 }

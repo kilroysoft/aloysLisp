@@ -131,7 +131,7 @@ public class cLEXICAL
 
 	/**
 	 * Write value to an existing variable not for compiled Blocks should user
-	 * intern()
+	 * api()
 	 * 
 	 * @param Name
 	 * @param val
@@ -181,7 +181,7 @@ public class cLEXICAL
 	}
 
 	/**
-	 * Set value of variable, intern variable if not exists
+	 * Set value of variable, api variable if not exists
 	 * 
 	 * @param name
 	 * @param value

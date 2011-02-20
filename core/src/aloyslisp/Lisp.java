@@ -48,16 +48,28 @@ public class Lisp
 	 */
 	public static void main(String[] args)
 	{
+		// Should be the first to allow READTABLE to be active in class
+		// loading...
+		// TODO put to core
+		loadClasses("aloyslisp.core.streams");
+
+		// Load the rest
+		// TODO Should be systematized probably :
+		// loadClasses("aloyslisp.core");
+		// loadClasses("aloyslisp.packages");
 		loadClasses("aloyslisp.annotations");
+		loadClasses("aloyslisp.core");
+		loadClasses("aloyslisp.core.clos");
 		loadClasses("aloyslisp.core.conditions");
 		loadClasses("aloyslisp.core.engine");
 		loadClasses("aloyslisp.core.functions");
 		loadClasses("aloyslisp.core.math");
-		loadClasses("aloyslisp.core");
 		loadClasses("aloyslisp.core.sequences");
-		loadClasses("aloyslisp.core.streams");
+		loadClasses("aloyslisp.iterators");
 		loadClasses("aloyslisp.packages.common_lisp");
 		loadClasses("aloyslisp.packages.system");
+
+		// Load first lisp file (REPL definition)
 		sym("lisp::load").e(str("class.lisp"));
 
 		// loop recovering errors

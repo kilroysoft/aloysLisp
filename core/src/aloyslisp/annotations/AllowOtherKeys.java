@@ -24,43 +24,23 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 29 oct. 2010 Creation
+// IP 20 févr. 2011 Creation
 // --------------------------------------------------------------------------
 
-package aloyslisp.core.functions;
+package aloyslisp.annotations;
 
-import aloyslisp.core.packages.tSYMBOL;
-import aloyslisp.core.sequences.tLIST;
+import java.lang.annotation.*;
 
 /**
- * cMACRO_FUNCTION
+ * AllowOtherKeys
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class cMACRO_FUNCTION extends cLAMBDA_FUNCTION implements tMACRO_FUNCTION
+@Target(ElementType.METHOD)
+@Retention(RetentionPolicy.RUNTIME)
+public @interface AllowOtherKeys
 {
 
-	tLIST	expander	= null;
-
-	/**
-	 * @param def
-	 */
-	public cMACRO_FUNCTION(tSYMBOL name, tLIST args, tLIST func)
-	{
-		super(name, args, func);
-	}
-
-	/**
-	 * Internal printable value
-	 * 
-	 * @return
-	 */
-	protected String printableStruct()
-	{
-		return "cMACRO_FUNCTION " + api.getName() + " " + api.getArgs()
-				+ " " + api.commentary() + " " + api.declare() + " "
-				+ api.func();
-	}
 }

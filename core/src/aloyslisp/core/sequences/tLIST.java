@@ -50,6 +50,7 @@ public interface tLIST extends tSEQUENCE
 	 * @return fCAR of cons
 	 */
 	@Function(name = "car", doc = "f_car_c")
+	@SetF(name = "setf-car")
 	public tT CAR();
 
 	/**
@@ -58,6 +59,7 @@ public interface tLIST extends tSEQUENCE
 	 * @return fCDR of cons
 	 */
 	@Function(name = "cdr", doc = "f_car_c")
+	@SetF(name = "setf-cdr")
 	public tT CDR();
 
 	/**
@@ -67,7 +69,9 @@ public interface tLIST extends tSEQUENCE
 	 */
 	@Function(name = "setf-car")
 	public tLIST SET_CAR( //
-			@Arg(name = "val") tT val);
+			@Arg(name = "val") tT val, //
+			@BaseArg @Arg(name = "list") tLIST tList //
+	);
 
 	/**
 	 * Put cell in cdr
@@ -76,7 +80,9 @@ public interface tLIST extends tSEQUENCE
 	 */
 	@Function(name = "setf-cdr")
 	public tLIST SET_CDR( //
-			@Arg(name = "val") tT val);
+			@Arg(name = "val") tT val, //
+			@BaseArg @Arg(name = "list") tLIST tList //
+	);
 
 	/**
 	 * Test if cons is the last

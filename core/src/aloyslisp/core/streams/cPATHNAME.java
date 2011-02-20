@@ -84,12 +84,12 @@ public class cPATHNAME extends cCELL implements tPATHNAME
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.tT#SXHASH()
+	 * @see aloyslisp.core.tT#hashCode()
 	 */
 	@Override
-	public Integer SXHASH()
+	public int hashCode()
 	{
-		return L.str(file).SXHASH();
+		return L.str(file).hashCode();
 	}
 
 }

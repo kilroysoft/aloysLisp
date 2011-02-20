@@ -65,8 +65,8 @@ public class cCONS extends cCELL implements tCONS
 	 */
 	public cCONS(tT car, tT cdr)
 	{
-		SET_CAR(car);
-		SET_CDR(cdr);
+		SET_CAR(car, null);
+		SET_CDR(cdr, null);
 	}
 
 	/**
@@ -161,8 +161,8 @@ public class cCONS extends cCELL implements tCONS
 			res = new cCONS(value, res);
 		}
 
-		SET_CAR(res.CAR());
-		SET_CDR(res.CDR());
+		SET_CAR(res.CAR(), null);
+		SET_CDR(res.CDR(), null);
 	}
 
 	// ////////////////////////////////////////////////////////////////////////////
@@ -190,7 +190,7 @@ public class cCONS extends cCELL implements tCONS
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tLIST#SET_CAR(aloyslisp.core.types.tT)
 	 */
-	public tLIST SET_CAR(tT val)
+	public tLIST SET_CAR(tT val, tLIST list)
 	{
 		car = val;
 		return this;
@@ -200,7 +200,7 @@ public class cCONS extends cCELL implements tCONS
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tLIST#SET_CDR(aloyslisp.core.types.tT)
 	 */
-	public tLIST SET_CDR(tT val)
+	public tLIST SET_CDR(tT val, tLIST list)
 	{
 		cdr = val;
 		return this;
@@ -292,8 +292,8 @@ public class cCONS extends cCELL implements tCONS
 	public tLIST NREVERSE()
 	{
 		tLIST newCons = REVERSE();
-		SET_CAR(newCons.CAR());
-		SET_CDR(newCons.CDR());
+		SET_CAR(newCons.CAR(), null);
+		SET_CDR(newCons.CDR(), null);
 		return this;
 	}
 
@@ -440,7 +440,7 @@ public class cCONS extends cCELL implements tCONS
 	 */
 	public tT APPEND(tT item)
 	{
-		LAST().SET_CDR(item);
+		LAST().SET_CDR(item, null);
 		return this;
 	}
 
@@ -568,12 +568,12 @@ public class cCONS extends cCELL implements tCONS
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.tT#SXHASH()
+	 * @see aloyslisp.core.tT#hashCode()
 	 */
 	@Override
-	public Integer SXHASH()
+	public int hashCode()
 	{
-		return car.SXHASH() ^ cdr.SXHASH();
+		return car.hashCode() ^ cdr.hashCode();
 	}
 
 }

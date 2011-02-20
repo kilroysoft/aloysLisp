@@ -57,27 +57,17 @@ public abstract class cFUNCTION extends cCELL implements tFUNCTION,
 	/**
 	 * Representation of arguments of the function
 	 */
-	public cAPI	intern	= null;
+	public cAPI		api		= null;
 
 	/**
 	 * String used to represent the function in case of macrochar transform
 	 */
-	public String		mac		= null;
-
-	/**
-	 * Java method to call, primitive, function, constructor or Lisp interpreter
-	 */
-	public Method		method	= null;
+	public String	mac		= null;
 
 	/**
 	 * Static object for static function
 	 */
-	tT					object	= null;
-
-	/**
-	 * Number of argument used as base object for primitives
-	 */
-	Integer				baseArg	= -1;
+	tT				object	= null;
 
 	/**
 	 * Creation with arguments detail
@@ -99,25 +89,16 @@ public abstract class cFUNCTION extends cCELL implements tFUNCTION,
 		else
 			f = name.SYMBOL_NAME();
 
-		intern = new cAPI(name, args, func);
+		api = new cAPI(name, args, func);
 		trace("Name = " + name + " new Name = " + f + " Class = "
 				+ c.getCanonicalName());
-		if (!setFunctionCall(c, f))
+		if (!api.setFunctionCall(c, f))
 		{
 			System.err.println("Function " + f + " not found in class "
 					+ c.getCanonicalName());
 		}
-		intern.setName(name);
+		api.setName(name);
 
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.types.tFUNCTION#setBaseArg(java.lang.Integer)
-	 */
-	public void setBaseArg(Integer no)
-	{
-		baseArg = no;
 	}
 
 	/*
@@ -159,7 +140,7 @@ public abstract class cFUNCTION extends cCELL implements tFUNCTION,
 		{
 
 			// test method
-			if (method == null)
+			if (api.method == null)
 			{
 				throw new LispException("Function call w/o method : (" + this
 						+ " " + args + ")");
@@ -168,28 +149,28 @@ public abstract class cFUNCTION extends cCELL implements tFUNCTION,
 			// Transform arguments
 			if (object == null)
 			{
-				if (baseArg >= 0)
+				if (api.baseArg >= 0)
 				{
 					// object is in the argument list, no change in arguments
-					intern.pushBlock(args);
-					args = intern.getValues();
-					newArgs = tranformArgs(method.getParameterTypes(), args);
-					actObj = (tT) newArgs[baseArg];
+					api.pushBlock(args);
+					args = api.getDynValues();
+					newArgs = tranformArgs(api.method.getParameterTypes(), args);
+					actObj = (tT) newArgs[api.baseArg];
 				}
 				else
 				{
 					// First argument is the object, real args follow
 					actObj = args.CAR();
-					intern.pushBlock((tLIST) args.CDR());
-					args = intern.getValues();
-					newArgs = tranformArgs(method.getParameterTypes(), args);
+					api.pushBlock((tLIST) args.CDR());
+					args = api.getDynValues();
+					newArgs = tranformArgs(api.method.getParameterTypes(), args);
 				}
 			}
 			else
 			{
 				// static function arguments are kept
-				intern.pushBlock(args);
-				newArgs = tranformArgs(method.getParameterTypes(), args);
+				api.pushBlock(args);
+				newArgs = tranformArgs(api.method.getParameterTypes(), args);
 			}
 
 			// Suppress the execution environment if special
@@ -197,32 +178,30 @@ public abstract class cFUNCTION extends cCELL implements tFUNCTION,
 				e.popBlock();
 
 			// Call function
-			trace("exec(" + intern.getName() + " (" + actObj + ") " + args
-					+ ")");
+			trace("exec(" + api.getName() + " (" + actObj + ") " + args + ")");
 
-			Object ret = method.invoke(actObj, newArgs);
+			Object ret = api.method.invoke(actObj, newArgs);
 
 			// if function return multiple values
 			if (ret == null)
 			{
 				// return value as tT
-				trace(" => From (" + intern.getName() + ") => " + null);
+				trace(" => From (" + api.getName() + ") => " + null);
 				res = new tT[] {};
 			}
 			else if (ret instanceof tT[])
 			{
 				if (((tT[]) ret).length > 0)
-					trace(" => From (" + intern.getName() + ") => "
+					trace(" => From (" + api.getName() + ") => "
 							+ ((Object[]) ret)[0]);
 				else
-					trace(" PROBLEME => From (" + intern.getName() + ") => "
-							+ ret);
+					trace(" PROBLEME => From (" + api.getName() + ") => " + ret);
 				res = (tT[]) ret;
 			}
 			else
 			{
 				// return value as tT
-				trace(" => From (" + intern.getName() + ") => " + ret);
+				trace(" => From (" + api.getName() + ") => " + ret);
 				res = new tT[]
 				{ normalize(ret) };
 			}
@@ -233,17 +212,17 @@ public abstract class cFUNCTION extends cCELL implements tFUNCTION,
 				System.out.println("cAPI : null");
 			else
 			{
-				System.out.println("Function : " + intern.getStringName());
+				System.out.println("Function : " + api.getStringName());
 				System.out.println("Object : " + actObj + " : ("
 						+ actObj.getClass().getSimpleName() + ")");
-				System.out.println("Meth : " + method.toGenericString());
+				System.out.println("Meth : " + api.method.toGenericString());
 				for (int i = 0; i < newArgs.length; i++)
 					System.out.println("Arg(" + i + ") : " + newArgs[i]
 							+ " : (" + newArgs[i].getClass().getSimpleName()
 							+ ")");
 			}
 			e.printStackTrace();
-			throw new LispException("Function " + intern.getStringName()
+			throw new LispException("Function " + api.getStringName()
 					+ " bad arguments : " + e.getLocalizedMessage());
 		}
 		catch (IllegalAccessException e)
@@ -312,7 +291,7 @@ public abstract class cFUNCTION extends cCELL implements tFUNCTION,
 	 */
 	protected String printableStruct()
 	{
-		return getClass().getSimpleName() + " " + intern.getName();
+		return getClass().getSimpleName() + " " + api.getName();
 	}
 
 	/**
@@ -337,7 +316,8 @@ public abstract class cFUNCTION extends cCELL implements tFUNCTION,
 						+ this + ": " + args);
 			}
 
-			tT out = arg.EVAL()[0];
+			tT out = NIL;
+			out = arg.EVAL()[0];
 
 			if (out == null)
 			{
@@ -359,7 +339,7 @@ public abstract class cFUNCTION extends cCELL implements tFUNCTION,
 	@Override
 	public tSYMBOL getFuncName()
 	{
-		return intern.getName();
+		return api.getName();
 	}
 
 	/*
@@ -369,7 +349,7 @@ public abstract class cFUNCTION extends cCELL implements tFUNCTION,
 	@Override
 	public void setFuncName(tSYMBOL name)
 	{
-		intern.setName(name);
+		api.setName(name);
 	}
 
 	/**
@@ -380,7 +360,7 @@ public abstract class cFUNCTION extends cCELL implements tFUNCTION,
 	 */
 	public tT arg(int index)
 	{
-		return intern.arg(index);
+		return api.arg(index);
 	}
 
 	/**
@@ -391,7 +371,7 @@ public abstract class cFUNCTION extends cCELL implements tFUNCTION,
 	 */
 	public tT arg(String key)
 	{
-		return intern.arg(key);
+		return api.arg(key);
 	}
 
 	/**
@@ -401,7 +381,7 @@ public abstract class cFUNCTION extends cCELL implements tFUNCTION,
 	 */
 	public tLIST arg()
 	{
-		return intern.arg();
+		return api.arg();
 	}
 
 	/**
@@ -423,29 +403,6 @@ public abstract class cFUNCTION extends cCELL implements tFUNCTION,
 	}
 
 	/**
-	 * @param c
-	 * @param obj
-	 * @param name
-	 * @return
-	 */
-	public boolean setFunctionCall(Class<?> c, String name)
-	{
-		Method[] meth = c.getMethods();
-		for (Method m : meth)
-		{
-			// m.getParameterAnnotations();
-
-			if (m.getName().equalsIgnoreCase(name))
-			{
-				method = m;
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	/**
 	 * @param paramTypes
 	 * @param arg
 	 * @return
@@ -454,7 +411,7 @@ public abstract class cFUNCTION extends cCELL implements tFUNCTION,
 	{
 		// Transform arguments
 		int i = 0;
-		int posRest = intern.getPosRest();
+		int posRest = api.getPosRest();
 		Object[] newArgs = new Object[paramTypes.length];
 
 		// System.out.println("Args : " + arg);
@@ -511,8 +468,9 @@ public abstract class cFUNCTION extends cCELL implements tFUNCTION,
 			}
 			else
 			{
-				System.out.println("transform fn " + method.getName() + " arg "
-						+ arg + " : " + arg.getClass().getSimpleName() + "->"
+				System.out.println("transform fn " + api.method.getName()
+						+ " arg " + arg + " : "
+						+ arg.getClass().getSimpleName() + "->"
 						+ cl.getSimpleName());
 				throw new LispException("1Argument " + arg + " : "
 						+ arg.getClass().getSimpleName()
@@ -611,36 +569,14 @@ public abstract class cFUNCTION extends cCELL implements tFUNCTION,
 				+ cell.getClass().getSimpleName() + " not managed");
 	}
 
-	/**
-	 * @return
-	 */
-	public String getLispDeclare()
-	{
-		String lFunc = intern.getName().SYMBOL_NAME();
-		tLIST res = list(intern.getName());
-		if (!(method.toString().contains("static")) && baseArg == -1)
-		{
-			res = (tLIST) res.APPEND(list(sym(method.getDeclaringClass()
-					.getSimpleName().substring(1))));
-		}
-		res = (tLIST) res.APPEND(intern.getArgs());
-		String decl = "* " + res.toString().replaceAll(" \\*", " \\\\*");
-		decl = decl.replaceFirst(
-				lFunc.replaceAll("\\*", "\\\\*").replaceAll("\\%", "\\\\%")
-						.replaceAll("\\+", "\\\\+"), "[[" + lFunc
-						+ "|http://hyper.aloys.li/Body/" + intern.commentary()
-						+ ".htm]]");
-		return decl.toLowerCase().replace("/body/", "/Body/");
-	}
-
-	/* (non-Javadoc)
-	 * @see aloyslisp.core.tT#SXHASH()
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.functions.tFUNCTION#setBaseArg(java.lang.Integer)
 	 */
 	@Override
-	public Integer SXHASH()
+	public void setBaseArg(Integer no)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		api.setBaseArg(no);
 	}
 
 }

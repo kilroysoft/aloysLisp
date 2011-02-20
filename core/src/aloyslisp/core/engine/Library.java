@@ -39,6 +39,7 @@ import aloyslisp.core.*;
 import aloyslisp.core.functions.*;
 import aloyslisp.core.packages.*;
 import aloyslisp.core.sequences.*;
+import static aloyslisp.core.streams.cSTRING_INPUT_STREAM.*;
 
 /**
  * Library
@@ -168,13 +169,31 @@ public class Library
 			Static stat = m.getAnnotation(Static.class);
 			Function f = m.getAnnotation(Function.class);
 			if (stat == null && f == null)
-				continue;
+			{
+				// Test for non declared
+				if (m.getName().matches("[A-Z_\\*\\%]*"))
+				{
+					if (m.getDeclaringClass().getSimpleName().startsWith("t"))
+						// we are in a type definition
+						System.out.println("NON DECLARED LISP METHOD : "
+								+ m.getName());
 
+					else if ((m.getModifiers() & Modifier.STATIC) != 0)
+						// we are in a class static definition
+						System.out.println("NON DECLARED LISP cSTATIC : "
+								+ m.getDeclaringClass() + " " + clas + " "
+								+ m.getName());
+				}
+				continue;
+			}
+
+			SetF setf = m.getAnnotation(SetF.class);
 			SpecialOp special = m.getAnnotation(SpecialOp.class);
 			Mac prefix = m.getAnnotation(Mac.class);
 			Annotation[][] notes = m.getParameterAnnotations();
 
-			tFUNCTION func;
+			tFUNCTION func = null;
+			tSYMBOL sym = null;
 			if (stat != null)
 			{
 				if (special == null)
@@ -186,7 +205,8 @@ public class Library
 					func = new cSPECIAL_OPERATOR(clas, m.getName(),
 							argsDecl(notes), stat.doc(), declareArgs());
 				writeMissing(m.getName(), notes);
-				func.setFuncName(sym(stat.name()).SET_SYMBOL_FUNCTION(func));
+				func.setFuncName(sym = sym(stat.name()).SET_SYMBOL_FUNCTION(
+						func));
 			}
 			else if (f != null)
 			{
@@ -195,28 +215,20 @@ public class Library
 						f.doc(), declareArgs());
 				func.setBaseArg(noArgsBase(notes));
 				writeMissing(m.getName(), notes);
-				func.setFuncName(sym(f.name()).SET_SYMBOL_FUNCTION(func));
-			}
-			else
-			{
-				if (m.getName().matches("[A-Z_\\*\\%]*"))
-				{
-					// if (type)
-					// System.out.println("NON DECLARED LISP METHOD : "
-					// + m.getName());
-					// else if ((m.getModifiers() & Modifier.STATIC) != 0)
-					// System.out.println("NON DECLARED LISP cSTATIC : "
-					// + m.getDeclaringClass() + " " + clas + " "
-					// + m.getName());
-					// System.out.println();
-				}
-
-				continue;
+				func.setFuncName(sym = sym(f.name()).SET_SYMBOL_FUNCTION(func));
 			}
 
-			if (m.toString().contains(cls + "." + m.getName()))
+			// define setf function
+			if (sym != null && setf != null)
 			{
-				System.out.println(((cFUNCTION) func).getLispDeclare());
+				sym.SET_GET(setfKey, sym(setf.name()));
+			}
+
+			// write declare
+			// TODO move as function of cAPI
+			if (func != null && m.toString().contains(cls + "." + m.getName()))
+			{
+				System.out.println(((cFUNCTION) func).api.getLispDeclare());
 				System.out.println();
 				if (prefix != null)
 				{
@@ -310,7 +322,8 @@ public class Library
 						if (call)
 							arg = unquote(arg);
 						else
-							arg = list(arg).APPEND(list(sym(((Opt) a).def())));
+							arg = list(arg).APPEND(
+									list(getDefault(((Opt) a).def())));
 					}
 					else if (a instanceof Key)
 					{
@@ -318,7 +331,8 @@ public class Library
 						if (call)
 							arg = unquote(arg);
 						else
-							arg = list(arg).APPEND(list(sym(((Key) a).def())));
+							arg = list(arg).APPEND(
+									list(getDefault(((Key) a).def())));
 					}
 					else if (a instanceof Rest)
 					{
@@ -337,6 +351,19 @@ public class Library
 			res = (tLIST) decl(prefix).APPEND(res);
 
 		return res;
+	}
+
+	/**
+	 * @param def
+	 * @return
+	 */
+	private static tT getDefault(String def)
+	{
+		if (def.equals(""))
+			return NIL;
+
+		return MAKE_STRING_INPUT_STREAM(def, NIL, NIL).READ(null, false, NIL,
+				false);
 	}
 
 	/**

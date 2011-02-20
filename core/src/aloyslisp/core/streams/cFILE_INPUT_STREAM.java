@@ -33,7 +33,6 @@ import java.io.*;
 
 import aloyslisp.core.*;
 import aloyslisp.core.conditions.*;
-import aloyslisp.core.sequences.*;
 
 /**
  * cFILE_INPUT_STREAM
@@ -106,7 +105,7 @@ public class cFILE_INPUT_STREAM extends cINPUT_STREAM implements
 	 * java.lang.Boolean)
 	 */
 	public Character READ_CHAR(tINPUT_STREAM stream, Boolean eofErrorP,
-			tT eofValue, Boolean recursiveP) throws EOFException
+			tT eofValue, Boolean recursiveP)
 	{
 		Character res = null;
 		try
@@ -114,17 +113,17 @@ public class cFILE_INPUT_STREAM extends cINPUT_STREAM implements
 			int car = reader.read();
 			if (car == -1)
 			{
-				throw new EOFException("");
+				throw new END_OF_FILE(this);
 			}
 
 			res = new Character((char) car);
 			// System.out.println("char : '" + res + "' (" + res.hashCode() +
 			// ")");
 		}
-		catch (EOFException e)
+		catch (END_OF_FILE e)
 		{
 			// retrow EOF
-			throw new EOFException("");
+			throw new END_OF_FILE(this);
 		}
 		catch (IOException e)
 		{
@@ -226,36 +225,7 @@ public class cFILE_INPUT_STREAM extends cINPUT_STREAM implements
 	 */
 	@Override
 	public Integer READ_BYTE(tINPUT_STREAM stream, Boolean eofErrorP,
-			tT eofValue, Boolean recursiveP) throws EOFException
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see
-	 * aloyslisp.core.types.tINPUT_STREAM#READ_SEQUENCE(aloyslisp.core.types
-	 * .tSEQUENCE, aloyslisp.core.types.tINPUT_STREAM, java.lang.Integer,
-	 * java.lang.Integer)
-	 */
-	@Override
-	public tT READ_SEQUENCE(tSEQUENCE sequence, tINPUT_STREAM stream,
-			Integer start, Integer end)
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.types.tINPUT_STREAM#READ_LINE(aloyslisp.core.types.
-	 * tINPUT_STREAM, java.lang.Boolean, aloyslisp.core.types.tT,
-	 * java.lang.Boolean)
-	 */
-	@Override
-	public tT[] READ_LINE(tINPUT_STREAM stream, Boolean eofErrorP, tT eofValue,
-			Boolean recursiveP) throws EOFException
+			tT eofValue, Boolean recursiveP)
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -286,12 +256,12 @@ public class cFILE_INPUT_STREAM extends cINPUT_STREAM implements
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.tT#SXHASH()
+	 * @see aloyslisp.core.tT#hashCode()
 	 */
 	@Override
-	public Integer SXHASH()
+	public int hashCode()
 	{
-		return path.SXHASH();
+		return path.hashCode();
 	}
 
 }

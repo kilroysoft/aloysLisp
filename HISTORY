@@ -1,92 +1,93 @@
-HISTORY : List of changes
+= HISTORY : List of changes =
 	
-To do
-=====
-- All non lisp functions on objects are private or protected or global.
-- At last write all the base functions !!!
-- Environment as dynamic object.
-- Debug environment.
-- Interface hooks (debug). Execute, continue, breakpoints, Environment stack.
-- Compilation.... (as soon as possible)
-- Add Missing streams.
-- FUNCTIONS implements SPECIAL_FORM as functions can be function designators and not MACROS 
+== To do ==
+* All non lisp functions on objects are private or protected or global.
+* At last write all the base functions !!!
+* Environment as dynamic object.
+* Debug environment.
+* Interface hooks (debug). Execute, continue, breakpoints, Environment stack.
+* Compilation.... (as soon as possible)
+* Add Missing streams.
+* FUNCTIONS implements SPECIAL_FORM as functions can be function designators and not MACROS 
   and SPECIAL_FORMS.....
-- MACROS implements SPECIAL_FORM, not the contrary.
-- Refactor toString() in a more standard way (with special print variables).
-- Create type objects. (I think in some PLIST infos...)
-- Change atom parsing... especially for case control. Interning with INTERN.
-- Change FUNCTIONs management (a lot of work...), and error management...
-- Test for arguments in excess.
-- Add setf management in annotations and instantiation.
+* MACROS implements SPECIAL_FORM, not the contrary.
+* Refactor toString() in a more standard way (with special print variables).
+* Create type objects. (I think in some PLIST infos...)
+* Change atom parsing... especially for case control. Interning with INTERN.
+* Change FUNCTIONs management (a lot of work...), and error management...
+* Add setf management in annotations and instantiation.
+* READs functions should return tT and manage return eof-value...
 
-Doing
-=====
-- Manage symbols annotations and link between SYMBOLs and Java variables.
-- Manage VECTORs and SIMPLE_VECTORs.
-- Automatic documentation creation (Wiki) by the programm itself. 
-	- Doc for Java version of syntax of LISP Function (by type or classes and globally alphabeticaly)
-	- Doc for LISP version of syntax of LISP Function
-	- List of function to be implemented.
-- Clean-up all instantiation process (key arguments, rething the calling process)
-- Implement PACKAGE and SYMBOL management (a lot of work...)
-- Implement CLASS and STRUCTURE functions for definition and instances
-- Change iterators for SEQUENCE classes (cons, array).
+== Doing ==
+* Test arguments management, rewrite the whole.
+* Manage symbols annotations and link between SYMBOLs and Java variables.
+* Manage VECTORs and SIMPLE_VECTORs.
+* Automatic documentation creation (Wiki) by the programm itself. 
+	* Doc for Java version of syntax of LISP Function (by type or classes and globally alphabeticaly)
+	* Doc for LISP version of syntax of LISP Function
+	* List of function to be implemented.
+* Clean-up all instantiation process (key arguments, rething the calling process)
+* Implement PACKAGE and SYMBOL management (a lot of work...)
+* Implement CLASS and STRUCTURE functions for definition and instances
+* Change iterators for SEQUENCE classes (cons, array).
+* Suppress @BaseArg argument in the Java call.
+* Test and debug LET
 
-Current state
-=============
-- Verify rest arguments management in java function tT... as array, tT (tLIST ?) as tLIST
-- Create SEQUENCEIterator, LISTIterator, VECTORIterator, for destructive and non destructive iterations
-- Generate function info of code. For now as printf at beginning, will be placed in a function.
-- CLASS, STANDARD_OBJECT, STANDARD_CLASS, BUILD_IN_CLASS + derivation of BUILD_IN_CLASSES for 
+== Current state ==
+* Add @AllowOtherKeys for argument management.
+* Add correct initialisation of key values in cAPI.
+* Added all string streams, cSTRING_INPUT_STREAM and cSTRING_OUTPUT_STREAM.
+* Add @SetF annotation and manage setf special operator (will be a macro).
+* Verify rest arguments management in java function tT... as array, tT (tLIST ?) as tLIST
+* Create SEQUENCEIterator, LISTIterator, VECTORIterator, for destructive and non destructive iterations
+* Generate function info of code. For now as printf at beginning, will be placed in a function.
+* CLASS, STANDARD_OBJECT, STANDARD_CLASS, BUILD_IN_CLASS + derivation of BUILD_IN_CLASSES for 
   base Classes and object
-- STRUCTURE_CLASS, STRUCTURE_OBJECT
-- Created new class aloyslisp.core.exec.Library to manage loading of class or jar definition 
+* STRUCTURE_CLASS, STRUCTURE_OBJECT
+* Created new class aloyslisp.core.exec.Library to manage loading of class or jar definition 
   of LISP functions (written or compiled). (SYS::INSTANTIATE java-class-path) create a new function 
   symbol for every LISP function declared in the classe defined in some package address.
-- MULTIPLE-VALUE-CALL, MULTIPLE-VALUE-PROG1, VALUES-LIST
-- INTERNAL, IMPORT, EXPORT
-- Adding documentation information
-- Add CONDITION classes
-- Change class naming for base LISP classes XXXXXX -< cXXXXX, i.e. cINTEGER, cFUNCTION
-- Add toString for math classes.
+* MULTIPLE-VALUE-CALL, MULTIPLE-VALUE-PROG1, VALUES-LIST
+* INTERNAL, IMPORT, EXPORT
+* Adding documentation information
+* Add CONDITION classes
+* Change class naming for base LISP classes XXXXXX -> cXXXXX, i.e. cINTEGER, cFUNCTION
+* Add toString for math classes.
 
-Version V120
-============
-- Complete rewrite of NUMBERs structure and functions.
-- Pass to an unified version of integer as BigInteger.
-- All this stuff is intended to move to a more general lisp object model.
-- Adding NUMBER functions
-- Suppressed @Construct annotation. Replaced by factory static functions.
-- Added tFUNCTION_DESIGNATOR (type (and SYMBOL LAMBDA-FUNCTION SYSTEM-FUNCTION)) to confirm and test.
-- Rewrite ALL Stream lisp functions.
-- Define clear documentation about function.
-- Function library as blank classes.
-- Automatic instantiate of all base object. This will be managed in detail later, perhaps config file
+== Version V120 ==
+* Complete rewrite of NUMBERs structure and functions.
+* Pass to an unified version of integer as BigInteger.
+* All this stuff is intended to move to a more general lisp object model.
+* Adding NUMBER functions
+* Suppressed @Construct annotation. Replaced by factory static functions.
+* Added tFUNCTION_DESIGNATOR (type (and SYMBOL LAMBDA-FUNCTION SYSTEM-FUNCTION)) to confirm and test.
+* Rewrite ALL Stream lisp functions.
+* Define clear documentation about function.
+* Function library as blank classes.
+* Automatic instantiate of all base object. This will be managed in detail later, perhaps config file
 and command tags.
-- Creation of STATIC, PRIMITIVE, CONSTRUCTOR function classes.
-- Change %global, %primitive, %construct as direct function call class.
+* Creation of STATIC, PRIMITIVE, CONSTRUCTOR function classes.
+* Change %global, %primitive, %construct as direct function call class.
 
-Version UB26
-============
-- Add %instantiate function to create %primitive and %global function call for general LISP functions
-- Add setf definition in plist :setf-func
-- Add type definition in plist :type-class
-- All function arguments can be object (translate Objects to tT's).
-- Une notation classes to give lisp info on Java definition of LISP functions.
-- Create function %static for creators and static functions call based on types.
-- Automatically load all the lisp function classes.
-- implement macroexpanders.
-- Added type basic test (%istype obj)
-- Added equality functions eq, eql, equal.
-- Rewrite SYSTEM-FUNCTIONs in lisp begin the whole lisp interface with java in lisp.
-- Create primitive lisp function to call directly objects java methods.
-- Transform all Cell objects interface in type in a proper package aloyslisp.core.types (+rename)
-- Complete key definition ((keyword variable) default)
-- &allow-other-keys
-- Change in the management of arguments binding order (mandatory, &optional, &rest, &key, 
+== Version UB26 ==
+* Add %instantiate function to create %primitive and %global function call for general LISP functions
+* Add setf definition in plist :setf-func
+* Add type definition in plist :type-class
+* All function arguments can be object (translate Objects to tT's).
+* Une notation classes to give lisp info on Java definition of LISP functions.
+* Create function %static for creators and static functions call based on types.
+* Automatically load all the lisp function classes.
+* implement macroexpanders.
+* Added type basic test (%istype obj)
+* Added equality functions eq, eql, equal.
+* Rewrite SYSTEM-FUNCTIONs in lisp begin the whole lisp interface with java in lisp.
+* Create primitive lisp function to call directly objects java methods.
+* Transform all Cell objects interface in type in a proper package aloyslisp.core.types (+rename)
+* Complete key definition ((keyword variable) default)
+* &allow-other-keys
+* Change in the management of arguments binding order (mandatory, &optional, &rest, &key, 
 &allow-other-keys, &aux).	
 	
-Version UB09
-============	
-- Alpha version working
+== Version UB09 ==
+* Alpha version working
 	

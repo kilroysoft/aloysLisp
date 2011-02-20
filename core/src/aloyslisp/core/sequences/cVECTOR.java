@@ -297,15 +297,15 @@ public class cVECTOR extends cCELL implements tVECTOR
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.tT#SXHASH()
+	 * @see aloyslisp.core.tT#hashCode()
 	 */
 	@Override
-	public Integer SXHASH()
+	public int hashCode()
 	{
 		Integer res = 0;
 		for (tT elem : array)
 		{
-			res = res ^ elem.SXHASH();
+			res = res ^ elem.hashCode();
 		}
 		return res;
 	}

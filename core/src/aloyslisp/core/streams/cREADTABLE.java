@@ -34,13 +34,13 @@
 
 package aloyslisp.core.streams;
 
-import java.io.EOFException;
 import java.util.*;
 
 import static aloyslisp.core.engine.L.*;
 import aloyslisp.annotations.*;
 import aloyslisp.core.*;
 import aloyslisp.core.conditions.*;
+import aloyslisp.core.engine.Library;
 import aloyslisp.core.functions.*;
 import aloyslisp.core.packages.cSYMBOL;
 import aloyslisp.core.packages.tSYMBOL;
@@ -190,18 +190,28 @@ public class cREADTABLE extends cCELL implements tREADTABLE
 	}
 
 	/**
+	 * @return
+	 */
+	public tREADTABLE init()
+	{
+		// validate standard readtable functions
+		Library.INSTANTIATE(this.getClass().getCanonicalName());
+		return this;
+	}
+
+	/**
 	 * @param character
 	 * @param stream
 	 * @param recursiveP
 	 * @return
-	 * @throws EOFException
+	 * @throws END_OF_FILE
 	 */
 	@Static(name = "read-delimited-list", doc = "f_rd_del")
 	public static tT READ_DELIMITED_LIST(
 			@Arg(name = "character") Character character, //
 			@BaseArg @Opt(name = "input-stream", def = "*standard-input*") tINPUT_STREAM stream, //
 			@Opt(name = "recursive-p", def = "nil") Boolean recursiveP)
-			throws EOFException
+			throws END_OF_FILE
 	{
 		return null;
 	}
@@ -447,7 +457,7 @@ public class cREADTABLE extends cCELL implements tREADTABLE
 		{
 			return list(BACKQUOTE, in.READ(in, false, NIL, true));
 		}
-		catch (EOFException e)
+		catch (END_OF_FILE e)
 		{
 			throw new LispException("Error in reading a value after "
 					+ BACKQUOTE);
@@ -472,7 +482,7 @@ public class cREADTABLE extends cCELL implements tREADTABLE
 			// escaped to keep case
 			return new cCHARACTER(in.readAtom(false, NIL, true));
 		}
-		catch (EOFException e)
+		catch (END_OF_FILE e)
 		{
 			throw new LispException(
 					"Error in reading a character definition after #\\");
@@ -503,7 +513,7 @@ public class cREADTABLE extends cCELL implements tREADTABLE
 			// we should reverse the list
 			return in.READ(in, false, NIL, true);
 		}
-		catch (EOFException e)
+		catch (END_OF_FILE e)
 		{
 			// end of file reading a commentary, well nothing...
 			return null;
@@ -544,7 +554,7 @@ public class cREADTABLE extends cCELL implements tREADTABLE
 		{
 			return list(FUNCTION, in.READ(in, false, NIL, true));
 		}
-		catch (EOFException e)
+		catch (END_OF_FILE e)
 		{
 			throw new LispException("Error in reading a value after "
 					+ FUNCTION);
@@ -594,7 +604,7 @@ public class cREADTABLE extends cCELL implements tREADTABLE
 			// we should reverse the list
 			return res.REVERSE();
 		}
-		catch (EOFException e)
+		catch (END_OF_FILE e)
 		{
 			throw new LispException("Error in reading a list : " + res);
 		}
@@ -619,7 +629,7 @@ public class cREADTABLE extends cCELL implements tREADTABLE
 		{
 			return quote(in.READ(in, false, NIL, true));
 		}
-		catch (EOFException e)
+		catch (END_OF_FILE e)
 		{
 			throw new LispException("Error in reading a value after " + QUOTE);
 		}
@@ -655,7 +665,7 @@ public class cREADTABLE extends cCELL implements tREADTABLE
 			// we should return as LISP String
 			return str(str.toString());
 		}
-		catch (EOFException e)
+		catch (END_OF_FILE e)
 		{
 			throw new LispException("Error in reading a string : " + str);
 		}
@@ -681,7 +691,7 @@ public class cREADTABLE extends cCELL implements tREADTABLE
 						"#: should be followed by an symbol name");
 			return new cSYMBOL(varName, null);
 		}
-		catch (EOFException e)
+		catch (END_OF_FILE e)
 		{
 			throw new LispException("Error in reading an uninterned variable");
 		}
@@ -722,7 +732,7 @@ public class cREADTABLE extends cCELL implements tREADTABLE
 					return list(UNQUOTE, in.READ(in, false, NIL, true));
 			}
 		}
-		catch (EOFException e)
+		catch (END_OF_FILE e)
 		{
 			throw new LispException("Error in reading a value after ," + sup);
 		}

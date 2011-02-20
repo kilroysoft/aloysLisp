@@ -24,43 +24,22 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 29 oct. 2010 Creation
+// IP 19 févr. 2011 Creation
 // --------------------------------------------------------------------------
 
-package aloyslisp.core.functions;
+package aloyslisp.core.streams;
 
-import aloyslisp.core.packages.tSYMBOL;
-import aloyslisp.core.sequences.tLIST;
+import aloyslisp.annotations.*;
 
 /**
- * cMACRO_FUNCTION
+ * tSTRING_OUTPUT_STREAM
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class cMACRO_FUNCTION extends cLAMBDA_FUNCTION implements tMACRO_FUNCTION
+public interface tSTRING_OUTPUT_STREAM extends tOUTPUT_STREAM, tSTRING_STREAM
 {
-
-	tLIST	expander	= null;
-
-	/**
-	 * @param def
-	 */
-	public cMACRO_FUNCTION(tSYMBOL name, tLIST args, tLIST func)
-	{
-		super(name, args, func);
-	}
-
-	/**
-	 * Internal printable value
-	 * 
-	 * @return
-	 */
-	protected String printableStruct()
-	{
-		return "cMACRO_FUNCTION " + api.getName() + " " + api.getArgs()
-				+ " " + api.commentary() + " " + api.declare() + " "
-				+ api.func();
-	}
+	@Function(name = "get-output-stream-string", doc = "f_get_ou")
+	public String GET_OUTPUT_STREAM_STRING();
 }

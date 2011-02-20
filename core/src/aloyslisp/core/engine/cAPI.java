@@ -37,6 +37,7 @@ package aloyslisp.core.engine;
 
 import static aloyslisp.core.engine.L.*;
 
+import java.lang.reflect.Method;
 import java.util.*;
 
 import aloyslisp.core.*;
@@ -59,6 +60,11 @@ public class cAPI
 	tSYMBOL						name			= NIL;
 
 	/**
+	 * Java method to call, primitive, function, constructor or Lisp interpreter
+	 */
+	public Method				method			= null;
+
+	/**
 	 * Number of mandatory arguments
 	 */
 	Integer						nbObl			= 0;
@@ -74,19 +80,19 @@ public class cAPI
 	tLIST						args			= NIL;
 
 	/**
-	 * Aux list
-	 */
-	tLIST						aux				= NIL;
-
-	/**
 	 * Key list
 	 */
 	LinkedHashMap<tSYMBOL, tT>	keyArgs			= new LinkedHashMap<tSYMBOL, tT>();
 
 	/**
+	 * Aux list
+	 */
+	tLIST						aux				= NIL;
+
+	/**
 	 * Rest of arguments
 	 */
-	cDYN_SYMBOL						rest			= null;
+	cDYN_SYMBOL					rest			= null;
 
 	/**
 	 * Commentary on functions
@@ -118,6 +124,11 @@ public class cAPI
 	 * 
 	 */
 	boolean						allowOtherKeys	= false;
+
+	/**
+	 * Number of argument used as base object for primitives
+	 */
+	public Integer				baseArg			= -1;
 
 	/**
 	 * VarType
@@ -317,8 +328,8 @@ public class cAPI
 
 				case OPTIONAL:
 					var = new cDYN_SYMBOL((tSYMBOL) walk, val);
-					trace("add optional : " + walk + "=[" + var + ","
-							+ var.SYMBOL_VALUE() + "]" + t.name());
+					System.out.println("add optional : " + walk + "=[" + var
+							+ "," + var.SYMBOL_VALUE() + "]" + t.name());
 					args = (tLIST) args.APPEND(list(var));
 					break;
 
@@ -389,11 +400,27 @@ public class cAPI
 	}
 
 	/**
+	 * @param no
+	 */
+	public void setBaseArg(Integer no)
+	{
+		baseArg = no;
+	}
+
+	/**
+	 * @return
+	 */
+	public Integer getBaseArg()
+	{
+		return baseArg;
+	}
+
+	/**
 	 * Init default values for args and aux
 	 * 
 	 * @param def
 	 */
-	private void initDef(tLIST def)
+	private void initDynDefaultValues(tLIST def)
 	{
 		while (def instanceof tCONS)
 		{
@@ -422,14 +449,22 @@ public class cAPI
 		e.newBlock(name, func);
 
 		// create all variables with default values
-		initDef(args);
+		initDynDefaultValues(args);
 
 		// i rest value
 		if (rest != null)
 		{
 			e.intern(rest.getOrig(), rest.SYMBOL_VALUE());
 		}
+		
+		setDynValues(vals);
+	}
 
+	/**
+	 * @param vals
+	 */
+	private void setDynValues(tLIST vals)
+	{
 		// manage values
 		tLIST walk = args;
 		tLIST restList = NIL;
@@ -462,7 +497,7 @@ public class cAPI
 			// still arguments to atribute to ?
 			if (walk instanceof tCONS)
 			{
-				trace("intern var : " + walk.CAR() + "=" + value);
+				trace("api var : " + walk.CAR() + "=" + value);
 				e.intern(((cDYN_SYMBOL) walk.CAR()).getOrig(), value);
 				walk = (tLIST) walk.CDR();
 			}
@@ -521,7 +556,7 @@ public class cAPI
 
 		// At the end initialization of &aux variables with already initialized
 		// local variables
-		initDef(aux);
+		initDynDefaultValues(aux);
 	}
 
 	/**
@@ -529,7 +564,7 @@ public class cAPI
 	 * 
 	 * @param args
 	 */
-	public tLIST getValues()
+	public tLIST getDynValues()
 	{
 		// Get mandatory and optionals args
 		tLIST res = NIL;
@@ -539,8 +574,8 @@ public class cAPI
 			// Taking arg list's CARs witch are symbols
 			// Using symbol to take in the environment the dynamic variable
 			// And appending the value
-			res = (tLIST) res.APPEND(list(e.arg(((cDYN_SYMBOL) walk.CAR()).orig)
-					.SYMBOL_VALUE()));
+			res = (tLIST) res.APPEND(list(e
+					.arg(((cDYN_SYMBOL) walk.CAR()).orig).SYMBOL_VALUE()));
 			walk = (tLIST) walk.CDR();
 		}
 
@@ -681,4 +716,50 @@ public class cAPI
 
 		return args.LENGTH() + keyArgs.size();
 	}
+
+	/**
+	 * @param c
+	 * @param obj
+	 * @param name
+	 * @return
+	 */
+	public boolean setFunctionCall(Class<?> c, String name)
+	{
+		Method[] meth = c.getMethods();
+		for (Method m : meth)
+		{
+			// m.getParameterAnnotations();
+
+			if (m.getName().equalsIgnoreCase(name))
+			{
+				method = m;
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	/**
+	 * @return
+	 */
+	public String getLispDeclare()
+	{
+		String lFunc = getName().SYMBOL_NAME();
+		tLIST res = list(getName());
+		if (!(method.toString().contains("static")) && baseArg == -1)
+		{
+			res = (tLIST) res.APPEND(list(sym(method.getDeclaringClass()
+					.getSimpleName().substring(1))));
+		}
+		res = (tLIST) res.APPEND(getArgs());
+		String decl = "* " + res.toString().replaceAll(" \\*", " \\\\*");
+		decl = decl.replaceFirst(
+				lFunc.replaceAll("\\*", "\\\\*").replaceAll("\\%", "\\\\%")
+						.replaceAll("\\+", "\\\\+"), "[[" + lFunc
+						+ "|http://hyper.aloys.li/Body/" + commentary()
+						+ ".htm]]");
+		return decl.toLowerCase().replace("/body/", "/Body/");
+	}
+
 }

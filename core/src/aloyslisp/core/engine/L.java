@@ -58,7 +58,7 @@ public class L
 
 	/**
 	 * Current Package
-	 * *package* should be be first hardwired, because it's used to intern
+	 * *package* should be be first hardwired, because it's used to api
 	 * symbols....
 	 */
 	public static tSYMBOL		sPACKAGEs	= new cSYMBOL("*package*",
@@ -370,6 +370,10 @@ public class L
 																			true)
 																	.SET_SYMBOL_VALUE(
 																			new cREADTABLE());
+	{
+		// Initialize readtable functions
+		((cREADTABLE)readTable.SYMBOL_VALUE()).init();
+	}
 
 	public static tSYMBOL			lispTraceSuppress		= sym("*trace*")
 																	.setExported(

@@ -433,12 +433,12 @@ public class cPACKAGE extends cCELL implements tPACKAGE
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.tT#SXHASH()
+	 * @see aloyslisp.core.tT#hashCode()
 	 */
 	@Override
-	public Integer SXHASH()
+	public int hashCode()
 	{
-		return str(name).SXHASH();
+		return str(name).hashCode();
 	}
 
 }

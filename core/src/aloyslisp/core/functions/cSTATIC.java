@@ -52,7 +52,7 @@ public class cSTATIC extends cSYSTEM_FUNCTION
 			tLIST declare)
 	{
 		super(cls, name, decl, doc, declare);
-		this.setFunctionCall(cls, name);
+		api.setFunctionCall(cls, name);
 		object = this;
 	}
 
@@ -62,8 +62,8 @@ public class cSTATIC extends cSYSTEM_FUNCTION
 	 */
 	protected String printableStruct()
 	{
-		return "cFUNCTION " + getFuncName() + " " + intern.getArgs() + " "
-				+ intern.commentary() + " " + intern.declare();
+		return "cFUNCTION " + getFuncName() + " " + api.getArgs() + " "
+				+ api.commentary() + " " + api.declare();
 	}
 
 }

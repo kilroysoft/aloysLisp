@@ -29,8 +29,6 @@
 
 package aloyslisp.core.streams;
 
-import java.io.*;
-
 import static aloyslisp.core.engine.L.*;
 import aloyslisp.annotations.*;
 import aloyslisp.core.*;
@@ -38,6 +36,7 @@ import aloyslisp.core.conditions.*;
 import aloyslisp.core.functions.*;
 import aloyslisp.core.math.*;
 import aloyslisp.core.packages.tSYMBOL;
+import aloyslisp.core.sequences.tSEQUENCE;
 
 /**
  * cINPUT_STREAM
@@ -55,21 +54,21 @@ public abstract class cINPUT_STREAM extends cSTREAM implements tINPUT_STREAM
 	 * @param eofValue
 	 * @param recursiveP
 	 * @return
-	 * @throws EOFException
+	 * @throws END_OF_FILE
 	 */
 	public tT READ(tINPUT_STREAM stream, Boolean eofErrorP, tT eofValue,
-			Boolean recursiveP) throws EOFException
+			Boolean recursiveP)
 	{
 		// loop until something found or EOF
 		for (;;)
 		{
 			// Test macro char
-			tT res = stream.readMacroChar(eofErrorP, eofValue, recursiveP);
+			tT res = readMacroChar(eofErrorP, eofValue, recursiveP);
 			if (res != null)
 				return res;
 
 			// It's a constituent... so atom
-			String atom = stream.readAtom(eofErrorP, eofValue, recursiveP);
+			String atom = readAtom(eofErrorP, eofValue, recursiveP);
 			if (atom != null)
 			{
 				// test if numeric
@@ -107,7 +106,7 @@ public abstract class cINPUT_STREAM extends cSTREAM implements tINPUT_STREAM
 			tINPUT_STREAM stream, //
 			Boolean eofErrorP, //
 			tT eofValue, //
-			Boolean recursiveP) throws EOFException
+			Boolean recursiveP)
 
 	{
 		Character walk = READ_CHAR(stream, eofErrorP, eofValue, recursiveP);
@@ -135,10 +134,10 @@ public abstract class cINPUT_STREAM extends cSTREAM implements tINPUT_STREAM
 	 * @param eofValue
 	 * @param recursiveP
 	 * @return
-	 * @throws EOFException
+	 * @throws END_OF_FILE
 	 */
 	public Character READ_CHAR_NO_HANG(tINPUT_STREAM stream, Boolean eofErrorP,
-			tT eofValue, Boolean recursiveP) throws EOFException
+			tT eofValue, Boolean recursiveP)
 	{
 		if (!LISTEN(stream))
 			return null;
@@ -151,10 +150,10 @@ public abstract class cINPUT_STREAM extends cSTREAM implements tINPUT_STREAM
 	 * @param eofValue
 	 * @param recursiveP
 	 * @return
-	 * @throws EOFException
+	 * @throws END_OF_FILE
 	 */
 	public tT readMacroChar(Boolean eofErrorP, tT eofValue, Boolean recursiveP)
-			throws EOFException
+			throws END_OF_FILE
 	{
 		Character curr = PEEK_CHAR(NIL, this, eofErrorP, eofValue, recursiveP);
 		cREADTABLE table = (cREADTABLE) readTable.SYMBOL_VALUE();
@@ -196,7 +195,7 @@ public abstract class cINPUT_STREAM extends cSTREAM implements tINPUT_STREAM
 			if (function == null)
 			{
 				throw new LispException("Function not defined for macrochar "
-						+ charMacro);
+						+ charMacro[0]);
 			}
 
 			// Call macro function
@@ -212,7 +211,7 @@ public abstract class cINPUT_STREAM extends cSTREAM implements tINPUT_STREAM
 	 * @see aloyslisp.core.streams.IInputStream#readAtom()
 	 */
 	public String readAtom(Boolean eofErrorP, tT eofValue, Boolean recursiveP)
-			throws EOFException
+			throws END_OF_FILE
 	{
 		return readAtom(false, eofErrorP, eofValue, recursiveP);
 	}
@@ -222,7 +221,7 @@ public abstract class cINPUT_STREAM extends cSTREAM implements tINPUT_STREAM
 	 * @see aloyslisp.core.streams.IInputStream#readAtom(boolean)
 	 */
 	public String readAtom(Boolean firstEscaped, Boolean eofErrorP,
-			tT eofValue, Boolean recursiveP) throws EOFException
+			tT eofValue, Boolean recursiveP)
 	{
 		Character curr = PEEK_CHAR(NIL, this, eofErrorP, eofValue, recursiveP);
 		cREADTABLE table = (cREADTABLE) readTable.SYMBOL_VALUE();
@@ -230,19 +229,31 @@ public abstract class cINPUT_STREAM extends cSTREAM implements tINPUT_STREAM
 		boolean singleEscaped = firstEscaped;
 		boolean multiEscaped = false;
 
-		while (table.isConstituent(curr = READ_CHAR(this, eofErrorP, eofValue,
-				recursiveP)) || singleEscaped || multiEscaped)
+		try
 		{
-			// switched on | ;-)
-			multiEscaped ^= (curr == '|');
+			while (table.isConstituent(curr = READ_CHAR(this, eofErrorP,
+					eofValue, recursiveP)) || singleEscaped || multiEscaped)
+			{
+				// switched on | ;-)
+				multiEscaped ^= (curr == '|');
 
-			res.append(singleEscaped || multiEscaped ? curr : table
-					.changeCase(curr));
+				res.append(singleEscaped || multiEscaped ? curr : table
+						.changeCase(curr));
 
-			// single escape
-			singleEscaped = (curr == '\\') && !singleEscaped && !multiEscaped;
+				// single escape
+				singleEscaped = (curr == '\\') && !singleEscaped
+						&& !multiEscaped;
+			}
+			UNREAD_CHAR(curr, this);
 		}
-		UNREAD_CHAR(curr, this);
+		catch (END_OF_FILE e)
+		{
+
+		}
+		catch (Exception e)
+		{
+			throw new LispException("Error in read : " + res.toString());
+		}
 
 		String atom = res.toString();
 		if (atom.equals(""))
@@ -256,6 +267,35 @@ public abstract class cINPUT_STREAM extends cSTREAM implements tINPUT_STREAM
 	 * @see aloyslisp.core.types.tSTREAM#STREAM_ELEMENT_TYPE()
 	 */
 	public tT STREAM_ELEMENT_TYPE()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * aloyslisp.core.types.tINPUT_STREAM#READ_SEQUENCE(aloyslisp.core.types
+	 * .tSEQUENCE, aloyslisp.core.types.tINPUT_STREAM, java.lang.Integer,
+	 * java.lang.Integer)
+	 */
+	@Override
+	public tT READ_SEQUENCE(tSEQUENCE sequence, tINPUT_STREAM stream,
+			Integer start, Integer end)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.types.tINPUT_STREAM#READ_LINE(aloyslisp.core.types.
+	 * tINPUT_STREAM, java.lang.Boolean, aloyslisp.core.types.tT,
+	 * java.lang.Boolean)
+	 */
+	@Override
+	public tT[] READ_LINE(tINPUT_STREAM stream, Boolean eofErrorP, tT eofValue,
+			Boolean recursiveP)
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -326,7 +366,7 @@ public abstract class cINPUT_STREAM extends cSTREAM implements tINPUT_STREAM
 					}
 			}
 		}
-		catch (EOFException e)
+		catch (END_OF_FILE e)
 		{
 			// End of file
 		}

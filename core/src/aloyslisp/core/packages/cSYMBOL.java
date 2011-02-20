@@ -191,12 +191,12 @@ public class cSYMBOL extends cCELL implements tSYMBOL
 				return this;
 			}
 			tLIST nc = (tLIST) list(name, data).APPEND(pList.copy());
-			pList.SET_CAR(nc.CAR());
-			pList.SET_CDR(nc.CDR());
+			pList.SET_CAR(nc.CAR(), null);
+			pList.SET_CDR(nc.CDR(), null);
 			return (tSYMBOL) name;
 		}
 		// Write data
-		((tLIST) sym.CDR()).SET_CAR(data);
+		((tLIST) sym.CDR()).SET_CAR(data, null);
 		return (tSYMBOL) name;
 	}
 
@@ -692,13 +692,13 @@ public class cSYMBOL extends cCELL implements tSYMBOL
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.tT#SXHASH()
+	 * @see aloyslisp.core.tT#hashCode()
 	 */
 	@Override
-	public Integer SXHASH()
+	public int hashCode()
 	{
 		// TODO Auto-generated method stub
-		return str(name).SXHASH();
+		return str(name).hashCode();
 	}
 
 }
