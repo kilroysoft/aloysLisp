@@ -24,77 +24,54 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 27 oct. 2010 Creation
+// IP 25 févr. 2011 Creation
 // --------------------------------------------------------------------------
 
-package aloyslisp.core.functions;
+package aloyslisp.internal.engine;
 
-import static aloyslisp.internal.engine.L.*;
 import aloyslisp.core.tT;
-import aloyslisp.core.packages.tSYMBOL;
-import aloyslisp.core.sequences.tLIST;
+import aloyslisp.core.clos.*;
+import aloyslisp.core.functions.*;
+import aloyslisp.core.packages.*;
+import aloyslisp.core.sequences.*;
 
 /**
- * cLAMBDA_FUNCTION
+ * tDYN_SYMBOL
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class cLAMBDA_FUNCTION extends cFUNCTION implements tLAMBDA_FUNCTION
+public interface tDYN_SYMBOL extends tBUILD_IN_CLASS
 {
+	public tSYMBOL SET_SYMBOL_VALUE(tT value);
 
-	/**
-	 * @param name
-	 * @param args
-	 * @param func
-	 */
-	public cLAMBDA_FUNCTION(tSYMBOL name, tLIST args, tLIST func)
-	{
-		super(false, null, name, args, func);
-	}
+	public tSYMBOL SET_SYMBOL_FUNCTION(tFUNCTION func);
 
-	/**
-	 * Execute Lisp code
-	 * 
-	 * @return
-	 */
-	public tT[] IMPL()
-	{
-		return e.exec();
-	}
+	public tT SYMBOL_VALUE();
 
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.functions.IFunction#getFunction()
-	 */
-	@Override
-	public tLIST getFunction()
-	{
-		return api.func();
-	}
+	public tFUNCTION SYMBOL_FUNCTION();
 
-	/*
-	 * (non-Javadoc)
-	 * @see
-	 * aloyslisp.core.functions.IFunction#setFunction(aloyslisp.core
-	 * .functions.ILispFunc)
-	 */
-	@Override
-	public void setFunction(tLIST func)
-	{
-		api.setFunc(func);
-	}
+	public tSYMBOL unset();
 
-	/**
-	 * Internal printable value
-	 * 
-	 * @return
-	 */
-	protected String printableStruct()
-	{
-		return "LAMBDA " + api.getArgs() + " " + api.commentary() + " "
-				+ api.declare() + " " + api.func();
-	}
+	public tSYMBOL fUnset();
+
+	public tPACKAGE SYMBOL_PACKAGE();
+
+	public tSYMBOL setSpecial(boolean special);
+
+	public boolean isSpecial();
+
+	public tSYMBOL setDeclare(tLIST declare);
+
+	public tLIST getDeclare();
+
+	public String SYMBOL_NAME();
+
+	public tSYMBOL getOrig();
+
+	public boolean BOUNDP();
+
+	public boolean FBOUNDP();
 
 }

@@ -45,22 +45,6 @@ import aloyslisp.core.math.*;
 public interface tHASH_TABLE extends tBUILD_IN_CLASS
 {
 	/**
-	 * @param test
-	 * @param size
-	 * @param rehashSize
-	 * @param rehashThreshold
-	 * @return
-	 */
-	@Function(name = "make-hash-table", doc = "f_mk_has")
-	public tHASH_TABLE MAKE_HASH_TABLE(
-	//
-			@Key(name = "test", def = "(function eql)") tT test, //
-			@Key(name = "size", def = "11") tINTEGER size, //
-			@Key(name = "rehash-size", def = "11") tINTEGER rehashSize, //
-			@Key(name = "rehash-threshosd", def = ".75") tFLOAT rehashThreshold //
-	);
-
-	/**
 	 * @return
 	 */
 	@Function(name = "hash-table-count", doc = "f_hash_1")

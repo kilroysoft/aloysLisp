@@ -28,7 +28,7 @@
 // IP UB20 Disconnect environment from Package
 // --------------------------------------------------------------------------
 
-package aloyslisp.core.engine;
+package aloyslisp.internal.engine;
 
 import java.util.*;
 

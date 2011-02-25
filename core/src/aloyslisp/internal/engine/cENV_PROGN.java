@@ -24,37 +24,85 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 11 nov. 2010 Creation
+// IP 21 févr. 2011 Creation
 // --------------------------------------------------------------------------
 
-package aloyslisp.core.functions;
+package aloyslisp.internal.engine;
 
-import aloyslisp.core.sequences.tLIST;
+import aloyslisp.core.*;
+import static aloyslisp.internal.engine.L.*;
+import aloyslisp.core.conditions.*;
+import aloyslisp.core.sequences.*;
 
 /**
- * fpPRIMITIVE
+ * cENV_PROGN
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class cPRIMITIVE extends cSYSTEM_FUNCTION
+public class cENV_PROGN extends cENV
 {
-	public cPRIMITIVE(Class<?> cls, String name, tLIST decl, String doc,
-			tLIST declare)
+	protected tLIST	blocks	= NIL;
+
+	protected tLIST	ip		= NIL;
+
+	/**
+	 * @param blocks
+	 */
+	public cENV_PROGN(tLIST blocks)
 	{
-		super(cls, name, decl, doc, declare);
-		api.setFunctionCall(cls, name);
+		super();
+		this.blocks = blocks;
+		ip = this.blocks;
+	}
+
+	public cENV_PROGN(tT... blocks)
+	{
+		super();
+		this.blocks = list((Object[]) blocks);
+		ip = this.blocks;
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.functions.FUNCTION#printableStruct()
+	 * @see aloyslisp.core.cCELL#EVAL()
 	 */
-	protected String printableStruct()
+	public tT[] EVAL()
 	{
-		return "cFUNCTION " + getFuncName() + " " + api.getArgs() + " "
-				+ api.commentary() + " " + api.declare();
+		tT[] res = new tT[]
+		{ NIL };
+
+		while (ip != NIL)
+		{
+			res = ENV_STEP();
+			ip = ENV_NEXT_STEP();
+		}
+		return res;
+	}
+
+	/**
+	 * Execute next instruction
+	 * 
+	 * @return
+	 */
+	public tT[] ENV_STEP()
+	{
+		tT[] res = null;
+		res = ip.CAR().EVAL();
+		return res;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.internal.engine.tENV#ENV_NEXT_STEP()
+	 */
+	public tLIST ENV_NEXT_STEP()
+	{
+		if (!(ip.CDR() instanceof tLIST))
+			throw new LispException("BLOCK code is not a list : " + blocks);
+
+		return ip = (tLIST) ip.CDR();
 	}
 
 }

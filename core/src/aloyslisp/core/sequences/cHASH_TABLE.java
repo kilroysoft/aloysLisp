@@ -32,8 +32,9 @@ package aloyslisp.core.sequences;
 
 import java.util.*;
 
+import aloyslisp.annotations.*;
 import aloyslisp.core.*;
-import static aloyslisp.core.engine.L.*;
+import static aloyslisp.internal.engine.L.*;
 import aloyslisp.core.functions.*;
 import aloyslisp.core.math.*;
 
@@ -68,16 +69,20 @@ public class cHASH_TABLE extends cCELL implements tHASH_TABLE
 		thresHold = load;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see
-	 * aloyslisp.core.sequences.tHASH_TABLE#MAKE_HASH_TABLE(aloyslisp.core.functions
-	 * .tFUNCTION, aloyslisp.core.math.tINTEGER, aloyslisp.core.math.tINTEGER,
-	 * aloyslisp.core.math.tINTEGER)
+	/**
+	 * @param test
+	 * @param size
+	 * @param rehashSize
+	 * @param rehashThreshold
+	 * @return
 	 */
-	@Override
-	public tHASH_TABLE MAKE_HASH_TABLE(tT test, tINTEGER size,
-			tINTEGER rehashSize, tFLOAT rehashThreshold)
+	@Static(name = "make-hash-table", doc = "f_mk_has")
+	static public tHASH_TABLE MAKE_HASH_TABLE( //
+			@Key(name = "test", def = "(function eql)") tT test, //
+			@Key(name = "size", def = "11") tINTEGER size, //
+			@Key(name = "rehash-size", def = "11") tINTEGER rehashSize, //
+			@Key(name = "rehash-threshosd", def = ".75") tFLOAT rehashThreshold //
+	)
 	{
 		if (!(test instanceof tFUNCTION))
 			test = null;

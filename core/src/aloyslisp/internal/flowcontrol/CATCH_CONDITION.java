@@ -24,77 +24,59 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 27 oct. 2010 Creation
+// IP 22 févr. 2011 Creation
 // --------------------------------------------------------------------------
 
-package aloyslisp.core.functions;
+package aloyslisp.internal.flowcontrol;
 
-import static aloyslisp.internal.engine.L.*;
 import aloyslisp.core.tT;
-import aloyslisp.core.packages.tSYMBOL;
-import aloyslisp.core.sequences.tLIST;
+import static aloyslisp.internal.engine.L.*;
 
 /**
- * cLAMBDA_FUNCTION
+ * CATCH_CONDITION
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class cLAMBDA_FUNCTION extends cFUNCTION implements tLAMBDA_FUNCTION
+public class CATCH_CONDITION extends LispFlowControl
 {
 
 	/**
-	 * @param name
-	 * @param args
-	 * @param func
+	 * 
 	 */
-	public cLAMBDA_FUNCTION(tSYMBOL name, tLIST args, tLIST func)
+	private static final long	serialVersionUID	= -4189491198644557637L;
+
+	private tT					catchTag			= null;
+
+	private tT[]				catchValue			= new tT[]
+													{ NIL };
+
+	/**
+	 * 
+	 */
+	public CATCH_CONDITION(tT catchTag, tT[] catchValue)
 	{
-		super(false, null, name, args, func);
+		super();
+		this.catchTag = catchTag;
+		this.catchValue = catchValue;
 	}
 
 	/**
-	 * Execute Lisp code
-	 * 
+	 * @param tag
 	 * @return
 	 */
-	public tT[] IMPL()
+	public Boolean TST_CATCH(tT tag)
 	{
-		return e.exec();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.functions.IFunction#getFunction()
-	 */
-	@Override
-	public tLIST getFunction()
-	{
-		return api.func();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see
-	 * aloyslisp.core.functions.IFunction#setFunction(aloyslisp.core
-	 * .functions.ILispFunc)
-	 */
-	@Override
-	public void setFunction(tLIST func)
-	{
-		api.setFunc(func);
+		return catchTag.EQL(tag);
 	}
 
 	/**
-	 * Internal printable value
-	 * 
 	 * @return
 	 */
-	protected String printableStruct()
+	public tT[] CATCH_VALUE()
 	{
-		return "LAMBDA " + api.getArgs() + " " + api.commentary() + " "
-				+ api.declare() + " " + api.func();
+		return catchValue;
 	}
 
 }

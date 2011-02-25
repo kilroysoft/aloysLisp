@@ -27,9 +27,8 @@
 // IP 10 févr. 2011 Creation
 // --------------------------------------------------------------------------
 
-package aloyslisp.core.engine;
+package aloyslisp.internal.engine;
 
-import static aloyslisp.core.engine.L.*;
 
 import java.lang.annotation.*;
 import java.lang.reflect.*;
@@ -40,6 +39,7 @@ import aloyslisp.core.functions.*;
 import aloyslisp.core.packages.*;
 import aloyslisp.core.sequences.*;
 import static aloyslisp.core.streams.cSTRING_INPUT_STREAM.*;
+import static aloyslisp.internal.engine.L.*;
 
 /**
  * Library
@@ -180,7 +180,7 @@ public class Library
 
 					else if ((m.getModifiers() & Modifier.STATIC) != 0)
 						// we are in a class static definition
-						System.out.println("NON DECLARED LISP cSTATIC : "
+						System.out.println("NON DECLARED LISP cBUILT_IN_FUNCTION : "
 								+ m.getDeclaringClass() + " " + clas + " "
 								+ m.getName());
 				}
@@ -198,7 +198,7 @@ public class Library
 			{
 				if (special == null)
 					// Static normal function
-					func = new cSTATIC(clas, m.getName(), argsDecl(notes),
+					func = new cBUILT_IN_FUNCTION(clas, m.getName(), argsDecl(notes),
 							stat.doc(), declareArgs());
 				else
 					// Static normal function
@@ -211,7 +211,7 @@ public class Library
 			else if (f != null)
 			{
 				// Object primitive
-				func = new cPRIMITIVE(clas, m.getName(), argsDecl(notes),
+				func = new cBUILT_IN_METHOD(clas, m.getName(), argsDecl(notes),
 						f.doc(), declareArgs());
 				func.setBaseArg(noArgsBase(notes));
 				writeMissing(m.getName(), notes);

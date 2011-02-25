@@ -38,7 +38,7 @@ import aloyslisp.core.sequences.tLIST;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class cSTATIC extends cSYSTEM_FUNCTION
+public class cBUILT_IN_FUNCTION extends cCOMPILED_FUNCTION
 {
 
 	/**
@@ -48,7 +48,7 @@ public class cSTATIC extends cSYSTEM_FUNCTION
 	 * @param doc
 	 * @param declare
 	 */
-	public cSTATIC(Class<?> cls, String name, tLIST decl, String doc,
+	public cBUILT_IN_FUNCTION(Class<?> cls, String name, tLIST decl, String doc,
 			tLIST declare)
 	{
 		super(cls, name, decl, doc, declare);

@@ -27,7 +27,7 @@
 // IP 13 févr. 2011 Creation
 // --------------------------------------------------------------------------
 
-package aloyslisp.iterators;
+package aloyslisp.internal.iterators;
 
 import aloyslisp.core.tT;
 import aloyslisp.core.conditions.LispException;
@@ -114,7 +114,7 @@ public class VECTORIterator extends SEQUENCEIterator
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.iterators.SEQUENCEIterator#add(aloyslisp.core.tT)
+	 * @see aloyslisp.internal.iterators.SEQUENCEIterator#add(aloyslisp.core.tT)
 	 */
 	@Override
 	public tT add(tT obj)
@@ -138,7 +138,7 @@ public class VECTORIterator extends SEQUENCEIterator
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.iterators.SEQUENCEIterator#set(aloyslisp.core.tT)
+	 * @see aloyslisp.internal.iterators.SEQUENCEIterator#set(aloyslisp.core.tT)
 	 */
 	@Override
 	public tT set(tT obj)
@@ -156,7 +156,7 @@ public class VECTORIterator extends SEQUENCEIterator
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.iterators.SEQUENCEIterator#go(int)
+	 * @see aloyslisp.internal.iterators.SEQUENCEIterator#go(int)
 	 */
 	@Override
 	public tT go(int index)
@@ -178,7 +178,7 @@ public class VECTORIterator extends SEQUENCEIterator
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.iterators.SEQUENCEIterator#rewind()
+	 * @see aloyslisp.internal.iterators.SEQUENCEIterator#rewind()
 	 */
 	@Override
 	public void rewind()
@@ -188,7 +188,7 @@ public class VECTORIterator extends SEQUENCEIterator
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.iterators.SEQUENCEIterator#toEnd()
+	 * @see aloyslisp.internal.iterators.SEQUENCEIterator#toEnd()
 	 */
 	@Override
 	public tT toEnd()
@@ -199,7 +199,7 @@ public class VECTORIterator extends SEQUENCEIterator
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.iterators.SEQUENCEIterator#copy()
+	 * @see aloyslisp.internal.iterators.SEQUENCEIterator#copy()
 	 */
 	@Override
 	protected void copy()
@@ -209,7 +209,7 @@ public class VECTORIterator extends SEQUENCEIterator
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.iterators.SEQUENCEIterator#getFinal()
+	 * @see aloyslisp.internal.iterators.SEQUENCEIterator#getFinal()
 	 */
 	@Override
 	public tSEQUENCE getFinal()

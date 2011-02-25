@@ -24,77 +24,56 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 27 oct. 2010 Creation
+// IP 22 févr. 2011 Creation
 // --------------------------------------------------------------------------
 
-package aloyslisp.core.functions;
+package aloyslisp.internal.flowcontrol;
 
-import static aloyslisp.internal.engine.L.*;
-import aloyslisp.core.tT;
-import aloyslisp.core.packages.tSYMBOL;
-import aloyslisp.core.sequences.tLIST;
+import aloyslisp.core.*;
+import aloyslisp.core.packages.*;
 
 /**
- * cLAMBDA_FUNCTION
+ * RETURN_CONDITION
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class cLAMBDA_FUNCTION extends cFUNCTION implements tLAMBDA_FUNCTION
+public class RETURN_CONDITION extends LispFlowControl
 {
+	private tSYMBOL				name				= null;
+
+	private tT[]				value				= null;
+
+	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= 7419919109022862608L;
+
+	/**
+	 * 
+	 */
+	public RETURN_CONDITION(tSYMBOL name, tT[] value)
+	{
+		super();
+		this.name = name;
+		this.value = value;
+	}
 
 	/**
 	 * @param name
-	 * @param args
-	 * @param func
+	 * @return
 	 */
-	public cLAMBDA_FUNCTION(tSYMBOL name, tLIST args, tLIST func)
+	public Boolean TST_RETURN(tSYMBOL name)
 	{
-		super(false, null, name, args, func);
+		return this.name.EQL(name);
 	}
 
 	/**
-	 * Execute Lisp code
-	 * 
 	 * @return
 	 */
-	public tT[] IMPL()
+	public tT[] RETURN_VALUE()
 	{
-		return e.exec();
+		return value;
 	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.functions.IFunction#getFunction()
-	 */
-	@Override
-	public tLIST getFunction()
-	{
-		return api.func();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see
-	 * aloyslisp.core.functions.IFunction#setFunction(aloyslisp.core
-	 * .functions.ILispFunc)
-	 */
-	@Override
-	public void setFunction(tLIST func)
-	{
-		api.setFunc(func);
-	}
-
-	/**
-	 * Internal printable value
-	 * 
-	 * @return
-	 */
-	protected String printableStruct()
-	{
-		return "LAMBDA " + api.getArgs() + " " + api.commentary() + " "
-				+ api.declare() + " " + api.func();
-	}
-
 }

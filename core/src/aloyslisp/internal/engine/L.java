@@ -27,7 +27,7 @@
 // IP 16 sept. 2010 Creation
 // --------------------------------------------------------------------------
 
-package aloyslisp.core.engine;
+package aloyslisp.internal.engine;
 
 import java.io.*;
 import java.net.*;

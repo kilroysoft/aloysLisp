@@ -24,77 +24,26 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 27 oct. 2010 Creation
+// IP 22 févr. 2011 Creation
 // --------------------------------------------------------------------------
 
-package aloyslisp.core.functions;
+package aloyslisp.internal.flowcontrol;
 
-import static aloyslisp.internal.engine.L.*;
-import aloyslisp.core.tT;
-import aloyslisp.core.packages.tSYMBOL;
-import aloyslisp.core.sequences.tLIST;
+import aloyslisp.core.*;
 
 /**
- * cLAMBDA_FUNCTION
+ * LispFlowControl
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class cLAMBDA_FUNCTION extends cFUNCTION implements tLAMBDA_FUNCTION
+public class LispFlowControl extends RuntimeException
 {
 
 	/**
-	 * @param name
-	 * @param args
-	 * @param func
-	 */
-	public cLAMBDA_FUNCTION(tSYMBOL name, tLIST args, tLIST func)
-	{
-		super(false, null, name, args, func);
-	}
-
-	/**
-	 * Execute Lisp code
 	 * 
-	 * @return
 	 */
-	public tT[] IMPL()
-	{
-		return e.exec();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.functions.IFunction#getFunction()
-	 */
-	@Override
-	public tLIST getFunction()
-	{
-		return api.func();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see
-	 * aloyslisp.core.functions.IFunction#setFunction(aloyslisp.core
-	 * .functions.ILispFunc)
-	 */
-	@Override
-	public void setFunction(tLIST func)
-	{
-		api.setFunc(func);
-	}
-
-	/**
-	 * Internal printable value
-	 * 
-	 * @return
-	 */
-	protected String printableStruct()
-	{
-		return "LAMBDA " + api.getArgs() + " " + api.commentary() + " "
-				+ api.declare() + " " + api.func();
-	}
+	private static final long	serialVersionUID	= 1859742428478658759L;
 
 }

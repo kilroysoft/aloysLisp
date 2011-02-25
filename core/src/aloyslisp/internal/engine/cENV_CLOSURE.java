@@ -24,77 +24,64 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 27 oct. 2010 Creation
+// IP 21 févr. 2011 Creation
 // --------------------------------------------------------------------------
 
-package aloyslisp.core.functions;
+package aloyslisp.internal.engine;
 
-import static aloyslisp.internal.engine.L.*;
-import aloyslisp.core.tT;
-import aloyslisp.core.packages.tSYMBOL;
-import aloyslisp.core.sequences.tLIST;
+import aloyslisp.core.*;
 
 /**
- * cLAMBDA_FUNCTION
+ * cENV_CLOSURE
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class cLAMBDA_FUNCTION extends cFUNCTION implements tLAMBDA_FUNCTION
+public class cENV_CLOSURE extends cENV
 {
+	private tENV	topClosure	= null;
 
 	/**
-	 * @param name
-	 * @param args
-	 * @param func
+	 * This closure is for a new environment
 	 */
-	public cLAMBDA_FUNCTION(tSYMBOL name, tLIST args, tLIST func)
+	public cENV_CLOSURE()
 	{
-		super(false, null, name, args, func);
+		super();
 	}
 
 	/**
-	 * Execute Lisp code
-	 * 
-	 * @return
+	 * This closure get back to the lambda environment
 	 */
-	public tT[] IMPL()
+	public cENV_CLOSURE(tENV closure)
 	{
-		return e.exec();
+		super();
+		topClosure = closure;
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.functions.IFunction#getFunction()
+	 * @see aloyslisp.internal.engine.cENV#ENV_STOP()
 	 */
-	@Override
-	public tLIST getFunction()
+	public tENV ENV_STOP()
 	{
-		return api.func();
+		topClosure = null;
+		return super.ENV_STOP();
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see
-	 * aloyslisp.core.functions.IFunction#setFunction(aloyslisp.core
-	 * .functions.ILispFunc)
+	 * @see aloyslisp.internal.engine.tENV#ENV_PREVIOUS_LEXICAL()
 	 */
 	@Override
-	public void setFunction(tLIST func)
+	public tT[] ENV_PREVIOUS_LEXICAL()
 	{
-		api.setFunc(func);
-	}
-
-	/**
-	 * Internal printable value
-	 * 
-	 * @return
-	 */
-	protected String printableStruct()
-	{
-		return "LAMBDA " + api.getArgs() + " " + api.commentary() + " "
-				+ api.declare() + " " + api.func();
+		if (topClosure == null)
+			return new tT[]
+			{ L.NIL, L.NIL };
+		else
+			return new tT[]
+			{ topClosure, L.T };
 	}
 
 }

@@ -31,15 +31,17 @@
 
 package aloyslisp.core.functions;
 
-import static aloyslisp.core.engine.L.*;
+import static aloyslisp.internal.engine.L.*;
 import aloyslisp.annotations.*;
 import aloyslisp.core.*;
 import aloyslisp.core.conditions.*;
-import aloyslisp.core.engine.*;
 import aloyslisp.core.packages.cNIL;
 import aloyslisp.core.packages.tNULL;
 import aloyslisp.core.packages.tSYMBOL;
 import aloyslisp.core.sequences.*;
+import aloyslisp.internal.engine.*;
+import aloyslisp.internal.flowcontrol.CATCH_CONDITION;
+import aloyslisp.internal.flowcontrol.LispFlowControl;
 
 /**
  * cSPECIAL_OPERATOR
@@ -48,7 +50,7 @@ import aloyslisp.core.sequences.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class cSPECIAL_OPERATOR extends cSYSTEM_FUNCTION implements
+public class cSPECIAL_OPERATOR extends cCOMPILED_FUNCTION implements
 		tSPECIAL_OPERATOR
 {
 
@@ -554,6 +556,88 @@ public class cSPECIAL_OPERATOR extends cSYSTEM_FUNCTION implements
 		arguments.pushBlock(NIL);
 		tT[] res = e.exec();
 		e.popBlock();
+		return res;
+	}
+
+	/*********************************************************************
+	 * @param name
+	 * @param args
+	 * @param block
+	 * @return
+	 */
+	@Static(name = "lisp::unwind-protect", doc = "s_unwind")
+	@SpecialOp
+	public static tT[] UNWIND_PROTECT( //
+			@Arg(name = "lisp::protected-form") tT prot, //
+			@Rest(name = "lisp::block") tT... block)
+	{
+		RuntimeException ex = null;
+		tT[] res = new tT[] {};
+
+		try
+		{
+			// Eval protected form
+			res = prot.EVAL();
+		}
+		catch (RuntimeException e)
+		{
+			ex = e;
+		}
+		finally
+		{
+			// do cleanup
+			try
+			{
+				PROGN(block);
+			}
+			catch (LispException e)
+			{
+				// Flow control are not managed
+				ex = e;
+			}
+		}
+
+		if (ex != null)
+		{
+			// re-throw exception
+			throw ex;
+		}
+
+		return res;
+	}
+
+	/**
+	 * @param tag
+	 * @param block
+	 * @return
+	 */
+	@Static(name = "lisp::catch", doc = "s_catch")
+	@SpecialOp
+	public static tT[] CATCH( //
+			@Arg(name = "lisp::catch-tag") tT tag, //
+			@Rest(name = "lisp::block") tT... block)
+	{
+		tT[] res = new tT[] {};
+
+		try
+		{
+			PROGN(block);
+		}
+		catch (LispException e)
+		{
+			throw e;
+		}
+		catch (LispFlowControl e)
+		{
+			if (e instanceof CATCH_CONDITION
+					&& ((CATCH_CONDITION) e).TST_CATCH(tag))
+			{
+				return ((CATCH_CONDITION) e).CATCH_VALUE();
+			}
+
+			throw e;
+		}
+
 		return res;
 	}
 

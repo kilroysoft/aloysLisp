@@ -30,13 +30,13 @@
 
 package aloyslisp.core.sequences;
 
-import static aloyslisp.core.engine.L.*;
+import static aloyslisp.internal.engine.L.*;
 import aloyslisp.annotations.*;
 import aloyslisp.core.*;
 import aloyslisp.core.conditions.*;
 import aloyslisp.core.functions.*;
 import aloyslisp.core.packages.*;
-import aloyslisp.iterators.*;
+import aloyslisp.internal.iterators.*;
 
 /**
  * cCONS

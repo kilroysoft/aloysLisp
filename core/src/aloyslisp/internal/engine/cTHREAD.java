@@ -27,7 +27,7 @@
 // IP 21 sept. 2010 Creation
 // --------------------------------------------------------------------------
 
-package aloyslisp.core.engine;
+package aloyslisp.internal.engine;
 
 import aloyslisp.core.*;
 import aloyslisp.core.conditions.LispException;

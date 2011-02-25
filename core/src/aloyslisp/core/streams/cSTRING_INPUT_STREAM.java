@@ -30,7 +30,7 @@
 package aloyslisp.core.streams;
 
 import aloyslisp.core.*;
-import static aloyslisp.core.engine.L.*;
+import static aloyslisp.internal.engine.L.*;
 import aloyslisp.core.conditions.*;
 import aloyslisp.core.math.*;
 import aloyslisp.annotations.*;

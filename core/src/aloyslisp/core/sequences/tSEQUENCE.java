@@ -31,7 +31,7 @@ package aloyslisp.core.sequences;
 
 import aloyslisp.annotations.*;
 import aloyslisp.core.tT;
-import aloyslisp.iterators.SEQUENCEIterator;
+import aloyslisp.internal.iterators.SEQUENCEIterator;
 
 /**
  * tSEQUENCE

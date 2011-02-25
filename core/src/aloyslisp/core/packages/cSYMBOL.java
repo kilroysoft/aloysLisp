@@ -30,14 +30,14 @@
 
 package aloyslisp.core.packages;
 
-import static aloyslisp.core.engine.L.*;
+import static aloyslisp.internal.engine.L.*;
 import aloyslisp.annotations.*;
 import aloyslisp.core.*;
 import aloyslisp.core.conditions.*;
-import aloyslisp.core.engine.*;
 import aloyslisp.core.functions.*;
 import aloyslisp.core.sequences.*;
-import aloyslisp.iterators.*;
+import aloyslisp.internal.engine.*;
+import aloyslisp.internal.iterators.*;
 
 /**
  * cSYMBOL

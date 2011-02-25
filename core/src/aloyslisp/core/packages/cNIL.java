@@ -32,12 +32,12 @@ package aloyslisp.core.packages;
 
 import java.util.Iterator;
 
-import static aloyslisp.core.engine.L.*;
+import static aloyslisp.internal.engine.L.*;
 import aloyslisp.core.tT;
 import aloyslisp.core.conditions.*;
 import aloyslisp.core.functions.*;
 import aloyslisp.core.sequences.*;
-import aloyslisp.iterators.*;
+import aloyslisp.internal.iterators.*;
 
 /**
  * cNIL

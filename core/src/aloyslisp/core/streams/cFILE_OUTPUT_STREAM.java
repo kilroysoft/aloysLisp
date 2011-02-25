@@ -29,7 +29,7 @@
 
 package aloyslisp.core.streams;
 
-import static aloyslisp.core.engine.L.*;
+import static aloyslisp.internal.engine.L.*;
 
 import java.io.*;
 

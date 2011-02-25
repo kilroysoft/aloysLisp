@@ -31,10 +31,10 @@ package aloyslisp.core.sequences;
 
 import java.util.*;
 
-import static aloyslisp.core.engine.L.*;
+import static aloyslisp.internal.engine.L.*;
 import aloyslisp.core.*;
 import aloyslisp.core.conditions.*;
-import aloyslisp.iterators.*;
+import aloyslisp.internal.iterators.*;
 
 /**
  * cVECTOR

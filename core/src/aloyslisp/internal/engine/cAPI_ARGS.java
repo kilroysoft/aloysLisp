@@ -24,77 +24,36 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 27 oct. 2010 Creation
+// IP 20 févr. 2011 Creation
 // --------------------------------------------------------------------------
 
-package aloyslisp.core.functions;
+package aloyslisp.internal.engine;
 
-import static aloyslisp.internal.engine.L.*;
-import aloyslisp.core.tT;
-import aloyslisp.core.packages.tSYMBOL;
-import aloyslisp.core.sequences.tLIST;
+import aloyslisp.core.*;
+import aloyslisp.core.sequences.*;
 
 /**
- * cLAMBDA_FUNCTION
+ * cAPI_ARGS
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class cLAMBDA_FUNCTION extends cFUNCTION implements tLAMBDA_FUNCTION
+public class cAPI_ARGS extends cCELL
 {
+	/**
+	 * Argument
+	 */
+	private tLIST	args		= null;
+
+	private Integer	mandatory	= 0;
 
 	/**
-	 * @param name
-	 * @param args
-	 * @param func
+	 * Create an API definition
 	 */
-	public cLAMBDA_FUNCTION(tSYMBOL name, tLIST args, tLIST func)
+	public cAPI_ARGS(tLIST args)
 	{
-		super(false, null, name, args, func);
-	}
-
-	/**
-	 * Execute Lisp code
-	 * 
-	 * @return
-	 */
-	public tT[] IMPL()
-	{
-		return e.exec();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.functions.IFunction#getFunction()
-	 */
-	@Override
-	public tLIST getFunction()
-	{
-		return api.func();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see
-	 * aloyslisp.core.functions.IFunction#setFunction(aloyslisp.core
-	 * .functions.ILispFunc)
-	 */
-	@Override
-	public void setFunction(tLIST func)
-	{
-		api.setFunc(func);
-	}
-
-	/**
-	 * Internal printable value
-	 * 
-	 * @return
-	 */
-	protected String printableStruct()
-	{
-		return "LAMBDA " + api.getArgs() + " " + api.commentary() + " "
-				+ api.declare() + " " + api.func();
+		// TODO Auto-generated constructor stub
 	}
 
 }

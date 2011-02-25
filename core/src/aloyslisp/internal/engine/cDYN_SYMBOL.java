@@ -30,15 +30,13 @@
 // IP UB20 Disconnect from tSYMBOL now own variable
 // --------------------------------------------------------------------------
 
-package aloyslisp.core.engine;
+package aloyslisp.internal.engine;
 
-import static aloyslisp.core.engine.L.*;
+import static aloyslisp.internal.engine.L.*;
 import aloyslisp.core.*;
-import aloyslisp.core.functions.cFUNCTION;
-import aloyslisp.core.functions.tFUNCTION;
-import aloyslisp.core.packages.tPACKAGE;
-import aloyslisp.core.packages.tSYMBOL;
-import aloyslisp.core.sequences.tLIST;
+import aloyslisp.core.functions.*;
+import aloyslisp.core.packages.*;
+import aloyslisp.core.sequences.*;
 
 /**
  * cDYN_SYMBOL
@@ -47,7 +45,7 @@ import aloyslisp.core.sequences.tLIST;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class cDYN_SYMBOL extends cCELL
+public class cDYN_SYMBOL extends cCELL implements tDYN_SYMBOL
 {
 	/**
 	 * 

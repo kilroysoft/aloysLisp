@@ -31,7 +31,7 @@ package aloyslisp.core.math;
 
 import java.math.BigInteger;
 
-import static aloyslisp.core.engine.L.*;
+import static aloyslisp.internal.engine.L.*;
 import aloyslisp.core.*;
 import aloyslisp.core.conditions.*;
 

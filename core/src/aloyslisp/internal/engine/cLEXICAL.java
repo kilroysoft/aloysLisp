@@ -27,7 +27,7 @@
 // IP 21 sept. 2010 Creation
 // --------------------------------------------------------------------------
 
-package aloyslisp.core.engine;
+package aloyslisp.internal.engine;
 
 import aloyslisp.core.tT;
 import aloyslisp.core.packages.tSYMBOL;

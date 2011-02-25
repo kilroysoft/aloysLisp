@@ -28,11 +28,11 @@
 // IP UB20 Disconnected from cTHREAD
 // --------------------------------------------------------------------------
 
-package aloyslisp.core.engine;
+package aloyslisp.internal.engine;
 
 import java.util.*;
 
-import static aloyslisp.core.engine.L.*;
+import static aloyslisp.internal.engine.L.*;
 import aloyslisp.core.packages.*;
 import aloyslisp.core.sequences.*;
 

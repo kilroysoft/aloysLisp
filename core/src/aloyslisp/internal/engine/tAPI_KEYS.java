@@ -22,25 +22,15 @@
 // IP 20 févr. 2011 Creation
 //--------------------------------------------------------------------------
 
-package aloyslisp.core.engine;
-
-import aloyslisp.core.cCELL;
+package aloyslisp.internal.engine;
 
 /**
- * cAPI_KEYS
+ * tAPI_KEYS
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  *
  */
-public class cAPI_KEYS extends cCELL
+public interface tAPI_KEYS extends tAPI_ARGS
 {
-
-	/**
-	 * 
-	 */
-	public cAPI_KEYS()
-	{
-		// TODO Auto-generated constructor stub
-	}
 
 }

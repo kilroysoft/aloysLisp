@@ -30,7 +30,7 @@
 
 package aloyslisp.core;
 
-import static aloyslisp.core.engine.L.*;
+import static aloyslisp.internal.engine.L.*;
 import aloyslisp.annotations.*;
 import aloyslisp.core.clos.*;
 import aloyslisp.core.conditions.*;
@@ -263,7 +263,7 @@ public abstract class cCELL implements tSTANDARD_OBJECT
 
 	// MAIN GLOBAL LISP FUNCTIONS
 	/**
-	 * PUBLIC cSTATIC cFUNCTION
+	 * PUBLIC cBUILT_IN_FUNCTION cFUNCTION
 	 */
 	/*
 	 * (non-Javadoc)

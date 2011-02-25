@@ -36,15 +36,15 @@ package aloyslisp.core.streams;
 
 import java.util.*;
 
-import static aloyslisp.core.engine.L.*;
+import static aloyslisp.internal.engine.L.*;
 import aloyslisp.annotations.*;
 import aloyslisp.core.*;
 import aloyslisp.core.conditions.*;
-import aloyslisp.core.engine.Library;
 import aloyslisp.core.functions.*;
 import aloyslisp.core.packages.cSYMBOL;
 import aloyslisp.core.packages.tSYMBOL;
 import aloyslisp.core.sequences.*;
+import aloyslisp.internal.engine.Library;
 
 /**
  * cREADTABLE

@@ -29,23 +29,23 @@
 
 package aloyslisp.core.functions;
 
-import static aloyslisp.core.engine.L.*;
+import static aloyslisp.internal.engine.L.*;
 import aloyslisp.core.sequences.tLIST;
 
 /**
- * cSYSTEM_FUNCTION
+ * cCOMPILED_FUNCTION
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public abstract class cSYSTEM_FUNCTION extends cFUNCTION implements
+public abstract class cCOMPILED_FUNCTION extends cFUNCTION implements
 		tCOMPILED_FUNCTION
 {
 	/**
 	 * @param def
 	 */
-	public cSYSTEM_FUNCTION(Class<?> cls, String name, tLIST args, String doc,
+	public cCOMPILED_FUNCTION(Class<?> cls, String name, tLIST args, String doc,
 			tLIST declare)
 	{
 		super(true, cls, sym(name), args, list(str(doc), declare));

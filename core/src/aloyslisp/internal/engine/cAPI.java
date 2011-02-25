@@ -33,9 +33,9 @@
 // IP UB19 Transform class name for compiled function classes
 // --------------------------------------------------------------------------
 
-package aloyslisp.core.engine;
+package aloyslisp.internal.engine;
 
-import static aloyslisp.core.engine.L.*;
+import static aloyslisp.internal.engine.L.*;
 
 import java.lang.reflect.Method;
 import java.util.*;

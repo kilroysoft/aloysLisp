@@ -30,7 +30,7 @@
 package aloyslisp.core.math;
 
 import aloyslisp.core.tT;
-import aloyslisp.core.engine.L;
+import aloyslisp.internal.engine.L;
 
 /**
  * cDOUBLE_FLOAT

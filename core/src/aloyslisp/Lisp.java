@@ -29,7 +29,7 @@
 
 package aloyslisp;
 
-import static aloyslisp.core.engine.L.*;
+import static aloyslisp.internal.engine.L.*;
 
 /**
  * Lisp
@@ -61,11 +61,12 @@ public class Lisp
 		loadClasses("aloyslisp.core");
 		loadClasses("aloyslisp.core.clos");
 		loadClasses("aloyslisp.core.conditions");
-		loadClasses("aloyslisp.core.engine");
+		loadClasses("aloyslisp.internal.flowcontrol");
+		loadClasses("aloyslisp.internal.engine");
 		loadClasses("aloyslisp.core.functions");
 		loadClasses("aloyslisp.core.math");
 		loadClasses("aloyslisp.core.sequences");
-		loadClasses("aloyslisp.iterators");
+		loadClasses("aloyslisp.internal.iterators");
 		loadClasses("aloyslisp.packages.common_lisp");
 		loadClasses("aloyslisp.packages.system");
 

@@ -30,19 +30,19 @@
 
 package aloyslisp.core.functions;
 
-import static aloyslisp.core.engine.L.*;
+import static aloyslisp.internal.engine.L.*;
 
 import java.lang.reflect.*;
 
 import aloyslisp.core.*;
 import aloyslisp.core.conditions.LispException;
-import aloyslisp.core.engine.*;
 import aloyslisp.core.math.*;
 import aloyslisp.core.packages.cPACKAGE;
 import aloyslisp.core.packages.tPACKAGE_DESIGNATOR;
 import aloyslisp.core.packages.tSYMBOL;
 import aloyslisp.core.sequences.*;
 import aloyslisp.core.streams.*;
+import aloyslisp.internal.engine.*;
 
 /**
  * cFUNCTION
@@ -57,17 +57,22 @@ public abstract class cFUNCTION extends cCELL implements tFUNCTION,
 	/**
 	 * Representation of arguments of the function
 	 */
-	public cAPI		api		= null;
+	public cAPI		api			= null;
 
 	/**
 	 * String used to represent the function in case of macrochar transform
 	 */
-	public String	mac		= null;
+	public String	mac			= null;
 
 	/**
 	 * Static object for static function
 	 */
-	tT				object	= null;
+	tT				object		= null;
+
+	/**
+	 * Current environment for functions
+	 */
+	tENV			environment	= null;
 
 	/**
 	 * Creation with arguments detail

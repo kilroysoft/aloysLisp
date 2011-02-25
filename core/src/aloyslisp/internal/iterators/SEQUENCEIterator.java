@@ -27,7 +27,7 @@
 // IP 12 févr. 2011 Creation
 // --------------------------------------------------------------------------
 
-package aloyslisp.iterators;
+package aloyslisp.internal.iterators;
 
 import java.util.*;
 

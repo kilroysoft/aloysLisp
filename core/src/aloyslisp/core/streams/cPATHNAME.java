@@ -32,9 +32,9 @@ package aloyslisp.core.streams;
 import aloyslisp.annotations.Static;
 import aloyslisp.core.*;
 import aloyslisp.core.conditions.LispException;
-import aloyslisp.core.engine.L;
 import aloyslisp.core.sequences.cSTRING;
 import aloyslisp.core.sequences.tSTRING_DESIGNATOR;
+import aloyslisp.internal.engine.L;
 
 /**
  * cPATHNAME

@@ -27,9 +27,9 @@
 // IP 12 févr. 2011 Creation
 // --------------------------------------------------------------------------
 
-package aloyslisp.iterators;
+package aloyslisp.internal.iterators;
 
-import static aloyslisp.core.engine.L.*;
+import static aloyslisp.internal.engine.L.*;
 import aloyslisp.core.*;
 import aloyslisp.core.conditions.LispException;
 import aloyslisp.core.sequences.*;
@@ -167,7 +167,7 @@ public class LISTIterator extends SEQUENCEIterator
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.iterators.SEQUENCEIterator#nextIndex()
+	 * @see aloyslisp.internal.iterators.SEQUENCEIterator#nextIndex()
 	 */
 	@Override
 	public int nextIndex()
@@ -177,7 +177,7 @@ public class LISTIterator extends SEQUENCEIterator
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.iterators.SEQUENCEIterator#add(aloyslisp.core.tT)
+	 * @see aloyslisp.internal.iterators.SEQUENCEIterator#add(aloyslisp.core.tT)
 	 */
 	@Override
 	public tT add(tT obj)
@@ -204,7 +204,7 @@ public class LISTIterator extends SEQUENCEIterator
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.iterators.SEQUENCEIterator#set(aloyslisp.core.tT)
+	 * @see aloyslisp.internal.iterators.SEQUENCEIterator#set(aloyslisp.core.tT)
 	 */
 	@Override
 	public tT set(tT obj)
@@ -232,7 +232,7 @@ public class LISTIterator extends SEQUENCEIterator
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.iterators.SEQUENCEIterator#getFinal()
+	 * @see aloyslisp.internal.iterators.SEQUENCEIterator#getFinal()
 	 */
 	@Override
 	public tSEQUENCE getFinal()
@@ -250,7 +250,7 @@ public class LISTIterator extends SEQUENCEIterator
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.iterators.SEQUENCEIterator#rewind()
+	 * @see aloyslisp.internal.iterators.SEQUENCEIterator#rewind()
 	 */
 	@Override
 	public void rewind()
@@ -311,7 +311,7 @@ public class LISTIterator extends SEQUENCEIterator
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.iterators.SEQUENCEIterator#copy()
+	 * @see aloyslisp.internal.iterators.SEQUENCEIterator#copy()
 	 */
 	@Override
 	protected void copy()

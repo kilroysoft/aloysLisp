@@ -31,7 +31,9 @@
 * Implement CLASS and STRUCTURE functions for definition and instances
 * Change iterators for SEQUENCE classes (cons, array).
 * Suppress @BaseArg argument in the Java call.
-* Test and debug LET
+* Rewrite the whole special forms
+* Rewrite the whole Environment management
+* Create a new Environment as thread...
 
 == Current state ==
 * Add @AllowOtherKeys for argument management.
