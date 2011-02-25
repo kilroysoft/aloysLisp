@@ -1,10 +1,1 @@
-aloyslisp
-aloyslisp.core.annotations
-aloyslisp.core.conditions
-aloyslisp.core.exec
-aloyslisp.core.functions
-aloyslisp.core.math
-aloyslisp.core.plugs
-aloyslisp.core.sequences
-aloyslisp.core.streams
-aloyslisp.packages
+aloyslisp.iterators
