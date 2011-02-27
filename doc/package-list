@@ -1,1 +1,13 @@
-aloyslisp.iterators
+aloyslisp
+aloyslisp.annotations
+aloyslisp.core
+aloyslisp.core.clos
+aloyslisp.core.conditions
+aloyslisp.core.functions
+aloyslisp.core.math
+aloyslisp.core.packages
+aloyslisp.core.sequences
+aloyslisp.core.streams
+aloyslisp.internal.engine
+aloyslisp.internal.flowcontrol
+aloyslisp.internal.iterators
