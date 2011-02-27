@@ -30,6 +30,7 @@
 package aloyslisp;
 
 import static aloyslisp.internal.engine.L.*;
+import aloyslisp.internal.engine.cTHREAD;
 
 /**
  * Lisp
@@ -84,7 +85,7 @@ public class Lisp
 			{
 				debug(ex);
 
-				e.init();
+				e = new cTHREAD();
 			}
 		}
 	}

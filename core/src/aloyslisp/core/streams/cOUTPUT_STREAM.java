@@ -51,7 +51,7 @@ public abstract class cOUTPUT_STREAM extends cSTREAM implements tOUTPUT_STREAM
 	 * aloyslisp.core.streams.IOutputStream#writeString(java.lang.String)
 	 */
 	@Override
-	public tT WRITE_STRING(tT str, tOUTPUT_STREAM stream, tT start, tT end)
+	public tT WRITE_STRING(tT str, tOUTPUT_STREAM stream)
 	{
 		// TODO manage start and end in WRITE_STRING
 		for (tT car : (tSTRING) str)
@@ -124,8 +124,9 @@ public abstract class cOUTPUT_STREAM extends cSTREAM implements tOUTPUT_STREAM
 	 */
 	public tT WRITE(tT obj, tOUTPUT_STREAM stream)
 	{
+		// TODO manage &key arguments and generate Specials vars for printing
 		// System.out.println("(WRITE " + str(obj.toString()));
-		return WRITE_STRING(str(obj.toString()), stream, NIL, NIL);
+		return WRITE_STRING(str(obj.toString()), stream);
 	}
 
 	/*

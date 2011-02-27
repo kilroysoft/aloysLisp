@@ -230,6 +230,29 @@ public class LISTIterator extends SEQUENCEIterator
 		return obj;
 	}
 
+	public tT setCDR(tT obj)
+	{
+		// empty list
+		if (list == NIL || current == null)
+		{
+			throw new LispException("Iterator no item to set : set");
+		}
+
+		save();
+
+		// last item deleted
+		if (current == NIL)
+		{
+			current = new cCONS(obj, NIL);
+			previous.SET_CDR(current, null);
+			index++;
+			return obj;
+		}
+
+		current.SET_CDR(obj, null);
+		return obj;
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * @see aloyslisp.internal.iterators.SEQUENCEIterator#getFinal()
@@ -318,6 +341,18 @@ public class LISTIterator extends SEQUENCEIterator
 	{
 		list = (tLIST) list.copy();
 		rewind();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * aloyslisp.internal.iterators.SEQUENCEIterator#append(aloyslisp.core.tT)
+	 */
+	@Override
+	public tT append(tT obj)
+	{
+		toEnd();
+		return add(obj);
 	}
 
 }

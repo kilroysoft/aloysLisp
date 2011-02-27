@@ -24,76 +24,38 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 27 oct. 2010 Creation
+// IP 26 févr. 2011 Creation
 // --------------------------------------------------------------------------
 
-package aloyslisp.core.functions;
+package aloyslisp.internal.engine;
 
 import aloyslisp.core.*;
+import aloyslisp.core.packages.*;
 import aloyslisp.core.sequences.*;
-import aloyslisp.internal.engine.*;
-import static aloyslisp.internal.engine.L.*;
 
 /**
- * cLAMBDA_FUNCTION
+ * Function interface for methods.
+ * One of the functional argument is the LISP class that will be used to
+ * call the method.
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class cLAMBDA_FUNCTION extends cFUNCTION implements tLAMBDA_FUNCTION
+public class cAPI_METH extends cAPI_FUNC
 {
+	private Integer	basePos	= 0;
 
 	/**
-	 * Lisp function
+	 * @param args
+	 * @param doc
+	 * @param decl
 	 */
-	tLIST	func	= null;
-
-	public cLAMBDA_FUNCTION(tLIST args, tLIST func)
+	public cAPI_METH(tSYMBOL name, tLIST args, tT doc, tLIST decl,
+			Integer basePos)
 	{
-		super();
-		tT doc = API_PARSE_FUNC(func);
-		api = new cAPI_LAMBDA(args, doc.CAR(), (tLIST) doc.CDR().CAR());
-		this.func = (tLIST) doc.CDR().CDR().CAR();
-	}
-
-	public cLAMBDA_FUNCTION(tLIST args, tT doc, tLIST decl, tLIST func)
-	{
-		super();
-		api = new cAPI_LAMBDA(args, doc, decl);
-		this.func = func;
-	}
-
-	/**
-	 * 
-	 */
-	public cLAMBDA_FUNCTION()
-	{
-		super();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see
-	 * aloyslisp.core.functions.tFUNCTION#exec(aloyslisp.core.sequences.tLIST)
-	 */
-	@Override
-	public tT[] exec(tLIST args)
-	{
-		tT[] res = new tT[]
-		{ NIL };
-		api.API_PUSH_ENV(args);
-
-		try
-		{
-			res = cCOMPILED_SPECIAL.PROGN(func.VALUES_LIST());
-		}
-		finally
-		{
-			api.API_POP_ENV();
-		}
-
-		return res;
+		super(name, args, doc, decl);
+		this.basePos = basePos;
 	}
 
 }

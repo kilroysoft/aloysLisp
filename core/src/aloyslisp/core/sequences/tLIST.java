@@ -117,7 +117,4 @@ public interface tLIST extends tSEQUENCE
 	public tT APPEND( //
 			@Arg(name = "item") tT item);
 
-	@Function(name = "values-list", doc = "f_vals_l")
-	public tT[] VALUES_LIST();
-
 }

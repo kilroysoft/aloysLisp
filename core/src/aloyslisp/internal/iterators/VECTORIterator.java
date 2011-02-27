@@ -217,4 +217,28 @@ public class VECTORIterator extends SEQUENCEIterator
 		return vector;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * aloyslisp.internal.iterators.SEQUENCEIterator#append(aloyslisp.core.tT)
+	 */
+	@Override
+	public tT append(tT obj)
+	{
+		toEnd();
+		return add(obj);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * aloyslisp.internal.iterators.SEQUENCEIterator#setCDR(aloyslisp.core.tT)
+	 */
+	@Override
+	public tT setCDR(tT obj)
+	{
+		// TODO setCDR not implanted
+		return null;
+	}
+
 }

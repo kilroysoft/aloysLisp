@@ -29,7 +29,6 @@
 
 package aloyslisp.internal.engine;
 
-
 import java.lang.annotation.*;
 import java.lang.reflect.*;
 
@@ -180,9 +179,12 @@ public class Library
 
 					else if ((m.getModifiers() & Modifier.STATIC) != 0)
 						// we are in a class static definition
-						System.out.println("NON DECLARED LISP cBUILT_IN_FUNCTION : "
-								+ m.getDeclaringClass() + " " + clas + " "
-								+ m.getName());
+						System.out
+								.println("NON DECLARED LISP cCOMPILED_METHOD : "
+										+ m.getDeclaringClass()
+										+ " "
+										+ clas
+										+ " " + m.getName());
 				}
 				continue;
 			}
@@ -198,11 +200,11 @@ public class Library
 			{
 				if (special == null)
 					// Static normal function
-					func = new cBUILT_IN_FUNCTION(clas, m.getName(), argsDecl(notes),
-							stat.doc(), declareArgs());
+					func = new cCOMPILED_METHOD(clas, m.getName(),
+							argsDecl(notes), stat.doc(), declareArgs());
 				else
 					// Static normal function
-					func = new cSPECIAL_OPERATOR(clas, m.getName(),
+					func = new cCOMPILED_SPECIAL(clas, m.getName(),
 							argsDecl(notes), stat.doc(), declareArgs());
 				writeMissing(m.getName(), notes);
 				func.setFuncName(sym = sym(stat.name()).SET_SYMBOL_FUNCTION(
@@ -211,8 +213,8 @@ public class Library
 			else if (f != null)
 			{
 				// Object primitive
-				func = new cBUILT_IN_METHOD(clas, m.getName(), argsDecl(notes),
-						f.doc(), declareArgs());
+				func = new cCOMPILED_FUNCTION(clas, m.getName(),
+						argsDecl(notes), f.doc(), declareArgs());
 				func.setBaseArg(noArgsBase(notes));
 				writeMissing(m.getName(), notes);
 				func.setFuncName(sym = sym(f.name()).SET_SYMBOL_FUNCTION(func));

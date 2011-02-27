@@ -24,37 +24,33 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 11 nov. 2010 Creation
+// IP 26 févr. 2011 Creation
 // --------------------------------------------------------------------------
 
-package aloyslisp.core.functions;
+package aloyslisp.internal.engine;
 
-import aloyslisp.core.sequences.tLIST;
+import aloyslisp.core.*;
+import aloyslisp.core.packages.*;
+import aloyslisp.core.sequences.*;
 
 /**
- * fpPRIMITIVE
+ * cAPI_FUNC
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class cBUILT_IN_METHOD extends cCOMPILED_FUNCTION
+public class cAPI_FUNC extends cAPI_SPECIAL
 {
-	public cBUILT_IN_METHOD(Class<?> cls, String name, tLIST decl, String doc,
-			tLIST declare)
-	{
-		super(cls, name, decl, doc, declare);
-		api.setFunctionCall(cls, name);
-	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.functions.FUNCTION#printableStruct()
+	/**
+	 * @param args
+	 * @param doc
+	 * @param decl
 	 */
-	protected String printableStruct()
+	public cAPI_FUNC(tSYMBOL name, tLIST args, tT doc, tLIST decl)
 	{
-		return "cFUNCTION " + getFuncName() + " " + api.getArgs() + " "
-				+ api.commentary() + " " + api.declare();
+		super(name, args, doc, decl);
 	}
 
 }

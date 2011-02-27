@@ -160,9 +160,8 @@ public interface tOUTPUT_STREAM extends tSTREAM
 	 * @return
 	 */
 	@Function(name = "write-string", doc = "f_wr_stg")
+	@Key(keys = "((start 0)(end nil))")
 	public tT WRITE_STRING(
 			@Arg(name = "object") tT obj, //
-			@BaseArg @Opt(name = "stream", def = "*standard-output*") tOUTPUT_STREAM stream,
-			@Key(name = "start", def = "0") tT start,
-			@Key(name = "end", def = "nil") tT end);
+			@BaseArg @Opt(name = "stream", def = "*standard-output*") tOUTPUT_STREAM stream);
 }

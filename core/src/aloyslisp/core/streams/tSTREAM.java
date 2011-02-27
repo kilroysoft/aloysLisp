@@ -53,8 +53,8 @@ public interface tSTREAM extends tBUILD_IN_CLASS
 	 * @return
 	 */
 	@Function(name = "close", doc = "f_close")
-	public Boolean CLOSE( //
-			@Key(name = "abort") Boolean abort);
+	@Key(keys = "(abort)")
+	public Boolean CLOSE();
 
 	/**
 	 * @return

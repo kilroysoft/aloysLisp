@@ -37,729 +37,234 @@ package aloyslisp.internal.engine;
 
 import static aloyslisp.internal.engine.L.*;
 
-import java.lang.reflect.Method;
-import java.util.*;
-
+import aloyslisp.annotations.*;
 import aloyslisp.core.*;
-import aloyslisp.core.conditions.*;
 import aloyslisp.core.packages.*;
 import aloyslisp.core.sequences.*;
+import aloyslisp.internal.iterators.*;
 
 /**
- * cAPI
+ * Main API definition.
+ * This will define the ENV_LET environment for special forms execution. <li>
+ * Only mandatory arguments</li> <li>Passed values are evaluated</li>
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class cAPI
+public class cAPI extends cCELL implements tAPI
 {
 	/**
-	 * Name of environment
+	 * argument representation in the java side.
+	 * Normally vars + rest + mandatory = args + decl. It should exist an unique
+	 * transformation function between them (not complete now, but it should...)
 	 */
-	tSYMBOL						name			= NIL;
+	tLIST	vars		= NIL;
+
+	tSYMBOL	rest		= NIL;
+
+	Integer	mandatory	= 0;
 
 	/**
-	 * Java method to call, primitive, function, constructor or Lisp interpreter
+	 * argument representation in the lisp side
 	 */
-	public Method				method			= null;
-
-	/**
-	 * Number of mandatory arguments
-	 */
-	Integer						nbObl			= 0;
-
-	/**
-	 * Original list
-	 */
-	tLIST						orig			= NIL;
-
-	/**
-	 * Argument list
-	 */
-	tLIST						args			= NIL;
-
-	/**
-	 * Key list
-	 */
-	LinkedHashMap<tSYMBOL, tT>	keyArgs			= new LinkedHashMap<tSYMBOL, tT>();
-
-	/**
-	 * Aux list
-	 */
-	tLIST						aux				= NIL;
-
-	/**
-	 * Rest of arguments
-	 */
-	cDYN_SYMBOL					rest			= null;
-
-	/**
-	 * Commentary on functions
-	 */
-	String						commentary;
+	tLIST	args		= null;
 
 	/**
 	 * Declare statements
 	 */
-	tLIST						declare			= NIL;
+	tLIST	decl		= NIL;
 
 	/**
-	 * Lisp function
+	 * Commentary on functions
 	 */
-	tLIST						func			= null;
+	tT		doc			= NIL;
 
 	/**
-	 * For optional values evaluation is only done for non special forms (SF,
-	 * macros)
+	 * Current environment at the time of API creation
 	 */
-	boolean						special			= false;
-
-	/**
-	 * Switch to display trace
-	 */
-	boolean						trace			= false;
-
-	/**
-	 * 
-	 */
-	boolean						allowOtherKeys	= false;
-
-	/**
-	 * Number of argument used as base object for primitives
-	 */
-	public Integer				baseArg			= -1;
-
-	/**
-	 * VarType
-	 * 
-	 * @author Ivan Pierre {ivan@kilroysoft.ch}
-	 * @author George Kilroy {george@kilroysoft.ch}
-	 * 
-	 */
-	static enum VarType
-	{
-		/**
-		 * Wait for mandatory arguments
-		 */
-		MANDATORY,
-
-		/**
-		 * Wait for optional arguments
-		 */
-		OPTIONAL,
-
-		/**
-		 * Wait for rest argument
-		 */
-		REST,
-
-		/**
-		 * Wait for keyword arguments
-		 */
-		KEY,
-
-		/**
-		 * Wait for aux arguments
-		 */
-		AUX
-	};
+	tENV	environment	= null;
 
 	/**
 	 * @param args
 	 */
-	public cAPI(tSYMBOL name, tLIST args, tLIST func)
+	public cAPI(tLIST args, tT doc, tLIST decl)
 	{
-		this.name = name;
-		this.orig = args;
-		createArgs(args);
-		readLambda(func);
+		this.args = args;
+		this.doc = doc;
+		this.decl = decl;
+		environment = e.topEnv;
 	}
 
-	/**
-	 * @return
-	 */
-	public tSYMBOL getName()
-	{
-		return name;
-	}
+	private static tSYMBOL	DECLARE	= sym("declare");
 
-	/**
-	 * @return
-	 */
-	public String getStringName()
+	@Static(name = "api-parse-func")
+	public static tLIST API_PARSE_FUNC(tLIST func)
 	{
-		if (name == null)
+		tT doc = func.CAR();
+
+		if (func.LENGTH() == 1)
 		{
-			return "no name in argument";
+			if (doc instanceof tSTRING)
+				return list(NIL, NIL, func);
 		}
-		return name.SYMBOL_NAME();
-	}
 
-	/**
-	 * @param name
-	 */
-	public void setName(tSYMBOL name)
-	{
-		this.name = name;
-	}
-
-	/**
-	 * Read lambda list
-	 * 
-	 * @param func
-	 * @return
-	 */
-	private void readLambda(tLIST func)
-	{
-		trace("readLambda(" + func + ")");
-
-		if (func == null)
-			return;
-
-		this.func = NIL;
-		this.declare = NIL;
-		tLIST block = func;
-
-		while (block instanceof tCONS)
+		LISTIterator iterDecl = new LISTIterator(NIL);
+		LISTIterator iterFunc = new LISTIterator(func);
+		while (iterFunc.hasNext())
 		{
-			tT curr = block.CAR();
-			// trace("curr = " + curr);
+			tT item = iterFunc.next();
 
-			if (curr instanceof tSTRING)
-			{
-				// commentary element
-				if (commentary != null)
-				{
-					throw new LispException(
-							"Too much description string in lambda");
-				}
-				commentary = ((tSTRING) curr).getString();
-			}
-			else if (beginWith(curr, "declare"))
-			{
-				// declare element
-				declare = new cCONS(curr, declare);
-			}
-			else
-			{
-				// Code block found stop
-				this.func = (tLIST) block;
+			if (!(item instanceof tLIST) || item.CAR() != DECLARE)
 				break;
-			}
 
-			// Next block elem
-			block = (tLIST) block.CDR();
+			iterFunc.append(item);
 		}
-		declare = (tLIST) declare.REVERSE();
+
+		return list(doc, iterDecl.getFinal(), iterFunc.getNode());
 	}
 
-	/**
-	 * Read argument list
-	 * 
-	 * @param args
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.internal.engine.tAPI#API_VARS()
 	 */
-	private void createArgs(tLIST arguments)
+	@Override
+	public tLIST API_VARS()
 	{
-		VarType t = VarType.MANDATORY;
-		tT val = null;
-		String name = "";
-		for (tT walk : arguments)
-		{
-			if (walk instanceof tSYMBOL)
-			{
-				name = ((tSYMBOL) walk).SYMBOL_NAME();
-				if (name.equalsIgnoreCase("&optional"))
-				{
-					t = VarType.OPTIONAL;
-					continue;
-				}
-				else if (name.equalsIgnoreCase("&rest"))
-				{
-					t = VarType.REST;
-					continue;
-				}
-				else if (name.equalsIgnoreCase("&key"))
-				{
-					t = VarType.KEY;
-					continue;
-				}
-				else if (name.equalsIgnoreCase("&allow-other-keys"))
-				{
-					t = VarType.KEY;
-					allowOtherKeys = true;
-					continue;
-				}
-				else if (name.equalsIgnoreCase("&aux"))
-				{
-					t = VarType.AUX;
-					continue;
-				}
-				else
-					val = NIL;
-			}
-			else if (walk instanceof tCONS)
-			{
-				val = walk.CDR();
-				walk = walk.CAR();
-				if (!(val instanceof tCONS))
-				{
-					throw new LispException("Bad argument definition in "
-							+ arguments + " at " + walk);
-				}
-				val = val.CAR();
-			}
-			else
-			{
-				throw new LispException("Bad argument definition in "
-						+ arguments + " at " + walk);
-			}
-
-			cDYN_SYMBOL var;
-			switch (t)
-			{
-				case MANDATORY:
-					nbObl++;
-					var = new cDYN_SYMBOL((tSYMBOL) walk, val);
-					trace("add mandatory : " + walk + "=[" + var + ","
-							+ var.SYMBOL_VALUE() + "]" + t.name());
-					args = (tLIST) args.APPEND(list(var));
-					break;
-
-				case OPTIONAL:
-					var = new cDYN_SYMBOL((tSYMBOL) walk, val);
-					System.out.println("add optional : " + walk + "=[" + var
-							+ "," + var.SYMBOL_VALUE() + "]" + t.name());
-					args = (tLIST) args.APPEND(list(var));
-					break;
-
-				case REST:
-					var = new cDYN_SYMBOL((tSYMBOL) walk, val);
-					trace("add rest : " + walk + "=[" + var + ","
-							+ var.SYMBOL_VALUE() + "]" + t.name());
-					rest = var;
-					break;
-
-				case KEY:
-					trace("add key : " + walk + "=[" + walk + "," + val + "]"
-							+ t.name());
-					tT assoc;
-					tT key;
-					if (walk instanceof tCONS)
-					{
-						// BUG Implementation of key reading false
-						// key is defined as ((key variable) [def])
-						key = walk.CAR();
-						if (!(key instanceof tSYMBOL))
-						{
-							throw new LispException("key is not a symbol "
-									+ key);
-						}
-						if (((tCONS) walk).LENGTH() < 2)
-						{
-							// new key ((pack:key) def)
-							assoc = key;
-						}
-						else
-						{
-							// new key ((pack:key pack2:variable) def)
-							assoc = walk.CDR().CAR();
-							if (!(key instanceof tSYMBOL))
-							{
-								throw new LispException("key is not a symbol "
-										+ key);
-							}
-							// BUG this is false look for cDYN_SYMBOL
-							((tSYMBOL) assoc).SET_SYMBOL_VALUE(val);
-						}
-					}
-					else
-					{
-						// key is a (symbol def) -> ((:symbol symbol) def) if in
-						// current package
-						if (((tSYMBOL) walk).SYMBOL_PACKAGE() == currPackage())
-							key = key(((tSYMBOL) walk).SYMBOL_NAME());
-						else
-							key = walk;
-					}
-
-					keyArgs.put((tSYMBOL) key, val);
-					break;
-
-				case AUX:
-					var = new cDYN_SYMBOL((tSYMBOL) walk, val);
-					trace("add aux : " + walk + "=[" + var + ","
-							+ var.SYMBOL_VALUE() + "]" + t.name());
-					aux = (tLIST) args.APPEND(list(var));
-					break;
-			}
-		}
-		// trace("args : " + args);
-		// trace("rest : " + rest);
-		// trace("key : " + keyArgs);
+		return vars;
 	}
 
-	/**
-	 * @param no
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * aloyslisp.internal.engine.tAPI#SET_API_VARS(aloyslisp.core.sequences.
+	 * tLIST)
 	 */
-	public void setBaseArg(Integer no)
+	@Override
+	public tLIST SET_API_VARS(tLIST vars)
 	{
-		baseArg = no;
+		return this.vars = vars;
 	}
 
-	/**
-	 * @return
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.internal.engine.tAPI#API_ARGS()
 	 */
-	public Integer getBaseArg()
+	@Override
+	public tLIST API_ARGS()
 	{
-		return baseArg;
+		return args;
 	}
 
-	/**
-	 * Init default values for args and aux
-	 * 
-	 * @param def
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * aloyslisp.internal.engine.tAPI#SET_API_ARGS(aloyslisp.core.sequences.
+	 * tLIST)
 	 */
-	private void initDynDefaultValues(tLIST def)
+	@Override
+	public tLIST SET_API_ARGS(tLIST args)
 	{
-		while (def instanceof tCONS)
-		{
-			// Evaluate default value if non special form
-			tT value = ((cDYN_SYMBOL) def.CAR()).SYMBOL_VALUE();
-			if (!special && value != null)
-				value = value.EVAL()[0];
-
-			trace("args create : " + (cDYN_SYMBOL) def.CAR() + "=" + value);
-
-			e.intern(((cDYN_SYMBOL) def.CAR()).getOrig(), value);
-			def = (tLIST) def.CDR();
-		}
+		return this.args = args;
 	}
 
-	/**
-	 * Push dynamic variables in block
-	 * 
-	 * @param args
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.internal.engine.tAPI#API_DOC()
 	 */
-	public void pushBlock(tLIST vals)
+	@Override
+	public tT API_DOC()
 	{
-		trace("pushBlock : " + vals);
-
-		// create block
-		e.newBlock(name, func);
-
-		// create all variables with default values
-		initDynDefaultValues(args);
-
-		// i rest value
-		if (rest != null)
-		{
-			e.intern(rest.getOrig(), rest.SYMBOL_VALUE());
-		}
-		
-		setDynValues(vals);
+		return doc;
 	}
 
-	/**
-	 * @param vals
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.internal.engine.tAPI#SET_API_DOC(aloyslisp.core.tT)
 	 */
-	private void setDynValues(tLIST vals)
+	@Override
+	public tT SET_API_DOC(tT doc)
 	{
-		// manage values
-		tLIST walk = args;
-		tLIST restList = NIL;
-		tLIST keyList = NIL;
-		int nbArgs = 0;
-
-		// read args
-		for (tT val : vals)
-		{
-			// get value
-			tT value = val;
-
-			// is it a key ?
-			if (value instanceof tSYMBOL)
-			{
-				if (((tSYMBOL) value).SYMBOL_PACKAGE() == cPACKAGE.key)
-					trace("Key ? " + value);
-
-				if (keyArgs.get((tSYMBOL) value) != null)
-				{
-					trace("key found : " + value);
-					keyList = (tLIST) val;
-					break;
-				}
-			}
-
-			// One more found
-			nbArgs++;
-
-			// still arguments to atribute to ?
-			if (walk instanceof tCONS)
-			{
-				trace("api var : " + walk.CAR() + "=" + value);
-				e.intern(((cDYN_SYMBOL) walk.CAR()).getOrig(), value);
-				walk = (tLIST) walk.CDR();
-			}
-			else
-			{
-				// add to rest
-				trace("add to rest : " + value);
-				restList = cons(value, restList);
-			}
-		}
-
-		if (nbArgs < nbObl)
-		{
-			throw new LispException("Missing arguments in " + name + ". "
-					+ nbObl + " needed, " + nbArgs + "found." + getArgs());
-		}
-
-		// read keys loop over tCONS (stop on cNIL)
-		while (keyList instanceof tCONS)
-		{
-			if (keyList.LENGTH() < 2)
-			{
-				throw new LispException("No value binded to key "
-						+ keyList.CAR());
-			}
-			tT key = keyList.CAR();
-			tT val = keyList.CDR().CAR();
-
-			tT var = null;
-			if (key instanceof tSYMBOL
-					&& (var = keyArgs.get((tSYMBOL) key)) != null)
-			{
-
-			}
-			else if (key instanceof tSYMBOL
-					&& (allowOtherKeys == true || key == key("allow-other-keys")))
-			{
-				allowOtherKeys = true;
-				var = key;
-			}
-			else
-			{
-				throw new LispException("" + key + "is not a key");
-			}
-			e.intern((tSYMBOL) var, val);
-			keyList = (tLIST) keyList.CDR().CDR();
-		}
-
-		// init rest variable
-		if (rest != null)
-		{
-			restList = (tLIST) restList.REVERSE();
-			trace("rest : " + rest + "=" + restList);
-			e.intern(rest.getOrig(), restList);
-		}
-
-		// At the end initialization of &aux variables with already initialized
-		// local variables
-		initDynDefaultValues(aux);
+		return this.doc = doc;
 	}
 
-	/**
-	 * Push dynamic variables in block
-	 * 
-	 * @param args
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.internal.engine.tAPI#API_DECL()
 	 */
-	public tLIST getDynValues()
+	@Override
+	public tLIST API_DECL()
 	{
-		// Get mandatory and optionals args
-		tLIST res = NIL;
-		tLIST walk = args;
-		while (walk instanceof tCONS)
-		{
-			// Taking arg list's CARs witch are symbols
-			// Using symbol to take in the environment the dynamic variable
-			// And appending the value
-			res = (tLIST) res.APPEND(list(e
-					.arg(((cDYN_SYMBOL) walk.CAR()).orig).SYMBOL_VALUE()));
-			walk = (tLIST) walk.CDR();
-		}
-
-		// TODO append keys
-		// Get mandatory and optionals args
-
-		// Get rest
-		if (rest != null)
-		{
-			res = (tLIST) res.APPEND(e.arg(rest.orig).SYMBOL_VALUE());
-		}
-
-		return res;
+		return decl;
 	}
 
-	/**
-	 * @param index
-	 * @return
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * aloyslisp.internal.engine.tAPI#SET_API_DECL(aloyslisp.core.sequences.
+	 * tLIST)
 	 */
-	public tT arg(int index)
+	@Override
+	public tLIST SET_API_DECL(tLIST decl)
 	{
-		cDYN_SYMBOL res = e.arg(((cDYN_SYMBOL) args.ELT(index)).getOrig());
+		return this.decl = decl;
+	}
 
-		if (res != null)
-		{
-			trace("arg(" + index + ")=" + res.SYMBOL_VALUE());
-			return res.SYMBOL_VALUE();
-		}
-
-		trace("arg(" + index + ")=null");
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.internal.engine.tAPI#API_INTERN_ARGS()
+	 */
+	@Override
+	public cENV_LET API_INTERN_ARGS()
+	{
+		// TODO Auto-generated method stub
 		return null;
 	}
 
-	/**
-	 * @param key
-	 * @return
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * aloyslisp.internal.engine.tAPI#API_INIT_VALUES(aloyslisp.core.sequences
+	 * .tLIST)
 	 */
-	public tT arg(String key)
+	@Override
+	public cENV_LET API_INIT_VALUES(tLIST values)
 	{
-		// gat key arg definition
-		tSYMBOL var = (tSYMBOL) keyArgs.get(key(key));
-
-		if (var == null)
-		{
-			throw new LispException("getting invalid key variable argument "
-					+ key);
-		}
-
-		// read in passed arguments (get variable in environment)
-		cDYN_SYMBOL eVar = e.arg(var);
-		tT def;
-
-		if (eVar != null)
-			def = eVar.SYMBOL_VALUE();
-		else
-			// get default value in key definition
-			def = var.SYMBOL_VALUE().EVAL()[0];
-
-		trace("arg('" + var + "')=" + def);
-		return def;
+		// TODO Auto-generated method stub
+		return null;
 	}
 
-	/**
-	 * @return
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.internal.engine.tAPI#API_EVAL(aloyslisp.core.tT)
 	 */
-	public tLIST arg()
+	public tT API_EVAL_ARG(tT value)
 	{
-		cDYN_SYMBOL res = e.arg(rest.getOrig());
-
-		if (res == null)
-			return NIL;
-
-		return (tLIST) res.SYMBOL_VALUE();
+		return value.EVAL()[0];
 	}
 
-	/**
-	 * Write trace on environment
-	 * 
-	 * @param msg
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * aloyslisp.internal.engine.tAPI#API_PUSH_ENV(aloyslisp.core.sequences.
+	 * tLIST)
 	 */
-	private void trace(String msg)
+	@Override
+	public tT[] API_PUSH_ENV(tLIST values)
 	{
-		if (trace)
-			System.out.println(msg);
+		// TODO Auto-generated method stub
+		return null;
 	}
 
-	/**
-	 * Return original argument list
-	 * 
-	 * @return
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.internal.engine.tAPI#API_POP_ENV()
 	 */
-	public tT getArgs()
+	@Override
+	public tAPI API_POP_ENV()
 	{
-		return orig;
-	}
-
-	/**
-	 * @return
-	 */
-	public String commentary()
-	{
-		return commentary;
-	}
-
-	/**
-	 * @return
-	 */
-	public tLIST declare()
-	{
-		return declare;
-	}
-
-	/**
-	 * @return
-	 */
-	public tLIST func()
-	{
-		return func;
-	}
-
-	/**
-	 * @return
-	 */
-	public void setFunc(tLIST func)
-	{
-		this.func = func;
-	}
-
-	/**
-	 * Position of rest in arguments. -1 if no rest
-	 * 
-	 * @return
-	 */
-	public Integer getPosRest()
-	{
-		if (rest == null)
-			return -1;
-
-		return args.LENGTH() + keyArgs.size();
-	}
-
-	/**
-	 * @param c
-	 * @param obj
-	 * @param name
-	 * @return
-	 */
-	public boolean setFunctionCall(Class<?> c, String name)
-	{
-		Method[] meth = c.getMethods();
-		for (Method m : meth)
-		{
-			// m.getParameterAnnotations();
-
-			if (m.getName().equalsIgnoreCase(name))
-			{
-				method = m;
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	/**
-	 * @return
-	 */
-	public String getLispDeclare()
-	{
-		String lFunc = getName().SYMBOL_NAME();
-		tLIST res = list(getName());
-		if (!(method.toString().contains("static")) && baseArg == -1)
-		{
-			res = (tLIST) res.APPEND(list(sym(method.getDeclaringClass()
-					.getSimpleName().substring(1))));
-		}
-		res = (tLIST) res.APPEND(getArgs());
-		String decl = "* " + res.toString().replaceAll(" \\*", " \\\\*");
-		decl = decl.replaceFirst(
-				lFunc.replaceAll("\\*", "\\\\*").replaceAll("\\%", "\\\\%")
-						.replaceAll("\\+", "\\\\+"), "[[" + lFunc
-						+ "|http://hyper.aloys.li/Body/" + commentary()
-						+ ".htm]]");
-		return decl.toLowerCase().replace("/body/", "/Body/");
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

@@ -33,6 +33,7 @@ import aloyslisp.core.*;
 import aloyslisp.core.conditions.LispException;
 import aloyslisp.core.packages.tSYMBOL;
 import aloyslisp.core.sequences.*;
+import static aloyslisp.internal.engine.L.*;
 
 /**
  * cTHREAD
@@ -46,89 +47,7 @@ public class cTHREAD
 	/**
 	 * cLEXICAL stack pointer
 	 */
-	cLEXICAL			topClosure;
-
-	/**
-	 * Return value
-	 */
-	public tT[]		ret		= null;
-
-	/**
-	 * cENVIRONMENT to go (return-from) ou (go)
-	 */
-	public cENVIRONMENT	goBlock	= null;
-
-	/**
-	 * New IP for go
-	 */
-	public tCONS	goIP	= null;
-
-	/**
-	 * Wrapper to open a new closure
-	 */
-	public void newClosure()
-	{
-		topClosure = new cLEXICAL(topClosure);
-	}
-
-	/**
-	 * Init environment
-	 */
-	public void init()
-	{
-		ret = null;
-		goBlock = null;
-		goIP = null;
-		topClosure = null;
-	}
-
-	/**
-	 * Wrapper to open a new block
-	 * 
-	 * @param name
-	 * @param args
-	 * @param block
-	 * @param vals
-	 * @return If a new closure has been created
-	 */
-	public boolean newBlock(tSYMBOL name, tLIST block)
-	{
-		if (topClosure == null)
-		{
-			newClosure();
-		}
-
-		topClosure.newBlock(name, block);
-		return false;
-	}
-
-	/**
-	 * Wrapper to execute block
-	 * 
-	 * @return
-	 */
-	public tT[] exec()
-	{
-		return topClosure.exec();
-	}
-
-	/**
-	 * Pop closure, done by pop block
-	 */
-	private void PopClosure()
-	{
-		topClosure = topClosure.previous;
-	}
-
-	/**
-	 * Pop block
-	 */
-	public void popBlock()
-	{
-		topClosure.PopBlock();
-		if (topClosure.topBlock == null)
-			PopClosure();
-	}
+	public cENV	topEnv;
 
 	/**
 	 * Return
@@ -138,10 +57,11 @@ public class cTHREAD
 	 */
 	public cDYN_SYMBOL arg(tSYMBOL name)
 	{
-		if (topClosure != null)
-			return topClosure.arg(name);
+		tT[] res = topEnv.ENV_LET_GET(name);
+		if (res[1] == NIL)
+			return null;
 
-		return null;
+		return (cDYN_SYMBOL) res[0];
 	}
 
 	/**
@@ -150,10 +70,21 @@ public class cTHREAD
 	 */
 	public cDYN_SYMBOL read(tSYMBOL name)
 	{
-		if (topClosure != null)
-			return topClosure.read(name);
+		return arg(name);
+	}
 
-		return null;
+	/**
+	 * @param name
+	 * @param val
+	 * @return
+	 */
+	public cDYN_SYMBOL write(tSYMBOL name, tT val)
+	{
+		tT[] res = topEnv.SET_ENV_LET_GET(name, val);
+		if (res[1] == NIL)
+			return null;
+
+		return (cDYN_SYMBOL) res[0];
 	}
 
 	/**
@@ -192,19 +123,7 @@ public class cTHREAD
 	 */
 	public cDYN_SYMBOL sRead(tSYMBOL name)
 	{
-		return topClosure.sRead(name);
-	}
-
-	/**
-	 * @param name
-	 * @param val
-	 * @return
-	 */
-	public cDYN_SYMBOL write(tSYMBOL name, tT val)
-	{
-		if (topClosure == null)
-			return null;
-		return topClosure.write(name, val);
+		return topEnv.sRead(name);
 	}
 
 	/**
@@ -213,7 +132,7 @@ public class cTHREAD
 	 */
 	public cDYN_SYMBOL intern(tSYMBOL atom)
 	{
-		return topClosure.intern(atom);
+		return topEnv.ENV_LET_INTERN(atom);
 	}
 
 	/**
@@ -223,60 +142,7 @@ public class cTHREAD
 	 */
 	public cDYN_SYMBOL intern(tSYMBOL atom, tT value)
 	{
-		return topClosure.intern(atom, value);
-	}
-
-	/**
-	 * @return
-	 */
-	public String trace()
-	{
-		return trace(false);
-	}
-
-	/**
-	 * @return
-	 */
-	public String trace(boolean all)
-	{
-		if (topClosure != null)
-			return topClosure.trace(all);
-		return "Top level closure";
-	}
-
-	/**
-	 * Prepare environment for a go special form
-	 * 
-	 * @param label
-	 */
-	public void go(tT label)
-	{
-		if (topClosure == null)
-		{
-			throw new LispException("sGO : invalid in top closure");
-		}
-		this.topClosure.topBlock.go(label);
-	}
-
-	/**
-	 * @param label
-	 * @param value
-	 */
-	public void returnFrom(tT label, tT[] value)
-	{
-		if (topClosure == null)
-		{
-			throw new LispException("RETURN-FROM : invalid in top closure");
-		}
-		this.topClosure.topBlock.returnFrom(label, value);
-	}
-
-	/**
-	 * Set block as tagbody
-	 */
-	public void tagBody()
-	{
-		this.topClosure.topBlock.tagBody = true;
+		return topEnv.intern(atom, value);
 	}
 
 }

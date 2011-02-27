@@ -160,7 +160,7 @@ public class cFILE_OUTPUT_STREAM extends cOUTPUT_STREAM implements
 	 * @see aloyslisp.core.types.tSTREAM#CLOSE(aloyslisp.core.types.tSTREAM,
 	 * java.lang.Boolean)
 	 */
-	public Boolean CLOSE(Boolean abort)
+	public Boolean CLOSE()
 	{
 		writer.close();
 		writer = null;

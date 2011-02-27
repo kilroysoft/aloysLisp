@@ -24,18 +24,31 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 26 oct. 2010 Creation
+// IP 26 févr. 2011 Creation
 // --------------------------------------------------------------------------
 
-package aloyslisp.core.functions;
+package aloyslisp.internal.engine;
+
+import aloyslisp.core.*;
+import aloyslisp.core.sequences.*;
 
 /**
- * tBLOCK_FUNCTION
+ * cAPI_LAMBDA
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public interface tBLOCK_FUNCTION extends tFUNCTION
+public class cAPI_LAMBDA extends cAPI
 {
+	/**
+	 * @param args
+	 * @param doc
+	 * @param decl
+	 */
+	public cAPI_LAMBDA(tLIST args, tT doc, tLIST decl)
+	{
+		super(args, doc, decl);
+	}
+
 }

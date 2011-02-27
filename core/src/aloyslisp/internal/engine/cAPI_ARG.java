@@ -24,37 +24,39 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 29 oct. 2010 Creation
+// IP 26 févr. 2011 Creation
 // --------------------------------------------------------------------------
 
-package aloyslisp.core.functions;
+package aloyslisp.internal.engine;
 
-import aloyslisp.core.packages.tSYMBOL;
-import aloyslisp.core.sequences.tLIST;
+import aloyslisp.core.*;
+import aloyslisp.annotations.*;
+import aloyslisp.core.sequences.*;
+import static aloyslisp.internal.engine.L.*;
 
 /**
- * cBLOCK_FUNCTION
+ * cAPI_ARG
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class cBLOCK_FUNCTION extends cLAMBDA_FUNCTION implements tBLOCK_FUNCTION
+public class cAPI_ARG extends cCELL implements tAPI_ARG
 {
+	@Symb(name = "lambda-list-keywords", doc = "v_lambda")
+	public static tLIST	StaticListKeywords	= list(sym("&allow-other-keys"),
+													sym("&aux"), sym("&body"),
+													sym("&environment"),
+													sym("&key"),
+													sym("&optional"),
+													sym("&rest"), sym("&whole"));
 
 	/**
-	 * @param def
+	 * 
 	 */
-	public cBLOCK_FUNCTION(tSYMBOL name, tLIST args, tLIST func)
+	public cAPI_ARG()
 	{
-		super(name, args, func);
-	}
-
-	protected String printableStruct()
-	{
-		return "cFUNCTION " + api.getName() + " " + api.getArgs() + " "
-				+ api.commentary() + " " + api.declare() + " "
-				+ api.func();
+		// TODO Auto-generated constructor stub
 	}
 
 }

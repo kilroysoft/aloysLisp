@@ -11,22 +11,15 @@ import java.lang.annotation.*;
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  */
-@Target(ElementType.PARAMETER)
+@Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Key
 {
 	/**
-	 * Lisp name of key
+	 * Lisp definition of keys
 	 * 
-	 * @return
+	 * @return Lisp definition of keys
 	 */
-	String name();
-
-	/**
-	 * Default value as a string
-	 * 
-	 * @return
-	 */
-	String def() default "";
+	String keys() default "NIL";
 
 }

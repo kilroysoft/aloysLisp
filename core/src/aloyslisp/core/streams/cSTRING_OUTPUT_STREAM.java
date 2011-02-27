@@ -138,7 +138,7 @@ public class cSTRING_OUTPUT_STREAM extends cOUTPUT_STREAM implements
 	 * @see aloyslisp.core.streams.tSTREAM#CLOSE(java.lang.Boolean)
 	 */
 	@Override
-	public Boolean CLOSE(Boolean abort)
+	public Boolean CLOSE()
 	{
 		Boolean was = opened;
 		opened = false;

@@ -87,6 +87,14 @@ public abstract class SEQUENCEIterator implements Iterator<tT>
 	public abstract tT add(tT obj);
 
 	/**
+	 * Insert an element at the end.
+	 * 
+	 * @param obj
+	 * @return
+	 */
+	public abstract tT append(tT obj);
+
+	/**
 	 * Write object in the current position.
 	 * <p>
 	 * Error in case the current position is not set (No first getNext()).
@@ -95,6 +103,16 @@ public abstract class SEQUENCEIterator implements Iterator<tT>
 	 * @return
 	 */
 	public abstract tT set(tT obj);
+
+	/**
+	 * Write object in the CDR of current position.
+	 * <p>
+	 * Error in case the current position is not set (No first getNext()).
+	 * 
+	 * @param obj
+	 * @return
+	 */
+	public abstract tT setCDR(tT obj);
 
 	/**
 	 * Place cursors to index

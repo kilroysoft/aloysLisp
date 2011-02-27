@@ -61,27 +61,4 @@ public interface tFUNCTION extends tBUILD_IN_CLASS
 	 */
 	public tT[] e(Object... args);
 
-	/**
-	 * @return
-	 */
-	public tSYMBOL getFuncName();
-
-	/**
-	 * @param name
-	 */
-	public void setFuncName(tSYMBOL name);
-
-	/**
-	 * Set String replacement for macrochar transformations
-	 * 
-	 * @param pref
-	 */
-	public void setPrefix(String pref);
-
-	/**
-	 * Set the argument for object call in Primitives
-	 * 
-	 * @param no
-	 */
-	public void setBaseArg(Integer no);
 }

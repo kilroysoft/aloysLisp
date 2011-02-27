@@ -30,8 +30,10 @@
 package aloyslisp.internal.engine;
 
 import aloyslisp.core.*;
-import aloyslisp.core.packages.tSYMBOL;
-import aloyslisp.core.sequences.tLIST;
+import static aloyslisp.internal.engine.L.*;
+import aloyslisp.core.conditions.*;
+import aloyslisp.core.packages.*;
+import aloyslisp.core.sequences.*;
 
 /**
  * cENV
@@ -71,21 +73,10 @@ public class cENV extends cCELL implements tENV
 	{
 		if (previous == null)
 			return new tT[]
-			{ L.NIL, L.NIL };
+			{ NIL, NIL };
 		else
 			return new tT[]
-			{ previous, L.T };
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.internal.engine.tENV#ENV_STOP()
-	 */
-	@Override
-	public tENV ENV_STOP()
-	{
-		top = previous;
-		return this;
+			{ previous, T };
 	}
 
 	/*
@@ -101,6 +92,17 @@ public class cENV extends cCELL implements tENV
 
 	/*
 	 * (non-Javadoc)
+	 * @see aloyslisp.internal.engine.tENV#ENV_STOP()
+	 */
+	@Override
+	public tENV ENV_STOP()
+	{
+		top = previous;
+		return this;
+	}
+
+	/*
+	 * (non-Javadoc)
 	 * @see
 	 * aloyslisp.internal.engine.tENV#ENV_LET_GET(aloyslisp.core.packages.tSYMBOL
 	 * )
@@ -109,10 +111,12 @@ public class cENV extends cCELL implements tENV
 	public tT[] ENV_LET_GET(tSYMBOL var)
 	{
 		tT[] prev = ENV_PREVIOUS_LEXICAL();
-		if (prev[1] == L.NIL)
+		if (prev[1] == NIL)
 			return prev;
 
-		return ((cENV) prev[0]).ENV_LET_GET(var);
+		prev = ((cENV) prev[0]).ENV_LET_GET(var);
+		return prev;
+
 	}
 
 	/*
@@ -125,7 +129,7 @@ public class cENV extends cCELL implements tENV
 	public tT[] SET_ENV_LET_GET(tSYMBOL var, tT value)
 	{
 		tT[] prev = ENV_PREVIOUS_LEXICAL();
-		if (prev[1] == L.NIL)
+		if (prev[1] == NIL)
 			return prev;
 
 		return ((cENV) prev[0]).SET_ENV_LET_GET(var, value);
@@ -138,11 +142,11 @@ public class cENV extends cCELL implements tENV
 	 * .tSYMBOL, aloyslisp.core.packages.tSYMBOL)
 	 */
 	@Override
-	public tT[] ENV_LET_INTERN(tSYMBOL var)
+	public tDYN_SYMBOL ENV_LET_INTERN(tSYMBOL var)
 	{
 		tT[] prev = ENV_PREVIOUS_LEXICAL();
-		if (prev[1] == L.NIL)
-			return prev;
+		if (prev[1] == NIL)
+			throw new LispException("");
 
 		return ((cENV) prev[0]).ENV_LET_INTERN(var);
 	}
@@ -155,11 +159,23 @@ public class cENV extends cCELL implements tENV
 	@Override
 	public cENV_BLOCK ENV_BLOCK_TST(tSYMBOL name)
 	{
+		cENV_BLOCK res = null;
+
 		tT[] prev = ENV_PREVIOUS_LEXICAL();
-		if (prev[1] == L.NIL)
+		if (prev[1] == NIL)
 			return null;
 
-		return ((cENV) prev[0]).ENV_BLOCK_TST(name);
+		res = ((cENV) prev[0]).ENV_BLOCK_TST(name);
+		if (res != null)
+			return res;
+
+		prev = ENV_PREVIOUS_LEXICAL();
+		if (prev[1] == NIL)
+			return null;
+
+		res = ((cENV) prev[0]).ENV_BLOCK_TST(name);
+		return res;
+
 	}
 
 	/*
@@ -169,25 +185,22 @@ public class cENV extends cCELL implements tENV
 	@Override
 	public tT[] ENV_STEP()
 	{
-		tT[] prev = ENV_PREVIOUS();
-		if (prev[1] == L.NIL)
+		tT[] res = null;
+
+		tT[] prev = ENV_PREVIOUS_LEXICAL();
+		if (prev[1] == NIL)
 			return null;
 
-		return ((cENV) prev[0]).ENV_STEP();
-	}
+		res = ((cENV) prev[0]).ENV_STEP();
+		if (res != null)
+			return res;
 
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.internal.engine.tENV#ENV_NEXT_STEP()
-	 */
-	@Override
-	public tLIST ENV_NEXT_STEP()
-	{
-		tT[] prev = ENV_PREVIOUS();
-		if (prev[1] == L.NIL)
+		prev = ENV_PREVIOUS_LEXICAL();
+		if (prev[1] == NIL)
 			return null;
 
-		return ((cENV) prev[0]).ENV_NEXT_STEP();
+		res = ((cENV) prev[0]).ENV_STEP();
+		return res;
 	}
 
 	/*
@@ -195,13 +208,24 @@ public class cENV extends cCELL implements tENV
 	 * @see aloyslisp.internal.engine.tENV#ENV_TAG_TST(aloyslisp.core.tT)
 	 */
 	@Override
-	public tT ENV_TAG_TST(tT tag)
+	public tLIST ENV_TAG_TST(tT tag)
 	{
+		tLIST res = null;
+
 		tT[] prev = ENV_PREVIOUS_LEXICAL();
-		if (prev[1] == L.NIL)
+		if (prev[1] == NIL)
 			return null;
 
-		return ((cENV) prev[0]).ENV_TAG_TST(tag);
+		res = ((cENV) prev[0]).ENV_TAG_TST(tag);
+		if (res != null)
+			return res;
+
+		prev = ENV_PREVIOUS_LEXICAL();
+		if (prev[1] == NIL)
+			return null;
+
+		res = ((cENV) prev[0]).ENV_TAG_TST(tag);
+		return res;
 	}
 
 	/*
@@ -213,11 +237,22 @@ public class cENV extends cCELL implements tENV
 	@Override
 	public tT[] ENV_TAG_GET(tSYMBOL tag)
 	{
+		tT[] res = null;
+
 		tT[] prev = ENV_PREVIOUS_LEXICAL();
-		if (prev[1] == L.NIL)
+		if (prev[1] == NIL)
 			return null;
 
-		return ((cENV) prev[0]).ENV_TAG_GET(tag);
+		res = ((cENV) prev[0]).ENV_TAG_GET(tag);
+		if (res != null)
+			return res;
+
+		prev = ENV_PREVIOUS_LEXICAL();
+		if (prev[1] == NIL)
+			return null;
+
+		res = ((cENV) prev[0]).ENV_TAG_GET(tag);
+		return res;
 	}
 
 	/*
@@ -229,11 +264,22 @@ public class cENV extends cCELL implements tENV
 	@Override
 	public tT[] SET_ENV_TAG_GET(tSYMBOL tag, tSYMBOL value)
 	{
+		tT[] res = null;
+
 		tT[] prev = ENV_PREVIOUS_LEXICAL();
-		if (prev[1] == L.NIL)
+		if (prev[1] == NIL)
 			return null;
 
-		return ((cENV) prev[0]).SET_ENV_TAG_GET(tag, value);
+		res = ((cENV) prev[0]).SET_ENV_TAG_GET(tag, value);
+		if (res != null)
+			return res;
+
+		prev = ENV_PREVIOUS_LEXICAL();
+		if (prev[1] == NIL)
+			return null;
+
+		res = ((cENV) prev[0]).SET_ENV_TAG_GET(tag, value);
+		return res;
 	}
 
 	/*
@@ -245,11 +291,22 @@ public class cENV extends cCELL implements tENV
 	@Override
 	public tT[] ENV_TAG_INTERN(tSYMBOL tag, tSYMBOL value)
 	{
+		tT[] res = null;
+
 		tT[] prev = ENV_PREVIOUS_LEXICAL();
-		if (prev[1] == L.NIL)
+		if (prev[1] == NIL)
 			return null;
 
-		return ((cENV) prev[0]).ENV_TAG_INTERN(tag, value);
+		res = ((cENV) prev[0]).ENV_TAG_INTERN(tag, value);
+		if (res != null)
+			return res;
+
+		prev = ENV_PREVIOUS_LEXICAL();
+		if (prev[1] == NIL)
+			return null;
+
+		res = ((cENV) prev[0]).ENV_TAG_INTERN(tag, value);
+		return res;
 	}
 
 }

@@ -29,8 +29,11 @@
 
 package aloyslisp.core.functions;
 
-import aloyslisp.core.packages.tSYMBOL;
-import aloyslisp.core.sequences.tLIST;
+import static aloyslisp.internal.engine.L.NIL;
+import aloyslisp.core.tT;
+import aloyslisp.core.packages.*;
+import aloyslisp.core.sequences.*;
+import aloyslisp.internal.engine.*;
 
 /**
  * cMACRO_FUNCTION
@@ -39,28 +42,54 @@ import aloyslisp.core.sequences.tLIST;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class cMACRO_FUNCTION extends cLAMBDA_FUNCTION implements tMACRO_FUNCTION
+public class cMACRO_FUNCTION extends cFUNCTION implements tMACRO_FUNCTION
 {
 
 	tLIST	expander	= null;
+
+	/**
+	 * Lisp function
+	 */
+	tLIST	func		= null;
 
 	/**
 	 * @param def
 	 */
 	public cMACRO_FUNCTION(tSYMBOL name, tLIST args, tLIST func)
 	{
-		super(name, args, func);
+		super();
+		tT doc = API_PARSE_FUNC(func);
+		api = new cAPI_MACRO(name, args, doc.CAR(), (tLIST) doc.CDR().CAR());
+		this.func = (tLIST) doc.CDR().CDR().CAR();
 	}
 
-	/**
-	 * Internal printable value
-	 * 
-	 * @return
-	 */
-	protected String printableStruct()
+	public cMACRO_FUNCTION()
 	{
-		return "cMACRO_FUNCTION " + api.getName() + " " + api.getArgs()
-				+ " " + api.commentary() + " " + api.declare() + " "
-				+ api.func();
+		super();
 	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * aloyslisp.core.functions.tFUNCTION#exec(aloyslisp.core.sequences.tLIST)
+	 */
+	@Override
+	public tT[] exec(tLIST args)
+	{
+		tT[] res = new tT[]
+		{ NIL };
+		cENV_LET env = api.API_INIT_VALUES(args);
+
+		try
+		{
+			res = cCOMPILED_SPECIAL.PROGN(func.VALUES_LIST());
+		}
+		finally
+		{
+			env.ENV_STOP();
+		}
+
+		return res;
+	}
+
 }

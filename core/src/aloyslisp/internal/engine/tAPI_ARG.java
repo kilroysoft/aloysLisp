@@ -24,46 +24,37 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 14 nov. 2010 Creation
+// IP 26 févr. 2011 Creation
 // --------------------------------------------------------------------------
 
-package aloyslisp.core.functions;
+package aloyslisp.internal.engine;
 
-import aloyslisp.core.sequences.tLIST;
+import aloyslisp.core.*;
+import aloyslisp.annotations.*;
+import aloyslisp.core.clos.*;
 
 /**
- * fpGLOBAL
+ * tAPI_ARG
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class cBUILT_IN_FUNCTION extends cCOMPILED_FUNCTION
+public interface tAPI_ARG extends tBUILD_IN_CLASS
 {
+	/**
+	 * Get evaluated default value
+	 * @param env
+	 * @return
+	 */
+	@Function(name = "api-arg-get-default")
+	public tT API_ARG_GET_DEFAULT(tENV env);
 
 	/**
-	 * @param cls
-	 * @param name
-	 * @param decl
-	 * @param doc
-	 * @param declare
+	 * @param env
+	 * @param value
+	 * @return
 	 */
-	public cBUILT_IN_FUNCTION(Class<?> cls, String name, tLIST decl, String doc,
-			tLIST declare)
-	{
-		super(cls, name, decl, doc, declare);
-		api.setFunctionCall(cls, name);
-		object = this;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.functions.FUNCTION#printableStruct()
-	 */
-	protected String printableStruct()
-	{
-		return "cFUNCTION " + getFuncName() + " " + api.getArgs() + " "
-				+ api.commentary() + " " + api.declare();
-	}
-
+	@Function(name = "api-arg-get-value")
+	public tT API_ARG_GET_VALUE(tENV env, tT value);
 }

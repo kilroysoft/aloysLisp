@@ -35,22 +35,19 @@ import static aloyslisp.internal.engine.L.*;
 import aloyslisp.annotations.*;
 import aloyslisp.core.*;
 import aloyslisp.core.conditions.*;
-import aloyslisp.core.packages.cNIL;
-import aloyslisp.core.packages.tNULL;
-import aloyslisp.core.packages.tSYMBOL;
+import aloyslisp.core.packages.*;
 import aloyslisp.core.sequences.*;
 import aloyslisp.internal.engine.*;
-import aloyslisp.internal.flowcontrol.CATCH_CONDITION;
-import aloyslisp.internal.flowcontrol.LispFlowControl;
+import aloyslisp.internal.flowcontrol.*;
 
 /**
- * cSPECIAL_OPERATOR
+ * cCOMPILED_SPECIAL
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class cSPECIAL_OPERATOR extends cCOMPILED_FUNCTION implements
+public class cCOMPILED_SPECIAL extends cCOMPILED_FUNCTION implements
 		tSPECIAL_OPERATOR
 {
 
@@ -61,22 +58,16 @@ public class cSPECIAL_OPERATOR extends cCOMPILED_FUNCTION implements
 	 * @param doc
 	 * @param declare
 	 */
-	public cSPECIAL_OPERATOR(Class<?> cls, String name, tLIST decl, String doc,
-			tLIST declare)
+	public cCOMPILED_SPECIAL(tSYMBOL name, tLIST args, tT doc, tLIST declare)
 	{
-		super(cls, name, decl, doc, declare);
-		api.setFunctionCall(cls, name);
-		object = this;
+		super();
+		api = new cAPI_MACRO(name, args, doc, declare);
+		method = setFunctionCall(null, name);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.functions.FUNCTION#printableStruct()
-	 */
-	protected String printableStruct()
+	public cCOMPILED_SPECIAL()
 	{
-		return "SPECIAL " + getFuncName() + " " + api.getArgs() + " "
-				+ api.commentary() + " " + api.declare();
+		super();
 	}
 
 	/*********************************************************************************
@@ -108,8 +99,13 @@ public class cSPECIAL_OPERATOR extends cCOMPILED_FUNCTION implements
 	public static tT DEFUN( //
 			@Arg(name = "lisp::name") tSYMBOL name, //
 			@Arg(name = "lisp::args") tLIST argList, //
-			@Rest(name = "lisp::func") tT... func)
+			@Rest(name = "lisp::func") tT... function)
 	{
+		tLIST func = list((Object[]) function);
+		tT doc = func.CAR();
+		tLIST decl = (tLIST) func.CDR().CAR();
+		func = (tLIST) func.CDR().CDR().CAR();
+
 		if (name instanceof tCONS)
 		{
 			// (setf func) definition
@@ -136,12 +132,9 @@ public class cSPECIAL_OPERATOR extends cCOMPILED_FUNCTION implements
 					"setf-" + ((tSYMBOL) newFunc).SYMBOL_NAME());
 
 			// setf writer function
-			tFUNCTION def = new cBLOCK_FUNCTION(setfFunc, (tLIST) argList,
-					list((Object[]) func));
-
+			tFUNCTION def = new cLAMBDA_FUNCTION((tLIST) argList, doc, decl,
+					(tLIST) list(BLOCK, setfFunc).APPEND(func));
 			((tSYMBOL) setfFunc).SET_SYMBOL_FUNCTION(def);
-
-			//
 			((tSYMBOL) newFunc).SET_GET(setfKey, setfFunc);
 
 			return newFunc;
@@ -152,8 +145,8 @@ public class cSPECIAL_OPERATOR extends cCOMPILED_FUNCTION implements
 			throw new LispException("Function name not a symbol " + name);
 		}
 
-		tFUNCTION def = new cBLOCK_FUNCTION((tSYMBOL) name, argList,
-				list((Object[]) func));
+		tFUNCTION def = new cLAMBDA_FUNCTION((tLIST) argList, doc, decl,
+				(tLIST) list(BLOCK, name).APPEND(func));
 		((tSYMBOL) name).SET_SYMBOL_FUNCTION(def);
 
 		return name;
@@ -237,7 +230,7 @@ public class cSPECIAL_OPERATOR extends cCOMPILED_FUNCTION implements
 
 		System.out.println("args:" + args + " func:" + func);
 
-		return new cLAMBDA_FUNCTION(key("lamda"), (tLIST) args, (tLIST) func);
+		return new cLAMBDA_FUNCTION((tLIST) args, (tLIST) func);
 	}
 
 	/**************************************************************************
@@ -249,8 +242,7 @@ public class cSPECIAL_OPERATOR extends cCOMPILED_FUNCTION implements
 	public static tT GO( //
 			@Arg(name = "lisp::tag") tT tag)
 	{
-		e.go(tag);
-		return NIL;
+		throw new GOTO_CONDITION(tag);
 	}
 
 	/************************************************************
@@ -289,11 +281,10 @@ public class cSPECIAL_OPERATOR extends cCOMPILED_FUNCTION implements
 	@Static(name = "lisp::return-from", doc = "s_ret_fr")
 	@SpecialOp
 	public static tT RETURN_FROM( //
-			@Arg(name = "lisp::tag") tT tag, //
+			@Arg(name = "lisp::tag") tSYMBOL tag, //
 			@Opt(name = "lisp::value") tT value)
 	{
-		e.returnFrom(tag, value.EVAL());
-		return NIL;
+		throw new RETURN_CONDITION(tag, value.EVAL());
 	}
 
 	/*************************************************************
@@ -401,13 +392,19 @@ public class cSPECIAL_OPERATOR extends cCOMPILED_FUNCTION implements
 	public static tT TAGBODY( //
 			@Rest(name = "func") tT... func)
 	{
-		cAPI args = new cAPI(NIL, NIL, list((Object[]) func));
-		args.pushBlock(NIL);
-		e.tagBody();
-		e.exec();
-		e.popBlock();
+		cENV_TAG tag = new cENV_TAG(list((Object[]) func));
+		try
+		{
+			tag.EVAL();
+		}
+		finally
+		{
+			tag.ENV_STOP();
+		}
 		return NIL;
 	}
+
+	public static final tSYMBOL	BLOCK	= sym("block");
 
 	/*******************************************************************************
 	 * @param name
@@ -418,14 +415,31 @@ public class cSPECIAL_OPERATOR extends cCOMPILED_FUNCTION implements
 	@SpecialOp
 	public static tT[] BLOCK( //
 			@Arg(name = "lisp::name") tSYMBOL name, //
-			@Rest(name = "lisp::block") tT... block)
+			@Rest(name = "lisp::block") tT... blocks)
 	{
-		cAPI args = new cAPI(name, NIL, list((Object[]) block));
-		args.pushBlock(NIL);
-		tT res[] = e.exec();
-		e.popBlock();
+		cENV_BLOCK block = new cENV_BLOCK(name, list((Object[]) blocks));
+		tT[] res = new tT[]
+		{ NIL };
+		try
+		{
+			res = block.EVAL();
+		}
+		catch (RETURN_CONDITION ret)
+		{
+			if (ret.TST_RETURN(name))
+				return ret.RETURN_VALUE();
+
+			throw ret;
+		}
+		finally
+		{
+			block.ENV_STOP();
+		}
+
 		return res;
 	}
+
+	public static final tSYMBOL	LET	= sym("let");
 
 	/*************************************************************
 	 * @param arg
@@ -436,12 +450,25 @@ public class cSPECIAL_OPERATOR extends cCOMPILED_FUNCTION implements
 	@SpecialOp
 	public static tT[] LET( //
 			@Arg(name = "lisp::args") tLIST args, //
-			@Rest(name = "lisp::func") tT... func)
+			@Rest(name = "lisp::func") tT... function)
 	{
-		cAPI arguments = new cAPI(NIL, args, list((Object[]) func));
-		arguments.pushBlock(NIL);
-		tT res[] = e.exec();
-		e.popBlock();
+		tLIST func = list((Object[]) function);
+		tT doc = func.CAR();
+		tLIST decl = (tLIST) func.CDR().CAR();
+		func = (tLIST) func.CDR().CDR().CAR();
+		tT res[] = new tT[]
+		{ NIL };
+
+		cAPI arguments = new cAPI(args, doc, decl);
+		arguments.API_PUSH_ENV(NIL);
+		try
+		{
+			res = PROGN(func);
+		}
+		finally
+		{
+			arguments.API_POP_ENV();
+		}
 		return res;
 	}
 
@@ -456,11 +483,8 @@ public class cSPECIAL_OPERATOR extends cCOMPILED_FUNCTION implements
 			@Arg(name = "lisp::first") tT first, //
 			@Rest(name = "lisp::rest") tT... rest)
 	{
-		cAPI arguments = new cAPI(NIL, NIL, list((Object[]) rest));
-		arguments.pushBlock(NIL);
 		tT res = first.EVAL()[0];
-		e.exec();
-		e.popBlock();
+		PROGN(list((Object[]) rest));
 		return res;
 	}
 
@@ -475,18 +499,8 @@ public class cSPECIAL_OPERATOR extends cCOMPILED_FUNCTION implements
 			@Arg(name = "lisp::first") tT first, //
 			@Rest(name = "lisp::rest") tT... rest)
 	{
-		cAPI arguments = new cAPI(NIL, NIL, list((Object[]) rest));
-		arguments.pushBlock(NIL);
-		tT[] res = new tT[] {};
-		try
-		{
-			res = first.EVAL();
-			e.exec();
-		}
-		finally
-		{
-			e.popBlock();
-		}
+		tT[] res = first.EVAL();
+		PROGN(list((Object[]) rest));
 		return res;
 	}
 
@@ -532,10 +546,17 @@ public class cSPECIAL_OPERATOR extends cCOMPILED_FUNCTION implements
 	public static tT[] PROGN( //
 			@Rest(name = "lisp::block") tT... block)
 	{
-		cAPI arguments = new cAPI(NIL, NIL, list((Object[]) block));
-		arguments.pushBlock(NIL);
-		tT[] res = e.exec();
-		e.popBlock();
+		tT[] res = new tT[]
+		{ NIL };
+		cENV_PROGN progn = new cENV_PROGN(list((Object[]) block));
+		try
+		{
+			res = progn.EVAL();
+		}
+		finally
+		{
+			progn.ENV_STOP();
+		}
 		return res;
 	}
 
@@ -550,13 +571,11 @@ public class cSPECIAL_OPERATOR extends cCOMPILED_FUNCTION implements
 	public static tT[] PROG( //
 			@Arg(name = "lisp::name") tSYMBOL name, //
 			@Arg(name = "lisp::args") tLIST args, //
-			@Rest(name = "lisp::block") tT... block)
+			@Rest(name = "lisp::block") tT... blocks)
 	{
-		cAPI arguments = new cAPI(name, args, list((Object[]) block));
-		arguments.pushBlock(NIL);
-		tT[] res = e.exec();
-		e.popBlock();
-		return res;
+		// TODO this is a macro
+		return list(BLOCK, name,
+				list(LET, args).APPEND(list((Object[]) blocks))).EVAL();
 	}
 
 	/*********************************************************************

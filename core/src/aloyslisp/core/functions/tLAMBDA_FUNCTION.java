@@ -29,10 +29,6 @@
 
 package aloyslisp.core.functions;
 
-import aloyslisp.core.sequences.tLIST;
-
-
-
 /**
  * tLAMBDA_FUNCTION
  * 
@@ -42,13 +38,4 @@ import aloyslisp.core.sequences.tLIST;
  */
 public interface tLAMBDA_FUNCTION extends tFUNCTION, tFUNCTION_DESIGNATOR
 {
-	/**
-	 * @return
-	 */
-	public tLIST getFunction();
-
-	/**
-	 * @param func
-	 */
-	public void setFunction(tLIST func);
 }

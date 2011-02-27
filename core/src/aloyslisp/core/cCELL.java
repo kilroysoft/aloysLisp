@@ -263,7 +263,7 @@ public abstract class cCELL implements tSTANDARD_OBJECT
 
 	// MAIN GLOBAL LISP FUNCTIONS
 	/**
-	 * PUBLIC cBUILT_IN_FUNCTION cFUNCTION
+	 * PUBLIC cCOMPILED_METHOD cFUNCTION
 	 */
 	/*
 	 * (non-Javadoc)

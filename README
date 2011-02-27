@@ -1,17 +1,16 @@
- aloysLisp.
+== aloysLisp ==
  
  A LISP interpreter, compiler and library.
  
- Copyright (C) 2010 kilroySoft <aloyslisp@kilroysoft.ch>
+ Copyright (C) 2010 kilroySoft [[aloyslisp@kilroysoft.ch]]
   
  Authors 
-	Ivan Pierre <me@ivanpierre.ch>
-	George Kilroy <george@kilroysoft.ch>
+	Ivan Pierre [[me@ivanpierre.ch]]
+	George Kilroy [[george@kilroysoft.ch]]
 	
-IP 06/12/2010
+  IP 06/12/2010
 
-PREAMBLE
-========
+== PREAMBLE ==
 
 I liked a lot LISP language in my first programming age. Well, time flies like
 an arrow, thirty years ago. There was no Internet and grabbing infos was an hard
@@ -27,33 +26,31 @@ For the beginning in BASIC, and afterward in LISP.
 
 Some time ago, I discoverd that LISP had had some improvements with COMMON-LISP, Scheme
 and other implementation. As I needed LISP for some musical analysis and text generation,
-hyerographical text analysis and translation for my own interest. I looked at some 
+hierographical text analysis and translation for my own interest. I looked at some 
 implementations. Working these times in Java, I found Jatha, that was a simple interpreter 
 and p-code generator. But improving it for COMMON-LISP compatibility, I stopped the work
 because of structural problems.
 
 Two month ago, I took back the project and decided to take it back, but rewriting the whole 
-stuff from beginning. I know ! there's already ABCL, but making it by myself is more fun
-and valuable that using someone's else code (even if I did). So is here this project.
+stuff from beginning. I know ! there's already ABCL, Clojure, ... but making it by myself 
+is more fun and valuable that using someone's else code (even if I did). So, that's 
+this project.
 
-LINKS
-=====
-Main info page : http://kilroysoft.github.com/aloysLisp
-Javadoc page : http://kilroysoft.github.com/aloysLisp/doc
-GitHUB repository : http://github.com/kilroysoft/aloysLisp
-Documentation : http://github.com/kilroysoft/aloysLisp/wiki
+== LINKS ==
 
-MAJOR AXES
-==========
+aloysLisp community : [[http://aloys.li/sp]]
+Javadoc page : [[http://kilroysoft.github.com/aloysLisp/doc]]
+GitHUB repository : [[http://github.com/kilroysoft/aloysLisp]]
+Documentation : [[http://github.com/kilroysoft/aloysLisp/wiki]]
 
-1. Simpliest core as possible
-=============================
+== MAIN IDEAS ==
+
+=== Simpliest core as possible ===
 
 Only base LISP objects are defined with their base functions. Main goal is not efficiency
 but simplicity, readability and code independence. 
 
-2. Java and LISP programming
-============================
+=== Java and LISP programming ===
 
 The whole lisp should be made in LISP. But base objects interface is defined in Java. 
 All the access and constructor functions as access to Java library will be programmed as 
@@ -63,8 +60,7 @@ interface).
 Evaluation process manages the conversion if needed. LISP interface is generated directly 
 from source code using annotation information.
 
-3. Java compilation
-===================
+=== Java compilation ===
 
 As LISP and java programming interface to LISP objects are someway homomorphic, it's
 more efficient to generate binary code as JVM code through the Java compiler and not
@@ -75,4 +71,4 @@ Compiled code using Java form dynamic variables management will be done in a Jav
 LISP Strings will be Java Strings and so on. Compiled functions and macros will be 
 created with source in Java, so compilation improvement will be tested. 
 
-That's all for now
+That's all folks !!!! for now...

@@ -24,76 +24,85 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 27 oct. 2010 Creation
+// IP 14 nov. 2010 Creation
 // --------------------------------------------------------------------------
 
 package aloyslisp.core.functions;
 
+import java.lang.reflect.Method;
+
+import aloyslisp.annotations.Function;
 import aloyslisp.core.*;
+import aloyslisp.core.packages.*;
 import aloyslisp.core.sequences.*;
-import aloyslisp.internal.engine.*;
-import static aloyslisp.internal.engine.L.*;
 
 /**
- * cLAMBDA_FUNCTION
+ * fpGLOBAL
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class cLAMBDA_FUNCTION extends cFUNCTION implements tLAMBDA_FUNCTION
+public class cCOMPILED_METHOD extends cCOMPILED_FUNCTION
 {
 
 	/**
-	 * Lisp function
+	 * @param cls
+	 * @param name
+	 * @param decl
+	 * @param doc
+	 * @param declare
 	 */
-	tLIST	func	= null;
-
-	public cLAMBDA_FUNCTION(tLIST args, tLIST func)
+	public cCOMPILED_METHOD(Class<?> cls, tSYMBOL name, tLIST decl, tT doc,
+			tLIST declare)
 	{
-		super();
-		tT doc = API_PARSE_FUNC(func);
-		api = new cAPI_LAMBDA(args, doc.CAR(), (tLIST) doc.CDR().CAR());
-		this.func = (tLIST) doc.CDR().CDR().CAR();
-	}
-
-	public cLAMBDA_FUNCTION(tLIST args, tT doc, tLIST decl, tLIST func)
-	{
-		super();
-		api = new cAPI_LAMBDA(args, doc, decl);
-		this.func = func;
+		super(cls, name, decl, doc, declare);
+		object = this;
 	}
 
 	/**
 	 * 
 	 */
-	public cLAMBDA_FUNCTION()
+	public cCOMPILED_METHOD()
 	{
 		super();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see
-	 * aloyslisp.core.functions.tFUNCTION#exec(aloyslisp.core.sequences.tLIST)
+	/**
+	 * @param no
 	 */
-	@Override
-	public tT[] exec(tLIST args)
+	public void setBaseArg(Integer no)
 	{
-		tT[] res = new tT[]
-		{ NIL };
-		api.API_PUSH_ENV(args);
+		baseArg = no;
+	}
 
-		try
+	/**
+	 * @return
+	 */
+	public Integer getBaseArg()
+	{
+		return baseArg;
+	}
+
+	/**
+	 * @param c
+	 * @param obj
+	 * @param name
+	 * @return
+	 */
+	public Method setFunctionCall(Class<?> c, tSYMBOL name)
+	{
+		Method[] meth = c.getMethods();
+		for (Method m : meth)
 		{
-			res = cCOMPILED_SPECIAL.PROGN(func.VALUES_LIST());
-		}
-		finally
-		{
-			api.API_POP_ENV();
+			String lispName = m.getAnnotation(Function.class).name();
+			if (lispName.equalsIgnoreCase(name.SYMBOL_NAME()))
+			{
+				return m;
+			}
 		}
 
-		return res;
+		return null;
 	}
 
 }

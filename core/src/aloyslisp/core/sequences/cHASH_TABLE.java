@@ -77,16 +77,14 @@ public class cHASH_TABLE extends cCELL implements tHASH_TABLE
 	 * @return
 	 */
 	@Static(name = "make-hash-table", doc = "f_mk_has")
-	static public tHASH_TABLE MAKE_HASH_TABLE( //
-			@Key(name = "test", def = "(function eql)") tT test, //
-			@Key(name = "size", def = "11") tINTEGER size, //
-			@Key(name = "rehash-size", def = "11") tINTEGER rehashSize, //
-			@Key(name = "rehash-threshosd", def = ".75") tFLOAT rehashThreshold //
-	)
+	@Key(keys = "((test (function eql))(size 11)(rehash-size 11)(rehash-threshold))")
+	static public tHASH_TABLE MAKE_HASH_TABLE()
 	{
+		tT test = (tFUNCTION) arg("test", tT.class);
 		if (!(test instanceof tFUNCTION))
 			test = null;
-		return new cHASH_TABLE((tFUNCTION) test, size, rehashThreshold);
+		return new cHASH_TABLE((tFUNCTION) test, (tINTEGER) arg("size",
+				tINTEGER.class), (tFLOAT) arg("rehashThreshold", tFLOAT.class));
 	}
 
 	/*

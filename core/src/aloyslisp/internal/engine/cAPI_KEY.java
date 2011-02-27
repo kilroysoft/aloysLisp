@@ -19,26 +19,24 @@
 //--------------------------------------------------------------------------
 // history
 //--------------------------------------------------------------------------
-// IP 20 févr. 2011 Creation
+// IP 26 févr. 2011 Creation
 //--------------------------------------------------------------------------
 
 package aloyslisp.internal.engine;
 
-import aloyslisp.core.cCELL;
-
 /**
- * cAPI_KEYS
+ * cAPI_KEY
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  *
  */
-public class cAPI_KEYS extends cCELL
+public class cAPI_KEY extends cAPI_ARG
 {
 
 	/**
 	 * 
 	 */
-	public cAPI_KEYS()
+	public cAPI_KEY()
 	{
 		// TODO Auto-generated constructor stub
 	}

@@ -76,7 +76,6 @@ public class cENV_PROGN extends cENV
 		while (ip != NIL)
 		{
 			res = ENV_STEP();
-			ip = ENV_NEXT_STEP();
 		}
 		return res;
 	}
@@ -90,6 +89,7 @@ public class cENV_PROGN extends cENV
 	{
 		tT[] res = null;
 		res = ip.CAR().EVAL();
+		ip = ENV_NEXT_STEP();
 		return res;
 	}
 
@@ -97,7 +97,7 @@ public class cENV_PROGN extends cENV
 	 * (non-Javadoc)
 	 * @see aloyslisp.internal.engine.tENV#ENV_NEXT_STEP()
 	 */
-	public tLIST ENV_NEXT_STEP()
+	protected tLIST ENV_NEXT_STEP()
 	{
 		if (!(ip.CDR() instanceof tLIST))
 			throw new LispException("BLOCK code is not a list : " + blocks);

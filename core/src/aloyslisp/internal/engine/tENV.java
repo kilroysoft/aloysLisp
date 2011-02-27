@@ -92,7 +92,7 @@ public interface tENV extends tBUILD_IN_CLASS
 	 * @return
 	 */
 	@Function(name = "sys::env-let-intern")
-	public tT[] ENV_LET_INTERN( //
+	public tDYN_SYMBOL ENV_LET_INTERN( //
 			@Arg(name = "var") tSYMBOL var //
 	);
 
@@ -116,6 +116,14 @@ public interface tENV extends tBUILD_IN_CLASS
 	);
 
 	/**
+	 * @param tag
+	 * @return
+	 */
+	@Function(name = "sys::tst-tag")
+	public tLIST ENV_TAG_TST( //
+			@Arg(name = "tag") tT tag);
+
+	/**
 	 * @param var
 	 * @return
 	 */
@@ -134,27 +142,11 @@ public interface tENV extends tBUILD_IN_CLASS
 	public tT[] ENV_STEP();
 
 	/**
-	 * Get next step of current environment
-	 * 
-	 * @return
-	 */
-	@Function(name = "sys::next-step")
-	public tLIST ENV_NEXT_STEP();
-
-	/**
 	 * @param name
 	 * @return
 	 */
 	@Function(name = "sys::tst-block")
 	public cENV_BLOCK ENV_BLOCK_TST( //
 			@Arg(name = "name") tSYMBOL name);
-
-	/**
-	 * @param tag
-	 * @return
-	 */
-	@Function(name = "sys::tst-tag")
-	public tT ENV_TAG_TST( //
-			@Arg(name = "tag") tT tag);
 
 }

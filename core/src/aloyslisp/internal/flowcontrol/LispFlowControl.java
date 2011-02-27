@@ -29,8 +29,6 @@
 
 package aloyslisp.internal.flowcontrol;
 
-import aloyslisp.core.*;
-
 /**
  * LispFlowControl
  * 

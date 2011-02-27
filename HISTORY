@@ -1,4 +1,4 @@
-= HISTORY : List of changes =
+== HISTORY : List of changes ==
 	
 == To do ==
 * All non lisp functions on objects are private or protected or global.
@@ -19,23 +19,27 @@
 * READs functions should return tT and manage return eof-value...
 
 == Doing ==
-* Test arguments management, rewrite the whole.
-* Manage symbols annotations and link between SYMBOLs and Java variables.
 * Manage VECTORs and SIMPLE_VECTORs.
+* Clean-up all instantiation process (key arguments, rething the calling process)
+* Implement PACKAGE and SYMBOL management (a lot of work...)
+* Implement CLASS and STRUCTURE functions for definition and instances
+* Pass @BaseArg annotation for arguments to functions in the Java call.
+
+* Test arguments management, rewrite the whole.
+* Rewrite the whole Environment management
+
+== Current state ==
+* Add cCOMPILED_MACRO. Change compiled function classes names.
+* Manage symbols annotations and link between SYMBOLs and Java variables.
+* Rewrite the whole special forms
+* Create a new Environment as thread...
+* Added cAPI, tAPI, tAPI_ARG, cAPI_ARG, cAPI_KEY for function API definition.
+* Change @Key annotation from argument to function.
+* Change iterators for SEQUENCE classes (cons, array).
 * Automatic documentation creation (Wiki) by the programm itself. 
 	* Doc for Java version of syntax of LISP Function (by type or classes and globally alphabeticaly)
 	* Doc for LISP version of syntax of LISP Function
 	* List of function to be implemented.
-* Clean-up all instantiation process (key arguments, rething the calling process)
-* Implement PACKAGE and SYMBOL management (a lot of work...)
-* Implement CLASS and STRUCTURE functions for definition and instances
-* Change iterators for SEQUENCE classes (cons, array).
-* Suppress @BaseArg argument in the Java call.
-* Rewrite the whole special forms
-* Rewrite the whole Environment management
-* Create a new Environment as thread...
-
-== Current state ==
 * Add @AllowOtherKeys for argument management.
 * Add correct initialisation of key values in cAPI.
 * Added all string streams, cSTRING_INPUT_STREAM and cSTRING_OUTPUT_STREAM.

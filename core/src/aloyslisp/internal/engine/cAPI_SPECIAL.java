@@ -24,36 +24,44 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 20 févr. 2011 Creation
+// IP 26 févr. 2011 Creation
 // --------------------------------------------------------------------------
 
 package aloyslisp.internal.engine;
 
 import aloyslisp.core.*;
+import aloyslisp.core.packages.*;
 import aloyslisp.core.sequences.*;
 
 /**
- * cAPI_ARGS
+ * cAPI_SPECIAL
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class cAPI_ARGS extends cCELL
+public class cAPI_SPECIAL extends cAPI_LAMBDA
 {
-	/**
-	 * Argument
-	 */
-	private tLIST	args		= null;
-
-	private Integer	mandatory	= 0;
+	tSYMBOL	name	= null;
 
 	/**
-	 * Create an API definition
+	 * @param args
+	 * @param doc
+	 * @param decl
 	 */
-	public cAPI_ARGS(tLIST args)
+	public cAPI_SPECIAL(tSYMBOL name, tLIST args, tT doc, tLIST decl)
 	{
-		// TODO Auto-generated constructor stub
+		super(args, doc, decl);
+		this.name = name;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.internal.engine.tAPI#API_EVAL(aloyslisp.core.tT)
+	 */
+	public tT API_EVAL_ARG(tT value)
+	{
+		return value;
 	}
 
 }

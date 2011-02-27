@@ -80,12 +80,7 @@ public class cENV_LET extends cENV
 			return previous.ENV_LET_GET(var);
 		}
 
-		tDYN_SYMBOL dyn = (tDYN_SYMBOL) res[0];
-		if (!dyn.BOUNDP())
-			throw new LispException("Variable not bound : " + dyn);
-
-		return new tT[]
-		{ dyn.SYMBOL_VALUE(), L.T };
+		return res;
 	}
 
 	/*
@@ -125,11 +120,9 @@ public class cENV_LET extends cENV
 	 * .tSYMBOL)
 	 */
 	@Override
-	public tT[] ENV_LET_INTERN(tSYMBOL var)
+	public tDYN_SYMBOL ENV_LET_INTERN(tSYMBOL var)
 	{
-		tDYN_SYMBOL dyn = new cDYN_SYMBOL(var, L.NIL);
-		return new tT[]
-		{ vars.SET_GETHASH(dyn, var, null, L.NIL), L.T };
+		return (tDYN_SYMBOL) vars.SET_GETHASH(null, var, null, L.NIL);
 	}
 
 }

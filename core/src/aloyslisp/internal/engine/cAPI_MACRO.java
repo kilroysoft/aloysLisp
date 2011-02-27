@@ -24,21 +24,33 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 20 févr. 2011 Creation
+// IP 26 févr. 2011 Creation
 // --------------------------------------------------------------------------
 
 package aloyslisp.internal.engine;
 
-import aloyslisp.core.clos.*;
+import aloyslisp.core.*;
+import aloyslisp.core.packages.*;
+import aloyslisp.core.sequences.*;
 
 /**
- * tAPI_ARGS
+ * cAPI_MACRO
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public interface tAPI_ARGS extends tBUILD_IN_CLASS
+public class cAPI_MACRO extends cAPI_SPECIAL
 {
+
+	/**
+	 * @param args
+	 * @param doc
+	 * @param decl
+	 */
+	public cAPI_MACRO(tSYMBOL name, tLIST args, tT doc, tLIST decl)
+	{
+		super(name, args, doc, decl);
+	}
 
 }

@@ -177,7 +177,7 @@ public class cFILE_INPUT_STREAM extends cINPUT_STREAM implements
 	 * @see aloyslisp.core.types.tSTREAM#CLOSE(aloyslisp.core.types.tSTREAM,
 	 * java.lang.Boolean)
 	 */
-	public Boolean CLOSE(Boolean abort)
+	public Boolean CLOSE()
 	{
 		try
 		{

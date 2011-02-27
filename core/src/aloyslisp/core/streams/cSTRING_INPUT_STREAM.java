@@ -152,7 +152,7 @@ public class cSTRING_INPUT_STREAM extends cINPUT_STREAM implements
 	 * @see aloyslisp.core.streams.tSTREAM#CLOSE(java.lang.Boolean)
 	 */
 	@Override
-	public Boolean CLOSE(Boolean abort)
+	public Boolean CLOSE()
 	{
 		Boolean was = opened;
 		opened = false;

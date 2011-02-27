@@ -61,12 +61,10 @@ public class L
 	 * *package* should be be first hardwired, because it's used to api
 	 * symbols....
 	 */
-	public static tSYMBOL		sPACKAGEs	= new cSYMBOL("*package*",
-													cPACKAGE.cl)
-													.setExported(true)
-													.setSpecial(true)
-													.SET_SYMBOL_VALUE(
-															cPACKAGE.cl);
+	public static tSYMBOL	sPACKAGEs	= new cSYMBOL("*package*", cPACKAGE.cl)
+												.setExported(true)
+												.setSpecial(true)
+												.SET_SYMBOL_VALUE(cPACKAGE.cl);
 
 	static
 	{
@@ -372,7 +370,7 @@ public class L
 																			new cREADTABLE());
 	{
 		// Initialize readtable functions
-		((cREADTABLE)readTable.SYMBOL_VALUE()).init();
+		((cREADTABLE) readTable.SYMBOL_VALUE()).init();
 	}
 
 	public static tSYMBOL			lispTraceSuppress		= sym("*trace*")
@@ -420,7 +418,18 @@ public class L
 	 * @param name
 	 * @return
 	 */
-	public static tT arg(tSYMBOL name)
+	public static tT arg(String name, Class<?> cla)
+	{
+		return arg(sym(name), cla);
+	}
+
+	/**
+	 * Search in dynamic environment
+	 * 
+	 * @param name
+	 * @return
+	 */
+	public static tT arg(tSYMBOL name, Class<?> cla)
 	{
 		cDYN_SYMBOL atom = e.arg(name);
 		if (atom == null)
@@ -428,6 +437,9 @@ public class L
 			throw new LispException("Argument " + name
 					+ " not found in environment");
 		}
+		if (!atom.SYMBOL_VALUE().getClass().isAssignableFrom(cla))
+			throw new LispException("Argument " + name + " should be of type "
+					+ cla.getSimpleName());
 		return atom.SYMBOL_VALUE();
 	}
 
