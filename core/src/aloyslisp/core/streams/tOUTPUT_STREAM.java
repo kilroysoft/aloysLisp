@@ -50,9 +50,9 @@ public interface tOUTPUT_STREAM extends tSTREAM
 	 * @return
 	 */
 	@Function(name = "write-char", doc = "f_wr_cha")
-	public Character WRITE_CHAR(
-			@Arg(name = "character") Character character, //
-			@BaseArg @Opt(name = "stream", def = "*standard-output*") tOUTPUT_STREAM stream);
+	@BaseArg(name = "stream", pos = 1, type = Opt.class, def = "*standard-output*")
+	public Character WRITE_CHAR( //
+			@Arg(name = "character") Character character);
 
 	/**
 	 * @param val
@@ -60,9 +60,9 @@ public interface tOUTPUT_STREAM extends tSTREAM
 	 * @return
 	 */
 	@Function(name = "write-byte", doc = "f_wr_by")
-	public Integer WRITE_BYTE(
-			@Arg(name = "val") Integer val, //
-			@BaseArg @Opt(name = "stream", def = "*standard-output*") tOUTPUT_STREAM stream);
+	@BaseArg(name = "stream", pos = 1, type = Opt.class, def = "*standard-output*")
+	public Integer WRITE_BYTE( //
+			@Arg(name = "val") Integer val);
 
 	/**
 	 * Write an object. This is a base function not the LISP one.
@@ -71,10 +71,11 @@ public interface tOUTPUT_STREAM extends tSTREAM
 	 * @return
 	 */
 	@Function(name = "%write", doc = "f_wr_pr")
-	public tT WRITE(
-			//
-			@Arg(name = "object") tT obj, //
-			@BaseArg @Opt(name = "stream", def = "*standard-output*") tOUTPUT_STREAM stream);
+	@BaseArg(name = "stream", pos = 1, type = Opt.class, def = "*standard-output*")
+	@Key(keys = "(array base case circle escape gensym length level lines miser-width"
+			+ " pprint-dispatch pretty radix readably right-margin stream)")
+	public tT WRITE( //
+			@Arg(name = "object") tT obj);
 
 	/**
 	 * @param obj
@@ -82,10 +83,9 @@ public interface tOUTPUT_STREAM extends tSTREAM
 	 * @return
 	 */
 	@Function(name = "prin1", doc = "f_wr_pr")
-	public tT PRIN1(
-			//
-			@Arg(name = "object") tT obj, //
-			@BaseArg @Opt(name = "stream", def = "*standard-output*") tOUTPUT_STREAM stream);
+	@BaseArg(name = "stream", pos = 1, type = Opt.class, def = "*standard-output*")
+	public tT PRIN1( //
+			@Arg(name = "object") tT obj);
 
 	/**
 	 * @param obj
@@ -93,10 +93,9 @@ public interface tOUTPUT_STREAM extends tSTREAM
 	 * @return
 	 */
 	@Function(name = "princ", doc = "f_wr_pr")
-	public tT PRINC(
-			//
-			@Arg(name = "object") tT obj, //
-			@BaseArg @Opt(name = "stream", def = "*standard-output*") tOUTPUT_STREAM stream);
+	@BaseArg(name = "stream", pos = 1, type = Opt.class, def = "*standard-output*")
+	public tT PRINC( //
+			@Arg(name = "object") tT obj);
 
 	/**
 	 * @param obj
@@ -104,9 +103,9 @@ public interface tOUTPUT_STREAM extends tSTREAM
 	 * @return
 	 */
 	@Function(name = "print", doc = "f_wr_pr")
-	public tT PRINT(
-			@Arg(name = "object") tT obj, //
-			@BaseArg @Opt(name = "stream", def = "*standard-output*") tOUTPUT_STREAM stream);
+	@BaseArg(name = "stream", pos = 1, type = Opt.class, def = "*standard-output*")
+	public tT PRINT( //
+			@Arg(name = "object") tT obj);
 
 	/**
 	 * Print new line
@@ -115,8 +114,8 @@ public interface tOUTPUT_STREAM extends tSTREAM
 	 * @return
 	 */
 	@Function(name = "terpri", doc = "f_terpri")
-	public tNULL TERPRI(
-			@BaseArg @Opt(name = "stream", def = "*standard-output*") tOUTPUT_STREAM stream);
+	@BaseArg(name = "stream", pos = 0, type = Opt.class, def = "*standard-output*")
+	public tNULL TERPRI();
 
 	/**
 	 * Print newline if necessary
@@ -125,32 +124,32 @@ public interface tOUTPUT_STREAM extends tSTREAM
 	 * @return
 	 */
 	@Function(name = "fresh-line", doc = "f_terpri")
-	public tT FRESH_LINE(
-			@BaseArg @Opt(name = "stream", def = "*standard-output*") tOUTPUT_STREAM stream);
+	@BaseArg(name = "stream", pos = 0, type = Opt.class, def = "*standard-output*")
+	public tT FRESH_LINE();
 
 	/**
 	 * @param stream
 	 * @return
 	 */
 	@Function(name = "finish-output", doc = "f_finish")
-	public tT FINISH_OUTPUT(
-			@BaseArg @Opt(name = "stream", def = "*standard-output*") tOUTPUT_STREAM stream);
+	@BaseArg(name = "stream", pos = 0, type = Opt.class, def = "*standard-output*")
+	public tT FINISH_OUTPUT();
 
 	/**
 	 * @param stream
 	 * @return
 	 */
 	@Function(name = "force-output", doc = "f_finish")
-	public tT FORCE_OUTPUT(
-			@BaseArg @Opt(name = "stream", def = "*standard-output*") tOUTPUT_STREAM stream);
+	@BaseArg(name = "stream", pos = 0, type = Opt.class, def = "*standard-output*")
+	public tT FORCE_OUTPUT();
 
 	/**
 	 * @param stream
 	 * @return
 	 */
 	@Function(name = "clear-output", doc = "f_finish")
-	public tT CLEAR_OUTPUT(
-			@BaseArg @Opt(name = "stream", def = "*standard-output*") tOUTPUT_STREAM stream);
+	@BaseArg(name = "stream", pos = 0, type = Opt.class, def = "*standard-output*")
+	public tT CLEAR_OUTPUT();
 
 	/**
 	 * @param obj
@@ -161,7 +160,7 @@ public interface tOUTPUT_STREAM extends tSTREAM
 	 */
 	@Function(name = "write-string", doc = "f_wr_stg")
 	@Key(keys = "((start 0)(end nil))")
-	public tT WRITE_STRING(
-			@Arg(name = "object") tT obj, //
-			@BaseArg @Opt(name = "stream", def = "*standard-output*") tOUTPUT_STREAM stream);
+	@BaseArg(name = "stream", pos = 1, type = Opt.class, def = "*standard-output*")
+	public tT WRITE_STRING( //
+			@Arg(name = "object") tT obj);
 }

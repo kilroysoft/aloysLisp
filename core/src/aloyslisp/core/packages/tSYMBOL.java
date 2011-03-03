@@ -74,17 +74,6 @@ public interface tSYMBOL extends tBUILD_IN_CLASS, tFUNCTION_DESIGNATOR,
 	public tPACKAGE SYMBOL_PACKAGE();
 
 	/**
-	 * @param exported
-	 * @return
-	 */
-	public tSYMBOL setExported(Boolean exported);
-
-	/**
-	 * @return
-	 */
-	public boolean isExported();
-
-	/**
 	 * @param special
 	 * @return
 	 */

@@ -70,7 +70,7 @@ public class cENV_LET extends cENV
 		tT[] res = new tT[]
 		{ L.NIL, L.NIL };
 
-		res = vars.GETHASH(var, null, L.NIL);
+		res = vars.GETHASH(var, L.NIL);
 		if (res[1] == L.NIL)
 		{
 			if (previous == null)
@@ -95,7 +95,7 @@ public class cENV_LET extends cENV
 		tT[] res = new tT[]
 		{ L.NIL, L.NIL };
 
-		res = vars.GETHASH(var, null, L.NIL);
+		res = vars.GETHASH(var, L.NIL);
 		if (res[1] == L.NIL)
 		{
 			if (previous == null)
@@ -122,7 +122,7 @@ public class cENV_LET extends cENV
 	@Override
 	public tDYN_SYMBOL ENV_LET_INTERN(tSYMBOL var)
 	{
-		return (tDYN_SYMBOL) vars.SET_GETHASH(null, var, null, L.NIL);
+		return (tDYN_SYMBOL) vars.SET_GETHASH(null, var, L.NIL);
 	}
 
 }

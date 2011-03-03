@@ -24,39 +24,28 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 26 févr. 2011 Creation
+// IP 28 févr. 2011 Creation
 // --------------------------------------------------------------------------
 
-package aloyslisp.internal.engine;
+package aloyslisp.annotations;
 
-import aloyslisp.core.*;
-import aloyslisp.annotations.*;
-import aloyslisp.core.sequences.*;
-import static aloyslisp.internal.engine.L.*;
+import java.lang.annotation.*;
 
 /**
- * cAPI_ARG
+ * Whole
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class cAPI_ARG extends cCELL implements tAPI_ARG
+@Target(ElementType.PARAMETER)
+@Retention(RetentionPolicy.RUNTIME)
+public @interface Whole
 {
-	@Symb(name = "lambda-list-keywords", doc = "v_lambda")
-	public static tLIST	StaticListKeywords	= list(sym("&allow-other-keys"),
-													sym("&aux"), sym("&body"),
-													sym("&environment"),
-													sym("&key"),
-													sym("&optional"),
-													sym("&rest"), sym("&whole"));
-
 	/**
+	 * Lisp name for whole
 	 * 
+	 * @return
 	 */
-	public cAPI_ARG()
-	{
-		// TODO Auto-generated constructor stub
-	}
-
+	String name();
 }

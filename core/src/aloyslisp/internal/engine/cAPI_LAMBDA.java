@@ -30,6 +30,7 @@
 package aloyslisp.internal.engine;
 
 import aloyslisp.core.*;
+import aloyslisp.core.packages.tSYMBOL;
 import aloyslisp.core.sequences.*;
 
 /**
@@ -41,14 +42,52 @@ import aloyslisp.core.sequences.*;
  */
 public class cAPI_LAMBDA extends cAPI
 {
+	public static tSYMBOL	LAMBDA	= L.key("lambda");
+
+	protected tLIST			func	= L.NIL;
+
+	protected tSYMBOL		name	= LAMBDA;
+
 	/**
 	 * @param args
 	 * @param doc
 	 * @param decl
 	 */
-	public cAPI_LAMBDA(tLIST args, tT doc, tLIST decl)
+	public cAPI_LAMBDA(tSYMBOL name, tLIST args, tLIST compl, Boolean special)
 	{
-		super(args, doc, decl);
+		super(special);
+		if (name != null)
+			this.name = name;
+		tT doc = cAPI.API_PARSE_FUNC(compl);
+		SET_API_ARGS(args);
+		SET_API_DOC(doc.CAR());
+		SET_API_DECL((tLIST) doc.CDR().CAR());
+		func = (tLIST) doc.CDR().CDR().CAR();
+	}
+
+	// /**
+	// * @param args
+	// * @param doc
+	// * @param decl
+	// */
+	// public cAPI_LAMBDA(tLIST args, tT doc, tLIST decl, tLIST func,
+	// Boolean special)
+	// {
+	// super(args, doc, decl);
+	// this.func = func;
+	// this.special = special;
+	// }
+
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * aloyslisp.internal.engine.tCODE#CODE_CALL(aloyslisp.core.sequences.tLIST)
+	 */
+	@Override
+	public tT[] API_CALL(tLIST args)
+	{
+		// here the args are not used the environment is already set up
+		return new cENV_PROGN(func).EVAL();
 	}
 
 }

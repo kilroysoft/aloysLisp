@@ -24,33 +24,32 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 26 févr. 2011 Creation
+// IP 3 mars 2011 Creation
 // --------------------------------------------------------------------------
 
-package aloyslisp.internal.engine;
+package aloyslisp.core.functions;
 
-import aloyslisp.core.*;
-import aloyslisp.core.packages.*;
-import aloyslisp.core.sequences.*;
+import java.lang.reflect.Method;
+
+import aloyslisp.internal.engine.cAPI_JAVA;
 
 /**
- * cAPI_FUNC
+ * cSPECIAL_OPERATOR
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class cAPI_FUNC extends cAPI_SPECIAL
+public class cSPECIAL_OPERATOR extends cAPI_JAVA implements tSPECIAL_OPERATOR
 {
 
 	/**
-	 * @param args
-	 * @param doc
-	 * @param decl
+	 * @param method
+	 * @param special
 	 */
-	public cAPI_FUNC(tSYMBOL name, tLIST args, tT doc, tLIST decl)
+	public cSPECIAL_OPERATOR(Method method)
 	{
-		super(name, args, doc, decl);
+		super(method, true);
 	}
 
 }

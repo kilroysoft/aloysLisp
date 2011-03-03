@@ -102,7 +102,7 @@ public class cFILE_OUTPUT_STREAM extends cOUTPUT_STREAM implements
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tOUTPUT_STREAM#WRITE_CHAR(java.lang.Character)
 	 */
-	public Character WRITE_CHAR(Character car, tOUTPUT_STREAM stream)
+	public Character WRITE_CHAR(Character car)
 	{
 		lineBegin = (car == '\n' || car == '\r');
 		writer.print(car);
@@ -114,7 +114,7 @@ public class cFILE_OUTPUT_STREAM extends cOUTPUT_STREAM implements
 	 * @see aloyslisp.core.streams.IOutputStream#forceOutput()
 	 */
 	@Override
-	public tT FORCE_OUTPUT(tOUTPUT_STREAM stream)
+	public tT FORCE_OUTPUT()
 	{
 		// TODO verify return
 		writer.flush();
@@ -126,7 +126,7 @@ public class cFILE_OUTPUT_STREAM extends cOUTPUT_STREAM implements
 	 * @see aloyslisp.core.streams.IOutputStream#clearOutput()
 	 */
 	@Override
-	public tT CLEAR_OUTPUT(tOUTPUT_STREAM stream)
+	public tT CLEAR_OUTPUT()
 	{
 		// TODO verify output
 		writer.flush();
@@ -138,7 +138,7 @@ public class cFILE_OUTPUT_STREAM extends cOUTPUT_STREAM implements
 	 * @see aloyslisp.core.streams.IOutputStream#finishOutput()
 	 */
 	@Override
-	public tT FINISH_OUTPUT(tOUTPUT_STREAM stream)
+	public tT FINISH_OUTPUT()
 	{
 		// TODO verify return
 		writer.flush();
@@ -173,7 +173,7 @@ public class cFILE_OUTPUT_STREAM extends cOUTPUT_STREAM implements
 	 * aloyslisp.core.types.tOUTPUT_STREAM)
 	 */
 	@Override
-	public Integer WRITE_BYTE(Integer val, tOUTPUT_STREAM stream)
+	public Integer WRITE_BYTE(Integer val)
 	{
 		writer.write(val);
 		return val;

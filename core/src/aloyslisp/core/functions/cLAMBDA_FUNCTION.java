@@ -29,10 +29,9 @@
 
 package aloyslisp.core.functions;
 
-import aloyslisp.core.*;
+import aloyslisp.core.packages.*;
 import aloyslisp.core.sequences.*;
 import aloyslisp.internal.engine.*;
-import static aloyslisp.internal.engine.L.*;
 
 /**
  * cLAMBDA_FUNCTION
@@ -41,59 +40,12 @@ import static aloyslisp.internal.engine.L.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class cLAMBDA_FUNCTION extends cFUNCTION implements tLAMBDA_FUNCTION
+public class cLAMBDA_FUNCTION extends cAPI_LAMBDA implements tLAMBDA_FUNCTION
 {
 
-	/**
-	 * Lisp function
-	 */
-	tLIST	func	= null;
-
-	public cLAMBDA_FUNCTION(tLIST args, tLIST func)
+	public cLAMBDA_FUNCTION(tSYMBOL name, tLIST args, tLIST func)
 	{
-		super();
-		tT doc = API_PARSE_FUNC(func);
-		api = new cAPI_LAMBDA(args, doc.CAR(), (tLIST) doc.CDR().CAR());
-		this.func = (tLIST) doc.CDR().CDR().CAR();
-	}
-
-	public cLAMBDA_FUNCTION(tLIST args, tT doc, tLIST decl, tLIST func)
-	{
-		super();
-		api = new cAPI_LAMBDA(args, doc, decl);
-		this.func = func;
-	}
-
-	/**
-	 * 
-	 */
-	public cLAMBDA_FUNCTION()
-	{
-		super();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see
-	 * aloyslisp.core.functions.tFUNCTION#exec(aloyslisp.core.sequences.tLIST)
-	 */
-	@Override
-	public tT[] exec(tLIST args)
-	{
-		tT[] res = new tT[]
-		{ NIL };
-		api.API_PUSH_ENV(args);
-
-		try
-		{
-			res = cCOMPILED_SPECIAL.PROGN(func.VALUES_LIST());
-		}
-		finally
-		{
-			api.API_POP_ENV();
-		}
-
-		return res;
+		super(name, args, func, false);
 	}
 
 }

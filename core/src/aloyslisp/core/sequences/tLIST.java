@@ -68,9 +68,9 @@ public interface tLIST extends tSEQUENCE
 	 * @param newCell
 	 */
 	@Function(name = "setf-car")
+	@BaseArg(name = "list", pos = 1)
 	public tLIST SET_CAR( //
-			@Arg(name = "val") tT val, //
-			@BaseArg @Arg(name = "list") tLIST tList //
+			@Arg(name = "val") tT val //
 	);
 
 	/**
@@ -79,9 +79,9 @@ public interface tLIST extends tSEQUENCE
 	 * @param newCell
 	 */
 	@Function(name = "setf-cdr")
+	@BaseArg(name = "list", pos = 1)
 	public tLIST SET_CDR( //
-			@Arg(name = "val") tT val, //
-			@BaseArg @Arg(name = "list") tLIST tList //
+			@Arg(name = "val") tT val //
 	);
 
 	/**

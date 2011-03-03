@@ -147,7 +147,7 @@ public class cHASH_TABLE extends cCELL implements tHASH_TABLE
 	 * aloyslisp.core.sequences.tHASH_TABLE)
 	 */
 	@Override
-	public tT[] GETHASH(tT key, tHASH_TABLE hashTable, tT def)
+	public tT[] GETHASH(tT key, tT def)
 	{
 		currTest = test;
 		tT res = table.get(key);
@@ -166,7 +166,7 @@ public class cHASH_TABLE extends cCELL implements tHASH_TABLE
 	 * aloyslisp.core.sequences.tHASH_TABLE)
 	 */
 	@Override
-	public tT SET_GETHASH(tT value, tT key, tHASH_TABLE hashTable, tT def)
+	public tT SET_GETHASH(tT value, tT key, tT def)
 	{
 		currTest = test;
 		return table.put(key, value);
@@ -178,7 +178,7 @@ public class cHASH_TABLE extends cCELL implements tHASH_TABLE
 	 * aloyslisp.core.sequences.tHASH_TABLE)
 	 */
 	@Override
-	public tT REMHASH(tT key, tHASH_TABLE hashTable)
+	public tT REMHASH(tT key)
 	{
 		currTest = test;
 		return table.remove(key);
@@ -191,13 +191,13 @@ public class cHASH_TABLE extends cCELL implements tHASH_TABLE
 	 * .tFUNCTION, aloyslisp.core.sequences.tHASH_TABLE)
 	 */
 	@Override
-	public tT MAPHASH(tFUNCTION func, tHASH_TABLE hashTable)
+	public tT MAPHASH(tFUNCTION func)
 	{
 		Set<tT> set = table.keySet();
 
 		for (tT elem : set)
 		{
-			func.e(elem, GETHASH(elem, null, NIL));
+			func.e(elem, GETHASH(elem, NIL));
 		}
 		return null;
 	}

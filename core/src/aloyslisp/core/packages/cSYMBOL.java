@@ -86,11 +86,6 @@ public class cSYMBOL extends cCELL implements tSYMBOL
 	/**
 	 * 
 	 */
-	protected boolean	exported	= false;
-
-	/**
-	 * 
-	 */
 	protected tLIST		pList		= null;
 
 	/**
@@ -123,25 +118,6 @@ public class cSYMBOL extends cCELL implements tSYMBOL
 	public tSYMBOL copy()
 	{
 		return this;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.types.tSYMBOL#setExported(boolean)
-	 */
-	public tSYMBOL setExported(Boolean exported)
-	{
-		this.exported = exported;
-		return this;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.types.tSYMBOL#isExported()
-	 */
-	public boolean isExported()
-	{
-		return exported;
 	}
 
 	/**
@@ -191,12 +167,12 @@ public class cSYMBOL extends cCELL implements tSYMBOL
 				return this;
 			}
 			tLIST nc = (tLIST) list(name, data).APPEND(pList.copy());
-			pList.SET_CAR(nc.CAR(), null);
-			pList.SET_CDR(nc.CDR(), null);
+			pList.SET_CAR(nc.CAR());
+			pList.SET_CDR(nc.CDR());
 			return (tSYMBOL) name;
 		}
 		// Write data
-		((tLIST) sym.CDR()).SET_CAR(data, null);
+		((tLIST) sym.CDR()).SET_CAR(data);
 		return (tSYMBOL) name;
 	}
 
@@ -260,7 +236,7 @@ public class cSYMBOL extends cCELL implements tSYMBOL
 	 */
 	public tSYMBOL SET_SYMBOL_VALUE(tT value)
 	{
-		if (e.writeVal(this, value) != null)
+		if (e.writeEnv(this, value) != null)
 		{
 			return this;
 		}
@@ -306,14 +282,14 @@ public class cSYMBOL extends cCELL implements tSYMBOL
 		}
 		else
 		{
-			tT val = e.readVal(this);
+			tT val = e.readEnv(this);
 			if (val != null)
 				return val;
 		}
 
 		if (value == null)
 		{
-			e.trace();
+			// e.trace();
 			throw new LispException("cDYN_SYMBOL " + this + " has no value");
 		}
 
@@ -340,7 +316,7 @@ public class cSYMBOL extends cCELL implements tSYMBOL
 		}
 		else
 		{
-			tT val = e.readVal(this);
+			tT val = e.readEnv(this);
 			if (val != null)
 				return val;
 		}
@@ -381,13 +357,6 @@ public class cSYMBOL extends cCELL implements tSYMBOL
 	 */
 	public tSYMBOL SET_SYMBOL_FUNCTION(tFUNCTION function)
 	{
-		cDYN_SYMBOL func = e.read(this);
-
-		if (func != null)
-		{
-			return func.SET_SYMBOL_VALUE(function);
-		}
-
 		this.function = function;
 		return this;
 	}
@@ -398,13 +367,6 @@ public class cSYMBOL extends cCELL implements tSYMBOL
 	 */
 	public tFUNCTION SYMBOL_FUNCTION()
 	{
-		cDYN_SYMBOL func = e.read(this);
-
-		if (func != null)
-		{
-			return func.SYMBOL_FUNCTION();
-		}
-
 		if (function == null)
 		{
 			return null;
@@ -420,7 +382,7 @@ public class cSYMBOL extends cCELL implements tSYMBOL
 	 */
 	private tT fGetValue()
 	{
-		cDYN_SYMBOL func = e.read(this);
+		cDYN_SYMBOL func = e.arg(this);
 
 		if (func != null)
 			if (!(func.SYMBOL_VALUE() instanceof tFUNCTION))
@@ -437,13 +399,6 @@ public class cSYMBOL extends cCELL implements tSYMBOL
 	 */
 	public tSYMBOL fUnset()
 	{
-		cDYN_SYMBOL atom = e.read(this);
-
-		if (atom != null)
-		{
-			return atom.SET_SYMBOL_VALUE(null);
-		}
-
 		function = null;
 		return this;
 	}
@@ -534,11 +489,10 @@ public class cSYMBOL extends cCELL implements tSYMBOL
 	 */
 	public tT[] e(Object... args)
 	{
-		tFUNCTION func = SYMBOL_FUNCTION();
 		tT a = NIL;
 		if (args.length > 0)
 			a = list(args);
-		return cons(func, a).EVAL();
+		return cons(this, a).EVAL();
 	}
 
 	/*
@@ -556,9 +510,9 @@ public class cSYMBOL extends cCELL implements tSYMBOL
 	 */
 	public tSYMBOL setSpecial(boolean special)
 	{
-		cDYN_SYMBOL atom = e.read(this);
+		cDYN_SYMBOL atom = e.arg(this);
 		if (atom != null)
-			return atom.setSpecial(special);
+			return atom.SETSPECIAL(special);
 
 		this.special = special;
 		return this;
@@ -570,9 +524,9 @@ public class cSYMBOL extends cCELL implements tSYMBOL
 	 */
 	public boolean isSpecial()
 	{
-		cDYN_SYMBOL atom = e.read(this);
+		cDYN_SYMBOL atom = e.arg(this);
 		if (atom != null)
-			return atom.isSpecial();
+			return atom.SPECIALP();
 
 		return special;
 	}
@@ -699,6 +653,16 @@ public class cSYMBOL extends cCELL implements tSYMBOL
 	{
 		// TODO Auto-generated method stub
 		return str(name).hashCode();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.tT#KEYWORDP()
+	 */
+	@Override
+	public boolean KEYWORDP()
+	{
+		return SYMBOL_PACKAGE() == cPACKAGE.key;
 	}
 
 }

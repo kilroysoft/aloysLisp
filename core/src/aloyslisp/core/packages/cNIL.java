@@ -82,7 +82,7 @@ public class cNIL extends cSYMBOL implements tNULL
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tLIST#SET_CAR(aloyslisp.core.types.tT)
 	 */
-	public tLIST SET_CAR(tT newCell, tLIST list)
+	public tLIST SET_CAR(tT newCell)
 	{
 		throw new LispErrorFunctionCannotApplyOn("rplaca", this);
 	}
@@ -92,7 +92,7 @@ public class cNIL extends cSYMBOL implements tNULL
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tLIST#SET_CDR(aloyslisp.core.types.tT)
 	 */
-	public tLIST SET_CDR(tT newCell, tLIST list)
+	public tLIST SET_CDR(tT newCell)
 	{
 		throw new LispErrorFunctionCannotApplyOn("rplacd", this);
 	}
@@ -495,6 +495,16 @@ public class cNIL extends cSYMBOL implements tNULL
 	public SEQUENCEIterator iterator(boolean destructive)
 	{
 		return new LISTIterator(this, destructive);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.sequences.tSEQUENCE#FIND(aloyslisp.core.tT)
+	 */
+	@Override
+	public tT FIND(tT item)
+	{
+		return NIL;
 	}
 
 }

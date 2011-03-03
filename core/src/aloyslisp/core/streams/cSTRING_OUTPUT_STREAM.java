@@ -69,7 +69,7 @@ public class cSTRING_OUTPUT_STREAM extends cOUTPUT_STREAM implements
 	 * aloyslisp.core.streams.tOUTPUT_STREAM)
 	 */
 	@Override
-	public Character WRITE_CHAR(Character character, tOUTPUT_STREAM stream)
+	public Character WRITE_CHAR(Character character)
 	{
 		buffer.append(character);
 		return character;
@@ -81,7 +81,7 @@ public class cSTRING_OUTPUT_STREAM extends cOUTPUT_STREAM implements
 	 * aloyslisp.core.streams.tOUTPUT_STREAM)
 	 */
 	@Override
-	public Integer WRITE_BYTE(Integer val, tOUTPUT_STREAM stream)
+	public Integer WRITE_BYTE(Integer val)
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -94,7 +94,7 @@ public class cSTRING_OUTPUT_STREAM extends cOUTPUT_STREAM implements
 	 * .tOUTPUT_STREAM)
 	 */
 	@Override
-	public tT FINISH_OUTPUT(tOUTPUT_STREAM stream)
+	public tT FINISH_OUTPUT()
 	{
 		return NIL;
 	}
@@ -106,7 +106,7 @@ public class cSTRING_OUTPUT_STREAM extends cOUTPUT_STREAM implements
 	 * .tOUTPUT_STREAM)
 	 */
 	@Override
-	public tT FORCE_OUTPUT(tOUTPUT_STREAM stream)
+	public tT FORCE_OUTPUT()
 	{
 		return NIL;
 	}
@@ -118,7 +118,7 @@ public class cSTRING_OUTPUT_STREAM extends cOUTPUT_STREAM implements
 	 * .tOUTPUT_STREAM)
 	 */
 	@Override
-	public tT CLEAR_OUTPUT(tOUTPUT_STREAM stream)
+	public tT CLEAR_OUTPUT()
 	{
 		return NIL;
 	}

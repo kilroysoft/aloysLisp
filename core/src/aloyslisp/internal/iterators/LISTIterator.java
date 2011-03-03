@@ -31,7 +31,7 @@ package aloyslisp.internal.iterators;
 
 import static aloyslisp.internal.engine.L.*;
 import aloyslisp.core.*;
-import aloyslisp.core.conditions.LispException;
+import aloyslisp.core.conditions.*;
 import aloyslisp.core.sequences.*;
 
 /**
@@ -162,7 +162,7 @@ public class LISTIterator extends SEQUENCEIterator
 
 		save();
 
-		current = previous.SET_CDR(current.CDR(), null);
+		current = previous.SET_CDR(current.CDR());
 	}
 
 	/*
@@ -185,7 +185,7 @@ public class LISTIterator extends SEQUENCEIterator
 		// at the beginning ?
 		if (current == null)
 		{
-			if (list == null)
+			if (list == null || list == NIL)
 			{
 				list = new cCONS(obj, NIL);
 				return obj;
@@ -198,7 +198,7 @@ public class LISTIterator extends SEQUENCEIterator
 		save();
 
 		tLIST newCons = new cCONS(obj, current.CDR());
-		current.SET_CDR(newCons, null);
+		current.SET_CDR(newCons);
 		return null;
 	}
 
@@ -221,12 +221,12 @@ public class LISTIterator extends SEQUENCEIterator
 		if (current == NIL)
 		{
 			current = new cCONS(obj, NIL);
-			previous.SET_CDR(current, null);
+			previous.SET_CDR(current);
 			index++;
 			return obj;
 		}
 
-		current.SET_CAR(obj, null);
+		current.SET_CAR(obj);
 		return obj;
 	}
 
@@ -244,12 +244,12 @@ public class LISTIterator extends SEQUENCEIterator
 		if (current == NIL)
 		{
 			current = new cCONS(obj, NIL);
-			previous.SET_CDR(current, null);
+			previous.SET_CDR(current);
 			index++;
 			return obj;
 		}
 
-		current.SET_CDR(obj, null);
+		current.SET_CDR(obj);
 		return obj;
 	}
 
@@ -318,7 +318,7 @@ public class LISTIterator extends SEQUENCEIterator
 	public tT toEnd()
 	{
 		tT res = null;
-		if (current == NIL)
+		if (current == null || current == NIL)
 		{
 			rewind();
 		}
@@ -351,8 +351,18 @@ public class LISTIterator extends SEQUENCEIterator
 	@Override
 	public tT append(tT obj)
 	{
+		tT res = null;
 		toEnd();
-		return add(obj);
+		if (current == NIL)
+		{
+			res = list = list(obj);
+		}
+		else
+		{
+			current.SET_CDR(res = list(obj));
+		}
+
+		return res;
 	}
 
 }

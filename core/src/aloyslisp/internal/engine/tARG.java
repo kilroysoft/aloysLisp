@@ -29,28 +29,15 @@
 
 package aloyslisp.internal.engine;
 
-import aloyslisp.core.*;
-import aloyslisp.core.packages.*;
-import aloyslisp.core.sequences.*;
+import aloyslisp.core.clos.*;
 
 /**
- * cAPI_MACRO
+ * tARG
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class cAPI_MACRO extends cAPI_SPECIAL
+public interface tARG extends tBUILD_IN_CLASS
 {
-
-	/**
-	 * @param args
-	 * @param doc
-	 * @param decl
-	 */
-	public cAPI_MACRO(tSYMBOL name, tLIST args, tT doc, tLIST decl)
-	{
-		super(name, args, doc, decl);
-	}
-
 }

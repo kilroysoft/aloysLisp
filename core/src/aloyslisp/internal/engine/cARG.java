@@ -31,37 +31,35 @@ package aloyslisp.internal.engine;
 
 import aloyslisp.core.*;
 import aloyslisp.core.packages.*;
-import aloyslisp.core.sequences.*;
+import aloyslisp.core.streams.*;
+import static aloyslisp.internal.engine.L.*;
 
 /**
- * cAPI_SPECIAL
+ * cARG
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class cAPI_SPECIAL extends cAPI_LAMBDA
+public class cARG extends cDYN_SYMBOL implements tARG
 {
-	tSYMBOL	name	= null;
-
 	/**
-	 * @param args
-	 * @param doc
-	 * @param decl
+	 * @param orig
+	 * @param value
 	 */
-	public cAPI_SPECIAL(tSYMBOL name, tLIST args, tT doc, tLIST decl)
+	public cARG(tSYMBOL orig, tT value)
 	{
-		super(args, doc, decl);
-		this.name = name;
+		super(orig, value);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.internal.engine.tAPI#API_EVAL(aloyslisp.core.tT)
+	/**
+	 * @param orig
+	 * @param value
 	 */
-	public tT API_EVAL_ARG(tT value)
+	public cARG(String orig, String value)
 	{
-		return value;
+		super(sym(orig), value.equals("") ? NIL : new cSTRING_INPUT_STREAM(
+				value, 0, -1).READ(false, NIL, false));
 	}
 
 }

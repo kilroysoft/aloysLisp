@@ -29,15 +29,11 @@
 
 package aloyslisp.internal.engine;
 
-import java.lang.annotation.*;
 import java.lang.reflect.*;
 
 import aloyslisp.annotations.*;
-import aloyslisp.core.*;
 import aloyslisp.core.functions.*;
 import aloyslisp.core.packages.*;
-import aloyslisp.core.sequences.*;
-import static aloyslisp.core.streams.cSTRING_INPUT_STREAM.*;
 import static aloyslisp.internal.engine.L.*;
 
 /**
@@ -164,13 +160,14 @@ public class Library
 		Method[] meth = clas.getMethods();
 		for (Method m : meth)
 		{
+			// TODO verify that m is not derivated from a base class...
 			// Get method data
 			Static stat = m.getAnnotation(Static.class);
 			Function f = m.getAnnotation(Function.class);
 			if (stat == null && f == null)
 			{
 				// Test for non declared
-				if (m.getName().matches("[A-Z_\\*\\%]*"))
+				if (m.getName().matches("[A-Z_ps]*"))
 				{
 					if (m.getDeclaringClass().getSimpleName().startsWith("t"))
 						// we are in a type definition
@@ -191,209 +188,37 @@ public class Library
 
 			SetF setf = m.getAnnotation(SetF.class);
 			SpecialOp special = m.getAnnotation(SpecialOp.class);
-			Mac prefix = m.getAnnotation(Mac.class);
-			Annotation[][] notes = m.getParameterAnnotations();
 
 			tFUNCTION func = null;
 			tSYMBOL sym = null;
 			if (stat != null)
 			{
+				sym = sym(stat.name());
 				if (special == null)
 					// Static normal function
-					func = new cCOMPILED_METHOD(clas, m.getName(),
-							argsDecl(notes), stat.doc(), declareArgs());
+					func = new cCOMPILED_FUNCTION(m);
 				else
-					// Static normal function
-					func = new cCOMPILED_SPECIAL(clas, m.getName(),
-							argsDecl(notes), stat.doc(), declareArgs());
-				writeMissing(m.getName(), notes);
-				func.setFuncName(sym = sym(stat.name()).SET_SYMBOL_FUNCTION(
-						func));
+					// Static special function
+					func = new cSPECIAL_OPERATOR(m);
 			}
 			else if (f != null)
 			{
 				// Object primitive
-				func = new cCOMPILED_FUNCTION(clas, m.getName(),
-						argsDecl(notes), f.doc(), declareArgs());
-				func.setBaseArg(noArgsBase(notes));
-				writeMissing(m.getName(), notes);
-				func.setFuncName(sym = sym(f.name()).SET_SYMBOL_FUNCTION(func));
+				sym = sym(f.name());
+				func = new cCOMPILED_FUNCTION(m);
 			}
+
+			// add symbol function
+			sym.SET_SYMBOL_FUNCTION(func);
 
 			// define setf function
 			if (sym != null && setf != null)
 			{
 				sym.SET_GET(setfKey, sym(setf.name()));
 			}
-
-			// write declare
-			// TODO move as function of cAPI
-			if (func != null && m.toString().contains(cls + "." + m.getName()))
-			{
-				System.out.println(((cFUNCTION) func).api.getLispDeclare());
-				System.out.println();
-				if (prefix != null)
-				{
-					func.setPrefix(prefix.prefix());
-					System.out.println(prefix.prefix() + "x -> (" + m.getName()
-							+ " x)");
-					System.out.println();
-				}
-				System.out.println("```java");
-				System.out.println(m.toString().replace(cls + ".", "")
-						.replaceAll("aloyslisp.core.", "")
-						.replaceAll("functions.", "").replaceAll("math.", "")
-						.replaceAll("plugs.", "").replaceAll("sequences.", "")
-						.replaceAll("streams.", "").replaceAll("packages.", "")
-						.replaceAll("java.lang.", "")
-						.replaceAll("#<cPACKAGE system>::", ""));
-				System.out.println("```\n");
-			}
 		}
 
 		return true;
-	}
-
-	/**
-	 * @param notes
-	 * @return
-	 */
-	private static tLIST declareArgs()
-	{
-		return NIL;
-	}
-
-	/**
-	 * @param notes
-	 * @return
-	 */
-	private static void writeMissing(String name, Annotation[][] notes)
-	{
-		for (Annotation[] note : notes)
-		{
-			if (note.length == 0)
-			{
-				System.out.println("Args not defined in " + name);
-				break;
-			}
-		}
-	}
-
-	/**
-	 * @param notes
-	 * @return
-	 */
-	private static tLIST argsDecl(Annotation[][] notes)
-	{
-		tLIST res = NIL;
-		res = (tLIST) res.APPEND(argsBase(notes, Arg.class, ""));
-		res = (tLIST) res.APPEND(argsBase(notes, Opt.class, "&optional"));
-		res = (tLIST) res.APPEND(argsBase(notes, Rest.class, "&rest"));
-		res = (tLIST) res.APPEND(argsBase(notes, Key.class, "&key"));
-		return res;
-	}
-
-	/**
-	 * @param notes
-	 * @param type
-	 * @param prefix
-	 * @return
-	 */
-	private static tLIST argsBase(Annotation[][] notes,
-			Class<? extends Annotation> type, String prefix)
-	{
-		tLIST res = NIL;
-		boolean call = prefix == null;
-
-		for (Annotation[] an : notes)
-		{
-			for (Annotation a : an)
-			{
-				tT arg = NIL;
-				if (type.isAssignableFrom(a.getClass()))
-				{
-					if (a instanceof Arg)
-					{
-						arg = sym(((Arg) a).name());
-						if (call)
-							arg = unquote(arg);
-					}
-					else if (a instanceof Opt)
-					{
-						arg = sym(((Opt) a).name());
-						if (call)
-							arg = unquote(arg);
-						else
-							arg = list(arg).APPEND(
-									list(getDefault(((Opt) a).def())));
-					}
-					else if (a instanceof Key)
-					{
-						arg = sym(((Key) a).name());
-						if (call)
-							arg = unquote(arg);
-						else
-							arg = list(arg).APPEND(
-									list(getDefault(((Key) a).def())));
-					}
-					else if (a instanceof Rest)
-					{
-						arg = sym(((Rest) a).name());
-						if (call)
-							arg = splice(arg);
-					}
-				}
-				if (arg != NIL)
-					res = (tLIST) res.APPEND(list(arg));
-			}
-		}
-
-		// If a prefix is given and
-		if (prefix != null && !prefix.equals("") && res.LENGTH() != 0)
-			res = (tLIST) decl(prefix).APPEND(res);
-
-		return res;
-	}
-
-	/**
-	 * @param def
-	 * @return
-	 */
-	private static tT getDefault(String def)
-	{
-		if (def.equals(""))
-			return NIL;
-
-		return MAKE_STRING_INPUT_STREAM(def, NIL, NIL).READ(null, false, NIL,
-				false);
-	}
-
-	/**
-	 * @param notes
-	 * @return
-	 */
-	private static Integer noArgsBase(Annotation[][] notes)
-	{
-		int base = 0;
-
-		for (Annotation[] an : notes)
-		{
-			for (Annotation a : an)
-			{
-				if (a instanceof Arg || a instanceof Opt || a instanceof Key
-						|| a instanceof Rest)
-				{
-					base++;
-				}
-				else if (a instanceof BaseArg)
-				{
-					return base;
-				}
-			}
-		}
-
-		// First arg is discarded
-		return -1;
 	}
 
 }

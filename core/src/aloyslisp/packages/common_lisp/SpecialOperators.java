@@ -24,52 +24,30 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 26 oct. 2010 Creation
-// TODO Rethink about SpecialOp form as a 2 way function and macro
-// transformations.
+// IP 3 mars 2011 Creation
 // --------------------------------------------------------------------------
 
-package aloyslisp.core.functions;
+package aloyslisp.packages.common_lisp;
 
 import static aloyslisp.internal.engine.L.*;
 import aloyslisp.annotations.*;
 import aloyslisp.core.*;
 import aloyslisp.core.conditions.*;
 import aloyslisp.core.packages.*;
+import aloyslisp.core.functions.*;
 import aloyslisp.core.sequences.*;
 import aloyslisp.internal.engine.*;
 import aloyslisp.internal.flowcontrol.*;
 
 /**
- * cCOMPILED_SPECIAL
+ * SpecialOperators
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class cCOMPILED_SPECIAL extends cCOMPILED_FUNCTION implements
-		tSPECIAL_OPERATOR
+public class SpecialOperators
 {
-
-	/**
-	 * @param cls
-	 * @param name
-	 * @param decl
-	 * @param doc
-	 * @param declare
-	 */
-	public cCOMPILED_SPECIAL(tSYMBOL name, tLIST args, tT doc, tLIST declare)
-	{
-		super();
-		api = new cAPI_MACRO(name, args, doc, declare);
-		method = setFunctionCall(null, name);
-	}
-
-	public cCOMPILED_SPECIAL()
-	{
-		super();
-	}
-
 	/*********************************************************************************
 	 * @param name
 	 * @param args
@@ -132,8 +110,9 @@ public class cCOMPILED_SPECIAL extends cCOMPILED_FUNCTION implements
 					"setf-" + ((tSYMBOL) newFunc).SYMBOL_NAME());
 
 			// setf writer function
-			tFUNCTION def = new cLAMBDA_FUNCTION((tLIST) argList, doc, decl,
-					(tLIST) list(BLOCK, setfFunc).APPEND(func));
+			tFUNCTION def = new cLAMBDA_FUNCTION(setfFunc, (tLIST) argList,
+					(tLIST) ((tLIST) list(doc).APPEND(decl)).APPEND(list(BLOCK,
+							setfFunc).APPEND(func)));
 			((tSYMBOL) setfFunc).SET_SYMBOL_FUNCTION(def);
 			((tSYMBOL) newFunc).SET_GET(setfKey, setfFunc);
 
@@ -145,8 +124,9 @@ public class cCOMPILED_SPECIAL extends cCOMPILED_FUNCTION implements
 			throw new LispException("Function name not a symbol " + name);
 		}
 
-		tFUNCTION def = new cLAMBDA_FUNCTION((tLIST) argList, doc, decl,
-				(tLIST) list(BLOCK, name).APPEND(func));
+		tFUNCTION def = new cLAMBDA_FUNCTION(name, (tLIST) argList,
+				(tLIST) ((tLIST) list(doc).APPEND(decl)).APPEND(list(BLOCK,
+						name).APPEND(func)));
 		((tSYMBOL) name).SET_SYMBOL_FUNCTION(def);
 
 		return name;
@@ -183,7 +163,7 @@ public class cCOMPILED_SPECIAL extends cCOMPILED_FUNCTION implements
 		else if (aFunc instanceof tCONS)
 		{
 			// anonymous function (lambda)
-			res = getLambda(aFunc);
+			res = getLambda(null, aFunc);
 			if (res == null)
 			{
 				throw new LispException(aFunc
@@ -205,7 +185,7 @@ public class cCOMPILED_SPECIAL extends cCOMPILED_FUNCTION implements
 	 * @param lambda
 	 * @return
 	 */
-	private static cLAMBDA_FUNCTION getLambda(tT lambda)
+	private static cLAMBDA_FUNCTION getLambda(tSYMBOL name, tT lambda)
 	{
 		tLIST walk = (tLIST) lambda;
 		tT func = NIL;
@@ -230,7 +210,7 @@ public class cCOMPILED_SPECIAL extends cCOMPILED_FUNCTION implements
 
 		System.out.println("args:" + args + " func:" + func);
 
-		return new cLAMBDA_FUNCTION((tLIST) args, (tLIST) func);
+		return new cLAMBDA_FUNCTION(name, (tLIST) args, (tLIST) func);
 	}
 
 	/**************************************************************************

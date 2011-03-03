@@ -140,7 +140,7 @@ public class cENV_TAG extends cENV_PROGN
 
 	public tT ENV_TST_TAG(tT label)
 	{
-		tT[] newIp = labels.GETHASH(label, null, null);
+		tT[] newIp = labels.GETHASH(label, null);
 
 		if (newIp[1] == NIL)
 			return null;

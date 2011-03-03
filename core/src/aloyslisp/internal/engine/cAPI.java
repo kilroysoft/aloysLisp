@@ -55,44 +55,61 @@ import aloyslisp.internal.iterators.*;
 public class cAPI extends cCELL implements tAPI
 {
 	/**
+	 * Lambda keywords
+	 */
+	@Symb(name = "lambda-list-keywords", doc = "v_lambda")
+	public static tSYMBOL	ALLOW_OTHER_KEYS	= sym("&allow-other-keys");
+	public static tSYMBOL	AUX					= sym("&aux");
+	public static tSYMBOL	BODY				= sym("&body");
+	public static tSYMBOL	ENVIRONMENT			= sym("&environment");
+	public static tSYMBOL	KEY					= sym("&key");
+	public static tSYMBOL	OPTIONAL			= sym("&optional");
+	public static tSYMBOL	REST				= sym("&rest");
+	public static tSYMBOL	WHOLE				= sym("&whole");
+
+	public static tLIST		LambdaListKeywords	= list(ALLOW_OTHER_KEYS, AUX,
+														BODY, ENVIRONMENT, KEY,
+														OPTIONAL, REST, WHOLE);
+
+	/**
 	 * argument representation in the java side.
-	 * Normally vars + rest + mandatory = args + decl. It should exist an unique
-	 * transformation function between them (not complete now, but it should...)
+	 * They will be set from LISP definition or from Methods for Java code.
 	 */
-	tLIST	vars		= NIL;
+	tLIST					vars				= NIL;
 
-	tSYMBOL	rest		= NIL;
+	Boolean					AllowOtherKeys		= false;
 
-	Integer	mandatory	= 0;
+	Integer					basePos				= -1;
+
+	tSYMBOL					rest				= null;
+
+	tSYMBOL					whole				= null;
+
+	tT						doc					= NIL;
+
+	tENV					environment			= null;
+
+	Boolean					special				= null;
 
 	/**
-	 * argument representation in the lisp side
-	 */
-	tLIST	args		= null;
-
-	/**
-	 * Declare statements
-	 */
-	tLIST	decl		= NIL;
-
-	/**
-	 * Commentary on functions
-	 */
-	tT		doc			= NIL;
-
-	/**
-	 * Current environment at the time of API creation
-	 */
-	tENV	environment	= null;
-
-	/**
+	 * or lambda APIs
+	 * 
 	 * @param args
 	 */
 	public cAPI(tLIST args, tT doc, tLIST decl)
 	{
-		this.args = args;
-		this.doc = doc;
-		this.decl = decl;
+		SET_API_ARGS(args);
+		SET_API_DOC(doc);
+		SET_API_DECL(decl);
+		environment = e.topEnv;
+	}
+
+	/**
+	 * For Code APIs
+	 */
+	public cAPI(Boolean special)
+	{
+		this.special = special;
 		environment = e.topEnv;
 	}
 
@@ -103,11 +120,13 @@ public class cAPI extends cCELL implements tAPI
 	{
 		tT doc = func.CAR();
 
-		if (func.LENGTH() == 1)
-		{
-			if (doc instanceof tSTRING)
-				return list(NIL, NIL, func);
-		}
+		if (func.LENGTH() == 1 && doc instanceof tSTRING)
+			return list(doc, NIL, func.CDR());
+
+		if (doc instanceof tSTRING)
+			func = (tLIST) func.CDR();
+		else
+			doc = NIL;
 
 		LISTIterator iterDecl = new LISTIterator(NIL);
 		LISTIterator iterFunc = new LISTIterator(func);
@@ -126,34 +145,12 @@ public class cAPI extends cCELL implements tAPI
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.internal.engine.tAPI#API_VARS()
-	 */
-	@Override
-	public tLIST API_VARS()
-	{
-		return vars;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see
-	 * aloyslisp.internal.engine.tAPI#SET_API_VARS(aloyslisp.core.sequences.
-	 * tLIST)
-	 */
-	@Override
-	public tLIST SET_API_VARS(tLIST vars)
-	{
-		return this.vars = vars;
-	}
-
-	/*
-	 * (non-Javadoc)
 	 * @see aloyslisp.internal.engine.tAPI#API_ARGS()
 	 */
 	@Override
 	public tLIST API_ARGS()
 	{
-		return args;
+		return null;
 	}
 
 	/*
@@ -165,7 +162,14 @@ public class cAPI extends cCELL implements tAPI
 	@Override
 	public tLIST SET_API_ARGS(tLIST args)
 	{
-		return this.args = args;
+		LISTIterator iter = new LISTIterator(args);
+		boolean key = false;
+		while (iter.hasNext())
+		{
+			tT elem = iter.next();
+
+		}
+		return null;
 	}
 
 	/*
@@ -195,7 +199,7 @@ public class cAPI extends cCELL implements tAPI
 	@Override
 	public tLIST API_DECL()
 	{
-		return decl;
+		return null;
 	}
 
 	/*
@@ -207,7 +211,38 @@ public class cAPI extends cCELL implements tAPI
 	@Override
 	public tLIST SET_API_DECL(tLIST decl)
 	{
-		return this.decl = decl;
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * aloyslisp.internal.engine.tAPI#API_FUNCALL(aloyslisp.core.sequences.tLIST
+	 * )
+	 */
+	@Override
+	public tT[] FUNCALL(tLIST args)
+	{
+		tT[] res = new tT[]
+		{ NIL };
+		cENV closure = new cENV_CLOSURE(environment);
+		try
+		{
+			API_PUSH_ENV(args);
+			try
+			{
+				res = API_CALL(args);
+			}
+			finally
+			{
+				API_POP_ENV();
+			}
+		}
+		finally
+		{
+			closure.ENV_STOP();
+		}
+		return res;
 	}
 
 	/*
@@ -240,7 +275,7 @@ public class cAPI extends cCELL implements tAPI
 	 */
 	public tT API_EVAL_ARG(tT value)
 	{
-		return value.EVAL()[0];
+		return special ? value : value.EVAL()[0];
 	}
 
 	/*
@@ -252,7 +287,17 @@ public class cAPI extends cCELL implements tAPI
 	@Override
 	public tT[] API_PUSH_ENV(tLIST values)
 	{
-		// TODO Auto-generated method stub
+		API_INTERN_ARGS();
+		LISTIterator iter = new LISTIterator(NIL, true);
+		if (special)
+		{
+			for (tT elem : values)
+			{
+				iter.append(API_EVAL_ARG(elem));
+			}
+			values = (tLIST) iter.getFinal();
+		}
+
 		return null;
 	}
 
@@ -265,6 +310,50 @@ public class cAPI extends cCELL implements tAPI
 	{
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.internal.engine.tAPI#API_GET_MAC()
+	 */
+	@Override
+	public String API_GET_MAC()
+	{
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * aloyslisp.internal.engine.tAPI#API_OBJECT(aloyslisp.core.sequences.tLIST)
+	 */
+	@Override
+	public tLIST API_OBJECT(tLIST args)
+	{
+		return args;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * aloyslisp.internal.engine.tAPI#API_CALL(aloyslisp.core.sequences.tLIST)
+	 */
+	@Override
+	public tT[] API_CALL(tLIST args)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.functions.tFUNCTION#e(java.lang.Object[])
+	 */
+	@Override
+	public tT[] e(Object... args)
+	{
+		// TODO Auto-generated method stub
+		return FUNCALL(list(args));
 	}
 
 }

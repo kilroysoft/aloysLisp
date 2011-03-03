@@ -51,14 +51,14 @@ public abstract class cOUTPUT_STREAM extends cSTREAM implements tOUTPUT_STREAM
 	 * aloyslisp.core.streams.IOutputStream#writeString(java.lang.String)
 	 */
 	@Override
-	public tT WRITE_STRING(tT str, tOUTPUT_STREAM stream)
+	public tT WRITE_STRING(tT str)
 	{
 		// TODO manage start and end in WRITE_STRING
 		for (tT car : (tSTRING) str)
 		{
 			// System.out.println("(WRITE_CHAR " + ((tCHARACTER)
 			// car).getChar());
-			WRITE_CHAR(((tCHARACTER) car).getChar(), stream);
+			WRITE_CHAR(((tCHARACTER) car).getChar());
 		}
 		return str;
 	}
@@ -67,9 +67,9 @@ public abstract class cOUTPUT_STREAM extends cSTREAM implements tOUTPUT_STREAM
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.streams.IOutputStream#terpri()
 	 */
-	public tNULL TERPRI(tOUTPUT_STREAM stream)
+	public tNULL TERPRI()
 	{
-		WRITE_CHAR('\n', stream);
+		WRITE_CHAR('\n');
 		lineBegin = true;
 		return NIL;
 
@@ -80,10 +80,10 @@ public abstract class cOUTPUT_STREAM extends cSTREAM implements tOUTPUT_STREAM
 	 * @see aloyslisp.core.streams.IOutputStream#freshLine()
 	 */
 	@Override
-	public tT FRESH_LINE(tOUTPUT_STREAM stream)
+	public tT FRESH_LINE()
 	{
 		if (!lineBegin)
-			return TERPRI(stream);
+			return TERPRI();
 		return T;
 	}
 
@@ -122,11 +122,11 @@ public abstract class cOUTPUT_STREAM extends cSTREAM implements tOUTPUT_STREAM
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tOUTPUT_STREAM#WRITE(aloyslisp.core.types.tT)
 	 */
-	public tT WRITE(tT obj, tOUTPUT_STREAM stream)
+	public tT WRITE(tT obj)
 	{
 		// TODO manage &key arguments and generate Specials vars for printing
 		// System.out.println("(WRITE " + str(obj.toString()));
-		return WRITE_STRING(str(obj.toString()), stream);
+		return WRITE_STRING(str(obj.toString()));
 	}
 
 	/*
@@ -135,7 +135,7 @@ public abstract class cOUTPUT_STREAM extends cSTREAM implements tOUTPUT_STREAM
 	 * aloyslisp.core.types.tOUTPUT_STREAM)
 	 */
 	@Override
-	public tT PRIN1(tT obj, tOUTPUT_STREAM stream)
+	public tT PRIN1(tT obj)
 	{
 		tT res = null;
 		tT savEscape = printEscape.SYMBOL_VALUE();
@@ -143,7 +143,7 @@ public abstract class cOUTPUT_STREAM extends cSTREAM implements tOUTPUT_STREAM
 
 		try
 		{
-			res = WRITE(obj, this);
+			res = WRITE(obj);
 		}
 		finally
 		{
@@ -158,7 +158,7 @@ public abstract class cOUTPUT_STREAM extends cSTREAM implements tOUTPUT_STREAM
 	 * aloyslisp.core.types.tOUTPUT_STREAM)
 	 */
 	@Override
-	public tT PRINC(tT obj, tOUTPUT_STREAM stream)
+	public tT PRINC(tT obj)
 	{
 		tT res = null;
 		tT savEscape = printEscape.SYMBOL_VALUE();
@@ -168,7 +168,7 @@ public abstract class cOUTPUT_STREAM extends cSTREAM implements tOUTPUT_STREAM
 
 		try
 		{
-			res = WRITE(obj, this);
+			res = WRITE(obj);
 		}
 		finally
 		{
@@ -184,11 +184,11 @@ public abstract class cOUTPUT_STREAM extends cSTREAM implements tOUTPUT_STREAM
 	 * aloyslisp.core.types.tOUTPUT_STREAM)
 	 */
 	@Override
-	public tT PRINT(tT obj, tOUTPUT_STREAM stream)
+	public tT PRINT(tT obj)
 	{
-		TERPRI(stream);
-		tT res = PRIN1(obj, stream);
-		WRITE(c(' '), stream);
+		TERPRI();
+		tT res = PRIN1(obj);
+		WRITE(c(' '));
 		return res;
 	}
 

@@ -45,7 +45,7 @@ import java.lang.annotation.Target;
 public @interface Rest
 {
 	/**
-	 * Lisp name of arg
+	 * Lisp name for rest
 	 * 
 	 * @return
 	 */

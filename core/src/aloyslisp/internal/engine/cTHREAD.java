@@ -30,9 +30,7 @@
 package aloyslisp.internal.engine;
 
 import aloyslisp.core.*;
-import aloyslisp.core.conditions.LispException;
 import aloyslisp.core.packages.tSYMBOL;
-import aloyslisp.core.sequences.*;
 import static aloyslisp.internal.engine.L.*;
 
 /**
@@ -57,6 +55,8 @@ public class cTHREAD
 	 */
 	public cDYN_SYMBOL arg(tSYMBOL name)
 	{
+		if (topEnv == null)
+			return null;
 		tT[] res = topEnv.ENV_LET_GET(name);
 		if (res[1] == NIL)
 			return null;
@@ -66,20 +66,13 @@ public class cTHREAD
 
 	/**
 	 * @param name
-	 * @return
-	 */
-	public cDYN_SYMBOL read(tSYMBOL name)
-	{
-		return arg(name);
-	}
-
-	/**
-	 * @param name
 	 * @param val
 	 * @return
 	 */
-	public cDYN_SYMBOL write(tSYMBOL name, tT val)
+	public cDYN_SYMBOL writeEnv(tSYMBOL name, tT val)
 	{
+		if (topEnv == null)
+			return null;
 		tT[] res = topEnv.SET_ENV_LET_GET(name, val);
 		if (res[1] == NIL)
 			return null;
@@ -91,58 +84,14 @@ public class cTHREAD
 	 * @param name
 	 * @return
 	 */
-	public tT readVal(tSYMBOL name)
+	public tT readEnv(tSYMBOL name)
 	{
-		cDYN_SYMBOL res = read(name);
+		cDYN_SYMBOL res = arg(name);
 
 		if (res == null)
 			return null;
 
 		return res.SYMBOL_VALUE();
-	}
-
-	/**
-	 * @param name
-	 * @param value
-	 * @return
-	 */
-	public tSYMBOL writeVal(tSYMBOL name, tT value)
-	{
-		cDYN_SYMBOL atom = read(name);
-		if (atom == null)
-			return null;
-		return atom.SET_SYMBOL_VALUE(value);
-	}
-
-	/**
-	 * Get special atom. We walk through all closure that could define the
-	 * special variable.
-	 * 
-	 * @param name
-	 * @return
-	 */
-	public cDYN_SYMBOL sRead(tSYMBOL name)
-	{
-		return topEnv.sRead(name);
-	}
-
-	/**
-	 * @param name
-	 * @return
-	 */
-	public cDYN_SYMBOL intern(tSYMBOL atom)
-	{
-		return topEnv.ENV_LET_INTERN(atom);
-	}
-
-	/**
-	 * @param name
-	 * @param value
-	 * @return
-	 */
-	public cDYN_SYMBOL intern(tSYMBOL atom, tT value)
-	{
-		return topEnv.intern(atom, value);
 	}
 
 }

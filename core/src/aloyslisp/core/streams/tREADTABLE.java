@@ -65,10 +65,11 @@ public interface tREADTABLE extends tBUILD_IN_CLASS
 	 * @return
 	 */
 	@Function(name = "make-dispatch-macro-character", doc = "f_mk_dis")
+	@BaseArg(name = "readtable", pos = 2, type = Opt.class, def = "*READTABLE*")
 	public tT MAKE_DISPATCH_MACRO_CHARACTER(
 			@Arg(name = "character") Character character, //
-			@Opt(name = "non-terminating-p", def = "nil") Boolean nonTerminatingP, //
-			@BaseArg @Opt(name = "readtable", def = "*cREADTABLE*") tREADTABLE readtable);
+			@Opt(name = "non-terminating-p", def = "nil") Boolean nonTerminatingP //
+	);
 
 	/**
 	 * Set macro char definition for multiple chars (in standard sharp macro
@@ -81,11 +82,11 @@ public interface tREADTABLE extends tBUILD_IN_CLASS
 	 * @return
 	 */
 	@Function(name = "set-dispatch-macro-character", doc = "f_set__1")
+	@BaseArg(name = "readtable", pos = 3, type = Opt.class, def = "*READTABLE*")
 	public tT SET_DISPATCH_MACRO_CHRACTER(
 			@Arg(name = "disp-char") Character disp, //
 			@Arg(name = "sub-char") Character sub, //
-			@Arg(name = "function") tFUNCTION_DESIGNATOR func,
-			@BaseArg @Opt(name = "readtable", def = "*cREADTABLE*") tREADTABLE readtable);
+			@Arg(name = "function") tFUNCTION_DESIGNATOR func);
 
 	/**
 	 * Get macro char definition for multiple chars (in standard sharp macro
@@ -97,10 +98,10 @@ public interface tREADTABLE extends tBUILD_IN_CLASS
 	 * @return
 	 */
 	@Function(name = "get-dispatch-macro-character", doc = "f_set__1")
+	@BaseArg(name = "readtable", pos = 2, type = Opt.class, def = "*READTABLE*")
 	public tFUNCTION_DESIGNATOR GET_DISPATCH_MACRO_CHARACTER(
 			@Arg(name = "disp-char") Character disp, //
-			@Arg(name = "sub-char") Character sub, //
-			@BaseArg @Opt(name = "readtable", def = "*cREADTABLE*") tREADTABLE readtable);
+			@Arg(name = "sub-char") Character sub);
 
 	/**
 	 * Set macro char definition for single char
@@ -112,11 +113,11 @@ public interface tREADTABLE extends tBUILD_IN_CLASS
 	 * @return
 	 */
 	@Function(name = "set-macro-character", doc = "f_set_ma")
+	@BaseArg(name = "readtable", pos = 3, type = Opt.class, def = "*READTABLE*")
 	public tT SET_MACRO_CHARACTER(
 			@Arg(name = "character") Character character, //
 			@Arg(name = "function") tFUNCTION_DESIGNATOR func,
-			@Opt(name = "non-terminating-p", def = "nil") Boolean nonTerminatingP, //
-			@BaseArg @Opt(name = "readtable", def = "*cREADTABLE*") tREADTABLE readtable);
+			@Opt(name = "non-terminating-p", def = "nil") Boolean nonTerminatingP);
 
 	/**
 	 * Get macro char definition for single char
@@ -126,9 +127,8 @@ public interface tREADTABLE extends tBUILD_IN_CLASS
 	 * @return
 	 */
 	@Function(name = "get-macro-character", doc = "f_set_ma")
-	public tT[] GET_MACRO_CHARACTER(
-			@Arg(name = "character") Character character, //
-			@BaseArg @Opt(name = "readtable", def = "*cREADTABLE*") tREADTABLE readtable);
+	@BaseArg(name = "readtable", pos = 1, type = Opt.class, def = "*READTABLE*")
+	public tT[] GET_MACRO_CHARACTER(@Arg(name = "character") Character character);
 
 	/**
 	 * return table case
@@ -137,8 +137,8 @@ public interface tREADTABLE extends tBUILD_IN_CLASS
 	 * @return
 	 */
 	@Function(name = "readtable-case", doc = "f_rdtabl")
-	public tSYMBOL READTABLE_CASE(
-			@BaseArg @Opt(name = "readtable", def = "*cREADTABLE*") tREADTABLE readtable);
+	@BaseArg(name = "readtable", pos = 0, type = Opt.class, def = "*READTABLE*")
+	public tSYMBOL READTABLE_CASE();
 
 	/**
 	 * Set table case
@@ -147,9 +147,8 @@ public interface tREADTABLE extends tBUILD_IN_CLASS
 	 * @param mode
 	 */
 	@Function(name = "set-readtable-case")
-	public tSYMBOL SET_READTABLE_CASE(
-			@BaseArg @Arg(name = "readtable") tREADTABLE readtable,
-			@Arg(name = "mode") tSYMBOL mode);
+	@BaseArg(name = "readtable", pos = 0, type = Opt.class, def = "*READTABLE*")
+	public tSYMBOL SET_READTABLE_CASE(@Arg(name = "mode") tSYMBOL mode);
 
 	/**
 	 * @param fromChar
@@ -158,10 +157,10 @@ public interface tREADTABLE extends tBUILD_IN_CLASS
 	 * @param fromReadtable
 	 */
 	@Function(name = "set-syntax-from-char", doc = "f_set_sy")
+	@BaseArg(name = "to-readtable", pos = 2, type = Opt.class, def = "*READTABLE*")
 	public void SET_SYNTAX_FROM_CHAR(
 			@Arg(name = "from-char") Character fromChar, //
 			@Arg(name = "to-char") Character toChar, //
-			@BaseArg @Opt(name = "to-readtable", def = "*cREADTABLE*") tREADTABLE toReadtable,
 			@Opt(name = "from-readtable", def = "*cREADTABLE*") tREADTABLE fromReadtable);
 
 	/**
@@ -170,8 +169,8 @@ public interface tREADTABLE extends tBUILD_IN_CLASS
 	 * @return
 	 */
 	@Function(name = "copy-readtable", doc = "f_cp_rdt")
+	@BaseArg(name = "readtable", pos = 0, type = Opt.class, def = "*READTABLE*")
 	public tREADTABLE COPY_READTABLE(
-			@BaseArg @Opt(name = "from-readtable", def = "*cREADTABLE*") tREADTABLE fromReadtable,
 			@Opt(name = "to-readtable", def = "nil") tT toReadtable);
 
 	/**

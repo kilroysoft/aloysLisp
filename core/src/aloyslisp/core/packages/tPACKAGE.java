@@ -66,10 +66,9 @@ public interface tPACKAGE extends tBUILD_IN_CLASS, tPACKAGE_DESIGNATOR
 	 * @return
 	 */
 	@Function(name = "api", doc = "f_intern")
-	public tSYMBOL[] INTERN(
-			//
-			@Arg(name = "symbol") String symbol, //
-			@BaseArg @Opt(name = "package", def = "*package*") tPACKAGE_DESIGNATOR pack);
+	@BaseArg(name = "package", pos = 1, type = Opt.class, def = "*package*")
+	public tSYMBOL[] INTERN(@Arg(name = "symbol") String symbol //
+	);
 
 	/**
 	 * @param symbol
@@ -77,10 +76,9 @@ public interface tPACKAGE extends tBUILD_IN_CLASS, tPACKAGE_DESIGNATOR
 	 * @return
 	 */
 	@Function(name = "unintern", doc = "f_uninte")
-	public tSYMBOL UNINTERN(
-			//
-			@Arg(name = "symbol") String symbol, //
-			@BaseArg @Opt(name = "package", def = "*package*") tPACKAGE_DESIGNATOR pack);
+	@BaseArg(name = "package", pos = 1, type = Opt.class, def = "*package*")
+	public tSYMBOL UNINTERN(@Arg(name = "symbol") String symbol //
+	);
 
 	/**
 	 * @param symbol
@@ -88,10 +86,9 @@ public interface tPACKAGE extends tBUILD_IN_CLASS, tPACKAGE_DESIGNATOR
 	 * @return
 	 */
 	@Function(name = "find-symbol", doc = "f_find_s")
-	public tSYMBOL[] FIND_SYMBOL(
-			//
-			@Arg(name = "symbol") String symbol, //
-			@BaseArg @Opt(name = "package", def = "*package*") tPACKAGE_DESIGNATOR pack);
+	@BaseArg(name = "package", pos = 1, type = Opt.class, def = "*package*")
+	public tSYMBOL[] FIND_SYMBOL(@Arg(name = "symbol") String symbol //
+	);
 
 	/**
 	 * @param symbols
@@ -99,10 +96,11 @@ public interface tPACKAGE extends tBUILD_IN_CLASS, tPACKAGE_DESIGNATOR
 	 * @return
 	 */
 	@Function(name = "import", doc = "f_import")
+	@BaseArg(name = "package", pos = 1, type = Opt.class, def = "*package*")
 	public tSYMBOL IMPORT(
-			//
-			@Arg(name = "symbols") tT symbols, //
-			@BaseArg @Opt(name = "package", def = "*package*") tPACKAGE_DESIGNATOR pack);
+	//
+			@Arg(name = "symbols") tT symbols //
+	);
 
 	/**
 	 * @param symbols
@@ -110,10 +108,11 @@ public interface tPACKAGE extends tBUILD_IN_CLASS, tPACKAGE_DESIGNATOR
 	 * @return
 	 */
 	@Function(name = "export", doc = "f_export")
+	@BaseArg(name = "package", pos = 1, type = Opt.class, def = "*package*")
 	public tSYMBOL EXPORT(
-			//
-			@Arg(name = "symbols") tT symbols, //
-			@BaseArg @Opt(name = "package", def = "*package*") tPACKAGE_DESIGNATOR pack);
+	//
+			@Arg(name = "symbols") tT symbols //
+	);
 
 	/**
 	 * @return

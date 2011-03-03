@@ -65,8 +65,8 @@ public class cCONS extends cCELL implements tCONS
 	 */
 	public cCONS(tT car, tT cdr)
 	{
-		SET_CAR(car, null);
-		SET_CDR(cdr, null);
+		SET_CAR(car);
+		SET_CDR(cdr);
 	}
 
 	/**
@@ -161,8 +161,8 @@ public class cCONS extends cCELL implements tCONS
 			res = new cCONS(value, res);
 		}
 
-		SET_CAR(res.CAR(), null);
-		SET_CDR(res.CDR(), null);
+		SET_CAR(res.CAR());
+		SET_CDR(res.CDR());
 	}
 
 	// ////////////////////////////////////////////////////////////////////////////
@@ -190,7 +190,7 @@ public class cCONS extends cCELL implements tCONS
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tLIST#SET_CAR(aloyslisp.core.types.tT)
 	 */
-	public tLIST SET_CAR(tT val, tLIST list)
+	public tLIST SET_CAR(tT val)
 	{
 		car = val;
 		return this;
@@ -200,7 +200,7 @@ public class cCONS extends cCELL implements tCONS
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tLIST#SET_CDR(aloyslisp.core.types.tT)
 	 */
-	public tLIST SET_CDR(tT val, tLIST list)
+	public tLIST SET_CDR(tT val)
 	{
 		cdr = val;
 		return this;
@@ -240,14 +240,19 @@ public class cCONS extends cCELL implements tCONS
 	 */
 	public tT[] EVAL()
 	{
-		tT func = FUNCTION.SYMBOL_FUNCTION().e(car)[0];
+		if (!(car instanceof tSYMBOL))
+			throw new LispException(
+					"CAR of CONS to be evaluated is not a function");
+
+		tT func = ((tSYMBOL) car).SYMBOL_FUNCTION();
+
 		// trace("executing " + func);
 		if (func instanceof tMACRO_FUNCTION)
 		{
 			// Expand macros
 			return MACROEXPAND()[0].EVAL();
 		}
-		return ((tFUNCTION) func).exec((tLIST) CDR());
+		return ((tFUNCTION) func).FUNCALL((tLIST) CDR());
 	}
 
 	/*
@@ -256,12 +261,16 @@ public class cCONS extends cCELL implements tCONS
 	 */
 	public tT[] MACROEXPAND_1()
 	{
-		tT func = FUNCTION.SYMBOL_FUNCTION().e(car)[0];
+		if (!(car instanceof tSYMBOL))
+			throw new LispException("CAR of CONS is not a function : " + car);
+
+		tT func = ((tSYMBOL) car).SYMBOL_FUNCTION();
+
 		// System.out.println("executing " + func);
 		if (func instanceof tMACRO_FUNCTION)
 		{
 			// Expand macros
-			tT res = ((tFUNCTION) func).exec((tLIST) CDR())[0];
+			tT res = ((tFUNCTION) func).FUNCALL((tLIST) CDR())[0];
 			return new tT[]
 			{ res, T };
 		}
@@ -292,8 +301,8 @@ public class cCONS extends cCELL implements tCONS
 	public tLIST NREVERSE()
 	{
 		tLIST newCons = REVERSE();
-		SET_CAR(newCons.CAR(), null);
-		SET_CDR(newCons.CDR(), null);
+		SET_CAR(newCons.CAR());
+		SET_CDR(newCons.CDR());
 		return this;
 	}
 
@@ -309,7 +318,7 @@ public class cCONS extends cCELL implements tCONS
 		{
 			func = ((tSYMBOL) func).SYMBOL_FUNCTION();
 			if (func != null)
-				mac = ((cFUNCTION) func).mac;
+				mac = ((tFUNCTION) func).API_GET_MAC();
 		}
 		String res = (mac == null) ? "(" : mac;
 		String sep = "";
@@ -440,7 +449,7 @@ public class cCONS extends cCELL implements tCONS
 	 */
 	public tT APPEND(tT item)
 	{
-		LAST().SET_CDR(item, null);
+		LAST().SET_CDR(item);
 		return this;
 	}
 
@@ -549,11 +558,25 @@ public class cCONS extends cCELL implements tCONS
 
 	/*
 	 * (non-Javadoc)
+	 * @see aloyslisp.core.sequences.tSEQUENCE#FIND(aloyslisp.core.tT)
+	 */
+	public tT FIND(tT item)
+	{
+		// TODO implement keys
+		LISTIterator iter = new LISTIterator(this);
+		while (iter.hasNext())
+			if (iter.next().EQL(item))
+				return iter.getFinal();
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
 	 * @see java.lang.Iterable#iterator()
 	 */
 	public LISTIterator iterator()
 	{
-		return iterator(false);
+		return iterator(true);
 	}
 
 	/*

@@ -38,8 +38,36 @@ import java.lang.annotation.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-@Target(ElementType.PARAMETER)
+@Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface BaseArg
 {
+	/**
+	 * Lisp name of object as arg
+	 * 
+	 * @return
+	 */
+	String name() default "";
+
+	/**
+	 * Default value as a string
+	 * 
+	 * @return
+	 */
+	int pos() default 0;
+
+	/**
+	 * Default value as a string
+	 * 
+	 * @return
+	 */
+	Class<?> type() default Arg.class;
+
+	/**
+	 * Default value as a string
+	 * 
+	 * @return
+	 */
+	String def() default "NIL";
+
 }

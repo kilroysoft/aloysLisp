@@ -207,9 +207,9 @@ public class cPACKAGE extends cCELL implements tPACKAGE
 	 * aloyslisp.core.tPACKAGE_DESIGNATOR)
 	 */
 	@Override
-	public tSYMBOL[] INTERN(String symbol, tPACKAGE_DESIGNATOR pack)
+	public tSYMBOL[] INTERN(String symbol)
 	{
-		tSYMBOL res[] = FIND_SYMBOL(symbol, null);
+		tSYMBOL res[] = FIND_SYMBOL(symbol);
 		if (res[1] != NIL)
 			return res;
 
@@ -223,12 +223,12 @@ public class cPACKAGE extends cCELL implements tPACKAGE
 	 * aloyslisp.core.tPACKAGE_DESIGNATOR)
 	 */
 	@Override
-	public tSYMBOL UNINTERN(String symbol, tPACKAGE_DESIGNATOR pack)
+	public tSYMBOL UNINTERN(String symbol)
 	{
 		tSYMBOL res;
 		if ((res = external.get(symbol)) != null)
 		{
-			if (pack != res.SYMBOL_PACKAGE())
+			if (this != res.SYMBOL_PACKAGE())
 			{
 				external.remove(symbol);
 				shadow.remove(symbol);
@@ -244,7 +244,7 @@ public class cPACKAGE extends cCELL implements tPACKAGE
 		}
 		else if ((res = internal.get(symbol)) != null)
 		{
-			if (pack != res.SYMBOL_PACKAGE())
+			if (this != res.SYMBOL_PACKAGE())
 			{
 				internal.remove(symbol);
 				shadow.remove(symbol);
@@ -267,7 +267,7 @@ public class cPACKAGE extends cCELL implements tPACKAGE
 	 * aloyslisp.core.tPACKAGE_DESIGNATOR)
 	 */
 	@Override
-	public tSYMBOL[] FIND_SYMBOL(String symbol, tPACKAGE_DESIGNATOR pack)
+	public tSYMBOL[] FIND_SYMBOL(String symbol)
 	{
 		tSYMBOL res = shadow.get(symbol);
 		if (res != null || (res = external.get(symbol)) != null)
@@ -309,7 +309,7 @@ public class cPACKAGE extends cCELL implements tPACKAGE
 	 * aloyslisp.core.tPACKAGE_DESIGNATOR)
 	 */
 	@Override
-	public tSYMBOL IMPORT(tT symbol, tPACKAGE_DESIGNATOR pack)
+	public tSYMBOL IMPORT(tT symbol)
 	{
 		if (symbol instanceof tLIST)
 		{
@@ -319,12 +319,12 @@ public class cPACKAGE extends cCELL implements tPACKAGE
 					throw new LispException("Not a symbol");
 
 				tSYMBOL sym = (tSYMBOL) walk;
-				imp(sym, pack);
+				imp(sym);
 			}
 		}
 		else if (symbol instanceof tSYMBOL)
 		{
-			imp((tSYMBOL) symbol, pack);
+			imp((tSYMBOL) symbol);
 		}
 		else
 			throw new LispException("Bad type for import");
@@ -336,9 +336,9 @@ public class cPACKAGE extends cCELL implements tPACKAGE
 	 * @param symbol
 	 * @param pack
 	 */
-	private void imp(tSYMBOL symbol, tPACKAGE_DESIGNATOR pack)
+	private void imp(tSYMBOL symbol)
 	{
-		tSYMBOL[] sym = this.FIND_SYMBOL(symbol.SYMBOL_NAME(), null);
+		tSYMBOL[] sym = this.FIND_SYMBOL(symbol.SYMBOL_NAME());
 
 		if (sym[1] == INTERNAL || sym[1] == EXTERNAL)
 		{
@@ -369,7 +369,7 @@ public class cPACKAGE extends cCELL implements tPACKAGE
 	 * @see aloyslisp.core.tPACKAGE#EXPORT(aloyslisp.core.tT,
 	 * aloyslisp.core.tPACKAGE_DESIGNATOR)
 	 */
-	public tSYMBOL EXPORT(tT symbol, tPACKAGE_DESIGNATOR pack)
+	public tSYMBOL EXPORT(tT symbol)
 	{
 		if (symbol instanceof tLIST)
 		{
@@ -379,12 +379,12 @@ public class cPACKAGE extends cCELL implements tPACKAGE
 					throw new LispException("Not a symbol");
 
 				tSYMBOL sym = (tSYMBOL) walk;
-				exp(sym, pack);
+				exp(sym);
 			}
 		}
 		else if (symbol instanceof tSYMBOL)
 		{
-			exp((tSYMBOL) symbol, pack);
+			exp((tSYMBOL) symbol);
 		}
 		else
 			throw new LispException("Bad type for export");
@@ -396,9 +396,9 @@ public class cPACKAGE extends cCELL implements tPACKAGE
 	 * @param symbol
 	 * @param pack
 	 */
-	private void exp(tSYMBOL symbol, tPACKAGE_DESIGNATOR pack)
+	private void exp(tSYMBOL symbol)
 	{
-		tSYMBOL[] sym = this.FIND_SYMBOL(symbol.SYMBOL_NAME(), null);
+		tSYMBOL[] sym = this.FIND_SYMBOL(symbol.SYMBOL_NAME());
 
 		if (sym[1] == EXTERNAL)
 			return;

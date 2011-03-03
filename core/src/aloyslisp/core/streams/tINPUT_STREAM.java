@@ -52,9 +52,8 @@ public interface tINPUT_STREAM extends tSTREAM
 	 * @throws END_OF_FILE
 	 */
 	@Function(name = "read", doc = "f_rd_rd")
-	public tT READ(
-			@BaseArg @Opt(name = "input-stream", def = "*standard-input*") tINPUT_STREAM stream, //
-			@Opt(name = "eof-error-p", def = "t") Boolean eofErrorP, //
+	@BaseArg(name = "input-stream", pos = 0, type = Opt.class, def = "*standard-input*")
+	public tT READ(@Opt(name = "eof-error-p", def = "t") Boolean eofErrorP, //
 			@Opt(name = "eof-value", def = "nil") tT eofValue, //
 			@Opt(name = "recursive-p", def = "nil") Boolean recursiveP)
 			throws END_OF_FILE;
@@ -68,8 +67,8 @@ public interface tINPUT_STREAM extends tSTREAM
 	 * @throws END_OF_FILE
 	 */
 	@Function(name = "read-char", doc = "f_rd_cha")
+	@BaseArg(name = "input-stream", pos = 0, type = Opt.class, def = "*standard-input*")
 	public Character READ_CHAR( //
-			@BaseArg @Opt(name = "input-stream", def = "*standard-input*") tINPUT_STREAM stream, //
 			@Opt(name = "eof-error-p", def = "t") Boolean eofErrorP, //
 			@Opt(name = "eof-value", def = "nil") tT eofValue, //
 			@Opt(name = "recursive-p", def = "nil") Boolean recursiveP)
@@ -85,9 +84,8 @@ public interface tINPUT_STREAM extends tSTREAM
 	 * @throws END_OF_FILE
 	 */
 	@Function(name = "peek-char", doc = "f_peek_c")
-	public Character PEEK_CHAR(
-			@Arg(name = "peek-type") tT peekType, //
-			@BaseArg @Opt(name = "input-stream", def = "*standard-input*") tINPUT_STREAM stream, //
+	@BaseArg(name = "input-stream", pos = 1, type = Opt.class, def = "*standard-input*")
+	public Character PEEK_CHAR(@Arg(name = "peek-type") tT peekType, //
 			@Opt(name = "eof-error-p", def = "t") Boolean eofErrorP, //
 			@Opt(name = "eof-value", def = "nil") tT eofValue, //
 			@Opt(name = "recursive-p", def = "nil") Boolean recursiveP)
@@ -99,25 +97,25 @@ public interface tINPUT_STREAM extends tSTREAM
 	 * @return
 	 */
 	@Function(name = "unread-char", doc = "f_undr_c")
-	public Character UNREAD_CHAR(
-			@Arg(name = "character") Character character,
-			@BaseArg @Opt(name = "input-stream", def = "*standard-input*") tINPUT_STREAM stream);
+	@BaseArg(name = "input-stream", pos = 1, type = Opt.class, def = "*standard-input*")
+	public Character UNREAD_CHAR( //
+			@Arg(name = "character") Character character);
 
 	/**
 	 * @param stream
 	 * @return
 	 */
 	@Function(name = "listen", doc = "f_listen")
-	public boolean LISTEN(
-			@BaseArg @Opt(name = "input-stream", def = "*standard-input*") tINPUT_STREAM stream);
+	@BaseArg(name = "input-stream", pos = 0, type = Opt.class, def = "*standard-input*")
+	public boolean LISTEN();
 
 	/**
 	 * @param stream
 	 * @return
 	 */
 	@Function(name = "clear-input", doc = "f_clear_")
-	public tT CLEAR_INPUT(
-			@BaseArg @Opt(name = "input-stream", def = "*standard-input*") tINPUT_STREAM stream);
+	@BaseArg(name = "input-stream", pos = 0, type = Opt.class, def = "*standard-input*")
+	public tT CLEAR_INPUT();
 
 	/**
 	 * @param stream
@@ -128,8 +126,8 @@ public interface tINPUT_STREAM extends tSTREAM
 	 * @throws END_OF_FILE
 	 */
 	@Function(name = "read-byte", doc = "f_rd_by")
+	@BaseArg(name = "input-stream", pos = 0, type = Opt.class, def = "*standard-input*")
 	public Integer READ_BYTE(
-			@BaseArg @Opt(name = "input-stream", def = "*standard-input*") tINPUT_STREAM stream, //
 			@Opt(name = "eof-error-p", def = "t") Boolean eofErrorP, //
 			@Opt(name = "eof-value", def = "nil") tT eofValue, //
 			@Opt(name = "recursive-p", def = "nil") Boolean recursiveP)
@@ -144,8 +142,8 @@ public interface tINPUT_STREAM extends tSTREAM
 	 * @throws END_OF_FILE
 	 */
 	@Function(name = "read-char-no-hang", doc = "f_rd_c_1")
+	@BaseArg(name = "input-stream", pos = 0, type = Opt.class, def = "*standard-input*")
 	public Character READ_CHAR_NO_HANG(
-			@BaseArg @Opt(name = "input-stream", def = "*standard-input*") tINPUT_STREAM stream, //
 			@Opt(name = "eof-error-p", def = "t") Boolean eofErrorP, //
 			@Opt(name = "eof-value", def = "nil") tT eofValue, //
 			@Opt(name = "recursive-p", def = "nil") Boolean recursiveP)
@@ -159,9 +157,9 @@ public interface tINPUT_STREAM extends tSTREAM
 	 * @return
 	 */
 	@Function(name = "read-sequence", doc = "f_rd_seq")
+	@BaseArg(name = "input-stream", pos = 1, type = Opt.class, def = "*standard-input*")
 	public tT READ_SEQUENCE( //
 			@Arg(name = "sequence") tSEQUENCE sequence, //
-			@BaseArg @Arg(name = "input-stream") tINPUT_STREAM stream, //
 			@Opt(name = "start", def = "0") Integer start, //
 			@Opt(name = "end", def = "-1") Integer end);
 
@@ -174,8 +172,8 @@ public interface tINPUT_STREAM extends tSTREAM
 	 * @throws END_OF_FILE
 	 */
 	@Function(name = "read-line", doc = "f_rd_lin")
+	@BaseArg(name = "input-stream", pos = 0, type = Opt.class, def = "*standard-input*")
 	public tT[] READ_LINE(
-			@BaseArg @Opt(name = "input-stream", def = "*standard-input*") tINPUT_STREAM stream, //
 			@Opt(name = "eof-error-p", def = "t") Boolean eofErrorP, //
 			@Opt(name = "eof-value", def = "nil") tT eofValue, //
 			@Opt(name = "recursive-p", def = "nil") Boolean recursiveP)

@@ -44,25 +44,6 @@ import aloyslisp.core.sequences.*;
 public interface tAPI extends tBUILD_IN_CLASS
 {
 	/**
-	 * Read args for java
-	 * 
-	 * @return
-	 */
-	@Function(name = "api-vars")
-	public tLIST API_VARS();
-
-	/**
-	 * Write vars for java
-	 * 
-	 * @param vars
-	 * @return
-	 */
-	@Function(name = "set-api-vars")
-	public tLIST SET_API_VARS( //
-			@Arg(name = "vars") tLIST vars //
-	);
-
-	/**
 	 * Read args
 	 * 
 	 * @return
@@ -164,5 +145,46 @@ public interface tAPI extends tBUILD_IN_CLASS
 	 */
 	@Function(name = "api-pop-env")
 	public tAPI API_POP_ENV();
+
+	/**
+	 * @return
+	 */
+	@Function(name = "api-get-mac")
+	public String API_GET_MAC();
+
+	/**
+	 * @param args
+	 * @return
+	 */
+	@Function(name = "api-object")
+	public tLIST API_OBJECT(tLIST args);
+
+	/**
+	 * @param args
+	 * @return
+	 */
+	@Function(name = "api-call")
+	public tT[] API_CALL(tLIST args);
+
+	/**
+	 * Execute function with arguments as a list
+	 * 
+	 * @param args
+	 *            List of arguments
+	 * @return Evaluated results in ana array for eventual multiple values
+	 */
+	@Function(name = "funcall")
+	public tT[] FUNCALL( //
+			@Rest(name = "args") tLIST args //
+	);
+
+	/**
+	 * Execute function with separate arguments
+	 * 
+	 * @param args
+	 *            individual args
+	 * @return Evaluated results in ana array for eventual multiple values
+	 */
+	public tT[] e(Object... args);
 
 }

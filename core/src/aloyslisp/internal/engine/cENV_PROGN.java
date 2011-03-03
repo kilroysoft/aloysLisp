@@ -88,6 +88,7 @@ public class cENV_PROGN extends cENV
 	public tT[] ENV_STEP()
 	{
 		tT[] res = null;
+		System.out.println("exec : " + ip);
 		res = ip.CAR().EVAL();
 		ip = ENV_NEXT_STEP();
 		return res;

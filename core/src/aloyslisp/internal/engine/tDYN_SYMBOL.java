@@ -31,9 +31,7 @@ package aloyslisp.internal.engine;
 
 import aloyslisp.core.tT;
 import aloyslisp.core.clos.*;
-import aloyslisp.core.functions.*;
 import aloyslisp.core.packages.*;
-import aloyslisp.core.sequences.*;
 
 /**
  * tDYN_SYMBOL
@@ -46,32 +44,20 @@ public interface tDYN_SYMBOL extends tBUILD_IN_CLASS
 {
 	public tSYMBOL SET_SYMBOL_VALUE(tT value);
 
-	public tSYMBOL SET_SYMBOL_FUNCTION(tFUNCTION func);
-
 	public tT SYMBOL_VALUE();
-
-	public tFUNCTION SYMBOL_FUNCTION();
 
 	public tSYMBOL unset();
 
-	public tSYMBOL fUnset();
-
 	public tPACKAGE SYMBOL_PACKAGE();
 
-	public tSYMBOL setSpecial(boolean special);
+	public tSYMBOL SETSPECIAL(boolean special);
 
-	public boolean isSpecial();
-
-	public tSYMBOL setDeclare(tLIST declare);
-
-	public tLIST getDeclare();
+	public boolean SPECIALP();
 
 	public String SYMBOL_NAME();
 
 	public tSYMBOL getOrig();
 
 	public boolean BOUNDP();
-
-	public boolean FBOUNDP();
 
 }

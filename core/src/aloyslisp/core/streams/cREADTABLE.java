@@ -120,73 +120,70 @@ public class cREADTABLE extends cCELL implements tREADTABLE
 		trace("-------->" + sym("%comment-reader").DESCRIBE());
 
 		// standard macro char
-		SET_MACRO_CHARACTER('"', sym("sys::%string-reader"), false, this);
-		SET_MACRO_CHARACTER('\'', sym("sys::%quote-reader"), false, this);
-		SET_MACRO_CHARACTER('(', sym("sys::%parent-reader"), false, this);
-		SET_MACRO_CHARACTER(')', sym("sys::%close-parent-reader"), false, this);
-		SET_MACRO_CHARACTER(',', sym("sys::%unquote-reader"), false, this);
-		SET_MACRO_CHARACTER(';', sym("%comment-reader"), false, this);
-		SET_MACRO_CHARACTER('`', sym("sys::%backquote-reader"), false, this);
+		SET_MACRO_CHARACTER('"', sym("sys::%string-reader"), false);
+		SET_MACRO_CHARACTER('\'', sym("sys::%quote-reader"), false);
+		SET_MACRO_CHARACTER('(', sym("sys::%parent-reader"), false);
+		SET_MACRO_CHARACTER(')', sym("sys::%close-parent-reader"), false);
+		SET_MACRO_CHARACTER(',', sym("sys::%unquote-reader"), false);
+		SET_MACRO_CHARACTER(';', sym("%comment-reader"), false);
+		SET_MACRO_CHARACTER('`', sym("sys::%backquote-reader"), false);
 
 		// as standard only # as dispatch macro
-		MAKE_DISPATCH_MACRO_CHARACTER('#', true, this);
+		MAKE_DISPATCH_MACRO_CHARACTER('#', true);
 
 		// reserved
-		SET_DISPATCH_MACRO_CHRACTER('#', '!', NIL, this);
-		SET_DISPATCH_MACRO_CHRACTER('#', '?', NIL, this);
-		SET_DISPATCH_MACRO_CHRACTER('#', '[', NIL, this);
-		SET_DISPATCH_MACRO_CHRACTER('#', ']', NIL, this);
-		SET_DISPATCH_MACRO_CHRACTER('#', '{', NIL, this);
-		SET_DISPATCH_MACRO_CHRACTER('#', '}', NIL, this);
+		SET_DISPATCH_MACRO_CHRACTER('#', '!', NIL);
+		SET_DISPATCH_MACRO_CHRACTER('#', '?', NIL);
+		SET_DISPATCH_MACRO_CHRACTER('#', '[', NIL);
+		SET_DISPATCH_MACRO_CHRACTER('#', ']', NIL);
+		SET_DISPATCH_MACRO_CHRACTER('#', '{', NIL);
+		SET_DISPATCH_MACRO_CHRACTER('#', '}', NIL);
 
 		// signal error
-		SET_DISPATCH_MACRO_CHRACTER('#', '<', NIL, this);
-		SET_DISPATCH_MACRO_CHRACTER('#', '\b', NIL, this);
-		SET_DISPATCH_MACRO_CHRACTER('#', '\t', NIL, this);
-		SET_DISPATCH_MACRO_CHRACTER('#', '\r', NIL, this);
-		SET_DISPATCH_MACRO_CHRACTER('#', '\n', NIL, this);
-		SET_DISPATCH_MACRO_CHRACTER('#', '\f', NIL, this);
-		SET_DISPATCH_MACRO_CHRACTER('#', ' ', NIL, this);
-		SET_DISPATCH_MACRO_CHRACTER('#', ')', NIL, this);
+		SET_DISPATCH_MACRO_CHRACTER('#', '<', NIL);
+		SET_DISPATCH_MACRO_CHRACTER('#', '\b', NIL);
+		SET_DISPATCH_MACRO_CHRACTER('#', '\t', NIL);
+		SET_DISPATCH_MACRO_CHRACTER('#', '\r', NIL);
+		SET_DISPATCH_MACRO_CHRACTER('#', '\n', NIL);
+		SET_DISPATCH_MACRO_CHRACTER('#', '\f', NIL);
+		SET_DISPATCH_MACRO_CHRACTER('#', ' ', NIL);
+		SET_DISPATCH_MACRO_CHRACTER('#', ')', NIL);
 
 		// undefined
-		SET_DISPATCH_MACRO_CHRACTER('#', '"', NIL, this);
-		SET_DISPATCH_MACRO_CHRACTER('#', '$', NIL, this);
-		SET_DISPATCH_MACRO_CHRACTER('#', '%', NIL, this);
-		SET_DISPATCH_MACRO_CHRACTER('#', '&', NIL, this);
-		SET_DISPATCH_MACRO_CHRACTER('#', ';', NIL, this);
-		SET_DISPATCH_MACRO_CHRACTER('#', '>', NIL, this);
-		SET_DISPATCH_MACRO_CHRACTER('#', '@', NIL, this);
-		SET_DISPATCH_MACRO_CHRACTER('#', '^', NIL, this);
-		SET_DISPATCH_MACRO_CHRACTER('#', '_', NIL, this);
-		SET_DISPATCH_MACRO_CHRACTER('#', '`', NIL, this);
-		SET_DISPATCH_MACRO_CHRACTER('#', '~', NIL, this);
-		SET_DISPATCH_MACRO_CHRACTER('#', '/', NIL, this);
+		SET_DISPATCH_MACRO_CHRACTER('#', '"', NIL);
+		SET_DISPATCH_MACRO_CHRACTER('#', '$', NIL);
+		SET_DISPATCH_MACRO_CHRACTER('#', '%', NIL);
+		SET_DISPATCH_MACRO_CHRACTER('#', '&', NIL);
+		SET_DISPATCH_MACRO_CHRACTER('#', ';', NIL);
+		SET_DISPATCH_MACRO_CHRACTER('#', '>', NIL);
+		SET_DISPATCH_MACRO_CHRACTER('#', '@', NIL);
+		SET_DISPATCH_MACRO_CHRACTER('#', '^', NIL);
+		SET_DISPATCH_MACRO_CHRACTER('#', '_', NIL);
+		SET_DISPATCH_MACRO_CHRACTER('#', '`', NIL);
+		SET_DISPATCH_MACRO_CHRACTER('#', '~', NIL);
+		SET_DISPATCH_MACRO_CHRACTER('#', '/', NIL);
 
 		// macro char
-		SET_DISPATCH_MACRO_CHRACTER('#', '#', NIL, this);
-		SET_DISPATCH_MACRO_CHRACTER('#', '\'', sym("sys::%function-reader"),
-				this);
-		SET_DISPATCH_MACRO_CHRACTER('#', '(', NIL, this);
-		SET_DISPATCH_MACRO_CHRACTER('#', '*', NIL, this);
-		SET_DISPATCH_MACRO_CHRACTER('#', ',', NIL, this);
-		SET_DISPATCH_MACRO_CHRACTER('#', ':', sym("sys::%unintern-reader"),
-				this);
-		SET_DISPATCH_MACRO_CHRACTER('#', '=', NIL, this);
-		SET_DISPATCH_MACRO_CHRACTER('#', '\\', sym("sys::%character-reader"),
-				this);
-		SET_DISPATCH_MACRO_CHRACTER('#', '|', NIL, this);
-		SET_DISPATCH_MACRO_CHRACTER('#', '+', NIL, this);
-		SET_DISPATCH_MACRO_CHRACTER('#', '-', NIL, this);
-		SET_DISPATCH_MACRO_CHRACTER('#', '.', NIL, this);
-		SET_DISPATCH_MACRO_CHRACTER('#', 'A', NIL, this);
-		SET_DISPATCH_MACRO_CHRACTER('#', 'B', NIL, this);
-		SET_DISPATCH_MACRO_CHRACTER('#', 'C', NIL, this);
-		SET_DISPATCH_MACRO_CHRACTER('#', 'O', NIL, this);
-		SET_DISPATCH_MACRO_CHRACTER('#', 'P', NIL, this);
-		SET_DISPATCH_MACRO_CHRACTER('#', 'R', NIL, this);
-		SET_DISPATCH_MACRO_CHRACTER('#', 'S', NIL, this);
-		SET_DISPATCH_MACRO_CHRACTER('#', 'X', NIL, this);
+		SET_DISPATCH_MACRO_CHRACTER('#', '#', NIL);
+		SET_DISPATCH_MACRO_CHRACTER('#', '\'', sym("sys::%function-reader"));
+		SET_DISPATCH_MACRO_CHRACTER('#', '(', NIL);
+		SET_DISPATCH_MACRO_CHRACTER('#', '*', NIL);
+		SET_DISPATCH_MACRO_CHRACTER('#', ',', NIL);
+		SET_DISPATCH_MACRO_CHRACTER('#', ':', sym("sys::%unintern-reader"));
+		SET_DISPATCH_MACRO_CHRACTER('#', '=', NIL);
+		SET_DISPATCH_MACRO_CHRACTER('#', '\\', sym("sys::%character-reader"));
+		SET_DISPATCH_MACRO_CHRACTER('#', '|', NIL);
+		SET_DISPATCH_MACRO_CHRACTER('#', '+', NIL);
+		SET_DISPATCH_MACRO_CHRACTER('#', '-', NIL);
+		SET_DISPATCH_MACRO_CHRACTER('#', '.', NIL);
+		SET_DISPATCH_MACRO_CHRACTER('#', 'A', NIL);
+		SET_DISPATCH_MACRO_CHRACTER('#', 'B', NIL);
+		SET_DISPATCH_MACRO_CHRACTER('#', 'C', NIL);
+		SET_DISPATCH_MACRO_CHRACTER('#', 'O', NIL);
+		SET_DISPATCH_MACRO_CHRACTER('#', 'P', NIL);
+		SET_DISPATCH_MACRO_CHRACTER('#', 'R', NIL);
+		SET_DISPATCH_MACRO_CHRACTER('#', 'S', NIL);
+		SET_DISPATCH_MACRO_CHRACTER('#', 'X', NIL);
 	}
 
 	/**
@@ -209,7 +206,7 @@ public class cREADTABLE extends cCELL implements tREADTABLE
 	@Static(name = "read-delimited-list", doc = "f_rd_del")
 	public static tT READ_DELIMITED_LIST(
 			@Arg(name = "character") Character character, //
-			@BaseArg @Opt(name = "input-stream", def = "*standard-input*") tINPUT_STREAM stream, //
+			@Opt(name = "input-stream", def = "*standard-input*") tINPUT_STREAM stream, //
 			@Opt(name = "recursive-p", def = "nil") Boolean recursiveP)
 			throws END_OF_FILE
 	{
@@ -272,8 +269,7 @@ public class cREADTABLE extends cCELL implements tREADTABLE
 	 * aloyslisp.core.types.tREADTABLE#MAKE_DISPATCH_MACRO_CHARACTER(java.lang
 	 * .Character, java.lang.Boolean, aloyslisp.core.types.tREADTABLE)
 	 */
-	public tT MAKE_DISPATCH_MACRO_CHARACTER(Character c, Boolean nonTerm,
-			tREADTABLE readtable)
+	public tT MAKE_DISPATCH_MACRO_CHARACTER(Character c, Boolean nonTerm)
 	{
 		map.put("" + c, cons(null, nonTerm ? T : NIL));
 		return T;
@@ -288,7 +284,7 @@ public class cREADTABLE extends cCELL implements tREADTABLE
 	 * aloyslisp.core.types.tREADTABLE)
 	 */
 	public tT SET_DISPATCH_MACRO_CHRACTER(Character disp, Character sub,
-			tFUNCTION_DESIGNATOR func, tREADTABLE readTable)
+			tFUNCTION_DESIGNATOR func)
 	{
 		map.put("" + disp + sub, cons(func, NIL));
 		return T;
@@ -301,7 +297,7 @@ public class cREADTABLE extends cCELL implements tREADTABLE
 	 * .Character, java.lang.Character, aloyslisp.core.types.tREADTABLE)
 	 */
 	public tFUNCTION_DESIGNATOR GET_DISPATCH_MACRO_CHARACTER(Character disp,
-			Character sub, tREADTABLE readtable)
+			Character sub)
 	{
 		tLIST res = map.get("" + disp + sub);
 		if (res == null)
@@ -317,7 +313,7 @@ public class cREADTABLE extends cCELL implements tREADTABLE
 	 * aloyslisp.core.types.tREADTABLE)
 	 */
 	public tT SET_MACRO_CHARACTER(Character c, tFUNCTION_DESIGNATOR func,
-			Boolean nonTerm, tREADTABLE readtable)
+			Boolean nonTerm)
 	{
 		map.put("" + c, cons(func, nonTerm ? T : NIL));
 		return T;
@@ -329,7 +325,7 @@ public class cREADTABLE extends cCELL implements tREADTABLE
 	 * aloyslisp.core.types.tREADTABLE#GET_MACRO_CHARACTER(java.lang.Character,
 	 * aloyslisp.core.types.tREADTABLE)
 	 */
-	public tT[] GET_MACRO_CHARACTER(Character c, tREADTABLE readtable)
+	public tT[] GET_MACRO_CHARACTER(Character c)
 	{
 		tLIST res = map.get("" + c);
 		if (res == null)
@@ -345,7 +341,7 @@ public class cREADTABLE extends cCELL implements tREADTABLE
 	 * @see aloyslisp.core.types.tREADTABLE#READTABLE_CASE(aloyslisp.core.types.
 	 * tREADTABLE)
 	 */
-	public tSYMBOL READTABLE_CASE(tREADTABLE tablereader)
+	public tSYMBOL READTABLE_CASE()
 	{
 		return key(caseVal.toString());
 	}
@@ -356,7 +352,7 @@ public class cREADTABLE extends cCELL implements tREADTABLE
 	 * aloyslisp.core.types.tREADTABLE#SET_READTABLE_CASE(aloyslisp.core.types
 	 * .tREADTABLE, aloyslisp.core.types.tSYMBOL)
 	 */
-	public tSYMBOL SET_READTABLE_CASE(tREADTABLE readtable, tSYMBOL c)
+	public tSYMBOL SET_READTABLE_CASE(tSYMBOL c)
 	{
 		// caseVal = Enum.valueOf(CaseType, c.getName().toUpperCase());
 		String name = c.SYMBOL_NAME();
@@ -420,7 +416,7 @@ public class cREADTABLE extends cCELL implements tREADTABLE
 	 */
 	@Override
 	public void SET_SYNTAX_FROM_CHAR(Character fromChar, Character toChar,
-			tREADTABLE toReadtable, tREADTABLE fromReadtable)
+			tREADTABLE toReadtable)
 	{
 		// TODO Auto-generated method stub
 
@@ -432,7 +428,7 @@ public class cREADTABLE extends cCELL implements tREADTABLE
 	 * tREADTABLE, aloyslisp.core.types.tREADTABLE)
 	 */
 	@Override
-	public tREADTABLE COPY_READTABLE(tREADTABLE fromReadtable, tT toReadtable)
+	public tREADTABLE COPY_READTABLE(tT toReadtable)
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -455,7 +451,7 @@ public class cREADTABLE extends cCELL implements tREADTABLE
 	{
 		try
 		{
-			return list(BACKQUOTE, in.READ(in, false, NIL, true));
+			return list(BACKQUOTE, in.READ(false, NIL, true));
 		}
 		catch (END_OF_FILE e)
 		{
@@ -506,12 +502,12 @@ public class cREADTABLE extends cCELL implements tREADTABLE
 		try
 		{
 			// TODO COMMENT_READER should test on eol
-			while ((curr = in.READ_CHAR(in, false, NIL, true)) != '\n'
+			while ((curr = in.READ_CHAR(false, NIL, true)) != '\n'
 					&& curr != '\r')
 				;
 
 			// we should reverse the list
-			return in.READ(in, false, NIL, true);
+			return in.READ(false, NIL, true);
 		}
 		catch (END_OF_FILE e)
 		{
@@ -552,7 +548,7 @@ public class cREADTABLE extends cCELL implements tREADTABLE
 	{
 		try
 		{
-			return list(FUNCTION, in.READ(in, false, NIL, true));
+			return list(FUNCTION, in.READ(false, NIL, true));
 		}
 		catch (END_OF_FILE e)
 		{
@@ -576,7 +572,7 @@ public class cREADTABLE extends cCELL implements tREADTABLE
 		tLIST res = NIL;
 		try
 		{
-			tT curr = in.READ(in, false, NIL, true);
+			tT curr = in.READ(false, NIL, true);
 			while (!(curr instanceof tSYMBOL)
 					|| !((tSYMBOL) curr).SYMBOL_NAME().equals(")"))
 			{
@@ -584,9 +580,9 @@ public class cREADTABLE extends cCELL implements tREADTABLE
 				if (curr instanceof tSYMBOL
 						&& ((tSYMBOL) curr).SYMBOL_NAME().equals("."))
 				{
-					curr = in.READ(in, false, NIL, true);
+					curr = in.READ(false, NIL, true);
 					res = (tLIST) ((tLIST) res.REVERSE()).APPEND(curr);
-					curr = in.READ(in, false, NIL, true);
+					curr = in.READ(false, NIL, true);
 
 					// dotted pair should end
 					if (curr instanceof tSYMBOL
@@ -598,7 +594,7 @@ public class cREADTABLE extends cCELL implements tREADTABLE
 
 				// else append element of list
 				res = cons(curr, res);
-				curr = in.READ(in, false, NIL, true);
+				curr = in.READ(false, NIL, true);
 			}
 
 			// we should reverse the list
@@ -627,7 +623,7 @@ public class cREADTABLE extends cCELL implements tREADTABLE
 	{
 		try
 		{
-			return quote(in.READ(in, false, NIL, true));
+			return quote(in.READ(false, NIL, true));
 		}
 		catch (END_OF_FILE e)
 		{
@@ -652,11 +648,11 @@ public class cREADTABLE extends cCELL implements tREADTABLE
 
 		try
 		{
-			while ((curr = in.READ_CHAR(in, false, NIL, true)) != '"')
+			while ((curr = in.READ_CHAR(false, NIL, true)) != '"')
 			{
 				if (curr == '\\')
 				{
-					curr = in.READ_CHAR(in, false, NIL, true);
+					curr = in.READ_CHAR(false, NIL, true);
 				}
 
 				str.append(curr);
@@ -717,19 +713,19 @@ public class cREADTABLE extends cCELL implements tREADTABLE
 		Character sup = ' ';
 		try
 		{
-			sup = in.PEEK_CHAR(NIL, in, false, NIL, true);
+			sup = in.PEEK_CHAR(NIL, false, NIL, true);
 			switch (sup)
 			{
 				case '@':
-					in.READ_CHAR(in, false, NIL, true);
-					return list(SPLICE, in.READ(in, false, NIL, true));
+					in.READ_CHAR(false, NIL, true);
+					return list(SPLICE, in.READ(false, NIL, true));
 
 				case '.':
-					in.READ_CHAR(in, false, NIL, true);
-					return list(NSPLICE, in.READ(in, false, NIL, true));
+					in.READ_CHAR(false, NIL, true);
+					return list(NSPLICE, in.READ(false, NIL, true));
 
 				default:
-					return list(UNQUOTE, in.READ(in, false, NIL, true));
+					return list(UNQUOTE, in.READ(false, NIL, true));
 			}
 		}
 		catch (END_OF_FILE e)

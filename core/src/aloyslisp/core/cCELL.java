@@ -283,6 +283,16 @@ public abstract class cCELL implements tSTANDARD_OBJECT
 		return true;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.tT#KEYWORDP()
+	 */
+	@Override
+	public boolean KEYWORDP()
+	{
+		return false;
+	}
+
 	/**
 	 * @param message
 	 * @param args

@@ -56,8 +56,7 @@ public abstract class cINPUT_STREAM extends cSTREAM implements tINPUT_STREAM
 	 * @return
 	 * @throws END_OF_FILE
 	 */
-	public tT READ(tINPUT_STREAM stream, Boolean eofErrorP, tT eofValue,
-			Boolean recursiveP)
+	public tT READ(Boolean eofErrorP, tT eofValue, Boolean recursiveP)
 	{
 		// loop until something found or EOF
 		for (;;)
@@ -103,13 +102,12 @@ public abstract class cINPUT_STREAM extends cSTREAM implements tINPUT_STREAM
 	}
 
 	public Character PEEK_CHAR(tT peekType, //
-			tINPUT_STREAM stream, //
 			Boolean eofErrorP, //
 			tT eofValue, //
 			Boolean recursiveP)
 
 	{
-		Character walk = READ_CHAR(stream, eofErrorP, eofValue, recursiveP);
+		Character walk = READ_CHAR(eofErrorP, eofValue, recursiveP);
 		boolean space = peekType == T;
 		boolean carTest = peekType instanceof tCHARACTER;
 		Character test = '\uffff';
@@ -120,11 +118,11 @@ public abstract class cINPUT_STREAM extends cSTREAM implements tINPUT_STREAM
 		// test for space char or for terminal char
 				&& ((space && Character.isSpaceChar(walk)) || (carTest && walk != test)))
 		{
-			walk = READ_CHAR(stream, eofErrorP, eofValue, recursiveP);
+			walk = READ_CHAR(eofErrorP, eofValue, recursiveP);
 		}
 
 		if (walk != null)
-			UNREAD_CHAR(walk, stream);
+			UNREAD_CHAR(walk);
 
 		return walk;
 	}
@@ -136,12 +134,12 @@ public abstract class cINPUT_STREAM extends cSTREAM implements tINPUT_STREAM
 	 * @return
 	 * @throws END_OF_FILE
 	 */
-	public Character READ_CHAR_NO_HANG(tINPUT_STREAM stream, Boolean eofErrorP,
-			tT eofValue, Boolean recursiveP)
+	public Character READ_CHAR_NO_HANG(Boolean eofErrorP, tT eofValue,
+			Boolean recursiveP)
 	{
-		if (!LISTEN(stream))
+		if (!LISTEN())
 			return null;
-		return READ_CHAR(stream, eofErrorP, eofValue, recursiveP);
+		return READ_CHAR(eofErrorP, eofValue, recursiveP);
 	}
 
 	/**
@@ -155,26 +153,24 @@ public abstract class cINPUT_STREAM extends cSTREAM implements tINPUT_STREAM
 	public tT readMacroChar(Boolean eofErrorP, tT eofValue, Boolean recursiveP)
 			throws END_OF_FILE
 	{
-		Character curr = PEEK_CHAR(NIL, this, eofErrorP, eofValue, recursiveP);
+		Character curr = PEEK_CHAR(NIL, eofErrorP, eofValue, recursiveP);
 		cREADTABLE table = (cREADTABLE) readTable.SYMBOL_VALUE();
 
-		if (!table.isConstituent(curr = PEEK_CHAR(NIL, this, eofErrorP,
-				eofValue, recursiveP)))
+		if (!table.isConstituent(curr = PEEK_CHAR(NIL, eofErrorP, eofValue,
+				recursiveP)))
 		{
-			curr = READ_CHAR(this, eofErrorP, eofValue, recursiveP);
+			curr = READ_CHAR(eofErrorP, eofValue, recursiveP);
 
 			// test macrochar
-			tT[] charMacro = table.GET_MACRO_CHARACTER(curr, table);
+			tT[] charMacro = table.GET_MACRO_CHARACTER(curr);
 			if (charMacro[0] == NIL)
 				return null;
 
 			// test macrochar extension
 			if (charMacro[1] != NIL)
 			{
-				Character curr2 = READ_CHAR(this, eofErrorP, eofValue,
-						recursiveP);
-				charMacro[0] = table.GET_DISPATCH_MACRO_CHARACTER(curr, curr2,
-						table);
+				Character curr2 = READ_CHAR(eofErrorP, eofValue, recursiveP);
+				charMacro[0] = table.GET_DISPATCH_MACRO_CHARACTER(curr, curr2);
 				if (charMacro[0] == NIL)
 				{
 					throw new LispException("Macro character " + curr + curr2
@@ -223,7 +219,7 @@ public abstract class cINPUT_STREAM extends cSTREAM implements tINPUT_STREAM
 	public String readAtom(Boolean firstEscaped, Boolean eofErrorP,
 			tT eofValue, Boolean recursiveP)
 	{
-		Character curr = PEEK_CHAR(NIL, this, eofErrorP, eofValue, recursiveP);
+		Character curr = PEEK_CHAR(NIL, eofErrorP, eofValue, recursiveP);
 		cREADTABLE table = (cREADTABLE) readTable.SYMBOL_VALUE();
 		StringBuilder res = new StringBuilder("");
 		boolean singleEscaped = firstEscaped;
@@ -231,8 +227,8 @@ public abstract class cINPUT_STREAM extends cSTREAM implements tINPUT_STREAM
 
 		try
 		{
-			while (table.isConstituent(curr = READ_CHAR(this, eofErrorP,
-					eofValue, recursiveP)) || singleEscaped || multiEscaped)
+			while (table.isConstituent(curr = READ_CHAR(eofErrorP, eofValue,
+					recursiveP)) || singleEscaped || multiEscaped)
 			{
 				// switched on | ;-)
 				multiEscaped ^= (curr == '|');
@@ -244,7 +240,7 @@ public abstract class cINPUT_STREAM extends cSTREAM implements tINPUT_STREAM
 				singleEscaped = (curr == '\\') && !singleEscaped
 						&& !multiEscaped;
 			}
-			UNREAD_CHAR(curr, this);
+			UNREAD_CHAR(curr);
 		}
 		catch (END_OF_FILE e)
 		{
@@ -280,8 +276,7 @@ public abstract class cINPUT_STREAM extends cSTREAM implements tINPUT_STREAM
 	 * java.lang.Integer)
 	 */
 	@Override
-	public tT READ_SEQUENCE(tSEQUENCE sequence, tINPUT_STREAM stream,
-			Integer start, Integer end)
+	public tT READ_SEQUENCE(tSEQUENCE sequence, Integer start, Integer end)
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -294,8 +289,7 @@ public abstract class cINPUT_STREAM extends cSTREAM implements tINPUT_STREAM
 	 * java.lang.Boolean)
 	 */
 	@Override
-	public tT[] READ_LINE(tINPUT_STREAM stream, Boolean eofErrorP, tT eofValue,
-			Boolean recursiveP)
+	public tT[] READ_LINE(Boolean eofErrorP, tT eofValue, Boolean recursiveP)
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -348,7 +342,7 @@ public abstract class cINPUT_STREAM extends cSTREAM implements tINPUT_STREAM
 			{
 				// read it
 				res = new tT[]
-				{ in.READ(in, false, NIL, false) };
+				{ in.READ(false, NIL, false) };
 
 				if (verbose)
 				{

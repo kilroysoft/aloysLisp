@@ -29,10 +29,11 @@
 
 package aloyslisp.core.functions;
 
+import aloyslisp.annotations.*;
 import aloyslisp.core.*;
-import aloyslisp.core.clos.tBUILD_IN_CLASS;
-import aloyslisp.core.packages.tSYMBOL;
+import aloyslisp.core.clos.*;
 import aloyslisp.core.sequences.*;
+import aloyslisp.internal.engine.*;
 
 /**
  * tLAMBDA_FUNCTION
@@ -41,24 +42,6 @@ import aloyslisp.core.sequences.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public interface tFUNCTION extends tBUILD_IN_CLASS
+public interface tFUNCTION extends tAPI
 {
-	/**
-	 * Execute function with arguments as a cons
-	 * 
-	 * @param args
-	 *            List of arguments
-	 * @return Evaluated results in ana array for eventual multiple values
-	 */
-	public tT[] exec(tLIST args);
-
-	/**
-	 * Execute function with separate arguments
-	 * 
-	 * @param args
-	 *            individual args
-	 * @return Evaluated results in ana array for eventual multiple values
-	 */
-	public tT[] e(Object... args);
-
 }

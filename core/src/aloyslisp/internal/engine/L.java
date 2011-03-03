@@ -62,7 +62,6 @@ public class L
 	 * symbols....
 	 */
 	public static tSYMBOL	sPACKAGEs	= new cSYMBOL("*package*", cPACKAGE.cl)
-												.setExported(true)
 												.setSpecial(true)
 												.SET_SYMBOL_VALUE(cPACKAGE.cl);
 
@@ -102,7 +101,7 @@ public class L
 	public static final tSYMBOL		T						= sym("T");
 	static
 	{
-		T.SET_SYMBOL_VALUE(T).setConstant(true).setExported(true);
+		T.SET_SYMBOL_VALUE(T).setConstant(true);
 	}
 
 	/*
@@ -130,8 +129,6 @@ public class L
 	 */
 	public static tSYMBOL			standardInput			= sym(
 																	"*standard-input*")
-																	.setExported(
-																			true)
 																	.setSpecial(
 																			true)
 																	.SET_SYMBOL_VALUE(
@@ -139,8 +136,6 @@ public class L
 
 	public static tSYMBOL			standardOutput			= sym(
 																	"*standard-output*")
-																	.setExported(
-																			true)
 																	.setSpecial(
 																			true)
 																	.SET_SYMBOL_VALUE(
@@ -148,8 +143,6 @@ public class L
 
 	public static tSYMBOL			errorOutput				= sym(
 																	"*error-output*")
-																	.setExported(
-																			true)
 																	.setSpecial(
 																			true)
 																	.SET_SYMBOL_VALUE(
@@ -157,24 +150,18 @@ public class L
 
 	public static tSYMBOL			traceOutput				= sym(
 																	"*trace-output*")
-																	.setExported(
-																			true)
 																	.setSpecial(
 																			true)
 																	.SET_SYMBOL_VALUE(
 																			out);
 
 	public static tSYMBOL			queryIO					= sym("*query-io*")
-																	.setExported(
-																			true)
 																	.setSpecial(
 																			true)
 																	.SET_SYMBOL_VALUE(
 																			query);
 
 	public static tSYMBOL			debugIO					= sym("*debug-io*")
-																	.setExported(
-																			true)
 																	.setSpecial(
 																			true)
 																	.SET_SYMBOL_VALUE(
@@ -182,8 +169,6 @@ public class L
 
 	public static tSYMBOL			terminalIO				= sym(
 																	"*terminal-io*")
-																	.setExported(
-																			true)
 																	.setSpecial(
 																			true)
 																	.SET_SYMBOL_VALUE(
@@ -194,8 +179,6 @@ public class L
 	 */
 	public static tSYMBOL			printEscape				= sym(
 																	"*print-escape*")
-																	.setExported(
-																			true)
 																	.setSpecial(
 																			true)
 																	.SET_SYMBOL_VALUE(
@@ -203,8 +186,6 @@ public class L
 
 	public static tSYMBOL			printRadix				= sym(
 																	"*print-radix*")
-																	.setExported(
-																			true)
 																	.setSpecial(
 																			true)
 																	.SET_SYMBOL_VALUE(
@@ -212,8 +193,6 @@ public class L
 
 	public static tSYMBOL			printBase				= sym(
 																	"*print-base*")
-																	.setExported(
-																			true)
 																	.setSpecial(
 																			true)
 																	.SET_SYMBOL_VALUE(
@@ -221,8 +200,6 @@ public class L
 
 	public static tSYMBOL			printCircle				= sym(
 																	"*print-circle*")
-																	.setExported(
-																			true)
 																	.setSpecial(
 																			true)
 																	.SET_SYMBOL_VALUE(
@@ -230,8 +207,6 @@ public class L
 
 	public static tSYMBOL			printPretty				= sym(
 																	"*print-pretty*")
-																	.setExported(
-																			true)
 																	.setSpecial(
 																			true)
 																	.SET_SYMBOL_VALUE(
@@ -239,8 +214,6 @@ public class L
 
 	public static tSYMBOL			printLevel				= sym(
 																	"*print-level*")
-																	.setExported(
-																			true)
 																	.setSpecial(
 																			true)
 																	.SET_SYMBOL_VALUE(
@@ -248,8 +221,6 @@ public class L
 
 	public static tSYMBOL			printLength				= sym(
 																	"*print-Length*")
-																	.setExported(
-																			true)
 																	.setSpecial(
 																			true)
 																	.SET_SYMBOL_VALUE(
@@ -257,8 +228,6 @@ public class L
 
 	public static tSYMBOL			printCase				= sym(
 																	"*print-case*")
-																	.setExported(
-																			true)
 																	.setSpecial(
 																			true)
 																	.SET_SYMBOL_VALUE(
@@ -266,8 +235,6 @@ public class L
 
 	public static tSYMBOL			printArray				= sym(
 																	"*print-array*")
-																	.setExported(
-																			true)
 																	.setSpecial(
 																			true)
 																	.SET_SYMBOL_VALUE(
@@ -275,8 +242,6 @@ public class L
 
 	public static tSYMBOL			printGensym				= sym(
 																	"*print-gensym*")
-																	.setExported(
-																			true)
 																	.setSpecial(
 																			true)
 																	.SET_SYMBOL_VALUE(
@@ -284,8 +249,6 @@ public class L
 
 	public static tSYMBOL			printReadably			= sym(
 																	"*print-readably*")
-																	.setExported(
-																			true)
 																	.setSpecial(
 																			true)
 																	.SET_SYMBOL_VALUE(
@@ -293,8 +256,6 @@ public class L
 
 	public static tSYMBOL			printRightMargin		= sym(
 																	"*print-right-margin*")
-																	.setExported(
-																			true)
 																	.setSpecial(
 																			true)
 																	.SET_SYMBOL_VALUE(
@@ -302,8 +263,6 @@ public class L
 
 	public static tSYMBOL			printMiserWidth			= sym(
 																	"*print-misere-width*")
-																	.setExported(
-																			true)
 																	.setSpecial(
 																			true)
 																	.SET_SYMBOL_VALUE(
@@ -311,8 +270,6 @@ public class L
 
 	public static tSYMBOL			printLines				= sym(
 																	"*print-lines*")
-																	.setExported(
-																			true)
 																	.setSpecial(
 																			true)
 																	.SET_SYMBOL_VALUE(
@@ -320,16 +277,12 @@ public class L
 
 	public static tSYMBOL			printPprintDispatch		= sym(
 																	"*print-pprint-dispatch*")
-																	.setExported(
-																			true)
 																	.setSpecial(
 																			true)
 																	.SET_SYMBOL_VALUE(
 																			NIL);
 
 	public static tSYMBOL			readBase				= sym("*read-base*")
-																	.setExported(
-																			true)
 																	.setSpecial(
 																			true)
 																	.SET_SYMBOL_VALUE(
@@ -337,16 +290,12 @@ public class L
 
 	public static tSYMBOL			readDefaultFloatFormat	= sym(
 																	"*read-default-float-format*")
-																	.setExported(
-																			true)
 																	.setSpecial(
 																			true)
 																	.SET_SYMBOL_VALUE(
 																			sym("single-float"));
 
 	public static tSYMBOL			readEval				= sym("*readEval*")
-																	.setExported(
-																			true)
 																	.setSpecial(
 																			true)
 																	.SET_SYMBOL_VALUE(
@@ -354,16 +303,12 @@ public class L
 
 	public static tSYMBOL			readSuppress			= sym(
 																	"*read-suppress*")
-																	.setExported(
-																			true)
 																	.setSpecial(
 																			true)
 																	.SET_SYMBOL_VALUE(
 																			NIL);
 
 	public static tSYMBOL			readTable				= sym("*readtable*")
-																	.setExported(
-																			true)
 																	.setSpecial(
 																			true)
 																	.SET_SYMBOL_VALUE(
@@ -374,8 +319,6 @@ public class L
 	}
 
 	public static tSYMBOL			lispTraceSuppress		= sym("*trace*")
-																	.setExported(
-																			true)
 																	.setSpecial(
 																			true)
 																	.SET_SYMBOL_VALUE(
@@ -392,7 +335,7 @@ public class L
 		cDYN_SYMBOL res = e.arg(name);
 
 		if (res == null)
-			res = e.read(name);
+			res = e.arg(name);
 
 		return res;
 	}
@@ -405,7 +348,7 @@ public class L
 	 */
 	public static tSYMBOL getGlobal(String name)
 	{
-		tSYMBOL[] res = currPackage().FIND_SYMBOL(name, null);
+		tSYMBOL[] res = currPackage().FIND_SYMBOL(name);
 		if (res[1] == NIL)
 			return null;
 		else
@@ -605,7 +548,7 @@ public class L
 		}
 		if (name.startsWith(":"))
 		{
-			return cPACKAGE.key.INTERN(name.substring(1), null)[0];
+			return cPACKAGE.key.INTERN(name.substring(1))[0];
 		}
 		int pos = name.indexOf(":");
 		if (pos > 0)
@@ -628,10 +571,10 @@ public class L
 			{
 				pos++;
 			}
-			return pack.INTERN(name.substring(pos + 1, name.length()), null)[0];
+			return pack.INTERN(name.substring(pos + 1, name.length()))[0];
 		}
 		else
-			return currPackage().INTERN(name, null)[0];
+			return currPackage().INTERN(name)[0];
 	}
 
 	// /**
@@ -663,7 +606,7 @@ public class L
 		{
 			throw new LispException("Package " + pack + " not found");
 		}
-		return ((tPACKAGE) p).INTERN(name, null)[0];
+		return ((tPACKAGE) p).INTERN(name)[0];
 	}
 
 	/**

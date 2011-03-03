@@ -86,9 +86,9 @@ public interface tHASH_TABLE extends tBUILD_IN_CLASS
 	 * @return
 	 */
 	@Function(name = "gethash", doc = "f_gethas")
+	@BaseArg(name = "hash-table", pos = 1)
 	public tT[] GETHASH( //
 			@Arg(name = "key") tT key, //
-			@BaseArg @Arg(name = "hash-table") tHASH_TABLE hashTable, //
 			@Opt(name = "default") tT def //
 	);
 
@@ -100,10 +100,10 @@ public interface tHASH_TABLE extends tBUILD_IN_CLASS
 	 * @return
 	 */
 	@Function(name = "setf-gethash", doc = "f_gethas")
+	@BaseArg(name = "hash-table", pos = 2)
 	public tT SET_GETHASH( //
 			@Arg(name = "value") tT value, //
 			@Arg(name = "key") tT key, //
-			@BaseArg @Arg(name = "hash-table") tHASH_TABLE hashTable, //
 			@Opt(name = "default") tT def //
 	);
 
@@ -113,9 +113,9 @@ public interface tHASH_TABLE extends tBUILD_IN_CLASS
 	 * @return
 	 */
 	@Function(name = "remhash", doc = "f_remhas")
+	@BaseArg(name = "hash-table", pos = 1)
 	public tT REMHASH( //
-			@Arg(name = "key") tT key, //
-			@BaseArg @Arg(name = "hash-table") tHASH_TABLE hashTable //
+			@Arg(name = "key") tT key //
 	);
 
 	/**
@@ -124,9 +124,9 @@ public interface tHASH_TABLE extends tBUILD_IN_CLASS
 	 * @return
 	 */
 	@Function(name = "maphash", doc = "f_maphas")
+	@BaseArg(name = "hash-table", pos = 1)
 	public tT MAPHASH( //
-			@Arg(name = "function") tFUNCTION func, //
-			@Arg(name = "hash-table") tHASH_TABLE hashTable //
+			@Arg(name = "function") tFUNCTION func //
 	);
 
 	/**

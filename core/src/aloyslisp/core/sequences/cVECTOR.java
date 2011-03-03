@@ -310,4 +310,14 @@ public class cVECTOR extends cCELL implements tVECTOR
 		return res;
 	}
 
+	/* (non-Javadoc)
+	 * @see aloyslisp.core.sequences.tSEQUENCE#FIND(aloyslisp.core.tT)
+	 */
+	@Override
+	public tT FIND(tT item)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

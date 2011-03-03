@@ -191,6 +191,14 @@ public interface tT
 	public boolean CONSTANTP();
 
 	/**
+	 * Test if thsi is a keyword
+	 * 
+	 * @return
+	 */
+	@Function(name = "keywordp", doc = "f_kwdp")
+	public boolean KEYWORDP();
+
+	/**
 	 * Return the class of object
 	 * 
 	 * @return

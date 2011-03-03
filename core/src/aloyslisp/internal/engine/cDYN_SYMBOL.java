@@ -34,7 +34,7 @@ package aloyslisp.internal.engine;
 
 import static aloyslisp.internal.engine.L.*;
 import aloyslisp.core.*;
-import aloyslisp.core.functions.*;
+import aloyslisp.core.conditions.*;
 import aloyslisp.core.packages.*;
 import aloyslisp.core.sequences.*;
 
@@ -43,7 +43,6 @@ import aloyslisp.core.sequences.*;
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
- * 
  */
 public class cDYN_SYMBOL extends cCELL implements tDYN_SYMBOL
 {
@@ -88,16 +87,6 @@ public class cDYN_SYMBOL extends cCELL implements tDYN_SYMBOL
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.types.tSYMBOL#fSet(aloyslisp.core.types.tFUNCTION)
-	 */
-	public tSYMBOL SET_SYMBOL_FUNCTION(tFUNCTION func)
-	{
-		this.value = func;
-		return orig;
-	}
-
-	/*
-	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tSYMBOL#get()
 	 */
 	public tT SYMBOL_VALUE()
@@ -107,31 +96,9 @@ public class cDYN_SYMBOL extends cCELL implements tDYN_SYMBOL
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.types.tSYMBOL#fGet()
-	 */
-	public tFUNCTION SYMBOL_FUNCTION()
-	{
-		if (value instanceof cFUNCTION)
-			return (tFUNCTION) value;
-		else
-			return null;
-	}
-
-	/*
-	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tSYMBOL#unset()
 	 */
 	public tSYMBOL unset()
-	{
-		value = null;
-		return orig;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.types.tSYMBOL#fUnset()
-	 */
-	public tSYMBOL fUnset()
 	{
 		value = null;
 		return orig;
@@ -150,7 +117,7 @@ public class cDYN_SYMBOL extends cCELL implements tDYN_SYMBOL
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tSYMBOL#setSpecial(boolean)
 	 */
-	public tSYMBOL setSpecial(boolean special)
+	public tSYMBOL SETSPECIAL(boolean special)
 	{
 		this.special = special;
 		return orig;
@@ -160,28 +127,9 @@ public class cDYN_SYMBOL extends cCELL implements tDYN_SYMBOL
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tSYMBOL#isSpecial()
 	 */
-	public boolean isSpecial()
+	public boolean SPECIALP()
 	{
 		return special;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.types.tSYMBOL#setDeclare(aloyslisp.core.types.tLIST)
-	 */
-	public tSYMBOL setDeclare(tLIST declare)
-	{
-		this.declare = declare;
-		return orig;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.types.tSYMBOL#getDeclare()
-	 */
-	public tLIST getDeclare()
-	{
-		return declare;
 	}
 
 	/*
@@ -202,6 +150,19 @@ public class cDYN_SYMBOL extends cCELL implements tDYN_SYMBOL
 		return orig;
 	}
 
+	/**
+	 * Set Orig value. This one cannot be a keyword...
+	 * 
+	 * @return
+	 */
+	public tSYMBOL setOrig(tSYMBOL newOrig)
+	{
+		if (!newOrig.KEYWORDP())
+			throw new LispException("Keyword cannot be arguments : " + this);
+
+		return orig = newOrig;
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tSYMBOL#isSet()
@@ -209,16 +170,6 @@ public class cDYN_SYMBOL extends cCELL implements tDYN_SYMBOL
 	public boolean BOUNDP()
 	{
 		return SYMBOL_VALUE() != null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.types.tSYMBOL#isSetf()
-	 */
-	public boolean FBOUNDP()
-	{
-		tT res;
-		return (res = SYMBOL_VALUE()) != null && res instanceof tFUNCTION;
 	}
 
 	/*

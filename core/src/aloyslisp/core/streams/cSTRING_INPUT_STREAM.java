@@ -166,8 +166,8 @@ public class cSTRING_INPUT_STREAM extends cINPUT_STREAM implements
 	 * .tINPUT_STREAM, java.lang.Boolean, aloyslisp.core.tT, java.lang.Boolean)
 	 */
 	@Override
-	public Character READ_CHAR(tINPUT_STREAM stream, Boolean eofErrorP,
-			tT eofValue, Boolean recursiveP)
+	public Character READ_CHAR(Boolean eofErrorP, tT eofValue,
+			Boolean recursiveP)
 	{
 		if (index >= end)
 			throw new END_OF_FILE(this);
@@ -182,7 +182,7 @@ public class cSTRING_INPUT_STREAM extends cINPUT_STREAM implements
 	 * aloyslisp.core.streams.tINPUT_STREAM)
 	 */
 	@Override
-	public Character UNREAD_CHAR(Character character, tINPUT_STREAM stream)
+	public Character UNREAD_CHAR(Character character)
 	{
 		if (index <= 0)
 			throw new LispException("unread-char : can't unread char "
@@ -199,7 +199,7 @@ public class cSTRING_INPUT_STREAM extends cINPUT_STREAM implements
 	 * tINPUT_STREAM)
 	 */
 	@Override
-	public boolean LISTEN(tINPUT_STREAM stream)
+	public boolean LISTEN()
 	{
 		return index < end;
 	}
@@ -211,7 +211,7 @@ public class cSTRING_INPUT_STREAM extends cINPUT_STREAM implements
 	 * .tINPUT_STREAM)
 	 */
 	@Override
-	public tT CLEAR_INPUT(tINPUT_STREAM stream)
+	public tT CLEAR_INPUT()
 	{
 		index = end;
 		return NIL;
@@ -224,8 +224,7 @@ public class cSTRING_INPUT_STREAM extends cINPUT_STREAM implements
 	 * .tINPUT_STREAM, java.lang.Boolean, aloyslisp.core.tT, java.lang.Boolean)
 	 */
 	@Override
-	public Integer READ_BYTE(tINPUT_STREAM stream, Boolean eofErrorP,
-			tT eofValue, Boolean recursiveP)
+	public Integer READ_BYTE(Boolean eofErrorP, tT eofValue, Boolean recursiveP)
 	{
 		// TODO Auto-generated method stub
 		return null;

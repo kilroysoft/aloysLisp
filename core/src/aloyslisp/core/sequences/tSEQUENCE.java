@@ -126,6 +126,19 @@ public interface tSEQUENCE extends tT, Iterable<tT>
 	 * 
 	 * @return
 	 */
+	@Function(name = "values-list", doc = "f_vals")
 	public tT[] VALUES_LIST();
+
+	/**
+	 * search an element in a sequence
+	 * 
+	 * @return
+	 */
+	@Function(name = "find", doc = "f_find_")
+	@Key(keys = "(from-end test test-not start end key)")
+	@BaseArg()
+	public tT FIND( //
+			@Arg(name = "item") tT item//
+	);
 
 }

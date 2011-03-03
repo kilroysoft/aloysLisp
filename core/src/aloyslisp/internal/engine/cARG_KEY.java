@@ -30,31 +30,63 @@
 package aloyslisp.internal.engine;
 
 import aloyslisp.core.*;
-import aloyslisp.annotations.*;
-import aloyslisp.core.clos.*;
+import static aloyslisp.internal.engine.L.*;
+import aloyslisp.core.conditions.*;
+import aloyslisp.core.packages.*;
+import aloyslisp.core.sequences.*;
 
 /**
- * tAPI_ARG
+ * cARG_KEY
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public interface tAPI_ARG extends tBUILD_IN_CLASS
+public class cARG_KEY extends cARG
 {
-	/**
-	 * Get evaluated default value
-	 * @param env
-	 * @return
-	 */
-	@Function(name = "api-arg-get-default")
-	public tT API_ARG_GET_DEFAULT(tENV env);
+
+	protected tSYMBOL	key;
 
 	/**
-	 * @param env
+	 * @param orig
 	 * @param value
-	 * @return
 	 */
-	@Function(name = "api-arg-get-value")
-	public tT API_ARG_GET_VALUE(tENV env, tT value);
+	public cARG_KEY(tSYMBOL orig, tT value, tSYMBOL key)
+	{
+		super(orig, value);
+		this.key = key;
+	}
+
+	public cARG_KEY(tT def)
+	{
+		super(NIL, NIL);
+		if (def instanceof tSYMBOL)
+		{
+			// the case (&key blah)
+			setOrig((tSYMBOL) def);
+			key = key(orig.SYMBOL_NAME());
+		}
+		else if (def instanceof tLIST)
+		{
+			setOrig((tSYMBOL) def.CAR());
+			def = def.CDR();
+			if (!(def.CAR() instanceof tLIST))
+			{
+				// the case (&key (blah bheu))
+				value = (tSYMBOL) def.CAR();
+				key = key(SYMBOL_NAME());
+			}
+			else if (def.CAR() instanceof tSYMBOL)
+			{
+				// the case (&key (blah (:blih bheu)))
+				key = (tSYMBOL) def.CAR();
+				value = def.CDR().CAR();
+			}
+			else
+				throw new LispException("bad key definition : " + def);
+		}
+		else
+			throw new LispException("bad key definition : " + def);
+	}
+
 }

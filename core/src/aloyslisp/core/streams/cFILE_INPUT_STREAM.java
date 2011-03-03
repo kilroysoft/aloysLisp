@@ -104,8 +104,8 @@ public class cFILE_INPUT_STREAM extends cINPUT_STREAM implements
 	 * tINPUT_STREAM, java.lang.Boolean, aloyslisp.core.types.tT,
 	 * java.lang.Boolean)
 	 */
-	public Character READ_CHAR(tINPUT_STREAM stream, Boolean eofErrorP,
-			tT eofValue, Boolean recursiveP)
+	public Character READ_CHAR(Boolean eofErrorP, tT eofValue,
+			Boolean recursiveP)
 	{
 		Character res = null;
 		try
@@ -139,7 +139,7 @@ public class cFILE_INPUT_STREAM extends cINPUT_STREAM implements
 	 * @see aloyslisp.core.types.tINPUT_STREAM#UNREAD_CHAR(java.lang.Character,
 	 * aloyslisp.core.types.tINPUT_STREAM)
 	 */
-	public Character UNREAD_CHAR(Character car, tINPUT_STREAM stream)
+	public Character UNREAD_CHAR(Character car)
 	{
 		try
 		{
@@ -159,7 +159,7 @@ public class cFILE_INPUT_STREAM extends cINPUT_STREAM implements
 	 * aloyslisp.core.types.tINPUT_STREAM#LISTEN(aloyslisp.core.types.tINPUT_STREAM
 	 * )
 	 */
-	public boolean LISTEN(tINPUT_STREAM stream)
+	public boolean LISTEN()
 	{
 		try
 		{
@@ -199,7 +199,7 @@ public class cFILE_INPUT_STREAM extends cINPUT_STREAM implements
 	 * aloyslisp.core.types.tSTREAM#STREAM_ELEMENT_TYPE(aloyslisp.core.types
 	 * .tSTREAM)
 	 */
-	public tT STREAM_ELEMENT_TYPE(tSTREAM stream)
+	public tT STREAM_ELEMENT_TYPE()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -211,7 +211,7 @@ public class cFILE_INPUT_STREAM extends cINPUT_STREAM implements
 	 * tINPUT_STREAM)
 	 */
 	@Override
-	public tT CLEAR_INPUT(tINPUT_STREAM stream)
+	public tT CLEAR_INPUT()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -224,8 +224,7 @@ public class cFILE_INPUT_STREAM extends cINPUT_STREAM implements
 	 * java.lang.Boolean)
 	 */
 	@Override
-	public Integer READ_BYTE(tINPUT_STREAM stream, Boolean eofErrorP,
-			tT eofValue, Boolean recursiveP)
+	public Integer READ_BYTE(Boolean eofErrorP, tT eofValue, Boolean recursiveP)
 	{
 		// TODO Auto-generated method stub
 		return null;
