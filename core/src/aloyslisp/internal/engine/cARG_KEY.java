@@ -30,7 +30,6 @@
 package aloyslisp.internal.engine;
 
 import aloyslisp.core.*;
-import static aloyslisp.internal.engine.L.*;
 import aloyslisp.core.conditions.*;
 import aloyslisp.core.packages.*;
 import aloyslisp.core.sequences.*;
@@ -53,40 +52,51 @@ public class cARG_KEY extends cARG
 	 */
 	public cARG_KEY(tSYMBOL orig, tT value, tSYMBOL key)
 	{
-		super(orig, value);
+		super(orig, value, false);
 		this.key = key;
 	}
 
 	public cARG_KEY(tT def)
 	{
-		super(NIL, NIL);
+		super(NIL, NIL, false);
 		if (def instanceof tSYMBOL)
 		{
-			// the case (&key blah)
+			// the case (&key var)
 			setOrig((tSYMBOL) def);
 			key = key(orig.SYMBOL_NAME());
 		}
 		else if (def instanceof tLIST)
 		{
-			setOrig((tSYMBOL) def.CAR());
-			def = def.CDR();
-			if (!(def.CAR() instanceof tLIST))
+			tT symbol = def.CAR();
+			if (!(symbol.CAR() instanceof tLIST))
 			{
-				// the case (&key (blah bheu))
-				value = (tSYMBOL) def.CAR();
-				key = key(SYMBOL_NAME());
+				// the case (&key ((:key var) val)))
+				key = (tSYMBOL) symbol.CAR();
+				setOrig((tSYMBOL) symbol.CDR().CAR());
 			}
-			else if (def.CAR() instanceof tSYMBOL)
+			else if (symbol.CAR() instanceof tSYMBOL)
 			{
-				// the case (&key (blah (:blih bheu)))
-				key = (tSYMBOL) def.CAR();
-				value = def.CDR().CAR();
+				// the case (&key (var val))
+				setOrig((tSYMBOL) symbol.CAR());
+				key = key(SYMBOL_NAME());
 			}
 			else
 				throw new LispException("bad key definition : " + def);
+			value = def.CDR().CAR();
 		}
 		else
 			throw new LispException("bad key definition : " + def);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.cCELL#DESCRIBE()
+	 */
+	public String DESCRIBE()
+	{
+		return "#<DYN-ARG-KEY " + orig.toString() + " " + key + " " + value
+				+ "" + (special ? T : NIL) + " " + (base ? T : NIL) + " "
+				+ value + ">";
 	}
 
 }

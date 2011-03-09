@@ -32,9 +32,9 @@ package aloyslisp.internal.engine;
 import java.lang.reflect.*;
 
 import aloyslisp.annotations.*;
+import aloyslisp.core.cCELL;
 import aloyslisp.core.functions.*;
 import aloyslisp.core.packages.*;
-import static aloyslisp.internal.engine.L.*;
 
 /**
  * Library
@@ -43,7 +43,7 @@ import static aloyslisp.internal.engine.L.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class Library
+public class Library extends cCELL
 {
 	/**
 	 * Read all lisp functions of the class and create appropriate package entry
@@ -104,7 +104,7 @@ public class Library
 			if (constant)
 				sym.setConstant(true);
 			else if (special != null)
-				sym.setSpecial(true);
+				sym.SET_SPECIAL(true);
 
 			if (f.toString().contains(cls + "." + f.getName()))
 			{
@@ -186,36 +186,28 @@ public class Library
 				continue;
 			}
 
-			SetF setf = m.getAnnotation(SetF.class);
-			SpecialOp special = m.getAnnotation(SpecialOp.class);
-
-			tFUNCTION func = null;
 			tSYMBOL sym = null;
 			if (stat != null)
 			{
 				sym = sym(stat.name());
-				if (special == null)
-					// Static normal function
-					func = new cCOMPILED_FUNCTION(m);
-				else
-					// Static special function
-					func = new cSPECIAL_OPERATOR(m);
 			}
 			else if (f != null)
 			{
-				// Object primitive
 				sym = sym(f.name());
-				func = new cCOMPILED_FUNCTION(m);
 			}
+			else
+				return false;
+
+			tFUNCTION func = null;
+			func = new cCOMPILED_FUNCTION(m);
 
 			// add symbol function
 			sym.SET_SYMBOL_FUNCTION(func);
 
-			// define setf function
-			if (sym != null && setf != null)
-			{
+			SetF setf = m.getAnnotation(SetF.class);
+			if (setf != null)
 				sym.SET_GET(setfKey, sym(setf.name()));
-			}
+
 		}
 
 		return true;

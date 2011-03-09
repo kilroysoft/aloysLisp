@@ -31,7 +31,6 @@ package aloyslisp.core.sequences;
 
 import java.util.*;
 
-import static aloyslisp.internal.engine.L.*;
 import aloyslisp.core.*;
 import aloyslisp.core.conditions.*;
 import aloyslisp.internal.iterators.*;
@@ -94,7 +93,7 @@ public class cVECTOR extends cCELL implements tVECTOR
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.cCELL#copy()
 	 */
-	public tT copy()
+	public tT COPY_CELL()
 	{
 		// return new cVECTOR(new cCONS(array.toArray()));
 		return this;
@@ -310,7 +309,8 @@ public class cVECTOR extends cCELL implements tVECTOR
 		return res;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see aloyslisp.core.sequences.tSEQUENCE#FIND(aloyslisp.core.tT)
 	 */
 	@Override

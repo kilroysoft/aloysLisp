@@ -29,7 +29,6 @@
 
 package aloyslisp.core.math;
 
-import static aloyslisp.internal.engine.L.*;
 import aloyslisp.core.*;
 import aloyslisp.core.conditions.*;
 import aloyslisp.core.sequences.*;
@@ -170,8 +169,9 @@ public abstract class cREAL extends cNUMBER implements tREAL
 
 	tREAL[] round(tREAL op)
 	{
-		tINTEGER quotient = new cBIGNUM(Math.round(DIVISION(op.getDoubleValue())
-				.getDoubleValue().doubleValue()));
+		tINTEGER quotient = new cBIGNUM(
+				Math.round(DIVISION(op.getDoubleValue()).getDoubleValue()
+						.doubleValue()));
 		return new tREAL[]
 		{ quotient, (tREAL) this.SUBSTRACT(quotient.MULTIPLY(op)) };
 	}

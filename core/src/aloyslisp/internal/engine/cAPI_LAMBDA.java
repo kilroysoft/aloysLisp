@@ -42,24 +42,29 @@ import aloyslisp.core.sequences.*;
  */
 public class cAPI_LAMBDA extends cAPI
 {
-	public static tSYMBOL	LAMBDA	= L.key("lambda");
+	public static tSYMBOL	LAMBDA	= key("lambda");
 
-	protected tLIST			func	= L.NIL;
-
-	protected tSYMBOL		name	= LAMBDA;
+	protected tLIST			func	= NIL;
 
 	/**
 	 * @param args
 	 * @param doc
 	 * @param decl
 	 */
-	public cAPI_LAMBDA(tSYMBOL name, tLIST args, tLIST compl, Boolean special)
+	public cAPI_LAMBDA(tSYMBOL name, tLIST args, tLIST compl, Boolean special,
+			Boolean macro)
 	{
-		super(special);
+		super();
+		// System.out.println("cAPI_LAMBDA " + name + " = " + compl);
+		this.special = special;
+		this.macro = macro;
 		if (name != null)
 			this.name = name;
+		else
+			this.name = LAMBDA;
 		tT doc = cAPI.API_PARSE_FUNC(compl);
-		SET_API_ARGS(args);
+
+		vars = SET_API_ARGS(args);
 		SET_API_DOC(doc.CAR());
 		SET_API_DECL((tLIST) doc.CDR().CAR());
 		func = (tLIST) doc.CDR().CDR().CAR();
@@ -86,8 +91,31 @@ public class cAPI_LAMBDA extends cAPI
 	@Override
 	public tT[] API_CALL(tLIST args)
 	{
+		tT[] res = new tT[]
+		{ NIL };
 		// here the args are not used the environment is already set up
-		return new cENV_PROGN(func).EVAL();
+		cENV_PROGN prog = new cENV_PROGN(func);
+		prog.ENV_PUSH();
+		try
+		{
+			res = prog.EVAL();
+		}
+		catch (RuntimeException e)
+		{
+			throw e;
+		}
+		finally
+		{
+			prog.ENV_POP();
+		}
+		return res;
+	}
+
+	public String DESCRIBE()
+	{
+		return "#<API-LAMBDA " + name + API_ARGS() + func + " " + basePos
+				+ " #<SPECIAL " + (special ? T : NIL) + "> #<MACRO "
+				+ (macro ? T : NIL) + "> " + environment + ">";
 	}
 
 }

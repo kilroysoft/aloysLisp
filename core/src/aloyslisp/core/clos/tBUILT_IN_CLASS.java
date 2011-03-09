@@ -24,31 +24,22 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 29 oct. 2010 Creation
+// IP 11 févr. 2011 Creation
 // --------------------------------------------------------------------------
 
-package aloyslisp.core.functions;
+package aloyslisp.core.clos;
 
-import aloyslisp.core.packages.tSYMBOL;
-import aloyslisp.core.sequences.*;
-import aloyslisp.internal.engine.*;
+import aloyslisp.annotations.*;
 
 /**
- * cMACRO_FUNCTION
+ * tBUILT_IN_CLASS
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class cMACRO_FUNCTION extends cAPI_LAMBDA implements tMACRO_FUNCTION
+@Type(name = "built-in-class", doc="t_built_")
+public interface tBUILT_IN_CLASS extends tCLASS
 {
-
-	/**
-	 * @param def
-	 */
-	public cMACRO_FUNCTION(tSYMBOL name, tLIST args, tLIST func)
-	{
-		super(name, args, func, true);
-	}
 
 }

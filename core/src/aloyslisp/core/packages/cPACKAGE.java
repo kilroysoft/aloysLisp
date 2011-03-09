@@ -30,8 +30,6 @@
 
 package aloyslisp.core.packages;
 
-import static aloyslisp.internal.engine.L.*;
-
 import aloyslisp.annotations.*;
 import aloyslisp.core.cCELL;
 import aloyslisp.core.tT;
@@ -100,7 +98,7 @@ public class cPACKAGE extends cCELL implements tPACKAGE
 
 	static
 	{
-		if (L.e == null)
+		if (e == null)
 			e = new cTHREAD();
 
 		packages.put("common-lisp",
@@ -128,6 +126,7 @@ public class cPACKAGE extends cCELL implements tPACKAGE
 		internal = new SymMap();
 		external = new SymMap();
 		shadow = new SymMap();
+		trace = true;
 	}
 
 	/*
@@ -168,7 +167,10 @@ public class cPACKAGE extends cCELL implements tPACKAGE
 	@Override
 	public String dump()
 	{
-		// TODO Auto-generated method stub
+		trace(DESCRIBE());
+		trace("Internal : " + internal.dump());
+		trace("External : " + external.dump());
+		trace("Shadow : " + external.dump());
 		return null;
 	}
 

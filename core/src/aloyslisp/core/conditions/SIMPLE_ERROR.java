@@ -29,6 +29,8 @@
 
 package aloyslisp.core.conditions;
 
+import aloyslisp.annotations.BuiltIn;
+import aloyslisp.annotations.Type;
 import aloyslisp.core.tT;
 import aloyslisp.core.sequences.tLIST;
 
@@ -39,6 +41,8 @@ import aloyslisp.core.sequences.tLIST;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
+@Type(name = "simple-error", doc = "e_smp_er")
+@BuiltIn(name = "simple-error", doc = "e_smp_er")
 public class SIMPLE_ERROR extends SIMPLE_CONDITION
 {
 	private static final long	serialVersionUID	= 1L;

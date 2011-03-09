@@ -29,6 +29,8 @@
 
 package aloyslisp.core.conditions;
 
+import aloyslisp.annotations.BuiltIn;
+import aloyslisp.annotations.Type;
 import aloyslisp.core.tT;
 
 /**
@@ -38,6 +40,8 @@ import aloyslisp.core.tT;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
+@Type(name = "undefined-function", doc = "e_undefi")
+@BuiltIn(name = "undefined-function", doc = "e_undefi")
 public class UNDEFINED_FUNCTION extends CELL_ERROR
 {
 	private static final long	serialVersionUID	= 1L;

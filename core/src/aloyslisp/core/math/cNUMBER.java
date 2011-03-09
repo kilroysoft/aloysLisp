@@ -29,7 +29,6 @@
 
 package aloyslisp.core.math;
 
-import static aloyslisp.internal.engine.L.*;
 import aloyslisp.core.*;
 import aloyslisp.core.sequences.*;
 import aloyslisp.core.conditions.*;

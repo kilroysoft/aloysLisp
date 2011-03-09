@@ -29,16 +29,12 @@
 
 package aloyslisp.core.sequences;
 
-import static aloyslisp.internal.engine.L.*;
-import aloyslisp.annotations.Arg;
-import aloyslisp.annotations.Static;
-import aloyslisp.core.tT;
-import aloyslisp.core.conditions.LispException;
-import aloyslisp.core.math.cBIGNUM;
-import aloyslisp.core.packages.cNIL;
-import aloyslisp.core.packages.tSYMBOL;
-import aloyslisp.core.streams.cCHARACTER;
-import aloyslisp.core.streams.tCHARACTER;
+import aloyslisp.annotations.*;
+import aloyslisp.core.*;
+import aloyslisp.core.conditions.*;
+import aloyslisp.core.math.*;
+import aloyslisp.core.packages.*;
+import aloyslisp.core.streams.*;
 
 /**
  * cSTRING

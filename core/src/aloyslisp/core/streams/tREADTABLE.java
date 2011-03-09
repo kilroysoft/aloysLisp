@@ -31,7 +31,7 @@ package aloyslisp.core.streams;
 
 import aloyslisp.annotations.*;
 import aloyslisp.core.*;
-import aloyslisp.core.clos.tBUILD_IN_CLASS;
+import aloyslisp.core.clos.tBUILT_IN_CLASS;
 import aloyslisp.core.functions.*;
 import aloyslisp.core.packages.tSYMBOL;
 
@@ -42,7 +42,7 @@ import aloyslisp.core.packages.tSYMBOL;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public interface tREADTABLE extends tBUILD_IN_CLASS
+public interface tREADTABLE extends tBUILT_IN_CLASS
 {
 	/**
 	 * Test if character is constituent

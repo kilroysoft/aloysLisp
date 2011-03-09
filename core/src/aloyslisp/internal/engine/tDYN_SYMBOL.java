@@ -40,7 +40,7 @@ import aloyslisp.core.packages.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public interface tDYN_SYMBOL extends tBUILD_IN_CLASS
+public interface tDYN_SYMBOL extends tBUILT_IN_CLASS
 {
 	public tSYMBOL SET_SYMBOL_VALUE(tT value);
 

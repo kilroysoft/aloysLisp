@@ -36,13 +36,11 @@ package aloyslisp.core.streams;
 
 import java.util.*;
 
-import static aloyslisp.internal.engine.L.*;
 import aloyslisp.annotations.*;
 import aloyslisp.core.*;
 import aloyslisp.core.conditions.*;
 import aloyslisp.core.functions.*;
-import aloyslisp.core.packages.cSYMBOL;
-import aloyslisp.core.packages.tSYMBOL;
+import aloyslisp.core.packages.*;
 import aloyslisp.core.sequences.*;
 import aloyslisp.internal.engine.Library;
 
@@ -230,7 +228,7 @@ public class cREADTABLE extends cCELL implements tREADTABLE
 	 * @see aloyslisp.core.Cell#copy()
 	 */
 	@Override
-	public tT copy()
+	public tT COPY_CELL()
 	{
 		return this;
 	}

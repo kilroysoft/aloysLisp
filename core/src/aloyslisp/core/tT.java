@@ -42,6 +42,7 @@ import aloyslisp.core.packages.tSYMBOL;
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  */
+@Type(name = "t", doc = "t_t")
 public interface tT
 {
 	/**
@@ -51,7 +52,8 @@ public interface tT
 	 * 
 	 * @return
 	 */
-	public tT copy();
+	@Function(name = "copy-cell")
+	public tT COPY_CELL();
 
 	/**
 	 * Evaluate the cell

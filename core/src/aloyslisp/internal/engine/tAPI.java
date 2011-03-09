@@ -41,7 +41,7 @@ import aloyslisp.core.sequences.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public interface tAPI extends tBUILD_IN_CLASS
+public interface tAPI extends tBUILT_IN_CLASS
 {
 	/**
 	 * Read args
@@ -101,25 +101,41 @@ public interface tAPI extends tBUILD_IN_CLASS
 	);
 
 	/**
-	 * Create the variables in the LET environment.
-	 * Set special initial values and default non calculated values
+	 * Read declare list
 	 * 
 	 * @return
 	 */
-	@Function(name = "api-intern-args")
-	public cENV_LET API_INTERN_ARGS();
+	@Function(name = "api-special")
+	public Boolean API_SPECIAL();
 
 	/**
-	 * Initialize values of LET environment with current values of a list
-	 * in a format of function call
+	 * write declare list
 	 * 
-	 * @param env
-	 * @param values
+	 * @param decl
 	 * @return
 	 */
-	@Function(name = "api-init-values")
-	public cENV_LET API_INIT_VALUES( //
-			@Arg(name = "values") tLIST values //
+	@Function(name = "set-api-special")
+	public Boolean SET_API_SPECIAL( //
+			@Arg(name = "special") Boolean special //
+	);
+
+	/**
+	 * Read declare list
+	 * 
+	 * @return
+	 */
+	@Function(name = "api-macro")
+	public Boolean API_MACRO();
+
+	/**
+	 * write declare list
+	 * 
+	 * @param decl
+	 * @return
+	 */
+	@Function(name = "set-api-macro")
+	public Boolean SET_API_MACRO( //
+			@Arg(name = "macro") Boolean macro //
 	);
 
 	/**
@@ -135,16 +151,24 @@ public interface tAPI extends tBUILD_IN_CLASS
 	);
 
 	/**
+	 * Evaluate the list (if not special)
+	 * 
+	 * @param list
 	 * @return
 	 */
-	@Function(name = "api-push-env")
-	public tT[] API_PUSH_ENV(tLIST args);
+	@Function(name = "api-eval-list")
+	public tLIST API_EVAL_LIST( //
+			@Arg(name = "list") tLIST list //
+	);
 
 	/**
 	 * @return
 	 */
-	@Function(name = "api-pop-env")
-	public tAPI API_POP_ENV();
+	@Function(name = "api-push-env")
+	public tLIST API_PUSH_ENV( //
+			@Arg(name = "args") tLIST args, //
+			@Arg(name = "let") tENV let //
+	);
 
 	/**
 	 * @return
@@ -165,18 +189,6 @@ public interface tAPI extends tBUILD_IN_CLASS
 	 */
 	@Function(name = "api-call")
 	public tT[] API_CALL(tLIST args);
-
-	/**
-	 * Execute function with arguments as a list
-	 * 
-	 * @param args
-	 *            List of arguments
-	 * @return Evaluated results in ana array for eventual multiple values
-	 */
-	@Function(name = "funcall")
-	public tT[] FUNCALL( //
-			@Rest(name = "args") tLIST args //
-	);
 
 	/**
 	 * Execute function with separate arguments

@@ -29,6 +29,8 @@
 
 package aloyslisp.core;
 
+import aloyslisp.annotations.*;
+
 /**
  * tNIL
  * <p>
@@ -38,6 +40,7 @@ package aloyslisp.core;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
+@Type(name = "nil", doc = "t_nil")
 public interface tNIL
 {
 }

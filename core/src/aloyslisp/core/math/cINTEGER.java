@@ -29,11 +29,9 @@
 
 package aloyslisp.core.math;
 
-import static aloyslisp.internal.engine.L.NIL;
-import static aloyslisp.internal.engine.L.sym;
-import aloyslisp.core.tT;
-import aloyslisp.core.conditions.TYPE_ERROR;
-import aloyslisp.core.sequences.tLIST;
+import aloyslisp.core.*;
+import aloyslisp.core.conditions.*;
+import aloyslisp.core.sequences.*;
 
 /**
  * cINTEGER

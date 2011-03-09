@@ -29,6 +29,8 @@
 
 package aloyslisp.core.conditions;
 
+import aloyslisp.annotations.BuiltIn;
+import aloyslisp.annotations.Type;
 import aloyslisp.core.tT;
 
 /**
@@ -38,6 +40,8 @@ import aloyslisp.core.tT;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
+@Type(name = "package-error", doc = "e_pkg_er")
+@BuiltIn(name = "package-error", doc = "e_pkg_er")
 public class PACKAGE_ERROR extends ERROR
 {
 	private static final long	serialVersionUID	= 1L;

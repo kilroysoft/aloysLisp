@@ -41,7 +41,7 @@ import aloyslisp.core.tT;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-@Type(name = "list", test = "listp")
+@Type(name = "list", typep = "listp")
 public interface tLIST extends tSEQUENCE
 {
 	/**

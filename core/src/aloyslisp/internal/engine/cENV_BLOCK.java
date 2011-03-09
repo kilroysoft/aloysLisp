@@ -29,7 +29,6 @@
 
 package aloyslisp.internal.engine;
 
-import static aloyslisp.internal.engine.L.*;
 import aloyslisp.core.*;
 import aloyslisp.core.packages.*;
 import aloyslisp.core.sequences.*;

@@ -38,7 +38,7 @@ import aloyslisp.core.clos.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public interface tRANDOM_STATE extends tBUILD_IN_CLASS
+public interface tRANDOM_STATE extends tBUILT_IN_CLASS
 {
 
 }

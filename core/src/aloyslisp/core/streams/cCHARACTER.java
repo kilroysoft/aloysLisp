@@ -29,7 +29,6 @@
 
 package aloyslisp.core.streams;
 
-import static aloyslisp.internal.engine.L.*;
 import aloyslisp.annotations.Arg;
 import aloyslisp.annotations.Static;
 import aloyslisp.core.*;
@@ -135,7 +134,7 @@ public class cCHARACTER extends cCELL implements tCHARACTER
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.cCELL#copy()
 	 */
-	public tT copy()
+	public tT COPY_CELL()
 	{
 		return this;
 	}

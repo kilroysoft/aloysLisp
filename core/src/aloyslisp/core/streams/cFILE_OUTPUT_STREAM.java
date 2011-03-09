@@ -29,8 +29,6 @@
 
 package aloyslisp.core.streams;
 
-import static aloyslisp.internal.engine.L.*;
-
 import java.io.*;
 
 import aloyslisp.core.tT;

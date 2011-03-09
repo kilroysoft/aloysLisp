@@ -24,18 +24,58 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 25 oct. 2010 Creation
+// IP 22 févr. 2011 Creation
 // --------------------------------------------------------------------------
 
-package aloyslisp.core.functions;
+package aloyslisp.internal.flowcontrol;
+
+import aloyslisp.core.*;
 
 /**
- * tSPECIAL_OPERATOR
+ * THROW_CONDITION
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public interface tSPECIAL_OPERATOR extends tFUNCTION
+public class THROW_CONDITION extends LispFlowControl
 {
+
+	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= -4189491198644557637L;
+
+	private tT					catchTag			= null;
+
+	private tT[]				catchValue			= new tT[]
+													{ cLISP.NIL };
+
+	/**
+	 * 
+	 */
+	public THROW_CONDITION(tT catchTag, tT[] catchValue)
+	{
+		super();
+		this.catchTag = catchTag;
+		this.catchValue = catchValue;
+	}
+
+	/**
+	 * @param tag
+	 * @return
+	 */
+	public Boolean TST_CATCH(tT tag)
+	{
+		return catchTag.EQL(tag);
+	}
+
+	/**
+	 * @return
+	 */
+	public tT[] CATCH_VALUE()
+	{
+		return catchValue;
+	}
+
 }

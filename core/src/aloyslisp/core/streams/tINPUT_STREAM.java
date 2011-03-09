@@ -53,7 +53,8 @@ public interface tINPUT_STREAM extends tSTREAM
 	 */
 	@Function(name = "read", doc = "f_rd_rd")
 	@BaseArg(name = "input-stream", pos = 0, type = Opt.class, def = "*standard-input*")
-	public tT READ(@Opt(name = "eof-error-p", def = "t") Boolean eofErrorP, //
+	public tT READ( //
+			@Opt(name = "eof-error-p", def = "t") Boolean eofErrorP, //
 			@Opt(name = "eof-value", def = "nil") tT eofValue, //
 			@Opt(name = "recursive-p", def = "nil") Boolean recursiveP)
 			throws END_OF_FILE;

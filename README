@@ -2,13 +2,13 @@
  
  A LISP interpreter, compiler and library.
  
- Copyright (C) 2010 kilroySoft [[aloyslisp@kilroysoft.ch]]
+ Copyright (C) 2011 kilroySoft [[aloyslisp@kilroysoft.ch]]
   
  Authors 
 	Ivan Pierre [[me@ivanpierre.ch]]
 	George Kilroy [[george@kilroysoft.ch]]
 	
-  IP 06/12/2010
+  IP 03/03/2011
 
 == PREAMBLE ==
 
@@ -18,11 +18,11 @@ work in libraries. As a beginning stage, I analysed a PROLOG interpreter in LISP
 I had found in some Unix server at Polytechnic School of Lausanne. But there was 
 no LISP interpreter available.
 
-The first one I tried was Acorn LISP on the BBC computer. Try is not the right word
-this one was very basic but efficient, so I disassemble the ROM and discover the 
-beautiful concept of a self-written language. Once the basic structure found, the 
-first program to create was a rom disassembler takig the LISP internal structure.
-For the beginning in BASIC, and afterward in LISP.
+The first one I tried was Acorn LISP on the BBC computer (int he old and dark cave age). 
+Try is not the right word this one was very basic but efficient, so I disassemble 
+the ROM and discover the beautiful concept of a self-written language. Once the basic 
+structure found, the first program to create was a rom disassembler taking the LISP 
+internal structure. For the beginning in BASIC, and afterward in LISP.
 
 Some time ago, I discoverd that LISP had had some improvements with COMMON-LISP, Scheme
 and other implementation. As I needed LISP for some musical analysis and text generation,
@@ -38,17 +38,18 @@ this project.
 
 == LINKS ==
 
-aloysLisp community : [[http://aloys.li/sp]]
-Javadoc page : [[http://kilroysoft.github.com/aloysLisp/doc]]
-GitHUB repository : [[http://github.com/kilroysoft/aloysLisp]]
-Documentation : [[http://github.com/kilroysoft/aloysLisp/wiki]]
+* aloysLisp community : [[http://aloys.li/sp]]
+* Javadoc page : [[http://kilroysoft.github.com/aloysLisp/doc]]
+* GitHUB repository : [[http://github.com/kilroysoft/aloysLisp]]
+* Documentation : [[http://github.com/kilroysoft/aloysLisp/wiki]]
 
 == MAIN IDEAS ==
 
 === Simpliest core as possible ===
 
 Only base LISP objects are defined with their base functions. Main goal is not efficiency
-but simplicity, readability and code independence. 
+but simplicity, readability and code independence. In intend of developpement process
+some places will be hard coded as first draft, this is to be removed as soon as possible.
 
 === Java and LISP programming ===
 
@@ -58,7 +59,8 @@ primitives that can be called by both Java (with java arguments) and LISP (with 
 interface).
 
 Evaluation process manages the conversion if needed. LISP interface is generated directly 
-from source code using annotation information.
+from Java source code using annotation information. Compilation of LISP code will produce
+Java code with the intended annotations.
 
 === Java compilation ===
 

@@ -29,6 +29,7 @@
 
 package aloyslisp.core.clos;
 
+import aloyslisp.annotations.Type;
 import aloyslisp.core.tT;
 
 /**
@@ -38,6 +39,7 @@ import aloyslisp.core.tT;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
+@Type(name = "standard-object", doc = "t_std_ob")
 public interface tSTANDARD_OBJECT extends tT
 {
 }

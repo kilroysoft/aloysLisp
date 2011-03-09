@@ -42,7 +42,7 @@ import aloyslisp.core.math.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public interface tHASH_TABLE extends tBUILD_IN_CLASS
+public interface tHASH_TABLE extends tBUILT_IN_CLASS
 {
 	/**
 	 * @return

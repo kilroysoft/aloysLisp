@@ -29,6 +29,8 @@
 
 package aloyslisp.core.conditions;
 
+import aloyslisp.annotations.*;
+
 /**
  * CONDITION
  * 
@@ -36,12 +38,14 @@ package aloyslisp.core.conditions;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
+@Type(name = "condition", doc = "e_cnd")
+@BuiltIn(name = "condition", doc = "e_cnd")
 public class CONDITION extends LispException
 {
 	private static final long	serialVersionUID	= 1L;
 
-	protected String message = "";
-	
+	protected String			message				= "";
+
 	/**
 	 * @param message
 	 */
@@ -49,8 +53,9 @@ public class CONDITION extends LispException
 	{
 		super("");
 	}
-	
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
 	 * @see java.lang.Throwable#getMessage()
 	 */
 	public String getMessage()

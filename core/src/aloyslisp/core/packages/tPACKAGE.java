@@ -31,7 +31,7 @@ package aloyslisp.core.packages;
 
 import aloyslisp.annotations.*;
 import aloyslisp.core.tT;
-import aloyslisp.core.clos.tBUILD_IN_CLASS;
+import aloyslisp.core.clos.tBUILT_IN_CLASS;
 
 /**
  * tPACKAGE
@@ -40,7 +40,7 @@ import aloyslisp.core.clos.tBUILD_IN_CLASS;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public interface tPACKAGE extends tBUILD_IN_CLASS, tPACKAGE_DESIGNATOR
+public interface tPACKAGE extends tBUILT_IN_CLASS, tPACKAGE_DESIGNATOR
 {
 	/**
 	 * @param pack

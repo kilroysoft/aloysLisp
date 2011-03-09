@@ -29,6 +29,9 @@
 
 package aloyslisp.core.conditions;
 
+import aloyslisp.annotations.BuiltIn;
+import aloyslisp.annotations.Type;
+
 /**
  * PROGRAM_ERROR
  * 
@@ -36,6 +39,8 @@ package aloyslisp.core.conditions;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
+@Type(name = "program-error", doc = "e_progra")
+@BuiltIn(name = "program-error", doc = "e_progra")
 public class PROGRAM_ERROR extends ERROR
 {
 	private static final long	serialVersionUID	= 1L;

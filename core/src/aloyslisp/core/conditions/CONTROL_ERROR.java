@@ -29,6 +29,9 @@
 
 package aloyslisp.core.conditions;
 
+import aloyslisp.annotations.BuiltIn;
+import aloyslisp.annotations.Type;
+
 /**
  * CONTROL_ERROR
  * 
@@ -36,6 +39,8 @@ package aloyslisp.core.conditions;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
+@Type(name = "control-error", doc = "e_contro")
+@BuiltIn(name = "control-error", doc = "e_contro")
 public class CONTROL_ERROR extends ERROR
 {
 	private static final long	serialVersionUID	= 1L;

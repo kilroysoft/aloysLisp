@@ -46,8 +46,8 @@ public class cCOMPILED_FUNCTION extends cAPI_JAVA implements tCOMPILED_FUNCTION
 	 */
 	public cCOMPILED_FUNCTION(Method method)
 	{
-		// Java code, non special
-		super(method, false);
+		// Java code, special & macro defined in notations
+		super(method);
 	}
 
 }

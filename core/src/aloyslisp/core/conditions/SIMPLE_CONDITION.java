@@ -29,6 +29,8 @@
 
 package aloyslisp.core.conditions;
 
+import aloyslisp.annotations.BuiltIn;
+import aloyslisp.annotations.Type;
 import aloyslisp.core.*;
 import aloyslisp.core.sequences.*;
 
@@ -39,6 +41,8 @@ import aloyslisp.core.sequences.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
+@Type(name = "simple-condition", doc = "e_smp_cn")
+@BuiltIn(name = "simple-condition", doc = "e_smp_cn")
 public class SIMPLE_CONDITION extends CONDITION
 {
 	private static final long	serialVersionUID	= 1L;

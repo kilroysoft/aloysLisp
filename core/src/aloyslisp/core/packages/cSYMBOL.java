@@ -30,7 +30,6 @@
 
 package aloyslisp.core.packages;
 
-import static aloyslisp.internal.engine.L.*;
 import aloyslisp.annotations.*;
 import aloyslisp.core.*;
 import aloyslisp.core.conditions.*;
@@ -115,7 +114,7 @@ public class cSYMBOL extends cCELL implements tSYMBOL
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.Cell#image()
 	 */
-	public tSYMBOL copy()
+	public tSYMBOL COPY_CELL()
 	{
 		return this;
 	}
@@ -166,7 +165,7 @@ public class cSYMBOL extends cCELL implements tSYMBOL
 				pList = list(name, data);
 				return this;
 			}
-			tLIST nc = (tLIST) list(name, data).APPEND(pList.copy());
+			tLIST nc = (tLIST) list(name, data).APPEND(pList.COPY_CELL());
 			pList.SET_CAR(nc.CAR());
 			pList.SET_CDR(nc.CDR());
 			return (tSYMBOL) name;
@@ -247,7 +246,7 @@ public class cSYMBOL extends cCELL implements tSYMBOL
 		}
 
 		// in case of special we search in the environment *variables*
-		if (isSpecial())
+		if (SPECIALP())
 		{
 			cDYN_SYMBOL atom = getAll(this);
 
@@ -273,7 +272,7 @@ public class cSYMBOL extends cCELL implements tSYMBOL
 			return this;
 
 		// in case of special we search in the environment. Dynamic *variables*.
-		if (isSpecial())
+		if (SPECIALP())
 		{
 			// If we fall back here, normal set
 			cDYN_SYMBOL res = getAll(this);
@@ -308,7 +307,7 @@ public class cSYMBOL extends cCELL implements tSYMBOL
 			return this;
 
 		// in case of special we search in the environment. Dynamic *variables*.
-		if (isSpecial())
+		if (SPECIALP())
 		{
 			cDYN_SYMBOL res = getAll(this);
 			if (res != null && !res.SYMBOL_NAME().equals(this.SYMBOL_NAME()))
@@ -331,7 +330,7 @@ public class cSYMBOL extends cCELL implements tSYMBOL
 	public tSYMBOL unset()
 	{
 		// in case of special we search in the environment *variables*
-		if (isSpecial())
+		if (SPECIALP())
 		{
 			cDYN_SYMBOL res = getAll(this);
 			if (res != null && !res.SYMBOL_NAME().equals(this.SYMBOL_NAME()))
@@ -480,7 +479,9 @@ public class cSYMBOL extends cCELL implements tSYMBOL
 		if (pack == cPACKAGE.key)
 			return (":" + name);
 
-		return (current ? "" : pack + (reachable ? ":" : "::")) + name;
+		return (current ? "" : ((tPACKAGE) pack).PACKAGE_NAME()
+				+ (reachable ? ":" : "::"))
+				+ name;
 	}
 
 	/*
@@ -516,19 +517,6 @@ public class cSYMBOL extends cCELL implements tSYMBOL
 
 		this.special = special;
 		return this;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.types.tSYMBOL#isSpecial()
-	 */
-	public boolean isSpecial()
-	{
-		cDYN_SYMBOL atom = e.arg(this);
-		if (atom != null)
-			return atom.SPECIALP();
-
-		return special;
 	}
 
 	/*
@@ -586,8 +574,10 @@ public class cSYMBOL extends cCELL implements tSYMBOL
 	 */
 	public String DESCRIBE()
 	{
-		return toString() + " " + pack + " " + getValue() + " " + fGetValue()
-				+ " " + pList;
+		tT func = fGetValue();
+		return toString() + " " + pack + " " + getValue() + " "
+				+ ((func instanceof tFUNCTION) ? func.DESCRIBE() : func) + " "
+				+ pList;
 	}
 
 	/*
@@ -599,17 +589,6 @@ public class cSYMBOL extends cCELL implements tSYMBOL
 	{
 		// TODO different behaviours
 		return SYMBOL_FUNCTION();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.types.tSYMBOL#special_form_p()
-	 */
-	@Override
-	public boolean SPECIAL_OPERATOR_P()
-	{
-		// TODO Auto-generated method stub
-		return false;
 	}
 
 	/**
@@ -663,6 +642,59 @@ public class cSYMBOL extends cCELL implements tSYMBOL
 	public boolean KEYWORDP()
 	{
 		return SYMBOL_PACKAGE() == cPACKAGE.key;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.packages.tSYMBOL#SPECIAL_OPERATOR_P()
+	 */
+	@Override
+	public tT SPECIAL_OPERATOR_P()
+	{
+		if (!FBOUNDP())
+			return NIL;
+
+		if (SYMBOL_FUNCTION().API_SPECIAL())
+			return SYMBOL_FUNCTION();
+		else
+			return NIL;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.packages.tSYMBOL#MACRO_FUNCTION()
+	 */
+	@Override
+	public tT MACRO_FUNCTION()
+	{
+		if (!FBOUNDP())
+			return NIL;
+
+		if (SYMBOL_FUNCTION().API_MACRO())
+			return SYMBOL_FUNCTION();
+		else
+			return NIL;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.packages.tSYMBOL#SPECIALP()
+	 */
+	@Override
+	public Boolean SPECIALP()
+	{
+		return special;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.packages.tSYMBOL#SET_SPECIALP()
+	 */
+	@Override
+	public tSYMBOL SET_SPECIAL(Boolean special)
+	{
+		this.special = special;
+		return this;
 	}
 
 }

@@ -30,8 +30,8 @@
 package aloyslisp.internal.engine;
 
 import aloyslisp.core.*;
-import aloyslisp.core.packages.tSYMBOL;
-import static aloyslisp.internal.engine.L.*;
+import aloyslisp.core.packages.*;
+import aloyslisp.core.sequences.*;
 
 /**
  * cTHREAD
@@ -40,12 +40,12 @@ import static aloyslisp.internal.engine.L.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class cTHREAD
+public class cTHREAD extends cCELL implements tENV
 {
 	/**
 	 * cLEXICAL stack pointer
 	 */
-	public cENV	topEnv;
+	public tENV	topEnv;
 
 	/**
 	 * Return
@@ -92,6 +92,160 @@ public class cTHREAD
 			return null;
 
 		return res.SYMBOL_VALUE();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.internal.engine.tENV#ENV_PUSH()
+	 */
+	@Override
+	public tENV ENV_PUSH()
+	{
+		return topEnv.ENV_PUSH();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.internal.engine.tENV#ENV_PREVIOUS()
+	 */
+	@Override
+	public tT[] ENV_PREVIOUS()
+	{
+		return topEnv.ENV_PREVIOUS();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.internal.engine.tENV#ENV_PREVIOUS_LEXICAL()
+	 */
+	@Override
+	public tT[] ENV_PREVIOUS_LEXICAL()
+	{
+		return topEnv.ENV_PREVIOUS_LEXICAL();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.internal.engine.tENV#ENV_POP()
+	 */
+	@Override
+	public tENV ENV_POP()
+	{
+		return topEnv.ENV_POP();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * aloyslisp.internal.engine.tENV#ENV_LET_GET(aloyslisp.core.packages.tSYMBOL
+	 * )
+	 */
+	@Override
+	public tT[] ENV_LET_GET(tSYMBOL var)
+	{
+		return topEnv.ENV_LET_GET(var);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * aloyslisp.internal.engine.tENV#SET_ENV_LET_GET(aloyslisp.core.packages
+	 * .tSYMBOL, aloyslisp.core.tT)
+	 */
+	@Override
+	public tT[] SET_ENV_LET_GET(tSYMBOL var, tT value)
+	{
+		return topEnv.SET_ENV_LET_GET(var, value);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * aloyslisp.internal.engine.tENV#ENV_LET_INTERN(aloyslisp.core.packages
+	 * .tSYMBOL, aloyslisp.core.tT)
+	 */
+	@Override
+	public tDYN_SYMBOL ENV_LET_INTERN(tSYMBOL var, tT val)
+	{
+		return topEnv.ENV_LET_INTERN(var, val);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * aloyslisp.internal.engine.tENV#ENV_TAG_GET(aloyslisp.core.packages.tSYMBOL
+	 * )
+	 */
+	@Override
+	public tT[] ENV_TAG_GET(tSYMBOL tag)
+	{
+		return topEnv.ENV_TAG_GET(tag);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * aloyslisp.internal.engine.tENV#SET_ENV_TAG_GET(aloyslisp.core.packages
+	 * .tSYMBOL, aloyslisp.core.packages.tSYMBOL)
+	 */
+	@Override
+	public tT[] SET_ENV_TAG_GET(tSYMBOL tag, tSYMBOL value)
+	{
+		return topEnv.SET_ENV_TAG_GET(tag, value);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.internal.engine.tENV#ENV_TAG_TST(aloyslisp.core.tT)
+	 */
+	@Override
+	public tLIST ENV_TAG_TST(tT tag)
+	{
+		return topEnv.ENV_TAG_TST(tag);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * aloyslisp.internal.engine.tENV#ENV_TAG_INTERN(aloyslisp.core.packages
+	 * .tSYMBOL, aloyslisp.core.packages.tSYMBOL)
+	 */
+	@Override
+	public tT[] ENV_TAG_INTERN(tSYMBOL tag, tSYMBOL value)
+	{
+		return topEnv.ENV_TAG_INTERN(tag, value);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.internal.engine.tENV#ENV_STEP()
+	 */
+	@Override
+	public tT[] ENV_STEP()
+	{
+		return topEnv.ENV_STEP();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * aloyslisp.internal.engine.tENV#ENV_BLOCK_TST(aloyslisp.core.packages.
+	 * tSYMBOL)
+	 */
+	@Override
+	public cENV_BLOCK ENV_BLOCK_TST(tSYMBOL name)
+	{
+		return topEnv.ENV_BLOCK_TST(name);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.internal.engine.tENV#ENV_DUMP()
+	 */
+	@Override
+	public tLIST ENV_DUMP()
+	{
+		return topEnv.ENV_DUMP();
 	}
 
 }

@@ -34,7 +34,6 @@ import aloyslisp.core.*;
 import aloyslisp.core.conditions.LispException;
 import aloyslisp.core.sequences.cSTRING;
 import aloyslisp.core.sequences.tSTRING_DESIGNATOR;
-import aloyslisp.internal.engine.L;
 
 /**
  * cPATHNAME
@@ -89,7 +88,7 @@ public class cPATHNAME extends cCELL implements tPATHNAME
 	@Override
 	public int hashCode()
 	{
-		return L.str(file).hashCode();
+		return str(file).hashCode();
 	}
 
 }

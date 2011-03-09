@@ -30,7 +30,6 @@
 package aloyslisp.internal.engine;
 
 import aloyslisp.core.*;
-import static aloyslisp.internal.engine.L.*;
 import aloyslisp.core.conditions.*;
 import aloyslisp.core.packages.*;
 import aloyslisp.core.sequences.*;
@@ -45,14 +44,9 @@ import aloyslisp.core.sequences.*;
 public class cENV extends cCELL implements tENV
 {
 	/**
-	 * Environment stack
-	 */
-	protected static tENV	top			= null;
-
-	/**
 	 * previous environment in the stack
 	 */
-	protected tENV			previous	= null;
+	tENV	previous	= null;
 
 	/**
 	 * Base constructor
@@ -61,8 +55,21 @@ public class cENV extends cCELL implements tENV
 	 */
 	public cENV()
 	{
-		this.previous = top;
-		top = this;
+	}
+
+	public tENV ENV_PUSH()
+	{
+		if (this == e.topEnv)
+		{
+			throw new LispException("Try to repush " + this);
+		}
+		previous = e.topEnv;
+		e.topEnv = this;
+
+		// System.out.println("Push " + this + " previous = " + previous);
+
+		// we return saved old stack state
+		return this;
 	}
 
 	/*
@@ -95,9 +102,12 @@ public class cENV extends cCELL implements tENV
 	 * @see aloyslisp.internal.engine.tENV#ENV_STOP()
 	 */
 	@Override
-	public tENV ENV_STOP()
+	public tENV ENV_POP()
 	{
-		top = previous;
+		// System.out.println("Pop " + this + " previous = " + previous);
+
+		e.topEnv = previous;
+		previous = null;
 		return this;
 	}
 
@@ -138,17 +148,17 @@ public class cENV extends cCELL implements tENV
 	/*
 	 * (non-Javadoc)
 	 * @see
-	 * aloyslisp.internal.engine.tENV#ENV_LET_INTERN(aloyslisp.core.packages
-	 * .tSYMBOL, aloyslisp.core.packages.tSYMBOL)
+	 * aloyslisp.internal.engine.tENV#ENV_LET_INTERN_VAL(aloyslisp.core.packages
+	 * .tSYMBOL, aloyslisp.core.tT)
 	 */
 	@Override
-	public tDYN_SYMBOL ENV_LET_INTERN(tSYMBOL var)
+	public tDYN_SYMBOL ENV_LET_INTERN(tSYMBOL var, tT val)
 	{
 		tT[] prev = ENV_PREVIOUS_LEXICAL();
 		if (prev[1] == NIL)
 			throw new LispException("");
 
-		return ((cENV) prev[0]).ENV_LET_INTERN(var);
+		return ((cENV) prev[0]).ENV_LET_INTERN(var, val);
 	}
 
 	/*
@@ -307,6 +317,19 @@ public class cENV extends cCELL implements tENV
 
 		res = ((cENV) prev[0]).ENV_TAG_INTERN(tag, value);
 		return res;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.internal.engine.tENV#ENV_DUMP()
+	 */
+	@Override
+	public tLIST ENV_DUMP()
+	{
+		System.out.println(DESCRIBE());
+		if (previous == null)
+			return list(this);
+		return (tLIST) list(this).APPEND(previous.ENV_DUMP());
 	}
 
 }

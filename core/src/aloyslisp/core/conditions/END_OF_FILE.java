@@ -29,6 +29,8 @@
 
 package aloyslisp.core.conditions;
 
+import aloyslisp.annotations.BuiltIn;
+import aloyslisp.annotations.Type;
 import aloyslisp.core.streams.tSTREAM;
 
 /**
@@ -38,6 +40,8 @@ import aloyslisp.core.streams.tSTREAM;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
+@Type(name = "end-of-file", doc = "e_end_of")
+@BuiltIn(name = "end-of-file", doc = "e_end_of")
 public class END_OF_FILE extends STREAM_ERROR
 {
 	private static final long	serialVersionUID	= 1L;

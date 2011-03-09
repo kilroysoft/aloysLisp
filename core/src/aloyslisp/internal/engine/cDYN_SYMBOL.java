@@ -32,7 +32,6 @@
 
 package aloyslisp.internal.engine;
 
-import static aloyslisp.internal.engine.L.*;
 import aloyslisp.core.*;
 import aloyslisp.core.conditions.*;
 import aloyslisp.core.packages.*;
@@ -157,7 +156,7 @@ public class cDYN_SYMBOL extends cCELL implements tDYN_SYMBOL
 	 */
 	public tSYMBOL setOrig(tSYMBOL newOrig)
 	{
-		if (!newOrig.KEYWORDP())
+		if (newOrig.KEYWORDP())
 			throw new LispException("Keyword cannot be arguments : " + this);
 
 		return orig = newOrig;
@@ -182,9 +181,23 @@ public class cDYN_SYMBOL extends cCELL implements tDYN_SYMBOL
 		return orig.hashCode();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.cCELL#toString()
+	 */
 	public String toString()
 	{
-		return "#<DYN_SYMB " + orig + " " + value + ">";
+		return orig.toString();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.cCELL#DESCRIBE()
+	 */
+	public String DESCRIBE()
+	{
+		return "#<DYN_SYMB " + orig.toString() + " " + value + ""
+				+ (special ? T : NIL) + " " + value + ">";
 	}
 
 }

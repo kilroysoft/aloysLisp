@@ -34,7 +34,6 @@ import java.util.*;
 
 import aloyslisp.annotations.*;
 import aloyslisp.core.*;
-import static aloyslisp.internal.engine.L.*;
 import aloyslisp.core.functions.*;
 import aloyslisp.core.math.*;
 
@@ -67,6 +66,11 @@ public class cHASH_TABLE extends cCELL implements tHASH_TABLE
 		this.test = test;
 		this.size = size;
 		thresHold = load;
+	}
+
+	public String toString()
+	{
+		return "#<HASH-TABLE " + list(table.keySet().toArray()) + " >";
 	}
 
 	/**
@@ -197,7 +201,7 @@ public class cHASH_TABLE extends cCELL implements tHASH_TABLE
 
 		for (tT elem : set)
 		{
-			func.e(elem, GETHASH(elem, NIL));
+			func.e(elem, GETHASH(elem, null));
 		}
 		return null;
 	}

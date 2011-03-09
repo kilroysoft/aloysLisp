@@ -29,7 +29,7 @@
 
 package aloyslisp.core.clos;
 
-import aloyslisp.core.tT;
+import aloyslisp.annotations.Type;
 
 /**
  * tCLASS
@@ -38,7 +38,8 @@ import aloyslisp.core.tT;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public interface tCLASS extends tT
+@Type(name = "class", doc = "t_class")
+public interface tCLASS extends tSTANDARD_OBJECT
 {
 
 }

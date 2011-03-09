@@ -29,6 +29,8 @@
 
 package aloyslisp.core.conditions;
 
+import aloyslisp.annotations.BuiltIn;
+import aloyslisp.annotations.Type;
 import aloyslisp.core.streams.tPATHNAME_DESIGNATOR;
 
 /**
@@ -38,6 +40,8 @@ import aloyslisp.core.streams.tPATHNAME_DESIGNATOR;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
+@Type(name = "parse-error", doc = "e_parse_")
+@BuiltIn(name = "parse-error", doc = "e_parse_")
 public class PARSE_ERROR extends ERROR
 {
 	private static final long		serialVersionUID	= 1L;

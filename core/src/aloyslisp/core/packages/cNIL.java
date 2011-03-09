@@ -32,8 +32,7 @@ package aloyslisp.core.packages;
 
 import java.util.Iterator;
 
-import static aloyslisp.internal.engine.L.*;
-import aloyslisp.core.tT;
+import aloyslisp.core.*;
 import aloyslisp.core.conditions.*;
 import aloyslisp.core.functions.*;
 import aloyslisp.core.sequences.*;
@@ -263,7 +262,7 @@ public class cNIL extends cSYMBOL implements tNULL
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.atoms.SYMBOL#copy()
 	 */
-	public cSYMBOL copy()
+	public cSYMBOL COPY_CELL()
 	{
 		return NIL;
 	}
@@ -280,67 +279,11 @@ public class cNIL extends cSYMBOL implements tNULL
 		return this;
 	}
 
-	// defined elsewhere (cNIL is just a gost of a cCONS or cSYMBOL)
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.atoms.SYMBOL#UNINTERN()
+	 * @see aloyslisp.core.packages.cSYMBOL#SPECIAL_OPERATOR_P()
 	 */
-	public tSYMBOL UNINTERN()
-	{
-		return this;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.atoms.SYMBOL#setExported(boolean)
-	 */
-	public tSYMBOL setExported(boolean exported)
-	{
-		return this;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.atoms.SYMBOL#isExported()
-	 */
-	public boolean isExported()
-	{
-		return true;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.atoms.SYMBOL#setSpecial(boolean)
-	 */
-	public tSYMBOL setSpecial(boolean special)
-	{
-		return this;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.atoms.SYMBOL#isSpecial()
-	 */
-	public boolean isSpecial()
-	{
-		return false;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see
-	 * aloyslisp.core.atoms.SYMBOL#setDeclare(aloyslisp.core.types.tLIST)
-	 */
-	public tSYMBOL setDeclare(tLIST declare)
-	{
-		return this;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.atoms.SYMBOL#getDeclare()
-	 */
-	public tLIST getDeclare()
+	public tT SPECIAL_OPERATOR_P()
 	{
 		return NIL;
 	}

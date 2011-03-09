@@ -31,7 +31,6 @@ package aloyslisp.core.functions;
 
 import aloyslisp.annotations.*;
 import aloyslisp.core.*;
-import aloyslisp.core.clos.*;
 import aloyslisp.core.sequences.*;
 import aloyslisp.internal.engine.*;
 
@@ -44,4 +43,16 @@ import aloyslisp.internal.engine.*;
  */
 public interface tFUNCTION extends tAPI
 {
+	/**
+	 * Execute function with arguments as a list
+	 * 
+	 * @param args
+	 *            List of arguments
+	 * @return Evaluated results in ana array for eventual multiple values
+	 */
+	@Function(name = "funcall")
+	public tT[] FUNCALL( //
+			@Rest(name = "args") tLIST args //
+	);
+
 }

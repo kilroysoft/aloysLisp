@@ -29,6 +29,9 @@
 
 package aloyslisp.core.conditions;
 
+import aloyslisp.annotations.BuiltIn;
+import aloyslisp.annotations.Type;
+
 /**
  * WARNING
  * 
@@ -36,6 +39,8 @@ package aloyslisp.core.conditions;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
+@Type(name = "warning", doc = "e_warnin")
+@BuiltIn(name = "warning", doc = "e_warnin")
 public class WARNING extends CONDITION
 {
 	private static final long	serialVersionUID	= 1L;

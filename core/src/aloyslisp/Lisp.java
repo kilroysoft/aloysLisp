@@ -29,8 +29,9 @@
 
 package aloyslisp;
 
-import static aloyslisp.internal.engine.L.*;
-import aloyslisp.internal.engine.cTHREAD;
+import aloyslisp.core.*;
+import aloyslisp.core.packages.*;
+import aloyslisp.internal.engine.*;
 
 /**
  * Lisp
@@ -39,7 +40,7 @@ import aloyslisp.internal.engine.cTHREAD;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class Lisp
+public class Lisp extends cCELL
 {
 
 	/**
@@ -57,6 +58,7 @@ public class Lisp
 		// Load the rest
 		// TODO Should be systematized probably :
 		// loadClasses("aloyslisp.core");
+		// loadClasses("aloyslisp.internal");
 		// loadClasses("aloyslisp.packages");
 		loadClasses("aloyslisp.annotations");
 		loadClasses("aloyslisp.core");
@@ -72,7 +74,12 @@ public class Lisp
 		loadClasses("aloyslisp.packages.system");
 
 		// Load first lisp file (REPL definition)
+		sym("lisp::print").e(str("aloysLisp v.V305"));
+
+		// Load first lisp file (REPL definition)
 		sym("lisp::load").e(str("class.lisp"));
+
+		cPACKAGE.cl.dump();
 
 		// loop recovering errors
 		for (;;)
@@ -87,6 +94,7 @@ public class Lisp
 
 				e = new cTHREAD();
 			}
+			break;
 		}
 	}
 
@@ -96,7 +104,7 @@ public class Lisp
 	public static void debug(Exception ex)
 	{
 		System.err.println(ex.getLocalizedMessage());
-		System.err.println("*trace* = " + sym("*trace*").SYMBOL_VALUE());
+		// System.err.println("*trace* = " + sym("*trace*").SYMBOL_VALUE());
 		if (sym("*trace*").SYMBOL_VALUE() != NIL)
 		{
 			ex.printStackTrace();

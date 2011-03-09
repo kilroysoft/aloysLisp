@@ -29,6 +29,8 @@
 
 package aloyslisp.core.conditions;
 
+import aloyslisp.annotations.BuiltIn;
+import aloyslisp.annotations.Type;
 import aloyslisp.core.streams.tSTREAM;
 
 /**
@@ -38,6 +40,8 @@ import aloyslisp.core.streams.tSTREAM;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
+@Type(name = "stream-error", doc = "e_stm_er")
+@BuiltIn(name = "stream-error", doc = "e_stm_er")
 public class STREAM_ERROR extends ERROR
 {
 	private static final long	serialVersionUID	= 1L;

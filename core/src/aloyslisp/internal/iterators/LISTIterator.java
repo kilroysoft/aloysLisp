@@ -29,7 +29,6 @@
 
 package aloyslisp.internal.iterators;
 
-import static aloyslisp.internal.engine.L.*;
 import aloyslisp.core.*;
 import aloyslisp.core.conditions.*;
 import aloyslisp.core.sequences.*;
@@ -101,10 +100,10 @@ public class LISTIterator extends SEQUENCEIterator
 	@Override
 	public boolean hasNext()
 	{
-		if (current == null && list != null)
+		if (current == null && list != NIL)
 			return true;
 
-		if (current == NIL)
+		if (list == NIL)
 			return false;
 
 		tT next = current.CDR();
@@ -339,7 +338,7 @@ public class LISTIterator extends SEQUENCEIterator
 	@Override
 	protected void copy()
 	{
-		list = (tLIST) list.copy();
+		list = (tLIST) list.COPY_CELL();
 		rewind();
 	}
 
@@ -353,7 +352,7 @@ public class LISTIterator extends SEQUENCEIterator
 	{
 		tT res = null;
 		toEnd();
-		if (current == NIL)
+		if (current == NIL || current == null)
 		{
 			res = list = list(obj);
 		}
@@ -364,5 +363,4 @@ public class LISTIterator extends SEQUENCEIterator
 
 		return res;
 	}
-
 }

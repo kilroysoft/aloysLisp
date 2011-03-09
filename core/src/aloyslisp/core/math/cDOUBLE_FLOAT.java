@@ -29,8 +29,7 @@
 
 package aloyslisp.core.math;
 
-import aloyslisp.core.tT;
-import aloyslisp.internal.engine.L;
+import aloyslisp.core.*;
 
 /**
  * cDOUBLE_FLOAT
@@ -51,14 +50,15 @@ public class cDOUBLE_FLOAT extends cFLOAT implements tDOUBLE_FLOAT
 		value = init;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see aloyslisp.core.cCELL#toString()
 	 */
 	public String toString()
 	{
 		return value.toString();
 	}
-	
+
 	/*
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.math.tNUMBER#ratioValue()
@@ -327,7 +327,7 @@ public class cDOUBLE_FLOAT extends cFLOAT implements tDOUBLE_FLOAT
 
 	public int hashCode()
 	{
-		return L.str(toString()).hashCode();
+		return str(toString()).hashCode();
 	}
 
 }

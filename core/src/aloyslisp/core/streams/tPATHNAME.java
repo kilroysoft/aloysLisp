@@ -38,7 +38,7 @@ import aloyslisp.core.clos.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public interface tPATHNAME extends tBUILD_IN_CLASS, tPATHNAME_DESIGNATOR
+public interface tPATHNAME extends tBUILT_IN_CLASS, tPATHNAME_DESIGNATOR
 {
 
 }

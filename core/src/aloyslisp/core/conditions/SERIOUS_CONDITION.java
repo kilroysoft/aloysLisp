@@ -29,6 +29,9 @@
 
 package aloyslisp.core.conditions;
 
+import aloyslisp.annotations.BuiltIn;
+import aloyslisp.annotations.Type;
+
 /**
  * SERIOUS_CONDITION
  * 
@@ -36,6 +39,8 @@ package aloyslisp.core.conditions;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
+@Type(name = "serious-condition", doc = "e_seriou")
+@BuiltIn(name = "serious-condition", doc = "e_seriou")
 public class SERIOUS_CONDITION extends CONDITION
 {
 	private static final long	serialVersionUID	= 1L;

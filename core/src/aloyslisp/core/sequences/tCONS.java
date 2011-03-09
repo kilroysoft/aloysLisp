@@ -29,7 +29,7 @@
 
 package aloyslisp.core.sequences;
 
-import aloyslisp.core.clos.tBUILD_IN_CLASS;
+import aloyslisp.core.clos.tBUILT_IN_CLASS;
 
 /**
  * tCONS
@@ -38,6 +38,6 @@ import aloyslisp.core.clos.tBUILD_IN_CLASS;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public interface tCONS extends tLIST, tBUILD_IN_CLASS
+public interface tCONS extends tLIST, tBUILT_IN_CLASS
 {
 }

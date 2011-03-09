@@ -42,8 +42,16 @@ import aloyslisp.core.sequences.tLIST;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public interface tENV extends tBUILD_IN_CLASS
+public interface tENV extends tBUILT_IN_CLASS
 {
+	/**
+	 * Push environment
+	 * 
+	 * @return
+	 */
+	@Function(name = "sys::env-push")
+	public tENV ENV_PUSH();
+
 	/**
 	 * get previous environment in the stack
 	 * 
@@ -65,8 +73,8 @@ public interface tENV extends tBUILD_IN_CLASS
 	 * 
 	 * @return
 	 */
-	@Function(name = "sys::env-stop")
-	public tENV ENV_STOP();
+	@Function(name = "sys::env-pop")
+	public tENV ENV_POP();
 
 	/**
 	 * @param var
@@ -93,7 +101,8 @@ public interface tENV extends tBUILD_IN_CLASS
 	 */
 	@Function(name = "sys::env-let-intern")
 	public tDYN_SYMBOL ENV_LET_INTERN( //
-			@Arg(name = "var") tSYMBOL var //
+			@Arg(name = "var") tSYMBOL var, //
+			@Arg(name = "value") tT val //
 	);
 
 	/**
@@ -149,4 +158,9 @@ public interface tENV extends tBUILD_IN_CLASS
 	public cENV_BLOCK ENV_BLOCK_TST( //
 			@Arg(name = "name") tSYMBOL name);
 
+	/**
+	 * @return
+	 */
+	@Function(name = "sys::env-dump")
+	public tLIST ENV_DUMP();
 }

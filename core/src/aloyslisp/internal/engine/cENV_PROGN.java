@@ -30,7 +30,6 @@
 package aloyslisp.internal.engine;
 
 import aloyslisp.core.*;
-import static aloyslisp.internal.engine.L.*;
 import aloyslisp.core.conditions.*;
 import aloyslisp.core.sequences.*;
 

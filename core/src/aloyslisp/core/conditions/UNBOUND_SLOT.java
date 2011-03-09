@@ -29,6 +29,8 @@
 
 package aloyslisp.core.conditions;
 
+import aloyslisp.annotations.BuiltIn;
+import aloyslisp.annotations.Type;
 import aloyslisp.core.tT;
 
 /**
@@ -38,6 +40,8 @@ import aloyslisp.core.tT;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
+@Type(name = "unbound-slot", doc = "e_unboun")
+@BuiltIn(name = "unbound-slot", doc = "e_unboun")
 public class UNBOUND_SLOT extends CELL_ERROR
 {
 	private static final long	serialVersionUID	= 1L;

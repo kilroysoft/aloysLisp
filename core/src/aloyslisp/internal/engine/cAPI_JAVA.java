@@ -30,7 +30,6 @@
 package aloyslisp.internal.engine;
 
 import static aloyslisp.core.streams.cSTRING_INPUT_STREAM.*;
-import static aloyslisp.internal.engine.L.*;
 
 import java.lang.annotation.*;
 import java.lang.reflect.*;
@@ -60,15 +59,56 @@ public class cAPI_JAVA extends cAPI
 	 * @param doc
 	 * @param decl
 	 */
-	public cAPI_JAVA(Method method, Boolean special)
+	public cAPI_JAVA(Method method)
 	{
-		super(special);
+		super();
+		Function func = method.getAnnotation(Function.class);
+		Static stat = method.getAnnotation(Static.class);
+		if (func != null)
+		{
+			name = sym(func.name());
+		}
+		if (stat != null)
+		{
+			name = sym(stat.name());
+		}
+
+		this.special = method.getAnnotation(SpecialOp.class) != null;
+		this.macro = method.getAnnotation(Macro.class) != null;
 		this.method = method;
-		SET_API_ARGS(NIL);
+		vars = SET_API_ARGS(NIL);
+		if (func != null)
+			vars = API_SET_OBJ(vars, method.getAnnotation(BaseArg.class));
 		SET_API_DOC(NIL);
 		SET_API_DECL(NIL);
 		environment = e.topEnv;
+		// System.out.println("cAPI_JAVA = " + DESCRIBE());
+	}
 
+	public static final tSYMBOL	ELEM	= sym("elem");
+
+	/**
+	 * @param vars
+	 * @param annotation
+	 * @return
+	 */
+	private tLIST API_SET_OBJ(tLIST vars, BaseArg base)
+	{
+		LISTIterator iter = new LISTIterator(vars);
+		if (base == null)
+		{
+			iter.add(new cARG(ELEM, NIL, true));
+			basePos = 0;
+			return (tLIST) iter.getFinal();
+		}
+
+		basePos = base.pos();
+		iter.go(basePos - 1);
+		iter.add(new cARG(sym(base.name()), lisp(base.def()), true));
+
+		tLIST res = (tLIST) iter.getFinal();
+		// System.out.println("API_SET_OBJ : " + res);
+		return (tLIST) res;
 	}
 
 	/**
@@ -76,8 +116,7 @@ public class cAPI_JAVA extends cAPI
 	 */
 	public tLIST SET_API_ARGS(tLIST unused)
 	{
-		tLIST res = NIL;
-		LISTIterator vars = new LISTIterator(res);
+		LISTIterator vars = new LISTIterator(NIL);
 		for (Annotation[] an : method.getParameterAnnotations())
 		{
 			int state = 0;
@@ -85,12 +124,13 @@ public class cAPI_JAVA extends cAPI
 			{
 				if (a instanceof Arg && state < 1)
 				{
-					vars.append(new cARG(sym(((Arg) a).name()), NIL));
+					vars.append(new cARG(sym(((Arg) a).name()), NIL, true));
 					state = 1;
 				}
 				else if (a instanceof Opt && state < 2)
 				{
-					vars.append(new cARG(((Opt) a).name(), ((Opt) a).def()));
+					vars.append(new cARG(sym(((Opt) a).name()), lisp(((Opt) a)
+							.def()), true));
 					state = 2;
 				}
 				else if (a instanceof Rest && state < 3 && rest == null)
@@ -106,7 +146,9 @@ public class cAPI_JAVA extends cAPI
 			}
 		}
 
-		return res;
+		tT res = vars.getFinal();
+		// System.out.println("SET_API_ARGS (java): " + res);
+		return (tLIST) res;
 	}
 
 	/*
@@ -131,6 +173,8 @@ public class cAPI_JAVA extends cAPI
 
 		try
 		{
+			// System.out
+			// .println("API_CALL " + object + args + tranformArgs(args));
 			Object is = method.invoke(object, tranformArgs(args));
 			if (is instanceof Object[])
 				res = normalizeArray((Object[]) is);
@@ -150,10 +194,17 @@ public class cAPI_JAVA extends cAPI
 		}
 		catch (InvocationTargetException e)
 		{
+			throw (RuntimeException) e.getTargetException();
+		}
+		catch (RuntimeException e)
+		{
+			throw (RuntimeException) e;
+		}
+		catch (Exception e)
+		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 		return res;
 	}
 
@@ -166,7 +217,7 @@ public class cAPI_JAVA extends cAPI
 	@Override
 	public tLIST API_OBJECT(tLIST args)
 	{
-		int pos = -1;
+		int pos = 0;
 		Function func = method.getAnnotation(Function.class);
 		if (func == null)
 			return args;
@@ -175,11 +226,10 @@ public class cAPI_JAVA extends cAPI
 		if (position != null)
 			pos = position.pos();
 
-		if (pos <= 0)
+		if (pos < 0)
 			return args;
 
 		LISTIterator iter = new LISTIterator(args);
-		iter.go(pos);
 		tT obj = iter.go(pos);
 		iter.remove();
 
@@ -476,6 +526,13 @@ public class cAPI_JAVA extends cAPI
 			return NIL;
 
 		return MAKE_STRING_INPUT_STREAM(def, NIL, NIL).READ(false, NIL, false);
+	}
+
+	public String DESCRIBE()
+	{
+		return "#<API-JAVA " + method.getName() + " " + API_ARGS() + " "
+				+ basePos + " #<SPECIAL " + (special ? T : NIL) + "> #<MACRO "
+				+ (macro ? T : NIL) + "> " + environment + ">";
 	}
 
 }

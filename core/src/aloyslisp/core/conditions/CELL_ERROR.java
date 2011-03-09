@@ -29,6 +29,8 @@
 
 package aloyslisp.core.conditions;
 
+import aloyslisp.annotations.BuiltIn;
+import aloyslisp.annotations.Type;
 import aloyslisp.core.tT;
 
 /**
@@ -38,6 +40,8 @@ import aloyslisp.core.tT;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
+@Type(name = "cell-error", doc = "e_cell_e")
+@BuiltIn(name = "cell-error", doc = "e_cell_e")
 public class CELL_ERROR extends ERROR
 {
 	private static final long	serialVersionUID	= 1L;

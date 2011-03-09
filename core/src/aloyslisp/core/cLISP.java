@@ -27,20 +27,20 @@
 // IP 16 sept. 2010 Creation
 // --------------------------------------------------------------------------
 
-package aloyslisp.internal.engine;
+package aloyslisp.core;
 
 import java.io.*;
 import java.net.*;
 import java.util.*;
 import java.util.jar.*;
 
-import aloyslisp.core.*;
 import aloyslisp.annotations.*;
 import aloyslisp.core.conditions.*;
 import aloyslisp.core.math.*;
 import aloyslisp.core.packages.*;
 import aloyslisp.core.sequences.*;
 import aloyslisp.core.streams.*;
+import aloyslisp.internal.engine.*;
 
 /**
  * Base environment en global functions of Common Lisp
@@ -49,7 +49,7 @@ import aloyslisp.core.streams.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class L
+public class cLISP
 {
 	/**
 	 * Execution context for Closures
@@ -86,7 +86,6 @@ public class L
 	{
 		// Nil is directly put in package
 		((cPACKAGE) currPackage()).external.put("nil", NIL);
-		NIL.setExported(true);
 	}
 
 	/**
@@ -129,47 +128,47 @@ public class L
 	 */
 	public static tSYMBOL			standardInput			= sym(
 																	"*standard-input*")
-																	.setSpecial(
+																	.SET_SPECIAL(
 																			true)
 																	.SET_SYMBOL_VALUE(
 																			in);
 
 	public static tSYMBOL			standardOutput			= sym(
 																	"*standard-output*")
-																	.setSpecial(
+																	.SET_SPECIAL(
 																			true)
 																	.SET_SYMBOL_VALUE(
 																			out);
 
 	public static tSYMBOL			errorOutput				= sym(
 																	"*error-output*")
-																	.setSpecial(
+																	.SET_SPECIAL(
 																			true)
 																	.SET_SYMBOL_VALUE(
 																			err);
 
 	public static tSYMBOL			traceOutput				= sym(
 																	"*trace-output*")
-																	.setSpecial(
+																	.SET_SPECIAL(
 																			true)
 																	.SET_SYMBOL_VALUE(
 																			out);
 
 	public static tSYMBOL			queryIO					= sym("*query-io*")
-																	.setSpecial(
+																	.SET_SPECIAL(
 																			true)
 																	.SET_SYMBOL_VALUE(
 																			query);
 
 	public static tSYMBOL			debugIO					= sym("*debug-io*")
-																	.setSpecial(
+																	.SET_SPECIAL(
 																			true)
 																	.SET_SYMBOL_VALUE(
 																			query);
 
 	public static tSYMBOL			terminalIO				= sym(
 																	"*terminal-io*")
-																	.setSpecial(
+																	.SET_SPECIAL(
 																			true)
 																	.SET_SYMBOL_VALUE(
 																			terminal);
@@ -179,137 +178,137 @@ public class L
 	 */
 	public static tSYMBOL			printEscape				= sym(
 																	"*print-escape*")
-																	.setSpecial(
+																	.SET_SPECIAL(
 																			true)
 																	.SET_SYMBOL_VALUE(
 																			T);
 
 	public static tSYMBOL			printRadix				= sym(
 																	"*print-radix*")
-																	.setSpecial(
+																	.SET_SPECIAL(
 																			true)
 																	.SET_SYMBOL_VALUE(
 																			NIL);
 
 	public static tSYMBOL			printBase				= sym(
 																	"*print-base*")
-																	.setSpecial(
+																	.SET_SPECIAL(
 																			true)
 																	.SET_SYMBOL_VALUE(
 																			nInt(10));
 
 	public static tSYMBOL			printCircle				= sym(
 																	"*print-circle*")
-																	.setSpecial(
+																	.SET_SPECIAL(
 																			true)
 																	.SET_SYMBOL_VALUE(
 																			NIL);
 
 	public static tSYMBOL			printPretty				= sym(
 																	"*print-pretty*")
-																	.setSpecial(
+																	.SET_SPECIAL(
 																			true)
 																	.SET_SYMBOL_VALUE(
 																			NIL);
 
 	public static tSYMBOL			printLevel				= sym(
 																	"*print-level*")
-																	.setSpecial(
+																	.SET_SPECIAL(
 																			true)
 																	.SET_SYMBOL_VALUE(
 																			NIL);
 
 	public static tSYMBOL			printLength				= sym(
 																	"*print-Length*")
-																	.setSpecial(
+																	.SET_SPECIAL(
 																			true)
 																	.SET_SYMBOL_VALUE(
 																			NIL);
 
 	public static tSYMBOL			printCase				= sym(
 																	"*print-case*")
-																	.setSpecial(
+																	.SET_SPECIAL(
 																			true)
 																	.SET_SYMBOL_VALUE(
 																			key("upcase"));
 
 	public static tSYMBOL			printArray				= sym(
 																	"*print-array*")
-																	.setSpecial(
+																	.SET_SPECIAL(
 																			true)
 																	.SET_SYMBOL_VALUE(
 																			T);
 
 	public static tSYMBOL			printGensym				= sym(
 																	"*print-gensym*")
-																	.setSpecial(
+																	.SET_SPECIAL(
 																			true)
 																	.SET_SYMBOL_VALUE(
 																			T);
 
 	public static tSYMBOL			printReadably			= sym(
 																	"*print-readably*")
-																	.setSpecial(
+																	.SET_SPECIAL(
 																			true)
 																	.SET_SYMBOL_VALUE(
 																			T);
 
 	public static tSYMBOL			printRightMargin		= sym(
 																	"*print-right-margin*")
-																	.setSpecial(
+																	.SET_SPECIAL(
 																			true)
 																	.SET_SYMBOL_VALUE(
 																			NIL);
 
 	public static tSYMBOL			printMiserWidth			= sym(
 																	"*print-misere-width*")
-																	.setSpecial(
+																	.SET_SPECIAL(
 																			true)
 																	.SET_SYMBOL_VALUE(
 																			NIL);
 
 	public static tSYMBOL			printLines				= sym(
 																	"*print-lines*")
-																	.setSpecial(
+																	.SET_SPECIAL(
 																			true)
 																	.SET_SYMBOL_VALUE(
 																			NIL);
 
 	public static tSYMBOL			printPprintDispatch		= sym(
 																	"*print-pprint-dispatch*")
-																	.setSpecial(
+																	.SET_SPECIAL(
 																			true)
 																	.SET_SYMBOL_VALUE(
 																			NIL);
 
 	public static tSYMBOL			readBase				= sym("*read-base*")
-																	.setSpecial(
+																	.SET_SPECIAL(
 																			true)
 																	.SET_SYMBOL_VALUE(
 																			nInt(10));
 
 	public static tSYMBOL			readDefaultFloatFormat	= sym(
 																	"*read-default-float-format*")
-																	.setSpecial(
+																	.SET_SPECIAL(
 																			true)
 																	.SET_SYMBOL_VALUE(
 																			sym("single-float"));
 
 	public static tSYMBOL			readEval				= sym("*readEval*")
-																	.setSpecial(
+																	.SET_SPECIAL(
 																			true)
 																	.SET_SYMBOL_VALUE(
 																			T);
 
 	public static tSYMBOL			readSuppress			= sym(
 																	"*read-suppress*")
-																	.setSpecial(
+																	.SET_SPECIAL(
 																			true)
 																	.SET_SYMBOL_VALUE(
 																			NIL);
 
 	public static tSYMBOL			readTable				= sym("*readtable*")
-																	.setSpecial(
+																	.SET_SPECIAL(
 																			true)
 																	.SET_SYMBOL_VALUE(
 																			new cREADTABLE());
@@ -319,7 +318,7 @@ public class L
 	}
 
 	public static tSYMBOL			lispTraceSuppress		= sym("*trace*")
-																	.setSpecial(
+																	.SET_SPECIAL(
 																			true)
 																	.SET_SYMBOL_VALUE(
 																			NIL);
@@ -527,6 +526,21 @@ public class L
 		return bool ? T : NIL;
 	}
 
+	/**
+	 * Read a string and transform it to a list object
+	 * 
+	 * @param def
+	 * @return
+	 */
+	public static tT lisp(String def)
+	{
+		return new cSTRING_INPUT_STREAM(def, 0, -1).READ(false, NIL, false);
+	}
+
+	/**
+	 * @param name
+	 * @return
+	 */
 	public static tSYMBOL sym(tSTRING name)
 	{
 		throw new LispException("mheu");

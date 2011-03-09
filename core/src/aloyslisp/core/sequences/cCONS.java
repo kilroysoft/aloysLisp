@@ -30,7 +30,6 @@
 
 package aloyslisp.core.sequences;
 
-import static aloyslisp.internal.engine.L.*;
 import aloyslisp.annotations.*;
 import aloyslisp.core.*;
 import aloyslisp.core.conditions.*;
@@ -105,7 +104,7 @@ public class cCONS extends cCELL implements tCONS
 			else if (cell.getClass().isArray())
 			{
 				newCell = list(cell);
-				System.out.println("list : " + newCell);
+				// System.out.println("list : " + newCell);
 			}
 			else if (cell instanceof tT)
 				newCell = (tT) cell;
@@ -206,8 +205,6 @@ public class cCONS extends cCELL implements tCONS
 		return this;
 	}
 
-	private static final tSYMBOL	FUNCTION	= sym("lisp::function");
-
 	/**
 	 * @param list
 	 * @return
@@ -244,15 +241,19 @@ public class cCONS extends cCELL implements tCONS
 			throw new LispException(
 					"CAR of CONS to be evaluated is not a function");
 
-		tT func = ((tSYMBOL) car).SYMBOL_FUNCTION();
-
-		// trace("executing " + func);
-		if (func instanceof tMACRO_FUNCTION)
+		if (((tSYMBOL) car).MACRO_FUNCTION() != NIL)
 		{
 			// Expand macros
+			tT me = MACROEXPAND()[0];
+			System.out.println("MACROEXPAND : " + me + " args : " + cdr);
 			return MACROEXPAND()[0].EVAL();
 		}
-		return ((tFUNCTION) func).FUNCALL((tLIST) CDR());
+
+		// System.out.println("Eval of cons : " + this);
+		if (!(cdr instanceof tLIST))
+			throw new LispException("Can't eval a non LIST cons");
+
+		return ((tSYMBOL) car).SYMBOL_FUNCTION().FUNCALL((tLIST) cdr);
 	}
 
 	/*
@@ -267,7 +268,7 @@ public class cCONS extends cCELL implements tCONS
 		tT func = ((tSYMBOL) car).SYMBOL_FUNCTION();
 
 		// System.out.println("executing " + func);
-		if (func instanceof tMACRO_FUNCTION)
+		if (((tFUNCTION) func).API_MACRO())
 		{
 			// Expand macros
 			tT res = ((tFUNCTION) func).FUNCALL((tLIST) CDR())[0];
@@ -501,9 +502,9 @@ public class cCONS extends cCELL implements tCONS
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.cCELL#copy()
 	 */
-	public tT copy()
+	public tT COPY_CELL()
 	{
-		return new cCONS(CAR().copy(), CDR().copy());
+		return new cCONS(CAR().COPY_CELL(), CDR().COPY_CELL());
 	}
 
 	/*
@@ -566,8 +567,8 @@ public class cCONS extends cCELL implements tCONS
 		LISTIterator iter = new LISTIterator(this);
 		while (iter.hasNext())
 			if (iter.next().EQL(item))
-				return iter.getFinal();
-		return null;
+				return iter.getNode();
+		return NIL;
 	}
 
 	/*

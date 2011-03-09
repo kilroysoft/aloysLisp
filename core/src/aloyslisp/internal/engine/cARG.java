@@ -30,9 +30,8 @@
 package aloyslisp.internal.engine;
 
 import aloyslisp.core.*;
+import aloyslisp.core.conditions.LispException;
 import aloyslisp.core.packages.*;
-import aloyslisp.core.streams.*;
-import static aloyslisp.internal.engine.L.*;
 
 /**
  * cARG
@@ -43,13 +42,32 @@ import static aloyslisp.internal.engine.L.*;
  */
 public class cARG extends cDYN_SYMBOL implements tARG
 {
+	Boolean	base	= true;
+
 	/**
 	 * @param orig
 	 * @param value
 	 */
-	public cARG(tSYMBOL orig, tT value)
+	public cARG(tSYMBOL orig, tT value, Boolean base)
 	{
 		super(orig, value);
+		this.base = base;
+	}
+
+	public cARG(tT arg, Boolean base)
+	{
+		super(NIL, NIL);
+		this.base = base;
+		if (arg instanceof tSYMBOL)
+		{
+			this.setOrig((tSYMBOL) arg);
+			return;
+		}
+		tT symbol = arg.CAR();
+		if (!(symbol instanceof tSYMBOL))
+			throw new LispException("Argument is not a symbol : " + symbol);
+		this.setOrig((tSYMBOL) arg);
+		this.value = arg.CDR().CAR();
 	}
 
 	/**
@@ -58,8 +76,18 @@ public class cARG extends cDYN_SYMBOL implements tARG
 	 */
 	public cARG(String orig, String value)
 	{
-		super(sym(orig), value.equals("") ? NIL : new cSTRING_INPUT_STREAM(
-				value, 0, -1).READ(false, NIL, false));
+		super(sym(orig), value.equals("") ? NIL : lisp(value));
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.cCELL#DESCRIBE()
+	 */
+	public String DESCRIBE()
+	{
+		return "#<DYN_ARG " + orig.toString() + " " + value + ""
+				+ (special ? T : NIL) + " " + (base ? T : NIL) + " " + value
+				+ ">";
 	}
 
 }

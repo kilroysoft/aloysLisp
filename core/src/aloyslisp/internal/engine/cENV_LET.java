@@ -30,7 +30,6 @@
 package aloyslisp.internal.engine;
 
 import aloyslisp.core.*;
-import aloyslisp.core.conditions.LispException;
 import aloyslisp.core.packages.*;
 import aloyslisp.core.sequences.*;
 
@@ -56,7 +55,12 @@ public class cENV_LET extends cENV
 	public cENV_LET()
 	{
 		super();
-		vars = new cHASH_TABLE(null, L.nInt(1), L.nFloat((float) 0.75));
+		vars = new cHASH_TABLE(null, nInt(1), nFloat((float) 0.75));
+	}
+
+	public String toString()
+	{
+		return "#<ENV-LET " + vars + ">";
 	}
 
 	/*
@@ -68,15 +72,19 @@ public class cENV_LET extends cENV
 	public tT[] ENV_LET_GET(tSYMBOL var)
 	{
 		tT[] res = new tT[]
-		{ L.NIL, L.NIL };
+		{ NIL, NIL };
 
-		res = vars.GETHASH(var, L.NIL);
-		if (res[1] == L.NIL)
+		// System.out.println("ENV_GET_LET(" + var.SYMBOL_NAME() + ") vars : "
+		// + vars + " previous : " + previous);
+		res = vars.GETHASH(var, NIL);
+		if (res[1] == NIL)
 		{
 			if (previous == null)
 				return new tT[]
-				{ L.NIL, L.NIL };
-
+				{ NIL, NIL };
+			if (previous == this)
+				System.out
+						.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAArgh !!!!!!!!!");
 			return previous.ENV_LET_GET(var);
 		}
 
@@ -92,25 +100,24 @@ public class cENV_LET extends cENV
 	@Override
 	public tT[] SET_ENV_LET_GET(tSYMBOL var, tT value)
 	{
+		// System.out.println("SET_ENV_LET_GET" + var + "=" + value + " " +
+		// this);
 		tT[] res = new tT[]
-		{ L.NIL, L.NIL };
+		{ NIL, NIL };
 
-		res = vars.GETHASH(var, L.NIL);
-		if (res[1] == L.NIL)
+		res = vars.GETHASH(var, NIL);
+		if (res[1] == NIL)
 		{
 			if (previous == null)
 				return new tT[]
-				{ L.NIL, L.NIL };
+				{ NIL, NIL };
 
 			return previous.ENV_LET_GET(var);
 		}
 
 		tDYN_SYMBOL dyn = (tDYN_SYMBOL) res[0];
-		if (!dyn.BOUNDP())
-			throw new LispException("Variable not bound : " + dyn);
-
 		return new tT[]
-		{ dyn.SET_SYMBOL_VALUE(value), L.T };
+		{ dyn.SET_SYMBOL_VALUE(value), T };
 	}
 
 	/*
@@ -120,9 +127,21 @@ public class cENV_LET extends cENV
 	 * .tSYMBOL)
 	 */
 	@Override
-	public tDYN_SYMBOL ENV_LET_INTERN(tSYMBOL var)
+	public tDYN_SYMBOL ENV_LET_INTERN(tSYMBOL var, tT value)
 	{
-		return (tDYN_SYMBOL) vars.SET_GETHASH(null, var, L.NIL);
+		tT[] res = new tT[]
+		{ NIL, NIL };
+
+		res = vars.GETHASH(var, NIL);
+		if (res[1] == NIL)
+		{
+			res[0] = new cDYN_SYMBOL(var, NIL);
+			vars.SET_GETHASH(res[0], var, null);
+		}
+
+		tDYN_SYMBOL dyn = (tDYN_SYMBOL) res[0];
+		dyn.SET_SYMBOL_VALUE(value);
+		return dyn;
 	}
 
 }

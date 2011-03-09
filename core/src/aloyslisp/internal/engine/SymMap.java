@@ -32,7 +32,7 @@ package aloyslisp.internal.engine;
 
 import java.util.*;
 
-import static aloyslisp.internal.engine.L.*;
+import aloyslisp.core.cCELL;
 import aloyslisp.core.packages.*;
 import aloyslisp.core.sequences.*;
 
@@ -43,7 +43,8 @@ import aloyslisp.core.sequences.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class SymMap implements Iterable<String>, Map<String, tSYMBOL>
+public class SymMap extends cCELL implements Iterable<String>,
+		Map<String, tSYMBOL>
 {
 	/**
 	 * 

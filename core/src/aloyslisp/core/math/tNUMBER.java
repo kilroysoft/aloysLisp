@@ -31,7 +31,7 @@ package aloyslisp.core.math;
 
 import aloyslisp.annotations.*;
 import aloyslisp.core.*;
-import aloyslisp.core.clos.tBUILD_IN_CLASS;
+import aloyslisp.core.clos.tBUILT_IN_CLASS;
 
 /**
  * tNUMBER
@@ -40,7 +40,7 @@ import aloyslisp.core.clos.tBUILD_IN_CLASS;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public interface tNUMBER extends tBUILD_IN_CLASS
+public interface tNUMBER extends tBUILT_IN_CLASS
 {
 	/* *******************************************************************
 	 * CONVERTERS

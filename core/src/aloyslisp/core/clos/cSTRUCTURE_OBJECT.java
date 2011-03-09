@@ -29,7 +29,8 @@
 
 package aloyslisp.core.clos;
 
-import aloyslisp.core.cCELL;
+import aloyslisp.annotations.*;
+import aloyslisp.core.*;
 
 /**
  * cSTRUCTURE_OBJECT
@@ -38,6 +39,7 @@ import aloyslisp.core.cCELL;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
+@BuiltIn(name = "structure-object", doc = "t_stu_ob")
 public class cSTRUCTURE_OBJECT extends cCELL implements tSTRUCTURE_OBJECT
 {
 

@@ -41,7 +41,7 @@ import aloyslisp.core.sequences.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public abstract class SEQUENCEIterator implements Iterator<tT>
+public abstract class SEQUENCEIterator extends cCELL implements Iterator<tT>
 {
 	/**
 	 * Index of current item in the sequence

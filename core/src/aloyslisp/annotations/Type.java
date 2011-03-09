@@ -63,5 +63,5 @@ public @interface Type
 	 * 
 	 * @return
 	 */
-	String test();
+	String typep() default "";
 }

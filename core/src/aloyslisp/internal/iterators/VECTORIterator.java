@@ -204,7 +204,7 @@ public class VECTORIterator extends SEQUENCEIterator
 	@Override
 	protected void copy()
 	{
-		vector = (cVECTOR) vector.copy();
+		vector = (cVECTOR) vector.COPY_CELL();
 	}
 
 	/*

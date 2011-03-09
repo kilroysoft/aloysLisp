@@ -17,29 +17,34 @@
 * Change FUNCTIONs management (a lot of work...), and error management...
 * Add setf management in annotations and instantiation.
 * READs functions should return tT and manage return eof-value...
-
-== Doing ==
+* Rework all the condition system...
 * Manage VECTORs and SIMPLE_VECTORs.
-* Clean-up all instantiation process (key arguments, rething the calling process)
 * Implement PACKAGE and SYMBOL management (a lot of work...)
 * Implement CLASS and STRUCTURE functions for definition and instances
-* Pass @BaseArg annotation for arguments to functions in the Java call.
+
+== Doing ==
+* Add type and class definition in all classes and interfaces.
+* Clean-up all instantiation process (key arguments, rething the calling process)
 
 * Test arguments management, rewrite the whole.
 * Rewrite the whole Environment management
+* Replace SymMap by cHASH_MAP.
+* Suppress @Static annotation to @Function with test on static function.
 
 == Current state ==
+* Pass @BaseArg annotation for arguments to functions in the Java call.
 * Add cCOMPILED_MACRO. Change compiled function classes names.
 * Manage symbols annotations and link between SYMBOLs and Java variables.
 * Rewrite the whole special forms
 * Create a new Environment as thread...
-* Added cAPI, tAPI, tAPI_ARG, cAPI_ARG, cAPI_KEY for function API definition.
+* Added tAPI, cAPI, cAPI_JAVA, cAPI_LAMBDA for function and environment interfaces. 
+* Added cARG, tARG, cARG_KEY for function arguments definition.
 * Change @Key annotation from argument to function.
 * Change iterators for SEQUENCE classes (cons, array).
 * Automatic documentation creation (Wiki) by the programm itself. 
-	* Doc for Java version of syntax of LISP Function (by type or classes and globally alphabeticaly)
-	* Doc for LISP version of syntax of LISP Function
-	* List of function to be implemented.
+** Doc for Java version of syntax of LISP Function (by type or classes and globally alphabeticaly)
+** Doc for LISP version of syntax of LISP Function
+** List of function to be implemented.
 * Add @AllowOtherKeys for argument management.
 * Add correct initialisation of key values in cAPI.
 * Added all string streams, cSTRING_INPUT_STREAM and cSTRING_OUTPUT_STREAM.

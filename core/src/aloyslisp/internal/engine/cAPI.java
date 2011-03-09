@@ -35,10 +35,9 @@
 
 package aloyslisp.internal.engine;
 
-import static aloyslisp.internal.engine.L.*;
-
 import aloyslisp.annotations.*;
 import aloyslisp.core.*;
+import aloyslisp.core.conditions.LispException;
 import aloyslisp.core.packages.*;
 import aloyslisp.core.sequences.*;
 import aloyslisp.internal.iterators.*;
@@ -75,11 +74,15 @@ public class cAPI extends cCELL implements tAPI
 	 * argument representation in the java side.
 	 * They will be set from LISP definition or from Methods for Java code.
 	 */
+	tSYMBOL					name				= null;
+
 	tLIST					vars				= NIL;
 
-	Boolean					AllowOtherKeys		= false;
+	Boolean					allowOtherKeys		= false;
 
 	Integer					basePos				= -1;
+
+	Integer					obl					= 0;
 
 	tSYMBOL					rest				= null;
 
@@ -89,7 +92,9 @@ public class cAPI extends cCELL implements tAPI
 
 	tENV					environment			= null;
 
-	Boolean					special				= null;
+	Boolean					special				= false;
+
+	Boolean					macro				= false;
 
 	/**
 	 * or lambda APIs
@@ -98,7 +103,7 @@ public class cAPI extends cCELL implements tAPI
 	 */
 	public cAPI(tLIST args, tT doc, tLIST decl)
 	{
-		SET_API_ARGS(args);
+		vars = SET_API_ARGS(args);
 		SET_API_DOC(doc);
 		SET_API_DECL(decl);
 		environment = e.topEnv;
@@ -107,9 +112,8 @@ public class cAPI extends cCELL implements tAPI
 	/**
 	 * For Code APIs
 	 */
-	public cAPI(Boolean special)
+	public cAPI()
 	{
-		this.special = special;
 		environment = e.topEnv;
 	}
 
@@ -118,6 +122,7 @@ public class cAPI extends cCELL implements tAPI
 	@Static(name = "api-parse-func")
 	public static tLIST API_PARSE_FUNC(tLIST func)
 	{
+		// System.out.println("API-PARSE-FUNC : " + func);
 		tT doc = func.CAR();
 
 		if (func.LENGTH() == 1 && doc instanceof tSTRING)
@@ -150,7 +155,61 @@ public class cAPI extends cCELL implements tAPI
 	@Override
 	public tLIST API_ARGS()
 	{
-		return null;
+		LISTIterator res = new LISTIterator(NIL);
+		if (whole != null)
+		{
+			res.append(WHOLE);
+			res.append(whole);
+		}
+
+		int count = 1;
+		Boolean isKey = false;
+		Boolean isRest = false;
+		Boolean isAllow = false;
+		Boolean isAux = false;
+		for (tT var : vars)
+		{
+			if (count == obl && ((cARG) var).base)
+				res.append(OPTIONAL);
+			if (!isKey && var instanceof cARG_KEY)
+			{
+				if (this.rest != null)
+				{
+					res.append(REST);
+					res.append(this.rest);
+					isRest = true;
+				}
+				res.append(KEY);
+				isKey = true;
+			}
+			if (!isAux && !(var instanceof cARG_KEY) && !((cARG) var).base)
+			{
+				if (this.rest != null && !isRest)
+				{
+					res.append(REST);
+					res.append(this.rest);
+					isRest = true;
+				}
+				if (allowOtherKeys)
+				{
+					res.append(ALLOW_OTHER_KEYS);
+					isAllow = true;
+				}
+				res.append(AUX);
+				isAux = true;
+			}
+			res.append(((tARG) var).getOrig());
+			count++;
+		}
+		if (this.rest != null && !isRest)
+		{
+			res.append(REST);
+			res.append(this.rest);
+		}
+		if (allowOtherKeys && !isAllow)
+			res.append(ALLOW_OTHER_KEYS);
+
+		return (tLIST) res.getFinal();
 	}
 
 	/*
@@ -162,14 +221,85 @@ public class cAPI extends cCELL implements tAPI
 	@Override
 	public tLIST SET_API_ARGS(tLIST args)
 	{
+		// System.out.println("SET-API-ARGS" + args);
 		LISTIterator iter = new LISTIterator(args);
+		LISTIterator newArgs = new LISTIterator(NIL);
 		boolean key = false;
+		boolean orig = true;
+		int count = 0;
 		while (iter.hasNext())
 		{
 			tT elem = iter.next();
+			if (elem instanceof tSYMBOL)
+			{
+				String keyword = getKeyword((tSYMBOL) elem);
+				if (keyword != null)
+				{
+					tT temp;
+					if (keyword.equals("&whole"))
+					{
+						temp = iter.next();
+						if (!(temp instanceof tSYMBOL))
+							throw new LispException("&whole with non symbol : "
+									+ temp);
+						whole = (tSYMBOL) temp;
+					}
+					else if (keyword.equals("&rest"))
+					{
+						temp = iter.next();
+						if (!(temp instanceof tSYMBOL))
+							throw new LispException("&rest with non symbol : "
+									+ temp);
+						rest = (tSYMBOL) temp;
+					}
+					else if (keyword.equals("&key"))
+					{
+						key = true;
+						orig = false;
+					}
+					else if (keyword.equals("&aux"))
+					{
+						key = false;
+						orig = false;
+					}
+					else if (keyword.equals("&optional"))
+					{
+						obl = count;
+					}
+					else if (keyword.equals("&allow-other-keys"))
+					{
+						allowOtherKeys = true;
+					}
+					continue;
+				}
+			}
+			count++;
+			tARG var = null;
+			if (key)
+				var = new cARG_KEY(elem);
+			else
+				var = new cARG(elem, orig);
 
+			newArgs.append(var);
 		}
-		return null;
+
+		tT res = newArgs.getFinal();
+		// System.out.println("SET_API_ARGS (lambda): " + res);
+		return (tLIST) res;
+	}
+
+	/**
+	 * Return lambda list keyword if found
+	 * 
+	 * @param sym
+	 * @return
+	 */
+	private String getKeyword(tSYMBOL sym)
+	{
+		tSYMBOL res = (tSYMBOL) LambdaListKeywords.FIND(sym).CAR();
+		if (res == NIL)
+			return null;
+		return res.SYMBOL_NAME().toLowerCase();
 	}
 
 	/*
@@ -214,59 +344,52 @@ public class cAPI extends cCELL implements tAPI
 		return null;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see
-	 * aloyslisp.internal.engine.tAPI#API_FUNCALL(aloyslisp.core.sequences.tLIST
-	 * )
+	/**
+	 * FORWARD definition of tFUNCTION's FUNCALL
+	 * 
+	 * @param args
+	 * @return
 	 */
-	@Override
 	public tT[] FUNCALL(tLIST args)
 	{
+		// System.out.println("FUNCALL : " + name + " " + args + " " +
+		// DESCRIBE());
 		tT[] res = new tT[]
 		{ NIL };
-		cENV closure = new cENV_CLOSURE(environment);
+
+		tENV closure = null;
+		tENV let = new cENV_LET();
+		let.ENV_PUSH();
 		try
 		{
-			API_PUSH_ENV(args);
-			try
+			args = API_PUSH_ENV(args, let);
+			if (!(special || macro))
 			{
-				res = API_CALL(args);
+				closure = new cENV_CLOSURE(environment);
+				((cENV) closure).previous = ((cENV) let).previous;
+				((cENV) let).previous = closure;
+				e.topEnv = let;
 			}
-			finally
-			{
-				API_POP_ENV();
-			}
+			// System.out.println("API-CALL :" + DESCRIBE() + "\nargs : " +
+			// args);
+			res = API_CALL(args);
+		}
+		catch (RuntimeException e)
+		{
+			// e.printStackTrace();
+			throw e;
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
 		}
 		finally
 		{
-			closure.ENV_STOP();
+			let.ENV_POP();
+			if (!(special || macro))
+				closure.ENV_POP();
 		}
 		return res;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.internal.engine.tAPI#API_INTERN_ARGS()
-	 */
-	@Override
-	public cENV_LET API_INTERN_ARGS()
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see
-	 * aloyslisp.internal.engine.tAPI#API_INIT_VALUES(aloyslisp.core.sequences
-	 * .tLIST)
-	 */
-	@Override
-	public cENV_LET API_INIT_VALUES(tLIST values)
-	{
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	/*
@@ -275,7 +398,28 @@ public class cAPI extends cCELL implements tAPI
 	 */
 	public tT API_EVAL_ARG(tT value)
 	{
-		return special ? value : value.EVAL()[0];
+		return (special || macro) ? value : value.EVAL()[0];
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * aloyslisp.internal.engine.tAPI#API_EVAL_LIST(aloyslisp.core.sequences
+	 * .tLIST)
+	 */
+	@Override
+	public tLIST API_EVAL_LIST(tLIST list)
+	{
+		if (special)
+			return list;
+
+		LISTIterator iter = new LISTIterator(NIL, true);
+		for (tT elem : list)
+		{
+			iter.append(API_EVAL_ARG(elem));
+		}
+
+		return (tLIST) iter.getFinal();
 	}
 
 	/*
@@ -285,31 +429,81 @@ public class cAPI extends cCELL implements tAPI
 	 * tLIST)
 	 */
 	@Override
-	public tT[] API_PUSH_ENV(tLIST values)
+	public tLIST API_PUSH_ENV(tLIST values, tENV let)
 	{
-		API_INTERN_ARGS();
-		LISTIterator iter = new LISTIterator(NIL, true);
-		if (special)
+		// System.out.println("API_PUSH_ENV : " + values + " on " + this.vars
+		// + " with " + DESCRIBE());
+
+		// Init all vars
+		LISTIterator var = new LISTIterator(this.vars);
+		while (var.hasNext())
 		{
-			for (tT elem : values)
-			{
-				iter.append(API_EVAL_ARG(elem));
-			}
-			values = (tLIST) iter.getFinal();
+			cARG arg = (cARG) var.next();
+			let.ENV_LET_INTERN(arg.orig, API_EVAL_ARG(arg.SYMBOL_VALUE()));
 		}
 
-		return null;
-	}
+		// mandatory and &optional
+		LISTIterator iter = new LISTIterator(NIL, true);
+		LISTIterator val = new LISTIterator(values);
+		var = new LISTIterator(this.vars);
 
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.internal.engine.tAPI#API_POP_ENV()
-	 */
-	@Override
-	public tAPI API_POP_ENV()
-	{
-		// TODO Auto-generated method stub
-		return null;
+		if (macro && whole != null)
+			// Add & whole
+			let.ENV_LET_INTERN(whole, (tLIST) val.getFinal());
+
+		while (var.hasNext())
+		{
+			cARG arg = (cARG) var.next();
+
+			if (!arg.base)
+				break;
+
+			tT elem = null;
+			if (val.hasNext())
+				elem = API_EVAL_ARG(val.next());
+			else
+				elem = API_EVAL_ARG(arg.SYMBOL_VALUE());
+
+			let.SET_ENV_LET_GET(arg.orig, elem);
+			// System.out.println("Argument : " + elem.DESCRIBE());
+			iter.append(elem);
+		}
+
+		tLIST res = (tLIST) iter.getFinal();
+
+		// Add &rest
+		if (rest != null)
+		{
+			tLIST r = NIL;
+			if (val.hasNext())
+			{
+				val.next();
+				r = API_EVAL_LIST((tLIST) val.getNode());
+			}
+			let.ENV_LET_INTERN(rest, r);
+			res = (tLIST) res.APPEND(r);
+		}
+
+		// next &key
+		while (var.hasNext() && val.hasNext())
+		{
+			tT key = val.next();
+			// System.out.println("Key = " + key);
+			if (!(key instanceof tSYMBOL))
+				throw new LispException("argument not a key : " + key);
+			if (!val.hasNext())
+				throw new LispException("Value of key doesn't exists: " + key);
+			tT value = val.next();
+			if (!(key instanceof tSYMBOL))
+				throw new LispException("&key var is not a symbol");
+			if (allowOtherKeys)
+				let.ENV_LET_INTERN((tSYMBOL) key, API_EVAL_ARG(value));
+			else
+				let.SET_ENV_LET_GET((tSYMBOL) key, API_EVAL_ARG(value));
+		}
+
+		// return call arguments
+		return res;
 	}
 
 	/*
@@ -319,6 +513,7 @@ public class cAPI extends cCELL implements tAPI
 	@Override
 	public String API_GET_MAC()
 	{
+		// Standard no macro
 		return null;
 	}
 
@@ -330,7 +525,7 @@ public class cAPI extends cCELL implements tAPI
 	@Override
 	public tLIST API_OBJECT(tLIST args)
 	{
-		return args;
+		throw new LispException("Function action on LET environment");
 	}
 
 	/*
@@ -341,8 +536,7 @@ public class cAPI extends cCELL implements tAPI
 	@Override
 	public tT[] API_CALL(tLIST args)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		throw new LispException("Function action on LET environment");
 	}
 
 	/*
@@ -354,6 +548,57 @@ public class cAPI extends cCELL implements tAPI
 	{
 		// TODO Auto-generated method stub
 		return FUNCALL(list(args));
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.internal.engine.tAPI#API_SPECIAL()
+	 */
+	@Override
+	public Boolean API_SPECIAL()
+	{
+		return special;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.internal.engine.tAPI#SET_API_SPECIAL(java.lang.Boolean)
+	 */
+	@Override
+	public Boolean SET_API_SPECIAL(Boolean special)
+	{
+		return this.special = special;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.internal.engine.tAPI#API_MACRO()
+	 */
+	@Override
+	public Boolean API_MACRO()
+	{
+		return macro;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.internal.engine.tAPI#SET_API_MACRO(java.lang.Boolean)
+	 */
+	@Override
+	public Boolean SET_API_MACRO(Boolean macro)
+	{
+		return this.macro = macro;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.cCELL#DESCRIBE()
+	 */
+	public String DESCRIBE()
+	{
+		return "#<API " + vars + " " + rest + " " + obl + " " + basePos
+				+ " #<SPECIAL " + (special ? T : NIL) + "> #<MACRO "
+				+ (macro ? T : NIL) + "> " + environment + ">";
 	}
 
 }

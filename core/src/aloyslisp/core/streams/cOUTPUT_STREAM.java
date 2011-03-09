@@ -29,7 +29,6 @@
 
 package aloyslisp.core.streams;
 
-import static aloyslisp.internal.engine.L.*;
 import aloyslisp.core.tT;
 import aloyslisp.core.packages.tNULL;
 import aloyslisp.core.sequences.tSTRING;
@@ -92,7 +91,7 @@ public abstract class cOUTPUT_STREAM extends cSTREAM implements tOUTPUT_STREAM
 	 * @see aloyslisp.core.Cell#copy()
 	 */
 	@Override
-	public tT copy()
+	public tT COPY_CELL()
 	{
 		return this;
 	}

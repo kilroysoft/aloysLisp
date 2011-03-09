@@ -29,7 +29,6 @@
 
 package aloyslisp.core.math;
 
-import static aloyslisp.internal.engine.L.*;
 import aloyslisp.core.conditions.*;
 
 /**
@@ -446,7 +445,8 @@ public class cCOMPLEX extends cNUMBER implements tCOMPLEX
 		return null;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see aloyslisp.core.tT#hashCode()
 	 */
 	@Override

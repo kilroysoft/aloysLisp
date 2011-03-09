@@ -31,7 +31,7 @@ package aloyslisp.core.streams;
 
 import aloyslisp.annotations.*;
 import aloyslisp.core.*;
-import aloyslisp.core.clos.tBUILD_IN_CLASS;
+import aloyslisp.core.clos.tBUILT_IN_CLASS;
 import aloyslisp.core.sequences.*;
 
 /**
@@ -41,7 +41,7 @@ import aloyslisp.core.sequences.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public interface tCHARACTER extends tBUILD_IN_CLASS, tSTRING_DESIGNATOR
+public interface tCHARACTER extends tBUILT_IN_CLASS, tSTRING_DESIGNATOR
 {
 	/**
 	 * Get char value

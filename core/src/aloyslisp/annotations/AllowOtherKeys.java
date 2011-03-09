@@ -32,7 +32,7 @@ package aloyslisp.annotations;
 import java.lang.annotation.*;
 
 /**
- * AllowOtherKeys
+ * allowOtherKeys
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}

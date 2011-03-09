@@ -29,6 +29,8 @@
 
 package aloyslisp.core.clos;
 
+import aloyslisp.annotations.*;
+
 /**
  * cSTANDARD_CLASS
  * 
@@ -36,6 +38,7 @@ package aloyslisp.core.clos;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
+@BuiltIn(name = "standard-class", doc = "t_std_cl")
 public class cSTANDARD_CLASS extends cSTANDARD_OBJECT implements
 		tSTANDARD_CLASS
 {

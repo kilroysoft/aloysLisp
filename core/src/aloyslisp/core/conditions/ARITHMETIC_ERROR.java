@@ -29,6 +29,7 @@
 
 package aloyslisp.core.conditions;
 
+import aloyslisp.annotations.*;
 import aloyslisp.core.tT;
 
 /**
@@ -38,6 +39,8 @@ import aloyslisp.core.tT;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
+@Type(name = "arithmetic-error", doc = "e_arithm")
+@BuiltIn(name = "arithmetic-error", doc = "e_arithm")
 public class ARITHMETIC_ERROR extends ERROR
 {
 	private static final long	serialVersionUID	= 1L;

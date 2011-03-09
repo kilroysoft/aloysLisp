@@ -31,7 +31,7 @@ package aloyslisp.core.sequences;
 
 import aloyslisp.annotations.Type;
 import aloyslisp.core.*;
-import aloyslisp.core.clos.tBUILD_IN_CLASS;
+import aloyslisp.core.clos.tBUILT_IN_CLASS;
 
 /**
  * tARRAY
@@ -40,8 +40,8 @@ import aloyslisp.core.clos.tBUILD_IN_CLASS;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-@Type(name = "array", test = "arrayp")
-public interface tARRAY extends tBUILD_IN_CLASS
+@Type(name = "array", typep = "arrayp")
+public interface tARRAY extends tBUILT_IN_CLASS
 {
 	/**
 	 * @return

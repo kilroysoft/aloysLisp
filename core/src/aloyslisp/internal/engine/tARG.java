@@ -29,8 +29,6 @@
 
 package aloyslisp.internal.engine;
 
-import aloyslisp.core.clos.*;
-
 /**
  * tARG
  * 
@@ -38,6 +36,6 @@ import aloyslisp.core.clos.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public interface tARG extends tBUILD_IN_CLASS
+public interface tARG extends tDYN_SYMBOL
 {
 }

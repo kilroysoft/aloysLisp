@@ -29,14 +29,13 @@
 
 package aloyslisp.core.streams;
 
-import static aloyslisp.internal.engine.L.*;
 import aloyslisp.annotations.*;
 import aloyslisp.core.*;
 import aloyslisp.core.conditions.*;
 import aloyslisp.core.functions.*;
 import aloyslisp.core.math.*;
-import aloyslisp.core.packages.tSYMBOL;
-import aloyslisp.core.sequences.tSEQUENCE;
+import aloyslisp.core.packages.*;
+import aloyslisp.core.sequences.*;
 
 /**
  * cINPUT_STREAM
@@ -48,13 +47,10 @@ import aloyslisp.core.sequences.tSEQUENCE;
 public abstract class cINPUT_STREAM extends cSTREAM implements tINPUT_STREAM
 {
 
-	/**
-	 * @param stream
-	 * @param eofErrorP
-	 * @param eofValue
-	 * @param recursiveP
-	 * @return
-	 * @throws END_OF_FILE
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.streams.tINPUT_STREAM#READ(java.lang.Boolean,
+	 * aloyslisp.core.tT, java.lang.Boolean)
 	 */
 	public tT READ(Boolean eofErrorP, tT eofValue, Boolean recursiveP)
 	{
@@ -86,7 +82,7 @@ public abstract class cINPUT_STREAM extends cSTREAM implements tINPUT_STREAM
 	 * @see aloyslisp.core.Cell#copy()
 	 */
 	@Override
-	public tT copy()
+	public tT COPY_CELL()
 	{
 		return this;
 	}
@@ -195,7 +191,7 @@ public abstract class cINPUT_STREAM extends cSTREAM implements tINPUT_STREAM
 			}
 
 			// Call macro function
-			tT read = ((tFUNCTION) function).e(this, c(curr), NIL)[0];
+			tT read = ((tFUNCTION) function).e(this, c(curr))[0];
 			return read;
 		}
 
@@ -350,7 +346,7 @@ public abstract class cINPUT_STREAM extends cSTREAM implements tINPUT_STREAM
 				}
 
 				// and evaluate it
-				// System.out.println("eval : " + res[0]);
+				System.out.println("eval : " + res[0]);
 				res = res[0].EVAL();
 
 				if (print)

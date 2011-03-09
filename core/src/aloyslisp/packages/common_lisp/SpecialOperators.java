@@ -29,7 +29,6 @@
 
 package aloyslisp.packages.common_lisp;
 
-import static aloyslisp.internal.engine.L.*;
 import aloyslisp.annotations.*;
 import aloyslisp.core.*;
 import aloyslisp.core.conditions.*;
@@ -46,7 +45,7 @@ import aloyslisp.internal.flowcontrol.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class SpecialOperators
+public class SpecialOperators extends cCELL
 {
 	/*********************************************************************************
 	 * @param name
@@ -61,7 +60,8 @@ public class SpecialOperators
 			@Arg(name = "lisp::args") tLIST args, //
 			@Rest(name = "lisp::macro") tT... macro)
 	{
-		tFUNCTION def = new cMACRO_FUNCTION(name, args, list((Object[]) macro));
+		tFUNCTION def = new cLAMBDA_FUNCTION(name, args,
+				list((Object[]) macro), true, true);
 		((tSYMBOL) name).SET_SYMBOL_FUNCTION(def);
 		return name;
 	}
@@ -79,11 +79,6 @@ public class SpecialOperators
 			@Arg(name = "lisp::args") tLIST argList, //
 			@Rest(name = "lisp::func") tT... function)
 	{
-		tLIST func = list((Object[]) function);
-		tT doc = func.CAR();
-		tLIST decl = (tLIST) func.CDR().CAR();
-		func = (tLIST) func.CDR().CDR().CAR();
-
 		if (name instanceof tCONS)
 		{
 			// (setf func) definition
@@ -111,8 +106,7 @@ public class SpecialOperators
 
 			// setf writer function
 			tFUNCTION def = new cLAMBDA_FUNCTION(setfFunc, (tLIST) argList,
-					(tLIST) ((tLIST) list(doc).APPEND(decl)).APPEND(list(BLOCK,
-							setfFunc).APPEND(func)));
+					list((Object[]) function), false, false);
 			((tSYMBOL) setfFunc).SET_SYMBOL_FUNCTION(def);
 			((tSYMBOL) newFunc).SET_GET(setfKey, setfFunc);
 
@@ -125,8 +119,7 @@ public class SpecialOperators
 		}
 
 		tFUNCTION def = new cLAMBDA_FUNCTION(name, (tLIST) argList,
-				(tLIST) ((tLIST) list(doc).APPEND(decl)).APPEND(list(BLOCK,
-						name).APPEND(func)));
+				list((Object[]) function), false, false);
 		((tSYMBOL) name).SET_SYMBOL_FUNCTION(def);
 
 		return name;
@@ -208,9 +201,10 @@ public class SpecialOperators
 		if (!(args instanceof tLIST))
 			return null;
 
-		System.out.println("args:" + args + " func:" + func);
+		// System.out.println("args:" + args + " func:" + func);
 
-		return new cLAMBDA_FUNCTION(name, (tLIST) args, (tLIST) func);
+		return new cLAMBDA_FUNCTION(name, (tLIST) args, (tLIST) func, false,
+				false);
 	}
 
 	/**************************************************************************
@@ -222,6 +216,9 @@ public class SpecialOperators
 	public static tT GO( //
 			@Arg(name = "lisp::tag") tT tag)
 	{
+		if (e.ENV_TAG_TST(tag) == null)
+			throw new LispException("GO to unreachable label : " + tag);
+
 		throw new GOTO_CONDITION(tag);
 	}
 
@@ -312,7 +309,7 @@ public class SpecialOperators
 		// write to place
 		tLIST test = (tLIST) ((tLIST) list(newFunc).APPEND(list(value)))
 				.APPEND(place.CDR());
-		System.out.println("Setf tranform = " + test);
+		// System.out.println("Setf tranform = " + test);
 		return test.EVAL();
 	}
 
@@ -373,13 +370,18 @@ public class SpecialOperators
 			@Rest(name = "func") tT... func)
 	{
 		cENV_TAG tag = new cENV_TAG(list((Object[]) func));
+		tag.ENV_PUSH();
 		try
 		{
 			tag.EVAL();
 		}
+		catch (RuntimeException e)
+		{
+			throw e;
+		}
 		finally
 		{
-			tag.ENV_STOP();
+			tag.ENV_POP();
 		}
 		return NIL;
 	}
@@ -398,6 +400,7 @@ public class SpecialOperators
 			@Rest(name = "lisp::block") tT... blocks)
 	{
 		cENV_BLOCK block = new cENV_BLOCK(name, list((Object[]) blocks));
+		block.ENV_PUSH();
 		tT[] res = new tT[]
 		{ NIL };
 		try
@@ -411,9 +414,14 @@ public class SpecialOperators
 
 			throw ret;
 		}
+		catch (RuntimeException e)
+		{
+			e.printStackTrace();
+			throw e;
+		}
 		finally
 		{
-			block.ENV_STOP();
+			block.ENV_POP();
 		}
 
 		return res;
@@ -440,14 +448,20 @@ public class SpecialOperators
 		{ NIL };
 
 		cAPI arguments = new cAPI(args, doc, decl);
-		arguments.API_PUSH_ENV(NIL);
+		tENV env = new cENV_LET();
 		try
 		{
+			arguments.API_PUSH_ENV(args, env);
 			res = PROGN(func);
+		}
+		catch (RuntimeException e)
+		{
+			e.printStackTrace();
+			throw e;
 		}
 		finally
 		{
-			arguments.API_POP_ENV();
+			env.ENV_POP();
 		}
 		return res;
 	}
@@ -510,11 +524,7 @@ public class SpecialOperators
 			}
 		}
 
-		tT cmd = list(function).APPEND(res);
-
-		System.out.println(cmd);
-
-		return cmd.EVAL();
+		return ((tFUNCTION) function).FUNCALL(res);
 	}
 
 	/*********************************************************************
@@ -529,13 +539,18 @@ public class SpecialOperators
 		tT[] res = new tT[]
 		{ NIL };
 		cENV_PROGN progn = new cENV_PROGN(list((Object[]) block));
+		progn.ENV_PUSH();
 		try
 		{
 			res = progn.EVAL();
 		}
+		catch (RuntimeException e)
+		{
+			throw e;
+		}
 		finally
 		{
-			progn.ENV_STOP();
+			progn.ENV_POP();
 		}
 		return res;
 	}
@@ -628,10 +643,10 @@ public class SpecialOperators
 		}
 		catch (LispFlowControl e)
 		{
-			if (e instanceof CATCH_CONDITION
-					&& ((CATCH_CONDITION) e).TST_CATCH(tag))
+			if (e instanceof THROW_CONDITION
+					&& ((THROW_CONDITION) e).TST_CATCH(tag))
 			{
-				return ((CATCH_CONDITION) e).CATCH_VALUE();
+				return ((THROW_CONDITION) e).CATCH_VALUE();
 			}
 
 			throw e;

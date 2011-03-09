@@ -30,10 +30,9 @@
 package aloyslisp.core.packages;
 
 import aloyslisp.annotations.*;
-import aloyslisp.core.tT;
-import aloyslisp.core.clos.tBUILD_IN_CLASS;
+import aloyslisp.core.*;
+import aloyslisp.core.clos.*;
 import aloyslisp.core.functions.*;
-import aloyslisp.core.sequences.*;
 
 /**
  * tSYMBOL
@@ -49,7 +48,7 @@ import aloyslisp.core.sequences.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public interface tSYMBOL extends tBUILD_IN_CLASS, tFUNCTION_DESIGNATOR,
+public interface tSYMBOL extends tBUILT_IN_CLASS, tFUNCTION_DESIGNATOR,
 		tPACKAGE_DESIGNATOR
 {
 	/**
@@ -72,28 +71,6 @@ public interface tSYMBOL extends tBUILD_IN_CLASS, tFUNCTION_DESIGNATOR,
 	 */
 	@Function(name = "symbol-package", doc = "f_symb_3")
 	public tPACKAGE SYMBOL_PACKAGE();
-
-	/**
-	 * @param special
-	 * @return
-	 */
-	public tSYMBOL setSpecial(boolean special);
-
-	/**
-	 * @return
-	 */
-	public boolean isSpecial();
-
-	/**
-	 * @param constant
-	 * @return
-	 */
-	public tSYMBOL setDeclare(tLIST declare);
-
-	/**
-	 * @return
-	 */
-	public tLIST getDeclare();
 
 	/**
 	 * @param name
@@ -200,6 +177,24 @@ public interface tSYMBOL extends tBUILD_IN_CLASS, tFUNCTION_DESIGNATOR,
 	 * @return
 	 */
 	@Function(name = "special-operator-p", doc = "f_specia")
-	public boolean SPECIAL_OPERATOR_P();
+	public tT SPECIAL_OPERATOR_P();
+
+	/**
+	 * @return
+	 */
+	@Function(name = "macro-function", doc = "f_macro_")
+	public tT MACRO_FUNCTION();
+
+	/**
+	 * @return
+	 */
+	@Function(name = "specialp")
+	public Boolean SPECIALP();
+
+	/**
+	 * @return
+	 */
+	@Function(name = "set-special")
+	public tSYMBOL SET_SPECIAL(Boolean special);
 
 }

@@ -30,7 +30,6 @@
 
 package aloyslisp.core;
 
-import static aloyslisp.internal.engine.L.*;
 import aloyslisp.annotations.*;
 import aloyslisp.core.clos.*;
 import aloyslisp.core.conditions.*;
@@ -45,7 +44,7 @@ import aloyslisp.core.sequences.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public abstract class cCELL implements tSTANDARD_OBJECT
+public abstract class cCELL extends cLISP implements tSTANDARD_OBJECT
 {
 
 	/**
@@ -269,7 +268,7 @@ public abstract class cCELL implements tSTANDARD_OBJECT
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tT#copy()
 	 */
-	public tT copy()
+	public tT COPY_CELL()
 	{
 		return this;
 	}

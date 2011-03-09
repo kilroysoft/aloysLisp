@@ -43,9 +43,10 @@ import aloyslisp.internal.engine.*;
 public class cLAMBDA_FUNCTION extends cAPI_LAMBDA implements tLAMBDA_FUNCTION
 {
 
-	public cLAMBDA_FUNCTION(tSYMBOL name, tLIST args, tLIST func)
+	public cLAMBDA_FUNCTION(tSYMBOL name, tLIST args, tLIST func,
+			Boolean special, Boolean macro)
 	{
-		super(name, args, func, false);
+		super(name, args, func, special, macro);
 	}
 
 }

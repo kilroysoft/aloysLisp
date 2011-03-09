@@ -63,10 +63,10 @@ public class cENV_CLOSURE extends cENV
 	 * (non-Javadoc)
 	 * @see aloyslisp.internal.engine.cENV#ENV_STOP()
 	 */
-	public tENV ENV_STOP()
+	public tENV ENV_POP()
 	{
 		topClosure = null;
-		return super.ENV_STOP();
+		return super.ENV_POP();
 	}
 
 	/*
@@ -78,10 +78,10 @@ public class cENV_CLOSURE extends cENV
 	{
 		if (topClosure == null)
 			return new tT[]
-			{ L.NIL, L.NIL };
+			{ NIL, NIL };
 		else
 			return new tT[]
-			{ topClosure, L.T };
+			{ topClosure, T };
 	}
 
 }

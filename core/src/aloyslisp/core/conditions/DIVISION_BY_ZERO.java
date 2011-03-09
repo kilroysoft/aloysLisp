@@ -29,6 +29,7 @@
 
 package aloyslisp.core.conditions;
 
+import aloyslisp.annotations.*;
 import aloyslisp.core.tT;
 
 /**
@@ -38,6 +39,8 @@ import aloyslisp.core.tT;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
+@Type(name = "division-by-zero", doc = "e_divisi")
+@BuiltIn(name = "division-by-zero", doc = "e_divisi")
 public class DIVISION_BY_ZERO extends ARITHMETIC_ERROR
 {
 	private static final long	serialVersionUID	= 1L;
