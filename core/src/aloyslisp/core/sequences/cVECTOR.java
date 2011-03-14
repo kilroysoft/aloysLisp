@@ -34,6 +34,7 @@ import java.util.*;
 import aloyslisp.core.*;
 import aloyslisp.core.conditions.*;
 import aloyslisp.internal.iterators.*;
+import static aloyslisp.core.L.*;
 
 /**
  * cVECTOR

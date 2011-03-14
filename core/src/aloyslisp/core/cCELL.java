@@ -36,6 +36,7 @@ import aloyslisp.core.conditions.*;
 import aloyslisp.core.functions.*;
 import aloyslisp.core.packages.*;
 import aloyslisp.core.sequences.*;
+import static aloyslisp.core.L.*;
 
 /**
  * cCELL
@@ -44,7 +45,7 @@ import aloyslisp.core.sequences.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public abstract class cCELL extends cLISP implements tSTANDARD_OBJECT
+public abstract class cCELL implements tSTANDARD_OBJECT
 {
 
 	/**
@@ -242,11 +243,16 @@ public abstract class cCELL extends cLISP implements tSTANDARD_OBJECT
 	 */
 	public boolean equals(Object o)
 	{
+		Boolean t = false;
 		if (!(o instanceof tT))
-			return super.equals(o);
-		if (currTest == null)
-			return EQL((tT) o);
-		return currTest.e((tT) o)[0] != NIL;
+			t = super.equals(o);
+		else if (currTest == null)
+			t = EQUAL((tT) o);
+		else
+			t = currTest.e((tT) o)[0] != NIL;
+		// if (t)
+		// System.out.println("equal : " + this + " " + o);
+		return t;
 	}
 
 	/**

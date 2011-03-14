@@ -29,6 +29,9 @@
 
 package aloyslisp.core.conditions;
 
+import aloyslisp.core.L;
+import aloyslisp.core.tT;
+
 /**
  * LispException
  * 
@@ -42,13 +45,19 @@ public class LispException extends RuntimeException
 	 */
 	private static final long	serialVersionUID	= 7785621250806132893L;
 
+	public Boolean				trace				= false;
+
 	/**
 	 * @param message
 	 */
 	public LispException(String message)
 	{
 		super(message);
-		// System.out.println(message);
+		tT res = L.sym("*trace*").SYMBOL_VALUE();
+		// System.out.println("*trace* = " + res);
+		L.e.ENV_DUMP();
+		if (res != null && res != L.NIL)
+			trace = true;
 	}
 
 }

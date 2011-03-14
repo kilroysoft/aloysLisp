@@ -32,6 +32,7 @@ package aloyslisp.core.streams;
 import aloyslisp.core.tT;
 import aloyslisp.core.packages.tNULL;
 import aloyslisp.core.sequences.tSTRING;
+import static aloyslisp.core.L.*;
 
 /**
  * cOUTPUT_STREAM

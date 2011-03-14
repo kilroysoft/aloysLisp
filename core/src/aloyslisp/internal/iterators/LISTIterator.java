@@ -32,6 +32,7 @@ package aloyslisp.internal.iterators;
 import aloyslisp.core.*;
 import aloyslisp.core.conditions.*;
 import aloyslisp.core.sequences.*;
+import static aloyslisp.core.L.*;
 
 /**
  * Iterator on lists.

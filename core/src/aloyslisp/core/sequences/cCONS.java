@@ -36,6 +36,7 @@ import aloyslisp.core.conditions.*;
 import aloyslisp.core.functions.*;
 import aloyslisp.core.packages.*;
 import aloyslisp.internal.iterators.*;
+import static aloyslisp.core.L.*;
 
 /**
  * cCONS
@@ -245,15 +246,24 @@ public class cCONS extends cCELL implements tCONS
 		{
 			// Expand macros
 			tT me = MACROEXPAND()[0];
-			System.out.println("MACROEXPAND : " + me + " args : " + cdr);
-			return MACROEXPAND()[0].EVAL();
+			// System.out.println("MACROEXPAND : " + me + " args : " + cdr);
+			return me.EVAL();
 		}
 
 		// System.out.println("Eval of cons : " + this);
 		if (!(cdr instanceof tLIST))
 			throw new LispException("Can't eval a non LIST cons");
 
-		return ((tSYMBOL) car).SYMBOL_FUNCTION().FUNCALL((tLIST) cdr);
+		if (!(car instanceof tSYMBOL))
+			throw new LispException("FUNCALL on non symbol" + car);
+
+		tT func = ((tSYMBOL) car).SYMBOL_FUNCTION();
+		if (!(func instanceof tFUNCTION))
+		{
+			System.out.println(cl.DESCRIBE());
+			throw new LispException("FUNCALL on non function" + car);
+		}
+		return ((tFUNCTION) func).FUNCALL((tLIST) cdr);
 	}
 
 	/*
@@ -546,7 +556,7 @@ public class cCONS extends cCELL implements tCONS
 	/**
 	 * QUOTE to test constant lists
 	 */
-	private static final tT	QUOTE	= sym("lisp::quote");
+	private static final tT	QUOTE	= sym("quote");
 
 	/*
 	 * (non-Javadoc)

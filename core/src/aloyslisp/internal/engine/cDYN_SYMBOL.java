@@ -36,6 +36,7 @@ import aloyslisp.core.*;
 import aloyslisp.core.conditions.*;
 import aloyslisp.core.packages.*;
 import aloyslisp.core.sequences.*;
+import static aloyslisp.core.L.*;
 
 /**
  * cDYN_SYMBOL

@@ -34,6 +34,7 @@ import aloyslisp.core.*;
 import aloyslisp.core.conditions.LispException;
 import aloyslisp.core.sequences.cSTRING;
 import aloyslisp.core.sequences.tSTRING_DESIGNATOR;
+import static aloyslisp.core.L.*;
 
 /**
  * cPATHNAME

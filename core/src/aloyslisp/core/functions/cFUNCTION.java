@@ -24,85 +24,84 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 21 févr. 2011 Creation
+// IP 10 mars 2011 Creation
 // --------------------------------------------------------------------------
 
-package aloyslisp.internal.engine;
+package aloyslisp.core.functions;
 
+import static aloyslisp.core.L.*;
 import aloyslisp.core.*;
 import aloyslisp.core.conditions.*;
 import aloyslisp.core.sequences.*;
-import static aloyslisp.core.L.*;
+import aloyslisp.internal.engine.*;
 
 /**
- * cENV_PROGN
+ * cFUNCTION
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class cENV_PROGN extends cENV
+public abstract class cFUNCTION extends cAPI implements tFUNCTION
 {
-	protected tLIST	blocks	= NIL;
-
-	protected tLIST	ip		= NIL;
-
-	public cENV_PROGN(tT... blocks)
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.functions.tFUNCTION#e(java.lang.Object[])
+	 */
+	@Override
+	public tT[] e(Object... args)
 	{
-		super();
-		this.blocks = list((Object[]) blocks);
-		ip = this.blocks;
+		return FUNCALL(list(args));
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.cCELL#toString()
+	 * @see
+	 * aloyslisp.core.functions.tFUNCTION#FUNCALL(aloyslisp.core.sequences.tLIST
+	 * )
 	 */
-	public String toString()
+	public tT[] FUNCALL(tLIST args)
 	{
-		return ("#<ENV-PROGN " + ip.toString() + ">");
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.cCELL#EVAL()
-	 */
-	public tT[] EVAL()
-	{
+		// System.out.println("FUNCALL : " + name + " " + args + " " +
+		// DESCRIBE());
 		tT[] res = new tT[]
 		{ NIL };
 
-		while (ip != NIL)
+		tENV closure = null;
+		tENV let = new cENV_LET();
+		let.ENV_PUSH();
+		try
 		{
-			res = ENV_STEP();
+			args = API_PUSH_ENV(args, let);
+			if (!(special || macro))
+			{
+				closure = new cENV_CLOSURE(name, environment);
+				((cENV) closure).previous = ((cENV) let).previous;
+				((cENV) let).previous = closure;
+				e.topEnv = let;
+			}
+			// System.out.println("API-CALL :" + DESCRIBE() + "\nargs : " +
+			// args);
+			res = API_CALL(args);
+		}
+		catch (RuntimeException e)
+		{
+			throw e;
+		}
+		catch (Exception e)
+		{
+			throw new LispException("Non lisp error in " + this + " : "
+					+ e.getLocalizedMessage());
+		}
+		finally
+		{
+			if (!(special || macro) && closure != null)
+			{
+				let.ENV_POP();
+				closure.ENV_POP();
+			}
 		}
 		return res;
-	}
-
-	/**
-	 * Execute next instruction
-	 * 
-	 * @return
-	 */
-	public tT[] ENV_STEP()
-	{
-		tT[] res = null;
-		// System.out.println("exec : " + ip);
-		res = ip.CAR().EVAL();
-		ip = ENV_NEXT_STEP();
-		return res;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.internal.engine.tENV#ENV_NEXT_STEP()
-	 */
-	protected tLIST ENV_NEXT_STEP()
-	{
-		if (!(ip.CDR() instanceof tLIST))
-			throw new LispException("BLOCK code is not a list : " + blocks);
-
-		return ip = (tLIST) ip.CDR();
 	}
 
 }

@@ -29,9 +29,9 @@
 
 package aloyslisp;
 
-import aloyslisp.core.*;
-import aloyslisp.core.packages.*;
+import aloyslisp.core.conditions.LispException;
 import aloyslisp.internal.engine.*;
+import static aloyslisp.core.L.*;
 
 /**
  * Lisp
@@ -40,7 +40,7 @@ import aloyslisp.internal.engine.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class Lisp extends cCELL
+public class Lisp
 {
 
 	/**
@@ -53,6 +53,7 @@ public class Lisp extends cCELL
 		// Should be the first to allow READTABLE to be active in class
 		// loading...
 		// TODO put to core
+		System.out.println(cl.PACKAGE_NAME());
 		loadClasses("aloyslisp.core.streams");
 
 		// Load the rest
@@ -74,19 +75,19 @@ public class Lisp extends cCELL
 		loadClasses("aloyslisp.packages.system");
 
 		// Load first lisp file (REPL definition)
-		sym("lisp::print").e(str("aloysLisp v.V305"));
+		sym("print").e(str("aloysLisp v.V305"));
 
 		// Load first lisp file (REPL definition)
-		sym("lisp::load").e(str("class.lisp"));
+		sym("load").e(str("class.lisp"));
 
-		cPACKAGE.cl.dump();
+		// cPACKAGE.cl.dump();
 
 		// loop recovering errors
 		for (;;)
 		{
 			try
 			{
-				sym("lisp::repl").e();
+				sym("repl").e();
 			}
 			catch (Exception ex)
 			{
@@ -94,7 +95,6 @@ public class Lisp extends cCELL
 
 				e = new cTHREAD();
 			}
-			break;
 		}
 	}
 
@@ -105,9 +105,12 @@ public class Lisp extends cCELL
 	{
 		System.err.println(ex.getLocalizedMessage());
 		// System.err.println("*trace* = " + sym("*trace*").SYMBOL_VALUE());
-		if (sym("*trace*").SYMBOL_VALUE() != NIL)
+		if (ex instanceof LispException)
 		{
-			ex.printStackTrace();
+			if (((LispException) ex).trace)
+				ex.printStackTrace();
 		}
+		else
+			ex.printStackTrace();
 	}
 }

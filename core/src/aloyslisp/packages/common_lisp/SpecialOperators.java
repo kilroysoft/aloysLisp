@@ -37,6 +37,7 @@ import aloyslisp.core.functions.*;
 import aloyslisp.core.sequences.*;
 import aloyslisp.internal.engine.*;
 import aloyslisp.internal.flowcontrol.*;
+import static aloyslisp.core.L.*;
 
 /**
  * SpecialOperators
@@ -53,12 +54,12 @@ public class SpecialOperators extends cCELL
 	 * @param func
 	 * @return
 	 */
-	@Static(name = "lisp::defmacro", doc = "m_defmac")
+	@Static(name = "defmacro", doc = "m_defmac")
 	@SpecialOp
 	public static tT DEFMACRO( //
-			@Arg(name = "lisp::name") tSYMBOL name, //
-			@Arg(name = "lisp::args") tLIST args, //
-			@Rest(name = "lisp::macro") tT... macro)
+			@Arg(name = "name") tSYMBOL name, //
+			@Arg(name = "args") tLIST args, //
+			@Rest(name = "macro") tT... macro)
 	{
 		tFUNCTION def = new cLAMBDA_FUNCTION(name, args,
 				list((Object[]) macro), true, true);
@@ -72,17 +73,17 @@ public class SpecialOperators extends cCELL
 	 * @param func
 	 * @return
 	 */
-	@Static(name = "lisp::defun", doc = "m_defun")
+	@Static(name = "defun", doc = "m_defun")
 	@SpecialOp
 	public static tT DEFUN( //
-			@Arg(name = "lisp::name") tSYMBOL name, //
-			@Arg(name = "lisp::args") tLIST argList, //
-			@Rest(name = "lisp::func") tT... function)
+			@Arg(name = "name") tSYMBOL name, //
+			@Arg(name = "args") tLIST argList, //
+			@Rest(name = "func") tT... function)
 	{
 		if (name instanceof tCONS)
 		{
 			// (setf func) definition
-			if (((tLIST) name).CAR() != sym("lisp::setf")
+			if (((tLIST) name).CAR() != sym("setf")
 					|| ((tLIST) name).LENGTH() != 2
 					|| !(((tLIST) name).CDR().CAR() instanceof tSYMBOL))
 			{
@@ -129,11 +130,11 @@ public class SpecialOperators extends cCELL
 	 * @param aFunc
 	 * @return
 	 */
-	@Static(name = "lisp::function", doc = "s_fn")
+	@Static(name = "function", doc = "s_fn")
 	@Mac(prefix = "#'")
 	@SpecialOp
 	public static tT FUNCTION( //
-			@Arg(name = "lisp::func") tT aFunc)
+			@Arg(name = "func") tT aFunc)
 	{
 		tT res = NIL;
 
@@ -211,10 +212,10 @@ public class SpecialOperators extends cCELL
 	 * @param tag
 	 * @return
 	 */
-	@Static(name = "lisp::go", doc = "s_go")
+	@Static(name = "go", doc = "s_go")
 	@SpecialOp
 	public static tT GO( //
-			@Arg(name = "lisp::tag") tT tag)
+			@Arg(name = "tag") tT tag)
 	{
 		if (e.ENV_TAG_TST(tag) == null)
 			throw new LispException("GO to unreachable label : " + tag);
@@ -228,12 +229,12 @@ public class SpecialOperators extends cCELL
 	 * @param or
 	 * @return
 	 */
-	@Static(name = "lisp::if", doc = "s_if")
+	@Static(name = "if", doc = "s_if")
 	@SpecialOp
 	public static tT[] IF( //
-			@Arg(name = "lisp::cond") tT cond, //
-			@Arg(name = "lisp::then") tT then, //
-			@Opt(name = "lisp::else") tT or)
+			@Arg(name = "cond") tT cond, //
+			@Arg(name = "then") tT then, //
+			@Opt(name = "else") tT or)
 	{
 		return cond.EVAL()[0] != NIL ? then.EVAL() : or.EVAL();
 	}
@@ -242,10 +243,10 @@ public class SpecialOperators extends cCELL
 	 * @param cell
 	 * @return
 	 */
-	@Static(name = "lisp::quote", doc = "s_quote")
+	@Static(name = "quote", doc = "s_quote")
 	@SpecialOp
 	public static tT QUOTE( //
-			@Arg(name = "lisp::cell") tT cell)
+			@Arg(name = "cell") tT cell)
 	{
 		return cell;
 	}
@@ -255,12 +256,16 @@ public class SpecialOperators extends cCELL
 	 * @param value
 	 * @return
 	 */
-	@Static(name = "lisp::return-from", doc = "s_ret_fr")
+	@Static(name = "return-from", doc = "s_ret_fr")
 	@SpecialOp
 	public static tT RETURN_FROM( //
-			@Arg(name = "lisp::tag") tSYMBOL tag, //
-			@Opt(name = "lisp::value") tT value)
+			@Arg(name = "tag") tSYMBOL tag, //
+			@Opt(name = "value") tT value)
 	{
+		if (tag != NIL && e.ENV_BLOCK_TST(tag) == null)
+			throw new LispException("No return block for (RETURN-FROM " + tag
+					+ ")");
+
 		throw new RETURN_CONDITION(tag, value.EVAL());
 	}
 
@@ -269,11 +274,11 @@ public class SpecialOperators extends cCELL
 	 * @param value
 	 * @return
 	 */
-	@Static(name = "lisp::setf", doc = "m_setf_")
+	@Static(name = "setf", doc = "m_setf_")
 	@SpecialOp
 	public static tT[] SETF( //
-			@Arg(name = "lisp::place") tT place, //
-			@Arg(name = "lisp::value") tT value)
+			@Arg(name = "place") tT place, //
+			@Arg(name = "value") tT value)
 	{
 		// if symbol it's a SETQ
 		if (place instanceof tSYMBOL)
@@ -317,7 +322,7 @@ public class SpecialOperators extends cCELL
 	 * @param args
 	 * @return
 	 */
-	@Static(name = "lisp::setq", doc = "s_setq")
+	@Static(name = "setq", doc = "s_setq")
 	@SpecialOp
 	public static tT SETQ( //
 			@Rest(name = "args") tT... args)
@@ -348,6 +353,9 @@ public class SpecialOperators extends cCELL
 			}
 			else
 			{
+				// debug dump
+				// e.ENV_DUMP();
+
 				// get and set value
 				val = cell.EVAL()[0];
 				((tSYMBOL) var).SET_SYMBOL_VALUE(val);
@@ -364,12 +372,12 @@ public class SpecialOperators extends cCELL
 	 * @param func
 	 * @return
 	 */
-	@Static(name = "lisp::tagbody", doc = "s_tagbod")
+	@Static(name = "tagbody", doc = "s_tagbod")
 	@SpecialOp
 	public static tT TAGBODY( //
 			@Rest(name = "func") tT... func)
 	{
-		cENV_TAG tag = new cENV_TAG(list((Object[]) func));
+		cENV_TAG tag = new cENV_TAG(func);
 		tag.ENV_PUSH();
 		try
 		{
@@ -393,13 +401,13 @@ public class SpecialOperators extends cCELL
 	 * @param block
 	 * @return
 	 */
-	@Static(name = "lisp::block", doc = "s_block")
+	@Static(name = "block", doc = "s_block")
 	@SpecialOp
 	public static tT[] BLOCK( //
-			@Arg(name = "lisp::name") tSYMBOL name, //
-			@Rest(name = "lisp::block") tT... blocks)
+			@Arg(name = "name") tSYMBOL name, //
+			@Rest(name = "block") tT... blocks)
 	{
-		cENV_BLOCK block = new cENV_BLOCK(name, list((Object[]) blocks));
+		cENV_BLOCK block = new cENV_BLOCK(name, blocks);
 		block.ENV_PUSH();
 		tT[] res = new tT[]
 		{ NIL };
@@ -416,7 +424,6 @@ public class SpecialOperators extends cCELL
 		}
 		catch (RuntimeException e)
 		{
-			e.printStackTrace();
 			throw e;
 		}
 		finally
@@ -434,13 +441,13 @@ public class SpecialOperators extends cCELL
 	 * @param func
 	 * @return
 	 */
-	@Static(name = "lisp::let", doc = "s_let_l")
+	@Static(name = "let", doc = "s_let_l")
 	@SpecialOp
 	public static tT[] LET( //
-			@Arg(name = "lisp::args") tLIST args, //
-			@Rest(name = "lisp::func") tT... function)
+			@Arg(name = "args") tLIST args, //
+			@Rest(name = "func") tT... function)
 	{
-		tLIST func = list((Object[]) function);
+		tLIST func = cAPI.API_PARSE_FUNC(list((Object[]) function));
 		tT doc = func.CAR();
 		tLIST decl = (tLIST) func.CDR().CAR();
 		func = (tLIST) func.CDR().CDR().CAR();
@@ -449,14 +456,14 @@ public class SpecialOperators extends cCELL
 
 		cAPI arguments = new cAPI(args, doc, decl);
 		tENV env = new cENV_LET();
+		env.ENV_PUSH();
 		try
 		{
-			arguments.API_PUSH_ENV(args, env);
-			res = PROGN(func);
+			arguments.API_PUSH_ENV(NIL, env);
+			res = PROGN(func.VALUES_LIST());
 		}
 		catch (RuntimeException e)
 		{
-			e.printStackTrace();
 			throw e;
 		}
 		finally
@@ -471,14 +478,14 @@ public class SpecialOperators extends cCELL
 	 * @param rest
 	 * @return
 	 */
-	@Static(name = "lisp::prog1", doc = "m_prog1c")
+	@Static(name = "prog1", doc = "m_prog1c")
 	@SpecialOp
 	public static tT PROG1( //
-			@Arg(name = "lisp::first") tT first, //
-			@Rest(name = "lisp::rest") tT... rest)
+			@Arg(name = "first") tT first, //
+			@Rest(name = "rest") tT... rest)
 	{
 		tT res = first.EVAL()[0];
-		PROGN(list((Object[]) rest));
+		PROGN(rest);
 		return res;
 	}
 
@@ -487,14 +494,14 @@ public class SpecialOperators extends cCELL
 	 * @param rest
 	 * @return
 	 */
-	@Static(name = "lisp::multiple-value-prog1", doc = "s_mult_1")
+	@Static(name = "multiple-value-prog1", doc = "s_mult_1")
 	@SpecialOp
 	public static tT[] MULTIPLE_VALUE_PROG1( //
-			@Arg(name = "lisp::first") tT first, //
-			@Rest(name = "lisp::rest") tT... rest)
+			@Arg(name = "first") tT first, //
+			@Rest(name = "rest") tT... rest)
 	{
 		tT[] res = first.EVAL();
-		PROGN(list((Object[]) rest));
+		PROGN(rest);
 		return res;
 	}
 
@@ -503,11 +510,11 @@ public class SpecialOperators extends cCELL
 	 * @param block
 	 * @return
 	 */
-	@Static(name = "lisp::multiple-value-call", doc = "s_multip")
+	@Static(name = "multiple-value-call", doc = "s_multip")
 	@SpecialOp
 	public static tT[] MULTIPLE_VALUE_CALL( //
-			@Arg(name = "lisp::func") tT func, //
-			@Rest(name = "lisp::block") tT... block)
+			@Arg(name = "func") tT func, //
+			@Rest(name = "block") tT... block)
 	{
 		tLIST res = NIL;
 		tT function = func.EVAL()[0];
@@ -531,14 +538,14 @@ public class SpecialOperators extends cCELL
 	 * @param block
 	 * @return
 	 */
-	@Static(name = "lisp::progn", doc = "s_progn")
+	@Static(name = "progn", doc = "s_progn")
 	@SpecialOp
 	public static tT[] PROGN( //
-			@Rest(name = "lisp::block") tT... block)
+			@Rest(name = "block") tT... block)
 	{
 		tT[] res = new tT[]
 		{ NIL };
-		cENV_PROGN progn = new cENV_PROGN(list((Object[]) block));
+		cENV_PROGN progn = new cENV_PROGN(block);
 		progn.ENV_PUSH();
 		try
 		{
@@ -561,12 +568,12 @@ public class SpecialOperators extends cCELL
 	 * @param block
 	 * @return
 	 */
-	@Static(name = "lisp::prog", doc = "m_prog_")
+	@Static(name = "prog", doc = "m_prog_")
 	@SpecialOp
 	public static tT[] PROG( //
-			@Arg(name = "lisp::name") tSYMBOL name, //
-			@Arg(name = "lisp::args") tLIST args, //
-			@Rest(name = "lisp::block") tT... blocks)
+			@Arg(name = "name") tSYMBOL name, //
+			@Arg(name = "args") tLIST args, //
+			@Rest(name = "block") tT... blocks)
 	{
 		// TODO this is a macro
 		return list(BLOCK, name,
@@ -579,11 +586,11 @@ public class SpecialOperators extends cCELL
 	 * @param block
 	 * @return
 	 */
-	@Static(name = "lisp::unwind-protect", doc = "s_unwind")
+	@Static(name = "unwind-protect", doc = "s_unwind")
 	@SpecialOp
 	public static tT[] UNWIND_PROTECT( //
-			@Arg(name = "lisp::protected-form") tT prot, //
-			@Rest(name = "lisp::block") tT... block)
+			@Arg(name = "protected-form") tT prot, //
+			@Rest(name = "block") tT... block)
 	{
 		RuntimeException ex = null;
 		tT[] res = new tT[] {};
@@ -625,11 +632,11 @@ public class SpecialOperators extends cCELL
 	 * @param block
 	 * @return
 	 */
-	@Static(name = "lisp::catch", doc = "s_catch")
+	@Static(name = "catch", doc = "s_catch")
 	@SpecialOp
 	public static tT[] CATCH( //
-			@Arg(name = "lisp::catch-tag") tT tag, //
-			@Rest(name = "lisp::block") tT... block)
+			@Arg(name = "catch-tag") tT tag, //
+			@Rest(name = "block") tT... block)
 	{
 		tT[] res = new tT[] {};
 

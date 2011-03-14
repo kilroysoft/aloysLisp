@@ -33,8 +33,10 @@ import java.lang.reflect.*;
 
 import aloyslisp.annotations.*;
 import aloyslisp.core.cCELL;
+import aloyslisp.core.conditions.LispException;
 import aloyslisp.core.functions.*;
 import aloyslisp.core.packages.*;
+import static aloyslisp.core.L.*;
 
 /**
  * Library
@@ -123,13 +125,13 @@ public class Library extends cCELL
 				}
 				catch (IllegalArgumentException e1)
 				{
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					throw new LispException("Illegal argument " + clas + " : "
+							+ e1.getLocalizedMessage());
 				}
 				catch (IllegalAccessException e1)
 				{
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					throw new LispException("Illegal access " + clas + " : "
+							+ e1.getLocalizedMessage());
 				}
 
 				if (constant)
@@ -157,6 +159,7 @@ public class Library extends cCELL
 	 */
 	public static Boolean InstMethods(String cls, Class<?> clas)
 	{
+		System.out.println("class " + cls);
 		Method[] meth = clas.getMethods();
 		for (Method m : meth)
 		{
@@ -189,11 +192,11 @@ public class Library extends cCELL
 			tSYMBOL sym = null;
 			if (stat != null)
 			{
-				sym = sym(stat.name());
+				sym = sym(stat.name().toUpperCase());
 			}
 			else if (f != null)
 			{
-				sym = sym(f.name());
+				sym = sym(f.name().toUpperCase());
 			}
 			else
 				return false;
@@ -212,5 +215,4 @@ public class Library extends cCELL
 
 		return true;
 	}
-
 }

@@ -24,57 +24,131 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 16 sept. 2010 Creation
+// IP 9 mars 2011 Creation
 // --------------------------------------------------------------------------
 
 package aloyslisp.core;
 
-import java.io.*;
-import java.net.*;
-import java.util.*;
-import java.util.jar.*;
+import static aloyslisp.core.L.e;
+import static aloyslisp.core.L.str;
 
-import aloyslisp.annotations.*;
-import aloyslisp.core.conditions.*;
-import aloyslisp.core.math.*;
-import aloyslisp.core.packages.*;
-import aloyslisp.core.sequences.*;
-import aloyslisp.core.streams.*;
-import aloyslisp.internal.engine.*;
+import java.io.File;
+import java.io.FilenameFilter;
+import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Enumeration;
+import java.util.List;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
+
+import aloyslisp.annotations.Symb;
+import aloyslisp.core.conditions.LispException;
+import aloyslisp.core.math.cBIGNUM;
+import aloyslisp.core.math.cCOMPLEX;
+import aloyslisp.core.math.cDOUBLE_FLOAT;
+import aloyslisp.core.math.cINTEGER;
+import aloyslisp.core.math.cRATIO;
+import aloyslisp.core.math.cSHORT_FLOAT;
+import aloyslisp.core.math.cSINGLE_FLOAT;
+import aloyslisp.core.math.tNUMBER;
+import aloyslisp.core.math.tREAL;
+import aloyslisp.core.packages.cNIL;
+import aloyslisp.core.packages.cPACKAGE;
+import aloyslisp.core.packages.cSYMBOL;
+import aloyslisp.core.packages.tPACKAGE;
+import aloyslisp.core.packages.tPACKAGE_DESIGNATOR;
+import aloyslisp.core.packages.tSYMBOL;
+import aloyslisp.core.sequences.cCONS;
+import aloyslisp.core.sequences.cHASH_TABLE;
+import aloyslisp.core.sequences.cSTRING;
+import aloyslisp.core.sequences.tHASH_TABLE;
+import aloyslisp.core.sequences.tLIST;
+import aloyslisp.core.sequences.tSTRING;
+import aloyslisp.core.streams.cCHARACTER;
+import aloyslisp.core.streams.cFILE_INPUT_STREAM;
+import aloyslisp.core.streams.cFILE_OUTPUT_STREAM;
+import aloyslisp.core.streams.cREADTABLE;
+import aloyslisp.core.streams.cSTRING_INPUT_STREAM;
+import aloyslisp.core.streams.tCHARACTER;
+import aloyslisp.core.streams.tSTREAM;
+import aloyslisp.internal.engine.Library;
+import aloyslisp.internal.engine.cDYN_SYMBOL;
+import aloyslisp.internal.engine.cTHREAD;
 
 /**
- * Base environment en global functions of Common Lisp
+ * L
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class cLISP
+public abstract class L
 {
 	/**
 	 * Execution context for Closures
 	 */
-	public static cTHREAD	e			= new cTHREAD();
+	public static cTHREAD		e			= new cTHREAD();
 
 	/**
 	 * Current Package
 	 * *package* should be be first hardwired, because it's used to api
 	 * symbols....
 	 */
-	public static tSYMBOL	sPACKAGEs	= new cSYMBOL("*package*", cPACKAGE.cl)
-												.setSpecial(true)
-												.SET_SYMBOL_VALUE(cPACKAGE.cl);
+	// public static tSYMBOL sPACKAGEs = new cSYMBOL("*package*", cPACKAGE.cl)
+	// .setSpecial(true)
+	// .SET_SYMBOL_VALUE(cPACKAGE.cl);
+	//
+	// static
+	// {
+	// ((cPACKAGE) cPACKAGE.cl).external.SET_GETHASH(sPACKAGEs,
+	// str("*package*"));
+	// }
+	public static tSYMBOL		sPACKAGEs	= null;
+
+	/**
+	 * List of all packages
+	 */
+	public static tHASH_TABLE	packages	= cHASH_TABLE.MAKE_HASH_TABLE();
+
+	/**
+	 * Keywords
+	 */
+	public static tPACKAGE		key			= new cPACKAGE("keyword");
+
+	/**
+	 * System implementation functions
+	 */
+	public static tPACKAGE		sys			= new cPACKAGE("system");
+
+	/**
+	 * Main lisp functions
+	 */
+	public static tPACKAGE		cl			= new cPACKAGE("common-lisp");
 
 	static
 	{
-		((cPACKAGE) cPACKAGE.cl).external.put("*package*", sPACKAGEs);
+		if (e == null)
+			e = new cTHREAD();
+
+		packages.SET_GETHASH(cl, str("common-lisp"));
+		packages.SET_GETHASH(cl, str("cl"));
+		packages.SET_GETHASH(cl, str("lisp"));
+		packages.SET_GETHASH(sys, str("system"));
+		packages.SET_GETHASH(sys, str("sys"));
+		packages.SET_GETHASH(key, str("keyword"));
+		packages.SET_GETHASH(key, str("key"));
 	}
 
 	/**
 	 * Afterward we can get the current package here
 	 */
-	public static cPACKAGE currPackage()
+	public static tPACKAGE currPackage()
 	{
+		// System.out.println("Curr package = " + sPACKAGEs);
+		if (sPACKAGEs == null)
+			return cl;
 		return (cPACKAGE) sPACKAGEs.SYMBOL_VALUE();
 	}
 
@@ -85,7 +159,11 @@ public class cLISP
 	static
 	{
 		// Nil is directly put in package
-		((cPACKAGE) currPackage()).external.put("nil", NIL);
+		((cPACKAGE) currPackage()).external.SET_GETHASH(NIL, str("NIL"));
+		System.out.println("aga");
+		sPACKAGEs = (tSYMBOL) ((cPACKAGE) currPackage()).external.SET_GETHASH(
+				new cSYMBOL("*PACKAGE*", cl).SET_SYMBOL_VALUE(cl),
+				str("*PACKAGE*"));
 	}
 
 	/**
@@ -118,10 +196,10 @@ public class cLISP
 	private static final tSTREAM	query					= terminal;
 
 	// Key for setf in PLIST
-	public static final tSYMBOL		setfKey					= key("setf-func");
+	public static tSYMBOL			setfKey					= key("SETF-FUNC");
 
 	// Key for symbol type in PLIST
-	public static final tSYMBOL		typeClass				= key("type-class");
+	public static tSYMBOL			typeClass				= key("TYPE-CLASS");
 
 	/*
 	 * All standard streams variables
@@ -562,20 +640,15 @@ public class cLISP
 		}
 		if (name.startsWith(":"))
 		{
-			return cPACKAGE.key.INTERN(name.substring(1))[0];
+			return key.INTERN(name.substring(1))[0];
 		}
 		int pos = name.indexOf(":");
 		if (pos > 0)
 		{
 
-			tSYMBOL packName = cPACKAGE.packages.get(name.substring(0, pos));
-			if (packName == null)
-			{
-				throw new LispException("Package doesn't exist : "
-						+ name.substring(0, pos));
-			}
-			tPACKAGE pack = (tPACKAGE) packName.SYMBOL_VALUE();
-			if (pack == null)
+			tT pack = (tPACKAGE) packages.GETHASH(str(name.substring(0, pos)),
+					NIL)[0];
+			if (pack == NIL)
 			{
 				throw new LispException("Package doesn't exist : "
 						+ name.substring(0, pos));
@@ -585,7 +658,8 @@ public class cLISP
 			{
 				pos++;
 			}
-			return pack.INTERN(name.substring(pos + 1, name.length()))[0];
+			return ((tPACKAGE) pack).INTERN(name.substring(pos + 1,
+					name.length()))[0];
 		}
 		else
 			return currPackage().INTERN(name)[0];
@@ -631,8 +705,15 @@ public class cLISP
 	 */
 	public static tSYMBOL key(String name)
 	{
-		return ((cPACKAGE) cPACKAGE.key).external.put(name,
-				new cSYMBOL(name).setConstant(true));
+		tSYMBOL res = (tSYMBOL) ((cPACKAGE) key).external.SET_GETHASH(
+				new cSYMBOL(name, key).setConstant(true),
+				str(name.toUpperCase()));
+		if (res == null)
+			System.out
+					.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAARRRRRGGGGG : "
+							+ name);// + " ->" + res.DESCRIBE());
+		System.out.println("New Key : " + name);// + " ->" + res.DESCRIBE());
+		return res;
 	}
 
 	/**
@@ -643,7 +724,7 @@ public class cLISP
 	 */
 	public static tLIST quote(Object form)
 	{
-		return decl("lisp::quote", form);
+		return decl("quote", form);
 	}
 
 	/**
@@ -654,7 +735,7 @@ public class cLISP
 	 */
 	public static tLIST unquote(Object form)
 	{
-		return decl("sys::%unquote", form);
+		return decl("%unquote", form);
 	}
 
 	/**
@@ -665,7 +746,7 @@ public class cLISP
 	 */
 	public static tLIST backquote(Object form)
 	{
-		return decl("sys::%backquote", form);
+		return decl("%backquote", form);
 	}
 
 	/**
@@ -676,7 +757,7 @@ public class cLISP
 	 */
 	public static tLIST splice(Object form)
 	{
-		return decl("sys::%splice", form);
+		return decl("%splice", form);
 	}
 
 	/**
@@ -718,13 +799,13 @@ public class cLISP
 		}
 		catch (ClassNotFoundException e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new LispException("Class not found  " + pkg + " : "
+					+ e.getLocalizedMessage());
 		}
 		catch (IOException e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new LispException("Error reading class " + pkg + " : "
+					+ e.getLocalizedMessage());
 		}
 	}
 

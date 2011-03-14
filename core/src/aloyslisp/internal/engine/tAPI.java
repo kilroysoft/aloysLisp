@@ -190,13 +190,4 @@ public interface tAPI extends tBUILT_IN_CLASS
 	@Function(name = "api-call")
 	public tT[] API_CALL(tLIST args);
 
-	/**
-	 * Execute function with separate arguments
-	 * 
-	 * @param args
-	 *            individual args
-	 * @return Evaluated results in ana array for eventual multiple values
-	 */
-	public tT[] e(Object... args);
-
 }

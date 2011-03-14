@@ -33,6 +33,7 @@ import aloyslisp.core.*;
 import aloyslisp.core.conditions.*;
 import aloyslisp.core.math.*;
 import aloyslisp.annotations.*;
+import static aloyslisp.core.L.*;
 
 /**
  * cSTRING_INPUT_STREAM

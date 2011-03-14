@@ -36,6 +36,7 @@ import aloyslisp.core.functions.*;
 import aloyslisp.core.math.*;
 import aloyslisp.core.packages.*;
 import aloyslisp.core.sequences.*;
+import static aloyslisp.core.L.*;
 
 /**
  * cINPUT_STREAM
@@ -346,7 +347,7 @@ public abstract class cINPUT_STREAM extends cSTREAM implements tINPUT_STREAM
 				}
 
 				// and evaluate it
-				System.out.println("eval : " + res[0]);
+				// System.out.println("eval : " + res[0]);
 				res = res[0].EVAL();
 
 				if (print)
@@ -367,8 +368,8 @@ public abstract class cINPUT_STREAM extends cSTREAM implements tINPUT_STREAM
 		}
 		catch (Exception e)
 		{
-			e.printStackTrace();
-			throw new LispException(e.getLocalizedMessage());
+			throw new LispException("Error on load : "
+					+ e.getLocalizedMessage());
 		}
 
 		if (verbose)

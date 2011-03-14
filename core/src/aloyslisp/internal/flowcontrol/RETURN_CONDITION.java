@@ -31,6 +31,7 @@ package aloyslisp.internal.flowcontrol;
 
 import aloyslisp.core.*;
 import aloyslisp.core.packages.*;
+import static aloyslisp.core.L.*;
 
 /**
  * RETURN_CONDITION
@@ -66,7 +67,7 @@ public class RETURN_CONDITION extends LispFlowControl
 	 */
 	public Boolean TST_RETURN(tSYMBOL name)
 	{
-		return this.name == cLISP.NIL || this.name.EQL(name);
+		return this.name == NIL || this.name.EQL(name);
 	}
 
 	/**

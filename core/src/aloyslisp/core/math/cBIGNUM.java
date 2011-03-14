@@ -33,6 +33,7 @@ import java.math.BigInteger;
 
 import aloyslisp.core.*;
 import aloyslisp.core.conditions.*;
+import static aloyslisp.core.L.*;
 
 /**
  * cBIGNUM

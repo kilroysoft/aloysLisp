@@ -33,6 +33,7 @@ import java.io.*;
 
 import aloyslisp.core.tT;
 import aloyslisp.core.conditions.LispException;
+import static aloyslisp.core.L.*;
 
 /**
  * cFILE_OUTPUT_STREAM
@@ -128,6 +129,7 @@ public class cFILE_OUTPUT_STREAM extends cOUTPUT_STREAM implements
 	{
 		// TODO verify output
 		writer.flush();
+		lineBegin = true;
 		return T;
 	}
 

@@ -37,6 +37,7 @@ import aloyslisp.core.conditions.*;
 import aloyslisp.core.functions.*;
 import aloyslisp.core.sequences.*;
 import aloyslisp.internal.iterators.*;
+import static aloyslisp.core.L.*;
 
 /**
  * cNIL
@@ -183,7 +184,7 @@ public class cNIL extends cSYMBOL implements tNULL
 	 */
 	public String toString()
 	{
-		return "nil";
+		return "NIL";
 	}
 
 	// defined elsewhere (cNIL is just a gost of a cCONS or cSYMBOL)

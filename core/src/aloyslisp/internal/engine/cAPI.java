@@ -41,6 +41,7 @@ import aloyslisp.core.conditions.LispException;
 import aloyslisp.core.packages.*;
 import aloyslisp.core.sequences.*;
 import aloyslisp.internal.iterators.*;
+import static aloyslisp.core.L.*;
 
 /**
  * Main API definition.
@@ -74,27 +75,27 @@ public class cAPI extends cCELL implements tAPI
 	 * argument representation in the java side.
 	 * They will be set from LISP definition or from Methods for Java code.
 	 */
-	tSYMBOL					name				= null;
+	protected tSYMBOL		name				= null;
 
-	tLIST					vars				= NIL;
+	protected tLIST			vars				= NIL;
 
-	Boolean					allowOtherKeys		= false;
+	protected Boolean		allowOtherKeys		= false;
 
-	Integer					basePos				= -1;
+	protected Integer		basePos				= -1;
 
-	Integer					obl					= 0;
+	protected Integer		obl					= 0;
 
-	tSYMBOL					rest				= null;
+	protected tSYMBOL		rest				= null;
 
-	tSYMBOL					whole				= null;
+	protected tSYMBOL		whole				= null;
 
-	tT						doc					= NIL;
+	protected tT			doc					= NIL;
 
-	tENV					environment			= null;
+	protected tENV			environment			= null;
 
-	Boolean					special				= false;
+	protected Boolean		special				= false;
 
-	Boolean					macro				= false;
+	protected Boolean		macro				= false;
 
 	/**
 	 * or lambda APIs
@@ -350,48 +351,6 @@ public class cAPI extends cCELL implements tAPI
 	 * @param args
 	 * @return
 	 */
-	public tT[] FUNCALL(tLIST args)
-	{
-		// System.out.println("FUNCALL : " + name + " " + args + " " +
-		// DESCRIBE());
-		tT[] res = new tT[]
-		{ NIL };
-
-		tENV closure = null;
-		tENV let = new cENV_LET();
-		let.ENV_PUSH();
-		try
-		{
-			args = API_PUSH_ENV(args, let);
-			if (!(special || macro))
-			{
-				closure = new cENV_CLOSURE(environment);
-				((cENV) closure).previous = ((cENV) let).previous;
-				((cENV) let).previous = closure;
-				e.topEnv = let;
-			}
-			// System.out.println("API-CALL :" + DESCRIBE() + "\nargs : " +
-			// args);
-			res = API_CALL(args);
-		}
-		catch (RuntimeException e)
-		{
-			// e.printStackTrace();
-			throw e;
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}
-		finally
-		{
-			let.ENV_POP();
-			if (!(special || macro))
-				closure.ENV_POP();
-		}
-		return res;
-	}
-
 	/*
 	 * (non-Javadoc)
 	 * @see aloyslisp.internal.engine.tAPI#API_EVAL(aloyslisp.core.tT)
@@ -537,17 +496,6 @@ public class cAPI extends cCELL implements tAPI
 	public tT[] API_CALL(tLIST args)
 	{
 		throw new LispException("Function action on LET environment");
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.functions.tFUNCTION#e(java.lang.Object[])
-	 */
-	@Override
-	public tT[] e(Object... args)
-	{
-		// TODO Auto-generated method stub
-		return FUNCALL(list(args));
 	}
 
 	/*

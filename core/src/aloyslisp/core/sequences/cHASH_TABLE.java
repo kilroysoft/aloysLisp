@@ -36,6 +36,7 @@ import aloyslisp.annotations.*;
 import aloyslisp.core.*;
 import aloyslisp.core.functions.*;
 import aloyslisp.core.math.*;
+import static aloyslisp.core.L.*;
 
 /**
  * cHASH_TABLE
@@ -84,11 +85,10 @@ public class cHASH_TABLE extends cCELL implements tHASH_TABLE
 	@Key(keys = "((test (function eql))(size 11)(rehash-size 11)(rehash-threshold))")
 	static public tHASH_TABLE MAKE_HASH_TABLE()
 	{
-		tT test = (tFUNCTION) arg("test", tT.class);
+		tT test = null; // (tFUNCTION) arg("test", tT.class);
 		if (!(test instanceof tFUNCTION))
 			test = null;
-		return new cHASH_TABLE((tFUNCTION) test, (tINTEGER) arg("size",
-				tINTEGER.class), (tFLOAT) arg("rehashThreshold", tFLOAT.class));
+		return new cHASH_TABLE(null, nInt(11), nDouble(0.75));
 	}
 
 	/*
@@ -155,12 +155,19 @@ public class cHASH_TABLE extends cCELL implements tHASH_TABLE
 	{
 		currTest = test;
 		tT res = table.get(key);
+
 		if (res == null)
+		{
+			// System.out.println("GETHASH : " + key + " " + def);
 			return new tT[]
 			{ def, NIL };
+		}
 		else
+		{
+			// System.out.println("GETHASH : " + key + " " + res.DESCRIBE());
 			return new tT[]
 			{ res, T };
+		}
 	}
 
 	/*
@@ -170,10 +177,12 @@ public class cHASH_TABLE extends cCELL implements tHASH_TABLE
 	 * aloyslisp.core.sequences.tHASH_TABLE)
 	 */
 	@Override
-	public tT SET_GETHASH(tT value, tT key, tT def)
+	public tT SET_GETHASH(tT value, tT key)
 	{
 		currTest = test;
-		return table.put(key, value);
+		// System.out.println("SET_GETHASH : " + key + " " + value.DESCRIBE());
+		table.put(key, value);
+		return value;
 	}
 
 	/*
@@ -215,5 +224,25 @@ public class cHASH_TABLE extends cCELL implements tHASH_TABLE
 	{
 		table.clear();
 		return NIL;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.sequences.tHASH_TABLE#HASH_TABLE_KEYS()
+	 */
+	@Override
+	public tLIST HASH_TABLE_KEYS()
+	{
+		return list(table.keySet().toArray());
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.sequences.tHASH_TABLE#HASH_TABLE_VALUES()
+	 */
+	@Override
+	public tLIST HASH_TABLE_VALUES()
+	{
+		return list(table.values().toArray());
 	}
 }

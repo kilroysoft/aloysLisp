@@ -24,14 +24,15 @@
 
 == Doing ==
 * Add type and class definition in all classes and interfaces.
-* Clean-up all instantiation process (key arguments, rething the calling process)
+* Add THROW/CATCH environment and special operator.
 
 * Test arguments management, rewrite the whole.
-* Rewrite the whole Environment management
 * Replace SymMap by cHASH_MAP.
 * Suppress @Static annotation to @Function with test on static function.
 
 == Current state ==
+* Clean-up all instantiation process (key arguments, rething the calling process)
+* Rewrite the whole Environment management
 * Pass @BaseArg annotation for arguments to functions in the Java call.
 * Add cCOMPILED_MACRO. Change compiled function classes names.
 * Manage symbols annotations and link between SYMBOLs and Java variables.

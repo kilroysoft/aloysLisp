@@ -30,8 +30,10 @@
 package aloyslisp.internal.engine;
 
 import aloyslisp.core.*;
+import aloyslisp.core.conditions.LispException;
 import aloyslisp.core.packages.*;
 import aloyslisp.core.sequences.*;
+import static aloyslisp.core.L.*;
 
 /**
  * cTHREAD
@@ -69,7 +71,7 @@ public class cTHREAD extends cCELL implements tENV
 	 * @param val
 	 * @return
 	 */
-	public cDYN_SYMBOL writeEnv(tSYMBOL name, tT val)
+	public tDYN_SYMBOL writeEnv(tSYMBOL name, tT val)
 	{
 		if (topEnv == null)
 			return null;
@@ -77,7 +79,13 @@ public class cTHREAD extends cCELL implements tENV
 		if (res[1] == NIL)
 			return null;
 
-		return (cDYN_SYMBOL) res[0];
+		if (!(res[0] instanceof tDYN_SYMBOL))
+		{
+			throw new LispException(
+					"SET-ENV-LET-GET value is not a dyn symbol : " + res[0]
+							+ "=" + res[0].DESCRIBE());
+		}
+		return (tDYN_SYMBOL) res[0];
 	}
 
 	/**
@@ -245,7 +253,16 @@ public class cTHREAD extends cCELL implements tENV
 	@Override
 	public tLIST ENV_DUMP()
 	{
-		return topEnv.ENV_DUMP();
+		tLIST res = NIL;
+		System.out.println("=================");
+		System.out.println("Environment trace");
+		if (topEnv != null)
+		{
+			res = topEnv.ENV_DUMP();
+		}
+		System.out.println("Global environment");
+		System.out.println("==================");
+		return res;
 	}
 
 }

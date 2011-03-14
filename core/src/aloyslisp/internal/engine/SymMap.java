@@ -35,6 +35,7 @@ import java.util.*;
 import aloyslisp.core.cCELL;
 import aloyslisp.core.packages.*;
 import aloyslisp.core.sequences.*;
+import static aloyslisp.core.L.*;
 
 /**
  * cPACKAGE

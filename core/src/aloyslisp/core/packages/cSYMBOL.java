@@ -37,6 +37,7 @@ import aloyslisp.core.functions.*;
 import aloyslisp.core.sequences.*;
 import aloyslisp.internal.engine.*;
 import aloyslisp.internal.iterators.*;
+import static aloyslisp.core.L.*;
 
 /**
  * cSYMBOL
@@ -93,7 +94,12 @@ public class cSYMBOL extends cCELL implements tSYMBOL
 	public cSYMBOL(String name)
 	{
 		// trace = true;
-		this.name = name;
+		this.name = name.toUpperCase();
+		if (this.name.equals("NIL"))
+			System.out
+					.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAARRRRRGGGGG : "
+							+ name);// + " ->" + res.DESCRIBE());
+
 		this.value = null;
 		pack = null;
 	}
@@ -105,7 +111,11 @@ public class cSYMBOL extends cCELL implements tSYMBOL
 	public cSYMBOL(String name, tPACKAGE pack)
 	{
 		// trace = true;
-		this.name = name;
+		this.name = name.toUpperCase();
+		if (this.name.equals("NIL"))
+			System.out
+					.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAARRRRRGGGGG : "
+							+ pack.DESCRIBE());// + " ->" + res.DESCRIBE());
 		this.value = null;
 		this.pack = pack;
 	}
@@ -268,7 +278,7 @@ public class cSYMBOL extends cCELL implements tSYMBOL
 	public tT SYMBOL_VALUE()
 	{
 		// keyworks are keywords
-		if (pack == cPACKAGE.key)
+		if (pack == key)
 			return this;
 
 		// in case of special we search in the environment. Dynamic *variables*.
@@ -276,7 +286,7 @@ public class cSYMBOL extends cCELL implements tSYMBOL
 		{
 			// If we fall back here, normal set
 			cDYN_SYMBOL res = getAll(this);
-			if (res != null && !res.SYMBOL_NAME().equals(this.SYMBOL_NAME()))
+			if (res != null && res.SYMBOL_NAME().equals(this.SYMBOL_NAME()))
 				return res.SYMBOL_VALUE();
 		}
 		else
@@ -289,7 +299,7 @@ public class cSYMBOL extends cCELL implements tSYMBOL
 		if (value == null)
 		{
 			// e.trace();
-			throw new LispException("cDYN_SYMBOL " + this + " has no value");
+			throw new LispException("cSYMBOL " + this + " has no value");
 		}
 
 		return value;
@@ -303,7 +313,7 @@ public class cSYMBOL extends cCELL implements tSYMBOL
 	private tT getValue()
 	{
 		// keyworks are keywords
-		if (pack == cPACKAGE.key)
+		if (pack == key)
 			return this;
 
 		// in case of special we search in the environment. Dynamic *variables*.
@@ -357,6 +367,7 @@ public class cSYMBOL extends cCELL implements tSYMBOL
 	public tSYMBOL SET_SYMBOL_FUNCTION(tFUNCTION function)
 	{
 		this.function = function;
+		System.out.println("SET_SYMBOL_FUNCTION : " + DESCRIBE());
 		return this;
 	}
 
@@ -476,7 +487,7 @@ public class cSYMBOL extends cCELL implements tSYMBOL
 		boolean current = currPackage() == pack;
 		boolean reachable = current || currPackage().isInUseList(pack);
 
-		if (pack == cPACKAGE.key)
+		if (pack == key)
 			return (":" + name);
 
 		return (current ? "" : ((tPACKAGE) pack).PACKAGE_NAME()
@@ -641,7 +652,7 @@ public class cSYMBOL extends cCELL implements tSYMBOL
 	@Override
 	public boolean KEYWORDP()
 	{
-		return SYMBOL_PACKAGE() == cPACKAGE.key;
+		return SYMBOL_PACKAGE() == key;
 	}
 
 	/*

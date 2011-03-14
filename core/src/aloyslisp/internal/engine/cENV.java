@@ -33,6 +33,7 @@ import aloyslisp.core.*;
 import aloyslisp.core.conditions.*;
 import aloyslisp.core.packages.*;
 import aloyslisp.core.sequences.*;
+import static aloyslisp.core.L.*;
 
 /**
  * cENV
@@ -46,7 +47,7 @@ public class cENV extends cCELL implements tENV
 	/**
 	 * previous environment in the stack
 	 */
-	tENV	previous	= null;
+	public tENV	previous	= null;
 
 	/**
 	 * Base constructor

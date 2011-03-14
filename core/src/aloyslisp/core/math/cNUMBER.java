@@ -32,6 +32,7 @@ package aloyslisp.core.math;
 import aloyslisp.core.*;
 import aloyslisp.core.sequences.*;
 import aloyslisp.core.conditions.*;
+import static aloyslisp.core.L.*;
 
 /**
  * cNUMBER

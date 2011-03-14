@@ -30,6 +30,8 @@
 package aloyslisp.internal.engine;
 
 import aloyslisp.core.*;
+import aloyslisp.core.packages.tSYMBOL;
+import static aloyslisp.core.L.*;
 
 /**
  * cENV_CLOSURE
@@ -42,20 +44,24 @@ public class cENV_CLOSURE extends cENV
 {
 	private tENV	topClosure	= null;
 
+	private tSYMBOL	name		= null;
+
 	/**
 	 * This closure is for a new environment
 	 */
-	public cENV_CLOSURE()
+	public cENV_CLOSURE(tSYMBOL name)
 	{
 		super();
+		this.name = name;
 	}
 
 	/**
 	 * This closure get back to the lambda environment
 	 */
-	public cENV_CLOSURE(tENV closure)
+	public cENV_CLOSURE(tSYMBOL name, tENV closure)
 	{
 		super();
+		this.name = name;
 		topClosure = closure;
 	}
 
@@ -82,6 +88,15 @@ public class cENV_CLOSURE extends cENV
 		else
 			return new tT[]
 			{ topClosure, T };
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.cCELL#toString()
+	 */
+	public String toString()
+	{
+		return ("#<ENV-CLOSURE " + name.toString() + ">");
 	}
 
 }

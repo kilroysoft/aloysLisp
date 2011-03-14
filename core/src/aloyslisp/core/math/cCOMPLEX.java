@@ -30,6 +30,7 @@
 package aloyslisp.core.math;
 
 import aloyslisp.core.conditions.*;
+import static aloyslisp.core.L.*;
 
 /**
  * cCOMPLEX

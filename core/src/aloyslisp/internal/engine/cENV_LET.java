@@ -32,6 +32,7 @@ package aloyslisp.internal.engine;
 import aloyslisp.core.*;
 import aloyslisp.core.packages.*;
 import aloyslisp.core.sequences.*;
+import static aloyslisp.core.L.*;
 
 /**
  * cENV_LET
@@ -112,12 +113,13 @@ public class cENV_LET extends cENV
 				return new tT[]
 				{ NIL, NIL };
 
-			return previous.ENV_LET_GET(var);
+			return previous.SET_ENV_LET_GET(var, value);
 		}
 
 		tDYN_SYMBOL dyn = (tDYN_SYMBOL) res[0];
+		dyn.SET_SYMBOL_VALUE(value);
 		return new tT[]
-		{ dyn.SET_SYMBOL_VALUE(value), T };
+		{ dyn, T };
 	}
 
 	/*
@@ -136,7 +138,7 @@ public class cENV_LET extends cENV
 		if (res[1] == NIL)
 		{
 			res[0] = new cDYN_SYMBOL(var, NIL);
-			vars.SET_GETHASH(res[0], var, null);
+			vars.SET_GETHASH(res[0], var);
 		}
 
 		tDYN_SYMBOL dyn = (tDYN_SYMBOL) res[0];

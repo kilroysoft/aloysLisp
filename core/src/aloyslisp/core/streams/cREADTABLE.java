@@ -43,6 +43,7 @@ import aloyslisp.core.functions.*;
 import aloyslisp.core.packages.*;
 import aloyslisp.core.sequences.*;
 import aloyslisp.internal.engine.Library;
+import static aloyslisp.core.L.*;
 
 /**
  * cREADTABLE
@@ -118,13 +119,13 @@ public class cREADTABLE extends cCELL implements tREADTABLE
 		trace("-------->" + sym("%comment-reader").DESCRIBE());
 
 		// standard macro char
-		SET_MACRO_CHARACTER('"', sym("sys::%string-reader"), false);
-		SET_MACRO_CHARACTER('\'', sym("sys::%quote-reader"), false);
-		SET_MACRO_CHARACTER('(', sym("sys::%parent-reader"), false);
-		SET_MACRO_CHARACTER(')', sym("sys::%close-parent-reader"), false);
-		SET_MACRO_CHARACTER(',', sym("sys::%unquote-reader"), false);
+		SET_MACRO_CHARACTER('"', sym("%string-reader"), false);
+		SET_MACRO_CHARACTER('\'', sym("%quote-reader"), false);
+		SET_MACRO_CHARACTER('(', sym("%parent-reader"), false);
+		SET_MACRO_CHARACTER(')', sym("%close-parent-reader"), false);
+		SET_MACRO_CHARACTER(',', sym("%unquote-reader"), false);
 		SET_MACRO_CHARACTER(';', sym("%comment-reader"), false);
-		SET_MACRO_CHARACTER('`', sym("sys::%backquote-reader"), false);
+		SET_MACRO_CHARACTER('`', sym("%backquote-reader"), false);
 
 		// as standard only # as dispatch macro
 		MAKE_DISPATCH_MACRO_CHARACTER('#', true);
@@ -163,13 +164,13 @@ public class cREADTABLE extends cCELL implements tREADTABLE
 
 		// macro char
 		SET_DISPATCH_MACRO_CHRACTER('#', '#', NIL);
-		SET_DISPATCH_MACRO_CHRACTER('#', '\'', sym("sys::%function-reader"));
+		SET_DISPATCH_MACRO_CHRACTER('#', '\'', sym("%function-reader"));
 		SET_DISPATCH_MACRO_CHRACTER('#', '(', NIL);
 		SET_DISPATCH_MACRO_CHRACTER('#', '*', NIL);
 		SET_DISPATCH_MACRO_CHRACTER('#', ',', NIL);
-		SET_DISPATCH_MACRO_CHRACTER('#', ':', sym("sys::%unintern-reader"));
+		SET_DISPATCH_MACRO_CHRACTER('#', ':', sym("%unintern-reader"));
 		SET_DISPATCH_MACRO_CHRACTER('#', '=', NIL);
-		SET_DISPATCH_MACRO_CHRACTER('#', '\\', sym("sys::%character-reader"));
+		SET_DISPATCH_MACRO_CHRACTER('#', '\\', sym("%character-reader"));
 		SET_DISPATCH_MACRO_CHRACTER('#', '|', NIL);
 		SET_DISPATCH_MACRO_CHRACTER('#', '+', NIL);
 		SET_DISPATCH_MACRO_CHRACTER('#', '-', NIL);
@@ -433,7 +434,7 @@ public class cREADTABLE extends cCELL implements tREADTABLE
 	}
 
 	// ***************************************************************************
-	private static final tSYMBOL	BACKQUOTE	= sym("sys::%backquote");
+	private static final tSYMBOL	BACKQUOTE	= sym("%backquote");
 
 	/***************************************************************************
 	 * @param in
@@ -441,11 +442,11 @@ public class cREADTABLE extends cCELL implements tREADTABLE
 	 * @param args
 	 * @return
 	 */
-	@Static(name = "sys::%backquote-reader", doc = "02_df")
+	@Static(name = "%backquote-reader", doc = "02_df")
 	public static tT BACKQUOTE_READER( //
-			@Arg(name = "sys::stream") tINPUT_STREAM in, //
-			@Arg(name = "sys::char") Character car, //
-			@Rest(name = "sys::args") tT... args)
+			@Arg(name = "stream") tINPUT_STREAM in, //
+			@Arg(name = "char") Character car, //
+			@Rest(name = "args") tT... args)
 	{
 		try
 		{
@@ -464,11 +465,11 @@ public class cREADTABLE extends cCELL implements tREADTABLE
 	 * @param args
 	 * @return
 	 */
-	@Static(name = "sys::%character-reader", doc = "02_dha")
+	@Static(name = "%character-reader", doc = "02_dha")
 	public static tT CHARACTER_READER( //
-			@Arg(name = "sys::stream") tINPUT_STREAM in, //
-			@Arg(name = "sys::char") Character car, //
-			@Rest(name = "sys::args") tT... args)
+			@Arg(name = "stream") tINPUT_STREAM in, //
+			@Arg(name = "char") Character car, //
+			@Rest(name = "args") tT... args)
 	{
 		try
 		{
@@ -520,17 +521,17 @@ public class cREADTABLE extends cCELL implements tREADTABLE
 	 * @param args
 	 * @return
 	 */
-	@Static(name = "sys::%close-parent-reader", doc = "02_db")
+	@Static(name = "%close-parent-reader", doc = "02_db")
 	public static tT CLOSE_PARENT_READER( //
-			@Arg(name = "sys::stream") tINPUT_STREAM in, //
-			@Arg(name = "sys::char") Character car, //
-			@Rest(name = "sys::args") tT... args)
+			@Arg(name = "stream") tINPUT_STREAM in, //
+			@Arg(name = "char") Character car, //
+			@Rest(name = "args") tT... args)
 	{
-		return sym("sys::)");
+		return sym(")");
 	}
 
 	// ***************************************************************************
-	private static final tSYMBOL	FUNCTION	= sym("lisp::function");
+	private static final tSYMBOL	FUNCTION	= sym("function");
 
 	/***************************************************************************
 	 * @param in
@@ -538,11 +539,11 @@ public class cREADTABLE extends cCELL implements tREADTABLE
 	 * @param args
 	 * @return
 	 */
-	@Static(name = "sys::%function-reader", doc = "02_dhb")
+	@Static(name = "%function-reader", doc = "02_dhb")
 	public static tT FUNCTION_READER( //
-			@Arg(name = "sys::stream") tINPUT_STREAM in, //
-			@Arg(name = "sys::char") Character car, //
-			@Rest(name = "sys::args") tT... args)
+			@Arg(name = "stream") tINPUT_STREAM in, //
+			@Arg(name = "char") Character car, //
+			@Rest(name = "args") tT... args)
 	{
 		try
 		{
@@ -561,11 +562,11 @@ public class cREADTABLE extends cCELL implements tREADTABLE
 	 * @param args
 	 * @return
 	 */
-	@Static(name = "sys::%parent-reader", doc = "02_da")
+	@Static(name = "%parent-reader", doc = "02_da")
 	public static tT PARENT_READER( //
-			@Arg(name = "sys::stream") tINPUT_STREAM in, //
-			@Arg(name = "sys::char") Character car, //
-			@Rest(name = "sys::args") tT... args)
+			@Arg(name = "stream") tINPUT_STREAM in, //
+			@Arg(name = "char") Character car, //
+			@Rest(name = "args") tT... args)
 	{
 		tLIST res = NIL;
 		try
@@ -605,7 +606,7 @@ public class cREADTABLE extends cCELL implements tREADTABLE
 	}
 
 	// ***************************************************************************
-	private static final tSYMBOL	QUOTE	= sym("lisp::quote");
+	private static final tSYMBOL	QUOTE	= sym("quote");
 
 	/***************************************************************************
 	 * @param in
@@ -613,11 +614,11 @@ public class cREADTABLE extends cCELL implements tREADTABLE
 	 * @param args
 	 * @return
 	 */
-	@Static(name = "sys::%quote-reader", doc = "02_dc")
+	@Static(name = "%quote-reader", doc = "02_dc")
 	public static tT QUOTE_READER( //
-			@Arg(name = "sys::stream") tINPUT_STREAM in, //
-			@Arg(name = "sys::char") Character car, //
-			@Rest(name = "sys::args") tT... args)
+			@Arg(name = "stream") tINPUT_STREAM in, //
+			@Arg(name = "char") Character car, //
+			@Rest(name = "args") tT... args)
 	{
 		try
 		{
@@ -635,11 +636,11 @@ public class cREADTABLE extends cCELL implements tREADTABLE
 	 * @param args
 	 * @return
 	 */
-	@Static(name = "sys::%string-reader", doc = "02_de")
+	@Static(name = "%string-reader", doc = "02_de")
 	public static tT STRING_READER( //
-			@Arg(name = "sys::stream") tINPUT_STREAM in, //
-			@Arg(name = "sys::char") Character car, //
-			@Rest(name = "sys::args") tT... args)
+			@Arg(name = "stream") tINPUT_STREAM in, //
+			@Arg(name = "char") Character car, //
+			@Rest(name = "args") tT... args)
 	{
 		StringBuilder str = new StringBuilder();
 		Character curr;
@@ -671,11 +672,11 @@ public class cREADTABLE extends cCELL implements tREADTABLE
 	 * @param args
 	 * @return
 	 */
-	@Static(name = "sys::%unintern-reader", doc = "02_dhe")
+	@Static(name = "%unintern-reader", doc = "02_dhe")
 	public static tT UNINTERN_READER( //
-			@Arg(name = "sys::stream") tINPUT_STREAM in, //
-			@Arg(name = "sys::char") Character car, //
-			@Rest(name = "sys::args") tT... args)
+			@Arg(name = "stream") tINPUT_STREAM in, //
+			@Arg(name = "char") Character car, //
+			@Rest(name = "args") tT... args)
 	{
 		try
 		{
@@ -692,9 +693,9 @@ public class cREADTABLE extends cCELL implements tREADTABLE
 	}
 
 	// ***************************************************************************
-	private static final tSYMBOL	SPLICE	= sym("sys::%splice");
-	private static final tSYMBOL	NSPLICE	= sym("sys::%nsplice");
-	private static final tSYMBOL	UNQUOTE	= sym("sys::%unquote");
+	private static final tSYMBOL	SPLICE	= sym("%splice");
+	private static final tSYMBOL	NSPLICE	= sym("%nsplice");
+	private static final tSYMBOL	UNQUOTE	= sym("%unquote");
 
 	/***************************************************************************
 	 * @param in
@@ -702,11 +703,11 @@ public class cREADTABLE extends cCELL implements tREADTABLE
 	 * @param args
 	 * @return
 	 */
-	@Static(name = "sys::%unquote-reader", doc = "02_df")
+	@Static(name = "%unquote-reader", doc = "02_df")
 	public static tT UNQUOTE_READER( //
-			@Arg(name = "sys::stream") tINPUT_STREAM in, //
-			@Arg(name = "sys::char") Character car, //
-			@Rest(name = "sys::args") tT... args)
+			@Arg(name = "stream") tINPUT_STREAM in, //
+			@Arg(name = "char") Character car, //
+			@Rest(name = "args") tT... args)
 	{
 		Character sup = ' ';
 		try
@@ -738,11 +739,11 @@ public class cREADTABLE extends cCELL implements tREADTABLE
 	 * @param args
 	 * @return
 	 */
-	@Static(name = "sys::%backquote", doc = "02_df")
+	@Static(name = "%backquote", doc = "02_df")
 	@SpecialOp
 	@Mac(prefix = "`")
 	public static tT BACKQUOTE( //
-			@Arg(name = "sys::obj") tT obj)
+			@Arg(name = "obj") tT obj)
 	{
 		if (obj instanceof tCONS)
 		{
@@ -772,7 +773,7 @@ public class cREADTABLE extends cCELL implements tREADTABLE
 
 		if (func == BACKQUOTE) // internal ` = fpBACKQUOTE
 		{
-			return list(sym("lisp::list")).APPEND(cons);
+			return list(sym("list")).APPEND(cons);
 		}
 		else if (func == UNQUOTE) // , = fpUNQUOTE
 		{
@@ -813,10 +814,10 @@ public class cREADTABLE extends cCELL implements tREADTABLE
 	 * @param obj
 	 * @return
 	 */
-	@Static(name = "sys::%nsplice", doc = "02_df")
+	@Static(name = "%nsplice", doc = "02_df")
 	@Mac(prefix = ",.")
 	public static tT NSPLICE( //
-			@Rest(name = "sys::obj") tT... obj)
+			@Rest(name = "obj") tT... obj)
 	{
 		throw new LispException(",. without `");
 	}
@@ -825,10 +826,10 @@ public class cREADTABLE extends cCELL implements tREADTABLE
 	 * @param obj
 	 * @return
 	 */
-	@Static(name = "sys::%splice", doc = "02_df")
+	@Static(name = "%splice", doc = "02_df")
 	@Mac(prefix = ",@")
 	public static tT SPLICE( //
-			@Rest(name = "sys::obj") tT... obj)
+			@Rest(name = "obj") tT... obj)
 	{
 		throw new LispException(",@ without `");
 	}
@@ -837,10 +838,10 @@ public class cREADTABLE extends cCELL implements tREADTABLE
 	 * @param obj
 	 * @return
 	 */
-	@Static(name = "sys::%unquote", doc = "02_df")
+	@Static(name = "%unquote", doc = "02_df")
 	@Mac(prefix = ",")
 	public static tT UNQUOTE( //
-			@Rest(name = "sys::obj") tT... obj)
+			@Rest(name = "obj") tT... obj)
 	{
 		throw new LispException(", without `");
 	}

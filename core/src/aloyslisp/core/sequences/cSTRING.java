@@ -35,6 +35,7 @@ import aloyslisp.core.conditions.*;
 import aloyslisp.core.math.*;
 import aloyslisp.core.packages.*;
 import aloyslisp.core.streams.*;
+import static aloyslisp.core.L.*;
 
 /**
  * cSTRING
@@ -94,7 +95,9 @@ public class cSTRING extends cVECTOR implements tSTRING
 	public String toString()
 	{
 		// System.out.println("String Escape : " + printEscape.get());
-		boolean esc = !(printEscape.SYMBOL_VALUE() instanceof cNIL);
+		boolean esc = false;
+		if (printEscape != null)
+			esc = !(printEscape.SYMBOL_VALUE() instanceof cNIL);
 		if (esc)
 			return "\"" + getString() + "\"";
 		else

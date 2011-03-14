@@ -29,9 +29,13 @@
 
 package aloyslisp.core.functions;
 
-import aloyslisp.core.packages.*;
+import aloyslisp.core.*;
+import aloyslisp.core.packages.tSYMBOL;
 import aloyslisp.core.sequences.*;
-import aloyslisp.internal.engine.*;
+import aloyslisp.internal.engine.cAPI;
+import aloyslisp.internal.engine.cENV_PROGN;
+import aloyslisp.packages.common_lisp.SpecialOperators;
+import static aloyslisp.core.L.*;
 
 /**
  * cLAMBDA_FUNCTION
@@ -40,13 +44,76 @@ import aloyslisp.internal.engine.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class cLAMBDA_FUNCTION extends cAPI_LAMBDA implements tLAMBDA_FUNCTION
+public class cLAMBDA_FUNCTION extends cFUNCTION implements tLAMBDA_FUNCTION
 {
+	/**
+	 * Lisp block to be executed
+	 */
+	protected tLIST	func	= NIL;
 
-	public cLAMBDA_FUNCTION(tSYMBOL name, tLIST args, tLIST func,
+	/**
+	 * @param args
+	 * @param doc
+	 * @param decl
+	 */
+	public cLAMBDA_FUNCTION(tSYMBOL name, tLIST args, tLIST compl,
 			Boolean special, Boolean macro)
 	{
-		super(name, args, func, special, macro);
+		super();
+		// System.out.println("cLAMBDA_FUNCTION " + name + " = " + compl);
+		this.special = special;
+		this.macro = macro;
+		if (name != null)
+			this.name = name;
+		else
+			this.name = NIL;
+		tT doc = cAPI.API_PARSE_FUNC(compl);
+
+		vars = SET_API_ARGS(args);
+		SET_API_DOC(doc.CAR());
+		SET_API_DECL((tLIST) doc.CDR().CAR());
+		func = (tLIST) list(list(SpecialOperators.BLOCK, name).APPEND(
+				doc.CDR().CDR().CAR()));
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * aloyslisp.internal.engine.tCODE#CODE_CALL(aloyslisp.core.sequences.tLIST)
+	 */
+	@Override
+	public tT[] API_CALL(tLIST args)
+	{
+		tT[] res = new tT[]
+		{ NIL };
+		// here the args are not used the environment is already set up
+		cENV_PROGN prog = new cENV_PROGN(func.VALUES_LIST());
+		prog.ENV_PUSH();
+		try
+		{
+			res = prog.EVAL();
+		}
+		catch (RuntimeException e)
+		{
+			throw e;
+		}
+		finally
+		{
+			prog.ENV_POP();
+		}
+		return res;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.internal.engine.cAPI#DESCRIBE()
+	 */
+	public String DESCRIBE()
+	{
+		return "#<API-LAMBDA " + name + "" + API_ARGS() + "" + func + " "
+				+ basePos + " #<SPECIAL " + (special ? T : NIL) + "> #<MACRO "
+				+ (macro ? T : NIL) + "> " + "> #<ENV " + environment + ">"
+				+ ">";
 	}
 
 }

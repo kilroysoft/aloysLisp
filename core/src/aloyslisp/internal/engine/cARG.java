@@ -32,6 +32,7 @@ package aloyslisp.internal.engine;
 import aloyslisp.core.*;
 import aloyslisp.core.conditions.LispException;
 import aloyslisp.core.packages.*;
+import static aloyslisp.core.L.*;
 
 /**
  * cARG
@@ -66,7 +67,7 @@ public class cARG extends cDYN_SYMBOL implements tARG
 		tT symbol = arg.CAR();
 		if (!(symbol instanceof tSYMBOL))
 			throw new LispException("Argument is not a symbol : " + symbol);
-		this.setOrig((tSYMBOL) arg);
+		this.setOrig((tSYMBOL) arg.CAR());
 		this.value = arg.CDR().CAR();
 	}
 

@@ -30,6 +30,7 @@
 package aloyslisp.internal.flowcontrol;
 
 import aloyslisp.core.*;
+import static aloyslisp.core.L.*;
 
 /**
  * THROW_CONDITION
@@ -49,7 +50,7 @@ public class THROW_CONDITION extends LispFlowControl
 	private tT					catchTag			= null;
 
 	private tT[]				catchValue			= new tT[]
-													{ cLISP.NIL };
+													{ NIL };
 
 	/**
 	 * 

@@ -186,9 +186,8 @@ public class cFILE_INPUT_STREAM extends cINPUT_STREAM implements
 		}
 		catch (IOException e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return false;
+			throw new LispException("Error on close " + path + " : "
+					+ e.getLocalizedMessage());
 		}
 		return true;
 	}

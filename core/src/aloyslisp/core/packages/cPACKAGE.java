@@ -35,7 +35,8 @@ import aloyslisp.core.cCELL;
 import aloyslisp.core.tT;
 import aloyslisp.core.conditions.*;
 import aloyslisp.core.sequences.*;
-import aloyslisp.internal.engine.*;
+import static aloyslisp.core.sequences.cHASH_TABLE.*;
+import static aloyslisp.core.L.*;
 
 /**
  * cPACKAGE
@@ -49,67 +50,32 @@ public class cPACKAGE extends cCELL implements tPACKAGE
 	/**
 	 * Package's name
 	 */
-	String					name;
+	public String		name;
 
 	/**
 	 * Use list
 	 */
-	SymMap					uses;
+	public tHASH_TABLE	uses;
 
 	/**
 	 * Shadow variables
 	 */
-	SymMap					internal;
+	public tHASH_TABLE	internal;
 
 	/**
 	 * Shadow variables
 	 */
-	public SymMap			external;
+	public tHASH_TABLE	external;
 
 	/**
 	 * Shadow variables
 	 */
-	SymMap					shadow;
+	public tHASH_TABLE	shadow;
 
 	/**
 	 * Case sensitivity
 	 */
-	boolean					caseSensitive	= false;
-
-	/**
-	 * List of all packages
-	 */
-	public static SymMap	packages		= new SymMap();
-
-	/**
-	 * Keywords
-	 */
-	public static tPACKAGE	key				= new cPACKAGE("keyword");
-
-	/**
-	 * System implementation functions
-	 */
-	public static tPACKAGE	sys				= new cPACKAGE("system");
-
-	/**
-	 * Main lisp functions
-	 */
-	public static tPACKAGE	cl				= new cPACKAGE("common-lisp");
-
-	static
-	{
-		if (e == null)
-			e = new cTHREAD();
-
-		packages.put("common-lisp",
-				new cSYMBOL("common-lisp").SET_SYMBOL_VALUE(cl));
-		packages.put("cl", new cSYMBOL("cl").SET_SYMBOL_VALUE(cl));
-		packages.put("lisp", new cSYMBOL("lisp").SET_SYMBOL_VALUE(cl));
-		packages.put("system", new cSYMBOL("system").SET_SYMBOL_VALUE(sys));
-		packages.put("sys", new cSYMBOL("sys").SET_SYMBOL_VALUE(sys));
-		packages.put("keyword", new cSYMBOL("keyword").SET_SYMBOL_VALUE(key));
-		packages.put("key", new cSYMBOL("key").SET_SYMBOL_VALUE(key));
-	}
+	boolean				caseSensitive	= false;
 
 	/**
 	 * Package constructor
@@ -121,11 +87,11 @@ public class cPACKAGE extends cCELL implements tPACKAGE
 	{
 		super();
 		// trace = true;
-		this.name = name;
-		uses = new SymMap();
-		internal = new SymMap();
-		external = new SymMap();
-		shadow = new SymMap();
+		this.name = name.toUpperCase();
+		uses = MAKE_HASH_TABLE();
+		internal = MAKE_HASH_TABLE();
+		external = MAKE_HASH_TABLE();
+		shadow = MAKE_HASH_TABLE();
 		trace = true;
 	}
 
@@ -148,12 +114,13 @@ public class cPACKAGE extends cCELL implements tPACKAGE
 	@Override
 	public boolean isInUseList(tPACKAGE pack)
 	{
-		for (String walk : uses)
+		tLIST keys = uses.HASH_TABLE_VALUES();
+		for (tT walk : keys)
 		{
-			if (walk == pack.PACKAGE_NAME())
+			if (walk == pack)
 				return true;
 
-			if (((cPACKAGE) uses.get(walk)).isInUseList(pack))
+			if (((cPACKAGE) walk).isInUseList(pack))
 				return true;
 		}
 
@@ -168,9 +135,9 @@ public class cPACKAGE extends cCELL implements tPACKAGE
 	public String dump()
 	{
 		trace(DESCRIBE());
-		trace("Internal : " + internal.dump());
-		trace("External : " + external.dump());
-		trace("Shadow : " + external.dump());
+		trace("Internal : " + internal.DESCRIBE());
+		trace("External : " + external.DESCRIBE());
+		trace("Shadow : " + external.DESCRIBE());
 		return null;
 	}
 
@@ -194,11 +161,12 @@ public class cPACKAGE extends cCELL implements tPACKAGE
 		if (!(pack instanceof tSTRING_DESIGNATOR))
 			throw new LispException("Type error for " + pack);
 
-		tT packN = packages.get(cSTRING.STRING((tSTRING_DESIGNATOR) pack));
-		if (packN == null)
+		tT packN = packages.GETHASH(
+				str(cSTRING.STRING((tSTRING_DESIGNATOR) pack)), NIL)[0];
+		if (packN == NIL)
 			throw new LispException("FIND-cPACKAGE : Package inconnu : " + pack);
 
-		return ((tSYMBOL) packN).SYMBOL_VALUE();
+		return packN;
 	}
 
 	// ////////////////////////////////////////////////////////////////////
@@ -211,12 +179,15 @@ public class cPACKAGE extends cCELL implements tPACKAGE
 	@Override
 	public tSYMBOL[] INTERN(String symbol)
 	{
+		symbol = symbol.toUpperCase();
 		tSYMBOL res[] = FIND_SYMBOL(symbol);
 		if (res[1] != NIL)
 			return res;
 
+		tSYMBOL sym = new cSYMBOL(symbol, this);
+		internal.SET_GETHASH(sym, str(symbol));
 		return new tSYMBOL[]
-		{ internal.put(symbol, new cSYMBOL(symbol, this)), NIL };
+		{ sym, T };
 	}
 
 	/*
@@ -227,37 +198,39 @@ public class cPACKAGE extends cCELL implements tPACKAGE
 	@Override
 	public tSYMBOL UNINTERN(String symbol)
 	{
-		tSYMBOL res;
-		if ((res = external.get(symbol)) != null)
+		symbol = symbol.toUpperCase();
+		tT res;
+		tSTRING sym = str(symbol);
+		if ((res = external.GETHASH(sym, NIL)[0]) != NIL)
 		{
-			if (this != res.SYMBOL_PACKAGE())
+			if (this != res)
 			{
-				external.remove(symbol);
-				shadow.remove(symbol);
+				external.REMHASH(sym);
+				shadow.REMHASH(sym);
 				return T;
 			}
 
 			// Test if conflict
-			if (shadow.get(symbol) != NIL)
+			if (shadow.GETHASH(sym, NIL)[0] != NIL)
 				throw new LispException("Correctable error shadow conflict");
 
-			res.SET_SYMBOL_PACKAGE(null);
+			((tSYMBOL) res).SET_SYMBOL_PACKAGE(null);
 			return NIL;
 		}
-		else if ((res = internal.get(symbol)) != null)
+		if ((res = internal.GETHASH(sym, NIL)[0]) != NIL)
 		{
-			if (this != res.SYMBOL_PACKAGE())
+			if (this != res)
 			{
-				internal.remove(symbol);
-				shadow.remove(symbol);
+				internal.REMHASH(sym);
+				shadow.REMHASH(sym);
 				return T;
 			}
 
 			// Test if conflict
-			if (shadow.get(symbol) != NIL)
+			if (shadow.GETHASH(sym, NIL)[0] != NIL)
 				throw new LispException("Correctable error shadow conflict");
 
-			res.SET_SYMBOL_PACKAGE(null);
+			((tSYMBOL) res).SET_SYMBOL_PACKAGE(null);
 			return NIL;
 		}
 		return NIL;
@@ -271,33 +244,34 @@ public class cPACKAGE extends cCELL implements tPACKAGE
 	@Override
 	public tSYMBOL[] FIND_SYMBOL(String symbol)
 	{
-		tSYMBOL res = shadow.get(symbol);
-		if (res != null || (res = external.get(symbol)) != null)
+		symbol = symbol.toUpperCase();
+		tSTRING sym = str(symbol);
+		tT res = shadow.GETHASH(sym, null)[0];
+		if (res != null || (res = external.GETHASH(sym, null)[0]) != null)
 		{
 			return new tSYMBOL[]
-			{ res, EXTERNAL };
+			{ (tSYMBOL) res, EXTERNAL };
 		}
-		else if ((res = internal.get(symbol)) != null)
+		else if ((res = internal.GETHASH(sym, null)[0]) != null)
 		{
 			return new tSYMBOL[]
-			{ res, INTERNAL };
+			{ (tSYMBOL) res, INTERNAL };
 		}
 		else
 		{
-			for (tSYMBOL pac : uses.values())
+			for (tT p : uses.HASH_TABLE_VALUES())
 			{
-				tT p = pac.SYMBOL_VALUE();
-				res = ((cPACKAGE) p).shadow.get(symbol);
+				res = ((cPACKAGE) p).shadow.GETHASH(sym, null)[0];
 				if (res != null)
 				{
 					return new tSYMBOL[]
-					{ res, INHERITED };
+					{ (tSYMBOL) res, INHERITED };
 				}
-				res = ((cPACKAGE) p).external.get(symbol);
+				res = ((cPACKAGE) p).external.GETHASH(sym, null)[0];
 				if (res != null)
 				{
 					return new tSYMBOL[]
-					{ res, INHERITED };
+					{ (tSYMBOL) res, INHERITED };
 				}
 			}
 		}
@@ -350,18 +324,18 @@ public class cPACKAGE extends cCELL implements tPACKAGE
 			if (sym[0].SYMBOL_PACKAGE() == NIL)
 			{
 				symbol.SET_SYMBOL_PACKAGE(this);
-				shadow.put(symbol.SYMBOL_NAME(), symbol);
+				shadow.SET_GETHASH(symbol, str(symbol.SYMBOL_NAME()));
 			}
 			else if (sym[0].SYMBOL_PACKAGE() != symbol.SYMBOL_PACKAGE())
 			{
-				shadow.put(symbol.SYMBOL_NAME(), symbol);
+				shadow.SET_GETHASH(symbol, str(symbol.SYMBOL_NAME()));
 			}
 		}
 		else
 		{
 			if (symbol.SYMBOL_PACKAGE() == NIL)
 				symbol.SET_SYMBOL_PACKAGE(this);
-			internal.put(symbol.SYMBOL_NAME(), symbol);
+			internal.SET_GETHASH(symbol, str(symbol.SYMBOL_NAME()));
 		}
 		return;
 	}
@@ -407,18 +381,18 @@ public class cPACKAGE extends cCELL implements tPACKAGE
 
 		if (sym[1] == INTERNAL)
 		{
-			internal.remove(sym[0].SYMBOL_NAME());
-			external.put(sym[0].SYMBOL_NAME(), sym[0]);
+			internal.REMHASH(str(sym[0].SYMBOL_NAME()));
+			external.SET_GETHASH(sym[0], str(sym[0].SYMBOL_NAME()));
 		}
 		else if (sym[1] == INHERITED)
 		{
-			external.put(sym[0].SYMBOL_NAME(), sym[0]);
+			external.SET_GETHASH(sym[0], str(sym[0].SYMBOL_NAME()));
 		}
 		else
 		{
 			if (symbol.SYMBOL_PACKAGE() == NIL)
 				symbol.SET_SYMBOL_PACKAGE(this);
-			external.put(symbol.SYMBOL_NAME(), symbol);
+			external.SET_GETHASH(symbol, str(symbol.SYMBOL_NAME()));
 		}
 		return;
 	}
@@ -441,6 +415,12 @@ public class cPACKAGE extends cCELL implements tPACKAGE
 	public int hashCode()
 	{
 		return str(name).hashCode();
+	}
+
+	public String DESCRIBE()
+	{
+		return "#<PACKAGE " + name + " " + uses + " " + internal + " "
+				+ external + " " + shadow + ">";
 	}
 
 }

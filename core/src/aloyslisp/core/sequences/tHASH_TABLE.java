@@ -79,6 +79,14 @@ public interface tHASH_TABLE extends tBUILT_IN_CLASS
 	public tFUNCTION HASH_TABLE_TEST( //
 	);
 
+	@Function(name = "hash-table-keys")
+	public tLIST HASH_TABLE_KEYS( //
+	);
+
+	@Function(name = "hash-table-values")
+	public tLIST HASH_TABLE_VALUES( //
+	);
+
 	/**
 	 * @param key
 	 * @param hashTable
@@ -103,8 +111,7 @@ public interface tHASH_TABLE extends tBUILT_IN_CLASS
 	@BaseArg(name = "hash-table", pos = 2)
 	public tT SET_GETHASH( //
 			@Arg(name = "value") tT value, //
-			@Arg(name = "key") tT key, //
-			@Opt(name = "default") tT def //
+			@Arg(name = "key") tT key //
 	);
 
 	/**

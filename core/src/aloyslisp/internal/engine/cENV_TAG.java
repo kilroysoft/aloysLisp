@@ -34,6 +34,7 @@ import aloyslisp.core.conditions.*;
 import aloyslisp.core.sequences.*;
 import aloyslisp.internal.flowcontrol.*;
 import aloyslisp.internal.iterators.*;
+import static aloyslisp.core.L.*;
 
 /**
  * cENV_TAG
@@ -53,11 +54,11 @@ public class cENV_TAG extends cENV_PROGN
 	/**
 	 * @param blocks
 	 */
-	public cENV_TAG(tLIST blocks)
+	public cENV_TAG(tT... blocks)
 	{
 		super(blocks);
 		labels = new cHASH_TABLE(null, nInt(1), nFloat((float) 0.75));
-		LISTIterator iter = new LISTIterator(blocks);
+		LISTIterator iter = new LISTIterator(list((Object[]) blocks));
 		while (iter.hasNext())
 		{
 			tT block = iter.next();
@@ -71,18 +72,18 @@ public class cENV_TAG extends cENV_PROGN
 				}
 				else
 					ip = NIL;
-				labels.SET_GETHASH(ip, block, null);
+				labels.SET_GETHASH(ip, block);
 			}
 		}
 	}
 
-	/**
-	 * @param blocks
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.cCELL#toString()
 	 */
-	public cENV_TAG(tT... blocks)
+	public String toString()
 	{
-		super(blocks);
-		labels = new cHASH_TABLE(null, nInt(1), nFloat((float) 0.75));
+		return ("#<ENV-TAG " + labels.toString() + ">");
 	}
 
 	/*

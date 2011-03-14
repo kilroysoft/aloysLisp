@@ -49,7 +49,7 @@ public interface tENV extends tBUILT_IN_CLASS
 	 * 
 	 * @return
 	 */
-	@Function(name = "sys::env-push")
+	@Function(name = "env-push")
 	public tENV ENV_PUSH();
 
 	/**
@@ -57,7 +57,7 @@ public interface tENV extends tBUILT_IN_CLASS
 	 * 
 	 * @return
 	 */
-	@Function(name = "sys::env-previous")
+	@Function(name = "env-previous")
 	public tT[] ENV_PREVIOUS();
 
 	/**
@@ -65,7 +65,7 @@ public interface tENV extends tBUILT_IN_CLASS
 	 * 
 	 * @return
 	 */
-	@Function(name = "sys::env-previous-lexical")
+	@Function(name = "env-previous-lexical")
 	public tT[] ENV_PREVIOUS_LEXICAL();
 
 	/**
@@ -73,14 +73,14 @@ public interface tENV extends tBUILT_IN_CLASS
 	 * 
 	 * @return
 	 */
-	@Function(name = "sys::env-pop")
+	@Function(name = "env-pop")
 	public tENV ENV_POP();
 
 	/**
 	 * @param var
 	 * @return
 	 */
-	@Function(name = "sys::env-let-get")
+	@Function(name = "env-let-get")
 	public tT[] ENV_LET_GET( //
 			@Arg(name = "var") tSYMBOL var);
 
@@ -89,7 +89,7 @@ public interface tENV extends tBUILT_IN_CLASS
 	 * @param value
 	 * @return
 	 */
-	@Function(name = "sys::env-let-set")
+	@Function(name = "env-let-set")
 	public tT[] SET_ENV_LET_GET( //
 			@Arg(name = "var") tSYMBOL var, //
 			@Arg(name = "value") tT value //
@@ -99,7 +99,7 @@ public interface tENV extends tBUILT_IN_CLASS
 	 * @param var
 	 * @return
 	 */
-	@Function(name = "sys::env-let-intern")
+	@Function(name = "env-let-intern")
 	public tDYN_SYMBOL ENV_LET_INTERN( //
 			@Arg(name = "var") tSYMBOL var, //
 			@Arg(name = "value") tT val //
@@ -109,7 +109,7 @@ public interface tENV extends tBUILT_IN_CLASS
 	 * @param var
 	 * @return
 	 */
-	@Function(name = "sys::env-tag-get")
+	@Function(name = "env-tag-get")
 	public tT[] ENV_TAG_GET( //
 			@Arg(name = "tag") tSYMBOL tag);
 
@@ -118,7 +118,7 @@ public interface tENV extends tBUILT_IN_CLASS
 	 * @param value
 	 * @return
 	 */
-	@Function(name = "sys::env-tag-set")
+	@Function(name = "env-tag-set")
 	public tT[] SET_ENV_TAG_GET( //
 			@Arg(name = "tag") tSYMBOL tag, //
 			@Arg(name = "value") tSYMBOL value //
@@ -128,7 +128,7 @@ public interface tENV extends tBUILT_IN_CLASS
 	 * @param tag
 	 * @return
 	 */
-	@Function(name = "sys::tst-tag")
+	@Function(name = "tst-tag")
 	public tLIST ENV_TAG_TST( //
 			@Arg(name = "tag") tT tag);
 
@@ -136,7 +136,7 @@ public interface tENV extends tBUILT_IN_CLASS
 	 * @param var
 	 * @return
 	 */
-	@Function(name = "sys::env-tag-intern")
+	@Function(name = "env-tag-intern")
 	public tT[] ENV_TAG_INTERN( //
 			@Arg(name = "tag") tSYMBOL tag, //
 			@Arg(name = "value") tSYMBOL value //
@@ -147,20 +147,20 @@ public interface tENV extends tBUILT_IN_CLASS
 	 * 
 	 * @return
 	 */
-	@Function(name = "sys::next-step")
+	@Function(name = "next-step")
 	public tT[] ENV_STEP();
 
 	/**
 	 * @param name
 	 * @return
 	 */
-	@Function(name = "sys::tst-block")
+	@Function(name = "tst-block")
 	public cENV_BLOCK ENV_BLOCK_TST( //
 			@Arg(name = "name") tSYMBOL name);
 
 	/**
 	 * @return
 	 */
-	@Function(name = "sys::env-dump")
+	@Function(name = "env-dump")
 	public tLIST ENV_DUMP();
 }

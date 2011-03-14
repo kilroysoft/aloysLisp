@@ -31,8 +31,8 @@ package aloyslisp.internal.engine;
 
 import aloyslisp.core.*;
 import aloyslisp.core.packages.*;
-import aloyslisp.core.sequences.*;
 import aloyslisp.internal.flowcontrol.*;
+import static aloyslisp.core.L.*;
 
 /**
  * cENV_BLOCK
@@ -59,14 +59,13 @@ public class cENV_BLOCK extends cENV_PROGN
 		this.name = name;
 	}
 
-	/**
-	 * @param name
-	 * @param blocks
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.cCELL#toString()
 	 */
-	public cENV_BLOCK(tSYMBOL name, tLIST blocks)
+	public String toString()
 	{
-		super(blocks);
-		this.name = name;
+		return ("#<ENV-BLOCK " + name + " " + ip.toString() + ">");
 	}
 
 	/**
