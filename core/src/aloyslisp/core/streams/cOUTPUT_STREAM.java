@@ -186,7 +186,7 @@ public abstract class cOUTPUT_STREAM extends cSTREAM implements tOUTPUT_STREAM
 	@Override
 	public tT PRINT(tT obj)
 	{
-		TERPRI();
+		FRESH_LINE();
 		tT res = PRIN1(obj);
 		WRITE(c(' '));
 		return res;

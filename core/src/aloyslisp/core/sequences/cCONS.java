@@ -36,6 +36,7 @@ import aloyslisp.core.conditions.*;
 import aloyslisp.core.functions.*;
 import aloyslisp.core.packages.*;
 import aloyslisp.internal.iterators.*;
+import aloyslisp.packages.common_lisp.SpecialOperators;
 import static aloyslisp.core.L.*;
 
 /**
@@ -238,11 +239,7 @@ public class cCONS extends cCELL implements tCONS
 	 */
 	public tT[] EVAL()
 	{
-		if (!(car instanceof tSYMBOL))
-			throw new LispException(
-					"CAR of CONS to be evaluated is not a function");
-
-		if (((tSYMBOL) car).MACRO_FUNCTION() != NIL)
+		if (car instanceof tSYMBOL && ((tSYMBOL) car).MACRO_FUNCTION() != NIL)
 		{
 			// Expand macros
 			tT me = MACROEXPAND()[0];
@@ -254,15 +251,7 @@ public class cCONS extends cCELL implements tCONS
 		if (!(cdr instanceof tLIST))
 			throw new LispException("Can't eval a non LIST cons");
 
-		if (!(car instanceof tSYMBOL))
-			throw new LispException("FUNCALL on non symbol" + car);
-
-		tT func = ((tSYMBOL) car).SYMBOL_FUNCTION();
-		if (!(func instanceof tFUNCTION))
-		{
-			System.out.println(cl.DESCRIBE());
-			throw new LispException("FUNCALL on non function" + car);
-		}
+		tFUNCTION func = SpecialOperators.FUNCTION(car);
 		return ((tFUNCTION) func).FUNCALL((tLIST) cdr);
 	}
 

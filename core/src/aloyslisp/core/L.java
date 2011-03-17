@@ -29,9 +29,6 @@
 
 package aloyslisp.core;
 
-import static aloyslisp.core.L.e;
-import static aloyslisp.core.L.str;
-
 import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
@@ -160,7 +157,6 @@ public abstract class L
 	{
 		// Nil is directly put in package
 		((cPACKAGE) currPackage()).external.SET_GETHASH(NIL, str("NIL"));
-		System.out.println("aga");
 		sPACKAGEs = (tSYMBOL) ((cPACKAGE) currPackage()).external.SET_GETHASH(
 				new cSYMBOL("*PACKAGE*", cl).SET_SYMBOL_VALUE(cl),
 				str("*PACKAGE*"));
@@ -712,7 +708,7 @@ public abstract class L
 			System.out
 					.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAARRRRRGGGGG : "
 							+ name);// + " ->" + res.DESCRIBE());
-		System.out.println("New Key : " + name);// + " ->" + res.DESCRIBE());
+		// System.out.println("New Key : " + name);// + " ->" + res.DESCRIBE());
 		return res;
 	}
 
@@ -783,17 +779,17 @@ public abstract class L
 	 */
 	public static void loadClasses(String pkg)
 	{
-		System.out.println("= Package " + pkg + " =\n");
+		// System.out.println("= Package " + pkg + " =\n");
 		try
 		{
 			List<Class<?>> cla = getClasses(pkg);
 			for (Class<?> clas : cla)
 			{
-				if (clas.isInterface())
-					System.out.print("=== Interface " + clas.getSimpleName());
-				else
-					System.out.print("=== Class " + clas.getSimpleName());
-				System.out.println(" ===\n");
+				// if (clas.isInterface())
+				// System.out.print("=== Interface " + clas.getSimpleName());
+				// else
+				// System.out.print("=== Class " + clas.getSimpleName());
+				// System.out.println(" ===\n");
 				Library.INSTANTIATE(clas.getCanonicalName());
 			}
 		}

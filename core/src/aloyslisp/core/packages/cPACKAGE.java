@@ -187,7 +187,7 @@ public class cPACKAGE extends cCELL implements tPACKAGE
 		tSYMBOL sym = new cSYMBOL(symbol, this);
 		internal.SET_GETHASH(sym, str(symbol));
 		return new tSYMBOL[]
-		{ sym, T };
+		{ sym, NIL };
 	}
 
 	/*

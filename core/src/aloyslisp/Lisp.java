@@ -65,17 +65,19 @@ public class Lisp
 		loadClasses("aloyslisp.core");
 		loadClasses("aloyslisp.core.clos");
 		loadClasses("aloyslisp.core.conditions");
-		loadClasses("aloyslisp.internal.flowcontrol");
-		loadClasses("aloyslisp.internal.engine");
 		loadClasses("aloyslisp.core.functions");
 		loadClasses("aloyslisp.core.math");
+		loadClasses("aloyslisp.core.packages");
 		loadClasses("aloyslisp.core.sequences");
+		loadClasses("aloyslisp.core.streams");
+		loadClasses("aloyslisp.internal.engine");
+		loadClasses("aloyslisp.internal.flowcontrol");
 		loadClasses("aloyslisp.internal.iterators");
 		loadClasses("aloyslisp.packages.common_lisp");
 		loadClasses("aloyslisp.packages.system");
 
 		// Load first lisp file (REPL definition)
-		sym("print").e(str("aloysLisp v.V305"));
+		sym("print").e(str("aloysLisp v.V314"));
 
 		// Load first lisp file (REPL definition)
 		sym("load").e(str("class.lisp"));

@@ -367,7 +367,7 @@ public class cSYMBOL extends cCELL implements tSYMBOL
 	public tSYMBOL SET_SYMBOL_FUNCTION(tFUNCTION function)
 	{
 		this.function = function;
-		System.out.println("SET_SYMBOL_FUNCTION : " + DESCRIBE());
+		// System.out.println("SET_SYMBOL_FUNCTION : " + DESCRIBE());
 		return this;
 	}
 

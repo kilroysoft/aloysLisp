@@ -72,6 +72,7 @@ public abstract class cFUNCTION extends cAPI implements tFUNCTION
 		let.ENV_PUSH();
 		try
 		{
+			// e.ENV_DUMP();
 			args = API_PUSH_ENV(args, let);
 			if (!(special || macro))
 			{

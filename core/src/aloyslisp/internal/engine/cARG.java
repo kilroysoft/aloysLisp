@@ -43,7 +43,8 @@ import static aloyslisp.core.L.*;
  */
 public class cARG extends cDYN_SYMBOL implements tARG
 {
-	Boolean	base	= true;
+	public Boolean	base	= true;
+	public tSYMBOL	exists	= null;
 
 	/**
 	 * @param orig
@@ -68,7 +69,17 @@ public class cARG extends cDYN_SYMBOL implements tARG
 		if (!(symbol instanceof tSYMBOL))
 			throw new LispException("Argument is not a symbol : " + symbol);
 		this.setOrig((tSYMBOL) arg.CAR());
-		this.value = arg.CDR().CAR();
+		arg = arg.CDR();
+		this.value = arg.CAR();
+		arg = arg.CDR();
+		if (arg.CAR() != NIL)
+		{
+			arg = arg.CAR();
+			if (!(arg instanceof tSYMBOL))
+				throw new LispException("Exist argument should be a SYMBOL : "
+						+ arg);
+			exists = (tSYMBOL) arg;
+		}
 	}
 
 	/**

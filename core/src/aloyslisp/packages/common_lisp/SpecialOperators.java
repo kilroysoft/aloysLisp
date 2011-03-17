@@ -133,7 +133,7 @@ public class SpecialOperators extends cCELL
 	@Static(name = "function", doc = "s_fn")
 	@Mac(prefix = "#'")
 	@SpecialOp
-	public static tT FUNCTION( //
+	public static tFUNCTION FUNCTION( //
 			@Arg(name = "func") tT aFunc)
 	{
 		tT res = NIL;
@@ -170,7 +170,7 @@ public class SpecialOperators extends cCELL
 		}
 
 		// System.out.println("function (real):" + res);
-		return res;
+		return (tFUNCTION) res;
 	}
 
 	/**

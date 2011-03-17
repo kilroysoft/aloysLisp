@@ -79,6 +79,8 @@ public class cAPI extends cCELL implements tAPI
 
 	protected tLIST			vars				= NIL;
 
+	protected tHASH_TABLE	keys				= null;
+
 	protected Boolean		allowOtherKeys		= false;
 
 	protected Integer		basePos				= -1;
@@ -115,6 +117,7 @@ public class cAPI extends cCELL implements tAPI
 	 */
 	public cAPI()
 	{
+		keys = cHASH_TABLE.MAKE_HASH_TABLE();
 		environment = e.topEnv;
 	}
 
@@ -277,7 +280,10 @@ public class cAPI extends cCELL implements tAPI
 			count++;
 			tARG var = null;
 			if (key)
+			{
 				var = new cARG_KEY(elem);
+				keys.SET_GETHASH(var, ((cARG_KEY) var).key);
+			}
 			else
 				var = new cARG(elem, orig);
 
@@ -392,34 +398,51 @@ public class cAPI extends cCELL implements tAPI
 	{
 		// System.out.println("API_PUSH_ENV : " + values + " on " + this.vars
 		// + " with " + DESCRIBE());
-
+		cARG arg = null;
+		values = API_EVAL_LIST((tLIST) values);
 		// Init all vars
 		LISTIterator var = new LISTIterator(this.vars);
 		while (var.hasNext())
 		{
-			cARG arg = (cARG) var.next();
+			arg = (cARG) var.next();
+
+			if (!arg.base)
+				break;
+
 			let.ENV_LET_INTERN(arg.orig, API_EVAL_ARG(arg.SYMBOL_VALUE()));
+			if (arg.exists != null)
+				let.ENV_LET_INTERN(arg.exists, NIL);
 		}
 
 		// mandatory and &optional
 		LISTIterator iter = new LISTIterator(NIL, true);
 		LISTIterator val = new LISTIterator(values);
+		Boolean isKey = false;
 		var = new LISTIterator(this.vars);
 
 		if (macro && whole != null)
 			// Add & whole
 			let.ENV_LET_INTERN(whole, (tLIST) val.getFinal());
 
+		arg = null;
 		while (var.hasNext())
 		{
-			cARG arg = (cARG) var.next();
+			arg = (cARG) var.next();
 
 			if (!arg.base)
+			{
+				isKey = true;
+				var = new LISTIterator(var.getNode());
 				break;
+			}
 
 			tT elem = null;
 			if (val.hasNext())
-				elem = API_EVAL_ARG(val.next());
+			{
+				elem = val.next();
+				if (arg.exists != null)
+					let.SET_ENV_LET_GET(arg.exists, T);
+			}
 			else
 				elem = API_EVAL_ARG(arg.SYMBOL_VALUE());
 
@@ -432,33 +455,53 @@ public class cAPI extends cCELL implements tAPI
 
 		// Add &rest
 		if (rest != null)
-		{
-			tLIST r = NIL;
 			if (val.hasNext())
 			{
+				tLIST r = NIL;
 				val.next();
-				r = API_EVAL_LIST((tLIST) val.getNode());
+				r = val.getNode();
+
+				// reinitialize val for optional keys
+				val = new LISTIterator(r);
+				let.ENV_LET_INTERN(rest, r);
+				res = (tLIST) res.APPEND(r);
 			}
-			let.ENV_LET_INTERN(rest, r);
-			res = (tLIST) res.APPEND(r);
+			else
+				let.ENV_LET_INTERN(rest, NIL);
+
+		while (var.hasNext())
+		{
+			arg = (cARG) var.next();
+			let.ENV_LET_INTERN(arg.orig, API_EVAL_ARG(arg.SYMBOL_VALUE()));
+			if (arg.exists != null)
+				let.ENV_LET_INTERN(arg.exists, NIL);
 		}
 
 		// next &key
-		while (var.hasNext() && val.hasNext())
+		while (isKey && val.hasNext())
 		{
 			tT key = val.next();
 			// System.out.println("Key = " + key);
 			if (!(key instanceof tSYMBOL))
 				throw new LispException("argument not a key : " + key);
+
+			tT keyArg = keys.GETHASH(key, NIL)[0];
+			if (keyArg == NIL)
+			{
+				if (!((tSYMBOL) key).KEYWORDP())
+					throw new LispException(
+							"Non declared key is not a keyword :" + key);
+				key = sym(((tSYMBOL) key).SYMBOL_NAME());
+			}
+			else
+			{
+				key = ((cARG_KEY) keyArg).orig;
+			}
+
 			if (!val.hasNext())
 				throw new LispException("Value of key doesn't exists: " + key);
 			tT value = val.next();
-			if (!(key instanceof tSYMBOL))
-				throw new LispException("&key var is not a symbol");
-			if (allowOtherKeys)
-				let.ENV_LET_INTERN((tSYMBOL) key, API_EVAL_ARG(value));
-			else
-				let.SET_ENV_LET_GET((tSYMBOL) key, API_EVAL_ARG(value));
+			let.ENV_LET_INTERN((tSYMBOL) key, value);
 		}
 
 		// return call arguments

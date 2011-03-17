@@ -33,7 +33,6 @@ import java.lang.reflect.*;
 
 import aloyslisp.annotations.*;
 import aloyslisp.core.cCELL;
-import aloyslisp.core.conditions.LispException;
 import aloyslisp.core.functions.*;
 import aloyslisp.core.packages.*;
 import static aloyslisp.core.L.*;
@@ -108,46 +107,6 @@ public class Library extends cCELL
 			else if (special != null)
 				sym.SET_SPECIAL(true);
 
-			if (f.toString().contains(cls + "." + f.getName()))
-			{
-				String var = f.toString().replace(cls + ".", "")
-						.replaceAll("aloyslisp.core.", "")
-						.replaceAll("aloyslisp.", "")
-						.replaceAll("functions.", "").replaceAll("math.", "")
-						.replaceAll("plugs.", "").replaceAll("sequences.", "")
-						.replaceAll("streams.", "").replaceAll("packages.", "")
-						.replaceAll("java.lang.", "")
-						.replaceAll("#<cPACKAGE system>::", "");
-				String val = "";
-				try
-				{
-					val = f.get(null).toString();
-				}
-				catch (IllegalArgumentException e1)
-				{
-					throw new LispException("Illegal argument " + clas + " : "
-							+ e1.getLocalizedMessage());
-				}
-				catch (IllegalAccessException e1)
-				{
-					throw new LispException("Illegal access " + clas + " : "
-							+ e1.getLocalizedMessage());
-				}
-
-				if (constant)
-					System.out.println("(constant " + sym + " " + val + ")");
-				else if (special != null)
-					System.out
-							.println("(defparameter " + sym + " " + val + ")");
-				else
-					System.out.println("(setq " + sym + " " + val + ")");
-
-				System.out.println(sym);
-				System.out.println();
-				System.out.println("```java");
-				System.out.println(var + " = " + val);
-				System.out.println("```\n");
-			}
 		}
 
 		return true;
@@ -159,7 +118,7 @@ public class Library extends cCELL
 	 */
 	public static Boolean InstMethods(String cls, Class<?> clas)
 	{
-		System.out.println("class " + cls);
+		// System.out.println("class " + cls);
 		Method[] meth = clas.getMethods();
 		for (Method m : meth)
 		{
@@ -170,22 +129,22 @@ public class Library extends cCELL
 			if (stat == null && f == null)
 			{
 				// Test for non declared
-				if (m.getName().matches("[A-Z_ps]*"))
-				{
-					if (m.getDeclaringClass().getSimpleName().startsWith("t"))
-						// we are in a type definition
-						System.out.println("NON DECLARED LISP METHOD : "
-								+ m.getName());
-
-					else if ((m.getModifiers() & Modifier.STATIC) != 0)
-						// we are in a class static definition
-						System.out
-								.println("NON DECLARED LISP cCOMPILED_METHOD : "
-										+ m.getDeclaringClass()
-										+ " "
-										+ clas
-										+ " " + m.getName());
-				}
+				// if (m.getName().matches("[A-Z_ps]*"))
+				// {
+				// if (m.getDeclaringClass().getSimpleName().startsWith("t"))
+				// // we are in a type definition
+				// System.out.println("NON DECLARED LISP METHOD : "
+				// + m.getName());
+				//
+				// else if ((m.getModifiers() & Modifier.STATIC) != 0)
+				// // we are in a class static definition
+				// System.out
+				// .println("NON DECLARED LISP cCOMPILED_METHOD : "
+				// + m.getDeclaringClass()
+				// + " "
+				// + clas
+				// + " " + m.getName());
+				// }
 				continue;
 			}
 

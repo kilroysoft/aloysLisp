@@ -298,8 +298,8 @@ public abstract class cINPUT_STREAM extends cSTREAM implements tINPUT_STREAM
 	@Static(name = "load", doc = "f_load")
 	public static tT[] LOAD( //
 			@Arg(name = "file") tPATHNAME_DESIGNATOR file, //
-			@Opt(name = "verbose", def = "t") Boolean verbose, //
-			@Opt(name = "print", def = "t") Boolean print, //
+			@Opt(name = "verbose", def = "nil") Boolean verbose, //
+			@Opt(name = "print", def = "nil") Boolean print, //
 			@Opt(name = "not-exists", def = "nil") Boolean notExists)
 	{
 		tINPUT_STREAM in;
@@ -368,6 +368,7 @@ public abstract class cINPUT_STREAM extends cSTREAM implements tINPUT_STREAM
 		}
 		catch (Exception e)
 		{
+			e.printStackTrace();
 			throw new LispException("Error on load : "
 					+ e.getLocalizedMessage());
 		}

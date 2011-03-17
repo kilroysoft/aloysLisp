@@ -99,9 +99,9 @@ public class cSTRING extends cVECTOR implements tSTRING
 		if (printEscape != null)
 			esc = !(printEscape.SYMBOL_VALUE() instanceof cNIL);
 		if (esc)
-			return "\"" + getString() + "\"";
-		else
 			return getString();
+		else
+			return "\"" + getString() + "\"";
 	}
 
 	/*

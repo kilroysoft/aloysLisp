@@ -31,6 +31,8 @@
 * Suppress @Static annotation to @Function with test on static function.
 
 == Current state ==
+* Added primitive IDE for debugging. Package aloyslisp.ide. Main class with main cIDE.java.
+* Add third argument fot &optional and &key about instance of an argument. 
 * Clean-up all instantiation process (key arguments, rething the calling process)
 * Rewrite the whole Environment management
 * Pass @BaseArg annotation for arguments to functions in the Java call.

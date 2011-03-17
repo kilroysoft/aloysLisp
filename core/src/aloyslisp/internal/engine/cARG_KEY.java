@@ -60,6 +60,7 @@ public class cARG_KEY extends cARG
 	public cARG_KEY(tT def)
 	{
 		super(NIL, NIL, false);
+		System.out.println("adding key : " + def);
 		if (def instanceof tSYMBOL)
 		{
 			// the case (&key var)
@@ -69,21 +70,23 @@ public class cARG_KEY extends cARG
 		else if (def instanceof tLIST)
 		{
 			tT symbol = def.CAR();
-			if (!(symbol.CAR() instanceof tLIST))
+			if (symbol instanceof tLIST)
 			{
 				// the case (&key ((:key var) val)))
 				key = (tSYMBOL) symbol.CAR();
 				setOrig((tSYMBOL) symbol.CDR().CAR());
 			}
-			else if (symbol.CAR() instanceof tSYMBOL)
+			else if (symbol instanceof tSYMBOL)
 			{
 				// the case (&key (var val))
-				setOrig((tSYMBOL) symbol.CAR());
+				setOrig((tSYMBOL) symbol);
 				key = key(SYMBOL_NAME());
 			}
 			else
 				throw new LispException("bad key definition : " + def);
-			value = def.CDR().CAR();
+
+			def = def.CDR();
+			value = def.CAR();
 		}
 		else
 			throw new LispException("bad key definition : " + def);

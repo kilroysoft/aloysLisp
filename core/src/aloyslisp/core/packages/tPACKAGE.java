@@ -65,7 +65,7 @@ public interface tPACKAGE extends tBUILT_IN_CLASS, tPACKAGE_DESIGNATOR
 	 * @param pack
 	 * @return
 	 */
-	@Function(name = "api", doc = "f_intern")
+	@Function(name = "intern", doc = "f_intern")
 	@BaseArg(name = "package", pos = 1, type = Opt.class, def = "*package*")
 	public tSYMBOL[] INTERN(@Arg(name = "symbol") String symbol //
 	);

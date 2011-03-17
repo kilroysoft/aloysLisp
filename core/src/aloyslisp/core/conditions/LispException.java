@@ -29,8 +29,8 @@
 
 package aloyslisp.core.conditions;
 
-import aloyslisp.core.L;
-import aloyslisp.core.tT;
+import static aloyslisp.core.L.*;
+import aloyslisp.core.*;
 
 /**
  * LispException
@@ -53,11 +53,13 @@ public class LispException extends RuntimeException
 	public LispException(String message)
 	{
 		super(message);
-		tT res = L.sym("*trace*").SYMBOL_VALUE();
+		tT res = sym("*trace*").SYMBOL_VALUE();
 		// System.out.println("*trace* = " + res);
-		L.e.ENV_DUMP();
-		if (res != null && res != L.NIL)
+		if (res != null && res != NIL)
+		{
+			L.e.ENV_DUMP();
 			trace = true;
+		}
 	}
 
 }
