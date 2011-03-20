@@ -29,6 +29,7 @@
 
 package aloyslisp.core.functions;
 
+import aloyslisp.annotations.BuiltIn;
 import aloyslisp.core.*;
 import aloyslisp.core.packages.tSYMBOL;
 import aloyslisp.core.sequences.*;
@@ -44,6 +45,7 @@ import static aloyslisp.core.L.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
+@BuiltIn(classOf = "function", typeOf = "lambda-function", doc = "03_a")
 public class cLAMBDA_FUNCTION extends cFUNCTION implements tLAMBDA_FUNCTION
 {
 	/**

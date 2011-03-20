@@ -29,6 +29,8 @@
 
 package aloyslisp.core.streams;
 
+import aloyslisp.annotations.Function;
+
 /**
  * tSTRING_STREAM
  * 
@@ -52,4 +54,6 @@ public interface tSTRING_STREAM extends tSTREAM
 	 */
 	public void setString(String str);
 
+	@Function(name = "get-output-stream-string", doc = "f_get_ou")
+	public String GET_OUTPUT_STREAM_STRING();
 }

@@ -31,6 +31,7 @@ package aloyslisp.core.sequences;
 
 import java.util.*;
 
+import aloyslisp.annotations.BuiltIn;
 import aloyslisp.core.*;
 import aloyslisp.core.conditions.*;
 import aloyslisp.internal.iterators.*;
@@ -43,6 +44,7 @@ import static aloyslisp.core.L.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
+@BuiltIn(classOf = "vector", doc = "t_vector")
 public class cVECTOR extends cCELL implements tVECTOR
 {
 	public ArrayList<tT>	array;

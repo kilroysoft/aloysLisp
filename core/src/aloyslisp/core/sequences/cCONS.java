@@ -46,6 +46,7 @@ import static aloyslisp.core.L.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
+@BuiltIn(classOf = "cons", doc = "t_cons")
 public class cCONS extends cCELL implements tCONS
 {
 	/**
@@ -94,7 +95,7 @@ public class cCONS extends cCELL implements tCONS
 	{
 		if (list.length == 0)
 			throw new LispException(
-					"Unable to init tCONS with empty array, use cNIL");
+					"Unable to init tCONS with empty array, use cNULL");
 
 		// We'll write in the cell first
 		tLIST walk = NIL;
@@ -338,7 +339,7 @@ public class cCONS extends cCELL implements tCONS
 		}
 
 		// dotted pair
-		if (!(walk instanceof cNIL))
+		if (!(walk instanceof cNULL))
 		{
 			res += " . ";
 			res += walk.toString();
@@ -382,7 +383,7 @@ public class cCONS extends cCELL implements tCONS
 	 */
 	public boolean ENDP()
 	{
-		return !(CDR() instanceof cCONS) || CDR() instanceof cNIL;
+		return !(CDR() instanceof cCONS) || CDR() instanceof cNULL;
 	}
 
 	/*

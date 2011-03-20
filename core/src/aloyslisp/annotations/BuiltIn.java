@@ -43,11 +43,18 @@ import java.lang.annotation.*;
 public @interface BuiltIn
 {
 	/**
-	 * Name of built-in class
+	 * Name of class
 	 * 
 	 * @return
 	 */
-	String name();
+	String classOf();
+
+	/**
+	 * Name of the type
+	 * 
+	 * @return
+	 */
+	String typeOf() default "";
 
 	/**
 	 * Documentation

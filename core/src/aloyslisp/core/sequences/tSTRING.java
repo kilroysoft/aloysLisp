@@ -42,6 +42,7 @@ import aloyslisp.core.streams.tPATHNAME_DESIGNATOR;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
+@Type(name = "string", doc = "t_string", typep = "stringp")
 public interface tSTRING extends tVECTOR, tPATHNAME_DESIGNATOR,
 		tPACKAGE_DESIGNATOR
 {
@@ -97,7 +98,7 @@ public interface tSTRING extends tVECTOR, tPATHNAME_DESIGNATOR,
 	 * @return
 	 */
 	@Function(name = "parse-integer", doc = "f_parse_")
-	public cBIGNUM PARSE_INTEGER(@Opt(name = "start", def = "0") Integer start, //
+	public cINTEGER PARSE_INTEGER(@Opt(name = "start", def = "0") Integer start, //
 			@Opt(name = "end", def = "nil") tT end, //
 			@Opt(name = "radix", def = "*read-base*") Integer radix, //
 			@Opt(name = "junk", def = "nil") Boolean junk);

@@ -29,11 +29,28 @@
 
 package aloyslisp.core.streams;
 
+import static aloyslisp.core.L.NIL;
+import static aloyslisp.core.L.T;
+import static aloyslisp.core.L.c;
+import static aloyslisp.core.L.printEscape;
+import static aloyslisp.core.L.printReadably;
+import static aloyslisp.core.L.readTable;
+import static aloyslisp.core.L.str;
+import static aloyslisp.core.L.sym;
 import aloyslisp.annotations.*;
+import aloyslisp.core.L;
 import aloyslisp.core.cCELL;
 import aloyslisp.core.tT;
+import aloyslisp.core.conditions.END_OF_FILE;
+import aloyslisp.core.conditions.FILE_ERROR;
+import aloyslisp.core.conditions.LispException;
+import aloyslisp.core.functions.tFUNCTION;
+import aloyslisp.core.math.cNUMBER;
+import aloyslisp.core.packages.tNULL;
 import aloyslisp.core.packages.tSYMBOL;
 import aloyslisp.core.sequences.tLIST;
+import aloyslisp.core.sequences.tSEQUENCE;
+import aloyslisp.core.sequences.tSTRING;
 
 /**
  * cSTREAM
@@ -44,6 +61,10 @@ import aloyslisp.core.sequences.tLIST;
  */
 public abstract class cSTREAM extends cCELL implements tSTREAM
 {
+	protected boolean	lineBegin	= true;
+
+	protected tT		elementType	= null;
+
 	/**
 	 * @param stream
 	 * @param form
@@ -58,25 +79,456 @@ public abstract class cSTREAM extends cCELL implements tSTREAM
 		return null;
 	}
 
-	/**
-	 * @param fileSpec
-	 * @param direction
-	 * @param ifExists
-	 * @param ifDoesNotExists
-	 * @param externalFormat
-	 * @return
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.streams.tSTREAM#STREAM_ELEMENT_TYPE()
 	 */
-	@SpecialOp
-	@Static(name = "open", doc = "f_open")
-	public static tT OPEN( //
-			@Arg(name = "filespec") tPATHNAME_DESIGNATOR fileSpec, //
-			@Arg(name = "direction") tSYMBOL direction, //
-			@Opt(name = "if-exists") tSYMBOL ifExists, //
-			@Opt(name = "is-does-not-exists") tSYMBOL ifDoesNotExists, //
-			@Opt(name = "external-format") tT externalFormat)
+	public tT STREAM_ELEMENT_TYPE()
+	{
+		return elementType;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.streams.tINPUT_STREAM#READ(java.lang.Boolean,
+	 * aloyslisp.core.tT, java.lang.Boolean)
+	 */
+	public tT READ(Boolean eofErrorP, tT eofValue, Boolean recursiveP)
+	{
+		// loop until something found or EOF
+		for (;;)
+		{
+			// Test macro char
+			tT res = readMacroChar(eofErrorP, eofValue, recursiveP);
+			if (res != null)
+				return res;
+
+			// It's a constituent... so atom
+			String atom = readAtom(eofErrorP, eofValue, recursiveP);
+			if (atom != null)
+			{
+				// test if numeric
+				res = cNUMBER.create(atom);
+				if (res != null)
+					return res;
+
+				// else it's a symbol
+				return sym(atom);
+			}
+		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.Cell#copy()
+	 */
+	@Override
+	public tT COPY_CELL()
+	{
+		return this;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.Cell#printable()
+	 */
+	@Override
+	public String toString()
+	{
+		return "<#STREAM " + this.getClass().getSimpleName() + ">";
+	}
+
+	public Character PEEK_CHAR(tT peekType, //
+			Boolean eofErrorP, //
+			tT eofValue, //
+			Boolean recursiveP)
+
+	{
+		Character walk = READ_CHAR(eofErrorP, eofValue, recursiveP);
+		boolean space = peekType == T;
+		boolean carTest = peekType instanceof tCHARACTER;
+		Character test = '\uffff';
+		if (carTest)
+			test = ((tCHARACTER) peekType).getChar();
+
+		while (walk != null
+		// test for space char or for terminal char
+				&& ((space && Character.isSpaceChar(walk)) || (carTest && walk != test)))
+		{
+			walk = READ_CHAR(eofErrorP, eofValue, recursiveP);
+		}
+
+		if (walk != null)
+			UNREAD_CHAR(walk);
+
+		return walk;
+	}
+
+	/**
+	 * @param eofErrorP
+	 * @param eofValue
+	 * @param recursiveP
+	 * @return
+	 * @throws END_OF_FILE
+	 */
+	public Character READ_CHAR_NO_HANG(Boolean eofErrorP, tT eofValue,
+			Boolean recursiveP)
+	{
+		if (!LISTEN())
+			return null;
+		return READ_CHAR(eofErrorP, eofValue, recursiveP);
+	}
+
+	/**
+	 * @param stream
+	 * @param eofErrorP
+	 * @param eofValue
+	 * @param recursiveP
+	 * @return
+	 * @throws END_OF_FILE
+	 */
+	public tT readMacroChar(Boolean eofErrorP, tT eofValue, Boolean recursiveP)
+			throws END_OF_FILE
+	{
+		Character curr = PEEK_CHAR(NIL, eofErrorP, eofValue, recursiveP);
+		cREADTABLE table = (cREADTABLE) readTable.SYMBOL_VALUE();
+
+		if (!table.isConstituent(curr = PEEK_CHAR(NIL, eofErrorP, eofValue,
+				recursiveP)))
+		{
+			curr = READ_CHAR(eofErrorP, eofValue, recursiveP);
+
+			// test macrochar
+			tT[] charMacro = table.GET_MACRO_CHARACTER(curr);
+			if (charMacro[0] == NIL)
+				return null;
+
+			// test macrochar extension
+			if (charMacro[1] != NIL)
+			{
+				Character curr2 = READ_CHAR(eofErrorP, eofValue, recursiveP);
+				charMacro[0] = table.GET_DISPATCH_MACRO_CHARACTER(curr, curr2);
+				if (charMacro[0] == NIL)
+				{
+					throw new LispException("Macro character " + curr + curr2
+							+ " not defined");
+				}
+
+				curr = curr2;
+			}
+
+			// verify function
+			tT function = charMacro[0];
+			if (function instanceof tSYMBOL)
+			{
+				trace("cDYN_SYMBOL macrochar = " + function + " "
+						+ function.DESCRIBE());
+				function = ((tSYMBOL) function).SYMBOL_FUNCTION();
+			}
+			if (function == null)
+			{
+				throw new LispException("Function not defined for macrochar "
+						+ charMacro[0]);
+			}
+
+			// Call macro function
+			tT read = ((tFUNCTION) function).e(this, c(curr))[0];
+			return read;
+		}
+
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.streams.IInputStream#readAtom()
+	 */
+	public String readAtom(Boolean eofErrorP, tT eofValue, Boolean recursiveP)
+			throws END_OF_FILE
+	{
+		return readAtom(false, eofErrorP, eofValue, recursiveP);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.streams.IInputStream#readAtom(boolean)
+	 */
+	public String readAtom(Boolean firstEscaped, Boolean eofErrorP,
+			tT eofValue, Boolean recursiveP)
+	{
+		Character curr = PEEK_CHAR(NIL, eofErrorP, eofValue, recursiveP);
+		cREADTABLE table = (cREADTABLE) readTable.SYMBOL_VALUE();
+		StringBuilder res = new StringBuilder("");
+		boolean singleEscaped = firstEscaped;
+		boolean multiEscaped = false;
+
+		try
+		{
+			while (table.isConstituent(curr = READ_CHAR(eofErrorP, eofValue,
+					recursiveP)) || singleEscaped || multiEscaped)
+			{
+				// switched on | ;-)
+				multiEscaped ^= (curr == '|');
+
+				res.append(singleEscaped || multiEscaped ? curr : table
+						.changeCase(curr));
+
+				// single escape
+				singleEscaped = (curr == '\\') && !singleEscaped
+						&& !multiEscaped;
+			}
+			UNREAD_CHAR(curr);
+		}
+		catch (END_OF_FILE e)
+		{
+
+		}
+		catch (Exception e)
+		{
+			throw new LispException("Error in read : " + res.toString());
+		}
+
+		String atom = res.toString();
+		if (atom.equals(""))
+			return null;
+
+		return atom;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * aloyslisp.core.types.tINPUT_STREAM#READ_SEQUENCE(aloyslisp.core.types
+	 * .tSEQUENCE, aloyslisp.core.types.tINPUT_STREAM, java.lang.Integer,
+	 * java.lang.Integer)
+	 */
+	@Override
+	public tT READ_SEQUENCE(tSEQUENCE sequence, Integer start, Integer end)
 	{
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.types.tINPUT_STREAM#READ_LINE(aloyslisp.core.types.
+	 * tINPUT_STREAM, java.lang.Boolean, aloyslisp.core.types.tT,
+	 * java.lang.Boolean)
+	 */
+	@Override
+	public tT[] READ_LINE(Boolean eofErrorP, tT eofValue, Boolean recursiveP)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/**
+	 * @return
+	 */
+	@Static(name = "load", doc = "f_load")
+	public static tT[] LOAD( //
+			@Arg(name = "file") tPATHNAME_DESIGNATOR file, //
+			@Opt(name = "verbose", def = "nil") Boolean verbose, //
+			@Opt(name = "print", def = "nil") Boolean print, //
+			@Opt(name = "not-exists", def = "nil") Boolean notExists)
+	{
+		tSTREAM in;
+
+		if (file instanceof tSTREAM)
+		{
+			in = (tSTREAM) file;
+		}
+		else
+		{
+			try
+			{
+				in = new cFILE_STREAM(true, file);
+			}
+			catch (FILE_ERROR e)
+			{
+				if (notExists)
+				{
+					return new tT[]
+					{ NIL };
+				}
+				throw new LispException("Error opening " + file + " "
+						+ e.getLocalizedMessage());
+			}
+		}
+
+		if (verbose)
+		{
+			((tSTREAM) L.standardOutput.SYMBOL_VALUE())
+					.PRINT(str("; Loading contents of file " + file));
+		}
+
+		// while there's something to read
+		try
+		{
+			tT[] res;
+			for (;;)
+			{
+				// read it
+				res = new tT[]
+				{ in.READ(false, NIL, false) };
+
+				if (verbose)
+				{
+					((tSTREAM) L.standardOutput.SYMBOL_VALUE())
+							.PRINT(str("; lisp>" + res[0]));
+				}
+
+				// and evaluate it
+				// System.out.println("eval : " + res[0]);
+				res = res[0].EVAL();
+
+				if (print)
+					for (tT cell : res)
+					{
+						((tSTREAM) L.standardOutput.SYMBOL_VALUE())
+								.PRINT(str("; " + cell));
+					}
+			}
+		}
+		catch (END_OF_FILE e)
+		{
+			// End of file
+		}
+		catch (LispException e)
+		{
+			// Lisp error transfer
+			throw e;
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			throw new LispException("Error on load : "
+					+ e.getLocalizedMessage());
+		}
+
+		if (verbose)
+		{
+			((tSTREAM) L.standardOutput.SYMBOL_VALUE())
+					.PRINT(str("; Finished loading " + file));
+		}
+		return new tT[]
+		{ T };
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * aloyslisp.core.streams.IOutputStream#writeString(java.lang.String)
+	 */
+	@Override
+	public tT WRITE_STRING(tT str)
+	{
+		// TODO manage start and end in WRITE_STRING
+		for (tT car : (tSTRING) str)
+		{
+			// System.out.println("(WRITE_CHAR " + ((tCHARACTER)
+			// car).getChar());
+			WRITE_CHAR(((tCHARACTER) car).getChar());
+		}
+		return str;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.streams.IOutputStream#terpri()
+	 */
+	public tNULL TERPRI()
+	{
+		WRITE_CHAR('\n');
+		lineBegin = true;
+		return NIL;
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.streams.IOutputStream#freshLine()
+	 */
+	@Override
+	public tT FRESH_LINE()
+	{
+		if (!lineBegin)
+			return TERPRI();
+		return T;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.types.tOUTPUT_STREAM#WRITE(aloyslisp.core.types.tT)
+	 */
+	public tT WRITE(tT obj)
+	{
+		// TODO manage &key arguments and generate Specials vars for printing
+		// System.out.println("(WRITE " + str(obj.toString()));
+		return WRITE_STRING(str(obj.toString()));
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.types.tOUTPUT_STREAM#PRIN1(aloyslisp.core.types.tT,
+	 * aloyslisp.core.types.tOUTPUT_STREAM)
+	 */
+	@Override
+	public tT PRIN1(tT obj)
+	{
+		tT res = null;
+		tT savEscape = printEscape.SYMBOL_VALUE();
+		printEscape.SET_SYMBOL_VALUE(T);
+
+		try
+		{
+			res = WRITE(obj);
+		}
+		finally
+		{
+			printEscape.SET_SYMBOL_VALUE(savEscape);
+		}
+		return res;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.types.tOUTPUT_STREAM#PRINC(aloyslisp.core.types.tT,
+	 * aloyslisp.core.types.tOUTPUT_STREAM)
+	 */
+	@Override
+	public tT PRINC(tT obj)
+	{
+		tT res = null;
+		tT savEscape = printEscape.SYMBOL_VALUE();
+		printEscape.SET_SYMBOL_VALUE(NIL);
+		tT savReadably = printReadably.SYMBOL_VALUE();
+		printReadably.SET_SYMBOL_VALUE(NIL);
+
+		try
+		{
+			res = WRITE(obj);
+		}
+		finally
+		{
+			printReadably.SET_SYMBOL_VALUE(savReadably);
+			printEscape.SET_SYMBOL_VALUE(savEscape);
+		}
+		return res;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.types.tOUTPUT_STREAM#PRINT(aloyslisp.core.types.tT,
+	 * aloyslisp.core.types.tOUTPUT_STREAM)
+	 */
+	@Override
+	public tT PRINT(tT obj)
+	{
+		FRESH_LINE();
+		tT res = PRIN1(obj);
+		WRITE(c(' '));
+		return res;
 	}
 
 }

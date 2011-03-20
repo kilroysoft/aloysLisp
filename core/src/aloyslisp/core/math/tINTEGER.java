@@ -39,6 +39,7 @@ import aloyslisp.core.tT;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
+@Type(name = "integer", doc = "t_intege", typep = "integerp")
 public interface tINTEGER extends tRATIONAL
 {
 	/********************************************************

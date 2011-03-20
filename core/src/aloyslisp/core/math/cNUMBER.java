@@ -47,22 +47,22 @@ public abstract class cNUMBER extends cCELL implements tNUMBER
 	/**
 	 * Constant 0
 	 */
-	public static final cBIGNUM			ZERO	= new cBIGNUM(0);
+	public static final cINTEGER			ZERO	= new cINTEGER(0);
 
 	/**
 	 * Constant 1
 	 */
-	public static final cBIGNUM			ONE		= new cBIGNUM(1);
+	public static final cINTEGER			ONE		= new cINTEGER(1);
 
 	/**
 	 * Constant 2
 	 */
-	public static final cBIGNUM			TWO		= new cBIGNUM(2);
+	public static final cINTEGER			TWO		= new cINTEGER(2);
 
 	/**
 	 * Constant 10
 	 */
-	public static final cBIGNUM			TEN		= new cBIGNUM(10);
+	public static final cINTEGER			TEN		= new cINTEGER(10);
 
 	/**
 	 * Constant PI
@@ -326,14 +326,14 @@ public abstract class cNUMBER extends cCELL implements tNUMBER
 		{
 			String[] rat = nb.split("/");
 			// System.out.println("Match ..." + rat[0] + " / " + rat[1]);
-			return new cRATIO(new cBIGNUM(rat[0], base), new cBIGNUM(rat[1],
+			return new cRATIO(new cINTEGER(rat[0], base), new cINTEGER(rat[1],
 					base)).rationalizeValue();
 		}
 
 		// Integer
 		if (nb.matches("^[-\\+]?" + strBase + "+$"))
 		{
-			return new cBIGNUM(nb, base);
+			return new cINTEGER(nb, base);
 		}
 
 		return null;

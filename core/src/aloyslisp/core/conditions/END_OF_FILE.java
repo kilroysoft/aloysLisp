@@ -41,7 +41,7 @@ import aloyslisp.core.streams.tSTREAM;
  * 
  */
 @Type(name = "end-of-file", doc = "e_end_of")
-@BuiltIn(name = "end-of-file", doc = "e_end_of")
+@BuiltIn(classOf = "end-of-file", doc = "e_end_of")
 public class END_OF_FILE extends STREAM_ERROR
 {
 	private static final long	serialVersionUID	= 1L;

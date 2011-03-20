@@ -24,22 +24,31 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 19 févr. 2011 Creation
+// IP 19 mars 2011 Creation
 // --------------------------------------------------------------------------
 
-package aloyslisp.core.streams;
+package aloyslisp.core.math;
 
-import aloyslisp.annotations.*;
+import aloyslisp.annotations.BuiltIn;
+import aloyslisp.core.cCELL;
 
 /**
- * tSTRING_OUTPUT_STREAM
+ * cRANDOM_STATE
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public interface tSTRING_OUTPUT_STREAM extends tOUTPUT_STREAM, tSTRING_STREAM
+@BuiltIn(classOf = "random-state", doc = "t_rnd")
+public class cRANDOM_STATE extends cCELL implements tRANDOM_STATE
 {
-	@Function(name = "get-output-stream-string", doc = "f_get_ou")
-	public String GET_OUTPUT_STREAM_STRING();
+
+	/**
+	 * 
+	 */
+	public cRANDOM_STATE()
+	{
+		// TODO Auto-generated constructor stub
+	}
+
 }

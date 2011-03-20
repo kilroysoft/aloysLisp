@@ -56,7 +56,7 @@ public abstract class cFLOAT extends cREAL implements tFLOAT
 	 * @see aloyslisp.core.math.tNUMBER#ratioValue()
 	 */
 	@Override
-	public cBIGNUM getIntegerValue()
+	public cINTEGER getIntegerValue()
 	{
 		throw new LispException("Cannot coerce cFLOAT to cINTEGER");
 	}

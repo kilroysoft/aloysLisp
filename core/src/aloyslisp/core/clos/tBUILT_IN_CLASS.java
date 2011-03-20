@@ -38,7 +38,7 @@ import aloyslisp.annotations.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-@Type(name = "built-in-class", doc="t_built_")
+@Type(name = "built-in-class", doc="t_built_", typep="built-in-class-p")
 public interface tBUILT_IN_CLASS extends tCLASS
 {
 

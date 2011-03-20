@@ -44,6 +44,7 @@ import static aloyslisp.core.L.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
+@BuiltIn(classOf = "string", doc = "t_string")
 public class cSTRING extends cVECTOR implements tSTRING
 {
 	/**
@@ -97,7 +98,7 @@ public class cSTRING extends cVECTOR implements tSTRING
 		// System.out.println("String Escape : " + printEscape.get());
 		boolean esc = false;
 		if (printEscape != null)
-			esc = !(printEscape.SYMBOL_VALUE() instanceof cNIL);
+			esc = !(printEscape.SYMBOL_VALUE() instanceof cNULL);
 		if (esc)
 			return getString();
 		else
@@ -192,7 +193,7 @@ public class cSTRING extends cVECTOR implements tSTRING
 	 * aloyslisp.core.java.lang.Integer, java.lang.Boolean)
 	 */
 	@Override
-	public cBIGNUM PARSE_INTEGER(Integer start, tT end, Integer radix,
+	public cINTEGER PARSE_INTEGER(Integer start, tT end, Integer radix,
 			Boolean junk)
 	{
 		// TODO Auto-generated method stub

@@ -24,26 +24,29 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 20 févr. 2011 Creation
+// IP 19 mars 2011 Creation
 // --------------------------------------------------------------------------
 
 package aloyslisp.core.streams;
 
-import aloyslisp.core.*;
-import aloyslisp.core.conditions.*;
-import aloyslisp.core.math.*;
-import aloyslisp.annotations.*;
-import static aloyslisp.core.L.*;
+import static aloyslisp.core.L.NIL;
+import aloyslisp.annotations.Arg;
+import aloyslisp.annotations.Opt;
+import aloyslisp.annotations.Static;
+import aloyslisp.core.tT;
+import aloyslisp.core.conditions.END_OF_FILE;
+import aloyslisp.core.conditions.LispException;
+import aloyslisp.core.math.cINTEGER;
+import aloyslisp.core.math.tINTEGER;
 
 /**
- * cSTRING_INPUT_STREAM
+ * cSTRING_STREAM
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class cSTRING_INPUT_STREAM extends cINPUT_STREAM implements
-		tSTRING_INPUT_STREAM
+public class cSTRING_STREAM extends cSTREAM implements tSTRING_STREAM
 {
 	/**
 	 * String buffer
@@ -68,7 +71,7 @@ public class cSTRING_INPUT_STREAM extends cINPUT_STREAM implements
 	/**
 	 * 
 	 */
-	public cSTRING_INPUT_STREAM(String str, Integer start, Integer end)
+	public cSTRING_STREAM(String str, Integer start, Integer end)
 	{
 		if (end < 0)
 			end = str.length();
@@ -78,6 +81,12 @@ public class cSTRING_INPUT_STREAM extends cINPUT_STREAM implements
 		setString(str);
 		this.index = start;
 		this.end = end;
+		opened = true;
+	}
+
+	public cSTRING_STREAM()
+	{
+		buffer = "";
 		opened = true;
 	}
 
@@ -111,7 +120,7 @@ public class cSTRING_INPUT_STREAM extends cINPUT_STREAM implements
 	 * @return
 	 */
 	@Static(name = "make-string-input-stream", doc = "f_mk_s_1")
-	public static tSTRING_INPUT_STREAM MAKE_STRING_INPUT_STREAM( //
+	public static tSTRING_STREAM MAKE_STRING_INPUT_STREAM( //
 			@Arg(name = "string") String string, //
 			@Opt(name = "start") tT start, //
 			@Opt(name = "end") tT end //
@@ -134,7 +143,7 @@ public class cSTRING_INPUT_STREAM extends cINPUT_STREAM implements
 		if (end != NIL)
 			en = ((cINTEGER) end).integerValue();
 
-		return new cSTRING_INPUT_STREAM(string, st, en);
+		return new cSTRING_STREAM(string, st, en);
 	}
 
 	/*
@@ -228,6 +237,78 @@ public class cSTRING_INPUT_STREAM extends cINPUT_STREAM implements
 	{
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * aloyslisp.core.streams.tOUTPUT_STREAM#WRITE_CHAR(java.lang.Character,
+	 * aloyslisp.core.streams.tOUTPUT_STREAM)
+	 */
+	@Override
+	public Character WRITE_CHAR(Character character)
+	{
+		buffer += character;
+		return character;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.streams.tOUTPUT_STREAM#WRITE_BYTE(java.lang.Integer,
+	 * aloyslisp.core.streams.tOUTPUT_STREAM)
+	 */
+	@Override
+	public Integer WRITE_BYTE(Integer val)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * aloyslisp.core.streams.tOUTPUT_STREAM#FINISH_OUTPUT(aloyslisp.core.streams
+	 * .tOUTPUT_STREAM)
+	 */
+	@Override
+	public tT FINISH_OUTPUT()
+	{
+		return NIL;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * aloyslisp.core.streams.tOUTPUT_STREAM#FORCE_OUTPUT(aloyslisp.core.streams
+	 * .tOUTPUT_STREAM)
+	 */
+	@Override
+	public tT FORCE_OUTPUT()
+	{
+		return NIL;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * aloyslisp.core.streams.tOUTPUT_STREAM#CLEAR_OUTPUT(aloyslisp.core.streams
+	 * .tOUTPUT_STREAM)
+	 */
+	@Override
+	public tT CLEAR_OUTPUT()
+	{
+		return NIL;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * aloyslisp.core.streams.tSTRING_OUTPUT_STREAM#GET_OUTPUT_STREAM_STRING()
+	 */
+	@Override
+	public String GET_OUTPUT_STREAM_STRING()
+	{
+		return getString();
 	}
 
 }

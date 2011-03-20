@@ -40,7 +40,7 @@ import aloyslisp.core.tT;
  * 
  */
 @Type(name = "division-by-zero", doc = "e_divisi")
-@BuiltIn(name = "division-by-zero", doc = "e_divisi")
+@BuiltIn(classOf = "division-by-zero", doc = "e_divisi")
 public class DIVISION_BY_ZERO extends ARITHMETIC_ERROR
 {
 	private static final long	serialVersionUID	= 1L;

@@ -56,7 +56,7 @@ public @interface Type
 	 * 
 	 * @return
 	 */
-	String doc() default "TBD";
+	String doc() default "";
 
 	/**
 	 * Test function

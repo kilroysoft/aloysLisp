@@ -40,7 +40,7 @@ import aloyslisp.core.clos.tBUILT_IN_CLASS;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-@Type(name = "array", typep = "arrayp")
+@Type(name = "array", doc = "t_array", typep = "arrayp")
 public interface tARRAY extends tBUILT_IN_CLASS
 {
 	/**

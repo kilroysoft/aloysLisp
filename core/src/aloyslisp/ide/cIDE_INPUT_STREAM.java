@@ -17,7 +17,7 @@ import java.util.*;
  * its input
  * off to a Lisp Evaluator.
  */
-class cIDE_INPUT_STREAM extends cSTRING_INPUT_STREAM implements Runnable,
+class cIDE_INPUT_STREAM extends cSTRING_STREAM implements Runnable,
 		ActionListener, KeyListener
 {
 	/**
@@ -70,7 +70,7 @@ class cIDE_INPUT_STREAM extends cSTRING_INPUT_STREAM implements Runnable,
 
 	protected int							vFudge						= 7;
 
-	protected cIDE						f_parent;
+	protected cIDE							f_parent;
 
 	protected String						f_saveBuffer				= "";
 
@@ -186,7 +186,7 @@ class cIDE_INPUT_STREAM extends cSTRING_INPUT_STREAM implements Runnable,
 		inputString = inputString.trim();
 
 		tT[] result = null;
-		f_parent.message(inputString + "\n", true);
+		f_parent.message(inputString, true);
 		try
 		{
 			result = L.lisp(inputString).EVAL();
@@ -211,7 +211,10 @@ class cIDE_INPUT_STREAM extends cSTRING_INPUT_STREAM implements Runnable,
 		// result will be printed in the Output window.
 		if (result != null)
 			for (int i = 0; i < result.length; i++)
-				f_parent.message(result[i] + "\n");
+			{
+				f_parent.message(result[i]);
+			}
+
 		f_lastCommand = inputString;
 
 		// Select all the text in the input box

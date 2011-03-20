@@ -38,7 +38,7 @@ import aloyslisp.annotations.Type;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-@Type(name = "class", doc = "t_class")
+@Type(name = "class", doc = "t_class", typep = "classp")
 public interface tCLASS extends tSTANDARD_OBJECT
 {
 

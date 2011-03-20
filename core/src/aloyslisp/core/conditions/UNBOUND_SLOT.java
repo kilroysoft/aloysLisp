@@ -41,7 +41,7 @@ import aloyslisp.core.tT;
  * 
  */
 @Type(name = "unbound-slot", doc = "e_unboun")
-@BuiltIn(name = "unbound-slot", doc = "e_unboun")
+@BuiltIn(classOf = "unbound-slot", doc = "e_unboun")
 public class UNBOUND_SLOT extends CELL_ERROR
 {
 	private static final long	serialVersionUID	= 1L;

@@ -41,7 +41,7 @@ import aloyslisp.core.tT;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-@Type(name = "list", typep = "listp")
+@Type(name = "list", doc = "t_list", typep = "listp")
 public interface tLIST extends tSEQUENCE
 {
 	/**
@@ -109,7 +109,7 @@ public interface tLIST extends tSEQUENCE
 			@Arg(name = "value") tT value);
 
 	/**
-	 * Append : write to the cdr of last cons (append to cNIL -> item)
+	 * Append : write to the cdr of last cons (append to cNULL -> item)
 	 * 
 	 * @return
 	 */

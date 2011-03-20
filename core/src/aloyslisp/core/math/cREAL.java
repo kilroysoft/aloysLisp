@@ -130,7 +130,7 @@ public abstract class cREAL extends cNUMBER implements tREAL
 
 	tREAL[] floor(tREAL op)
 	{
-		tINTEGER quotient = new cBIGNUM(
+		tINTEGER quotient = new cINTEGER(
 				((Double) Math.floor(DIVISION(op.getDoubleValue())
 						.getDoubleValue().doubleValue())).toString());
 		return new tREAL[]
@@ -144,7 +144,7 @@ public abstract class cREAL extends cNUMBER implements tREAL
 
 	tREAL[] ceiling(tREAL op)
 	{
-		tINTEGER quotient = new cBIGNUM(
+		tINTEGER quotient = new cINTEGER(
 				((Double) Math.ceil(DIVISION(op.getDoubleValue())
 						.getDoubleValue().doubleValue())).toString());
 		return new tREAL[]
@@ -170,7 +170,7 @@ public abstract class cREAL extends cNUMBER implements tREAL
 
 	tREAL[] round(tREAL op)
 	{
-		tINTEGER quotient = new cBIGNUM(
+		tINTEGER quotient = new cINTEGER(
 				Math.round(DIVISION(op.getDoubleValue()).getDoubleValue()
 						.doubleValue()));
 		return new tREAL[]

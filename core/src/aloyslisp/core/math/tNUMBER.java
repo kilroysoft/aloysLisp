@@ -40,6 +40,7 @@ import aloyslisp.core.clos.tBUILT_IN_CLASS;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
+@Type(name = "number", doc = "t_number", typep = "numberp")
 public interface tNUMBER extends tBUILT_IN_CLASS
 {
 	/* *******************************************************************
@@ -64,7 +65,7 @@ public interface tNUMBER extends tBUILT_IN_CLASS
 	 * 
 	 * @return
 	 */
-	abstract cBIGNUM getIntegerValue();
+	abstract cINTEGER getIntegerValue();
 
 	/**
 	 * Convert to float

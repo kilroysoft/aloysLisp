@@ -29,6 +29,7 @@
 
 package aloyslisp.core.math;
 
+import aloyslisp.annotations.BuiltIn;
 import aloyslisp.core.conditions.*;
 import static aloyslisp.core.L.*;
 
@@ -39,6 +40,7 @@ import static aloyslisp.core.L.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
+@BuiltIn(classOf = "complex", typeOf = "complex", doc = "t_comple")
 public class cCOMPLEX extends cNUMBER implements tCOMPLEX
 {
 
@@ -104,7 +106,7 @@ public class cCOMPLEX extends cNUMBER implements tCOMPLEX
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.math.tNUMBER#getIntegerValue()
 	 */
-	public cBIGNUM getIntegerValue()
+	public cINTEGER getIntegerValue()
 	{
 		if (!imag.EQUAL(nInt(0)))
 		{

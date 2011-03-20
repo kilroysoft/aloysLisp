@@ -38,7 +38,7 @@ import aloyslisp.annotations.Type;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-@Type(name = "structure-class", doc = "t_stu_cl")
+@Type(name = "structure-class", doc = "t_stu_cl", typep = "structure-class-p")
 public interface tSTRUCTURE_CLASS extends tCLASS
 {
 

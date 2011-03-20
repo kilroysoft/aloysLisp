@@ -41,7 +41,7 @@ import aloyslisp.core.tT;
  * 
  */
 @Type(name = "unbound-variable", doc = "e_unbo_1")
-@BuiltIn(name = "unbound-variable", doc = "e_unbo_1")
+@BuiltIn(classOf = "unbound-variable", doc = "e_unbo_1")
 public class UNBOUND_VARIABLE extends CELL_ERROR
 {
 	private static final long	serialVersionUID	= 1L;

@@ -29,8 +29,10 @@
 
 package aloyslisp.core.functions;
 
+import aloyslisp.annotations.Type;
 import aloyslisp.core.tT;
 
+@Type(name = "function-designator", doc = "01_dae", typep = "function-designator-p")
 public interface tFUNCTION_DESIGNATOR extends tT
 {
 

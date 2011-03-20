@@ -29,6 +29,8 @@
 
 package aloyslisp.core.sequences;
 
+import aloyslisp.annotations.Type;
+
 
 /**
  * tVECTOR
@@ -37,6 +39,7 @@ package aloyslisp.core.sequences;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
+@Type(name = "vector", doc = "t_vector", typep = "vectorp")
 public interface tVECTOR extends tARRAY, tSEQUENCE
 {
 

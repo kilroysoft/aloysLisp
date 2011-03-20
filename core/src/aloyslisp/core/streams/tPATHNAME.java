@@ -29,7 +29,10 @@
 
 package aloyslisp.core.streams;
 
+import aloyslisp.annotations.*;
+import aloyslisp.core.*;
 import aloyslisp.core.clos.*;
+import aloyslisp.core.sequences.*;
 
 /**
  * tPATHNAME
@@ -40,5 +43,49 @@ import aloyslisp.core.clos.*;
  */
 public interface tPATHNAME extends tBUILT_IN_CLASS, tPATHNAME_DESIGNATOR
 {
+	/**
+	 * @return Pathnames list
+	 */
+	@Function(name = "directory", doc = "f_dir")
+	@BaseArg(name = "path", type = tPATHNAME_DESIGNATOR.class)
+	public tLIST DIRECTORY();
+
+	/**
+	 * @return pathname or NIL
+	 */
+	@Function(name = "probe-file", doc = "f_probe")
+	@BaseArg(name = "path", type = tPATHNAME_DESIGNATOR.class)
+	public tT PROBE_FILE();
+
+	/**
+	 * @return pathspec, created
+	 */
+	@Function(name = "ensure-directories-exist", doc = "f_ensu_1")
+	@Key(keys = "(verbose)")
+	@BaseArg(name = "path", type = tPATHNAME_DESIGNATOR.class)
+	public tT[] ENSURE_DIRECTORIES_EXIST();
+
+	/**
+	 * @return pathname
+	 */
+	@Function(name = "truename", doc = "f_tn")
+	@BaseArg(name = "path", type = tPATHNAME_DESIGNATOR.class)
+	public tPATHNAME TRUENAME();
+
+	/**
+	 * @return author name or nil
+	 */
+	@Function(name = "file-author", doc = "f_file_a")
+	@BaseArg(name = "path", type = tPATHNAME_DESIGNATOR.class)
+	public tT FILE_AUTHOR();
+
+	/**
+	 * @return date in universal time or nil
+	 */
+	@Function(name = "rename-file", doc = "f_rn_file")
+	@BaseArg(name = "path", type = tPATHNAME_DESIGNATOR.class)
+	public tT FILE_WRITE_DATE( //
+			@Arg(name = "new-file") tPATHNAME_DESIGNATOR newFile //
+	);
 
 }

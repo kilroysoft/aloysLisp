@@ -39,6 +39,7 @@ import aloyslisp.core.tT;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
+@Type(name = "float", doc = "t_short", typep = "floatp")
 public interface tFLOAT extends tREAL
 {
 	/*************************************************************

@@ -41,7 +41,7 @@ import aloyslisp.core.tT;
  * 
  */
 @Type(name = "package-error", doc = "e_pkg_er")
-@BuiltIn(name = "package-error", doc = "e_pkg_er")
+@BuiltIn(classOf = "package-error", doc = "e_pkg_er")
 public class PACKAGE_ERROR extends ERROR
 {
 	private static final long	serialVersionUID	= 1L;

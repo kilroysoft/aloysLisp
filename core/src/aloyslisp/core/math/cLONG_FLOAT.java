@@ -29,12 +29,15 @@
 
 package aloyslisp.core.math;
 
+import aloyslisp.annotations.BuiltIn;
+
 /**
  * cLONG_FLOAT
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  */
+@BuiltIn(classOf = "float", typeOf = "long-float", doc = "t_short_")
 public class cLONG_FLOAT extends cDOUBLE_FLOAT
 {
 

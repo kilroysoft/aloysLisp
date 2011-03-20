@@ -29,6 +29,8 @@
 
 package aloyslisp.core.math;
 
+import aloyslisp.annotations.Type;
+
 /**
  * tCOMPLEX
  * 
@@ -36,6 +38,7 @@ package aloyslisp.core.math;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
+@Type(name = "complex", doc = "t_comple", typep = "complexp")
 public interface tCOMPLEX extends tNUMBER
 {
 	/* *******************************************************************

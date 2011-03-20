@@ -29,6 +29,7 @@
 
 package aloyslisp.core.sequences;
 
+import aloyslisp.annotations.Type;
 import aloyslisp.core.clos.tBUILT_IN_CLASS;
 
 /**
@@ -38,6 +39,7 @@ import aloyslisp.core.clos.tBUILT_IN_CLASS;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
+@Type(name = "cons", doc = "t_cons", typep = "consp")
 public interface tCONS extends tLIST, tBUILT_IN_CLASS
 {
 }

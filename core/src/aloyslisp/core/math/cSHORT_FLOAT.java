@@ -29,6 +29,8 @@
 
 package aloyslisp.core.math;
 
+import aloyslisp.annotations.BuiltIn;
+
 /**
  * cSHORT_FLOAT
  * 
@@ -36,6 +38,7 @@ package aloyslisp.core.math;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
+@BuiltIn(classOf = "float", typeOf = "short-float", doc = "t_short_")
 public class cSHORT_FLOAT extends cSINGLE_FLOAT implements tSHORT_FLOAT
 {
 

@@ -45,6 +45,7 @@ import static aloyslisp.core.L.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
+@BuiltIn(classOf = "package", doc = "t_pkg")
 public class cPACKAGE extends cCELL implements tPACKAGE
 {
 	/**

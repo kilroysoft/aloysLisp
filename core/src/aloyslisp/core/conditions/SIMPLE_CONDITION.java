@@ -42,7 +42,7 @@ import aloyslisp.core.sequences.*;
  * 
  */
 @Type(name = "simple-condition", doc = "e_smp_cn")
-@BuiltIn(name = "simple-condition", doc = "e_smp_cn")
+@BuiltIn(classOf = "simple-condition", doc = "e_smp_cn")
 public class SIMPLE_CONDITION extends CONDITION
 {
 	private static final long	serialVersionUID	= 1L;

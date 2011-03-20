@@ -40,7 +40,7 @@ import aloyslisp.annotations.Type;
  * 
  */
 @Type(name = "program-error", doc = "e_progra")
-@BuiltIn(name = "program-error", doc = "e_progra")
+@BuiltIn(classOf = "program-error", doc = "e_progra")
 public class PROGRAM_ERROR extends ERROR
 {
 	private static final long	serialVersionUID	= 1L;

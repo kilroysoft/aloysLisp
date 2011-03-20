@@ -29,6 +29,7 @@
 
 package aloyslisp.core.math;
 
+import aloyslisp.annotations.Type;
 import aloyslisp.core.clos.*;
 
 /**
@@ -38,6 +39,7 @@ import aloyslisp.core.clos.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
+@Type(name = "random-state", doc = "t_rnd", typep = "random-state-p")
 public interface tRANDOM_STATE extends tBUILT_IN_CLASS
 {
 

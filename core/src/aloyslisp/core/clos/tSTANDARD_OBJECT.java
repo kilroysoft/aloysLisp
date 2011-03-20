@@ -39,7 +39,7 @@ import aloyslisp.core.tT;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-@Type(name = "standard-object", doc = "t_std_ob")
+@Type(name = "standard-object", doc = "t_std_ob", typep="standard-object-p")
 public interface tSTANDARD_OBJECT extends tT
 {
 }

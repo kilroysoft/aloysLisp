@@ -46,6 +46,7 @@ import static aloyslisp.core.L.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
+@BuiltIn(classOf = "symbol", doc = "t_symbol")
 public class cSYMBOL extends cCELL implements tSYMBOL
 {
 	/**

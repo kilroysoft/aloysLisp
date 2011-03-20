@@ -29,6 +29,7 @@
 
 package aloyslisp.core.math;
 
+import aloyslisp.annotations.BuiltIn;
 import aloyslisp.core.tT;
 
 /**
@@ -38,6 +39,7 @@ import aloyslisp.core.tT;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
+@BuiltIn(classOf = "float", typeOf = "single-float", doc = "t_short_")
 public class cSINGLE_FLOAT extends cFLOAT implements tSINGLE_FLOAT
 {
 	public Float	value;

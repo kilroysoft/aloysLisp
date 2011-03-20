@@ -205,7 +205,7 @@ public class cREADTABLE extends cCELL implements tREADTABLE
 	@Static(name = "read-delimited-list", doc = "f_rd_del")
 	public static tT READ_DELIMITED_LIST(
 			@Arg(name = "character") Character character, //
-			@Opt(name = "input-stream", def = "*standard-input*") tINPUT_STREAM stream, //
+			@Opt(name = "input-stream", def = "*standard-input*") tSTREAM stream, //
 			@Opt(name = "recursive-p", def = "nil") Boolean recursiveP)
 			throws END_OF_FILE
 	{
@@ -444,7 +444,7 @@ public class cREADTABLE extends cCELL implements tREADTABLE
 	 */
 	@Static(name = "%backquote-reader", doc = "02_df")
 	public static tT BACKQUOTE_READER( //
-			@Arg(name = "stream") tINPUT_STREAM in, //
+			@Arg(name = "stream") tSTREAM in, //
 			@Arg(name = "char") Character car, //
 			@Rest(name = "args") tT... args)
 	{
@@ -467,7 +467,7 @@ public class cREADTABLE extends cCELL implements tREADTABLE
 	 */
 	@Static(name = "%character-reader", doc = "02_dha")
 	public static tT CHARACTER_READER( //
-			@Arg(name = "stream") tINPUT_STREAM in, //
+			@Arg(name = "stream") tSTREAM in, //
 			@Arg(name = "char") Character car, //
 			@Rest(name = "args") tT... args)
 	{
@@ -492,7 +492,7 @@ public class cREADTABLE extends cCELL implements tREADTABLE
 	 */
 	@Static(name = "%comment-reader", doc = "02_dd")
 	public static tT COMMENT_READER( //
-			@Arg(name = "stream") tINPUT_STREAM in, //
+			@Arg(name = "stream") tSTREAM in, //
 			@Arg(name = "char") Character car, //
 			@Rest(name = "args") tT... args)
 	{
@@ -523,7 +523,7 @@ public class cREADTABLE extends cCELL implements tREADTABLE
 	 */
 	@Static(name = "%close-parent-reader", doc = "02_db")
 	public static tT CLOSE_PARENT_READER( //
-			@Arg(name = "stream") tINPUT_STREAM in, //
+			@Arg(name = "stream") tSTREAM in, //
 			@Arg(name = "char") Character car, //
 			@Rest(name = "args") tT... args)
 	{
@@ -541,7 +541,7 @@ public class cREADTABLE extends cCELL implements tREADTABLE
 	 */
 	@Static(name = "%function-reader", doc = "02_dhb")
 	public static tT FUNCTION_READER( //
-			@Arg(name = "stream") tINPUT_STREAM in, //
+			@Arg(name = "stream") tSTREAM in, //
 			@Arg(name = "char") Character car, //
 			@Rest(name = "args") tT... args)
 	{
@@ -564,7 +564,7 @@ public class cREADTABLE extends cCELL implements tREADTABLE
 	 */
 	@Static(name = "%parent-reader", doc = "02_da")
 	public static tT PARENT_READER( //
-			@Arg(name = "stream") tINPUT_STREAM in, //
+			@Arg(name = "stream") tSTREAM in, //
 			@Arg(name = "char") Character car, //
 			@Rest(name = "args") tT... args)
 	{
@@ -616,7 +616,7 @@ public class cREADTABLE extends cCELL implements tREADTABLE
 	 */
 	@Static(name = "%quote-reader", doc = "02_dc")
 	public static tT QUOTE_READER( //
-			@Arg(name = "stream") tINPUT_STREAM in, //
+			@Arg(name = "stream") tSTREAM in, //
 			@Arg(name = "char") Character car, //
 			@Rest(name = "args") tT... args)
 	{
@@ -638,7 +638,7 @@ public class cREADTABLE extends cCELL implements tREADTABLE
 	 */
 	@Static(name = "%string-reader", doc = "02_de")
 	public static tT STRING_READER( //
-			@Arg(name = "stream") tINPUT_STREAM in, //
+			@Arg(name = "stream") tSTREAM in, //
 			@Arg(name = "char") Character car, //
 			@Rest(name = "args") tT... args)
 	{
@@ -674,7 +674,7 @@ public class cREADTABLE extends cCELL implements tREADTABLE
 	 */
 	@Static(name = "%unintern-reader", doc = "02_dhe")
 	public static tT UNINTERN_READER( //
-			@Arg(name = "stream") tINPUT_STREAM in, //
+			@Arg(name = "stream") tSTREAM in, //
 			@Arg(name = "char") Character car, //
 			@Rest(name = "args") tT... args)
 	{
@@ -705,7 +705,7 @@ public class cREADTABLE extends cCELL implements tREADTABLE
 	 */
 	@Static(name = "%unquote-reader", doc = "02_df")
 	public static tT UNQUOTE_READER( //
-			@Arg(name = "stream") tINPUT_STREAM in, //
+			@Arg(name = "stream") tSTREAM in, //
 			@Arg(name = "char") Character car, //
 			@Rest(name = "args") tT... args)
 	{

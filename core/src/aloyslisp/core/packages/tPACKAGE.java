@@ -40,6 +40,7 @@ import aloyslisp.core.clos.tBUILT_IN_CLASS;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
+@Type(name = "package", doc = "t_pkg", typep = "packagep")
 public interface tPACKAGE extends tBUILT_IN_CLASS, tPACKAGE_DESIGNATOR
 {
 	/**

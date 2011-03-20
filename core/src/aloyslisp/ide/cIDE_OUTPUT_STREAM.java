@@ -39,6 +39,7 @@ import javax.swing.JTextArea;
 import static aloyslisp.core.L.*;
 import aloyslisp.core.L;
 import aloyslisp.core.tT;
+import aloyslisp.core.conditions.END_OF_FILE;
 import aloyslisp.core.streams.*;
 
 /**
@@ -48,7 +49,7 @@ import aloyslisp.core.streams.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class cIDE_OUTPUT_STREAM extends cOUTPUT_STREAM
+public class cIDE_OUTPUT_STREAM extends cSTREAM
 {
 	protected JPanel	f_panel			= null;
 
@@ -92,6 +93,7 @@ public class cIDE_OUTPUT_STREAM extends cOUTPUT_STREAM
 	public Character WRITE_CHAR(Character character)
 	{
 		f_outputArea.append("" + character);
+		lineBegin = character=='\n';
 		return character;
 	}
 
@@ -155,6 +157,58 @@ public class cIDE_OUTPUT_STREAM extends cOUTPUT_STREAM
 	public Boolean CLOSE()
 	{
 		return false;
+	}
+
+	/* (non-Javadoc)
+	 * @see aloyslisp.core.streams.tSTREAM#READ_CHAR(java.lang.Boolean, aloyslisp.core.tT, java.lang.Boolean)
+	 */
+	@Override
+	public Character READ_CHAR(Boolean eofErrorP, tT eofValue,
+			Boolean recursiveP) throws END_OF_FILE
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see aloyslisp.core.streams.tSTREAM#UNREAD_CHAR(java.lang.Character)
+	 */
+	@Override
+	public Character UNREAD_CHAR(Character character)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see aloyslisp.core.streams.tSTREAM#LISTEN()
+	 */
+	@Override
+	public boolean LISTEN()
+	{
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	/* (non-Javadoc)
+	 * @see aloyslisp.core.streams.tSTREAM#CLEAR_INPUT()
+	 */
+	@Override
+	public tT CLEAR_INPUT()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see aloyslisp.core.streams.tSTREAM#READ_BYTE(java.lang.Boolean, aloyslisp.core.tT, java.lang.Boolean)
+	 */
+	@Override
+	public Integer READ_BYTE(Boolean eofErrorP, tT eofValue, Boolean recursiveP)
+			throws END_OF_FILE
+	{
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

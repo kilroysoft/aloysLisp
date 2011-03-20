@@ -24,11 +24,14 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 28 déc. 2010 Creation
+// IP 23 déc. 2010 Creation
 // --------------------------------------------------------------------------
 
 package aloyslisp.core.math;
 
+import java.math.BigInteger;
+
+import aloyslisp.annotations.BuiltIn;
 import aloyslisp.core.*;
 import aloyslisp.core.conditions.*;
 import aloyslisp.core.sequences.*;
@@ -37,12 +40,69 @@ import static aloyslisp.core.L.*;
 /**
  * cINTEGER
  * 
+ * Implements all integers, so difference between bignums and fixnums will be
+ * programmaticaly set (class, tests, etc)
+ * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public abstract class cINTEGER extends cRATIONAL implements tINTEGER
+@BuiltIn(classOf = "integer", doc = "t_integer")
+public class cINTEGER extends cRATIONAL implements tINTEGER
 {
+	public BigInteger	val;
+
+	/**
+	 * @param init
+	 */
+	public cINTEGER(BigInteger init)
+	{
+		val = new BigInteger(init.toString());
+	}
+
+	/**
+	 * @param init
+	 */
+	public cINTEGER(String init)
+	{
+		int pos = init.indexOf(".");
+		try
+		{
+			if (pos >= 0)
+				val = new BigInteger(init.substring(0, pos));
+			else
+				val = new BigInteger(init);
+		}
+		catch (Exception e)
+		{
+			throw new ARITHMETIC_ERROR(str(e.getLocalizedMessage()), str(init));
+		}
+	}
+
+	/**
+	 * @param init
+	 */
+	public cINTEGER(String init, Integer radix)
+	{
+		val = new BigInteger(init, radix);
+	}
+
+	/**
+	 * @param init
+	 */
+	public cINTEGER(Integer init)
+	{
+		val = new BigInteger(init.toString());
+	}
+
+	/**
+	 * @param init
+	 */
+	public cINTEGER(Long init)
+	{
+		val = new BigInteger(init.toString());
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.math.tINTEGER#integerValue()
@@ -61,166 +121,441 @@ public abstract class cINTEGER extends cRATIONAL implements tINTEGER
 		return getIntegerValue().val.longValue();
 	}
 
-	/* *******************************************************************
-	 * OPERATOR
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.cCELL#toString()
 	 */
-	/**
-	 * Less common multiplicand
-	 * 
-	 * @param op
-	 * @return
+	public String toString()
+	{
+		tT base = printBase.SYMBOL_VALUE();
+		int numBase = 10;
+		if (base instanceof tINTEGER)
+			numBase = ((cINTEGER) base).integerValue();
+		return val.toString(numBase);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tNUMBER#ratioValue()
 	 */
-	abstract tINTEGER lcm(tINTEGER op);
+	@Override
+	public cRATIO getRatioValue()
+	{
+		return new cRATIO(this);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tNUMBER#complexValue()
+	 */
+	@Override
+	public cCOMPLEX getComplexValue()
+	{
+		return new cCOMPLEX(this, ZERO);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tNUMBER#integerValue()
+	 */
+	@Override
+	public cINTEGER getIntegerValue()
+	{
+		return this;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tNUMBER#floatValue()
+	 */
+	@Override
+	public cSINGLE_FLOAT getFloatValue()
+	{
+		return new cSINGLE_FLOAT(val.floatValue());
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tNUMBER#doubleValue()
+	 */
+	@Override
+	public cDOUBLE_FLOAT getDoubleValue()
+	{
+		return new cDOUBLE_FLOAT(val.doubleValue());
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tNUMBER#shortValue()
+	 */
+	@Override
+	public cSHORT_FLOAT getShortValue()
+	{
+		return new cSHORT_FLOAT(val.shortValue());
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.cRATIONAL#getRationalValue()
+	 */
+	public tRATIONAL rationalizeValue()
+	{
+		return this;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tNUMBER#coerce(aloyslisp.core.math.tNUMBER)
+	 */
+	public cNUMBER coerce(tNUMBER var)
+	{
+		if (var instanceof cRATIO)
+			return getRatioValue();
+
+		if (var instanceof cSINGLE_FLOAT)
+			return getFloatValue();
+
+		if (var instanceof cDOUBLE_FLOAT)
+			return getDoubleValue();
+
+		if (var instanceof cSHORT_FLOAT)
+			return getShortValue();
+
+		if (var instanceof cCOMPLEX)
+			return getComplexValue();
+
+		return this;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tINTEGER#lcm(aloyslisp.core.math.tINTEGER)
+	 */
+	tINTEGER lcm(tINTEGER op)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tINTEGER#gcd(aloyslisp.core.math.tINTEGER)
+	 */
+	tINTEGER gcd(tINTEGER op)
+	{
+		return new cINTEGER(val.gcd(((cINTEGER) op).val));
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tINTEGER#logand(aloyslisp.core.math.tINTEGER)
+	 */
+	tINTEGER logand(tINTEGER op)
+	{
+		return new cINTEGER(val.and(((cINTEGER) op).val));
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tINTEGER#lognand(aloyslisp.core.math.tINTEGER)
+	 */
+	tINTEGER lognand(tINTEGER op)
+	{
+		return new cINTEGER(val.and(((cINTEGER) op).val).not());
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tINTEGER#logandc1(aloyslisp.core.math.tINTEGER)
+	 */
+	tINTEGER logandc1(tINTEGER op)
+	{
+		return new cINTEGER(val.not().and(((cINTEGER) op).val));
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tINTEGER#logandc2(aloyslisp.core.math.tINTEGER)
+	 */
+	tINTEGER logandc2(tINTEGER op)
+	{
+		return new cINTEGER(val.and(((cINTEGER) op).val.not()));
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tINTEGER#logior(aloyslisp.core.math.tINTEGER)
+	 */
+	tINTEGER logior(tINTEGER op)
+	{
+		return new cINTEGER(val.or(((cINTEGER) op).val));
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tINTEGER#logorc1(aloyslisp.core.math.tINTEGER)
+	 */
+	tINTEGER logorc1(tINTEGER op)
+	{
+		return new cINTEGER(val.not().or(((cINTEGER) op).val));
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tINTEGER#logorc2(aloyslisp.core.math.tINTEGER)
+	 */
+	tINTEGER logorc2(tINTEGER op)
+	{
+		return new cINTEGER(val.or(((cINTEGER) op).val.not()));
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tINTEGER#logxor(aloyslisp.core.math.tINTEGER)
+	 */
+	tINTEGER logxor(tINTEGER op)
+	{
+		return new cINTEGER(val.xor(((cINTEGER) op).val));
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tINTEGER#logeqv(aloyslisp.core.math.tINTEGER)
+	 */
+	tINTEGER logeqv(tINTEGER op)
+	{
+		return new cINTEGER(val.xor(((cINTEGER) op).val).not());
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tINTEGER#lognot()
+	 */
+	tINTEGER lognot()
+	{
+		return new cINTEGER(val.not());
+	}
 
 	/**
-	 * Greather common denumerator
+	 * Get number from a string representation in base radix
 	 * 
-	 * @param op
-	 * @return
-	 */
-	abstract tINTEGER gcd(tINTEGER op);
-
-	/**
-	 * Arithmetic AND
-	 * 
-	 * @param op
-	 * @return
-	 */
-	abstract tINTEGER logand(tINTEGER op);
-
-	/**
-	 * Arithmetic NAND
-	 * 
-	 * @param op
-	 * @return
-	 */
-	abstract tINTEGER lognand(tINTEGER op);
-
-	/**
-	 * Arithmetic NAND COMPLEMENT 1
-	 * 
-	 * @param op
-	 * @return
-	 */
-	abstract tINTEGER logandc1(tINTEGER op);
-
-	/**
-	 * Arithmetic AND COMPLEMENT 2
-	 * 
-	 * @param op
-	 * @return
-	 */
-	abstract tINTEGER logandc2(tINTEGER op);
-
-	/**
-	 * Arithmetic OR
-	 * 
-	 * @param op
-	 * @return
-	 */
-	abstract tINTEGER logior(tINTEGER op);
-
-	/**
-	 * Arithmetic OR COMPLEMENT 1
-	 * 
-	 * @param op
-	 * @return
-	 */
-	abstract tINTEGER logorc1(tINTEGER op);
-
-	/**
-	 * Arithmetic OR COMPLEMENT 2
-	 * 
-	 * @param op
-	 * @return
-	 */
-	abstract tINTEGER logorc2(tINTEGER op);
-
-	/**
-	 * Arithmetic XOR
-	 * 
-	 * @param op
-	 * @return
-	 */
-	abstract tINTEGER logxor(tINTEGER op);
-
-	/**
-	 * Arithmetic EQUIVALENCE
-	 * 
-	 * @param op
-	 * @return
-	 */
-	abstract tINTEGER logeqv(tINTEGER op);
-
-	/**
-	 * Arithmetic NOT (complement to 0)
-	 * 
-	 * @return
-	 */
-	abstract tINTEGER lognot();
-
-	/* *******************************************************************
-	 * FUNCTIONS
-	 */
-	/**
-	 * Get string representation of number with base radix (for integers)
-	 * 
+	 * @param val
+	 * @param start
+	 * @param end
 	 * @param radix
+	 * @param junk
 	 * @return
 	 */
-	abstract String toBase(Integer radix);
+	public static cINTEGER parse_integer(String val, Integer start,
+			Integer end, Integer radix, Boolean junk)
+	{
+		return new cINTEGER(new BigInteger(val, radix));
+	}
 
-	/**
-	 * Arithmetic bit pattern test
-	 * 
-	 * @param op
-	 * @return
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tINTEGER#toBase(java.lang.Integer)
 	 */
-	abstract Boolean logtest(tINTEGER op);
+	String toBase(Integer radix)
+	{
+		return val.toString(radix);
+	}
 
-	/**
-	 * Arithmetic bit count
-	 * 
-	 * @param op
-	 * @return
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tINTEGER#logtest(aloyslisp.core.math.tINTEGER)
 	 */
-	abstract tINTEGER logcount();
+	Boolean logtest(tINTEGER op)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-	/**
-	 * Arithmetic bit test
-	 * 
-	 * @param op
-	 * @return
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tINTEGER#logcount()
 	 */
-	abstract Boolean logbitp(tINTEGER op);
+	tINTEGER logcount()
+	{
+		return new cINTEGER(val.bitCount());
+	}
 
-	/**
-	 * Arithmetic bit shift
-	 * 
-	 * @param count
-	 * @return
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tINTEGER#logbitp(aloyslisp.core.math.tINTEGER)
 	 */
-	abstract tINTEGER ash(tINTEGER count);
+	Boolean logbitp(tINTEGER op)
+	{
+		return val.testBit(op.getIntegerValue().val.intValue());
+	}
 
-	/**
-	 * @return
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tINTEGER#ash(aloyslisp.core.math.tINTEGER)
 	 */
-	abstract boolean evenp();
+	tINTEGER ash(tINTEGER count)
+	{
+		if (count.MINUSP())
+			return new cINTEGER(
+					val.shiftRight(count.MINUS().getIntegerValue().val
+							.intValue()));
+		else
+			return new cINTEGER(val.shiftLeft(count.getIntegerValue().val
+					.intValue()));
+	}
 
-	/**
-	 * @return
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tINTEGER#evenp()
 	 */
-	abstract boolean oddp();
+	boolean evenp()
+	{
+		return val.mod(new BigInteger("2")).intValue() == 0;
+	}
 
-	/**
-	 * @return
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tINTEGER#oddp()
 	 */
-	abstract tINTEGER isqrt();
+	boolean oddp()
+	{
+		return val.mod(new BigInteger("2")).intValue() != 0;
+	}
 
-	/**
-	 * @return
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tINTEGER#isqrt()
 	 */
-	abstract tINTEGER integer_length();
+	tINTEGER isqrt()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tINTEGER#integer_length()
+	 */
+	tINTEGER integer_length()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tRATIONAL#numerator()
+	 */
+	@Override
+	tINTEGER numerator()
+	{
+		return this;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tRATIONAL#denominator()
+	 */
+	@Override
+	tINTEGER denominator()
+	{
+		return ONE;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.cREAL#greater(aloyslisp.core.math.tREAL)
+	 */
+	@Override
+	boolean greater(tREAL op)
+	{
+		return val.compareTo(op.getIntegerValue().val) > 0;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.cREAL#lower(aloyslisp.core.math.tREAL)
+	 */
+	@Override
+	boolean lower(tREAL op)
+	{
+		return val.compareTo(op.getIntegerValue().val) < 0;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.cNUMBER#equalnum(aloyslisp.core.math.tNUMBER)
+	 */
+	@Override
+	boolean equalnum(tNUMBER op)
+	{
+		return val.compareTo(op.getIntegerValue().val) == 0;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.cNUMBER#add(aloyslisp.core.math.tNUMBER)
+	 */
+	@Override
+	tNUMBER add(tNUMBER op)
+	{
+		return new cINTEGER(val.add(op.getIntegerValue().val));
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.cNUMBER#substract(aloyslisp.core.math.tNUMBER)
+	 */
+	@Override
+	tNUMBER substract(tNUMBER op)
+	{
+		return new cINTEGER(val.subtract(op.getIntegerValue().val));
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.cNUMBER#minus()
+	 */
+	@Override
+	tNUMBER minus()
+	{
+		return new cINTEGER(val.negate());
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.cNUMBER#inversion()
+	 */
+	@Override
+	tNUMBER inversion()
+	{
+		return new cRATIO(ONE, this).rationalizeValue();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.cNUMBER#multiply(aloyslisp.core.math.tNUMBER)
+	 */
+	@Override
+	tNUMBER multiply(tNUMBER op)
+	{
+		return new cINTEGER(val.multiply(op.getIntegerValue().val));
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.cNUMBER#division(aloyslisp.core.math.tNUMBER)
+	 */
+	@Override
+	tNUMBER division(tNUMBER op)
+	{
+		if (op.getIntegerValue().EQUALNUM(ONE))
+			return this;
+		if (MOD(op.getIntegerValue()).EQUALNUM(ZERO))
+			return new cINTEGER(val.divide(op.getIntegerValue().val));
+		else
+			return new cRATIO(this, op.getIntegerValue()).rationalizeValue();
+	}
 
 	/*
 	 * (non-Javadoc)

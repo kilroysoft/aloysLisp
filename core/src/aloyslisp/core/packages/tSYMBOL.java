@@ -48,6 +48,7 @@ import aloyslisp.core.functions.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
+@Type(name = "symbol", doc = "t_symbol", typep = "symbolp")
 public interface tSYMBOL extends tBUILT_IN_CLASS, tFUNCTION_DESIGNATOR,
 		tPACKAGE_DESIGNATOR
 {

@@ -39,6 +39,7 @@ import aloyslisp.core.tT;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
+@Type(name = "real", doc = "t_real", typep = "realp")
 public interface tREAL extends tNUMBER
 {
 

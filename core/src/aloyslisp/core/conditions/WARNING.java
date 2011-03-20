@@ -40,7 +40,7 @@ import aloyslisp.annotations.Type;
  * 
  */
 @Type(name = "warning", doc = "e_warnin")
-@BuiltIn(name = "warning", doc = "e_warnin")
+@BuiltIn(classOf = "warning", doc = "e_warnin")
 public class WARNING extends CONDITION
 {
 	private static final long	serialVersionUID	= 1L;

@@ -39,7 +39,7 @@ import aloyslisp.core.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-@BuiltIn(name = "structure-object", doc = "t_stu_ob")
+@BuiltIn(classOf = "structure-object", typeOf = "structure-object", doc = "t_stu_ob")
 public class cSTRUCTURE_OBJECT extends cCELL implements tSTRUCTURE_OBJECT
 {
 

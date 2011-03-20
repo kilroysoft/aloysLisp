@@ -30,6 +30,7 @@
 package aloyslisp.core.streams;
 
 import aloyslisp.annotations.Arg;
+import aloyslisp.annotations.BuiltIn;
 import aloyslisp.annotations.Static;
 import aloyslisp.core.*;
 import aloyslisp.core.conditions.*;
@@ -43,6 +44,7 @@ import static aloyslisp.core.L.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
+@BuiltIn(classOf = "character", doc = "t_ch")
 public class cCHARACTER extends cCELL implements tCHARACTER
 {
 	private Character			value;

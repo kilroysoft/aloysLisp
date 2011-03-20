@@ -39,7 +39,7 @@ import aloyslisp.core.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-@BuiltIn(name = "standard-object", doc = "t_std_ob")
+@BuiltIn(classOf = "standard-object", typeOf = "standard-object", doc = "t_std_ob")
 public class cSTANDARD_OBJECT extends cCELL
 {
 

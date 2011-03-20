@@ -330,7 +330,7 @@ public class SpecialOperators extends cCELL
 		// we are in the block part values should be found in environment
 		tT list = list((Object[]) args);
 
-		if (list instanceof cNIL)
+		if (list instanceof cNULL)
 		{
 			// no values to set
 			return NIL;

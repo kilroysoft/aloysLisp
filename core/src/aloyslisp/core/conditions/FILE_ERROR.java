@@ -41,7 +41,7 @@ import aloyslisp.core.tT;
  * 
  */
 @Type(name = "file-error", doc = "e_file_e")
-@BuiltIn(name = "file-error", doc = "e_file_e")
+@BuiltIn(classOf = "file-error", doc = "e_file_e")
 public class FILE_ERROR extends ERROR
 {
 	private static final long	serialVersionUID	= 1L;

@@ -39,7 +39,7 @@ import aloyslisp.core.tT;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-@Type(name = "structure-object", doc = "t_stu_ob")
+@Type(name = "structure-object", doc = "t_stu_ob", typep = "structure-object-p")
 public interface tSTRUCTURE_OBJECT extends tT
 {
 

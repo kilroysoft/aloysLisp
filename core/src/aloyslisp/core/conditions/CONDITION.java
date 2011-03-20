@@ -39,7 +39,7 @@ import aloyslisp.annotations.*;
  * 
  */
 @Type(name = "condition", doc = "e_cnd")
-@BuiltIn(name = "condition", doc = "e_cnd")
+@BuiltIn(classOf = "condition", typeOf = "condition", doc = "e_cnd")
 public class CONDITION extends LispException
 {
 	private static final long	serialVersionUID	= 1L;

@@ -30,6 +30,7 @@
 
 package aloyslisp.core.math;
 
+import aloyslisp.annotations.BuiltIn;
 import aloyslisp.core.conditions.*;
 import static aloyslisp.core.L.*;
 
@@ -40,6 +41,7 @@ import static aloyslisp.core.L.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
+@BuiltIn(classOf = "ratio", doc = "t_ratio")
 public class cRATIO extends cRATIONAL implements tRATIO
 {
 	/**
@@ -75,7 +77,7 @@ public class cRATIO extends cRATIONAL implements tRATIO
 	public cRATIO(tINTEGER num)
 	{
 		this.num = num;
-		this.den = new cBIGNUM(1);
+		this.den = new cINTEGER(1);
 	}
 
 	/*
@@ -91,7 +93,7 @@ public class cRATIO extends cRATIONAL implements tRATIO
 	 * (non-Javadoc)
 	 * @see java.lang.Number#integerValue()
 	 */
-	public cBIGNUM getIntegerValue()
+	public cINTEGER getIntegerValue()
 	{
 		if (!den.EQ(ONE))
 			throw new ARITHMETIC_ERROR(this, sym("integer"));

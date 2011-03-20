@@ -42,6 +42,7 @@ import aloyslisp.core.math.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
+@Type(name = "hash-table", doc = "t_hash_t", typep = "hash-table-p")
 public interface tHASH_TABLE extends tBUILT_IN_CLASS
 {
 	/**

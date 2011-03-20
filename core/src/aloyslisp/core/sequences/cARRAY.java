@@ -24,33 +24,65 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 29 déc. 2010 Creation
+// IP 19 mars 2011 Creation
 // --------------------------------------------------------------------------
 
-package aloyslisp.core.conditions;
+package aloyslisp.core.sequences;
 
 import aloyslisp.annotations.BuiltIn;
-import aloyslisp.annotations.Type;
+import aloyslisp.core.cCELL;
+import aloyslisp.core.tT;
 
 /**
- * CONTROL_ERROR
+ * cARRAY
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-@Type(name = "control-error", doc = "e_contro")
-@BuiltIn(classOf = "control-error", doc = "e_contro")
-public class CONTROL_ERROR extends ERROR
+@BuiltIn(classOf = "array", doc = "t_array")
+public class cARRAY extends cCELL implements tARRAY
 {
-	private static final long	serialVersionUID	= 1L;
 
 	/**
 	 * 
 	 */
-	public CONTROL_ERROR()
+	public cARRAY()
 	{
-		message += "Control error :";
+		// TODO Auto-generated constructor stub
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.sequences.tARRAY#get()
+	 */
+	@Override
+	public tT[] get()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.sequences.tARRAY#getType()
+	 */
+	@Override
+	public tT getType()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.sequences.tARRAY#setType(aloyslisp.core.tT)
+	 */
+	@Override
+	public tARRAY setType(tT type)
+	{
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

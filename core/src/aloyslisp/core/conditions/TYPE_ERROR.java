@@ -41,7 +41,7 @@ import aloyslisp.core.tT;
  * 
  */
 @Type(name = "type-error", doc = "e_tp_err")
-@BuiltIn(name = "type-error", doc = "e_tp_err")
+@BuiltIn(classOf = "type-error", doc = "e_tp_err")
 public class TYPE_ERROR extends ERROR
 {
 	private static final long	serialVersionUID	= 1L;

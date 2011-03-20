@@ -40,7 +40,7 @@ import aloyslisp.core.tT;
  * 
  */
 @Type(name = "arithmetic-error", doc = "e_arithm")
-@BuiltIn(name = "arithmetic-error", doc = "e_arithm")
+@BuiltIn(classOf = "arithmetic-error", doc = "e_arithm")
 public class ARITHMETIC_ERROR extends ERROR
 {
 	private static final long	serialVersionUID	= 1L;

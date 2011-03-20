@@ -57,7 +57,7 @@ public interface tREADTABLE extends tBUILT_IN_CLASS
 
 	/**
 	 * Set single macro char be a multiple or single macro char.
-	 * nonTerm = true (!cNIL) -> multiple
+	 * nonTerm = true (!cNULL) -> multiple
 	 * 
 	 * @param character
 	 * @param nonTerminatingP

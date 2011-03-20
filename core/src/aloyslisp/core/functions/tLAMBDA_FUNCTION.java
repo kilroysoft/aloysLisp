@@ -29,6 +29,8 @@
 
 package aloyslisp.core.functions;
 
+import aloyslisp.annotations.Type;
+
 /**
  * tLAMBDA_FUNCTION
  * 
@@ -36,6 +38,7 @@ package aloyslisp.core.functions;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
+@Type(name = "lambda-function", doc = "03_a", typep = "lambda-function-p")
 public interface tLAMBDA_FUNCTION extends tFUNCTION, tFUNCTION_DESIGNATOR
 {
 }

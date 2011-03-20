@@ -32,6 +32,7 @@ package aloyslisp.core.packages;
 
 import java.util.Iterator;
 
+import aloyslisp.annotations.*;
 import aloyslisp.core.*;
 import aloyslisp.core.conditions.*;
 import aloyslisp.core.functions.*;
@@ -40,20 +41,21 @@ import aloyslisp.internal.iterators.*;
 import static aloyslisp.core.L.*;
 
 /**
- * cNIL
+ * cNULL
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class cNIL extends cSYMBOL implements tNULL
+@BuiltIn(classOf = "null", doc = "t_null")
+public class cNULL extends cSYMBOL implements tNULL
 {
 	/**
 	 * Constructor
 	 */
-	public cNIL()
+	public cNULL()
 	{
-		super("cNIL");
+		super("cNULL");
 		this.value = this;
 	}
 
@@ -61,7 +63,7 @@ public class cNIL extends cSYMBOL implements tNULL
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.cCELL#CAR()
 	 */
-	// defined elsewhere (cNIL is just a gost of a cCONS or cSYMBOL)
+	// defined elsewhere (cNULL is just a gost of a cCONS or cSYMBOL)
 	public tT CAR()
 	{
 		return NIL;
@@ -71,13 +73,13 @@ public class cNIL extends cSYMBOL implements tNULL
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.cCELL#CDR()
 	 */
-	// defined elsewhere (cNIL is just a gost of a cCONS or cSYMBOL)
+	// defined elsewhere (cNULL is just a gost of a cCONS or cSYMBOL)
 	public tT CDR()
 	{
 		return NIL;
 	}
 
-	// defined elsewhere (cNIL is just a gost of a cCONS or cSYMBOL)
+	// defined elsewhere (cNULL is just a gost of a cCONS or cSYMBOL)
 	/*
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tLIST#SET_CAR(aloyslisp.core.types.tT)
@@ -87,7 +89,7 @@ public class cNIL extends cSYMBOL implements tNULL
 		throw new LispErrorFunctionCannotApplyOn("rplaca", this);
 	}
 
-	// defined elsewhere (cNIL is just a gost of a cCONS or cSYMBOL)
+	// defined elsewhere (cNULL is just a gost of a cCONS or cSYMBOL)
 	/*
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tLIST#SET_CDR(aloyslisp.core.types.tT)
@@ -148,7 +150,7 @@ public class cNIL extends cSYMBOL implements tNULL
 
 	}
 
-	// defined elsewhere (cNIL is just a gost of a cCONS or cSYMBOL)
+	// defined elsewhere (cNULL is just a gost of a cCONS or cSYMBOL)
 	/*
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tSEQUENCE#REVERSE()
@@ -158,7 +160,7 @@ public class cNIL extends cSYMBOL implements tNULL
 		return NIL;
 	}
 
-	// defined elsewhere (cNIL is just a gost of a cCONS or cSYMBOL)
+	// defined elsewhere (cNULL is just a gost of a cCONS or cSYMBOL)
 	/*
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tSEQUENCE#NREVERSE()
@@ -168,7 +170,7 @@ public class cNIL extends cSYMBOL implements tNULL
 		return NIL;
 	}
 
-	// defined elsewhere (cNIL is just a gost of a cCONS or cSYMBOL)
+	// defined elsewhere (cNULL is just a gost of a cCONS or cSYMBOL)
 	/*
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tLIST#LAST()
@@ -187,7 +189,7 @@ public class cNIL extends cSYMBOL implements tNULL
 		return "NIL";
 	}
 
-	// defined elsewhere (cNIL is just a gost of a cCONS or cSYMBOL)
+	// defined elsewhere (cNULL is just a gost of a cCONS or cSYMBOL)
 	/*
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tLIST#ENDP()
@@ -197,7 +199,7 @@ public class cNIL extends cSYMBOL implements tNULL
 		return true;
 	}
 
-	// defined elsewhere (cNIL is just a gost of a cCONS or cSYMBOL)
+	// defined elsewhere (cNULL is just a gost of a cCONS or cSYMBOL)
 	/*
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tSEQUENCE#LENGTH()
@@ -207,7 +209,7 @@ public class cNIL extends cSYMBOL implements tNULL
 		return 0;
 	}
 
-	// defined elsewhere (cNIL is just a gost of a cCONS or cSYMBOL)
+	// defined elsewhere (cNULL is just a gost of a cCONS or cSYMBOL)
 	/*
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tSEQUENCE#ELT(java.lang.Integer)
@@ -217,7 +219,7 @@ public class cNIL extends cSYMBOL implements tNULL
 		throw new LispErrorFunctionCannotApplyOn("elt", this);
 	}
 
-	// defined elsewhere (cNIL is just a gost of a cCONS or cSYMBOL)
+	// defined elsewhere (cNULL is just a gost of a cCONS or cSYMBOL)
 	/*
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tSEQUENCE#SET_ELT(java.lang.Integer,
@@ -228,7 +230,7 @@ public class cNIL extends cSYMBOL implements tNULL
 		throw new LispErrorFunctionCannotApplyOn("selt", this);
 	}
 
-	// defined elsewhere (cNIL is just a gost of a cCONS or cSYMBOL)
+	// defined elsewhere (cNULL is just a gost of a cCONS or cSYMBOL)
 	/*
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tSEQUENCE#SUBSEQ(java.lang.Integer,
@@ -239,7 +241,7 @@ public class cNIL extends cSYMBOL implements tNULL
 		return NIL;
 	}
 
-	// defined elsewhere (cNIL is just a gost of a cCONS or cSYMBOL)
+	// defined elsewhere (cNULL is just a gost of a cCONS or cSYMBOL)
 	/*
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tLIST#APPEND(aloyslisp.core.types.tT)
@@ -249,14 +251,14 @@ public class cNIL extends cSYMBOL implements tNULL
 		return item;
 	}
 
-	// defined elsewhere (cNIL is just a gost of a cCONS or cSYMBOL)
+	// defined elsewhere (cNULL is just a gost of a cCONS or cSYMBOL)
 	/*
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.atoms.SYMBOL#COMPILE()
 	 */
 	public String COMPILE()
 	{
-		return "cNIL";
+		return "cNULL";
 	}
 
 	/*
@@ -268,7 +270,7 @@ public class cNIL extends cSYMBOL implements tNULL
 		return NIL;
 	}
 
-	// defined elsewhere (cNIL is just a gost of a cCONS or cSYMBOL)
+	// defined elsewhere (cNULL is just a gost of a cCONS or cSYMBOL)
 	/*
 	 * (non-Javadoc)
 	 * @see
@@ -298,7 +300,7 @@ public class cNIL extends cSYMBOL implements tNULL
 		return this;
 	}
 
-	// defined elsewhere (cNIL is just a gost of a cCONS or cSYMBOL)
+	// defined elsewhere (cNULL is just a gost of a cCONS or cSYMBOL)
 	/*
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.atoms.SYMBOL#CONSTANTP()
@@ -308,7 +310,7 @@ public class cNIL extends cSYMBOL implements tNULL
 		return true;
 	}
 
-	// defined elsewhere (cNIL is just a gost of a cCONS or cSYMBOL)
+	// defined elsewhere (cNULL is just a gost of a cCONS or cSYMBOL)
 	/*
 	 * (non-Javadoc)
 	 * @see
@@ -320,7 +322,7 @@ public class cNIL extends cSYMBOL implements tNULL
 		return this;
 	}
 
-	// defined elsewhere (cNIL is just a gost of a cCONS or cSYMBOL)
+	// defined elsewhere (cNULL is just a gost of a cCONS or cSYMBOL)
 	/*
 	 * (non-Javadoc)
 	 * @see
@@ -332,7 +334,7 @@ public class cNIL extends cSYMBOL implements tNULL
 		return this;
 	}
 
-	// defined elsewhere (cNIL is just a gost of a cCONS or cSYMBOL)
+	// defined elsewhere (cNULL is just a gost of a cCONS or cSYMBOL)
 	/*
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.atoms.SYMBOL#SYMBOL_VALUE()
@@ -342,7 +344,7 @@ public class cNIL extends cSYMBOL implements tNULL
 		return this;
 	}
 
-	// defined elsewhere (cNIL is just a gost of a cCONS or cSYMBOL)
+	// defined elsewhere (cNULL is just a gost of a cCONS or cSYMBOL)
 	/*
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.atoms.SYMBOL#SYMBOL_FUNCTION()
@@ -352,7 +354,7 @@ public class cNIL extends cSYMBOL implements tNULL
 		return null;
 	}
 
-	// defined elsewhere (cNIL is just a gost of a cCONS or cSYMBOL)
+	// defined elsewhere (cNULL is just a gost of a cCONS or cSYMBOL)
 	/*
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.atoms.SYMBOL#unset()
@@ -362,7 +364,7 @@ public class cNIL extends cSYMBOL implements tNULL
 		return this;
 	}
 
-	// defined elsewhere (cNIL is just a gost of a cCONS or cSYMBOL)
+	// defined elsewhere (cNULL is just a gost of a cCONS or cSYMBOL)
 	/*
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.atoms.SYMBOL#fUnset()
@@ -372,7 +374,7 @@ public class cNIL extends cSYMBOL implements tNULL
 		return this;
 	}
 
-	// defined elsewhere (cNIL is just a gost of a cCONS or cSYMBOL)
+	// defined elsewhere (cNULL is just a gost of a cCONS or cSYMBOL)
 	/*
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.atoms.SYMBOL#BOUNDP()
@@ -382,7 +384,7 @@ public class cNIL extends cSYMBOL implements tNULL
 		return true;
 	}
 
-	// defined elsewhere (cNIL is just a gost of a cCONS or cSYMBOL)
+	// defined elsewhere (cNULL is just a gost of a cCONS or cSYMBOL)
 	/*
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.atoms.SYMBOL#FBOUNDP()
@@ -393,10 +395,10 @@ public class cNIL extends cSYMBOL implements tNULL
 	}
 
 	/*
-	 * // defined elsewhere (cNIL is just a gost of a cCONS or cSYMBOL)
+	 * // defined elsewhere (cNULL is just a gost of a cCONS or cSYMBOL)
 	 * public tLIST LIST()
 	 * {
-	 * return cNIL;
+	 * return cNULL;
 	 * }
 	 * /*
 	 * (non-Javadoc)
@@ -412,14 +414,14 @@ public class cNIL extends cSYMBOL implements tNULL
 	 * @see aloyslisp.core.types.tLIST#SET_LAST(aloyslisp.core.types.tT)
 	 */
 	@Override
-	// defined elsewhere (cNIL is just a gost of a cCONS or cSYMBOL)
+	// defined elsewhere (cNULL is just a gost of a cCONS or cSYMBOL)
 	public tLIST SET_LAST(tT value)
 	{
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	// defined elsewhere (cNIL is just a gost of a cCONS or cSYMBOL)
+	// defined elsewhere (cNULL is just a gost of a cCONS or cSYMBOL)
 	/*
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tSEQUENCE#SET_SUBSEQ(java.lang.Integer,

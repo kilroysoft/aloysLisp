@@ -41,6 +41,7 @@ import aloyslisp.internal.engine.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
+@Type(name = "function", doc = "03_", typep = "functionp")
 public interface tFUNCTION extends tAPI
 {
 	/**

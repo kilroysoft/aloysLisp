@@ -108,20 +108,20 @@ public class cIDE extends JFrame implements ActionListener
 
 	public void message(tT expr)
 	{
-		message(expr.toString(), false);
+		message(expr, false);
 	}
 
 	public void message(tT expr, boolean showPrompt)
 	{
 		if (showPrompt)
-			message(f_prompt, false);
-		message(expr.toString(), false);
+			f_outputStream.PRIN1(str(f_prompt));
+		f_outputStream.PRINT(expr);
 	}
 
 	public void message(String msg, boolean showPrompt)
 	{
 		if (showPrompt)
-			message(f_prompt, false);
+			f_outputStream.PRIN1(str(f_prompt));
 		f_outputStream.PRINT(str(msg));
 	}
 

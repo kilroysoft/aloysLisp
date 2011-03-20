@@ -45,6 +45,7 @@ import static aloyslisp.core.L.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
+@BuiltIn(classOf = "hash-table", doc = "t_hash_t")
 public class cHASH_TABLE extends cCELL implements tHASH_TABLE
 {
 	private LinkedHashMap<tT, tT>	table		= new LinkedHashMap<tT, tT>();
@@ -108,7 +109,7 @@ public class cHASH_TABLE extends cCELL implements tHASH_TABLE
 	@Override
 	public tINTEGER HASH_TABLE_REHASH_SIZE()
 	{
-		return cBIGNUM.ZERO;
+		return cINTEGER.ZERO;
 	}
 
 	/*

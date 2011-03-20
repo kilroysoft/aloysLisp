@@ -29,7 +29,7 @@
 
 package aloyslisp.core.functions;
 
-import static aloyslisp.core.streams.cSTRING_INPUT_STREAM.*;
+import static aloyslisp.core.streams.cSTRING_STREAM.*;
 
 import java.lang.annotation.*;
 import java.lang.reflect.*;
@@ -52,6 +52,7 @@ import static aloyslisp.core.L.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
+@BuiltIn(classOf = "function", typeOf = "compiled-function", doc = "03_b")
 public class cCOMPILED_FUNCTION extends cFUNCTION implements tCOMPILED_FUNCTION
 {
 	protected Method	method	= null;

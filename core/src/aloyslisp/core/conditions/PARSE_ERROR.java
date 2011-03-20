@@ -41,7 +41,7 @@ import aloyslisp.core.streams.tPATHNAME_DESIGNATOR;
  * 
  */
 @Type(name = "parse-error", doc = "e_parse_")
-@BuiltIn(name = "parse-error", doc = "e_parse_")
+@BuiltIn(classOf = "parse-error", doc = "e_parse_")
 public class PARSE_ERROR extends ERROR
 {
 	private static final long		serialVersionUID	= 1L;

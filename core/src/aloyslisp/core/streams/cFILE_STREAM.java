@@ -24,30 +24,112 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 16 déc. 2010 Creation
+// IP 19 mars 2011 Creation
 // --------------------------------------------------------------------------
 
 package aloyslisp.core.streams;
 
-import java.io.*;
+import static aloyslisp.core.L.T;
+import static aloyslisp.core.L.str;
 
-import aloyslisp.core.*;
-import aloyslisp.core.conditions.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.PrintStream;
+import java.io.PushbackReader;
+
+import aloyslisp.annotations.Arg;
+import aloyslisp.annotations.Key;
+import aloyslisp.annotations.Static;
+import aloyslisp.core.L;
+import aloyslisp.core.tT;
+import aloyslisp.core.conditions.END_OF_FILE;
+import aloyslisp.core.conditions.FILE_ERROR;
+import aloyslisp.core.conditions.LispException;
+import aloyslisp.core.packages.tSYMBOL;
 
 /**
- * cFILE_INPUT_STREAM
+ * cFILE_STREAM
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class cFILE_INPUT_STREAM extends cINPUT_STREAM implements
-		tFILE_INPUT_STREAM
+public class cFILE_STREAM extends cSTREAM implements tFILE_STREAM
 {
+
 	private tPATHNAME		path	= null;
 	private PushbackReader	reader	= null;
+	protected PrintStream	writer	= null;
 
-	// TODO private tPATHNAME path = null;
+	/**
+	 * For file output
+	 * 
+	 * @param file
+	 *            new FileWriter("datafile")
+	 * @throws FileNotFoundException
+	 */
+	public cFILE_STREAM(File file) throws FileNotFoundException
+	{
+		try
+		{
+			setPathname(str(file.getCanonicalPath()));
+		}
+		catch (IOException e)
+		{
+			throw new LispException("I/O error : " + e.getLocalizedMessage());
+		}
+
+		writer = new PrintStream(file);
+	}
+
+	/**
+	 * @param file
+	 */
+	public cFILE_STREAM(Boolean input, tPATHNAME_DESIGNATOR file)
+	{
+		setPathname(file);
+
+		if (input)
+		{
+			try
+			{
+				reader = new PushbackReader(new InputStreamReader(
+						new FileInputStream(((cPATHNAME) path).getFile())));
+			}
+			catch (FileNotFoundException e)
+			{
+				throw new FILE_ERROR(path);
+			}
+		}
+		else
+		{
+			try
+			{
+				writer = new PrintStream(new File(((cPATHNAME) path).getFile()));
+			}
+			catch (FileNotFoundException e)
+			{
+				throw new LispException("File not found "
+						+ e.getLocalizedMessage());
+			}
+		}
+	}
+
+	/**
+	 * For standard output file
+	 * 
+	 * @param file
+	 *            System.out
+	 */
+	public cFILE_STREAM(PrintStream file)
+	{
+		writer = file;
+	}
 
 	/**
 	 * Use standard input
@@ -55,26 +137,9 @@ public class cFILE_INPUT_STREAM extends cINPUT_STREAM implements
 	 * @param file
 	 *            System.in
 	 */
-	public cFILE_INPUT_STREAM(InputStream file)
+	public cFILE_STREAM(InputStream file)
 	{
 		reader = new PushbackReader(new InputStreamReader(file));
-	}
-
-	/**
-	 * @param file
-	 */
-	public cFILE_INPUT_STREAM(tPATHNAME_DESIGNATOR file)
-	{
-		setPathname(file);
-		try
-		{
-			reader = new PushbackReader(new InputStreamReader(
-					new FileInputStream(((cPATHNAME) path).getFile())));
-		}
-		catch (FileNotFoundException e)
-		{
-			throw new FILE_ERROR(path);
-		}
 	}
 
 	/**
@@ -83,9 +148,30 @@ public class cFILE_INPUT_STREAM extends cINPUT_STREAM implements
 	 * @param file
 	 *            new FileReader("filename")
 	 */
-	public cFILE_INPUT_STREAM(FileReader file)
+	public cFILE_STREAM(FileReader file)
 	{
 		reader = new PushbackReader(file);
+	}
+
+	/**
+	 * @param fileSpec
+	 * @return
+	 */
+	@Static(name = "open", doc = "f_open")
+	@Key(keys = "(direction element-type if-exists if-does-not-exist external-format)")
+	public static tT OPEN( //
+			@Arg(name = "filespec") tPATHNAME_DESIGNATOR fileSpec //
+	)
+	{
+		tSYMBOL direction = (tSYMBOL) L.arg("direction", tSYMBOL.class);
+		tT elementType = (tSYMBOL) L.arg("element-type", tT.class);
+		tSYMBOL ifExists = (tSYMBOL) L.arg("if-exists", tSYMBOL.class);
+		tSYMBOL ifNotExists = (tSYMBOL) L.arg("if-not-exists", tSYMBOL.class);
+		tSYMBOL externalFormat = (tSYMBOL) L.arg("external-format",
+				tSYMBOL.class);
+		tPATHNAME path = (tPATHNAME) fileSpec;
+
+		return null;
 	}
 
 	/*
@@ -181,8 +267,16 @@ public class cFILE_INPUT_STREAM extends cINPUT_STREAM implements
 	{
 		try
 		{
-			reader.close();
-			reader = null;
+			if (reader != null)
+			{
+				reader.close();
+				reader = null;
+			}
+			if (writer != null)
+			{
+				writer.close();
+				writer = null;
+			}
 		}
 		catch (IOException e)
 		{
@@ -200,8 +294,7 @@ public class cFILE_INPUT_STREAM extends cINPUT_STREAM implements
 	 */
 	public tT STREAM_ELEMENT_TYPE()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return L.sym("character");
 	}
 
 	/*
@@ -235,7 +328,6 @@ public class cFILE_INPUT_STREAM extends cINPUT_STREAM implements
 	 * aloyslisp.core.streams.tFILE_STREAM#setPathname(aloyslisp.core.streams
 	 * .tPATHNAME_DESIGNATOR)
 	 */
-	@Override
 	public tPATHNAME setPathname(tPATHNAME_DESIGNATOR path)
 	{
 		this.path = cPATHNAME.PATHNAME(path);
@@ -246,10 +338,69 @@ public class cFILE_INPUT_STREAM extends cINPUT_STREAM implements
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.streams.tFILE_STREAM#getPathname()
 	 */
-	@Override
 	public tPATHNAME getPathname()
 	{
 		return this.path;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.types.tOUTPUT_STREAM#WRITE_CHAR(java.lang.Character)
+	 */
+	public Character WRITE_CHAR(Character car)
+	{
+		lineBegin = (car == '\n' || car == '\r');
+		writer.print(car);
+		return car;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.streams.IOutputStream#forceOutput()
+	 */
+	@Override
+	public tT FORCE_OUTPUT()
+	{
+		// TODO verify return
+		writer.flush();
+		return T;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.streams.IOutputStream#clearOutput()
+	 */
+	@Override
+	public tT CLEAR_OUTPUT()
+	{
+		// TODO verify output
+		writer.flush();
+		lineBegin = true;
+		return T;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.streams.IOutputStream#finishOutput()
+	 */
+	@Override
+	public tT FINISH_OUTPUT()
+	{
+		// TODO verify return
+		writer.flush();
+		return T;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.types.tOUTPUT_STREAM#WRITE_BYTE(java.lang.Integer,
+	 * aloyslisp.core.types.tOUTPUT_STREAM)
+	 */
+	@Override
+	public Integer WRITE_BYTE(Integer val)
+	{
+		writer.write(val);
+		return val;
 	}
 
 	/*

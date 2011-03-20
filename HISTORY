@@ -25,12 +25,13 @@
 == Doing ==
 * Add type and class definition in all classes and interfaces.
 * Add THROW/CATCH environment and special operator.
-
-* Test arguments management, rewrite the whole.
+* Implement PATHNAME and STREAM Functions.
+* Manage Class of BaseArg argument.
 * Replace SymMap by cHASH_MAP.
 * Suppress @Static annotation to @Function with test on static function.
 
 == Current state ==
+* Arguments management, rewrite the whole.
 * Added primitive IDE for debugging. Package aloyslisp.ide. Main class with main cIDE.java.
 * Add third argument fot &optional and &key about instance of an argument. 
 * Clean-up all instantiation process (key arguments, rething the calling process)

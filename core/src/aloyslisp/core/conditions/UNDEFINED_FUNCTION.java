@@ -41,7 +41,7 @@ import aloyslisp.core.tT;
  * 
  */
 @Type(name = "undefined-function", doc = "e_undefi")
-@BuiltIn(name = "undefined-function", doc = "e_undefi")
+@BuiltIn(classOf = "undefined-function", doc = "e_undefi")
 public class UNDEFINED_FUNCTION extends CELL_ERROR
 {
 	private static final long	serialVersionUID	= 1L;

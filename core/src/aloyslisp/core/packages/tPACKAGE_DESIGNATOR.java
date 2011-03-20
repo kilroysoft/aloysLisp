@@ -29,6 +29,7 @@
 
 package aloyslisp.core.packages;
 
+import aloyslisp.annotations.Type;
 import aloyslisp.core.sequences.tSTRING_DESIGNATOR;
 
 /**
@@ -38,6 +39,7 @@ import aloyslisp.core.sequences.tSTRING_DESIGNATOR;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
+@Type(name = "package-designator", typep = "package-designator-p")
 public interface tPACKAGE_DESIGNATOR extends tSTRING_DESIGNATOR
 {
 

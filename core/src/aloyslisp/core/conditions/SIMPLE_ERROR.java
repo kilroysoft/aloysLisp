@@ -42,7 +42,7 @@ import aloyslisp.core.sequences.tLIST;
  * 
  */
 @Type(name = "simple-error", doc = "e_smp_er")
-@BuiltIn(name = "simple-error", doc = "e_smp_er")
+@BuiltIn(classOf = "simple-error", doc = "e_smp_er")
 public class SIMPLE_ERROR extends SIMPLE_CONDITION
 {
 	private static final long	serialVersionUID	= 1L;

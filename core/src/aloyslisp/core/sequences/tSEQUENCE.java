@@ -43,6 +43,7 @@ import aloyslisp.internal.iterators.SEQUENCEIterator;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
+@Type(name = "sequencs", doc = "t_seq", typep = "sequence-p")
 public interface tSEQUENCE extends tT, Iterable<tT>
 {
 	/**

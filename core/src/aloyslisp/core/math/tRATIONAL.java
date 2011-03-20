@@ -30,6 +30,7 @@
 package aloyslisp.core.math;
 
 import aloyslisp.annotations.Function;
+import aloyslisp.annotations.Type;
 
 /**
  * tRATIONAL
@@ -38,6 +39,7 @@ import aloyslisp.annotations.Function;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
+@Type(name = "rational", doc = "t_ration", typep = "rationalp")
 public interface tRATIONAL extends tREAL
 {
 

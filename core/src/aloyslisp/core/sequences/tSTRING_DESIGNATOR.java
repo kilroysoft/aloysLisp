@@ -29,6 +29,7 @@
 
 package aloyslisp.core.sequences;
 
+import aloyslisp.annotations.Type;
 import aloyslisp.core.*;
 
 /**
@@ -38,6 +39,7 @@ import aloyslisp.core.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
+@Type(name = "string-designator", doc = "t_bt_vec", typep = "string-designator-p")
 public interface tSTRING_DESIGNATOR extends tT
 {
 

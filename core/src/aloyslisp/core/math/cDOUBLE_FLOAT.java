@@ -29,6 +29,7 @@
 
 package aloyslisp.core.math;
 
+import aloyslisp.annotations.BuiltIn;
 import aloyslisp.core.*;
 import static aloyslisp.core.L.*;
 
@@ -39,6 +40,7 @@ import static aloyslisp.core.L.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
+@BuiltIn(classOf = "float", typeOf = "double-float", doc = "t_short_")
 public class cDOUBLE_FLOAT extends cFLOAT implements tDOUBLE_FLOAT
 {
 	public Double	value;
@@ -89,7 +91,7 @@ public class cDOUBLE_FLOAT extends cFLOAT implements tDOUBLE_FLOAT
 	 * @see aloyslisp.core.math.tNUMBER#integerValue()
 	 */
 	@Override
-	public cBIGNUM getIntegerValue()
+	public cINTEGER getIntegerValue()
 	{
 		// TODO to think about
 		return FLOOR(ONE)[0].getIntegerValue();
