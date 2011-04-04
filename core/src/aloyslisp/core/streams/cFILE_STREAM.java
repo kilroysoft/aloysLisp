@@ -3,7 +3,7 @@
  * <p>
  * A LISP interpreter, compiler and library.
  * <p>
- * Copyright (C) 2010 kilroySoft <aloyslisp@kilroysoft.ch>
+ * Copyright (C) 2010-2011 kilroySoft <aloyslisp@kilroysoft.ch>
  * 
  * <p>
  * This program is free software: you can redistribute it and/or modify it under
@@ -29,28 +29,15 @@
 
 package aloyslisp.core.streams;
 
-import static aloyslisp.core.L.T;
-import static aloyslisp.core.L.str;
+import static aloyslisp.core.L.*;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.PrintStream;
-import java.io.PushbackReader;
+import java.io.*;
 
-import aloyslisp.annotations.Arg;
-import aloyslisp.annotations.Key;
-import aloyslisp.annotations.Static;
-import aloyslisp.core.L;
-import aloyslisp.core.tT;
-import aloyslisp.core.conditions.END_OF_FILE;
-import aloyslisp.core.conditions.FILE_ERROR;
-import aloyslisp.core.conditions.LispException;
-import aloyslisp.core.packages.tSYMBOL;
+import aloyslisp.annotations.*;
+import aloyslisp.core.*;
+import aloyslisp.core.conditions.*;
+import aloyslisp.core.designators.tPATHNAME_DESIGNATOR;
+import aloyslisp.core.packages.*;
 
 /**
  * cFILE_STREAM
@@ -99,7 +86,7 @@ public class cFILE_STREAM extends cSTREAM implements tFILE_STREAM
 			try
 			{
 				reader = new PushbackReader(new InputStreamReader(
-						new FileInputStream(((cPATHNAME) path).getFile())));
+						new FileInputStream(((cPATHNAME) path).NAMESTRING())));
 			}
 			catch (FileNotFoundException e)
 			{
@@ -110,7 +97,8 @@ public class cFILE_STREAM extends cSTREAM implements tFILE_STREAM
 		{
 			try
 			{
-				writer = new PrintStream(new File(((cPATHNAME) path).getFile()));
+				writer = new PrintStream(new File(
+						((cPATHNAME) path).NAMESTRING()));
 			}
 			catch (FileNotFoundException e)
 			{
@@ -153,25 +141,58 @@ public class cFILE_STREAM extends cSTREAM implements tFILE_STREAM
 		reader = new PushbackReader(file);
 	}
 
+	public static final tSYMBOL	INPUT				= key("input");
+	public static final tSYMBOL	OUTPUT				= key("output");
+	public static final tSYMBOL	IO					= key("io");
+	public static final tSYMBOL	PROBE				= key("probe");
+	public static final tSYMBOL	ERROR				= key("error");
+	public static final tSYMBOL	NEW_VERSION			= key("new-version");
+	public static final tSYMBOL	RENAME				= key("rename");
+	public static final tSYMBOL	RENAME_AND_DELETE	= key("rename-and-delete");
+	public static final tSYMBOL	OVERWRITE			= key("overwrite");
+	public static final tSYMBOL	APPEND				= key("append");
+	public static final tSYMBOL	SUPERSEDE			= key("supersede");
+	public static final tSYMBOL	CREATE				= key("create");
+	public static final tSYMBOL	DEFAULT				= key("default");
+
 	/**
 	 * @param fileSpec
 	 * @return
 	 */
-	@Static(name = "open", doc = "f_open")
-	@Key(keys = "(direction element-type if-exists if-does-not-exist external-format)")
+	@aFunction(name = "open", doc = "f_open")
+	@aKey(keys = "((direction :input) (element-type 'character) if-exists if-does-not-exist (external-format :default))")
 	public static tT OPEN( //
-			@Arg(name = "filespec") tPATHNAME_DESIGNATOR fileSpec //
+			@aArg(name = "filespec") tPATHNAME_DESIGNATOR fileSpec //
 	)
 	{
-		tSYMBOL direction = (tSYMBOL) L.arg("direction", tSYMBOL.class);
-		tT elementType = (tSYMBOL) L.arg("element-type", tT.class);
-		tSYMBOL ifExists = (tSYMBOL) L.arg("if-exists", tSYMBOL.class);
-		tSYMBOL ifNotExists = (tSYMBOL) L.arg("if-not-exists", tSYMBOL.class);
-		tSYMBOL externalFormat = (tSYMBOL) L.arg("external-format",
-				tSYMBOL.class);
+		// L.e.ENV_DUMP();
+
+		tSYMBOL direction = (tSYMBOL) arg("direction", tSYMBOL.class, INPUT);
+		tT elementType = (tSYMBOL) arg("element-type", tT.class,
+				sym("character"));
+		tSYMBOL ifExists = (tSYMBOL) arg("if-exists", tSYMBOL.class, NIL);
+		tSYMBOL ifNotExists = (tSYMBOL) arg("if-does-not-exist", NIL);
+		tSYMBOL externalFormat = (tSYMBOL) arg("external-format",
+				tSYMBOL.class, DEFAULT);
 		tPATHNAME path = (tPATHNAME) fileSpec;
 
-		return null;
+		File file = path.getFile();
+		if (file.isFile())
+		{
+
+		}
+		else
+		{
+
+		}
+
+		boolean dir = direction == INPUT || direction == PROBE;
+		cFILE_STREAM res = new cFILE_STREAM(dir, path);
+
+		if (direction == PROBE)
+			res.CLOSE();
+
+		return res;
 	}
 
 	/*
@@ -328,7 +349,7 @@ public class cFILE_STREAM extends cSTREAM implements tFILE_STREAM
 	 * aloyslisp.core.streams.tFILE_STREAM#setPathname(aloyslisp.core.streams
 	 * .tPATHNAME_DESIGNATOR)
 	 */
-	public tPATHNAME setPathname(tPATHNAME_DESIGNATOR path)
+	protected tPATHNAME setPathname(tPATHNAME_DESIGNATOR path)
 	{
 		this.path = cPATHNAME.PATHNAME(path);
 		return this.path;
@@ -338,7 +359,7 @@ public class cFILE_STREAM extends cSTREAM implements tFILE_STREAM
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.streams.tFILE_STREAM#getPathname()
 	 */
-	public tPATHNAME getPathname()
+	public tPATHNAME GET_PATHNAME()
 	{
 		return this.path;
 	}
@@ -408,9 +429,9 @@ public class cFILE_STREAM extends cSTREAM implements tFILE_STREAM
 	 * @see aloyslisp.core.tT#hashCode()
 	 */
 	@Override
-	public int hashCode()
+	public Integer SXHASH()
 	{
-		return path.hashCode();
+		return path.SXHASH();
 	}
 
 }

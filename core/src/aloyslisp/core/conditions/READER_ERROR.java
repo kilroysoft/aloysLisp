@@ -3,7 +3,7 @@
  * <p>
  * A LISP interpreter, compiler and library.
  * <p>
- * Copyright (C) 2010 kilroySoft <aloyslisp@kilroysoft.ch>
+ * Copyright (C) 2010-2011 kilroySoft <aloyslisp@kilroysoft.ch>
  * 
  * <p>
  * This program is free software: you can redistribute it and/or modify it under
@@ -24,13 +24,13 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 29 déc. 2010 Creation
+// IP 29 déc. 2010-2011 Creation
 // --------------------------------------------------------------------------
 
 package aloyslisp.core.conditions;
 
-import aloyslisp.annotations.Type;
-import aloyslisp.core.streams.tPATHNAME_DESIGNATOR;
+import aloyslisp.annotations.aType;
+import aloyslisp.core.designators.tPATHNAME_DESIGNATOR;
 
 /**
  * READER_ERROR
@@ -39,7 +39,7 @@ import aloyslisp.core.streams.tPATHNAME_DESIGNATOR;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-@Type(name = "reader-error", doc = "e_rder_e")
+@aType(name = "reader-error", doc = "e_rder_e")
 public class READER_ERROR extends PARSE_ERROR
 {
 	private static final long	serialVersionUID	= 1L;

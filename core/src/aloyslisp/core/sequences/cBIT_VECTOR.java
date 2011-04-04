@@ -3,7 +3,7 @@
  * <p>
  * A LISP interpreter, compiler and library.
  * <p>
- * Copyright (C) 2010 kilroySoft <aloyslisp@kilroysoft.ch>
+ * Copyright (C) 2010-2011 kilroySoft <aloyslisp@kilroysoft.ch>
  * 
  * <p>
  * This program is free software: you can redistribute it and/or modify it under
@@ -31,7 +31,7 @@ package aloyslisp.core.sequences;
 
 import java.util.Iterator;
 
-import aloyslisp.annotations.BuiltIn;
+import aloyslisp.annotations.aBuiltIn;
 import aloyslisp.core.cCELL;
 import aloyslisp.core.tT;
 import aloyslisp.internal.iterators.SEQUENCEIterator;
@@ -43,7 +43,7 @@ import aloyslisp.internal.iterators.SEQUENCEIterator;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-@BuiltIn(classOf = "bit-vector", doc = "t_bt_vec")
+@aBuiltIn(lispClass = "bit-vector", doc = "t_bt_vec")
 public class cBIT_VECTOR extends cCELL implements tBIT_VECTOR
 {
 

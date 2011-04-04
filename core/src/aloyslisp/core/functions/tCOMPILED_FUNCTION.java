@@ -3,7 +3,7 @@
  * <p>
  * A LISP interpreter, compiler and library.
  * <p>
- * Copyright (C) 2010 kilroySoft <aloyslisp@kilroysoft.ch>
+ * Copyright (C) 2010-2011 kilroySoft <aloyslisp@kilroysoft.ch>
  * 
  * <p>
  * This program is free software: you can redistribute it and/or modify it under
@@ -24,12 +24,13 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 10 nov. 2010 Creation
+// IP 10 nov. 2010-2011 Creation
 // --------------------------------------------------------------------------
 
 package aloyslisp.core.functions;
 
 import aloyslisp.annotations.*;
+import aloyslisp.core.designators.tFUNCTION_DESIGNATOR;
 
 /**
  * tCOMPILED_FUNCTION
@@ -38,7 +39,7 @@ import aloyslisp.annotations.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-@Type(name = "compiled-function", doc = "03_b", typep = "compiled-function-p")
+@aType(name = "compiled-function", doc = "03_b", typep = "compiled-function-p")
 public interface tCOMPILED_FUNCTION extends tFUNCTION, tFUNCTION_DESIGNATOR
 {
 

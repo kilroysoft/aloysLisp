@@ -3,7 +3,7 @@
  * <p>
  * A LISP interpreter, compiler and library.
  * <p>
- * Copyright (C) 2010 kilroySoft <aloyslisp@kilroysoft.ch>
+ * Copyright (C) 2010-2011 kilroySoft <aloyslisp@kilroysoft.ch>
  * 
  * <p>
  * This program is free software: you can redistribute it and/or modify it under
@@ -24,13 +24,13 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 29 déc. 2010 Creation
+// IP 29 déc. 2010-2011 Creation
 // --------------------------------------------------------------------------
 
 package aloyslisp.core.conditions;
 
-import aloyslisp.annotations.BuiltIn;
-import aloyslisp.annotations.Type;
+import aloyslisp.annotations.aBuiltIn;
+import aloyslisp.annotations.aType;
 
 /**
  * STORAGE_CONDITION
@@ -39,8 +39,8 @@ import aloyslisp.annotations.Type;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-@Type(name = "storage-condition", doc = "e_storag")
-@BuiltIn(classOf = "storage-condition", doc = "e_storag")
+@aType(name = "storage-condition", doc = "e_storag")
+@aBuiltIn(lispClass = "storage-condition", doc = "e_storag")
 public class STORAGE_CONDITION extends SERIOUS_CONDITION
 {
 	private static final long	serialVersionUID	= 1L;

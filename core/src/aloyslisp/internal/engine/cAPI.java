@@ -3,7 +3,7 @@
  * <p>
  * A LISP interpreter, compiler and library.
  * <p>
- * Copyright (C) 2010 kilroySoft <aloyslisp@kilroysoft.ch>
+ * Copyright (C) 2010-2011 kilroySoft <aloyslisp@kilroysoft.ch>
  * 
  * <p>
  * This program is free software: you can redistribute it and/or modify it under
@@ -24,7 +24,7 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 22 oct. 2010 Creation
+// IP 22 oct. 2010-2011 Creation
 // IP UB10 cAPI order mandatory, optional, rest, key
 // IP UB10 &aux variables
 // IP UB10 &allow-other-keys
@@ -52,12 +52,13 @@ import static aloyslisp.core.L.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
+@aNonStandard
 public class cAPI extends cCELL implements tAPI
 {
 	/**
 	 * Lambda keywords
 	 */
-	@Symb(name = "lambda-list-keywords", doc = "v_lambda")
+	@aSymb(name = "lambda-list-keywords", doc = "v_lambda")
 	public static tSYMBOL	ALLOW_OTHER_KEYS	= sym("&allow-other-keys");
 	public static tSYMBOL	AUX					= sym("&aux");
 	public static tSYMBOL	BODY				= sym("&body");
@@ -106,10 +107,14 @@ public class cAPI extends cCELL implements tAPI
 	 */
 	public cAPI(tLIST args, tT doc, tLIST decl)
 	{
+		environment = e.topEnv;
+		// System.out.println("---------------ENV-------------------");
+		// if (environment != null)
+		// System.out.println(environment.ENV_DUMP());
+		// System.out.println("--------------<ENV>------------------");
 		vars = SET_API_ARGS(args);
 		SET_API_DOC(doc);
 		SET_API_DECL(decl);
-		environment = e.topEnv;
 	}
 
 	/**
@@ -117,14 +122,21 @@ public class cAPI extends cCELL implements tAPI
 	 */
 	public cAPI()
 	{
-		keys = cHASH_TABLE.MAKE_HASH_TABLE();
 		environment = e.topEnv;
+
+		// System.out.println("---------------ENV-------------------");
+		// if (environment != null)
+		// System.out.println(environment.ENV_DUMP());
+		// System.out.println("--------------<ENV>------------------");
+
+		keys = cHASH_TABLE.MAKE_HASH_TABLE();
 	}
 
 	private static tSYMBOL	DECLARE	= sym("declare");
 
-	@Static(name = "api-parse-func")
-	public static tLIST API_PARSE_FUNC(tLIST func)
+	@aFunction(name = "api-parse-func")
+	public static tLIST API_PARSE_FUNC( //
+			@aArg(name = "function") tLIST func)
 	{
 		// System.out.println("API-PARSE-FUNC : " + func);
 		tT doc = func.CAR();
@@ -202,7 +214,7 @@ public class cAPI extends cCELL implements tAPI
 				res.append(AUX);
 				isAux = true;
 			}
-			res.append(((tARG) var).getOrig());
+			res.append(((tARG) var).SYMBOL_ORIG());
 			count++;
 		}
 		if (this.rest != null && !isRest)
@@ -399,7 +411,6 @@ public class cAPI extends cCELL implements tAPI
 		// System.out.println("API_PUSH_ENV : " + values + " on " + this.vars
 		// + " with " + DESCRIBE());
 		cARG arg = null;
-		values = API_EVAL_LIST((tLIST) values);
 		// Init all vars
 		LISTIterator var = new LISTIterator(this.vars);
 		while (var.hasNext())
@@ -409,7 +420,7 @@ public class cAPI extends cCELL implements tAPI
 			if (!arg.base)
 				break;
 
-			let.ENV_LET_INTERN(arg.orig, API_EVAL_ARG(arg.SYMBOL_VALUE()));
+			let.ENV_LET_INTERN(arg.SYMBOL_ORIG(), API_EVAL_ARG(arg.SYMBOL_VALUE()));
 			if (arg.exists != null)
 				let.ENV_LET_INTERN(arg.exists, NIL);
 		}
@@ -446,7 +457,7 @@ public class cAPI extends cCELL implements tAPI
 			else
 				elem = API_EVAL_ARG(arg.SYMBOL_VALUE());
 
-			let.SET_ENV_LET_GET(arg.orig, elem);
+			let.SET_ENV_LET_GET(arg.SYMBOL_ORIG(), elem);
 			// System.out.println("Argument : " + elem.DESCRIBE());
 			iter.append(elem);
 		}
@@ -472,7 +483,7 @@ public class cAPI extends cCELL implements tAPI
 		while (var.hasNext())
 		{
 			arg = (cARG) var.next();
-			let.ENV_LET_INTERN(arg.orig, API_EVAL_ARG(arg.SYMBOL_VALUE()));
+			let.ENV_LET_INTERN(arg.SYMBOL_ORIG(), API_EVAL_ARG(arg.SYMBOL_VALUE()));
 			if (arg.exists != null)
 				let.ENV_LET_INTERN(arg.exists, NIL);
 		}
@@ -481,7 +492,7 @@ public class cAPI extends cCELL implements tAPI
 		while (isKey && val.hasNext())
 		{
 			tT key = val.next();
-			// System.out.println("Key = " + key);
+			// System.out.println("aKey = " + key);
 			if (!(key instanceof tSYMBOL))
 				throw new LispException("argument not a key : " + key);
 
@@ -495,7 +506,7 @@ public class cAPI extends cCELL implements tAPI
 			}
 			else
 			{
-				key = ((cARG_KEY) keyArg).orig;
+				key = ((cARG_KEY) keyArg).SYMBOL_ORIG();
 			}
 
 			if (!val.hasNext())
@@ -527,7 +538,7 @@ public class cAPI extends cCELL implements tAPI
 	@Override
 	public tLIST API_OBJECT(tLIST args)
 	{
-		throw new LispException("Function action on LET environment");
+		throw new LispException("aFunction action on LET environment");
 	}
 
 	/*
@@ -538,7 +549,7 @@ public class cAPI extends cCELL implements tAPI
 	@Override
 	public tT[] API_CALL(tLIST args)
 	{
-		throw new LispException("Function action on LET environment");
+		throw new LispException("aFunction action on LET environment");
 	}
 
 	/*
@@ -589,7 +600,7 @@ public class cAPI extends cCELL implements tAPI
 	{
 		return "#<API " + vars + " " + rest + " " + obl + " " + basePos
 				+ " #<SPECIAL " + (special ? T : NIL) + "> #<MACRO "
-				+ (macro ? T : NIL) + "> " + environment + ">";
+				+ (macro ? T : NIL) + "> " + environment.ENV_DUMP() + ">";
 	}
 
 }

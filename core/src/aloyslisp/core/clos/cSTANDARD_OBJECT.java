@@ -3,7 +3,7 @@
  * <p>
  * A LISP interpreter, compiler and library.
  * <p>
- * Copyright (C) 2010 kilroySoft <aloyslisp@kilroysoft.ch>
+ * Copyright (C) 2010-2011 kilroySoft <aloyslisp@kilroysoft.ch>
  * 
  * <p>
  * This program is free software: you can redistribute it and/or modify it under
@@ -39,7 +39,7 @@ import aloyslisp.core.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-@BuiltIn(classOf = "standard-object", typeOf = "standard-object", doc = "t_std_ob")
+@aBuiltIn(lispClass = "standard-object", lispType = "standard-object", doc = "t_std_ob")
 public class cSTANDARD_OBJECT extends cCELL
 {
 

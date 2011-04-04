@@ -3,7 +3,7 @@
  * <p>
  * A LISP interpreter, compiler and library.
  * <p>
- * Copyright (C) 2010 kilroySoft <aloyslisp@kilroysoft.ch>
+ * Copyright (C) 2010-2011 kilroySoft <aloyslisp@kilroysoft.ch>
  * 
  * <p>
  * This program is free software: you can redistribute it and/or modify it under
@@ -48,7 +48,7 @@ public interface tAPI extends tBUILT_IN_CLASS
 	 * 
 	 * @return
 	 */
-	@Function(name = "api-args")
+	@aFunction(name = "api-args")
 	public tLIST API_ARGS();
 
 	/**
@@ -57,9 +57,9 @@ public interface tAPI extends tBUILT_IN_CLASS
 	 * @param args
 	 * @return
 	 */
-	@Function(name = "set-api-args")
+	@aFunction(name = "set-api-args")
 	public tLIST SET_API_ARGS( //
-			@Arg(name = "args") tLIST args //
+			@aArg(name = "args") tLIST args //
 	);
 
 	/**
@@ -67,7 +67,7 @@ public interface tAPI extends tBUILT_IN_CLASS
 	 * 
 	 * @return
 	 */
-	@Function(name = "api-doc")
+	@aFunction(name = "api-doc")
 	public tT API_DOC();
 
 	/**
@@ -76,9 +76,9 @@ public interface tAPI extends tBUILT_IN_CLASS
 	 * @param doc
 	 * @return
 	 */
-	@Function(name = "set-api-doc")
+	@aFunction(name = "set-api-doc")
 	public tT SET_API_DOC( //
-			@Arg(name = "doc") tT doc //
+			@aArg(name = "doc") tT doc //
 	);
 
 	/**
@@ -86,7 +86,7 @@ public interface tAPI extends tBUILT_IN_CLASS
 	 * 
 	 * @return
 	 */
-	@Function(name = "api-decl")
+	@aFunction(name = "api-decl")
 	public tLIST API_DECL();
 
 	/**
@@ -95,9 +95,9 @@ public interface tAPI extends tBUILT_IN_CLASS
 	 * @param decl
 	 * @return
 	 */
-	@Function(name = "set-api-decl")
+	@aFunction(name = "set-api-decl")
 	public tLIST SET_API_DECL( //
-			@Arg(name = "decl") tLIST decl //
+			@aArg(name = "decl") tLIST decl //
 	);
 
 	/**
@@ -105,7 +105,7 @@ public interface tAPI extends tBUILT_IN_CLASS
 	 * 
 	 * @return
 	 */
-	@Function(name = "api-special")
+	@aFunction(name = "api-special")
 	public Boolean API_SPECIAL();
 
 	/**
@@ -114,9 +114,9 @@ public interface tAPI extends tBUILT_IN_CLASS
 	 * @param decl
 	 * @return
 	 */
-	@Function(name = "set-api-special")
+	@aFunction(name = "set-api-special")
 	public Boolean SET_API_SPECIAL( //
-			@Arg(name = "special") Boolean special //
+			@aArg(name = "special") Boolean special //
 	);
 
 	/**
@@ -124,7 +124,7 @@ public interface tAPI extends tBUILT_IN_CLASS
 	 * 
 	 * @return
 	 */
-	@Function(name = "api-macro")
+	@aFunction(name = "api-macro")
 	public Boolean API_MACRO();
 
 	/**
@@ -133,9 +133,9 @@ public interface tAPI extends tBUILT_IN_CLASS
 	 * @param decl
 	 * @return
 	 */
-	@Function(name = "set-api-macro")
+	@aFunction(name = "set-api-macro")
 	public Boolean SET_API_MACRO( //
-			@Arg(name = "macro") Boolean macro //
+			@aArg(name = "macro") Boolean macro //
 	);
 
 	/**
@@ -145,9 +145,9 @@ public interface tAPI extends tBUILT_IN_CLASS
 	 * @param values
 	 * @return
 	 */
-	@Function(name = "api-eval-arg")
+	@aFunction(name = "api-eval-arg")
 	public tT API_EVAL_ARG( //
-			@Arg(name = "values") tT values //
+			@aArg(name = "values") tT values //
 	);
 
 	/**
@@ -156,38 +156,40 @@ public interface tAPI extends tBUILT_IN_CLASS
 	 * @param list
 	 * @return
 	 */
-	@Function(name = "api-eval-list")
+	@aFunction(name = "api-eval-list")
 	public tLIST API_EVAL_LIST( //
-			@Arg(name = "list") tLIST list //
+			@aArg(name = "list") tLIST list //
 	);
 
 	/**
 	 * @return
 	 */
-	@Function(name = "api-push-env")
+	@aFunction(name = "api-push-env")
 	public tLIST API_PUSH_ENV( //
-			@Arg(name = "args") tLIST args, //
-			@Arg(name = "let") tENV let //
+			@aArg(name = "args") tLIST args, //
+			@aArg(name = "let") tENV let //
 	);
 
 	/**
 	 * @return
 	 */
-	@Function(name = "api-get-mac")
+	@aFunction(name = "api-get-mac")
 	public String API_GET_MAC();
 
 	/**
 	 * @param args
 	 * @return
 	 */
-	@Function(name = "api-object")
-	public tLIST API_OBJECT(tLIST args);
+	@aFunction(name = "api-object")
+	public tLIST API_OBJECT( //
+			@aRest(name = "args") tLIST args);
 
 	/**
 	 * @param args
 	 * @return
 	 */
-	@Function(name = "api-call")
-	public tT[] API_CALL(tLIST args);
+	@aFunction(name = "api-call")
+	public tT[] API_CALL( //
+			@aRest(name = "args") tLIST args);
 
 }

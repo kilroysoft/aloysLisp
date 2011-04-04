@@ -3,7 +3,7 @@
  * <p>
  * A LISP interpreter, compiler and library.
  * <p>
- * Copyright (C) 2010 kilroySoft <aloyslisp@kilroysoft.ch>
+ * Copyright (C) 2010-2011 kilroySoft <aloyslisp@kilroysoft.ch>
  * 
  * <p>
  * This program is free software: you can redistribute it and/or modify it under
@@ -24,8 +24,8 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 14 oct. 2010 Creation
-// IP 04 nov. 2010 Works
+// IP 14 oct. 2010-2011 Creation
+// IP 04 nov. 2010-2011 Works
 // --------------------------------------------------------------------------
 // To do
 // --------------------------------------------------------------------------
@@ -39,10 +39,10 @@ import java.util.*;
 import aloyslisp.annotations.*;
 import aloyslisp.core.*;
 import aloyslisp.core.conditions.*;
+import aloyslisp.core.designators.tFUNCTION_DESIGNATOR;
 import aloyslisp.core.functions.*;
 import aloyslisp.core.packages.*;
 import aloyslisp.core.sequences.*;
-import aloyslisp.internal.engine.Library;
 import static aloyslisp.core.L.*;
 
 /**
@@ -85,6 +85,7 @@ public class cREADTABLE extends cCELL implements tREADTABLE
 	 * @author George Kilroy {george@kilroysoft.ch}
 	 * 
 	 */
+	@aJavaInternal
 	public enum CaseType
 	{
 		/**
@@ -116,7 +117,7 @@ public class cREADTABLE extends cCELL implements tREADTABLE
 		// default value
 		caseVal = CaseType.DOWNCASE;
 
-		trace("-------->" + sym("%comment-reader").DESCRIBE());
+		// trace("-------->" + sym("%comment-reader").DESCRIBE());
 
 		// standard macro char
 		SET_MACRO_CHARACTER('"', sym("%string-reader"), false);
@@ -179,20 +180,10 @@ public class cREADTABLE extends cCELL implements tREADTABLE
 		SET_DISPATCH_MACRO_CHRACTER('#', 'B', NIL);
 		SET_DISPATCH_MACRO_CHRACTER('#', 'C', NIL);
 		SET_DISPATCH_MACRO_CHRACTER('#', 'O', NIL);
-		SET_DISPATCH_MACRO_CHRACTER('#', 'P', NIL);
+		SET_DISPATCH_MACRO_CHRACTER('#', 'P', sym("%pathname-reader"));
 		SET_DISPATCH_MACRO_CHRACTER('#', 'R', NIL);
 		SET_DISPATCH_MACRO_CHRACTER('#', 'S', NIL);
 		SET_DISPATCH_MACRO_CHRACTER('#', 'X', NIL);
-	}
-
-	/**
-	 * @return
-	 */
-	public tREADTABLE init()
-	{
-		// validate standard readtable functions
-		Library.INSTANTIATE(this.getClass().getCanonicalName());
-		return this;
 	}
 
 	/**
@@ -202,23 +193,23 @@ public class cREADTABLE extends cCELL implements tREADTABLE
 	 * @return
 	 * @throws END_OF_FILE
 	 */
-	@Static(name = "read-delimited-list", doc = "f_rd_del")
+	@aFunction(name = "read-delimited-list", doc = "f_rd_del")
 	public static tT READ_DELIMITED_LIST(
-			@Arg(name = "character") Character character, //
-			@Opt(name = "input-stream", def = "*standard-input*") tSTREAM stream, //
-			@Opt(name = "recursive-p", def = "nil") Boolean recursiveP)
+			@aArg(name = "character") Character character, //
+			@aOpt(name = "input-stream", def = "*standard-input*") tSTREAM stream, //
+			@aOpt(name = "recursive-p", def = "nil") Boolean recursiveP)
 			throws END_OF_FILE
 	{
 		return null;
 	}
 
-	@Static(name = "read-preserving-whitespace", doc = "f_rd_rd")
+	@aFunction(name = "read-preserving-whitespace", doc = "f_rd_rd")
 	public static tT READ_PRESERVING_WHITESPACE()
 	{
 		return null;
 	}
 
-	@Static(name = "read-from string", doc = "f_rd_fro")
+	@aFunction(name = "read-from string", doc = "f_rd_fro")
 	public static tT READ_FROM_STRING()
 	{
 		return null;
@@ -239,7 +230,7 @@ public class cREADTABLE extends cCELL implements tREADTABLE
 	 * @see aloyslisp.core.Cell#printable()
 	 */
 	@Override
-	public String toString()
+	public String TO_STRING()
 	{
 		return "#<cREADTABLE " + this.caseVal + ">";
 	}
@@ -248,7 +239,7 @@ public class cREADTABLE extends cCELL implements tREADTABLE
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tREADTABLE#isConstituent(java.lang.Character)
 	 */
-	public Boolean isConstituent(Character car)
+	public Boolean IS_CONSTITUENT(Character car)
 	{
 		switch (car)
 		{
@@ -384,7 +375,7 @@ public class cREADTABLE extends cCELL implements tREADTABLE
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tREADTABLE#changeCase(java.lang.Character)
 	 */
-	public Character changeCase(Character c)
+	public Character CHANGE_CASE(Character c)
 	{
 		switch (caseVal)
 		{
@@ -442,11 +433,11 @@ public class cREADTABLE extends cCELL implements tREADTABLE
 	 * @param args
 	 * @return
 	 */
-	@Static(name = "%backquote-reader", doc = "02_df")
+	@aFunction(name = "%backquote-reader", doc = "02_df")
 	public static tT BACKQUOTE_READER( //
-			@Arg(name = "stream") tSTREAM in, //
-			@Arg(name = "char") Character car, //
-			@Rest(name = "args") tT... args)
+			@aArg(name = "stream") tSTREAM in, //
+			@aArg(name = "char") Character car, //
+			@aRest(name = "args") tT... args)
 	{
 		try
 		{
@@ -465,11 +456,11 @@ public class cREADTABLE extends cCELL implements tREADTABLE
 	 * @param args
 	 * @return
 	 */
-	@Static(name = "%character-reader", doc = "02_dha")
+	@aFunction(name = "%character-reader", doc = "02_dha")
 	public static tT CHARACTER_READER( //
-			@Arg(name = "stream") tSTREAM in, //
-			@Arg(name = "char") Character car, //
-			@Rest(name = "args") tT... args)
+			@aArg(name = "stream") tSTREAM in, //
+			@aArg(name = "char") Character car, //
+			@aRest(name = "args") tT... args)
 	{
 		try
 		{
@@ -490,11 +481,40 @@ public class cREADTABLE extends cCELL implements tREADTABLE
 	 * @param args
 	 * @return
 	 */
-	@Static(name = "%comment-reader", doc = "02_dd")
+	@aFunction(name = "%pathname-reader", doc = "02_dha")
+	public static tT PATHNAME_READER( //
+			@aArg(name = "stream") tSTREAM in, //
+			@aArg(name = "char") Character car, //
+			@aRest(name = "args") tT... args)
+	{
+		try
+		{
+			// read atom (for example newline) if single char first char is
+			// escaped to keep case
+			tT res = in.READ(false, NIL, true);
+			if (!(res instanceof tSTRING))
+				throw new LispException(
+						"%pathname-reader bad pathname definition : " + res);
+			return new cLOGICAL_PATHNAME(((tSTRING) res).getString());
+		}
+		catch (END_OF_FILE e)
+		{
+			throw new LispException(
+					"Error in reading a character definition after #\\");
+		}
+	}
+
+	/***************************************************************************
+	 * @param in
+	 * @param car
+	 * @param args
+	 * @return
+	 */
+	@aFunction(name = "%comment-reader", doc = "02_dd")
 	public static tT COMMENT_READER( //
-			@Arg(name = "stream") tSTREAM in, //
-			@Arg(name = "char") Character car, //
-			@Rest(name = "args") tT... args)
+			@aArg(name = "stream") tSTREAM in, //
+			@aArg(name = "char") Character car, //
+			@aRest(name = "args") tT... args)
 	{
 		Character curr;
 
@@ -521,11 +541,11 @@ public class cREADTABLE extends cCELL implements tREADTABLE
 	 * @param args
 	 * @return
 	 */
-	@Static(name = "%close-parent-reader", doc = "02_db")
+	@aFunction(name = "%close-parent-reader", doc = "02_db")
 	public static tT CLOSE_PARENT_READER( //
-			@Arg(name = "stream") tSTREAM in, //
-			@Arg(name = "char") Character car, //
-			@Rest(name = "args") tT... args)
+			@aArg(name = "stream") tSTREAM in, //
+			@aArg(name = "char") Character car, //
+			@aRest(name = "args") tT... args)
 	{
 		return sym(")");
 	}
@@ -539,11 +559,11 @@ public class cREADTABLE extends cCELL implements tREADTABLE
 	 * @param args
 	 * @return
 	 */
-	@Static(name = "%function-reader", doc = "02_dhb")
+	@aFunction(name = "%function-reader", doc = "02_dhb")
 	public static tT FUNCTION_READER( //
-			@Arg(name = "stream") tSTREAM in, //
-			@Arg(name = "char") Character car, //
-			@Rest(name = "args") tT... args)
+			@aArg(name = "stream") tSTREAM in, //
+			@aArg(name = "char") Character car, //
+			@aRest(name = "args") tT... args)
 	{
 		try
 		{
@@ -562,11 +582,11 @@ public class cREADTABLE extends cCELL implements tREADTABLE
 	 * @param args
 	 * @return
 	 */
-	@Static(name = "%parent-reader", doc = "02_da")
+	@aFunction(name = "%parent-reader", doc = "02_da")
 	public static tT PARENT_READER( //
-			@Arg(name = "stream") tSTREAM in, //
-			@Arg(name = "char") Character car, //
-			@Rest(name = "args") tT... args)
+			@aArg(name = "stream") tSTREAM in, //
+			@aArg(name = "char") Character car, //
+			@aRest(name = "args") tT... args)
 	{
 		tLIST res = NIL;
 		try
@@ -614,11 +634,11 @@ public class cREADTABLE extends cCELL implements tREADTABLE
 	 * @param args
 	 * @return
 	 */
-	@Static(name = "%quote-reader", doc = "02_dc")
+	@aFunction(name = "%quote-reader", doc = "02_dc")
 	public static tT QUOTE_READER( //
-			@Arg(name = "stream") tSTREAM in, //
-			@Arg(name = "char") Character car, //
-			@Rest(name = "args") tT... args)
+			@aArg(name = "stream") tSTREAM in, //
+			@aArg(name = "char") Character car, //
+			@aRest(name = "args") tT... args)
 	{
 		try
 		{
@@ -636,11 +656,11 @@ public class cREADTABLE extends cCELL implements tREADTABLE
 	 * @param args
 	 * @return
 	 */
-	@Static(name = "%string-reader", doc = "02_de")
+	@aFunction(name = "%string-reader", doc = "02_de")
 	public static tT STRING_READER( //
-			@Arg(name = "stream") tSTREAM in, //
-			@Arg(name = "char") Character car, //
-			@Rest(name = "args") tT... args)
+			@aArg(name = "stream") tSTREAM in, //
+			@aArg(name = "char") Character car, //
+			@aRest(name = "args") tT... args)
 	{
 		StringBuilder str = new StringBuilder();
 		Character curr;
@@ -672,11 +692,11 @@ public class cREADTABLE extends cCELL implements tREADTABLE
 	 * @param args
 	 * @return
 	 */
-	@Static(name = "%unintern-reader", doc = "02_dhe")
+	@aFunction(name = "%unintern-reader", doc = "02_dhe")
 	public static tT UNINTERN_READER( //
-			@Arg(name = "stream") tSTREAM in, //
-			@Arg(name = "char") Character car, //
-			@Rest(name = "args") tT... args)
+			@aArg(name = "stream") tSTREAM in, //
+			@aArg(name = "char") Character car, //
+			@aRest(name = "args") tT... args)
 	{
 		try
 		{
@@ -703,11 +723,11 @@ public class cREADTABLE extends cCELL implements tREADTABLE
 	 * @param args
 	 * @return
 	 */
-	@Static(name = "%unquote-reader", doc = "02_df")
+	@aFunction(name = "%unquote-reader", doc = "02_df")
 	public static tT UNQUOTE_READER( //
-			@Arg(name = "stream") tSTREAM in, //
-			@Arg(name = "char") Character car, //
-			@Rest(name = "args") tT... args)
+			@aArg(name = "stream") tSTREAM in, //
+			@aArg(name = "char") Character car, //
+			@aRest(name = "args") tT... args)
 	{
 		Character sup = ' ';
 		try
@@ -739,11 +759,11 @@ public class cREADTABLE extends cCELL implements tREADTABLE
 	 * @param args
 	 * @return
 	 */
-	@Static(name = "%backquote", doc = "02_df")
-	@SpecialOp
-	@Mac(prefix = "`")
+	@aFunction(name = "%backquote", doc = "02_df")
+	@aSpecialOperator
+	@aMac(prefix = "`")
 	public static tT BACKQUOTE( //
-			@Arg(name = "obj") tT obj)
+			@aArg(name = "obj") tT obj)
 	{
 		if (obj instanceof tCONS)
 		{
@@ -759,7 +779,7 @@ public class cREADTABLE extends cCELL implements tREADTABLE
 	 * @return
 	 * @throws ExceptionLisp
 	 */
-	public static tT walk(tT cons)
+	private static tT walk(tT cons)
 	{
 		// System.out.println("walk:" + cons);
 
@@ -814,10 +834,10 @@ public class cREADTABLE extends cCELL implements tREADTABLE
 	 * @param obj
 	 * @return
 	 */
-	@Static(name = "%nsplice", doc = "02_df")
-	@Mac(prefix = ",.")
+	@aFunction(name = "%nsplice", doc = "02_df")
+	@aMac(prefix = ",.")
 	public static tT NSPLICE( //
-			@Rest(name = "obj") tT... obj)
+			@aRest(name = "obj") tT... obj)
 	{
 		throw new LispException(",. without `");
 	}
@@ -826,10 +846,10 @@ public class cREADTABLE extends cCELL implements tREADTABLE
 	 * @param obj
 	 * @return
 	 */
-	@Static(name = "%splice", doc = "02_df")
-	@Mac(prefix = ",@")
+	@aFunction(name = "%splice", doc = "02_df")
+	@aMac(prefix = ",@")
 	public static tT SPLICE( //
-			@Rest(name = "obj") tT... obj)
+			@aRest(name = "obj") tT... obj)
 	{
 		throw new LispException(",@ without `");
 	}
@@ -838,10 +858,10 @@ public class cREADTABLE extends cCELL implements tREADTABLE
 	 * @param obj
 	 * @return
 	 */
-	@Static(name = "%unquote", doc = "02_df")
-	@Mac(prefix = ",")
+	@aFunction(name = "%unquote", doc = "02_df")
+	@aMac(prefix = ",")
 	public static tT UNQUOTE( //
-			@Rest(name = "obj") tT... obj)
+			@aRest(name = "obj") tT... obj)
 	{
 		throw new LispException(", without `");
 	}

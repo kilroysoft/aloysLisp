@@ -3,7 +3,7 @@
  * <p>
  * A LISP interpreter, compiler and library.
  * <p>
- * Copyright (C) 2010 kilroySoft <aloyslisp@kilroysoft.ch>
+ * Copyright (C) 2010-2011 kilroySoft <aloyslisp@kilroysoft.ch>
  * 
  * <p>
  * This program is free software: you can redistribute it and/or modify it under
@@ -70,19 +70,35 @@ public abstract class cFUNCTION extends cAPI implements tFUNCTION
 		tENV closure = null;
 		tENV let = new cENV_LET();
 		let.ENV_PUSH();
+		if (!(special || macro))
+		{
+			args = API_EVAL_LIST((tLIST) args);
+		}
 		try
 		{
-			// e.ENV_DUMP();
+			// System.out.println("args avant API_PUSH_ENV : " + name + args);
+			if (name.equals("LOAD-PACKAGE"))
+			{
+				trace("");
+			}
 			args = API_PUSH_ENV(args, let);
+			// System.out.println("args apres API_PUSH_ENV : " + name + args);
 			if (!(special || macro))
 			{
+				let.ENV_POP();
 				closure = new cENV_CLOSURE(name, environment);
-				((cENV) closure).previous = ((cENV) let).previous;
-				((cENV) let).previous = closure;
-				e.topEnv = let;
+//				if (environment != null)
+//				{
+//					System.out.println(">ENV============================");
+//					environment.ENV_DUMP();
+//					System.out.println("<ENV============================");
+//				}
+				closure.ENV_PUSH();
+				let.ENV_PUSH();
 			}
 			// System.out.println("API-CALL :" + DESCRIBE() + "\nargs : " +
 			// args);
+			// e.ENV_DUMP();
 			res = API_CALL(args);
 		}
 		catch (RuntimeException e)

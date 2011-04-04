@@ -3,7 +3,7 @@
  * <p>
  * A LISP interpreter, compiler and library.
  * <p>
- * Copyright (C) 2010 kilroySoft <aloyslisp@kilroysoft.ch>
+ * Copyright (C) 2010-2011 kilroySoft <aloyslisp@kilroysoft.ch>
  * 
  * <p>
  * This program is free software: you can redistribute it and/or modify it under
@@ -24,10 +24,12 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 23 déc. 2010 Creation
+// IP 23 déc. 2010-2011 Creation
 // --------------------------------------------------------------------------
 
 package aloyslisp.core.math;
+
+import java.math.BigInteger;
 
 import aloyslisp.annotations.*;
 import aloyslisp.core.*;
@@ -40,9 +42,13 @@ import aloyslisp.core.clos.tBUILT_IN_CLASS;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-@Type(name = "number", doc = "t_number", typep = "numberp")
+@aType(name = "number", doc = "t_number", typep = "numberp")
 public interface tNUMBER extends tBUILT_IN_CLASS
 {
+	/****************************************************************
+	 * LISP FUNCTIONS
+	 */
+
 	/* *******************************************************************
 	 * CONVERTERS
 	 */
@@ -51,65 +57,103 @@ public interface tNUMBER extends tBUILT_IN_CLASS
 	 * 
 	 * @return
 	 */
-	abstract cRATIO getRatioValue();
-
-	/**
-	 * Convert to complex
-	 * 
-	 * @return
-	 */
-	abstract cCOMPLEX getComplexValue();
+	@aNonStandard
+	@aFunction(name = "coerce-to-ratio")
+	public tRATIO COERCE_TO_RATIO();
 
 	/**
 	 * Convert to integer
 	 * 
 	 * @return
 	 */
-	abstract cINTEGER getIntegerValue();
+	@aNonStandard
+	@aFunction(name = "coerce-to-integer")
+	public tINTEGER COERCE_TO_INTEGER();
 
 	/**
 	 * Convert to float
 	 * 
 	 * @return
 	 */
-	abstract cSINGLE_FLOAT getFloatValue();
+	@aNonStandard
+	@aFunction(name = "coerce-to-single-float")
+	public tSINGLE_FLOAT COERCE_TO_SINGLE_FLOAT();
 
 	/**
 	 * Convert to double
 	 * 
 	 * @return
 	 */
-	abstract cDOUBLE_FLOAT getDoubleValue();
+	@aNonStandard
+	@aFunction(name = "coerce-to-double-float")
+	public tDOUBLE_FLOAT COERCE_TO_DOUBLE_FLOAT();
 
 	/**
 	 * Convert to short
 	 * 
 	 * @return
 	 */
-	abstract cSHORT_FLOAT getShortValue();
+	@aNonStandard
+	@aFunction(name = "coerce-to-short-float")
+	public tSHORT_FLOAT COERCE_TO_SHORT_FLOAT();
+
+	/**
+	 * @return
+	 */
+	@aNonStandard
+	@aFunction(name = "coerce-to-complex")
+	public tNUMBER COERCE_TO_COMPLEX();
 
 	/**
 	 * @param var
 	 * @return
 	 */
-	abstract public cNUMBER coerce(tNUMBER var);
+	@aNonStandard
+	@aFunction(name = "coerce-to-number")
+	public tNUMBER COERCE_TO_NUMBER( //
+			@aArg(name = "var") tNUMBER var);
 
-	/****************************************************************
-	 * LISP FUNCTIONS
-	 */
-
-	/* *******************************************************************
-	 * OPERATORS
-	 */
 	/**
-	 * Test equality a == b
-	 * 
-	 * @param op
 	 * @return
 	 */
-	@Function(name = "=", doc = "f_eq_sle")
-	public boolean EQUALNUM( //
-			@Rest(name = "op") tT op);
+	@aNonStandard
+	@aFunction(name = "bigint-value")
+	public BigInteger BIGINT_VALUE();
+
+	/**
+	 * @return
+	 */
+	@aNonStandard
+	@aFunction(name = "integer-value")
+	public Integer INTEGER_VALUE();
+
+	/**
+	 * @return
+	 */
+	@aNonStandard
+	@aFunction(name = "long-value")
+	public Long LONG_VALUE();
+
+	/**
+	 * @return
+	 */
+	@aNonStandard
+	@aFunction(name = "double-value")
+	public Double DOUBLE_VALUE();
+
+	/**
+	 * @return
+	 */
+	@aNonStandard
+	@aFunction(name = "float-value")
+	public Float FLOAT_VALUE();
+
+	/**
+	 * @return
+	 */
+	@aNonStandard
+	@aFunction(name = "rationalize-value")
+	public tRATIONAL RATIONALIZE_VALUE();
 
 	/**
 	 * Add a + b
@@ -118,49 +162,10 @@ public interface tNUMBER extends tBUILT_IN_CLASS
 	 * @param b
 	 * @return
 	 */
-	@Function(name = "+", doc = "f_pl")
-	public tNUMBER ADD( //
-			@Rest(name = "op") tT op);
-
-	/**
-	 * Substract a - b
-	 * 
-	 * @param a
-	 * @param b
-	 * @return
-	 */
-	@Function(name = "-", doc = "f__")
-	public tNUMBER SUBSTRACT( //
-			@Rest(name = "op") tT op);
-
-	/**
-	 * Minus -a
-	 * 
-	 * @param a
-	 * @return
-	 */
-	@Function(name = "%minus")
-	public tNUMBER MINUS();
-
-	/**
-	 * Inversion 1/a
-	 * 
-	 * @param a
-	 * @return
-	 */
-	@Function(name = "%inversion")
-	public tNUMBER INVERSION();
-
-	/**
-	 * Multiply a * b
-	 * 
-	 * @param a
-	 * @param b
-	 * @return
-	 */
-	@Function(name = "*", doc = "f_st")
-	public tNUMBER MULTIPLY( //
-			@Rest(name = "op") tT op);
+	@aNonStandard
+	@aFunction(name = "single-add")
+	public tNUMBER SINGLE_ADD( //
+			@aArg(name = "op") tNUMBER op);
 
 	/**
 	 * Division a / b
@@ -169,9 +174,230 @@ public interface tNUMBER extends tBUILT_IN_CLASS
 	 * @param b
 	 * @return
 	 */
-	@Function(name = "/", doc = "f_sl")
+	@aNonStandard
+	@aFunction(name = "single-divition")
+	public tNUMBER SINGLE_DIVISION( //
+			@aArg(name = "op") tNUMBER op);
+
+	/**
+	 * Test equality a == b
+	 * 
+	 * @param op
+	 * @return
+	 */
+	@aNonStandard
+	@aFunction(name = "single-equalnum", doc = "f_eq_sle")
+	public boolean SINGLE_EQUALNUM( //
+			@aArg(name = "op") tNUMBER op);
+
+	/**
+	 * Multiply a * b
+	 * 
+	 * @param a
+	 * @param b
+	 * @return
+	 */
+	@aNonStandard
+	@aFunction(name = "single-multiply")
+	public abstract tNUMBER SINGLE_MULTIPLY( //
+			@aArg(name = "op") tNUMBER op);
+
+	/**
+	 * Substract a - b
+	 * 
+	 * @param a
+	 * @param b
+	 * @return
+	 */
+	@aNonStandard
+	@aFunction(name = "single-substract")
+	public tNUMBER SINGLE_SUBSTRACT( //
+			@aArg(name = "op") tNUMBER op);
+
+	/* *******************************************************************
+	 * FUNCTIONS
+	 */
+	/**
+	 * Absolute value ||a||, mod for complex
+	 * 
+	 * @return
+	 */
+	@aFunction(name = "abs", doc = "f_abs")
+	public tREAL ABS();
+
+	/**
+	 * @return
+	 */
+	@aFunction(name = "acos", doc = "f_asin_")
+	public tNUMBER ACOS();
+
+	/**
+	 * @return
+	 */
+	@aFunction(name = "acosh", doc = "f_sinh_")
+	public tNUMBER ACOSH();
+
+	/**
+	 * Add a + b
+	 * 
+	 * @param a
+	 * @param b
+	 * @return
+	 */
+	@aFunction(name = "+", doc = "f_pl")
+	public tNUMBER ADD( //
+			@aRest(name = "op") tT op);
+
+	/**
+	 * @return
+	 */
+	@aFunction(name = "asin", doc = "f_asin_")
+	public tNUMBER ASIN();
+
+	/**
+	 * @return
+	 */
+	@aFunction(name = "asinh", doc = "f_sinh_")
+	public tNUMBER ASINH();
+
+	/**
+	 * @param opt
+	 * @return
+	 */
+	@aFunction(name = "atan", doc = "f_asin_")
+	public tNUMBER ATAN( //
+			@aOpt(name = "opt") tT opt);
+
+	/**
+	 * @return
+	 */
+	@aFunction(name = "atanh", doc = "f_sinh_")
+	public tNUMBER ATANH();
+
+	/* *******************************************************************
+	 * FUNCTIONS cCOMPLEX
+	 */
+	/**
+	 * cCOMPLEX conjugate a + bi -> a - bi
+	 * 
+	 * @param a
+	 * @return
+	 */
+	@aFunction(name = "conjugate", doc = "f_conjug")
+	public tNUMBER CONJUGATE();
+
+	/**
+	 * @return
+	 */
+	@aFunction(name = "cos", doc = "f_sin_c")
+	public tNUMBER COS();
+
+	/**
+	 * @return
+	 */
+	@aFunction(name = "cosh", doc = "f_sinh_")
+	public tNUMBER COSH();
+
+	/**
+	 * Division a / b
+	 * 
+	 * @param a
+	 * @param b
+	 * @return
+	 */
+	@aFunction(name = "/", doc = "f_sl")
 	public tNUMBER DIVISION( //
-			@Rest(name = "op") tT op);
+			@aRest(name = "op") tT op);
+
+	/**
+	 * Test equality a == b
+	 * 
+	 * @param op
+	 * @return
+	 */
+	@aFunction(name = "=", doc = "f_eq_sle")
+	public boolean EQUALNUM( //
+			@aRest(name = "op") tT op);
+
+	/**
+	 * @return
+	 */
+	@aFunction(name = "exp", doc = "f_exp_e")
+	public tNUMBER EXP();
+
+	/**
+	 * @param power
+	 * @return
+	 */
+	@aFunction(name = "expt", doc = "f_exp_e")
+	public tNUMBER EXPT( //
+			@aArg(name = "power") tNUMBER power);
+
+	/**
+	 * Imaginary part (for complex) a + bi -> b
+	 * 
+	 * @param a
+	 * @return
+	 */
+	@aFunction(name = "imagpart", doc = "f_realpa")
+	public tNUMBER IMAGPART();
+
+	/**
+	 * Inversion 1/a
+	 * 
+	 * @param a
+	 * @return
+	 */
+	@aNonStandard
+	@aFunction(name = "%inversion")
+	public tNUMBER INVERSION();
+
+	/**
+	 * @return
+	 */
+	@aFunction(name = "log", doc = "f_log")
+	public tNUMBER LOG();
+
+	/**
+	 * log base n
+	 * 
+	 * @param base
+	 * @return
+	 */
+	@aNonStandard
+	@aFunction(name = "log-base")
+	tNUMBER LOG_BASE( //
+			@aArg(name = "base") tREAL base);
+
+	/**
+	 * Minus -a
+	 * 
+	 * @param a
+	 * @return
+	 */
+	@aNonStandard
+	@aFunction(name = "%minus")
+	public tNUMBER MINUS();
+
+	/**
+	 * Multiply a * b
+	 * 
+	 * @param a
+	 * @param b
+	 * @return
+	 */
+	@aFunction(name = "*", doc = "f_st")
+	public tNUMBER MULTIPLY( //
+			@aRest(name = "op") tT op);
+
+	/**
+	 * Polar value (for complex)
+	 * 
+	 * @param a
+	 * @return
+	 */
+	@aFunction(name = "phase", doc = "f_phase")
+	public tNUMBER PHASE();
 
 	/* *******************************************************************
 	 * ACCESSORS
@@ -183,154 +409,54 @@ public interface tNUMBER extends tBUILT_IN_CLASS
 	 * @param a
 	 * @return
 	 */
-	@Function(name = "realpart", doc = "f_realpa")
+	@aFunction(name = "realpart", doc = "f_realpa")
 	public tNUMBER REALPART();
 
 	/**
-	 * Imaginary part (for complex) a + bi -> b
-	 * 
-	 * @param a
 	 * @return
 	 */
-	@Function(name = "imagpart", doc = "f_realpa")
-	public tNUMBER IMAGPART();
-
-	/* *******************************************************************
-	 * FUNCTIONS cCOMPLEX
-	 */
-	/**
-	 * cCOMPLEX conjugate a + bi -> a - bi
-	 * 
-	 * @param a
-	 * @return
-	 */
-	@Function(name = "conjugate", doc = "f_conjug")
-	public tNUMBER CONJUGATE();
-
-	/**
-	 * Polar value (for complex)
-	 * 
-	 * @param a
-	 * @return
-	 */
-	@Function(name = "phase", doc = "f_phase")
-	public tNUMBER PHASE();
-
-	/* *******************************************************************
-	 * FUNCTIONS
-	 */
-	/**
-	 * Absolute value ||a||, mod for complex
-	 * 
-	 * @return
-	 */
-	@Function(name = "abs", doc = "f_abs")
-	public tREAL ABS();
-
-	/**
-	 * @return
-	 */
-	@Function(name = "zerop", doc = "f_zerop")
-	public boolean ZEROP();
-
-	/**
-	 * @return
-	 */
-	@Function(name = "sin", doc = "f_sin_c")
+	@aFunction(name = "sin", doc = "f_sin_c")
 	public tNUMBER SIN();
 
 	/**
 	 * @return
 	 */
-	@Function(name = "cos", doc = "f_sin_c")
-	public tNUMBER COS();
-
-	/**
-	 * @return
-	 */
-	@Function(name = "tan", doc = "f_sin_c")
-	public tNUMBER TAN();
-
-	/**
-	 * @return
-	 */
-	@Function(name = "asin", doc = "f_asin_")
-	public tNUMBER ASIN();
-
-	/**
-	 * @return
-	 */
-	@Function(name = "acos", doc = "f_asin_")
-	public tNUMBER ACOS();
-
-	/**
-	 * @param opt
-	 * @return
-	 */
-	@Function(name = "atan", doc = "f_asin_")
-	public tNUMBER ATAN( //
-			@Opt(name = "opt") tT opt);
-
-	/**
-	 * @return
-	 */
-	@Function(name = "sinh", doc = "f_sinh_")
+	@aFunction(name = "sinh", doc = "f_sinh_")
 	public tNUMBER SINH();
 
 	/**
 	 * @return
 	 */
-	@Function(name = "cosh", doc = "f_sinh_")
-	public tNUMBER COSH();
+	@aFunction(name = "sqrt", doc = "f_sqrt_")
+	public tNUMBER SQRT();
+
+	/**
+	 * Substract a - b
+	 * 
+	 * @param a
+	 * @param b
+	 * @return
+	 */
+	@aFunction(name = "-", doc = "f__")
+	public tNUMBER SUBSTRACT( //
+			@aRest(name = "op") tT op);
 
 	/**
 	 * @return
 	 */
-	@Function(name = "tanh", doc = "f_sinh_")
+	@aFunction(name = "tan", doc = "f_sin_c")
+	public tNUMBER TAN();
+
+	/**
+	 * @return
+	 */
+	@aFunction(name = "tanh", doc = "f_sinh_")
 	public tNUMBER TANH();
 
 	/**
 	 * @return
 	 */
-	@Function(name = "asinh", doc = "f_sinh_")
-	public tNUMBER ASINH();
-
-	/**
-	 * @return
-	 */
-	@Function(name = "acosh", doc = "f_sinh_")
-	public tNUMBER ACOSH();
-
-	/**
-	 * @return
-	 */
-	@Function(name = "atanh", doc = "f_sinh_")
-	public tNUMBER ATANH();
-
-	/**
-	 * @return
-	 */
-	@Function(name = "log", doc = "f_log")
-	public tNUMBER LOG();
-
-	/**
-	 * @return
-	 */
-	@Function(name = "sqrt", doc = "f_sqrt_")
-	public tNUMBER SQRT();
-
-	/**
-	 * @return
-	 */
-	@Function(name = "exp", doc = "f_exp_e")
-	public tNUMBER EXP();
-
-	/**
-	 * @param power
-	 * @return
-	 */
-	@Function(name = "expt", doc = "f_exp_e")
-	public tNUMBER EXPT( //
-			@Arg(name = "power") tNUMBER power);
+	@aFunction(name = "zerop", doc = "f_zerop")
+	public boolean ZEROP();
 
 }

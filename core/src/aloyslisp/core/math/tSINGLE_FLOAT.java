@@ -3,7 +3,7 @@
  * <p>
  * A LISP interpreter, compiler and library.
  * <p>
- * Copyright (C) 2010 kilroySoft <aloyslisp@kilroysoft.ch>
+ * Copyright (C) 2010-2011 kilroySoft <aloyslisp@kilroysoft.ch>
  * 
  * <p>
  * This program is free software: you can redistribute it and/or modify it under
@@ -24,12 +24,12 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 28 déc. 2010 Creation
+// IP 28 déc. 2010-2011 Creation
 // --------------------------------------------------------------------------
 
 package aloyslisp.core.math;
 
-import aloyslisp.annotations.Type;
+import aloyslisp.annotations.aType;
 
 /**
  * tSINGLE_FLOAT
@@ -38,7 +38,7 @@ import aloyslisp.annotations.Type;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-@Type(name = "single-float", doc = "t_short", typep = "single-float-p")
+@aType(name = "single-float", doc = "t_short", typep = "single-float-p")
 public interface tSINGLE_FLOAT extends tFLOAT
 {
 

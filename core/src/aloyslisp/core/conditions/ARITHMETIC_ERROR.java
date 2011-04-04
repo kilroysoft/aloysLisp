@@ -3,7 +3,7 @@
  * <p>
  * A LISP interpreter, compiler and library.
  * <p>
- * Copyright (C) 2010 kilroySoft <aloyslisp@kilroysoft.ch>
+ * Copyright (C) 2010-2011 kilroySoft <aloyslisp@kilroysoft.ch>
  * 
  * <p>
  * This program is free software: you can redistribute it and/or modify it under
@@ -24,7 +24,7 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 29 déc. 2010 Creation
+// IP 29 déc. 2010-2011 Creation
 // --------------------------------------------------------------------------
 
 package aloyslisp.core.conditions;
@@ -39,8 +39,8 @@ import aloyslisp.core.tT;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-@Type(name = "arithmetic-error", doc = "e_arithm")
-@BuiltIn(classOf = "arithmetic-error", doc = "e_arithm")
+@aType(name = "arithmetic-error", doc = "e_arithm")
+@aBuiltIn(lispClass = "arithmetic-error", doc = "e_arithm")
 public class ARITHMETIC_ERROR extends ERROR
 {
 	private static final long	serialVersionUID	= 1L;

@@ -3,7 +3,7 @@
  * <p>
  * A LISP interpreter, compiler and library.
  * <p>
- * Copyright (C) 2010 kilroySoft <aloyslisp@kilroysoft.ch>
+ * Copyright (C) 2010-2011 kilroySoft <aloyslisp@kilroysoft.ch>
  * 
  * <p>
  * This program is free software: you can redistribute it and/or modify it under
@@ -24,7 +24,7 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 11 sept. 2010 Creation
+// IP 11 sept. 2010-2011 Creation
 // IP UB19 Update commentaries
 // --------------------------------------------------------------------------
 
@@ -46,7 +46,7 @@ import static aloyslisp.core.L.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-@BuiltIn(classOf = "cons", doc = "t_cons")
+@aBuiltIn(lispClass = "cons", doc = "t_cons")
 public class cCONS extends cCELL implements tCONS
 {
 	/**
@@ -212,9 +212,9 @@ public class cCONS extends cCELL implements tCONS
 	 * @param list
 	 * @return
 	 */
-	@Static(name = "list", doc = "f_list")
+	@aFunction(name = "list", doc = "f_list")
 	public static tLIST LIST( //
-			@Rest(name = "list") Object... list)
+			@aRest(name = "list") Object... list)
 	{
 		if (list.length == 0)
 			return NIL;
@@ -226,10 +226,10 @@ public class cCONS extends cCELL implements tCONS
 	 * @param cdr
 	 * @return
 	 */
-	@Static(name = "cons", doc = "f_cons")
+	@aFunction(name = "cons", doc = "f_cons")
 	public static tLIST CONS( //
-			@Arg(name = "car") tT car, //
-			@Arg(name = "cdr") tT cdr)
+			@aArg(name = "car") tT car, //
+			@aArg(name = "cdr") tT cdr)
 	{
 		return new cCONS(car, cdr);
 	}
@@ -311,7 +311,7 @@ public class cCONS extends cCELL implements tCONS
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.cCELL#printable()
 	 */
-	public String toString()
+	public String TO_STRING()
 	{
 		tT func = CAR();
 		String mac = null;
@@ -333,7 +333,7 @@ public class cCONS extends cCELL implements tCONS
 			res += sep;
 			sep = " ";
 			tT car = walk.CAR();
-			res += car == null ? "*(null)*" : car.toString();
+			res += car == null ? "*(null)*" : car.TO_STRING();
 
 			walk = walk.CDR();
 		}
@@ -342,7 +342,7 @@ public class cCONS extends cCELL implements tCONS
 		if (!(walk instanceof cNULL))
 		{
 			res += " . ";
-			res += walk.toString();
+			res += walk.TO_STRING();
 		}
 
 		if (mac == null)
@@ -595,9 +595,9 @@ public class cCONS extends cCELL implements tCONS
 	 * @see aloyslisp.core.tT#hashCode()
 	 */
 	@Override
-	public int hashCode()
+	public Integer SXHASH()
 	{
-		return car.hashCode() ^ cdr.hashCode();
+		return car.SXHASH() ^ cdr.SXHASH();
 	}
 
 }

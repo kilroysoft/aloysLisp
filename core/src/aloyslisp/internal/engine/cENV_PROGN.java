@@ -3,7 +3,7 @@
  * <p>
  * A LISP interpreter, compiler and library.
  * <p>
- * Copyright (C) 2010 kilroySoft <aloyslisp@kilroysoft.ch>
+ * Copyright (C) 2010-2011 kilroySoft <aloyslisp@kilroysoft.ch>
  * 
  * <p>
  * This program is free software: you can redistribute it and/or modify it under
@@ -41,7 +41,7 @@ import static aloyslisp.core.L.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class cENV_PROGN extends cENV
+public class cENV_PROGN extends cENV implements tENV_PROGN
 {
 	protected tLIST	blocks	= NIL;
 
@@ -56,11 +56,11 @@ public class cENV_PROGN extends cENV
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.cCELL#toString()
+	 * @see aloyslisp.core.cCELL#TO_STRING()
 	 */
-	public String toString()
+	public String TO_STRING()
 	{
-		return ("#<ENV-PROGN " + ip.toString() + ">");
+		return ("#<ENV-PROGN " + ip.TO_STRING() + ">");
 	}
 
 	/*
@@ -97,7 +97,7 @@ public class cENV_PROGN extends cENV
 	 * (non-Javadoc)
 	 * @see aloyslisp.internal.engine.tENV#ENV_NEXT_STEP()
 	 */
-	protected tLIST ENV_NEXT_STEP()
+	public tLIST ENV_NEXT_STEP()
 	{
 		if (!(ip.CDR() instanceof tLIST))
 			throw new LispException("BLOCK code is not a list : " + blocks);

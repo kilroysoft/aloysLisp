@@ -3,7 +3,7 @@
  * <p>
  * A LISP interpreter, compiler and library.
  * <p>
- * Copyright (C) 2010 kilroySoft <aloyslisp@kilroysoft.ch>
+ * Copyright (C) 2010-2011 kilroySoft <aloyslisp@kilroysoft.ch>
  * 
  * <p>
  * This program is free software: you can redistribute it and/or modify it under
@@ -24,13 +24,12 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 28 déc. 2010 Creation
+// IP 28 déc. 2010-2011 Creation
 // --------------------------------------------------------------------------
 
 package aloyslisp.core.math;
 
-import aloyslisp.core.tT;
-import aloyslisp.core.conditions.LispException;
+import aloyslisp.core.conditions.*;
 
 /**
  * cFLOAT
@@ -43,142 +42,20 @@ public abstract class cFLOAT extends cREAL implements tFLOAT
 {
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#ratioValue()
+	 * @see aloyslisp.core.math.tNUMBER#COERCE_TO_INTEGER()
 	 */
-	@Override
-	public cRATIO getRatioValue()
-	{
-		throw new LispException("Cannot coerce cFLOAT to cRATIO");
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#ratioValue()
-	 */
-	@Override
-	public cINTEGER getIntegerValue()
+	public tINTEGER COERCE_TO_INTEGER()
 	{
 		throw new LispException("Cannot coerce cFLOAT to cINTEGER");
 	}
 
-	/**
-	 * @param f
-	 * @return
-	 */
-	abstract tT[] decode_float();
-
-	/**
-	 * @param f
-	 * @return
-	 */
-	abstract tT[] integer_decode_float();
-
-	/**
-	 * @param f
-	 * @param scale
-	 * @return
-	 */
-	abstract tFLOAT scale_float( //
-			tINTEGER scale);
-
-	/**
-	 * @param f
-	 * @return
-	 */
-	abstract tFLOAT float_radix();
-
-	/**
-	 * @param f
-	 * @param f2
-	 * @return
-	 */
-	abstract tFLOAT float_sign(tFLOAT f2);
-
-	/**
-	 * @param f
-	 * @return
-	 */
-	abstract tINTEGER float_digits();
-
-	/**
-	 * @param f
-	 * @return
-	 */
-	abstract tINTEGER float_precision();
-
 	/*
 	 * (non-Javadoc)
-	 * @see
-	 * aloyslisp.core.math.tFLOAT#INTEGER_DECODE_FLOAT(aloyslisp.core.math.tFLOAT
-	 * )
+	 * @see aloyslisp.core.math.tNUMBER#COERCE_TO_RATIO()
 	 */
-	@Override
-	public tT[] INTEGER_DECODE_FLOAT()
+	public tRATIO COERCE_TO_RATIO()
 	{
-		return integer_decode_float();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tFLOAT#SCALE_FLOAT(aloyslisp.core.math.tFLOAT,
-	 * aloyslisp.core.math.tINTEGER)
-	 */
-	@Override
-	public tFLOAT SCALE_FLOAT(tINTEGER scale)
-	{
-		return scale_float(scale);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tFLOAT#FLOAT_RADIX(aloyslisp.core.math.tFLOAT)
-	 */
-	@Override
-	public tFLOAT FLOAT_RADIX()
-	{
-		return float_radix();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tFLOAT#FLOAT_SIGN(aloyslisp.core.math.tFLOAT,
-	 * aloyslisp.core.math.tFLOAT)
-	 */
-	@Override
-	public tFLOAT FLOAT_SIGN(tFLOAT f2)
-	{
-		return float_sign(f2);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tFLOAT#FLOAT_DIGITS(aloyslisp.core.math.tFLOAT)
-	 */
-	@Override
-	public tINTEGER FLOAT_DIGITS()
-	{
-		return float_digits();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see
-	 * aloyslisp.core.math.tFLOAT#FLOAT_PRECISION(aloyslisp.core.math.tFLOAT)
-	 */
-	@Override
-	public tINTEGER FLOAT_PRECISION()
-	{
-		return float_precision();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tFLOAT#DECODE_FLOAT()
-	 */
-	@Override
-	public tT[] DECODE_FLOAT()
-	{
-		return decode_float();
+		throw new LispException("Cannot coerce cFLOAT to cRATIO");
 	}
 
 }

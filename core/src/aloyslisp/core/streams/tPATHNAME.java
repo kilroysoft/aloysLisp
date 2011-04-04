@@ -3,7 +3,7 @@
  * <p>
  * A LISP interpreter, compiler and library.
  * <p>
- * Copyright (C) 2010 kilroySoft <aloyslisp@kilroysoft.ch>
+ * Copyright (C) 2010-2011 kilroySoft <aloyslisp@kilroysoft.ch>
  * 
  * <p>
  * This program is free software: you can redistribute it and/or modify it under
@@ -24,14 +24,17 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 16 déc. 2010 Creation
+// IP 16 déc. 2010-2011 Creation
 // --------------------------------------------------------------------------
 
 package aloyslisp.core.streams;
 
+import java.io.File;
+
 import aloyslisp.annotations.*;
 import aloyslisp.core.*;
 import aloyslisp.core.clos.*;
+import aloyslisp.core.designators.tPATHNAME_DESIGNATOR;
 import aloyslisp.core.sequences.*;
 
 /**
@@ -44,48 +47,66 @@ import aloyslisp.core.sequences.*;
 public interface tPATHNAME extends tBUILT_IN_CLASS, tPATHNAME_DESIGNATOR
 {
 	/**
+	 * @return
+	 */
+	public File getFile();
+
+	/**
+	 * @return Path as string
+	 */
+	@aFunction(name = "namestring", doc = "f_namest")
+	public String NAMESTRING();
+
+	/**
 	 * @return Pathnames list
 	 */
-	@Function(name = "directory", doc = "f_dir")
-	@BaseArg(name = "path", type = tPATHNAME_DESIGNATOR.class)
+	@aFunction(name = "directory", doc = "f_dir")
+	@aBaseArg(name = "path", type = tPATHNAME_DESIGNATOR.class)
 	public tLIST DIRECTORY();
 
 	/**
 	 * @return pathname or NIL
 	 */
-	@Function(name = "probe-file", doc = "f_probe")
-	@BaseArg(name = "path", type = tPATHNAME_DESIGNATOR.class)
+	@aFunction(name = "probe-file", doc = "f_probe")
+	@aBaseArg(name = "path", type = tPATHNAME_DESIGNATOR.class)
 	public tT PROBE_FILE();
 
 	/**
 	 * @return pathspec, created
 	 */
-	@Function(name = "ensure-directories-exist", doc = "f_ensu_1")
-	@Key(keys = "(verbose)")
-	@BaseArg(name = "path", type = tPATHNAME_DESIGNATOR.class)
+	@aFunction(name = "ensure-directories-exist", doc = "f_ensu_1")
+	@aKey(keys = "(verbose)")
+	@aBaseArg(name = "path", type = tPATHNAME_DESIGNATOR.class)
 	public tT[] ENSURE_DIRECTORIES_EXIST();
 
 	/**
 	 * @return pathname
 	 */
-	@Function(name = "truename", doc = "f_tn")
-	@BaseArg(name = "path", type = tPATHNAME_DESIGNATOR.class)
+	@aFunction(name = "truename", doc = "f_tn")
+	@aBaseArg(name = "path", type = tPATHNAME_DESIGNATOR.class)
 	public tPATHNAME TRUENAME();
 
 	/**
 	 * @return author name or nil
 	 */
-	@Function(name = "file-author", doc = "f_file_a")
-	@BaseArg(name = "path", type = tPATHNAME_DESIGNATOR.class)
+	@aFunction(name = "file-author", doc = "f_file_a")
+	@aBaseArg(name = "path", type = tPATHNAME_DESIGNATOR.class)
 	public tT FILE_AUTHOR();
 
 	/**
-	 * @return date in universal time or nil
+	 * @return defaulted-new-name, old-truename, new-truename
 	 */
-	@Function(name = "rename-file", doc = "f_rn_file")
-	@BaseArg(name = "path", type = tPATHNAME_DESIGNATOR.class)
-	public tT FILE_WRITE_DATE( //
-			@Arg(name = "new-file") tPATHNAME_DESIGNATOR newFile //
+	@aFunction(name = "rename-file", doc = "f_rn_fil")
+	@aBaseArg(name = "path", type = tPATHNAME_DESIGNATOR.class)
+	public tT[] RENAME_FILE( //
+			@aArg(name = "new-file") tPATHNAME_DESIGNATOR newFile //
 	);
+
+	/**
+	 * @return T or error
+	 */
+	@aFunction(name = "delete-file", doc = "f_del_fi")
+	@aBaseArg(name = "path", type = tPATHNAME_DESIGNATOR.class)
+	public tT DELETE_FILE();
 
 }

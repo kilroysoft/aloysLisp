@@ -3,7 +3,7 @@
  * <p>
  * A LISP interpreter, compiler and library.
  * <p>
- * Copyright (C) 2010 kilroySoft <aloyslisp@kilroysoft.ch>
+ * Copyright (C) 2010-2011 kilroySoft <aloyslisp@kilroysoft.ch>
  * 
  * <p>
  * This program is free software: you can redistribute it and/or modify it under
@@ -24,7 +24,7 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 9 oct. 2010 Creation
+// IP 9 oct. 2010-2011 Creation
 // IMPLEMENTS Tout à faire pour HashTable
 // --------------------------------------------------------------------------
 
@@ -45,7 +45,7 @@ import static aloyslisp.core.L.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-@BuiltIn(classOf = "hash-table", doc = "t_hash_t")
+@aBuiltIn(lispClass = "hash-table", doc = "t_hash_t")
 public class cHASH_TABLE extends cCELL implements tHASH_TABLE
 {
 	private LinkedHashMap<tT, tT>	table		= new LinkedHashMap<tT, tT>();
@@ -63,14 +63,14 @@ public class cHASH_TABLE extends cCELL implements tHASH_TABLE
 	 */
 	public cHASH_TABLE(tFUNCTION test, tINTEGER size, tFLOAT load)
 	{
-		table = new LinkedHashMap<tT, tT>(((cINTEGER) size).integerValue(),
-				((cSINGLE_FLOAT) ((cFLOAT) load).getFloatValue()).value);
+		table = new LinkedHashMap<tT, tT>(((cINTEGER) size).INTEGER_VALUE(),
+				((cSINGLE_FLOAT) ((cFLOAT) load).COERCE_TO_SINGLE_FLOAT()).value);
 		this.test = test;
 		this.size = size;
 		thresHold = load;
 	}
 
-	public String toString()
+	public String TO_STRING()
 	{
 		return "#<HASH-TABLE " + list(table.keySet().toArray()) + " >";
 	}
@@ -82,9 +82,9 @@ public class cHASH_TABLE extends cCELL implements tHASH_TABLE
 	 * @param rehashThreshold
 	 * @return
 	 */
-	@Static(name = "make-hash-table", doc = "f_mk_has")
-	@Key(keys = "((test (function eql))(size 11)(rehash-size 11)(rehash-threshold))")
-	static public tHASH_TABLE MAKE_HASH_TABLE()
+	@aFunction(name = "make-hash-table", doc = "f_mk_has")
+	//@aKey(keys = "((test (function eql))(size 11)(rehash-size 11) rehash-threshold)")
+	public static tHASH_TABLE MAKE_HASH_TABLE()
 	{
 		tT test = null; // (tFUNCTION) arg("test", tT.class);
 		if (!(test instanceof tFUNCTION))

@@ -3,7 +3,7 @@
  * <p>
  * A LISP interpreter, compiler and library.
  * <p>
- * Copyright (C) 2010 kilroySoft <aloyslisp@kilroysoft.ch>
+ * Copyright (C) 2010-2011 kilroySoft <aloyslisp@kilroysoft.ch>
  * 
  * <p>
  * This program is free software: you can redistribute it and/or modify it under
@@ -24,12 +24,12 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 27 oct. 2010 Creation
+// IP 27 oct. 2010-2011 Creation
 // --------------------------------------------------------------------------
 
 package aloyslisp.core.functions;
 
-import aloyslisp.annotations.BuiltIn;
+import aloyslisp.annotations.aBuiltIn;
 import aloyslisp.core.*;
 import aloyslisp.core.packages.tSYMBOL;
 import aloyslisp.core.sequences.*;
@@ -45,7 +45,7 @@ import static aloyslisp.core.L.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-@BuiltIn(classOf = "function", typeOf = "lambda-function", doc = "03_a")
+@aBuiltIn(lispClass = "function", lispType = "lambda-function", doc = "03_a")
 public class cLAMBDA_FUNCTION extends cFUNCTION implements tLAMBDA_FUNCTION
 {
 	/**
@@ -112,10 +112,10 @@ public class cLAMBDA_FUNCTION extends cFUNCTION implements tLAMBDA_FUNCTION
 	 */
 	public String DESCRIBE()
 	{
-		return "#<API-LAMBDA " + name + "" + API_ARGS() + "" + func + " "
+		return "#<LAMBDA-FUNCTION " + name + "" + API_ARGS() + "" + func + " "
 				+ basePos + " #<SPECIAL " + (special ? T : NIL) + "> #<MACRO "
-				+ (macro ? T : NIL) + "> " + "> #<ENV " + environment + ">"
-				+ ">";
+				+ (macro ? T : NIL) + "> " + "> #<ENV "
+				+ environment.ENV_DUMP() + ">" + ">";
 	}
 
 }

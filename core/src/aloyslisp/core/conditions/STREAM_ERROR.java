@@ -3,7 +3,7 @@
  * <p>
  * A LISP interpreter, compiler and library.
  * <p>
- * Copyright (C) 2010 kilroySoft <aloyslisp@kilroysoft.ch>
+ * Copyright (C) 2010-2011 kilroySoft <aloyslisp@kilroysoft.ch>
  * 
  * <p>
  * This program is free software: you can redistribute it and/or modify it under
@@ -24,13 +24,13 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 29 déc. 2010 Creation
+// IP 29 déc. 2010-2011 Creation
 // --------------------------------------------------------------------------
 
 package aloyslisp.core.conditions;
 
-import aloyslisp.annotations.BuiltIn;
-import aloyslisp.annotations.Type;
+import aloyslisp.annotations.aBuiltIn;
+import aloyslisp.annotations.aType;
 import aloyslisp.core.streams.tSTREAM;
 
 /**
@@ -40,8 +40,8 @@ import aloyslisp.core.streams.tSTREAM;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-@Type(name = "stream-error", doc = "e_stm_er")
-@BuiltIn(classOf = "stream-error", doc = "e_stm_er")
+@aType(name = "stream-error", doc = "e_stm_er")
+@aBuiltIn(lispClass = "stream-error", doc = "e_stm_er")
 public class STREAM_ERROR extends ERROR
 {
 	private static final long	serialVersionUID	= 1L;

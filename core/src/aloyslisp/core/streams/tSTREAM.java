@@ -3,7 +3,7 @@
  * <p>
  * A LISP interpreter, compiler and library.
  * <p>
- * Copyright (C) 2010 kilroySoft <aloyslisp@kilroysoft.ch>
+ * Copyright (C) 2010-2011 kilroySoft <aloyslisp@kilroysoft.ch>
  * 
  * <p>
  * This program is free software: you can redistribute it and/or modify it under
@@ -24,7 +24,7 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 16 sept. 2010 Creation
+// IP 16 sept. 2010-2011 Creation
 // --------------------------------------------------------------------------
 
 package aloyslisp.core.streams;
@@ -48,21 +48,21 @@ public interface tSTREAM extends tBUILT_IN_CLASS
 	/**
 	 * @return
 	 */
-	@Function(name = "open-stream-p", doc = "f_open_s")
+	@aFunction(name = "open-stream-p", doc = "f_open_s")
 	public Boolean OPEN_STREAM_P();
 
 	/**
 	 * @param stream
 	 * @return
 	 */
-	@Function(name = "close", doc = "f_close")
-	@Key(keys = "(abort)")
+	@aFunction(name = "close", doc = "f_close")
+	@aKey(keys = "(abort)")
 	public Boolean CLOSE();
 
 	/**
 	 * @return
 	 */
-	@Function(name = "stream-element-type", doc = "f_stm_el")
+	@aFunction(name = "stream-element-type", doc = "f_stm_el")
 	public tT STREAM_ELEMENT_TYPE();
 
 	/**
@@ -73,12 +73,12 @@ public interface tSTREAM extends tBUILT_IN_CLASS
 	 * @return
 	 * @throws END_OF_FILE
 	 */
-	@Function(name = "read", doc = "f_rd_rd")
-	@BaseArg(name = "input-stream", pos = 0, type = Opt.class, def = "*standard-input*")
+	@aFunction(name = "read", doc = "f_rd_rd")
+	@aBaseArg(name = "input-stream", pos = 0, type = aOpt.class, def = "*standard-input*")
 	public tT READ( //
-			@Opt(name = "eof-error-p", def = "t") Boolean eofErrorP, //
-			@Opt(name = "eof-value", def = "nil") tT eofValue, //
-			@Opt(name = "recursive-p", def = "nil") Boolean recursiveP)
+			@aOpt(name = "eof-error-p", def = "t") Boolean eofErrorP, //
+			@aOpt(name = "eof-value", def = "nil") tT eofValue, //
+			@aOpt(name = "recursive-p", def = "nil") Boolean recursiveP)
 			throws END_OF_FILE;
 
 	/**
@@ -89,12 +89,12 @@ public interface tSTREAM extends tBUILT_IN_CLASS
 	 * @return
 	 * @throws END_OF_FILE
 	 */
-	@Function(name = "read-char", doc = "f_rd_cha")
-	@BaseArg(name = "input-stream", pos = 0, type = Opt.class, def = "*standard-input*")
+	@aFunction(name = "read-char", doc = "f_rd_cha")
+	@aBaseArg(name = "input-stream", pos = 0, type = aOpt.class, def = "*standard-input*")
 	public Character READ_CHAR( //
-			@Opt(name = "eof-error-p", def = "t") Boolean eofErrorP, //
-			@Opt(name = "eof-value", def = "nil") tT eofValue, //
-			@Opt(name = "recursive-p", def = "nil") Boolean recursiveP)
+			@aOpt(name = "eof-error-p", def = "t") Boolean eofErrorP, //
+			@aOpt(name = "eof-value", def = "nil") tT eofValue, //
+			@aOpt(name = "recursive-p", def = "nil") Boolean recursiveP)
 			throws END_OF_FILE;
 
 	/**
@@ -106,12 +106,12 @@ public interface tSTREAM extends tBUILT_IN_CLASS
 	 * @return
 	 * @throws END_OF_FILE
 	 */
-	@Function(name = "peek-char", doc = "f_peek_c")
-	@BaseArg(name = "input-stream", pos = 1, type = Opt.class, def = "*standard-input*")
-	public Character PEEK_CHAR(@Arg(name = "peek-type") tT peekType, //
-			@Opt(name = "eof-error-p", def = "t") Boolean eofErrorP, //
-			@Opt(name = "eof-value", def = "nil") tT eofValue, //
-			@Opt(name = "recursive-p", def = "nil") Boolean recursiveP)
+	@aFunction(name = "peek-char", doc = "f_peek_c")
+	@aBaseArg(name = "input-stream", pos = 1, type = aOpt.class, def = "*standard-input*")
+	public Character PEEK_CHAR(@aArg(name = "peek-type") tT peekType, //
+			@aOpt(name = "eof-error-p", def = "t") Boolean eofErrorP, //
+			@aOpt(name = "eof-value", def = "nil") tT eofValue, //
+			@aOpt(name = "recursive-p", def = "nil") Boolean recursiveP)
 			throws END_OF_FILE;
 
 	/**
@@ -119,25 +119,25 @@ public interface tSTREAM extends tBUILT_IN_CLASS
 	 * @param car
 	 * @return
 	 */
-	@Function(name = "unread-char", doc = "f_undr_c")
-	@BaseArg(name = "input-stream", pos = 1, type = Opt.class, def = "*standard-input*")
+	@aFunction(name = "unread-char", doc = "f_undr_c")
+	@aBaseArg(name = "input-stream", pos = 1, type = aOpt.class, def = "*standard-input*")
 	public Character UNREAD_CHAR( //
-			@Arg(name = "character") Character character);
+			@aArg(name = "character") Character character);
 
 	/**
 	 * @param stream
 	 * @return
 	 */
-	@Function(name = "listen", doc = "f_listen")
-	@BaseArg(name = "input-stream", pos = 0, type = Opt.class, def = "*standard-input*")
+	@aFunction(name = "listen", doc = "f_listen")
+	@aBaseArg(name = "input-stream", pos = 0, type = aOpt.class, def = "*standard-input*")
 	public boolean LISTEN();
 
 	/**
 	 * @param stream
 	 * @return
 	 */
-	@Function(name = "clear-input", doc = "f_clear_")
-	@BaseArg(name = "input-stream", pos = 0, type = Opt.class, def = "*standard-input*")
+	@aFunction(name = "clear-input", doc = "f_clear_")
+	@aBaseArg(name = "input-stream", pos = 0, type = aOpt.class, def = "*standard-input*")
 	public tT CLEAR_INPUT();
 
 	/**
@@ -148,12 +148,12 @@ public interface tSTREAM extends tBUILT_IN_CLASS
 	 * @return
 	 * @throws END_OF_FILE
 	 */
-	@Function(name = "read-byte", doc = "f_rd_by")
-	@BaseArg(name = "input-stream", pos = 0, type = Opt.class, def = "*standard-input*")
+	@aFunction(name = "read-byte", doc = "f_rd_by")
+	@aBaseArg(name = "input-stream", pos = 0, type = aOpt.class, def = "*standard-input*")
 	public Integer READ_BYTE(
-			@Opt(name = "eof-error-p", def = "t") Boolean eofErrorP, //
-			@Opt(name = "eof-value", def = "nil") tT eofValue, //
-			@Opt(name = "recursive-p", def = "nil") Boolean recursiveP)
+			@aOpt(name = "eof-error-p", def = "t") Boolean eofErrorP, //
+			@aOpt(name = "eof-value", def = "nil") tT eofValue, //
+			@aOpt(name = "recursive-p", def = "nil") Boolean recursiveP)
 			throws END_OF_FILE;
 
 	/**
@@ -164,12 +164,12 @@ public interface tSTREAM extends tBUILT_IN_CLASS
 	 * @return
 	 * @throws END_OF_FILE
 	 */
-	@Function(name = "read-char-no-hang", doc = "f_rd_c_1")
-	@BaseArg(name = "input-stream", pos = 0, type = Opt.class, def = "*standard-input*")
+	@aFunction(name = "read-char-no-hang", doc = "f_rd_c_1")
+	@aBaseArg(name = "input-stream", pos = 0, type = aOpt.class, def = "*standard-input*")
 	public Character READ_CHAR_NO_HANG(
-			@Opt(name = "eof-error-p", def = "t") Boolean eofErrorP, //
-			@Opt(name = "eof-value", def = "nil") tT eofValue, //
-			@Opt(name = "recursive-p", def = "nil") Boolean recursiveP)
+			@aOpt(name = "eof-error-p", def = "t") Boolean eofErrorP, //
+			@aOpt(name = "eof-value", def = "nil") tT eofValue, //
+			@aOpt(name = "recursive-p", def = "nil") Boolean recursiveP)
 			throws END_OF_FILE;
 
 	/**
@@ -179,12 +179,12 @@ public interface tSTREAM extends tBUILT_IN_CLASS
 	 * @param end
 	 * @return
 	 */
-	@Function(name = "read-sequence", doc = "f_rd_seq")
-	@BaseArg(name = "input-stream", pos = 1, type = Opt.class, def = "*standard-input*")
+	@aFunction(name = "read-sequence", doc = "f_rd_seq")
+	@aBaseArg(name = "input-stream", pos = 1, type = aOpt.class, def = "*standard-input*")
 	public tT READ_SEQUENCE( //
-			@Arg(name = "sequence") tSEQUENCE sequence, //
-			@Opt(name = "start", def = "0") Integer start, //
-			@Opt(name = "end", def = "-1") Integer end);
+			@aArg(name = "sequence") tSEQUENCE sequence, //
+			@aOpt(name = "start", def = "0") Integer start, //
+			@aOpt(name = "end", def = "-1") Integer end);
 
 	/**
 	 * @param stream
@@ -194,12 +194,12 @@ public interface tSTREAM extends tBUILT_IN_CLASS
 	 * @return
 	 * @throws END_OF_FILE
 	 */
-	@Function(name = "read-line", doc = "f_rd_lin")
-	@BaseArg(name = "input-stream", pos = 0, type = Opt.class, def = "*standard-input*")
+	@aFunction(name = "read-line", doc = "f_rd_lin")
+	@aBaseArg(name = "input-stream", pos = 0, type = aOpt.class, def = "*standard-input*")
 	public tT[] READ_LINE(
-			@Opt(name = "eof-error-p", def = "t") Boolean eofErrorP, //
-			@Opt(name = "eof-value", def = "nil") tT eofValue, //
-			@Opt(name = "recursive-p", def = "nil") Boolean recursiveP)
+			@aOpt(name = "eof-error-p", def = "t") Boolean eofErrorP, //
+			@aOpt(name = "eof-value", def = "nil") tT eofValue, //
+			@aOpt(name = "recursive-p", def = "nil") Boolean recursiveP)
 			throws END_OF_FILE;
 
 	/**
@@ -212,9 +212,9 @@ public interface tSTREAM extends tBUILT_IN_CLASS
 	 * @throws END_OF_FILE
 	 */
 	public String readAtom( //
-			@Opt(name = "eof-error-p", def = "t") Boolean eofErrorP, //
-			@Opt(name = "eof-value", def = "nil") tT eofValue, //
-			@Opt(name = "recursive-p", def = "nil") Boolean recursiveP)
+			@aOpt(name = "eof-error-p", def = "t") Boolean eofErrorP, //
+			@aOpt(name = "eof-value", def = "nil") tT eofValue, //
+			@aOpt(name = "recursive-p", def = "nil") Boolean recursiveP)
 			throws END_OF_FILE;
 
 	/**
@@ -248,20 +248,20 @@ public interface tSTREAM extends tBUILT_IN_CLASS
 	 * @param stream
 	 * @return
 	 */
-	@Function(name = "write-char", doc = "f_wr_cha")
-	@BaseArg(name = "stream", pos = 1, type = Opt.class, def = "*standard-output*")
+	@aFunction(name = "write-char", doc = "f_wr_cha")
+	@aBaseArg(name = "stream", pos = 1, type = aOpt.class, def = "*standard-output*")
 	public Character WRITE_CHAR( //
-			@Arg(name = "character") Character character);
+			@aArg(name = "character") Character character);
 
 	/**
 	 * @param val
 	 * @param stream
 	 * @return
 	 */
-	@Function(name = "write-byte", doc = "f_wr_by")
-	@BaseArg(name = "stream", pos = 1, type = Opt.class, def = "*standard-output*")
+	@aFunction(name = "write-byte", doc = "f_wr_by")
+	@aBaseArg(name = "stream", pos = 1, type = aOpt.class, def = "*standard-output*")
 	public Integer WRITE_BYTE( //
-			@Arg(name = "val") Integer val);
+			@aArg(name = "val") Integer val);
 
 	/**
 	 * Write an object. This is a base function not the LISP one.
@@ -269,42 +269,42 @@ public interface tSTREAM extends tBUILT_IN_CLASS
 	 * @param obj
 	 * @return
 	 */
-	@Function(name = "%write", doc = "f_wr_pr")
-	@BaseArg(name = "stream", pos = 1, type = Opt.class, def = "*standard-output*")
-	@Key(keys = "(array base case circle escape gensym length level lines miser-width"
+	@aFunction(name = "%write", doc = "f_wr_pr")
+	@aBaseArg(name = "stream", pos = 1, type = aOpt.class, def = "*standard-output*")
+	@aKey(keys = "(array base case circle escape gensym length level lines miser-width"
 			+ " pprint-dispatch pretty radix readably right-margin stream)")
 	public tT WRITE( //
-			@Arg(name = "object") tT obj);
+			@aArg(name = "object") tT obj);
 
 	/**
 	 * @param obj
 	 * @param stream
 	 * @return
 	 */
-	@Function(name = "prin1", doc = "f_wr_pr")
-	@BaseArg(name = "stream", pos = 1, type = Opt.class, def = "*standard-output*")
+	@aFunction(name = "prin1", doc = "f_wr_pr")
+	@aBaseArg(name = "stream", pos = 1, type = aOpt.class, def = "*standard-output*")
 	public tT PRIN1( //
-			@Arg(name = "object") tT obj);
+			@aArg(name = "object") tT obj);
 
 	/**
 	 * @param obj
 	 * @param stream
 	 * @return
 	 */
-	@Function(name = "princ", doc = "f_wr_pr")
-	@BaseArg(name = "stream", pos = 1, type = Opt.class, def = "*standard-output*")
+	@aFunction(name = "princ", doc = "f_wr_pr")
+	@aBaseArg(name = "stream", pos = 1, type = aOpt.class, def = "*standard-output*")
 	public tT PRINC( //
-			@Arg(name = "object") tT obj);
+			@aArg(name = "object") tT obj);
 
 	/**
 	 * @param obj
 	 * @param stream
 	 * @return
 	 */
-	@Function(name = "print", doc = "f_wr_pr")
-	@BaseArg(name = "stream", pos = 1, type = Opt.class, def = "*standard-output*")
+	@aFunction(name = "print", doc = "f_wr_pr")
+	@aBaseArg(name = "stream", pos = 1, type = aOpt.class, def = "*standard-output*")
 	public tT PRINT( //
-			@Arg(name = "object") tT obj);
+			@aArg(name = "object") tT obj);
 
 	/**
 	 * Print new line
@@ -312,8 +312,8 @@ public interface tSTREAM extends tBUILT_IN_CLASS
 	 * @param stream
 	 * @return
 	 */
-	@Function(name = "terpri", doc = "f_terpri")
-	@BaseArg(name = "stream", pos = 0, type = Opt.class, def = "*standard-output*")
+	@aFunction(name = "terpri", doc = "f_terpri")
+	@aBaseArg(name = "stream", pos = 0, type = aOpt.class, def = "*standard-output*")
 	public tNULL TERPRI();
 
 	/**
@@ -322,32 +322,32 @@ public interface tSTREAM extends tBUILT_IN_CLASS
 	 * @param stream
 	 * @return
 	 */
-	@Function(name = "fresh-line", doc = "f_terpri")
-	@BaseArg(name = "stream", pos = 0, type = Opt.class, def = "*standard-output*")
+	@aFunction(name = "fresh-line", doc = "f_terpri")
+	@aBaseArg(name = "stream", pos = 0, type = aOpt.class, def = "*standard-output*")
 	public tT FRESH_LINE();
 
 	/**
 	 * @param stream
 	 * @return
 	 */
-	@Function(name = "finish-output", doc = "f_finish")
-	@BaseArg(name = "stream", pos = 0, type = Opt.class, def = "*standard-output*")
+	@aFunction(name = "finish-output", doc = "f_finish")
+	@aBaseArg(name = "stream", pos = 0, type = aOpt.class, def = "*standard-output*")
 	public tT FINISH_OUTPUT();
 
 	/**
 	 * @param stream
 	 * @return
 	 */
-	@Function(name = "force-output", doc = "f_finish")
-	@BaseArg(name = "stream", pos = 0, type = Opt.class, def = "*standard-output*")
+	@aFunction(name = "force-output", doc = "f_finish")
+	@aBaseArg(name = "stream", pos = 0, type = aOpt.class, def = "*standard-output*")
 	public tT FORCE_OUTPUT();
 
 	/**
 	 * @param stream
 	 * @return
 	 */
-	@Function(name = "clear-output", doc = "f_finish")
-	@BaseArg(name = "stream", pos = 0, type = Opt.class, def = "*standard-output*")
+	@aFunction(name = "clear-output", doc = "f_finish")
+	@aBaseArg(name = "stream", pos = 0, type = aOpt.class, def = "*standard-output*")
 	public tT CLEAR_OUTPUT();
 
 	/**
@@ -357,10 +357,10 @@ public interface tSTREAM extends tBUILT_IN_CLASS
 	 * @param end
 	 * @return
 	 */
-	@Function(name = "write-string", doc = "f_wr_stg")
-	@Key(keys = "((start 0)(end nil))")
-	@BaseArg(name = "stream", pos = 1, type = Opt.class, def = "*standard-output*")
+	@aFunction(name = "write-string", doc = "f_wr_stg")
+	@aKey(keys = "((start 0)(end nil))")
+	@aBaseArg(name = "stream", pos = 1, type = aOpt.class, def = "*standard-output*")
 	public tT WRITE_STRING( //
-			@Arg(name = "object") tT obj);
+			@aArg(name = "object") tT obj);
 
 }

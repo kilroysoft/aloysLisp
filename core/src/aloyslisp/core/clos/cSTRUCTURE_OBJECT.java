@@ -3,7 +3,7 @@
  * <p>
  * A LISP interpreter, compiler and library.
  * <p>
- * Copyright (C) 2010 kilroySoft <aloyslisp@kilroysoft.ch>
+ * Copyright (C) 2010-2011 kilroySoft <aloyslisp@kilroysoft.ch>
  * 
  * <p>
  * This program is free software: you can redistribute it and/or modify it under
@@ -39,7 +39,7 @@ import aloyslisp.core.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-@BuiltIn(classOf = "structure-object", typeOf = "structure-object", doc = "t_stu_ob")
+@aBuiltIn(lispClass = "structure-object", lispType = "structure-object", doc = "t_stu_ob")
 public class cSTRUCTURE_OBJECT extends cCELL implements tSTRUCTURE_OBJECT
 {
 

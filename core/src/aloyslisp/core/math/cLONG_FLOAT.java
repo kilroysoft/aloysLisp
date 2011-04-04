@@ -3,7 +3,7 @@
  * <p>
  * A LISP interpreter, compiler and library.
  * <p>
- * Copyright (C) 2010 kilroySoft <aloyslisp@kilroysoft.ch>
+ * Copyright (C) 2010-2011 kilroySoft <aloyslisp@kilroysoft.ch>
  * 
  * <p>
  * This program is free software: you can redistribute it and/or modify it under
@@ -29,7 +29,7 @@
 
 package aloyslisp.core.math;
 
-import aloyslisp.annotations.BuiltIn;
+import aloyslisp.annotations.aBuiltIn;
 
 /**
  * cLONG_FLOAT
@@ -37,7 +37,7 @@ import aloyslisp.annotations.BuiltIn;
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  */
-@BuiltIn(classOf = "float", typeOf = "long-float", doc = "t_short_")
+@aBuiltIn(lispClass = "float", lispType = "long-float", doc = "t_short_")
 public class cLONG_FLOAT extends cDOUBLE_FLOAT
 {
 

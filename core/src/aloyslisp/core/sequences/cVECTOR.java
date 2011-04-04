@@ -3,7 +3,7 @@
  * <p>
  * A LISP interpreter, compiler and library.
  * <p>
- * Copyright (C) 2010 kilroySoft <aloyslisp@kilroysoft.ch>
+ * Copyright (C) 2010-2011 kilroySoft <aloyslisp@kilroysoft.ch>
  * 
  * <p>
  * This program is free software: you can redistribute it and/or modify it under
@@ -24,14 +24,14 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 12 sept. 2010 Creation
+// IP 12 sept. 2010-2011 Creation
 // --------------------------------------------------------------------------
 
 package aloyslisp.core.sequences;
 
 import java.util.*;
 
-import aloyslisp.annotations.BuiltIn;
+import aloyslisp.annotations.aBuiltIn;
 import aloyslisp.core.*;
 import aloyslisp.core.conditions.*;
 import aloyslisp.internal.iterators.*;
@@ -44,16 +44,16 @@ import static aloyslisp.core.L.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-@BuiltIn(classOf = "vector", doc = "t_vector")
+@aBuiltIn(lispClass = "vector", doc = "t_vector")
 public class cVECTOR extends cCELL implements tVECTOR
 {
 	public ArrayList<tT>	array;
 
 	private tT				type	= T;
 
-	private int				base	= 0;
+	private Integer			base	= 0;
 
-	private int				size	= -1;
+	private Integer			size	= -1;
 
 	/**
 	 * Create emplty array
@@ -132,9 +132,9 @@ public class cVECTOR extends cCELL implements tVECTOR
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.cCELL#toString()
+	 * @see aloyslisp.core.cCELL#TO_STRING()
 	 */
-	public String toString()
+	public String TO_STRING()
 	{
 		String res = "#(";
 		String sep = "";
@@ -143,7 +143,7 @@ public class cVECTOR extends cCELL implements tVECTOR
 		{
 			res += sep;
 			sep = " ";
-			res += walk.toString();
+			res += walk.TO_STRING();
 		}
 
 		res += ")";
@@ -302,12 +302,12 @@ public class cVECTOR extends cCELL implements tVECTOR
 	 * @see aloyslisp.core.tT#hashCode()
 	 */
 	@Override
-	public int hashCode()
+	public Integer SXHASH()
 	{
 		Integer res = 0;
 		for (tT elem : array)
 		{
-			res = res ^ elem.hashCode();
+			res = res ^ elem.SXHASH();
 		}
 		return res;
 	}

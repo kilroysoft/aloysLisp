@@ -3,7 +3,7 @@
  * <p>
  * A LISP interpreter, compiler and library.
  * <p>
- * Copyright (C) 2010 kilroySoft <aloyslisp@kilroysoft.ch>
+ * Copyright (C) 2010-2011 kilroySoft <aloyslisp@kilroysoft.ch>
  * 
  * <p>
  * This program is free software: you can redistribute it and/or modify it under
@@ -24,12 +24,12 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 10 nov. 2010 Creation
+// IP 10 nov. 2010-2011 Creation
 // --------------------------------------------------------------------------
 
 package aloyslisp.core.sequences;
 
-import aloyslisp.annotations.Type;
+import aloyslisp.annotations.aType;
 
 /**
  * tBIT_VECTOR
@@ -38,7 +38,7 @@ import aloyslisp.annotations.Type;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-@Type(name = "bit-vector", doc = "t_bt_vec", typep = "bit-vector-p")
+@aType(name = "bit-vector", doc = "t_bt_vec", typep = "bit-vector-p")
 public interface tBIT_VECTOR extends tVECTOR
 {
 

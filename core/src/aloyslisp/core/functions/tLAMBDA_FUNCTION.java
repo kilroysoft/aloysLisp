@@ -3,7 +3,7 @@
  * <p>
  * A LISP interpreter, compiler and library.
  * <p>
- * Copyright (C) 2010 kilroySoft <aloyslisp@kilroysoft.ch>
+ * Copyright (C) 2010-2011 kilroySoft <aloyslisp@kilroysoft.ch>
  * 
  * <p>
  * This program is free software: you can redistribute it and/or modify it under
@@ -24,12 +24,13 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 27 oct. 2010 Creation
+// IP 27 oct. 2010-2011 Creation
 // --------------------------------------------------------------------------
 
 package aloyslisp.core.functions;
 
-import aloyslisp.annotations.Type;
+import aloyslisp.annotations.aType;
+import aloyslisp.core.designators.tFUNCTION_DESIGNATOR;
 
 /**
  * tLAMBDA_FUNCTION
@@ -38,7 +39,7 @@ import aloyslisp.annotations.Type;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-@Type(name = "lambda-function", doc = "03_a", typep = "lambda-function-p")
+@aType(name = "lambda-function", doc = "03_a", typep = "lambda-function-p")
 public interface tLAMBDA_FUNCTION extends tFUNCTION, tFUNCTION_DESIGNATOR
 {
 }

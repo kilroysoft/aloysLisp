@@ -3,7 +3,7 @@
  * <p>
  * A LISP interpreter, compiler and library.
  * <p>
- * Copyright (C) 2010 kilroySoft <aloyslisp@kilroysoft.ch>
+ * Copyright (C) 2010-2011 kilroySoft <aloyslisp@kilroysoft.ch>
  * 
  * <p>
  * This program is free software: you can redistribute it and/or modify it under
@@ -24,7 +24,7 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 12 nov. 2010 Creation
+// IP 12 nov. 2010-2011 Creation
 // --------------------------------------------------------------------------
 
 package aloyslisp.core;
@@ -34,13 +34,13 @@ import aloyslisp.annotations.*;
 /**
  * tNIL
  * <p>
- * Type of no cell. This is supertype of nothing.
+ * aType of no cell. This is supertype of nothing.
  * 
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-@Type(name = "nil", doc = "t_nil")
+@aType(name = "nil", doc = "t_nil")
 public interface tNIL
 {
 }

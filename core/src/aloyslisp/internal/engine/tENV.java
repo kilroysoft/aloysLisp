@@ -3,7 +3,7 @@
  * <p>
  * A LISP interpreter, compiler and library.
  * <p>
- * Copyright (C) 2010 kilroySoft <aloyslisp@kilroysoft.ch>
+ * Copyright (C) 2010-2011 kilroySoft <aloyslisp@kilroysoft.ch>
  * 
  * <p>
  * This program is free software: you can redistribute it and/or modify it under
@@ -49,7 +49,7 @@ public interface tENV extends tBUILT_IN_CLASS
 	 * 
 	 * @return
 	 */
-	@Function(name = "env-push")
+	@aFunction(name = "env-push")
 	public tENV ENV_PUSH();
 
 	/**
@@ -57,7 +57,7 @@ public interface tENV extends tBUILT_IN_CLASS
 	 * 
 	 * @return
 	 */
-	@Function(name = "env-previous")
+	@aFunction(name = "env-previous")
 	public tT[] ENV_PREVIOUS();
 
 	/**
@@ -65,7 +65,7 @@ public interface tENV extends tBUILT_IN_CLASS
 	 * 
 	 * @return
 	 */
-	@Function(name = "env-previous-lexical")
+	@aFunction(name = "env-previous-lexical")
 	public tT[] ENV_PREVIOUS_LEXICAL();
 
 	/**
@@ -73,73 +73,73 @@ public interface tENV extends tBUILT_IN_CLASS
 	 * 
 	 * @return
 	 */
-	@Function(name = "env-pop")
+	@aFunction(name = "env-pop")
 	public tENV ENV_POP();
 
 	/**
 	 * @param var
 	 * @return
 	 */
-	@Function(name = "env-let-get")
+	@aFunction(name = "env-let-get")
 	public tT[] ENV_LET_GET( //
-			@Arg(name = "var") tSYMBOL var);
+			@aArg(name = "var") tSYMBOL var);
 
 	/**
 	 * @param var
 	 * @param value
 	 * @return
 	 */
-	@Function(name = "env-let-set")
+	@aFunction(name = "env-let-set")
 	public tT[] SET_ENV_LET_GET( //
-			@Arg(name = "var") tSYMBOL var, //
-			@Arg(name = "value") tT value //
+			@aArg(name = "var") tSYMBOL var, //
+			@aArg(name = "value") tT value //
 	);
 
 	/**
 	 * @param var
 	 * @return
 	 */
-	@Function(name = "env-let-intern")
+	@aFunction(name = "env-let-intern")
 	public tDYN_SYMBOL ENV_LET_INTERN( //
-			@Arg(name = "var") tSYMBOL var, //
-			@Arg(name = "value") tT val //
+			@aArg(name = "var") tSYMBOL var, //
+			@aArg(name = "value") tT val //
 	);
 
 	/**
 	 * @param var
 	 * @return
 	 */
-	@Function(name = "env-tag-get")
+	@aFunction(name = "env-tag-get")
 	public tT[] ENV_TAG_GET( //
-			@Arg(name = "tag") tSYMBOL tag);
+			@aArg(name = "tag") tSYMBOL tag);
 
 	/**
 	 * @param var
 	 * @param value
 	 * @return
 	 */
-	@Function(name = "env-tag-set")
+	@aFunction(name = "env-tag-set")
 	public tT[] SET_ENV_TAG_GET( //
-			@Arg(name = "tag") tSYMBOL tag, //
-			@Arg(name = "value") tSYMBOL value //
+			@aArg(name = "tag") tSYMBOL tag, //
+			@aArg(name = "value") tSYMBOL value //
 	);
 
 	/**
 	 * @param tag
 	 * @return
 	 */
-	@Function(name = "tst-tag")
+	@aFunction(name = "tst-tag")
 	public tLIST ENV_TAG_TST( //
-			@Arg(name = "tag") tT tag);
+			@aArg(name = "tag") tT tag);
 
 	/**
 	 * @param var
 	 * @return
 	 */
-	@Function(name = "env-tag-intern")
+	@aFunction(name = "env-tag-intern")
 	public tT[] ENV_TAG_INTERN( //
-			@Arg(name = "tag") tSYMBOL tag, //
-			@Arg(name = "value") tSYMBOL value //
+			@aArg(name = "tag") tSYMBOL tag, //
+			@aArg(name = "value") tSYMBOL value //
 	);
 
 	/**
@@ -147,20 +147,20 @@ public interface tENV extends tBUILT_IN_CLASS
 	 * 
 	 * @return
 	 */
-	@Function(name = "next-step")
+	@aFunction(name = "next-step")
 	public tT[] ENV_STEP();
 
 	/**
 	 * @param name
 	 * @return
 	 */
-	@Function(name = "tst-block")
+	@aFunction(name = "tst-block")
 	public cENV_BLOCK ENV_BLOCK_TST( //
-			@Arg(name = "name") tSYMBOL name);
+			@aArg(name = "name") tSYMBOL name);
 
 	/**
 	 * @return
 	 */
-	@Function(name = "env-dump")
+	@aFunction(name = "env-dump")
 	public tLIST ENV_DUMP();
 }

@@ -3,7 +3,7 @@
  * <p>
  * A LISP interpreter, compiler and library.
  * <p>
- * Copyright (C) 2010 kilroySoft <aloyslisp@kilroysoft.ch>
+ * Copyright (C) 2010-2011 kilroySoft <aloyslisp@kilroysoft.ch>
  * 
  * <p>
  * This program is free software: you can redistribute it and/or modify it under
@@ -29,7 +29,7 @@
 
 package aloyslisp.core.math;
 
-import aloyslisp.annotations.BuiltIn;
+import aloyslisp.annotations.aBuiltIn;
 import aloyslisp.core.cCELL;
 
 /**
@@ -39,7 +39,7 @@ import aloyslisp.core.cCELL;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-@BuiltIn(classOf = "random-state", doc = "t_rnd")
+@aBuiltIn(lispClass = "random-state", doc = "t_rnd")
 public class cRANDOM_STATE extends cCELL implements tRANDOM_STATE
 {
 

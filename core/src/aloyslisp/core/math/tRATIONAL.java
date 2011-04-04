@@ -3,7 +3,7 @@
  * <p>
  * A LISP interpreter, compiler and library.
  * <p>
- * Copyright (C) 2010 kilroySoft <aloyslisp@kilroysoft.ch>
+ * Copyright (C) 2010-2011 kilroySoft <aloyslisp@kilroysoft.ch>
  * 
  * <p>
  * This program is free software: you can redistribute it and/or modify it under
@@ -24,13 +24,13 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 23 déc. 2010 Creation
+// IP 23 déc. 2010-2011 Creation
 // --------------------------------------------------------------------------
 
 package aloyslisp.core.math;
 
-import aloyslisp.annotations.Function;
-import aloyslisp.annotations.Type;
+import aloyslisp.annotations.aFunction;
+import aloyslisp.annotations.aType;
 
 /**
  * tRATIONAL
@@ -39,9 +39,17 @@ import aloyslisp.annotations.Type;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-@Type(name = "rational", doc = "t_ration", typep = "rationalp")
+@aType(name = "rational", doc = "t_ration", typep = "rationalp")
 public interface tRATIONAL extends tREAL
 {
+
+	/**
+	 * Denumerator (for ratio) a/b -> b
+	 * 
+	 * @return
+	 */
+	@aFunction(name = "denominator", doc = "f_numera")
+	public tINTEGER DENOMINATOR();
 
 	/* *******************************************************************
 	 * FUNCTIONS cRATIO
@@ -57,15 +65,7 @@ public interface tRATIONAL extends tREAL
 	 * 
 	 * @return
 	 */
-	@Function(name = "numerator", doc = "f_numera")
+	@aFunction(name = "numerator", doc = "f_numera")
 	public tINTEGER NUMERATOR();
-
-	/**
-	 * Denumerator (for ratio) a/b -> b
-	 * 
-	 * @return
-	 */
-	@Function(name = "denominator", doc = "f_numera")
-	public tINTEGER DENOMINATOR();
 
 }

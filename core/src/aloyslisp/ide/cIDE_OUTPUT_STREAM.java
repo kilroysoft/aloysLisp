@@ -3,7 +3,7 @@
  * <p>
  * A LISP interpreter, compiler and library.
  * <p>
- * Copyright (C) 2010 kilroySoft <aloyslisp@kilroysoft.ch>
+ * Copyright (C) 2010-2011 kilroySoft <aloyslisp@kilroysoft.ch>
  * 
  * <p>
  * This program is free software: you can redistribute it and/or modify it under
@@ -32,14 +32,16 @@ package aloyslisp.ide;
 import java.awt.Color;
 import java.awt.Font;
 
+import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import static aloyslisp.core.L.*;
+import aloyslisp.annotations.*;
 import aloyslisp.core.L;
 import aloyslisp.core.tT;
-import aloyslisp.core.conditions.END_OF_FILE;
+import aloyslisp.core.conditions.*;
 import aloyslisp.core.streams.*;
 
 /**
@@ -49,11 +51,14 @@ import aloyslisp.core.streams.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
+@aJavaInternal
 public class cIDE_OUTPUT_STREAM extends cSTREAM
 {
-	protected JPanel	f_panel			= null;
+	protected JPanel		f_panel			= null;
 
-	protected JTextArea	f_outputArea	= null;
+	protected JTextArea		f_outputArea	= null;
+
+	protected JScrollPane	f_scroller		= null;
 
 	/**
 	 * 
@@ -61,6 +66,10 @@ public class cIDE_OUTPUT_STREAM extends cSTREAM
 	public cIDE_OUTPUT_STREAM(int rows, int cols)
 	{
 		f_panel = new JPanel();
+		f_panel.setFont(new Font("Courier", Font.PLAIN, 12));
+		f_panel.setLayout(new BoxLayout(f_panel, BoxLayout.PAGE_AXIS));
+		f_panel.setBackground(new Color(170, 170, 170)); // new Color(255, 255,
+
 		f_outputArea = new JTextArea(rows, cols);
 		f_outputArea.setBackground(Color.white);
 		f_outputArea.setFont(new Font("Courier", Font.PLAIN, 12));
@@ -68,10 +77,11 @@ public class cIDE_OUTPUT_STREAM extends cSTREAM
 		f_outputArea.setLineWrap(true);
 		f_outputArea.setVisible(true);
 
-		JScrollPane scroller = new JScrollPane(f_outputArea,
+		f_scroller = new JScrollPane(f_outputArea,
 				JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		f_panel.add(scroller);
+		// f_scroller.getVerticalScrollBar().setValue(f_scroller.getVerticalScrollBar().getMaximum());
+		f_panel.add(f_scroller);
 		L.standardOutput.SET_SYMBOL_VALUE(this);
 		L.errorOutput.SET_SYMBOL_VALUE(this);
 	}
@@ -93,7 +103,13 @@ public class cIDE_OUTPUT_STREAM extends cSTREAM
 	public Character WRITE_CHAR(Character character)
 	{
 		f_outputArea.append("" + character);
-		lineBegin = character=='\n';
+		lineBegin = character == '\n';
+		if (lineBegin)
+		{
+			f_panel.validate();
+			f_scroller.getVerticalScrollBar().setValue(
+					f_scroller.getVerticalScrollBar().getMaximum());
+		}
 		return character;
 	}
 
@@ -159,8 +175,10 @@ public class cIDE_OUTPUT_STREAM extends cSTREAM
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see aloyslisp.core.streams.tSTREAM#READ_CHAR(java.lang.Boolean, aloyslisp.core.tT, java.lang.Boolean)
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.streams.tSTREAM#READ_CHAR(java.lang.Boolean,
+	 * aloyslisp.core.tT, java.lang.Boolean)
 	 */
 	@Override
 	public Character READ_CHAR(Boolean eofErrorP, tT eofValue,
@@ -170,7 +188,8 @@ public class cIDE_OUTPUT_STREAM extends cSTREAM
 		return null;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see aloyslisp.core.streams.tSTREAM#UNREAD_CHAR(java.lang.Character)
 	 */
 	@Override
@@ -180,7 +199,8 @@ public class cIDE_OUTPUT_STREAM extends cSTREAM
 		return null;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see aloyslisp.core.streams.tSTREAM#LISTEN()
 	 */
 	@Override
@@ -190,7 +210,8 @@ public class cIDE_OUTPUT_STREAM extends cSTREAM
 		return false;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see aloyslisp.core.streams.tSTREAM#CLEAR_INPUT()
 	 */
 	@Override
@@ -200,8 +221,10 @@ public class cIDE_OUTPUT_STREAM extends cSTREAM
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see aloyslisp.core.streams.tSTREAM#READ_BYTE(java.lang.Boolean, aloyslisp.core.tT, java.lang.Boolean)
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.streams.tSTREAM#READ_BYTE(java.lang.Boolean,
+	 * aloyslisp.core.tT, java.lang.Boolean)
 	 */
 	@Override
 	public Integer READ_BYTE(Boolean eofErrorP, tT eofValue, Boolean recursiveP)

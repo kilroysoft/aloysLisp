@@ -3,7 +3,7 @@
  * <p>
  * A LISP interpreter, compiler and library.
  * <p>
- * Copyright (C) 2010 kilroySoft <aloyslisp@kilroysoft.ch>
+ * Copyright (C) 2010-2011 kilroySoft <aloyslisp@kilroysoft.ch>
  * 
  * <p>
  * This program is free software: you can redistribute it and/or modify it under
@@ -29,7 +29,7 @@
 
 package aloyslisp.core.clos;
 
-import aloyslisp.annotations.Type;
+import aloyslisp.annotations.aType;
 import aloyslisp.core.tT;
 
 /**
@@ -39,7 +39,7 @@ import aloyslisp.core.tT;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-@Type(name = "structure-object", doc = "t_stu_ob", typep = "structure-object-p")
+@aType(name = "structure-object", doc = "t_stu_ob", typep = "structure-object-p")
 public interface tSTRUCTURE_OBJECT extends tT
 {
 

@@ -3,7 +3,7 @@
  * <p>
  * A LISP interpreter, compiler and library.
  * <p>
- * Copyright (C) 2010 kilroySoft <aloyslisp@kilroysoft.ch>
+ * Copyright (C) 2010-2011 kilroySoft <aloyslisp@kilroysoft.ch>
  * 
  * <p>
  * This program is free software: you can redistribute it and/or modify it under
@@ -24,7 +24,7 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 13 sept. 2010 Creation
+// IP 13 sept. 2010-2011 Creation
 // --------------------------------------------------------------------------
 
 package aloyslisp.core.functions;
@@ -41,7 +41,7 @@ import aloyslisp.internal.engine.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-@Type(name = "function", doc = "03_", typep = "functionp")
+@aType(name = "function", doc = "03_", typep = "functionp")
 public interface tFUNCTION extends tAPI
 {
 	/**
@@ -51,9 +51,9 @@ public interface tFUNCTION extends tAPI
 	 *            List of arguments
 	 * @return Evaluated results in ana array for eventual multiple values
 	 */
-	@Function(name = "funcall")
+	@aFunction(name = "funcall")
 	public tT[] FUNCALL( //
-			@Rest(name = "args") tLIST args //
+			@aRest(name = "args") tLIST args //
 	);
 
 	/**

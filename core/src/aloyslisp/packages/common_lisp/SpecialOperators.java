@@ -3,7 +3,7 @@
  * <p>
  * A LISP interpreter, compiler and library.
  * <p>
- * Copyright (C) 2010 kilroySoft <aloyslisp@kilroysoft.ch>
+ * Copyright (C) 2010-2011 kilroySoft <aloyslisp@kilroysoft.ch>
  * 
  * <p>
  * This program is free software: you can redistribute it and/or modify it under
@@ -54,12 +54,12 @@ public class SpecialOperators extends cCELL
 	 * @param func
 	 * @return
 	 */
-	@Static(name = "defmacro", doc = "m_defmac")
-	@SpecialOp
+	@aFunction(name = "defmacro", doc = "m_defmac")
+	@aSpecialOperator
 	public static tT DEFMACRO( //
-			@Arg(name = "name") tSYMBOL name, //
-			@Arg(name = "args") tLIST args, //
-			@Rest(name = "macro") tT... macro)
+			@aArg(name = "name") tSYMBOL name, //
+			@aArg(name = "args") tLIST args, //
+			@aRest(name = "macro") tT... macro)
 	{
 		tFUNCTION def = new cLAMBDA_FUNCTION(name, args,
 				list((Object[]) macro), true, true);
@@ -73,12 +73,12 @@ public class SpecialOperators extends cCELL
 	 * @param func
 	 * @return
 	 */
-	@Static(name = "defun", doc = "m_defun")
-	@SpecialOp
+	@aFunction(name = "defun", doc = "m_defun")
+	@aSpecialOperator
 	public static tT DEFUN( //
-			@Arg(name = "name") tSYMBOL name, //
-			@Arg(name = "args") tLIST argList, //
-			@Rest(name = "func") tT... function)
+			@aArg(name = "name") tSYMBOL name, //
+			@aArg(name = "args") tLIST argList, //
+			@aRest(name = "func") tT... function)
 	{
 		if (name instanceof tCONS)
 		{
@@ -88,7 +88,7 @@ public class SpecialOperators extends cCELL
 					|| !(((tLIST) name).CDR().CAR() instanceof tSYMBOL))
 			{
 				cCELL.ERROR(
-						"DEFUN : Function name as list should have the form (SEFT name) : ~s",
+						"DEFUN : aFunction name as list should have the form (SEFT name) : ~s",
 						name);
 			}
 
@@ -97,7 +97,7 @@ public class SpecialOperators extends cCELL
 			if (!(newFunc instanceof tSYMBOL))
 			{
 				cCELL.ERROR(
-						"DEFUN : Function name as list should have the form (SEFT name) : ~s",
+						"DEFUN : aFunction name as list should have the form (SEFT name) : ~s",
 						name);
 			}
 
@@ -116,7 +116,7 @@ public class SpecialOperators extends cCELL
 
 		if (!(name instanceof tSYMBOL))
 		{
-			throw new LispException("Function name not a symbol " + name);
+			throw new LispException("aFunction name not a symbol " + name);
 		}
 
 		tFUNCTION def = new cLAMBDA_FUNCTION(name, (tLIST) argList,
@@ -130,15 +130,16 @@ public class SpecialOperators extends cCELL
 	 * @param aFunc
 	 * @return
 	 */
-	@Static(name = "function", doc = "s_fn")
-	@Mac(prefix = "#'")
-	@SpecialOp
+	@aFunction(name = "function", doc = "s_fn")
+	@aMac(prefix = "#'")
+	@aSpecialOperator
 	public static tFUNCTION FUNCTION( //
-			@Arg(name = "func") tT aFunc)
+			@aArg(name = "func") tT aFunc)
 	{
 		tT res = NIL;
 
-		// System.out.println("function:" + args[0]);
+		// System.out.println("FUNCTION(" + aFunc+")");
+		// e.ENV_DUMP();
 
 		if (aFunc instanceof tFUNCTION)
 		{
@@ -212,10 +213,10 @@ public class SpecialOperators extends cCELL
 	 * @param tag
 	 * @return
 	 */
-	@Static(name = "go", doc = "s_go")
-	@SpecialOp
+	@aFunction(name = "go", doc = "s_go")
+	@aSpecialOperator
 	public static tT GO( //
-			@Arg(name = "tag") tT tag)
+			@aArg(name = "tag") tT tag)
 	{
 		if (e.ENV_TAG_TST(tag) == null)
 			throw new LispException("GO to unreachable label : " + tag);
@@ -229,12 +230,12 @@ public class SpecialOperators extends cCELL
 	 * @param or
 	 * @return
 	 */
-	@Static(name = "if", doc = "s_if")
-	@SpecialOp
+	@aFunction(name = "if", doc = "s_if")
+	@aSpecialOperator
 	public static tT[] IF( //
-			@Arg(name = "cond") tT cond, //
-			@Arg(name = "then") tT then, //
-			@Opt(name = "else") tT or)
+			@aArg(name = "cond") tT cond, //
+			@aArg(name = "then-clause") tT then, //
+			@aOpt(name = "else-clause") tT or)
 	{
 		return cond.EVAL()[0] != NIL ? then.EVAL() : or.EVAL();
 	}
@@ -243,10 +244,10 @@ public class SpecialOperators extends cCELL
 	 * @param cell
 	 * @return
 	 */
-	@Static(name = "quote", doc = "s_quote")
-	@SpecialOp
+	@aFunction(name = "quote", doc = "s_quote")
+	@aSpecialOperator
 	public static tT QUOTE( //
-			@Arg(name = "cell") tT cell)
+			@aArg(name = "cell") tT cell)
 	{
 		return cell;
 	}
@@ -256,11 +257,11 @@ public class SpecialOperators extends cCELL
 	 * @param value
 	 * @return
 	 */
-	@Static(name = "return-from", doc = "s_ret_fr")
-	@SpecialOp
+	@aFunction(name = "return-from", doc = "s_ret_fr")
+	@aSpecialOperator
 	public static tT RETURN_FROM( //
-			@Arg(name = "tag") tSYMBOL tag, //
-			@Opt(name = "value") tT value)
+			@aArg(name = "tag") tSYMBOL tag, //
+			@aOpt(name = "value") tT value)
 	{
 		if (tag != NIL && e.ENV_BLOCK_TST(tag) == null)
 			throw new LispException("No return block for (RETURN-FROM " + tag
@@ -274,11 +275,11 @@ public class SpecialOperators extends cCELL
 	 * @param value
 	 * @return
 	 */
-	@Static(name = "setf", doc = "m_setf_")
-	@SpecialOp
+	@aFunction(name = "setf", doc = "m_setf_")
+	@aSpecialOperator
 	public static tT[] SETF( //
-			@Arg(name = "place") tT place, //
-			@Arg(name = "value") tT value)
+			@aArg(name = "place") tT place, //
+			@aArg(name = "value") tT value)
 	{
 		// if symbol it's a SETQ
 		if (place instanceof tSYMBOL)
@@ -306,7 +307,7 @@ public class SpecialOperators extends cCELL
 		tT newFunc = ((tSYMBOL) func).GET(setfKey, NIL);
 		if (newFunc instanceof tNULL)
 		{
-			cCELL.ERROR("FSET : Function for place has no FSET definition: ~s",
+			cCELL.ERROR("FSET : aFunction for place has no FSET definition: ~s",
 					func);
 			return null;
 		}
@@ -322,10 +323,10 @@ public class SpecialOperators extends cCELL
 	 * @param args
 	 * @return
 	 */
-	@Static(name = "setq", doc = "s_setq")
-	@SpecialOp
+	@aFunction(name = "setq", doc = "s_setq")
+	@aSpecialOperator
 	public static tT SETQ( //
-			@Rest(name = "args") tT... args)
+			@aRest(name = "args") tT... args)
 	{
 		// we are in the block part values should be found in environment
 		tT list = list((Object[]) args);
@@ -372,10 +373,10 @@ public class SpecialOperators extends cCELL
 	 * @param func
 	 * @return
 	 */
-	@Static(name = "tagbody", doc = "s_tagbod")
-	@SpecialOp
+	@aFunction(name = "tagbody", doc = "s_tagbod")
+	@aSpecialOperator
 	public static tT TAGBODY( //
-			@Rest(name = "func") tT... func)
+			@aRest(name = "func") tT... func)
 	{
 		cENV_TAG tag = new cENV_TAG(func);
 		tag.ENV_PUSH();
@@ -401,11 +402,11 @@ public class SpecialOperators extends cCELL
 	 * @param block
 	 * @return
 	 */
-	@Static(name = "block", doc = "s_block")
-	@SpecialOp
+	@aFunction(name = "block", doc = "s_block")
+	@aSpecialOperator
 	public static tT[] BLOCK( //
-			@Arg(name = "name") tSYMBOL name, //
-			@Rest(name = "block") tT... blocks)
+			@aArg(name = "name") tSYMBOL name, //
+			@aRest(name = "block") tT... blocks)
 	{
 		cENV_BLOCK block = new cENV_BLOCK(name, blocks);
 		block.ENV_PUSH();
@@ -441,11 +442,11 @@ public class SpecialOperators extends cCELL
 	 * @param func
 	 * @return
 	 */
-	@Static(name = "let", doc = "s_let_l")
-	@SpecialOp
+	@aFunction(name = "let", doc = "s_let_l")
+	@aSpecialOperator
 	public static tT[] LET( //
-			@Arg(name = "args") tLIST args, //
-			@Rest(name = "func") tT... function)
+			@aArg(name = "args") tLIST args, //
+			@aRest(name = "func") tT... function)
 	{
 		tLIST func = cAPI.API_PARSE_FUNC(list((Object[]) function));
 		tT doc = func.CAR();
@@ -478,11 +479,11 @@ public class SpecialOperators extends cCELL
 	 * @param rest
 	 * @return
 	 */
-	@Static(name = "prog1", doc = "m_prog1c")
-	@SpecialOp
+	@aFunction(name = "prog1", doc = "m_prog1c")
+	@aSpecialOperator
 	public static tT PROG1( //
-			@Arg(name = "first") tT first, //
-			@Rest(name = "rest") tT... rest)
+			@aArg(name = "first") tT first, //
+			@aRest(name = "rest") tT... rest)
 	{
 		tT res = first.EVAL()[0];
 		PROGN(rest);
@@ -494,11 +495,11 @@ public class SpecialOperators extends cCELL
 	 * @param rest
 	 * @return
 	 */
-	@Static(name = "multiple-value-prog1", doc = "s_mult_1")
-	@SpecialOp
+	@aFunction(name = "multiple-value-prog1", doc = "s_mult_1")
+	@aSpecialOperator
 	public static tT[] MULTIPLE_VALUE_PROG1( //
-			@Arg(name = "first") tT first, //
-			@Rest(name = "rest") tT... rest)
+			@aArg(name = "first") tT first, //
+			@aRest(name = "rest") tT... rest)
 	{
 		tT[] res = first.EVAL();
 		PROGN(rest);
@@ -510,11 +511,11 @@ public class SpecialOperators extends cCELL
 	 * @param block
 	 * @return
 	 */
-	@Static(name = "multiple-value-call", doc = "s_multip")
-	@SpecialOp
+	@aFunction(name = "multiple-value-call", doc = "s_multip")
+	@aSpecialOperator
 	public static tT[] MULTIPLE_VALUE_CALL( //
-			@Arg(name = "func") tT func, //
-			@Rest(name = "block") tT... block)
+			@aArg(name = "func") tT func, //
+			@aRest(name = "block") tT... block)
 	{
 		tLIST res = NIL;
 		tT function = func.EVAL()[0];
@@ -538,10 +539,10 @@ public class SpecialOperators extends cCELL
 	 * @param block
 	 * @return
 	 */
-	@Static(name = "progn", doc = "s_progn")
-	@SpecialOp
+	@aFunction(name = "progn", doc = "s_progn")
+	@aSpecialOperator
 	public static tT[] PROGN( //
-			@Rest(name = "block") tT... block)
+			@aRest(name = "block") tT... block)
 	{
 		tT[] res = new tT[]
 		{ NIL };
@@ -568,12 +569,12 @@ public class SpecialOperators extends cCELL
 	 * @param block
 	 * @return
 	 */
-	@Static(name = "prog", doc = "m_prog_")
-	@SpecialOp
+	@aFunction(name = "prog", doc = "m_prog_")
+	@aSpecialOperator
 	public static tT[] PROG( //
-			@Arg(name = "name") tSYMBOL name, //
-			@Arg(name = "args") tLIST args, //
-			@Rest(name = "block") tT... blocks)
+			@aArg(name = "name") tSYMBOL name, //
+			@aArg(name = "args") tLIST args, //
+			@aRest(name = "block") tT... blocks)
 	{
 		// TODO this is a macro
 		return list(BLOCK, name,
@@ -586,11 +587,11 @@ public class SpecialOperators extends cCELL
 	 * @param block
 	 * @return
 	 */
-	@Static(name = "unwind-protect", doc = "s_unwind")
-	@SpecialOp
+	@aFunction(name = "unwind-protect", doc = "s_unwind")
+	@aSpecialOperator
 	public static tT[] UNWIND_PROTECT( //
-			@Arg(name = "protected-form") tT prot, //
-			@Rest(name = "block") tT... block)
+			@aArg(name = "protected-form") tT prot, //
+			@aRest(name = "block") tT... block)
 	{
 		RuntimeException ex = null;
 		tT[] res = new tT[] {};
@@ -632,11 +633,11 @@ public class SpecialOperators extends cCELL
 	 * @param block
 	 * @return
 	 */
-	@Static(name = "catch", doc = "s_catch")
-	@SpecialOp
+	@aFunction(name = "catch", doc = "s_catch")
+	@aSpecialOperator
 	public static tT[] CATCH( //
-			@Arg(name = "catch-tag") tT tag, //
-			@Rest(name = "block") tT... block)
+			@aArg(name = "catch-tag") tT tag, //
+			@aRest(name = "block") tT... block)
 	{
 		tT[] res = new tT[] {};
 

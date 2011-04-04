@@ -3,7 +3,7 @@
  * <p>
  * A LISP interpreter, compiler and library.
  * <p>
- * Copyright (C) 2010 kilroySoft <aloyslisp@kilroysoft.ch>
+ * Copyright (C) 2010-2011 kilroySoft <aloyslisp@kilroysoft.ch>
  * 
  * <p>
  * This program is free software: you can redistribute it and/or modify it under
@@ -24,7 +24,7 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 25 oct. 2010 Creation
+// IP 25 oct. 2010-2011 Creation
 // --------------------------------------------------------------------------
 
 package aloyslisp.core.sequences;
@@ -41,36 +41,18 @@ import aloyslisp.core.tT;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-@Type(name = "list", doc = "t_list", typep = "listp")
+@aType(name = "list", doc = "t_list", typep = "listp")
 public interface tLIST extends tSEQUENCE
 {
-	/**
-	 * Get car
-	 * 
-	 * @return fCAR of cons
-	 */
-	@Function(name = "car", doc = "f_car_c")
-	@SetF(name = "setf-car")
-	public tT CAR();
-
-	/**
-	 * Get cdr
-	 * 
-	 * @return fCDR of cons
-	 */
-	@Function(name = "cdr", doc = "f_car_c")
-	@SetF(name = "setf-cdr")
-	public tT CDR();
-
 	/**
 	 * Put cell in car
 	 * 
 	 * @param newCell
 	 */
-	@Function(name = "setf-car")
-	@BaseArg(name = "list", pos = 1)
+	@aFunction(name = "setf-car")
+	@aBaseArg(name = "list", pos = 1)
 	public tLIST SET_CAR( //
-			@Arg(name = "val") tT val //
+			@aArg(name = "val") tT val //
 	);
 
 	/**
@@ -78,10 +60,10 @@ public interface tLIST extends tSEQUENCE
 	 * 
 	 * @param newCell
 	 */
-	@Function(name = "setf-cdr")
-	@BaseArg(name = "list", pos = 1)
+	@aFunction(name = "setf-cdr")
+	@aBaseArg(name = "list", pos = 1)
 	public tLIST SET_CDR( //
-			@Arg(name = "val") tT val //
+			@aArg(name = "val") tT val //
 	);
 
 	/**
@@ -89,7 +71,7 @@ public interface tLIST extends tSEQUENCE
 	 * 
 	 * @return
 	 */
-	@Function(name = "endp", doc = "f_endp")
+	@aFunction(name = "endp", doc = "f_endp")
 	public boolean ENDP();
 
 	/**
@@ -97,24 +79,24 @@ public interface tLIST extends tSEQUENCE
 	 * 
 	 * @return
 	 */
-	@Function(name = "last", doc = "f_last")
+	@aFunction(name = "last", doc = "f_last")
 	public tLIST LAST();
 
 	/**
 	 * @param value
 	 * @return
 	 */
-	@Function(name = "setf-last")
+	@aFunction(name = "setf-last")
 	public tLIST SET_LAST( //
-			@Arg(name = "value") tT value);
+			@aArg(name = "value") tT value);
 
 	/**
 	 * Append : write to the cdr of last cons (append to cNULL -> item)
 	 * 
 	 * @return
 	 */
-	@Function(name = "append", doc = "f_append")
+	@aFunction(name = "append", doc = "f_append")
 	public tT APPEND( //
-			@Arg(name = "item") tT item);
+			@aArg(name = "item") tT item);
 
 }

@@ -3,7 +3,7 @@
  * <p>
  * A LISP interpreter, compiler and library.
  * <p>
- * Copyright (C) 2010 kilroySoft <aloyslisp@kilroysoft.ch>
+ * Copyright (C) 2010-2011 kilroySoft <aloyslisp@kilroysoft.ch>
  * 
  * <p>
  * This program is free software: you can redistribute it and/or modify it under
@@ -24,7 +24,7 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 13 sept. 2010 Creation
+// IP 13 sept. 2010-2011 Creation
 // IP UB19 Modify commentaries
 // --------------------------------------------------------------------------
 
@@ -35,6 +35,7 @@ import java.util.Iterator;
 import aloyslisp.annotations.*;
 import aloyslisp.core.*;
 import aloyslisp.core.conditions.*;
+import aloyslisp.core.designators.tPACKAGE_DESIGNATOR;
 import aloyslisp.core.functions.*;
 import aloyslisp.core.sequences.*;
 import aloyslisp.internal.iterators.*;
@@ -47,7 +48,7 @@ import static aloyslisp.core.L.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-@BuiltIn(classOf = "null", doc = "t_null")
+@aBuiltIn(lispClass = "null", doc = "t_null")
 public class cNULL extends cSYMBOL implements tNULL
 {
 	/**
@@ -115,7 +116,7 @@ public class cNULL extends cSYMBOL implements tNULL
 	 * @author George Kilroy {george@kilroysoft.ch}
 	 * 
 	 */
-	private class NilIterator implements Iterator<tT>
+	public class NilIterator implements Iterator<tT>
 	{
 
 		/*
@@ -184,7 +185,7 @@ public class cNULL extends cSYMBOL implements tNULL
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.atoms.SYMBOL#printable()
 	 */
-	public String toString()
+	public String TO_STRING()
 	{
 		return "NIL";
 	}
@@ -277,7 +278,7 @@ public class cNULL extends cSYMBOL implements tNULL
 	 * aloyslisp.core.atoms.SYMBOL#SET_SYMBOL_PACKAGE(aloyslisp.core.
 	 * types.tT)
 	 */
-	public tSYMBOL SET_SYMBOL_PACKAGE(tT dictionary)
+	public tSYMBOL SET_SYMBOL_PACKAGE(tPACKAGE_DESIGNATOR dictionary)
 	{
 		return this;
 	}
@@ -295,7 +296,7 @@ public class cNULL extends cSYMBOL implements tNULL
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.atoms.SYMBOL#setConstant(boolean)
 	 */
-	public tSYMBOL setConstant(boolean constant)
+	public tSYMBOL SET_CONSTANT(boolean constant)
 	{
 		return this;
 	}
@@ -359,7 +360,7 @@ public class cNULL extends cSYMBOL implements tNULL
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.atoms.SYMBOL#unset()
 	 */
-	public tSYMBOL unset()
+	public tSYMBOL MAKUNBOUND()
 	{
 		return this;
 	}
@@ -369,7 +370,7 @@ public class cNULL extends cSYMBOL implements tNULL
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.atoms.SYMBOL#fUnset()
 	 */
-	public tSYMBOL fUnset()
+	public tSYMBOL FMAKUNBOUND()
 	{
 		return this;
 	}

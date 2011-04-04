@@ -4,6 +4,7 @@ import javax.swing.*;
 import javax.swing.event.*;
 import javax.swing.text.*;
 
+import aloyslisp.annotations.aJavaInternal;
 import aloyslisp.core.*;
 import aloyslisp.core.conditions.*;
 import aloyslisp.core.streams.*;
@@ -17,6 +18,7 @@ import java.util.*;
  * its input
  * off to a Lisp Evaluator.
  */
+@aJavaInternal
 class cIDE_INPUT_STREAM extends cSTRING_STREAM implements Runnable,
 		ActionListener, KeyListener
 {
@@ -231,7 +233,7 @@ class cIDE_INPUT_STREAM extends cSTRING_STREAM implements Runnable,
 	 */
 	public void eval(tT input)
 	{
-		eval(input.toString());
+		eval(input.TO_STRING());
 	}
 
 	// This is called when the user hits RETURN in the input window.
@@ -468,6 +470,7 @@ class cIDE_INPUT_STREAM extends cSTRING_STREAM implements Runnable,
 
 }
 
+@aJavaInternal
 class BracketMatcher implements CaretListener
 {
 	protected cIDE_INPUT_STREAM	f_input;

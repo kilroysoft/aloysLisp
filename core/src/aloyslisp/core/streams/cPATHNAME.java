@@ -3,7 +3,7 @@
  * <p>
  * A LISP interpreter, compiler and library.
  * <p>
- * Copyright (C) 2010 kilroySoft <aloyslisp@kilroysoft.ch>
+ * Copyright (C) 2010-2011 kilroySoft <aloyslisp@kilroysoft.ch>
  * 
  * <p>
  * This program is free software: you can redistribute it and/or modify it under
@@ -24,16 +24,19 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 18 déc. 2010 Creation
+// IP 18 déc. 2010-2011 Creation
 // --------------------------------------------------------------------------
 
 package aloyslisp.core.streams;
 
-import aloyslisp.annotations.Static;
+import java.io.File;
+
+import aloyslisp.annotations.*;
 import aloyslisp.core.*;
-import aloyslisp.core.conditions.LispException;
-import aloyslisp.core.sequences.cSTRING;
-import aloyslisp.core.sequences.tSTRING_DESIGNATOR;
+import aloyslisp.core.conditions.*;
+import aloyslisp.core.designators.tPATHNAME_DESIGNATOR;
+import aloyslisp.core.designators.tSTRING_DESIGNATOR;
+import aloyslisp.core.sequences.*;
 import static aloyslisp.core.L.*;
 
 /**
@@ -45,41 +48,81 @@ import static aloyslisp.core.L.*;
  */
 public class cPATHNAME extends cCELL implements tPATHNAME
 {
-	String	file	= "";
+	File	file	= null;
 
 	/**
 	 * @param file
 	 */
 	public cPATHNAME(String file)
 	{
-		this.file = file;
+		this.file = new File(file);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.cCELL#TO_STRING()
+	 */
+	public String TO_STRING()
+	{
+		return "#P\"" + NAMESTRING() + "\"";
 	}
 
 	/**
 	 * @return
 	 */
-	public String getFile()
+	public String NAMESTRING()
 	{
-		return file;
+		return file.getPath();
 	}
 
 	/**
 	 * @param path
 	 * @return
 	 */
-	@Static(name = "pathname", doc = "f_pn")
-	public static tPATHNAME PATHNAME(tPATHNAME_DESIGNATOR path)
+	@aFunction(name = "pathname", doc = "f_pn")
+	public static tPATHNAME PATHNAME( //
+			@aArg(name = "pathname") tPATHNAME_DESIGNATOR path)
 	{
 		if (path instanceof tPATHNAME)
 			return (tPATHNAME) path;
 
 		if (path instanceof tFILE_STREAM)
-			return ((tFILE_STREAM) path).getPathname();
+			return ((tFILE_STREAM) path).GET_PATHNAME();
 
 		if (!(path instanceof tSTRING_DESIGNATOR))
-			throw new LispException("Type error for " + path);
+			throw new LispException("aType error for " + path);
 
 		return new cPATHNAME(cSTRING.STRING(path));
+	}
+
+	/**
+	 * @return
+	 */
+	@aFunction(name = "make-pathname", doc = "f_mk_pn")
+	@aKey(keys = "(host device directory name type version defaults case)")
+	public static tPATHNAME MAKE_PATHNAME()
+	{
+		// TODO Implements MAKE_PATHNAME
+		return null;
+	}
+
+	@aFunction(name = "logical-pathname", doc = "f_logi_1")
+	@aKey(keys = "(host device directory name type version defaults case)")
+	public static tPATHNAME LOGICAL_PATHNAME( //
+			@aArg(name = "pathspec") tT path //
+	)
+	{
+		if (path instanceof tSTRING)
+			return new cLOGICAL_PATHNAME(((tSTRING) path).getString());
+
+		if (path instanceof tFILE_STREAM)
+		{
+			tPATHNAME res = ((tFILE_STREAM) path).GET_PATHNAME();
+			if (res != null)
+				return res;
+		}
+
+		throw new LispException("LOGICAL_PATHNAME bad argument : " + path);
 	}
 
 	/*
@@ -87,9 +130,97 @@ public class cPATHNAME extends cCELL implements tPATHNAME
 	 * @see aloyslisp.core.tT#hashCode()
 	 */
 	@Override
-	public int hashCode()
+	public Integer SXHASH()
 	{
-		return str(file).hashCode();
+		return str(NAMESTRING()).SXHASH();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.streams.tPATHNAME#DIRECTORY()
+	 */
+	@Override
+	public tLIST DIRECTORY()
+	{
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.streams.tPATHNAME#PROBE_FILE()
+	 */
+	@Override
+	public tT PROBE_FILE()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.streams.tPATHNAME#ENSURE_DIRECTORIES_EXIST()
+	 */
+	@Override
+	public tT[] ENSURE_DIRECTORIES_EXIST()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.streams.tPATHNAME#TRUENAME()
+	 */
+	@Override
+	public tPATHNAME TRUENAME()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.streams.tPATHNAME#FILE_AUTHOR()
+	 */
+	@Override
+	public tT FILE_AUTHOR()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.streams.tPATHNAME#RENAME_FILE(aloyslisp.core.streams.
+	 * tPATHNAME_DESIGNATOR)
+	 */
+	@Override
+	public tT[] RENAME_FILE(tPATHNAME_DESIGNATOR newFile)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.streams.tPATHNAME#DELETE_FILE()
+	 */
+	@Override
+	public tT DELETE_FILE()
+	{
+		// TODO Auto-generated method stub
+		return T;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.streams.tPATHNAME#getFile()
+	 */
+	@Override
+	public File getFile()
+	{
+		// TODO Auto-generated method stub
+		return file;
 	}
 
 }

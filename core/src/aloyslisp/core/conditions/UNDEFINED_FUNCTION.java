@@ -3,7 +3,7 @@
  * <p>
  * A LISP interpreter, compiler and library.
  * <p>
- * Copyright (C) 2010 kilroySoft <aloyslisp@kilroysoft.ch>
+ * Copyright (C) 2010-2011 kilroySoft <aloyslisp@kilroysoft.ch>
  * 
  * <p>
  * This program is free software: you can redistribute it and/or modify it under
@@ -24,13 +24,13 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 28 déc. 2010 Creation
+// IP 28 déc. 2010-2011 Creation
 // --------------------------------------------------------------------------
 
 package aloyslisp.core.conditions;
 
-import aloyslisp.annotations.BuiltIn;
-import aloyslisp.annotations.Type;
+import aloyslisp.annotations.aBuiltIn;
+import aloyslisp.annotations.aType;
 import aloyslisp.core.tT;
 
 /**
@@ -40,8 +40,8 @@ import aloyslisp.core.tT;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-@Type(name = "undefined-function", doc = "e_undefi")
-@BuiltIn(classOf = "undefined-function", doc = "e_undefi")
+@aType(name = "undefined-function", doc = "e_undefi")
+@aBuiltIn(lispClass = "undefined-function", doc = "e_undefi")
 public class UNDEFINED_FUNCTION extends CELL_ERROR
 {
 	private static final long	serialVersionUID	= 1L;

@@ -3,7 +3,7 @@
  * <p>
  * A LISP interpreter, compiler and library.
  * <p>
- * Copyright (C) 2010 kilroySoft <aloyslisp@kilroysoft.ch>
+ * Copyright (C) 2010-2011 kilroySoft <aloyslisp@kilroysoft.ch>
  * 
  * <p>
  * This program is free software: you can redistribute it and/or modify it under
@@ -24,13 +24,13 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 29 déc. 2010 Creation
+// IP 29 déc. 2010-2011 Creation
 // --------------------------------------------------------------------------
 
 package aloyslisp.core.conditions;
 
-import aloyslisp.annotations.BuiltIn;
-import aloyslisp.annotations.Type;
+import aloyslisp.annotations.aBuiltIn;
+import aloyslisp.annotations.aType;
 import aloyslisp.core.*;
 import aloyslisp.core.sequences.*;
 
@@ -41,8 +41,8 @@ import aloyslisp.core.sequences.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-@Type(name = "simple-condition", doc = "e_smp_cn")
-@BuiltIn(classOf = "simple-condition", doc = "e_smp_cn")
+@aType(name = "simple-condition", doc = "e_smp_cn")
+@aBuiltIn(lispClass = "simple-condition", doc = "e_smp_cn")
 public class SIMPLE_CONDITION extends CONDITION
 {
 	private static final long	serialVersionUID	= 1L;

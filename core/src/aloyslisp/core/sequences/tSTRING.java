@@ -3,7 +3,7 @@
  * <p>
  * A LISP interpreter, compiler and library.
  * <p>
- * Copyright (C) 2010 kilroySoft <aloyslisp@kilroysoft.ch>
+ * Copyright (C) 2010-2011 kilroySoft <aloyslisp@kilroysoft.ch>
  * 
  * <p>
  * This program is free software: you can redistribute it and/or modify it under
@@ -24,16 +24,16 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 12 sept. 2010 Creation
+// IP 12 sept. 2010-2011 Creation
 // --------------------------------------------------------------------------
 
 package aloyslisp.core.sequences;
 
 import aloyslisp.annotations.*;
 import aloyslisp.core.*;
+import aloyslisp.core.designators.tPACKAGE_DESIGNATOR;
+import aloyslisp.core.designators.tPATHNAME_DESIGNATOR;
 import aloyslisp.core.math.*;
-import aloyslisp.core.packages.tPACKAGE_DESIGNATOR;
-import aloyslisp.core.streams.tPATHNAME_DESIGNATOR;
 
 /**
  * tSTRING
@@ -42,7 +42,7 @@ import aloyslisp.core.streams.tPATHNAME_DESIGNATOR;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-@Type(name = "string", doc = "t_string", typep = "stringp")
+@aType(name = "string", doc = "t_string", typep = "stringp")
 public interface tSTRING extends tVECTOR, tPATHNAME_DESIGNATOR,
 		tPACKAGE_DESIGNATOR
 {
@@ -54,37 +54,37 @@ public interface tSTRING extends tVECTOR, tPATHNAME_DESIGNATOR,
 	/**
 	 * @return
 	 */
-	@Function(name = "string-upcase", doc = "f_stg_up")
+	@aFunction(name = "string-upcase", doc = "f_stg_up")
 	public tSTRING STRING_UPCASE();
 
 	/**
 	 * @return
 	 */
-	@Function(name = "string-downcase", doc = "f_stg_up")
+	@aFunction(name = "string-downcase", doc = "f_stg_up")
 	public tSTRING STRING_DOWNCASE();
 
 	/**
 	 * @return
 	 */
-	@Function(name = "string-capitalize", doc = "f_stg_up")
+	@aFunction(name = "string-capitalize", doc = "f_stg_up")
 	public tSTRING STRING_CAPITALIZE();
 
 	/**
 	 * @return
 	 */
-	@Function(name = "string-trim", doc = "f_stg_tr")
+	@aFunction(name = "string-trim", doc = "f_stg_tr")
 	public tSTRING STRING_TRIM();
 
 	/**
 	 * @return
 	 */
-	@Function(name = "string-left-trim", doc = "f_stg_tr")
+	@aFunction(name = "string-left-trim", doc = "f_stg_tr")
 	public tSTRING STRING_LEFT_TRIM();
 
 	/**
 	 * @return
 	 */
-	@Function(name = "string-right-trim", doc = "f_stg_tr")
+	@aFunction(name = "string-right-trim", doc = "f_stg_tr")
 	public tSTRING STRING_RIGHT_TRIM();
 
 	/**
@@ -97,10 +97,10 @@ public interface tSTRING extends tVECTOR, tPATHNAME_DESIGNATOR,
 	 * @param junk
 	 * @return
 	 */
-	@Function(name = "parse-integer", doc = "f_parse_")
-	public cINTEGER PARSE_INTEGER(@Opt(name = "start", def = "0") Integer start, //
-			@Opt(name = "end", def = "nil") tT end, //
-			@Opt(name = "radix", def = "*read-base*") Integer radix, //
-			@Opt(name = "junk", def = "nil") Boolean junk);
+	@aFunction(name = "parse-integer", doc = "f_parse_")
+	public cINTEGER PARSE_INTEGER(@aOpt(name = "start", def = "0") Integer start, //
+			@aOpt(name = "end", def = "nil") tT end, //
+			@aOpt(name = "radix", def = "*read-base*") Integer radix, //
+			@aOpt(name = "junk", def = "nil") Boolean junk);
 
 }

@@ -3,7 +3,7 @@
  * <p>
  * A LISP interpreter, compiler and library.
  * <p>
- * Copyright (C) 2010 kilroySoft <aloyslisp@kilroysoft.ch>
+ * Copyright (C) 2010-2011 kilroySoft <aloyslisp@kilroysoft.ch>
  * 
  * <p>
  * This program is free software: you can redistribute it and/or modify it under
@@ -24,7 +24,7 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 12 sept. 2010 Creation
+// IP 12 sept. 2010-2011 Creation
 // --------------------------------------------------------------------------
 
 package aloyslisp.core.sequences;
@@ -32,6 +32,7 @@ package aloyslisp.core.sequences;
 import aloyslisp.annotations.*;
 import aloyslisp.core.*;
 import aloyslisp.core.conditions.*;
+import aloyslisp.core.designators.tSTRING_DESIGNATOR;
 import aloyslisp.core.math.*;
 import aloyslisp.core.packages.*;
 import aloyslisp.core.streams.*;
@@ -44,7 +45,7 @@ import static aloyslisp.core.L.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-@BuiltIn(classOf = "string", doc = "t_string")
+@aBuiltIn(lispClass = "string", doc = "t_string")
 public class cSTRING extends cVECTOR implements tSTRING
 {
 	/**
@@ -62,9 +63,9 @@ public class cSTRING extends cVECTOR implements tSTRING
 	 * @param str
 	 * @return
 	 */
-	@Static(name = "string", doc = "f_string")
+	@aFunction(name = "string", doc = "f_string")
 	public static String STRING( //
-			@Arg(name = "mess") tSTRING_DESIGNATOR str)
+			@aArg(name = "mess") tSTRING_DESIGNATOR str)
 	{
 		if (str instanceof tSTRING)
 			return ((cSTRING) str).getString();
@@ -72,7 +73,7 @@ public class cSTRING extends cVECTOR implements tSTRING
 			return ((tSYMBOL) str).SYMBOL_NAME();
 		if (str instanceof tCHARACTER)
 			return "" + ((cCHARACTER) str).getChar();
-		throw new LispException("Type error");
+		throw new LispException("aType error");
 	}
 
 	/*
@@ -84,7 +85,7 @@ public class cSTRING extends cVECTOR implements tSTRING
 	{
 		StringBuilder res = new StringBuilder("");
 		for (int i = 0; i < this.LENGTH(); i++)
-			res.append(ELT(i).toString());
+			res.append(ELT(i).TO_STRING());
 		return res.toString();
 	}
 
@@ -93,16 +94,16 @@ public class cSTRING extends cVECTOR implements tSTRING
 	 * @see aloyslisp.core.Cell#printable()
 	 */
 	@Override
-	public String toString()
+	public String TO_STRING()
 	{
 		// System.out.println("String Escape : " + printEscape.get());
 		boolean esc = false;
 		if (printEscape != null)
 			esc = !(printEscape.SYMBOL_VALUE() instanceof cNULL);
 		if (esc)
-			return getString();
-		else
 			return "\"" + getString() + "\"";
+		else
+			return getString();
 	}
 
 	/*

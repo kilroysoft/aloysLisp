@@ -3,7 +3,7 @@
  * <p>
  * A LISP interpreter, compiler and library.
  * <p>
- * Copyright (C) 2010 kilroySoft <aloyslisp@kilroysoft.ch>
+ * Copyright (C) 2010-2011 kilroySoft <aloyslisp@kilroysoft.ch>
  * 
  * <p>
  * This program is free software: you can redistribute it and/or modify it under
@@ -24,7 +24,7 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 16 sept. 2010 Creation
+// IP 16 sept. 2010-2011 Creation
 // --------------------------------------------------------------------------
 
 package aloyslisp.core.streams;
@@ -44,6 +44,7 @@ import aloyslisp.core.tT;
 import aloyslisp.core.conditions.END_OF_FILE;
 import aloyslisp.core.conditions.FILE_ERROR;
 import aloyslisp.core.conditions.LispException;
+import aloyslisp.core.designators.tPATHNAME_DESIGNATOR;
 import aloyslisp.core.functions.tFUNCTION;
 import aloyslisp.core.math.cNUMBER;
 import aloyslisp.core.packages.tNULL;
@@ -70,11 +71,11 @@ public abstract class cSTREAM extends cCELL implements tSTREAM
 	 * @param form
 	 * @return
 	 */
-	@SpecialOp
-	@Static(name = "with-open-stream", doc = "m_w_op_1")
+	@aSpecialOperator
+	@aFunction(name = "with-open-stream", doc = "m_w_op_1")
 	public static tT WITH_OPEN_STREAM( //
-			@Arg(name = "stream") tLIST stream, //
-			@Rest(name = "form") tT... form)
+			@aArg(name = "stream") tLIST stream, //
+			@aRest(name = "form") tT... form)
 	{
 		return null;
 	}
@@ -108,7 +109,7 @@ public abstract class cSTREAM extends cCELL implements tSTREAM
 			if (atom != null)
 			{
 				// test if numeric
-				res = cNUMBER.create(atom);
+				res = cNUMBER.MAKE_NUMBER(atom);
 				if (res != null)
 					return res;
 
@@ -133,7 +134,7 @@ public abstract class cSTREAM extends cCELL implements tSTREAM
 	 * @see aloyslisp.core.Cell#printable()
 	 */
 	@Override
-	public String toString()
+	public String TO_STRING()
 	{
 		return "<#STREAM " + this.getClass().getSimpleName() + ">";
 	}
@@ -193,7 +194,7 @@ public abstract class cSTREAM extends cCELL implements tSTREAM
 		Character curr = PEEK_CHAR(NIL, eofErrorP, eofValue, recursiveP);
 		cREADTABLE table = (cREADTABLE) readTable.SYMBOL_VALUE();
 
-		if (!table.isConstituent(curr = PEEK_CHAR(NIL, eofErrorP, eofValue,
+		if (!table.IS_CONSTITUENT(curr = PEEK_CHAR(NIL, eofErrorP, eofValue,
 				recursiveP)))
 		{
 			curr = READ_CHAR(eofErrorP, eofValue, recursiveP);
@@ -210,7 +211,7 @@ public abstract class cSTREAM extends cCELL implements tSTREAM
 				charMacro[0] = table.GET_DISPATCH_MACRO_CHARACTER(curr, curr2);
 				if (charMacro[0] == NIL)
 				{
-					throw new LispException("Macro character " + curr + curr2
+					throw new LispException("aMacro character " + curr + curr2
 							+ " not defined");
 				}
 
@@ -221,18 +222,18 @@ public abstract class cSTREAM extends cCELL implements tSTREAM
 			tT function = charMacro[0];
 			if (function instanceof tSYMBOL)
 			{
-				trace("cDYN_SYMBOL macrochar = " + function + " "
-						+ function.DESCRIBE());
+				// trace("cDYN_SYMBOL macrochar = " + function + " "
+				// + function.DESCRIBE());
 				function = ((tSYMBOL) function).SYMBOL_FUNCTION();
 			}
 			if (function == null)
 			{
-				throw new LispException("Function not defined for macrochar "
+				throw new LispException("aFunction not defined for macrochar "
 						+ charMacro[0]);
 			}
 
 			// Call macro function
-			tT read = ((tFUNCTION) function).e(this, c(curr))[0];
+			tT read = ((tFUNCTION) function).e(this, c(curr), this)[0];
 			return read;
 		}
 
@@ -264,14 +265,14 @@ public abstract class cSTREAM extends cCELL implements tSTREAM
 
 		try
 		{
-			while (table.isConstituent(curr = READ_CHAR(eofErrorP, eofValue,
+			while (table.IS_CONSTITUENT(curr = READ_CHAR(eofErrorP, eofValue,
 					recursiveP)) || singleEscaped || multiEscaped)
 			{
 				// switched on | ;-)
 				multiEscaped ^= (curr == '|');
 
 				res.append(singleEscaped || multiEscaped ? curr : table
-						.changeCase(curr));
+						.CHANGE_CASE(curr));
 
 				// single escape
 				singleEscaped = (curr == '\\') && !singleEscaped
@@ -325,12 +326,12 @@ public abstract class cSTREAM extends cCELL implements tSTREAM
 	/**
 	 * @return
 	 */
-	@Static(name = "load", doc = "f_load")
+	@aFunction(name = "load", doc = "f_load")
 	public static tT[] LOAD( //
-			@Arg(name = "file") tPATHNAME_DESIGNATOR file, //
-			@Opt(name = "verbose", def = "nil") Boolean verbose, //
-			@Opt(name = "print", def = "nil") Boolean print, //
-			@Opt(name = "not-exists", def = "nil") Boolean notExists)
+			@aArg(name = "file") tPATHNAME_DESIGNATOR file, //
+			@aOpt(name = "verbose", def = "nil") Boolean verbose, //
+			@aOpt(name = "print", def = "nil") Boolean print, //
+			@aOpt(name = "not-exists", def = "nil") Boolean notExists)
 	{
 		tSTREAM in;
 
@@ -464,8 +465,8 @@ public abstract class cSTREAM extends cCELL implements tSTREAM
 	public tT WRITE(tT obj)
 	{
 		// TODO manage &key arguments and generate Specials vars for printing
-		// System.out.println("(WRITE " + str(obj.toString()));
-		return WRITE_STRING(str(obj.toString()));
+		// System.out.println("(WRITE " + str(obj.TO_STRING()));
+		return WRITE_STRING(str(obj.TO_STRING()));
 	}
 
 	/*
@@ -526,9 +527,97 @@ public abstract class cSTREAM extends cCELL implements tSTREAM
 	public tT PRINT(tT obj)
 	{
 		FRESH_LINE();
-		tT res = PRIN1(obj);
+		tT res = PRINC(obj);
 		WRITE(c(' '));
 		return res;
 	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.streams.tSTREAM#OPEN_STREAM_P()
+	 */
+	@Override
+	public abstract Boolean OPEN_STREAM_P();
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.streams.tSTREAM#CLOSE()
+	 */
+	@Override
+	public abstract Boolean CLOSE();
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.streams.tSTREAM#READ_CHAR(java.lang.Boolean,
+	 * aloyslisp.core.tT, java.lang.Boolean)
+	 */
+	@Override
+	public abstract Character READ_CHAR(Boolean eofErrorP, tT eofValue,
+			Boolean recursiveP) throws END_OF_FILE;
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.streams.tSTREAM#UNREAD_CHAR(java.lang.Character)
+	 */
+	@Override
+	public abstract Character UNREAD_CHAR(Character character);
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.streams.tSTREAM#LISTEN()
+	 */
+	@Override
+	public abstract boolean LISTEN();
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.streams.tSTREAM#CLEAR_INPUT()
+	 */
+	@Override
+	public abstract tT CLEAR_INPUT();
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.streams.tSTREAM#READ_BYTE(java.lang.Boolean,
+	 * aloyslisp.core.tT, java.lang.Boolean)
+	 */
+	@Override
+	public abstract Integer READ_BYTE(Boolean eofErrorP, tT eofValue,
+			Boolean recursiveP) throws END_OF_FILE;
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.streams.tSTREAM#WRITE_CHAR(java.lang.Character)
+	 */
+	@Override
+	public abstract Character WRITE_CHAR(Character character);
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.streams.tSTREAM#WRITE_BYTE(java.lang.Integer)
+	 */
+	@Override
+	public abstract Integer WRITE_BYTE(Integer val);
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.streams.tSTREAM#FINISH_OUTPUT()
+	 */
+	@Override
+	public abstract tT FINISH_OUTPUT();
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.streams.tSTREAM#FORCE_OUTPUT()
+	 */
+	@Override
+	public abstract tT FORCE_OUTPUT();
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.streams.tSTREAM#CLEAR_OUTPUT()
+	 */
+	@Override
+	public abstract tT CLEAR_OUTPUT();
 
 }

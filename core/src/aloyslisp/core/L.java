@@ -3,7 +3,7 @@
  * <p>
  * A LISP interpreter, compiler and library.
  * <p>
- * Copyright (C) 2010 kilroySoft <aloyslisp@kilroysoft.ch>
+ * Copyright (C) 2010-2011 kilroySoft <aloyslisp@kilroysoft.ch>
  * 
  * <p>
  * This program is free software: you can redistribute it and/or modify it under
@@ -29,13 +29,9 @@
 
 package aloyslisp.core;
 
-import java.io.*;
-import java.net.*;
-import java.util.*;
-import java.util.jar.*;
-
 import aloyslisp.annotations.*;
 import aloyslisp.core.conditions.*;
+import aloyslisp.core.designators.tPACKAGE_DESIGNATOR;
 import aloyslisp.core.math.*;
 import aloyslisp.core.packages.*;
 import aloyslisp.core.sequences.*;
@@ -142,13 +138,13 @@ public abstract class L
 	public static final tSYMBOL		T						= sym("T");
 	static
 	{
-		T.SET_SYMBOL_VALUE(T).setConstant(true);
+		T.SET_SYMBOL_VALUE(T).SET_CONSTANT(true);
 	}
 
 	/*
 	 * All standard streams
 	 */
-	@Symb(name = "+in+")
+	@aSymb(name = "+in+")
 	public static tSTREAM			in						= new cFILE_STREAM(
 																	System.in);
 	private static final tSTREAM	out						= new cFILE_STREAM(
@@ -159,10 +155,10 @@ public abstract class L
 
 	private static final tSTREAM	query					= terminal;
 
-	// Key for setf in PLIST
+	// aKey for setf in PLIST
 	public static tSYMBOL			setfKey					= key("SETF-FUNC");
 
-	// Key for symbol type in PLIST
+	// aKey for symbol type in PLIST
 	public static tSYMBOL			typeClass				= key("TYPE-CLASS");
 
 	/*
@@ -216,7 +212,7 @@ public abstract class L
 																			terminal);
 
 	/**
-	 * SpecialOp variables for write
+	 * aSpecialOperator variables for write
 	 */
 	public static tSYMBOL			printEscape				= sym(
 																	"*print-escape*")
@@ -354,10 +350,6 @@ public abstract class L
 																			true)
 																	.SET_SYMBOL_VALUE(
 																			new cREADTABLE());
-	{
-		// Initialize readtable functions
-		((cREADTABLE) readTable.SYMBOL_VALUE()).init();
-	}
 
 	public static tSYMBOL			lispTraceSuppress		= sym("*trace*")
 																	.SET_SPECIAL(
@@ -402,27 +394,54 @@ public abstract class L
 	 * @param name
 	 * @return
 	 */
-	public static tT arg(String name, Class<?> cla)
+	public static tT arg(String name)
 	{
-		return arg(sym(name), cla);
+		return arg(sym(name), tT.class, NIL);
 	}
 
 	/**
 	 * Search in dynamic environment
 	 * 
 	 * @param name
+	 * @param def
 	 * @return
 	 */
-	public static tT arg(tSYMBOL name, Class<?> cla)
+	public static tT arg(String name, tT def)
+	{
+		return arg(sym(name), tT.class, def);
+	}
+
+	/**
+	 * Search in dynamic environment
+	 * 
+	 * @param name
+	 * @param cla
+	 * @param def
+	 * @return
+	 */
+	public static tT arg(String name, Class<?> cla, tT def)
+	{
+		return arg(sym(name), cla, def);
+	}
+
+	/**
+	 * Search in dynamic environment
+	 * 
+	 * @param name
+	 * @param cla
+	 * @param def
+	 * @return
+	 */
+	public static tT arg(tSYMBOL name, Class<?> cla, tT def)
 	{
 		cDYN_SYMBOL atom = e.arg(name);
 		if (atom == null)
 		{
-			throw new LispException("Argument " + name
-					+ " not found in environment");
+			return def;
 		}
-		if (!atom.SYMBOL_VALUE().getClass().isAssignableFrom(cla))
-			throw new LispException("Argument " + name + " should be of type "
+		if (!cla.isAssignableFrom(atom.SYMBOL_VALUE().getClass()))
+			throw new LispException("Argument " + name + "="
+					+ atom.SYMBOL_VALUE() + " should be of type "
 					+ cla.getSimpleName());
 		return atom.SYMBOL_VALUE();
 	}
@@ -554,7 +573,7 @@ public abstract class L
 	 */
 	public static cRATIO mRatio(tNUMBER num, tNUMBER den)
 	{
-		return new cRATIO(num.getIntegerValue(), den.getIntegerValue());
+		return new cRATIO(num.COERCE_TO_INTEGER(), den.COERCE_TO_INTEGER());
 	}
 
 	/**
@@ -576,7 +595,17 @@ public abstract class L
 	 */
 	public static tT lisp(String def)
 	{
+		def = def.trim();
 		return new cSTRING_STREAM(def, 0, -1).READ(false, NIL, false);
+	}
+
+	/**
+	 * @param def
+	 * @return
+	 */
+	public static tT[] eval(String def)
+	{
+		return lisp(def).EVAL();
 	}
 
 	/**
@@ -670,13 +699,14 @@ public abstract class L
 	public static tSYMBOL key(String name)
 	{
 		tSYMBOL res = (tSYMBOL) ((cPACKAGE) key).external.SET_GETHASH(
-				new cSYMBOL(name, key).setConstant(true),
+				new cSYMBOL(name, key).SET_CONSTANT(true),
 				str(name.toUpperCase()));
 		if (res == null)
 			System.out
 					.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAARRRRRGGGGG : "
 							+ name);// + " ->" + res.DESCRIBE());
-		// System.out.println("New Key : " + name);// + " ->" + res.DESCRIBE());
+		// System.out.println("New aKey : " + name);// + " ->" +
+		// res.DESCRIBE());
 		return res;
 	}
 
@@ -741,189 +771,4 @@ public abstract class L
 			return false;
 		return ((tSYMBOL) atom).SYMBOL_NAME().equalsIgnoreCase(name);
 	}
-
-	/**
-	 * 
-	 */
-	public static void loadClasses(String pkg)
-	{
-		// System.out.println("= Package " + pkg + " =\n");
-		try
-		{
-			List<Class<?>> cla = getClasses(pkg);
-			for (Class<?> clas : cla)
-			{
-				// if (clas.isInterface())
-				// System.out.print("=== Interface " + clas.getSimpleName());
-				// else
-				// System.out.print("=== Class " + clas.getSimpleName());
-				// System.out.println(" ===\n");
-				Library.INSTANTIATE(clas.getCanonicalName());
-			}
-		}
-		catch (ClassNotFoundException e)
-		{
-			throw new LispException("Class not found  " + pkg + " : "
-					+ e.getLocalizedMessage());
-		}
-		catch (IOException e)
-		{
-			throw new LispException("Error reading class " + pkg + " : "
-					+ e.getLocalizedMessage());
-		}
-	}
-
-	/**
-	 * @param pckgname
-	 * @return
-	 * @throws ClassNotFoundException
-	 * @throws IOException
-	 */
-	public static List<Class<?>> getClasses(String pckgname)
-			throws ClassNotFoundException, IOException
-	{
-		// Création de la liste qui sera retournée
-		ArrayList<Class<?>> classes = new ArrayList<Class<?>>();
-
-		// On récupère toutes les entrées du CLASSPATH
-		String[] entries = System.getProperty("java.class.path").split(
-				System.getProperty("path.separator"));
-
-		// Pour toutes ces entrées, on verifie si elles contiennent
-		// un répertoire ou un jar
-		for (int i = 0; i < entries.length; i++)
-		{
-
-			if (entries[i].endsWith(".jar"))
-			{
-				classes.addAll((Collection<? extends Class<?>>) manageJar(
-						entries[i], pckgname));
-			}
-			else
-			{
-				classes.addAll((Collection<? extends Class<?>>) manageDirectory(
-						entries[i], pckgname));
-			}
-
-		}
-
-		// ajout => analyse classpath de la webapp
-		Enumeration<URL> eUrl = NIL.getClass().getClassLoader()
-				.getResources(pckgname);
-		for (; eUrl.hasMoreElements();)
-		{
-			URL url = eUrl.nextElement();
-			String sUrl = url.toString();
-
-			if (sUrl.contains(".jar!"))
-			{
-				sUrl = sUrl.substring(0, sUrl.indexOf("!"));
-				classes.addAll((Collection<? extends Class<?>>) manageJar(sUrl,
-						pckgname));
-			}
-			else
-			{
-				classes.addAll((Collection<? extends Class<?>>) manageDirectory(
-						sUrl, pckgname));
-			}
-
-		}
-
-		return classes;
-	}
-
-	/**
-	 * @param repertoire
-	 * @param pckgname
-	 * @return
-	 * @throws ClassNotFoundException
-	 */
-	private static Collection<Class<?>> manageDirectory(String repertoire,
-			String pckgname) throws ClassNotFoundException
-	{
-		ArrayList<Class<?>> classes = new ArrayList<Class<?>>();
-
-		// On génère le chemin absolu du package
-		StringBuffer sb = new StringBuffer(repertoire);
-		String[] repsPkg = pckgname.split("\\.");
-		for (int i = 0; i < repsPkg.length; i++)
-		{
-			sb.append(System.getProperty("file.separator") + repsPkg[i]);
-		}
-		File rep = new File(sb.toString());
-
-		// Si le chemin existe, et que c'est un dossier, alors, on le liste
-		if (rep.exists() && rep.isDirectory())
-		{
-			// On filtre les entrées du répertoire
-			FilenameFilter filter = new DotClassFilter();
-			File[] liste = rep.listFiles(filter);
-
-			// Pour chaque classe présente dans le package, on l'ajoute à la
-			// liste
-			for (int i = 0; i < liste.length; i++)
-			{
-				classes.add(Class.forName(pckgname + "."
-						+ liste[i].getName().split("\\.")[0]));
-			}
-		}
-
-		return classes;
-	}
-
-	/**
-	 * @param jar
-	 * @param pckgname
-	 * @return
-	 * @throws IOException
-	 * @throws ClassNotFoundException
-	 */
-	private static Collection<Class<?>> manageJar(String jar, String pckgname)
-			throws IOException, ClassNotFoundException
-	{
-		ArrayList<Class<?>> classes = new ArrayList<Class<?>>();
-
-		JarFile jfile = new JarFile(jar);
-		String pkgpath = pckgname.replace(".", "/");
-
-		// Pour chaque entrée du Jar
-		for (Enumeration<JarEntry> entries = jfile.entries(); entries
-				.hasMoreElements();)
-		{
-			JarEntry element = entries.nextElement();
-
-			// all the .class in package and sub-package
-			if (element.getName().startsWith(pkgpath)
-					&& element.getName().endsWith(".class"))
-			{
-				// get
-				String nomFichier = element.getName().substring(
-						pckgname.length() + 1);
-
-				Class<?> found = Class.forName(pckgname + "."
-						+ nomFichier.split("\\.")[0]);
-
-				classes.add(found);
-
-			}
-
-		}
-
-		return classes;
-	}
-
-	/**
-	 * Cette classe permet de filtrer les fichiers d'un répertoire. Il n'accepte
-	 * que les fichiers .class.
-	 */
-	private static class DotClassFilter implements FilenameFilter
-	{
-
-		public boolean accept(File arg0, String arg1)
-		{
-			return arg1.endsWith(".class");
-		}
-
-	}
-
 }

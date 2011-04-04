@@ -3,7 +3,7 @@
  * <p>
  * A LISP interpreter, compiler and library.
  * <p>
- * Copyright (C) 2010 kilroySoft <aloyslisp@kilroysoft.ch>
+ * Copyright (C) 2010-2011 kilroySoft <aloyslisp@kilroysoft.ch>
  * 
  * <p>
  * This program is free software: you can redistribute it and/or modify it under
@@ -24,7 +24,7 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 15 sept. 2010 Creation
+// IP 15 sept. 2010-2011 Creation
 // --------------------------------------------------------------------------
 
 package aloyslisp.core.sequences;
@@ -43,7 +43,7 @@ import aloyslisp.internal.iterators.SEQUENCEIterator;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-@Type(name = "sequencs", doc = "t_seq", typep = "sequence-p")
+@aType(name = "sequencs", doc = "t_seq", typep = "sequence-p")
 public interface tSEQUENCE extends tT, Iterable<tT>
 {
 	/**
@@ -60,26 +60,26 @@ public interface tSEQUENCE extends tT, Iterable<tT>
 	/**
 	 * @return
 	 */
-	@Function(name = "length", doc = "f_length")
+	@aFunction(name = "length", doc = "f_length")
 	public Integer LENGTH();
 
 	/**
 	 * @param pos
 	 * @return
 	 */
-	@Function(name = "elt", doc = "f_elt")
+	@aFunction(name = "elt", doc = "f_elt")
 	public tT ELT( //
-			@Arg(name = "pos") Integer pos);
+			@aArg(name = "pos") Integer pos);
 
 	/**
 	 * @param pos
 	 * @param value
 	 * @return
 	 */
-	@Function(name = "set-elt")
+	@aFunction(name = "set-elt")
 	public tT SET_ELT( //
-			@Arg(name = "value") tT value, //
-			@Arg(name = "pos") Integer pos //
+			@aArg(name = "value") tT value, //
+			@aArg(name = "pos") Integer pos //
 	);
 
 	/**
@@ -87,10 +87,10 @@ public interface tSEQUENCE extends tT, Iterable<tT>
 	 * @param end
 	 * @return
 	 */
-	@Function(name = "subseq", doc = "f_subseq")
+	@aFunction(name = "subseq", doc = "f_subseq")
 	public tSEQUENCE SUBSEQ( //
-			@Arg(name = "start") Integer start, //
-			@Opt(name = "end") Integer end);
+			@aArg(name = "start") Integer start, //
+			@aOpt(name = "end") Integer end);
 
 	/**
 	 * @param start
@@ -98,11 +98,11 @@ public interface tSEQUENCE extends tT, Iterable<tT>
 	 * @param value
 	 * @return
 	 */
-	@Function(name = "set-subseq")
+	@aFunction(name = "set-subseq")
 	public tSEQUENCE SET_SUBSEQ( //
-			@Arg(name = "value") tT value, //
-			@Arg(name = "start") Integer start, //
-			@Arg(name = "end") Integer end //
+			@aArg(name = "value") tT value, //
+			@aArg(name = "start") Integer start, //
+			@aArg(name = "end") Integer end //
 	);
 
 	/**
@@ -111,7 +111,7 @@ public interface tSEQUENCE extends tT, Iterable<tT>
 	 * @param list
 	 * @return
 	 */
-	@Function(name = "reverse", doc = "f_revers")
+	@aFunction(name = "reverse", doc = "f_revers")
 	public tSEQUENCE REVERSE();
 
 	/**
@@ -119,7 +119,7 @@ public interface tSEQUENCE extends tT, Iterable<tT>
 	 * 
 	 * @return
 	 */
-	@Function(name = "nreverse", doc = "f_revers")
+	@aFunction(name = "nreverse", doc = "f_revers")
 	public tSEQUENCE NREVERSE();
 
 	/**
@@ -127,7 +127,7 @@ public interface tSEQUENCE extends tT, Iterable<tT>
 	 * 
 	 * @return
 	 */
-	@Function(name = "values-list", doc = "f_vals")
+	@aFunction(name = "values-list", doc = "f_vals")
 	public tT[] VALUES_LIST();
 
 	/**
@@ -135,11 +135,11 @@ public interface tSEQUENCE extends tT, Iterable<tT>
 	 * 
 	 * @return
 	 */
-	@Function(name = "find", doc = "f_find_")
-	@Key(keys = "(from-end test test-not start end key)")
-	@BaseArg()
+	@aFunction(name = "find", doc = "f_find_")
+	@aKey(keys = "(from-end test test-not start end key)")
+	@aBaseArg()
 	public tT FIND( //
-			@Arg(name = "item") tT item//
+			@aArg(name = "item") tT item//
 	);
 
 }

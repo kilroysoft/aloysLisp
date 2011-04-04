@@ -1,9 +1,7 @@
 == HISTORY : List of changes ==
 	
 == To do ==
-* All non lisp functions on objects are private or protected or global.
 * At last write all the base functions !!!
-* Environment as dynamic object.
 * Debug environment.
 * Interface hooks (debug). Execute, continue, breakpoints, Environment stack.
 * Compilation.... (as soon as possible)
@@ -27,10 +25,17 @@
 * Add THROW/CATCH environment and special operator.
 * Implement PATHNAME and STREAM Functions.
 * Manage Class of BaseArg argument.
-* Replace SymMap by cHASH_MAP.
 * Suppress @Static annotation to @Function with test on static function.
+* All non lisp functions on objects are private or protected or global.
 
 == Current state ==
+* Annotation @aNonStandard for Non Standard Common-lisp functions and classes
+* Replace SymMap by cHASH_MAP.
+* Annotation @aWriter for simple SETF macros.
+* Environment as dynamic object. cTHREAD.
+* Suppress @Static notation.
+* Add VB code génération. (just tu test and compare inplementations)
+* Added #P management.
 * Arguments management, rewrite the whole.
 * Added primitive IDE for debugging. Package aloyslisp.ide. Main class with main cIDE.java.
 * Add third argument fot &optional and &key about instance of an argument. 

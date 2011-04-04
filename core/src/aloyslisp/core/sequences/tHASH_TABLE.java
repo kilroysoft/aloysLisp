@@ -3,7 +3,7 @@
  * <p>
  * A LISP interpreter, compiler and library.
  * <p>
- * Copyright (C) 2010 kilroySoft <aloyslisp@kilroysoft.ch>
+ * Copyright (C) 2010-2011 kilroySoft <aloyslisp@kilroysoft.ch>
  * 
  * <p>
  * This program is free software: you can redistribute it and/or modify it under
@@ -24,7 +24,7 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 9 oct. 2010 Creation
+// IP 9 oct. 2010-2011 Creation
 // --------------------------------------------------------------------------
 
 package aloyslisp.core.sequences;
@@ -42,49 +42,49 @@ import aloyslisp.core.math.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-@Type(name = "hash-table", doc = "t_hash_t", typep = "hash-table-p")
+@aType(name = "hash-table", doc = "t_hash_t", typep = "hash-table-p")
 public interface tHASH_TABLE extends tBUILT_IN_CLASS
 {
 	/**
 	 * @return
 	 */
-	@Function(name = "hash-table-count", doc = "f_hash_1")
+	@aFunction(name = "hash-table-count", doc = "f_hash_1")
 	public tINTEGER HASH_TABLE_COUNT( //
 	);
 
 	/**
 	 * @return
 	 */
-	@Function(name = "hash-table-rehash-size", doc = "f_hash_2")
+	@aFunction(name = "hash-table-rehash-size", doc = "f_hash_2")
 	public tINTEGER HASH_TABLE_REHASH_SIZE( //
 	);
 
 	/**
 	 * @return
 	 */
-	@Function(name = "hash-table-rehash-threshold", doc = "f_hash_3")
+	@aFunction(name = "hash-table-rehash-threshold", doc = "f_hash_3")
 	public tFLOAT HASH_TABLE_REHASH_THRESHOLD( //
 	);
 
 	/**
 	 * @return
 	 */
-	@Function(name = "hash-table-size", doc = "f_hash_4")
+	@aFunction(name = "hash-table-size", doc = "f_hash_4")
 	public tINTEGER HASH_TABLE_SIZE( //
 	);
 
 	/**
 	 * @return
 	 */
-	@Function(name = "hash-table-test", doc = "f_hash_4")
+	@aFunction(name = "hash-table-test", doc = "f_hash_4")
 	public tFUNCTION HASH_TABLE_TEST( //
 	);
 
-	@Function(name = "hash-table-keys")
+	@aFunction(name = "hash-table-keys")
 	public tLIST HASH_TABLE_KEYS( //
 	);
 
-	@Function(name = "hash-table-values")
+	@aFunction(name = "hash-table-values")
 	public tLIST HASH_TABLE_VALUES( //
 	);
 
@@ -94,11 +94,11 @@ public interface tHASH_TABLE extends tBUILT_IN_CLASS
 	 * @param def
 	 * @return
 	 */
-	@Function(name = "gethash", doc = "f_gethas")
-	@BaseArg(name = "hash-table", pos = 1)
+	@aFunction(name = "gethash", doc = "f_gethas")
+	@aBaseArg(name = "hash-table", pos = 1)
 	public tT[] GETHASH( //
-			@Arg(name = "key") tT key, //
-			@Opt(name = "default") tT def //
+			@aArg(name = "key") tT key, //
+			@aOpt(name = "default") tT def //
 	);
 
 	/**
@@ -108,11 +108,11 @@ public interface tHASH_TABLE extends tBUILT_IN_CLASS
 	 * @param def
 	 * @return
 	 */
-	@Function(name = "setf-gethash", doc = "f_gethas")
-	@BaseArg(name = "hash-table", pos = 2)
+	@aFunction(name = "setf-gethash", doc = "f_gethas")
+	@aBaseArg(name = "hash-table", pos = 2)
 	public tT SET_GETHASH( //
-			@Arg(name = "value") tT value, //
-			@Arg(name = "key") tT key //
+			@aArg(name = "value") tT value, //
+			@aArg(name = "key") tT key //
 	);
 
 	/**
@@ -120,10 +120,10 @@ public interface tHASH_TABLE extends tBUILT_IN_CLASS
 	 * @param hashTable
 	 * @return
 	 */
-	@Function(name = "remhash", doc = "f_remhas")
-	@BaseArg(name = "hash-table", pos = 1)
+	@aFunction(name = "remhash", doc = "f_remhas")
+	@aBaseArg(name = "hash-table", pos = 1)
 	public tT REMHASH( //
-			@Arg(name = "key") tT key //
+			@aArg(name = "key") tT key //
 	);
 
 	/**
@@ -131,16 +131,16 @@ public interface tHASH_TABLE extends tBUILT_IN_CLASS
 	 * @param hashTable
 	 * @return
 	 */
-	@Function(name = "maphash", doc = "f_maphas")
-	@BaseArg(name = "hash-table", pos = 1)
+	@aFunction(name = "maphash", doc = "f_maphas")
+	@aBaseArg(name = "hash-table", pos = 1)
 	public tT MAPHASH( //
-			@Arg(name = "function") tFUNCTION func //
+			@aArg(name = "function") tFUNCTION func //
 	);
 
 	/**
 	 * @return
 	 */
-	@Function(name = "clrhash", doc = "f_clrhas")
+	@aFunction(name = "clrhash", doc = "f_clrhas")
 	public tT CLRHASH( //
 	);
 

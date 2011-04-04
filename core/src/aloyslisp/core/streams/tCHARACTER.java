@@ -3,7 +3,7 @@
  * <p>
  * A LISP interpreter, compiler and library.
  * <p>
- * Copyright (C) 2010 kilroySoft <aloyslisp@kilroysoft.ch>
+ * Copyright (C) 2010-2011 kilroySoft <aloyslisp@kilroysoft.ch>
  * 
  * <p>
  * This program is free software: you can redistribute it and/or modify it under
@@ -24,7 +24,7 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 20 sept. 2010 Creation
+// IP 20 sept. 2010-2011 Creation
 // --------------------------------------------------------------------------
 
 package aloyslisp.core.streams;
@@ -32,6 +32,7 @@ package aloyslisp.core.streams;
 import aloyslisp.annotations.*;
 import aloyslisp.core.*;
 import aloyslisp.core.clos.tBUILT_IN_CLASS;
+import aloyslisp.core.designators.tSTRING_DESIGNATOR;
 import aloyslisp.core.sequences.*;
 
 /**
@@ -60,25 +61,25 @@ public interface tCHARACTER extends tBUILT_IN_CLASS, tSTRING_DESIGNATOR
 	/**
 	 * @return
 	 */
-	@Function(name = "char-upcase", doc = "f_char_u")
+	@aFunction(name = "char-upcase", doc = "f_char_u")
 	public tCHARACTER CHAR_UPCASE();
 
 	/**
 	 * @return
 	 */
-	@Function(name = "char-downcase", doc = "f_char_u")
+	@aFunction(name = "char-downcase", doc = "f_char_u")
 	public tCHARACTER CHAR_DOWNCASE();
 
 	/**
 	 * @return
 	 */
-	@Function(name = "char-name", doc = "f_char_n")
+	@aFunction(name = "char-name", doc = "f_char_n")
 	public tCHARACTER CHAR_NAME();
 
 	/**
 	 * @return
 	 */
-	@Function(name = "char-int", doc = "f_char_i")
+	@aFunction(name = "char-int", doc = "f_char_i")
 	public tT CHAR_INT();
 
 }

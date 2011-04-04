@@ -3,7 +3,7 @@
  * <p>
  * A LISP interpreter, compiler and library.
  * <p>
- * Copyright (C) 2010 kilroySoft <aloyslisp@kilroysoft.ch>
+ * Copyright (C) 2010-2011 kilroySoft <aloyslisp@kilroysoft.ch>
  * 
  * <p>
  * This program is free software: you can redistribute it and/or modify it under
@@ -24,12 +24,13 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 16 oct. 2010 Creation
+// IP 16 oct. 2010-2011 Creation
 // --------------------------------------------------------------------------
 
 package aloyslisp.core.math;
 
-import aloyslisp.annotations.BuiltIn;
+import aloyslisp.annotations.aBuiltIn;
+import aloyslisp.core.tT;
 import aloyslisp.core.conditions.*;
 import static aloyslisp.core.L.*;
 
@@ -40,7 +41,7 @@ import static aloyslisp.core.L.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-@BuiltIn(classOf = "complex", typeOf = "complex", doc = "t_comple")
+@aBuiltIn(lispClass = "complex", lispType = "complex", doc = "t_comple")
 public class cCOMPLEX extends cNUMBER implements tCOMPLEX
 {
 
@@ -74,9 +75,9 @@ public class cCOMPLEX extends cNUMBER implements tCOMPLEX
 
 	/*
 	 * (non-Javadoc)
-	 * @see java.lang.Object#toString()
+	 * @see java.lang.Object#TO_STRING()
 	 */
-	public String toString()
+	public String TO_STRING()
 	{
 		return "#C(" + real + " " + imag + ")";
 	}
@@ -84,106 +85,97 @@ public class cCOMPLEX extends cNUMBER implements tCOMPLEX
 	/**
 	 * @return
 	 */
-	public cRATIO getRatioValue()
+	public tRATIO COERCE_TO_RATIO()
 	{
 		if (!imag.EQUAL(nInt(0)))
 		{
 			throw new LispException("Can't convert complex to ratio");
 		}
-		return realpart().getRatioValue();
+		return REALPART().COERCE_TO_RATIO();
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#getComplexValue()
+	 * @see aloyslisp.core.math.tNUMBER#COERCE_TO_COMPLEX()
 	 */
-	public cCOMPLEX getComplexValue()
+	@Override
+	public cNUMBER COERCE_TO_COMPLEX()
 	{
+		if (imag instanceof cINTEGER && imag.EQUALNUM(ZERO))
+			return (cNUMBER) real;
+
 		return this;
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#getIntegerValue()
+	 * @see aloyslisp.core.math.tNUMBER#COERCE_TO_INTEGER()
 	 */
-	public cINTEGER getIntegerValue()
+	public tINTEGER COERCE_TO_INTEGER()
 	{
 		if (!imag.EQUAL(nInt(0)))
 		{
 			throw new LispException("Can't convert complex to integer");
 		}
-		return realpart().getIntegerValue();
+		return REALPART().COERCE_TO_INTEGER();
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#getFloatValue()
+	 * @see aloyslisp.core.math.tNUMBER#COERCE_TO_SINGLE_FLOAT()
 	 */
-	public cSINGLE_FLOAT getFloatValue()
+	public tSINGLE_FLOAT COERCE_TO_SINGLE_FLOAT()
 	{
 		if (!imag.EQUAL(nInt(0)))
 		{
 			throw new LispException("Can't convert complex to float");
 		}
-		return realpart().getFloatValue();
+		return REALPART().COERCE_TO_SINGLE_FLOAT();
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#getDoubleValue()
+	 * @see aloyslisp.core.math.tNUMBER#COERCE_TO_DOUBLE_FLOAT()
 	 */
-	public cDOUBLE_FLOAT getDoubleValue()
+	public tDOUBLE_FLOAT COERCE_TO_DOUBLE_FLOAT()
 	{
 		if (!imag.EQUAL(nInt(0)))
 		{
 			throw new LispException("Can't convert complex to double");
 		}
-		return realpart().getDoubleValue();
+		return REALPART().COERCE_TO_DOUBLE_FLOAT();
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#getShortValue()
+	 * @see aloyslisp.core.math.tNUMBER#COERCE_TO_SHORT_FLOAT()
 	 */
-	public cSHORT_FLOAT getShortValue()
+	public tSHORT_FLOAT COERCE_TO_SHORT_FLOAT()
 	{
 		if (!imag.EQUAL(nInt(0)))
 		{
 			throw new LispException("Can't convert complex to short");
 		}
-		return realpart().getShortValue();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.cNUMBER#complexifyValue()
-	 */
-	@Override
-	public tNUMBER complexifyValue()
-	{
-		if (imag instanceof cINTEGER && imag.EQUALNUM(ZERO))
-			return real;
-
-		return this;
+		return REALPART().COERCE_TO_SHORT_FLOAT();
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.math.tNUMBER#coerce(aloyslisp.core.math.tNUMBER)
 	 */
-	public cNUMBER coerce(tNUMBER var)
+	public cNUMBER COERCE_TO_NUMBER(tNUMBER var)
 	{
 		return this;
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#equalnum(aloyslisp.core.math.tNUMBER)
+	 * @see aloyslisp.core.tT#hashCode()
 	 */
-	boolean equalnum(tNUMBER op)
+	@Override
+	public Integer SXHASH()
 	{
-		cCOMPLEX op2 = op.getComplexValue();
-		return real.EQUALNUM(op2.real) && imag.EQUALNUM(op2.imag);
+		return real.SXHASH() ^ imag.SXHASH();
 	}
 
 	/*
@@ -191,63 +183,10 @@ public class cCOMPLEX extends cNUMBER implements tCOMPLEX
 	 * @see aloyslisp.core.math.tNUMBER#add(aloyslisp.core.math.tNUMBER)
 	 */
 	@Override
-	tNUMBER add(tNUMBER op)
+	public tNUMBER SINGLE_ADD(tNUMBER op)
 	{
-		cCOMPLEX op2 = op.getComplexValue();
-		return new cCOMPLEX((tREAL) real.ADD(op2.real),
-				(tREAL) imag.ADD(op2.imag)).complexifyValue();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#substract(aloyslisp.core.math.tNUMBER)
-	 */
-	@Override
-	tNUMBER substract(tNUMBER op)
-	{
-		cCOMPLEX op2 = op.getComplexValue();
-		return new cCOMPLEX((tREAL) real.SUBSTRACT(op2.real),
-				(tREAL) imag.SUBSTRACT(op2.imag)).complexifyValue();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#minus()
-	 */
-	@Override
-	tNUMBER minus()
-	{
-		return new cCOMPLEX((tREAL) real.MINUS(), (tREAL) imag.MINUS())
-				.complexifyValue();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#inversion()
-	 */
-	@Override
-	tNUMBER inversion()
-	{
-		tNUMBER phase = (tREAL) PHASE().MINUS();
-		tNUMBER mod = ABS();
-		return new cCOMPLEX((tREAL) mod.MULTIPLY(phase.COS()),
-				(tREAL) mod.MULTIPLY(phase.SIN())).complexifyValue();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#multiply(aloyslisp.core.math.tNUMBER)
-	 */
-	@Override
-	tNUMBER multiply(tNUMBER op)
-	{
-		tNUMBER phase = (tREAL) PHASE().MINUS();
-		tNUMBER mod = ABS();
-		cCOMPLEX op2 = (cCOMPLEX) op.coerce(this);
-		phase = (tREAL) phase.ADD(op2.PHASE().MINUS());
-		mod = mod.MULTIPLY(op2.ABS());
-		return new cCOMPLEX((tREAL) mod.MULTIPLY(phase.COS()),
-				(tREAL) mod.MULTIPLY(phase.SIN())).complexifyValue();
+		return new cCOMPLEX((tREAL) real.ADD(op.REALPART()),
+				(tREAL) imag.ADD(op.IMAGPART())).COERCE_TO_COMPLEX();
 	}
 
 	/*
@@ -255,55 +194,51 @@ public class cCOMPLEX extends cNUMBER implements tCOMPLEX
 	 * @see aloyslisp.core.math.tNUMBER#division(aloyslisp.core.math.tNUMBER)
 	 */
 	@Override
-	tNUMBER division(tNUMBER op)
+	public tNUMBER SINGLE_DIVISION(tNUMBER op)
 	{
 		tNUMBER phase = (tREAL) PHASE().MINUS();
 		tNUMBER mod = ABS();
-		cCOMPLEX op2 = (cCOMPLEX) op.coerce(this);
+		cCOMPLEX op2 = (cCOMPLEX) op.COERCE_TO_NUMBER(this);
 		phase = (tREAL) phase.SUBSTRACT(op2.PHASE().MINUS());
 		mod = mod.DIVISION(op2.ABS());
 		return new cCOMPLEX((tREAL) mod.MULTIPLY(phase.COS()),
-				(tREAL) mod.MULTIPLY(phase.SIN())).complexifyValue();
+				(tREAL) mod.MULTIPLY(phase.SIN())).COERCE_TO_COMPLEX();
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#realpart()
+	 * @see aloyslisp.core.math.tNUMBER#equalnum(aloyslisp.core.math.tNUMBER)
 	 */
-	@Override
-	tNUMBER realpart()
+	public boolean SINGLE_EQUALNUM(tNUMBER op)
 	{
-		return real;
+		return real.EQUALNUM(op.REALPART()) && imag.EQUALNUM(op.IMAGPART());
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#imagpart()
+	 * @see aloyslisp.core.math.tNUMBER#multiply(aloyslisp.core.math.tNUMBER)
 	 */
 	@Override
-	tNUMBER imagpart()
+	public tNUMBER SINGLE_MULTIPLY(tNUMBER op)
 	{
-		return imag;
+		tNUMBER phase = (tREAL) PHASE().MINUS();
+		tNUMBER mod = ABS();
+		cCOMPLEX op2 = (cCOMPLEX) op.COERCE_TO_NUMBER(this);
+		phase = (tREAL) phase.ADD(op2.PHASE().MINUS());
+		mod = mod.MULTIPLY(op2.ABS());
+		return new cCOMPLEX((tREAL) mod.MULTIPLY(phase.COS()),
+				(tREAL) mod.MULTIPLY(phase.SIN())).COERCE_TO_COMPLEX();
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#conjugate()
+	 * @see aloyslisp.core.math.tNUMBER#substract(aloyslisp.core.math.tNUMBER)
 	 */
 	@Override
-	tNUMBER conjugate()
+	public tNUMBER SINGLE_SUBSTRACT(tNUMBER op)
 	{
-		return new cCOMPLEX(real, (tREAL) imag.MINUS()).complexifyValue();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#phase()
-	 */
-	@Override
-	tNUMBER phase()
-	{
-		return real.ATAN(imag);
+		return new cCOMPLEX((tREAL) real.SUBSTRACT(op.REALPART()),
+				(tREAL) imag.SUBSTRACT(op.IMAGPART())).COERCE_TO_COMPLEX();
 	}
 
 	/*
@@ -311,64 +246,9 @@ public class cCOMPLEX extends cNUMBER implements tCOMPLEX
 	 * @see aloyslisp.core.math.tNUMBER#abs()
 	 */
 	@Override
-	tREAL abs()
+	public tREAL ABS()
 	{
 		return (tREAL) real.EXPT(TWO).ADD(imag.EXPT(TWO)).SQRT();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#zerop()
-	 */
-	@Override
-	boolean zerop()
-	{
-		return real.EQUALNUM(ZERO) && imag.EQUALNUM(ZERO);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#sin()
-	 */
-	@Override
-	tNUMBER sin()
-	{
-		tNUMBER eix = MULTIPLY(I).EXP();
-		return eix.SUBSTRACT(eix.INVERSION()).DIVISION(TWO.MULTIPLY(I));
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#cos()
-	 */
-	@Override
-	tNUMBER cos()
-	{
-		tNUMBER eix = MULTIPLY(I).EXP();
-		return eix.ADD(eix.INVERSION()).DIVISION(TWO);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#tan()
-	 */
-	@Override
-	tNUMBER tan()
-	{
-		tNUMBER eix = MULTIPLY(I).EXP();
-		tNUMBER e_ix = eix.INVERSION();
-		return eix.SUBSTRACT(e_ix).DIVISION(eix.ADD(e_ix).DIVISION(I));
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#asin()
-	 */
-	@Override
-	tNUMBER asin()
-	{
-		return MULTIPLY(this).MINUS().SQRT().ADD(this.MULTIPLY(I)).LOG()
-				.MULTIPLY(I).MINUS();
 	}
 
 	/*
@@ -376,17 +256,28 @@ public class cCOMPLEX extends cNUMBER implements tCOMPLEX
 	 * @see aloyslisp.core.math.tNUMBER#acos()
 	 */
 	@Override
-	tNUMBER acos()
+	public tNUMBER ACOS()
 	{
 		return PI.DIVISION(TWO).SUBSTRACT(ASIN());
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#atan()
+	 * @see aloyslisp.core.math.tNUMBER#asin()
 	 */
 	@Override
-	tNUMBER atan()
+	public tNUMBER ASIN()
+	{
+		return MULTIPLY(this).MINUS().SQRT().ADD(this.MULTIPLY(I)).LOG()
+				.MULTIPLY(I).MINUS();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tNUMBER#atan(aloyslisp.core.math.tREAL)
+	 */
+	@Override
+	public tNUMBER ATAN(tT opt)
 	{
 		tNUMBER iy = MULTIPLY(I);
 		return ONE.ADD(iy).SUBSTRACT(ONE.SUBSTRACT(iy)).DIVISION(TWO)
@@ -395,36 +286,23 @@ public class cCOMPLEX extends cNUMBER implements tCOMPLEX
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#atan(aloyslisp.core.math.tREAL)
+	 * @see aloyslisp.core.math.tNUMBER#conjugate()
 	 */
 	@Override
-	tNUMBER atan(tREAL opt)
+	public tNUMBER CONJUGATE()
 	{
-		throw new LispException("ATAN optional arg should be cREAL");
+		return new cCOMPLEX(real, (tREAL) imag.MINUS()).COERCE_TO_COMPLEX();
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#log()
+	 * @see aloyslisp.core.math.tNUMBER#cos()
 	 */
 	@Override
-	tNUMBER log()
+	public tNUMBER COS()
 	{
-		return new cCOMPLEX((tREAL) real.ABS().LOG(), (tREAL) PHASE())
-				.complexifyValue();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#sqrt()
-	 */
-	@Override
-	tNUMBER sqrt()
-	{
-		return new cCOMPLEX((tREAL) realpart().ADD(ABS()).SQRT()
-				.MULTIPLY(TWO.INVERSION()).MULTIPLY(TWO.SQRT()),
-				(tREAL) imagpart().SUBSTRACT(ABS()).SQRT()
-						.MULTIPLY(TWO.INVERSION()).MULTIPLY(TWO.SQRT()));
+		tNUMBER eix = MULTIPLY(I).EXP();
+		return eix.ADD(eix.INVERSION()).DIVISION(TWO);
 	}
 
 	/*
@@ -432,7 +310,7 @@ public class cCOMPLEX extends cNUMBER implements tCOMPLEX
 	 * @see aloyslisp.core.math.tNUMBER#exp()
 	 */
 	@Override
-	tNUMBER exp()
+	public tNUMBER EXP()
 	{
 		return E.EXPT(this);
 	}
@@ -442,7 +320,7 @@ public class cCOMPLEX extends cNUMBER implements tCOMPLEX
 	 * @see aloyslisp.core.math.tNUMBER#expt(aloyslisp.core.math.tNUMBER)
 	 */
 	@Override
-	tNUMBER expt(tNUMBER power)
+	public tNUMBER EXPT(tNUMBER power)
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -450,12 +328,113 @@ public class cCOMPLEX extends cNUMBER implements tCOMPLEX
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.tT#hashCode()
+	 * @see aloyslisp.core.math.tNUMBER#imagpart()
 	 */
 	@Override
-	public int hashCode()
+	public tNUMBER IMAGPART()
 	{
-		return real.hashCode() ^ imag.hashCode();
+		return imag;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tNUMBER#inversion()
+	 */
+	@Override
+	public tNUMBER INVERSION()
+	{
+		tNUMBER phase = (tREAL) PHASE().MINUS();
+		tNUMBER mod = ABS();
+		return new cCOMPLEX((tREAL) mod.MULTIPLY(phase.COS()),
+				(tREAL) mod.MULTIPLY(phase.SIN())).COERCE_TO_COMPLEX();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tNUMBER#log()
+	 */
+	@Override
+	public tNUMBER LOG()
+	{
+		return new cCOMPLEX((tREAL) real.ABS().LOG(), (tREAL) PHASE())
+				.COERCE_TO_COMPLEX();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tNUMBER#minus()
+	 */
+	@Override
+	public tNUMBER MINUS()
+	{
+		return new cCOMPLEX((tREAL) real.MINUS(), (tREAL) imag.MINUS())
+				.COERCE_TO_COMPLEX();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tNUMBER#phase()
+	 */
+	@Override
+	public tNUMBER PHASE()
+	{
+		return real.ATAN(imag);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tNUMBER#realpart()
+	 */
+	@Override
+	public tNUMBER REALPART()
+	{
+		return real;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tNUMBER#sin()
+	 */
+	@Override
+	public tNUMBER SIN()
+	{
+		tNUMBER eix = MULTIPLY(I).EXP();
+		return eix.SUBSTRACT(eix.INVERSION()).DIVISION(TWO.MULTIPLY(I));
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tNUMBER#sqrt()
+	 */
+	@Override
+	public tNUMBER SQRT()
+	{
+		return new cCOMPLEX((tREAL) REALPART().ADD(ABS()).SQRT()
+				.MULTIPLY(TWO.INVERSION()).MULTIPLY(TWO.SQRT()),
+				(tREAL) IMAGPART().SUBSTRACT(ABS()).SQRT()
+						.MULTIPLY(TWO.INVERSION()).MULTIPLY(TWO.SQRT()));
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tNUMBER#tan()
+	 */
+	@Override
+	public tNUMBER TAN()
+	{
+		tNUMBER eix = MULTIPLY(I).EXP();
+		tNUMBER e_ix = eix.INVERSION();
+		return eix.SUBSTRACT(e_ix).DIVISION(eix.ADD(e_ix).DIVISION(I));
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tNUMBER#zerop()
+	 */
+	@Override
+	public boolean ZEROP()
+	{
+		return real.EQUALNUM(ZERO) && imag.EQUALNUM(ZERO);
 	}
 
 }

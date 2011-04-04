@@ -3,7 +3,7 @@
  * <p>
  * A LISP interpreter, compiler and library.
  * <p>
- * Copyright (C) 2010 kilroySoft <aloyslisp@kilroysoft.ch>
+ * Copyright (C) 2010-2011 kilroySoft <aloyslisp@kilroysoft.ch>
  * 
  * <p>
  * This program is free software: you can redistribute it and/or modify it under
@@ -38,7 +38,7 @@ import aloyslisp.annotations.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-@Type(name = "built-in-class", doc="t_built_", typep="built-in-class-p")
+@aType(name = "built-in-class", doc="t_built_", typep="built-in-class-p")
 public interface tBUILT_IN_CLASS extends tCLASS
 {
 

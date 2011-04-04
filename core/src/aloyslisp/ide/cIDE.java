@@ -1,15 +1,20 @@
 package aloyslisp.ide;
 
 import static aloyslisp.core.L.*;
+import static aloyslisp.core.streams.cSTREAM.LOAD;
+import static aloyslisp.internal.engine.cINTERNAL_CLASS.MAKE_INTERNAL_CLASS;
 
 import java.awt.*;
 import java.awt.event.*;
 
+import aloyslisp.annotations.*;
 import aloyslisp.core.*;
+import aloyslisp.core.streams.*;
 import aloyslisp.ide.action.*;
 
 import javax.swing.*;
 
+@aJavaInternal
 public class cIDE extends JFrame implements ActionListener
 {
 	/**
@@ -58,14 +63,15 @@ public class cIDE extends JFrame implements ActionListener
 		setResizable(true);
 
 		f_inputStream = new cIDE_INPUT_STREAM(this, NUM_INPUT_ROWS, NUM_COLS);
-		getContentPane().add("North", f_inputStream.getPanel());
+		getContentPane().add("South", f_inputStream.getPanel());
 
 		f_outputStream = new cIDE_OUTPUT_STREAM(NUM_OUTPUT_ROWS, NUM_COLS);
-		message("aloysLISP v. V314\n");
 		getContentPane().add("Center", f_outputStream.getPanel());
 
 		pack();
 		setVisible(true);
+		init();
+		message("aloysLISP v. V314\n");
 	}
 
 	protected void setupMenuBar()
@@ -86,9 +92,9 @@ public class cIDE extends JFrame implements ActionListener
 		// LISP
 
 		// -- Apropos
-		JMenuItem aproposItem = new JMenuItem(new RunAproposTask(this,
-				"apropos", null, "Lists all defined symbols and functions",
-				null, null));
+		JMenuItem aproposItem = new JMenuItem(new RunTask(this, "apropos",
+				null, "Lists all defined symbols and functions", null, null,
+				"(describe *package*)"));
 		f_lispMenu.add(aproposItem);
 
 		// -- Load
@@ -113,16 +119,18 @@ public class cIDE extends JFrame implements ActionListener
 
 	public void message(tT expr, boolean showPrompt)
 	{
+		f_outputStream.PRINT(str(""));
 		if (showPrompt)
-			f_outputStream.PRIN1(str(f_prompt));
-		f_outputStream.PRINT(expr);
+			f_outputStream.PRINC(str(f_prompt));
+		f_outputStream.PRINC(expr);
 	}
 
 	public void message(String msg, boolean showPrompt)
 	{
+		f_outputStream.PRINT(str(""));
 		if (showPrompt)
-			f_outputStream.PRIN1(str(f_prompt));
-		f_outputStream.PRINT(str(msg));
+			f_outputStream.PRINC(str(f_prompt));
+		f_outputStream.PRINC(str(msg));
 	}
 
 	public void message(String msg)
@@ -203,42 +211,30 @@ public class cIDE extends JFrame implements ActionListener
 		f_inputStream.eval(s);
 	}
 
-	public static void main(String[] args)
+	/**
+	 * Init aloysLisp
+	 */
+	public void init()
 	{
 		// Should be the first to allow READTABLE to be active in class
 		// loading...
-		// TODO put to core
-		System.out.println(cl.PACKAGE_NAME());
-		loadClasses("aloyslisp.core.streams");
+		// to be able to read lisp file
+		MAKE_INTERNAL_CLASS("aloyslisp.core.streams.cREADTABLE");
 
-		// Load the rest
-		// TODO Should be systematized probably :
-		// loadClasses("aloyslisp.core");
-		// loadClasses("aloyslisp.internal");
-		// loadClasses("aloyslisp.packages");
-		loadClasses("aloyslisp.annotations");
-		loadClasses("aloyslisp.core");
-		loadClasses("aloyslisp.core.clos");
-		loadClasses("aloyslisp.core.conditions");
-		loadClasses("aloyslisp.core.functions");
-		loadClasses("aloyslisp.core.math");
-		loadClasses("aloyslisp.core.packages");
-		loadClasses("aloyslisp.core.sequences");
-		loadClasses("aloyslisp.core.streams");
-		loadClasses("aloyslisp.internal.engine");
-		loadClasses("aloyslisp.internal.flowcontrol");
-		loadClasses("aloyslisp.internal.iterators");
-		loadClasses("aloyslisp.packages.common_lisp");
-		loadClasses("aloyslisp.packages.system");
+		// to be able to load classes
+		MAKE_INTERNAL_CLASS("aloyslisp.internal.engine.tINTERNAL_CLASSES");
+		MAKE_INTERNAL_CLASS("aloyslisp.internal.engine.cINTERNAL_CLASSES");
 
-		// Load first lisp file (REPL definition)
-		sym("print").e(str("aloysLisp v.V314"));
+		// to be able to setq...
+		MAKE_INTERNAL_CLASS("aloyslisp.packages.common_lisp.SpecialOperators");
 
-		// Load first lisp file (REPL definition)
-		sym("load").e(str("class.lisp"));
+		// Load classes and repl definition
+		LOAD(new cPATHNAME("class.lisp"), false, false, false);
+	}
 
+	public static void main(String[] args)
+	{
 		new cIDE("aloysLisp v. V314", ">>");
-
 	}
 
 }

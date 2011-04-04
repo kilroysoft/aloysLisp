@@ -3,7 +3,7 @@
  * <p>
  * A LISP interpreter, compiler and library.
  * <p>
- * Copyright (C) 2010 kilroySoft <aloyslisp@kilroysoft.ch>
+ * Copyright (C) 2010-2011 kilroySoft <aloyslisp@kilroysoft.ch>
  * 
  * <p>
  * This program is free software: you can redistribute it and/or modify it under
@@ -24,12 +24,12 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 18 sept. 2010 Creation
+// IP 18 sept. 2010-2011 Creation
 // --------------------------------------------------------------------------
 
 package aloyslisp.core.sequences;
 
-import aloyslisp.annotations.Type;
+import aloyslisp.annotations.aType;
 import aloyslisp.core.*;
 import aloyslisp.core.clos.tBUILT_IN_CLASS;
 
@@ -40,7 +40,7 @@ import aloyslisp.core.clos.tBUILT_IN_CLASS;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-@Type(name = "array", doc = "t_array", typep = "arrayp")
+@aType(name = "array", doc = "t_array", typep = "arrayp")
 public interface tARRAY extends tBUILT_IN_CLASS
 {
 	/**
@@ -51,7 +51,7 @@ public interface tARRAY extends tBUILT_IN_CLASS
 	/**
 	 * Return the type as a cons (int) (int 0 5) (complex (int) (float))
 	 * 
-	 * @return Type of array cell
+	 * @return aType of array cell
 	 */
 	public tT getType();
 

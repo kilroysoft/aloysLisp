@@ -3,7 +3,7 @@
  * <p>
  * A LISP interpreter, compiler and library.
  * <p>
- * Copyright (C) 2010 kilroySoft <aloyslisp@kilroysoft.ch>
+ * Copyright (C) 2010-2011 kilroySoft <aloyslisp@kilroysoft.ch>
  * 
  * <p>
  * This program is free software: you can redistribute it and/or modify it under
@@ -24,13 +24,13 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 29 déc. 2010 Creation
+// IP 29 déc. 2010-2011 Creation
 // --------------------------------------------------------------------------
 
 package aloyslisp.core.conditions;
 
-import aloyslisp.annotations.BuiltIn;
-import aloyslisp.annotations.Type;
+import aloyslisp.annotations.aBuiltIn;
+import aloyslisp.annotations.aType;
 import aloyslisp.core.tT;
 
 /**
@@ -40,8 +40,8 @@ import aloyslisp.core.tT;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-@Type(name = "type-error", doc = "e_tp_err")
-@BuiltIn(classOf = "type-error", doc = "e_tp_err")
+@aType(name = "type-error", doc = "e_tp_err")
+@aBuiltIn(lispClass = "type-error", doc = "e_tp_err")
 public class TYPE_ERROR extends ERROR
 {
 	private static final long	serialVersionUID	= 1L;
@@ -55,7 +55,7 @@ public class TYPE_ERROR extends ERROR
 	{
 		this.datum = datum;
 		this.expected = expected;
-		message += " Type error on " + datum + ". " + expected + " expected.";
+		message += " aType error on " + datum + ". " + expected + " expected.";
 	}
 
 }

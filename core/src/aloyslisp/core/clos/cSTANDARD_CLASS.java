@@ -3,7 +3,7 @@
  * <p>
  * A LISP interpreter, compiler and library.
  * <p>
- * Copyright (C) 2010 kilroySoft <aloyslisp@kilroysoft.ch>
+ * Copyright (C) 2010-2011 kilroySoft <aloyslisp@kilroysoft.ch>
  * 
  * <p>
  * This program is free software: you can redistribute it and/or modify it under
@@ -38,7 +38,7 @@ import aloyslisp.annotations.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-@BuiltIn(classOf = "standard-class", typeOf = "standard-class", doc = "t_std_cl")
+@aBuiltIn(lispClass = "standard-class", lispType = "standard-class", doc = "t_std_cl")
 public class cSTANDARD_CLASS extends cSTANDARD_OBJECT implements
 		tSTANDARD_CLASS
 {

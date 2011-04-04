@@ -3,7 +3,7 @@
  * <p>
  * A LISP interpreter, compiler and library.
  * <p>
- * Copyright (C) 2010 kilroySoft <aloyslisp@kilroysoft.ch>
+ * Copyright (C) 2010-2011 kilroySoft <aloyslisp@kilroysoft.ch>
  * 
  * <p>
  * This program is free software: you can redistribute it and/or modify it under
@@ -24,7 +24,7 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 25 déc. 2010 Creation
+// IP 25 déc. 2010-2011 Creation
 // --------------------------------------------------------------------------
 
 package aloyslisp.core.math;
@@ -39,7 +39,7 @@ import aloyslisp.core.tT;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-@Type(name = "float", doc = "t_short", typep = "floatp")
+@aType(name = "float", doc = "t_short", typep = "floatp")
 public interface tFLOAT extends tREAL
 {
 	/*************************************************************
@@ -49,31 +49,28 @@ public interface tFLOAT extends tREAL
 	 * @param f
 	 * @return
 	 */
-	@Function(name = "decode-float", doc = "f_dec_fl")
+	@aFunction(name = "decode-float", doc = "f_dec_fl")
 	public tT[] DECODE_FLOAT();
 
 	/**
 	 * @param f
 	 * @return
 	 */
-	//
-	@Function(name = "integer-decode-float", doc = "f_dec_fl")
-	public tT[] INTEGER_DECODE_FLOAT();
-
-	/**
-	 * @param f
-	 * @param scale
-	 * @return
-	 */
-	@Function(name = "scale-float", doc = "f_dec_fl")
-	public tFLOAT SCALE_FLOAT( //
-			@Arg(name = "scale") tINTEGER scale);
+	@aFunction(name = "float-digits", doc = "f_dec_fl")
+	public tINTEGER FLOAT_DIGITS();
 
 	/**
 	 * @param f
 	 * @return
 	 */
-	@Function(name = "float-radix", doc = "f_dec_fl")
+	@aFunction(name = "float-precision", doc = "f_dec_fl")
+	public tINTEGER FLOAT_PRECISION();
+
+	/**
+	 * @param f
+	 * @return
+	 */
+	@aFunction(name = "float-radix", doc = "f_dec_fl")
 	public tFLOAT FLOAT_RADIX();
 
 	/**
@@ -81,22 +78,25 @@ public interface tFLOAT extends tREAL
 	 * @param f2
 	 * @return
 	 */
-	@Function(name = "float-sign", doc = "f_dec_fl")
+	@aFunction(name = "float-sign", doc = "f_dec_fl")
 	public tFLOAT FLOAT_SIGN( //
-			@Opt(name = "scale") tFLOAT f2);
+			@aOpt(name = "scale") tFLOAT f2);
 
 	/**
 	 * @param f
 	 * @return
 	 */
-	@Function(name = "float-digits", doc = "f_dec_fl")
-	public tINTEGER FLOAT_DIGITS();
+	//
+	@aFunction(name = "integer-decode-float", doc = "f_dec_fl")
+	public tT[] INTEGER_DECODE_FLOAT();
 
 	/**
 	 * @param f
+	 * @param scale
 	 * @return
 	 */
-	@Function(name = "float-precision", doc = "f_dec_fl")
-	public tINTEGER FLOAT_PRECISION();
+	@aFunction(name = "scale-float", doc = "f_dec_fl")
+	public tFLOAT SCALE_FLOAT( //
+			@aArg(name = "scale") tINTEGER scale);
 
 }

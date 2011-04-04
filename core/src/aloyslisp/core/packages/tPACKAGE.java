@@ -3,7 +3,7 @@
  * <p>
  * A LISP interpreter, compiler and library.
  * <p>
- * Copyright (C) 2010 kilroySoft <aloyslisp@kilroysoft.ch>
+ * Copyright (C) 2010-2011 kilroySoft <aloyslisp@kilroysoft.ch>
  * 
  * <p>
  * This program is free software: you can redistribute it and/or modify it under
@@ -24,7 +24,7 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 13 sept. 2010 Creation
+// IP 13 sept. 2010-2011 Creation
 // --------------------------------------------------------------------------
 
 package aloyslisp.core.packages;
@@ -32,6 +32,7 @@ package aloyslisp.core.packages;
 import aloyslisp.annotations.*;
 import aloyslisp.core.tT;
 import aloyslisp.core.clos.tBUILT_IN_CLASS;
+import aloyslisp.core.designators.tPACKAGE_DESIGNATOR;
 
 /**
  * tPACKAGE
@@ -40,7 +41,7 @@ import aloyslisp.core.clos.tBUILT_IN_CLASS;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-@Type(name = "package", doc = "t_pkg", typep = "packagep")
+@aType(name = "package", doc = "t_pkg", typep = "packagep")
 public interface tPACKAGE extends tBUILT_IN_CLASS, tPACKAGE_DESIGNATOR
 {
 	/**
@@ -48,13 +49,6 @@ public interface tPACKAGE extends tBUILT_IN_CLASS, tPACKAGE_DESIGNATOR
 	 * @return
 	 */
 	public boolean isInUseList(tPACKAGE pack);
-
-	/**
-	 * APROPOS
-	 * 
-	 * @return
-	 */
-	public String dump();
 
 	// ////////////////////////////////////////////////////////////////////
 	// Static functions
@@ -66,9 +60,9 @@ public interface tPACKAGE extends tBUILT_IN_CLASS, tPACKAGE_DESIGNATOR
 	 * @param pack
 	 * @return
 	 */
-	@Function(name = "intern", doc = "f_intern")
-	@BaseArg(name = "package", pos = 1, type = Opt.class, def = "*package*")
-	public tSYMBOL[] INTERN(@Arg(name = "symbol") String symbol //
+	@aFunction(name = "intern", doc = "f_intern")
+	@aBaseArg(name = "package", pos = 1, type = aOpt.class, def = "*package*")
+	public tSYMBOL[] INTERN(@aArg(name = "symbol") String symbol //
 	);
 
 	/**
@@ -76,9 +70,9 @@ public interface tPACKAGE extends tBUILT_IN_CLASS, tPACKAGE_DESIGNATOR
 	 * @param pack
 	 * @return
 	 */
-	@Function(name = "unintern", doc = "f_uninte")
-	@BaseArg(name = "package", pos = 1, type = Opt.class, def = "*package*")
-	public tSYMBOL UNINTERN(@Arg(name = "symbol") String symbol //
+	@aFunction(name = "unintern", doc = "f_uninte")
+	@aBaseArg(name = "package", pos = 1, type = aOpt.class, def = "*package*")
+	public tSYMBOL UNINTERN(@aArg(name = "symbol") String symbol //
 	);
 
 	/**
@@ -86,9 +80,9 @@ public interface tPACKAGE extends tBUILT_IN_CLASS, tPACKAGE_DESIGNATOR
 	 * @param pack
 	 * @return
 	 */
-	@Function(name = "find-symbol", doc = "f_find_s")
-	@BaseArg(name = "package", pos = 1, type = Opt.class, def = "*package*")
-	public tSYMBOL[] FIND_SYMBOL(@Arg(name = "symbol") String symbol //
+	@aFunction(name = "find-symbol", doc = "f_find_s")
+	@aBaseArg(name = "package", pos = 1, type = aOpt.class, def = "*package*")
+	public tSYMBOL[] FIND_SYMBOL(@aArg(name = "symbol") String symbol //
 	);
 
 	/**
@@ -96,11 +90,11 @@ public interface tPACKAGE extends tBUILT_IN_CLASS, tPACKAGE_DESIGNATOR
 	 * @param pack
 	 * @return
 	 */
-	@Function(name = "import", doc = "f_import")
-	@BaseArg(name = "package", pos = 1, type = Opt.class, def = "*package*")
+	@aFunction(name = "import", doc = "f_import")
+	@aBaseArg(name = "package", pos = 1, type = aOpt.class, def = "*package*")
 	public tSYMBOL IMPORT(
 	//
-			@Arg(name = "symbols") tT symbols //
+			@aArg(name = "symbols") tT symbols //
 	);
 
 	/**
@@ -108,17 +102,17 @@ public interface tPACKAGE extends tBUILT_IN_CLASS, tPACKAGE_DESIGNATOR
 	 * @param pack
 	 * @return
 	 */
-	@Function(name = "export", doc = "f_export")
-	@BaseArg(name = "package", pos = 1, type = Opt.class, def = "*package*")
+	@aFunction(name = "export", doc = "f_export")
+	@aBaseArg(name = "package", pos = 1, type = aOpt.class, def = "*package*")
 	public tSYMBOL EXPORT(
 	//
-			@Arg(name = "symbols") tT symbols //
+			@aArg(name = "symbols") tT symbols //
 	);
 
 	/**
 	 * @return
 	 */
-	@Function(name = "package-name", doc = "f_pkg_na")
+	@aFunction(name = "package-name", doc = "f_pkg_na")
 	public String PACKAGE_NAME();
 
 }

@@ -3,7 +3,7 @@
  * <p>
  * A LISP interpreter, compiler and library.
  * <p>
- * Copyright (C) 2010 kilroySoft <aloyslisp@kilroysoft.ch>
+ * Copyright (C) 2010-2011 kilroySoft <aloyslisp@kilroysoft.ch>
  * 
  * <p>
  * This program is free software: you can redistribute it and/or modify it under
@@ -45,7 +45,7 @@ import static aloyslisp.core.L.*;
 public class cARG_KEY extends cARG
 {
 
-	protected tSYMBOL	key;
+	public tSYMBOL	key;
 
 	/**
 	 * @param orig
@@ -60,11 +60,11 @@ public class cARG_KEY extends cARG
 	public cARG_KEY(tT def)
 	{
 		super(NIL, NIL, false);
-		System.out.println("adding key : " + def);
+		// System.out.println("adding key : " + def);
 		if (def instanceof tSYMBOL)
 		{
 			// the case (&key var)
-			setOrig((tSYMBOL) def);
+			SET_SYMBOL_ORIG((tSYMBOL) def);
 			key = key(orig.SYMBOL_NAME());
 		}
 		else if (def instanceof tLIST)
@@ -74,12 +74,12 @@ public class cARG_KEY extends cARG
 			{
 				// the case (&key ((:key var) val)))
 				key = (tSYMBOL) symbol.CAR();
-				setOrig((tSYMBOL) symbol.CDR().CAR());
+				SET_SYMBOL_ORIG((tSYMBOL) symbol.CDR().CAR());
 			}
 			else if (symbol instanceof tSYMBOL)
 			{
 				// the case (&key (var val))
-				setOrig((tSYMBOL) symbol);
+				SET_SYMBOL_ORIG((tSYMBOL) symbol);
 				key = key(SYMBOL_NAME());
 			}
 			else
@@ -98,7 +98,7 @@ public class cARG_KEY extends cARG
 	 */
 	public String DESCRIBE()
 	{
-		return "#<DYN-ARG-KEY " + orig.toString() + " " + key + " " + value
+		return "#<DYN-ARG-KEY " + orig.TO_STRING() + " " + key + " " + value
 				+ "" + (special ? T : NIL) + " " + (base ? T : NIL) + " "
 				+ value + ">";
 	}

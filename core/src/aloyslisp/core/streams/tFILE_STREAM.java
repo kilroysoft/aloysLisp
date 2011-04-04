@@ -3,7 +3,7 @@
  * <p>
  * A LISP interpreter, compiler and library.
  * <p>
- * Copyright (C) 2010 kilroySoft <aloyslisp@kilroysoft.ch>
+ * Copyright (C) 2010-2011 kilroySoft <aloyslisp@kilroysoft.ch>
  * 
  * <p>
  * This program is free software: you can redistribute it and/or modify it under
@@ -24,10 +24,12 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 11 nov. 2010 Creation
+// IP 11 nov. 2010-2011 Creation
 // --------------------------------------------------------------------------
 
 package aloyslisp.core.streams;
+
+import aloyslisp.annotations.*;
 
 /**
  * FILE_STREAM
@@ -38,7 +40,10 @@ package aloyslisp.core.streams;
  */
 public interface tFILE_STREAM extends tSTREAM
 {
-	public tPATHNAME setPathname(tPATHNAME_DESIGNATOR path);
-
-	public tPATHNAME getPathname();
+	/**
+	 * @return
+	 */
+	@aNonStandard
+	@aFunction(name = "get-pathname")
+	public tPATHNAME GET_PATHNAME();
 }

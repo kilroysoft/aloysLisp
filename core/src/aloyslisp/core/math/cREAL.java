@@ -3,7 +3,7 @@
  * <p>
  * A LISP interpreter, compiler and library.
  * <p>
- * Copyright (C) 2010 kilroySoft <aloyslisp@kilroysoft.ch>
+ * Copyright (C) 2010-2011 kilroySoft <aloyslisp@kilroysoft.ch>
  * 
  * <p>
  * This program is free software: you can redistribute it and/or modify it under
@@ -24,7 +24,7 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 26 déc. 2010 Creation
+// IP 26 déc. 2010-2011 Creation
 // --------------------------------------------------------------------------
 
 package aloyslisp.core.math;
@@ -44,230 +44,32 @@ import static aloyslisp.core.L.*;
 public abstract class cREAL extends cNUMBER implements tREAL
 {
 
-	/* *******************************************************************
-	 * COMPARATORS
-	 */
-	/**
-	 * Test greater a > b
-	 * 
-	 * @param op
-	 * @return
-	 */
-	abstract boolean greater(tREAL op);
-
-	/**
-	 * Test lower a < b
-	 * 
-	 * @param op
-	 * @return
-	 */
-	abstract boolean lower(tREAL op);
-
-	/* *******************************************************************
-	 * cRATIONAL
-	 */
-	/**
-	 * @return
-	 */
-	abstract tRATIONAL rational();
-
-	/**
-	 * @return
-	 */
-	abstract tRATIONAL rationalize();
-
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tREAL#doubleValue()
+	 * @see aloyslisp.core.math.tNUMBER#COERCE_TO_COMPLEX()
 	 */
-	public Double doubleValue()
-	{
-		return getDoubleValue().value;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.cNUMBER#complexifyValue()
-	 */
-	public tNUMBER complexifyValue()
+	public cNUMBER COERCE_TO_COMPLEX()
 	{
 		return this;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tREAL#floatValue()
-	 */
-	public Float floatValue()
-	{
-		return getFloatValue().value;
-	}
-
-	/**
-	 * @param op
-	 * @return
-	 */
-	tREAL mod(tREAL op)
-	{
-		tREAL[] rest = FLOOR(op);
-		return rest[1];
-	}
-
-	/**
-	 * @param op
-	 * @return
-	 */
-	tREAL rem(tREAL op)
-	{
-		tREAL[] rest = TRUNCATE(op);
-		return rest[1];
-	}
-
-	tREAL[] floor()
-	{
-		return FLOOR(ONE);
-	}
-
-	tREAL[] floor(tREAL op)
-	{
-		tINTEGER quotient = new cINTEGER(
-				((Double) Math.floor(DIVISION(op.getDoubleValue())
-						.getDoubleValue().doubleValue())).toString());
-		return new tREAL[]
-		{ quotient, (tREAL) this.SUBSTRACT(quotient.MULTIPLY(op)) };
-	}
-
-	tREAL[] ceiling()
-	{
-		return CEILING(ONE);
-	}
-
-	tREAL[] ceiling(tREAL op)
-	{
-		tINTEGER quotient = new cINTEGER(
-				((Double) Math.ceil(DIVISION(op.getDoubleValue())
-						.getDoubleValue().doubleValue())).toString());
-		return new tREAL[]
-		{ quotient, (tREAL) this.SUBSTRACT(quotient.MULTIPLY(op)) };
-	}
-
-	tREAL[] truncate()
-	{
-		return TRUNCATE(ONE);
-	}
-
-	tREAL[] truncate(tREAL op)
-	{
-		tINTEGER quotient = DIVISION(op.getDoubleValue()).getIntegerValue();
-		return new tREAL[]
-		{ quotient, (tREAL) this.SUBSTRACT(quotient.MULTIPLY(op)) };
-	}
-
-	tREAL[] round()
-	{
-		return ROUND(ONE);
-	}
-
-	tREAL[] round(tREAL op)
-	{
-		tINTEGER quotient = new cINTEGER(
-				Math.round(DIVISION(op.getDoubleValue()).getDoubleValue()
-						.doubleValue()));
-		return new tREAL[]
-		{ quotient, (tREAL) this.SUBSTRACT(quotient.MULTIPLY(op)) };
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.math.cNUMBER#abs()
 	 */
-	tREAL abs()
+	public tREAL ABS()
 	{
-		return lower(ZERO) ? (tREAL) minus() : this;
+		return SINGLE_LOWER(ZERO) ? (tREAL) MINUS() : this;
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.cNUMBER#realpart()
-	 */
-	tNUMBER realpart()
-	{
-		return this;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.cNUMBER#imagpart()
-	 */
-	tNUMBER imagpart()
-	{
-		return ZERO;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.cNUMBER#conjugate()
-	 */
-	tNUMBER conjugate()
-	{
-		return this;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.cNUMBER#phase()
-	 */
-	tNUMBER phase()
-	{
-		tNUMBER res = ONE.coerce(this);
-		return MINUSP() ? res.MINUS() : res;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.cNUMBER#zerop()
-	 */
-	boolean zerop()
-	{
-		return EQUALNUM(ZERO);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#sin()
+	 * @see aloyslisp.core.math.tNUMBER#acos()
 	 */
 	@Override
-	tNUMBER sin()
+	public tNUMBER ACOS()
 	{
-		Double res = Math.sin(getDoubleValue().doubleValue());
-		if (this instanceof cDOUBLE_FLOAT)
-			return new cDOUBLE_FLOAT(res);
-		else
-			return new cSINGLE_FLOAT(res.floatValue());
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#cos()
-	 */
-	@Override
-	tNUMBER cos()
-	{
-		Double res = Math.cos(getDoubleValue().doubleValue());
-		if (this instanceof cDOUBLE_FLOAT)
-			return new cDOUBLE_FLOAT(res);
-		else
-			return new cSINGLE_FLOAT(res.floatValue());
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#tan()
-	 */
-	@Override
-	tNUMBER tan()
-	{
-		Double res = Math.tan(getDoubleValue().doubleValue());
+		Double res = Math.acos(COERCE_TO_DOUBLE_FLOAT().DOUBLE_VALUE());
 		if (this instanceof cDOUBLE_FLOAT)
 			return new cDOUBLE_FLOAT(res);
 		else
@@ -279,37 +81,9 @@ public abstract class cREAL extends cNUMBER implements tREAL
 	 * @see aloyslisp.core.math.tNUMBER#asin()
 	 */
 	@Override
-	tNUMBER asin()
+	public tNUMBER ASIN()
 	{
-		Double res = Math.asin(getDoubleValue().doubleValue());
-		if (this instanceof cDOUBLE_FLOAT)
-			return new cDOUBLE_FLOAT(res);
-		else
-			return new cSINGLE_FLOAT(res.floatValue());
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#acos()
-	 */
-	@Override
-	tNUMBER acos()
-	{
-		Double res = Math.acos(getDoubleValue().doubleValue());
-		if (this instanceof cDOUBLE_FLOAT)
-			return new cDOUBLE_FLOAT(res);
-		else
-			return new cSINGLE_FLOAT(res.floatValue());
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#atan()
-	 */
-	@Override
-	tNUMBER atan()
-	{
-		Double res = Math.atan(getDoubleValue().doubleValue());
+		Double res = Math.asin(COERCE_TO_DOUBLE_FLOAT().DOUBLE_VALUE());
 		if (this instanceof cDOUBLE_FLOAT)
 			return new cDOUBLE_FLOAT(res);
 		else
@@ -321,10 +95,10 @@ public abstract class cREAL extends cNUMBER implements tREAL
 	 * @see aloyslisp.core.math.tNUMBER#atan(aloyslisp.core.math.tNUMBER)
 	 */
 	@Override
-	tNUMBER atan(tREAL opt)
+	public tNUMBER ATAN(tT opt)
 	{
 		// TODO crectly write the atan
-		Double res = Math.atan(getDoubleValue().doubleValue());
+		Double res = Math.atan(COERCE_TO_DOUBLE_FLOAT().DOUBLE_VALUE());
 		if (this instanceof cDOUBLE_FLOAT)
 			return new cDOUBLE_FLOAT(res);
 		else
@@ -333,265 +107,21 @@ public abstract class cREAL extends cNUMBER implements tREAL
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#log()
+	 * @see aloyslisp.core.math.tREAL#CEILING(aloyslisp.core.tT)
 	 */
-	@Override
-	tNUMBER log()
-	{
-		Double res = Math.log(getDoubleValue().doubleValue());
-		if (this instanceof cDOUBLE_FLOAT)
-			return new cDOUBLE_FLOAT(res);
-		else
-			return new cSINGLE_FLOAT(res.floatValue());
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#sqrt()
-	 */
-	@Override
-	tNUMBER sqrt()
-	{
-		Double res = Math.sqrt(getDoubleValue().doubleValue());
-		if (this instanceof cDOUBLE_FLOAT)
-			return new cDOUBLE_FLOAT(res);
-		else
-			return new cSINGLE_FLOAT(res.floatValue());
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#exp()
-	 */
-	@Override
-	tNUMBER exp()
-	{
-		Double res = Math.exp(getDoubleValue().doubleValue());
-		if (this instanceof cDOUBLE_FLOAT)
-			return new cDOUBLE_FLOAT(res);
-		else
-			return new cSINGLE_FLOAT(res.floatValue());
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#expt(aloyslisp.core.math.tNUMBER)
-	 */
-	@Override
-	tNUMBER expt(tNUMBER power)
-	{
-		// TODO add power as integer
-		Double res = Math.pow(getDoubleValue().doubleValue(),
-				power.getDoubleValue().value);
-		if (this instanceof cDOUBLE_FLOAT)
-			return new cDOUBLE_FLOAT(res);
-		else
-			return new cSINGLE_FLOAT(res.floatValue());
-	}
-
-	/**
-	 * @return
-	 */
-	tNUMBER random()
-	{
-		return MULTIPLY(new cDOUBLE_FLOAT(Math.random())).coerce(this);
-	}
-
-	/**
-	 * @param st
-	 * @return
-	 */
-	tNUMBER random(tRANDOM_STATE st)
-	{
-		return MULTIPLY(new cDOUBLE_FLOAT(Math.random())).coerce(this);
-	}
-
-	/**
-	 * @return
-	 */
-	boolean minusp()
-	{
-		return LOWER(ZERO);
-	}
-
-	/**
-	 * @return
-	 */
-	boolean plusp()
-	{
-		return GREATER(ZERO);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tREAL#GREATER(aloyslisp.core.tT)
-	 */
-	@Override
-	public boolean GREATER(tT op)
-	{
-		if (op instanceof tREAL)
-		{
-			return ((cREAL) coerce((cREAL) op)).greater((tREAL) op);
-		}
-		else if (op == NIL)
-		{
-			return true;
-		}
-		else if (op instanceof tLIST)
-		{
-			tLIST list = (tLIST) op;
-			if (!GREATER(list.CAR()))
-				return false;
-			return GREATER(list.CDR());
-		}
-
-		throw new TYPE_ERROR(op, sym("real"));
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tREAL#LOWER(aloyslisp.core.tT)
-	 */
-	@Override
-	public boolean LOWER(tT op)
-	{
-		if (op instanceof tREAL)
-		{
-			return ((cREAL) coerce((cREAL) op)).lower((tREAL) op);
-		}
-		else if (op == NIL)
-		{
-			return true;
-		}
-		else if (op instanceof tLIST)
-		{
-			tLIST list = (tLIST) op;
-			if (!GREATER(list.CAR()))
-				return false;
-			return GREATER(list.CDR());
-		}
-
-		throw new TYPE_ERROR(op, sym("real"));
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tREAL#MINUSP()
-	 */
-	@Override
-	public boolean MINUSP()
-	{
-		return minusp();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tREAL#PLUSP()
-	 */
-	@Override
-	public boolean PLUSP()
-	{
-		return plusp();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tREAL#RATIONAL()
-	 */
-	@Override
-	public tRATIONAL RATIONAL()
-	{
-		return rational();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tREAL#RATIONALIZE()
-	 */
-	@Override
-	public tRATIONAL RATIONALIZE()
-	{
-		return rationalize();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tREAL#MOD(aloyslisp.core.math.tREAL)
-	 */
-	@Override
-	public tREAL MOD(tREAL op)
-	{
-		return mod(op);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tREAL#REM(aloyslisp.core.math.tREAL)
-	 */
-	@Override
-	public tREAL REM(tREAL op)
-	{
-		return rem(op);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tREAL#FLOOR(aloyslisp.core.math.tREAL)
-	 */
-	@Override
-	public tREAL[] FLOOR(tT op)
-	{
-		if (op == NIL)
-			return floor();
-		else if (op instanceof tREAL)
-			return floor((tREAL) op);
-
-		throw new TYPE_ERROR(op, sym("real"));
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tREAL#CEILING(aloyslisp.core.math.tREAL)
-	 */
-	@Override
 	public tREAL[] CEILING(tT op)
 	{
 		if (op == NIL)
-			return ceiling();
+			op = ONE;
 		else if (op instanceof tREAL)
-			return ceiling((tREAL) op);
-
-		throw new TYPE_ERROR(op, sym("real"));
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tREAL#TRUNCATE(aloyslisp.core.math.tREAL)
-	 */
-	@Override
-	public tREAL[] TRUNCATE(tT op)
-	{
-		if (op == NIL)
-			return truncate();
-		else if (op instanceof tREAL)
-			return truncate((tREAL) op);
-
-		throw new TYPE_ERROR(op, sym("real"));
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tREAL#ROUND(aloyslisp.core.math.tREAL)
-	 */
-	@Override
-	public tREAL[] ROUND(tT op)
-	{
-		if (op == NIL)
-			return round();
-		else if (op instanceof tREAL)
-			return round((tREAL) op);
-
-		throw new TYPE_ERROR(op, sym("real"));
+			;
+		else
+			throw new TYPE_ERROR(op, sym("real"));
+		tINTEGER quotient = new cINTEGER(((Double) Math.ceil(DIVISION(
+				((tREAL) op).COERCE_TO_DOUBLE_FLOAT()).COERCE_TO_DOUBLE_FLOAT()
+				.DOUBLE_VALUE())).toString());
+		return new tREAL[]
+		{ quotient, (tREAL) this.SUBSTRACT(quotient.MULTIPLY(op)) };
 	}
 
 	/*
@@ -605,6 +135,197 @@ public abstract class cREAL extends cNUMBER implements tREAL
 
 	/*
 	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.cNUMBER#conjugate()
+	 */
+	public tNUMBER CONJUGATE()
+	{
+		return this;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tNUMBER#cos()
+	 */
+	@Override
+	public tNUMBER COS()
+	{
+		Double res = Math.cos(COERCE_TO_DOUBLE_FLOAT().DOUBLE_VALUE());
+		if (this instanceof cDOUBLE_FLOAT)
+			return new cDOUBLE_FLOAT(res);
+		else
+			return new cSINGLE_FLOAT(res.floatValue());
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tNUMBER#exp()
+	 */
+	@Override
+	public tNUMBER EXP()
+	{
+		Double res = Math.exp(COERCE_TO_DOUBLE_FLOAT().DOUBLE_VALUE());
+		if (this instanceof cDOUBLE_FLOAT)
+			return new cDOUBLE_FLOAT(res);
+		else
+			return new cSINGLE_FLOAT(res.floatValue());
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tNUMBER#expt(aloyslisp.core.math.tNUMBER)
+	 */
+	@Override
+	public tNUMBER EXPT(tNUMBER power)
+	{
+		// TODO add power as integer
+		Double res = Math.pow(DOUBLE_VALUE(), power.DOUBLE_VALUE());
+		if (this instanceof cDOUBLE_FLOAT)
+			return new cDOUBLE_FLOAT(res);
+		else
+			return new cSINGLE_FLOAT(res.floatValue());
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tREAL#FLOOR(aloyslisp.core.tT)
+	 */
+	public tREAL[] FLOOR(tT op)
+	{
+		if (op == NIL)
+			op = ONE;
+		else if (op instanceof tREAL)
+			;
+		else
+			throw new TYPE_ERROR(op, sym("real"));
+		tINTEGER quotient = new cINTEGER(((Double) Math.floor(DIVISION(
+				((tREAL) op).COERCE_TO_DOUBLE_FLOAT()).COERCE_TO_DOUBLE_FLOAT()
+				.DOUBLE_VALUE())).toString());
+		return new tREAL[]
+		{ quotient, (tREAL) this.SUBSTRACT(quotient.MULTIPLY(op)) };
+	}
+
+	/* *******************************************************************
+	 * COMPARATORS
+	 */
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tREAL#GREATER(aloyslisp.core.tT)
+	 */
+	@Override
+	public boolean GREATER(tT op)
+	{
+		if (op instanceof tREAL)
+		{
+			return ((cREAL) COERCE_TO_NUMBER((cREAL) op))
+					.SINGLE_GREATER((tREAL) op);
+		}
+		else if (op == NIL)
+		{
+			return true;
+		}
+		else if (op instanceof tLIST)
+		{
+			tLIST list = (tLIST) op;
+			if (!GREATER(list.CAR()))
+				return false;
+			return GREATER(list.CDR());
+		}
+	
+		throw new TYPE_ERROR(op, sym("real"));
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.cNUMBER#imagpart()
+	 */
+	public tNUMBER IMAGPART()
+	{
+		return ZERO;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tNUMBER#log()
+	 */
+	@Override
+	public tNUMBER LOG()
+	{
+		Double res = Math.log(COERCE_TO_DOUBLE_FLOAT().DOUBLE_VALUE());
+		if (this instanceof cDOUBLE_FLOAT)
+			return new cDOUBLE_FLOAT(res);
+		else
+			return new cSINGLE_FLOAT(res.floatValue());
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tREAL#LOWER(aloyslisp.core.tT)
+	 */
+	@Override
+	public boolean LOWER(tT op)
+	{
+		if (op instanceof tREAL)
+		{
+			return ((cREAL) COERCE_TO_NUMBER((cREAL) op))
+					.SINGLE_LOWER((tREAL) op);
+		}
+		else if (op == NIL)
+		{
+			return true;
+		}
+		else if (op instanceof tLIST)
+		{
+			tLIST list = (tLIST) op;
+			if (!GREATER(list.CAR()))
+				return false;
+			return GREATER(list.CDR());
+		}
+	
+		throw new TYPE_ERROR(op, sym("real"));
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tREAL#MINUSP()
+	 */
+	@Override
+	public boolean MINUSP()
+	{
+		return LOWER(ZERO);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tREAL#MOD(aloyslisp.core.math.tREAL)
+	 */
+	public tREAL MOD(tREAL op)
+	{
+		tREAL[] rest = FLOOR(op);
+		return rest[1];
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.cNUMBER#phase()
+	 */
+	public tNUMBER PHASE()
+	{
+		tNUMBER res = ONE.COERCE_TO_NUMBER(this);
+		return MINUSP() ? res.MINUS() : res;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tREAL#PLUSP()
+	 */
+	@Override
+	public boolean PLUSP()
+	{
+		return GREATER(ZERO);
+	}
+
+	/*
+	 * (non-Javadoc)
 	 * @see
 	 * aloyslisp.core.math.tNUMBER#RANDOM(aloyslisp.core.numbers.tRANDOM_STATE)
 	 */
@@ -612,11 +333,123 @@ public abstract class cREAL extends cNUMBER implements tREAL
 	public tNUMBER RANDOM(tT st)
 	{
 		if (st == NIL)
-			return random();
+			return MULTIPLY(new cDOUBLE_FLOAT(Math.random())).COERCE_TO_NUMBER(
+					this);
 		else if (st instanceof tRANDOM_STATE)
-			return random((tRANDOM_STATE) st);
-
+			return MULTIPLY(new cDOUBLE_FLOAT(Math.random())).COERCE_TO_NUMBER(
+					this);
+	
 		throw new TYPE_ERROR(st, sym("random-state"));
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.cNUMBER#realpart()
+	 */
+	public tNUMBER REALPART()
+	{
+		return this;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tREAL#REM(aloyslisp.core.math.tREAL)
+	 */
+	@Override
+	public tREAL REM(tREAL op)
+	{
+		tREAL[] rest = TRUNCATE(op);
+		return rest[1];
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tREAL#ROUND(aloyslisp.core.math.tREAL)
+	 */
+	@Override
+	public tREAL[] ROUND(tT op)
+	{
+		if (op == NIL)
+			op = ONE;
+		else if (op instanceof tREAL)
+			;
+		else
+			throw new TYPE_ERROR(op, sym("real"));
+		tINTEGER quotient = new cINTEGER(Math.round(DIVISION(
+				((tREAL) op).COERCE_TO_DOUBLE_FLOAT()).COERCE_TO_DOUBLE_FLOAT()
+				.DOUBLE_VALUE()));
+		return new tREAL[]
+		{ quotient, (tREAL) this.SUBSTRACT(quotient.MULTIPLY(op)) };
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tNUMBER#sin()
+	 */
+	@Override
+	public tNUMBER SIN()
+	{
+		Double res = Math.sin(COERCE_TO_DOUBLE_FLOAT().DOUBLE_VALUE());
+		if (this instanceof cDOUBLE_FLOAT)
+			return new cDOUBLE_FLOAT(res);
+		else
+			return new cSINGLE_FLOAT(res.floatValue());
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tNUMBER#sqrt()
+	 */
+	@Override
+	public tNUMBER SQRT()
+	{
+		Double res = Math.sqrt(COERCE_TO_DOUBLE_FLOAT().DOUBLE_VALUE());
+		if (this instanceof cDOUBLE_FLOAT)
+			return new cDOUBLE_FLOAT(res);
+		else
+			return new cSINGLE_FLOAT(res.floatValue());
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tNUMBER#tan()
+	 */
+	@Override
+	public tNUMBER TAN()
+	{
+		Double res = Math.tan(COERCE_TO_DOUBLE_FLOAT().DOUBLE_VALUE());
+		if (this instanceof cDOUBLE_FLOAT)
+			return new cDOUBLE_FLOAT(res);
+		else
+			return new cSINGLE_FLOAT(res.floatValue());
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tREAL#TRUNCATE(aloyslisp.core.math.tREAL)
+	 */
+	@Override
+	public tREAL[] TRUNCATE(tT op)
+	{
+		if (op == NIL)
+			op = ONE;
+		else if (op instanceof tREAL)
+			;
+		else
+			throw new TYPE_ERROR(op, sym("real"));
+		tINTEGER quotient = DIVISION(((tREAL) op).COERCE_TO_DOUBLE_FLOAT())
+				.COERCE_TO_INTEGER();
+		return new tREAL[]
+		{ quotient, (tREAL) this.SUBSTRACT(quotient.MULTIPLY(op)) };
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.cNUMBER#zerop()
+	 */
+	public boolean ZEROP()
+	{
+		return EQUALNUM(ZERO);
 	}
 
 }

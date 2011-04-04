@@ -3,7 +3,7 @@
  * <p>
  * A LISP interpreter, compiler and library.
  * <p>
- * Copyright (C) 2010 kilroySoft <aloyslisp@kilroysoft.ch>
+ * Copyright (C) 2010-2011 kilroySoft <aloyslisp@kilroysoft.ch>
  * 
  * <p>
  * This program is free software: you can redistribute it and/or modify it under
@@ -24,7 +24,7 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 19 sept. 2010 Creation
+// IP 19 sept. 2010-2011 Creation
 // IP UB12 Update commentaries
 // --------------------------------------------------------------------------
 
@@ -33,9 +33,9 @@ package aloyslisp.core.packages;
 import aloyslisp.annotations.*;
 import aloyslisp.core.*;
 import aloyslisp.core.conditions.*;
+import aloyslisp.core.designators.tPACKAGE_DESIGNATOR;
 import aloyslisp.core.functions.*;
 import aloyslisp.core.sequences.*;
-import aloyslisp.internal.engine.*;
 import aloyslisp.internal.iterators.*;
 import static aloyslisp.core.L.*;
 
@@ -46,7 +46,7 @@ import static aloyslisp.core.L.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-@BuiltIn(classOf = "symbol", doc = "t_symbol")
+@aBuiltIn(lispClass = "symbol", doc = "t_symbol")
 public class cSYMBOL extends cCELL implements tSYMBOL
 {
 	/**
@@ -68,11 +68,6 @@ public class cSYMBOL extends cCELL implements tSYMBOL
 	 * 
 	 */
 	protected tFUNCTION	function	= null;
-
-	/**
-	 * 
-	 */
-	protected tLIST		declare		= NIL;		;
 
 	/**
 	 * 
@@ -338,14 +333,14 @@ public class cSYMBOL extends cCELL implements tSYMBOL
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tSYMBOL#unset()
 	 */
-	public tSYMBOL unset()
+	public tSYMBOL MAKUNBOUND()
 	{
 		// in case of special we search in the environment *variables*
 		if (SPECIALP())
 		{
 			cDYN_SYMBOL res = getAll(this);
 			if (res != null && !res.SYMBOL_NAME().equals(this.SYMBOL_NAME()))
-				return res.unset();
+				return res.MAKUNBOUND();
 		}
 
 		value = null;
@@ -408,7 +403,7 @@ public class cSYMBOL extends cCELL implements tSYMBOL
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tSYMBOL#fUnset()
 	 */
-	public tSYMBOL fUnset()
+	public tSYMBOL FMAKUNBOUND()
 	{
 		function = null;
 		return this;
@@ -470,7 +465,7 @@ public class cSYMBOL extends cCELL implements tSYMBOL
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tSYMBOL#copy(aloyslisp.core.types.tT)
 	 */
-	public tT copy(tT copyProps)
+	public tT COPY_SYMBOL(tT copyProps)
 	{
 		// TODO Implement copy of symbols
 		return null;
@@ -480,7 +475,7 @@ public class cSYMBOL extends cCELL implements tSYMBOL
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.cCELL#printable()
 	 */
-	public String toString()
+	public String TO_STRING()
 	{
 		if (pack == null)
 			return "#:" + name;
@@ -519,44 +514,9 @@ public class cSYMBOL extends cCELL implements tSYMBOL
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.types.tSYMBOL#setSpecial(boolean)
-	 */
-	public tSYMBOL setSpecial(boolean special)
-	{
-		cDYN_SYMBOL atom = e.arg(this);
-		if (atom != null)
-			return atom.SETSPECIAL(special);
-
-		this.special = special;
-		return this;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.types.tSYMBOL#setDeclare(aloyslisp.core.types.tLIST)
-	 */
-	public tSYMBOL setDeclare(tLIST declare)
-	{
-		// TODO test environment
-		this.declare = declare;
-		return this;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.types.tSYMBOL#getDeclare()
-	 */
-	public tLIST getDeclare()
-	{
-		// TODO test environment
-		return declare;
-	}
-
-	/*
-	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tSYMBOL#setConstant(boolean)
 	 */
-	public tSYMBOL setConstant(boolean constant)
+	public tSYMBOL SET_CONSTANT(boolean constant)
 	{
 		this.constant = constant;
 		return this;
@@ -575,7 +535,7 @@ public class cSYMBOL extends cCELL implements tSYMBOL
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tSYMBOL#getOrig()
 	 */
-	public tSYMBOL getOrig()
+	public tSYMBOL SYMBOL_ORIG()
 	{
 		return this;
 	}
@@ -587,7 +547,7 @@ public class cSYMBOL extends cCELL implements tSYMBOL
 	public String DESCRIBE()
 	{
 		tT func = fGetValue();
-		return toString() + " " + pack + " " + getValue() + " "
+		return TO_STRING() + " " + pack + " " + getValue() + " "
 				+ ((func instanceof tFUNCTION) ? func.DESCRIBE() : func) + " "
 				+ pList;
 	}
@@ -610,10 +570,10 @@ public class cSYMBOL extends cCELL implements tSYMBOL
 	 *         IMPLEMENT EXPORT
 	 * @deprecated
 	 */
-	@Static(name = "export", doc = "f_export")
+	@aFunction(name = "export", doc = "f_export")
 	public static tT EXPORT( //
-			@Arg(name = "symbol") tT symbol, //
-			@Opt(name = "pack") tT pack)
+			@aArg(name = "symbol") tT symbol, //
+			@aOpt(name = "pack") tT pack)
 	{
 		if (pack != NIL)
 			pack = (tPACKAGE) cPACKAGE.FIND_PACKAGE((tPACKAGE_DESIGNATOR) pack);
@@ -640,10 +600,10 @@ public class cSYMBOL extends cCELL implements tSYMBOL
 	 * @see aloyslisp.core.tT#hashCode()
 	 */
 	@Override
-	public int hashCode()
+	public Integer SXHASH()
 	{
 		// TODO Auto-generated method stub
-		return str(name).hashCode();
+		return str(name).SXHASH();
 	}
 
 	/*
@@ -707,6 +667,19 @@ public class cSYMBOL extends cCELL implements tSYMBOL
 	{
 		this.special = special;
 		return this;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * aloyslisp.core.packages.tDYN_SYMBOL#SET_SYMBOL_ORIG(aloyslisp.core.packages
+	 * .tSYMBOL)
+	 */
+	@Override
+	public tSYMBOL SET_SYMBOL_ORIG(tSYMBOL newOrig)
+	{
+		throw new LispException("Cannot change orig of a symbol : " + this
+				+ " new : " + newOrig);
 	}
 
 }

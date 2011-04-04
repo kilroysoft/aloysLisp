@@ -3,7 +3,7 @@
  * <p>
  * A LISP interpreter, compiler and library.
  * <p>
- * Copyright (C) 2010 kilroySoft <aloyslisp@kilroysoft.ch>
+ * Copyright (C) 2010-2011 kilroySoft <aloyslisp@kilroysoft.ch>
  * 
  * <p>
  * This program is free software: you can redistribute it and/or modify it under
@@ -29,7 +29,7 @@
 
 package aloyslisp.core.sequences;
 
-import aloyslisp.annotations.BuiltIn;
+import aloyslisp.annotations.aBuiltIn;
 import aloyslisp.core.cCELL;
 import aloyslisp.core.tT;
 
@@ -40,7 +40,7 @@ import aloyslisp.core.tT;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-@BuiltIn(classOf = "array", doc = "t_array")
+@aBuiltIn(lispClass = "array", doc = "t_array")
 public class cARRAY extends cCELL implements tARRAY
 {
 

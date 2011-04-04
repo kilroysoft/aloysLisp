@@ -3,7 +3,7 @@
  * <p>
  * A LISP interpreter, compiler and library.
  * <p>
- * Copyright (C) 2010 kilroySoft <aloyslisp@kilroysoft.ch>
+ * Copyright (C) 2010-2011 kilroySoft <aloyslisp@kilroysoft.ch>
  * 
  * <p>
  * This program is free software: you can redistribute it and/or modify it under
@@ -62,13 +62,13 @@ public class cARG extends cDYN_SYMBOL implements tARG
 		this.base = base;
 		if (arg instanceof tSYMBOL)
 		{
-			this.setOrig((tSYMBOL) arg);
+			this.SET_SYMBOL_ORIG((tSYMBOL) arg);
 			return;
 		}
 		tT symbol = arg.CAR();
 		if (!(symbol instanceof tSYMBOL))
 			throw new LispException("Argument is not a symbol : " + symbol);
-		this.setOrig((tSYMBOL) arg.CAR());
+		this.SET_SYMBOL_ORIG((tSYMBOL) arg.CAR());
 		arg = arg.CDR();
 		this.value = arg.CAR();
 		arg = arg.CDR();
@@ -97,7 +97,7 @@ public class cARG extends cDYN_SYMBOL implements tARG
 	 */
 	public String DESCRIBE()
 	{
-		return "#<DYN_ARG " + orig.toString() + " " + value + ""
+		return "#<DYN_ARG " + orig.TO_STRING() + " " + value + ""
 				+ (special ? T : NIL) + " " + (base ? T : NIL) + " " + value
 				+ ">";
 	}

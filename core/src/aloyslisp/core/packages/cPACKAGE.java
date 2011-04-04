@@ -3,7 +3,7 @@
  * <p>
  * A LISP interpreter, compiler and library.
  * <p>
- * Copyright (C) 2010 kilroySoft <aloyslisp@kilroysoft.ch>
+ * Copyright (C) 2010-2011 kilroySoft <aloyslisp@kilroysoft.ch>
  * 
  * <p>
  * This program is free software: you can redistribute it and/or modify it under
@@ -24,7 +24,7 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 13 sept. 2010 Creation
+// IP 13 sept. 2010-2011 Creation
 // IP UB20 Disconnected from cTHREAD
 // --------------------------------------------------------------------------
 
@@ -34,6 +34,8 @@ import aloyslisp.annotations.*;
 import aloyslisp.core.cCELL;
 import aloyslisp.core.tT;
 import aloyslisp.core.conditions.*;
+import aloyslisp.core.designators.tPACKAGE_DESIGNATOR;
+import aloyslisp.core.designators.tSTRING_DESIGNATOR;
 import aloyslisp.core.sequences.*;
 import static aloyslisp.core.sequences.cHASH_TABLE.*;
 import static aloyslisp.core.L.*;
@@ -45,7 +47,7 @@ import static aloyslisp.core.L.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-@BuiltIn(classOf = "package", doc = "t_pkg")
+@aBuiltIn(lispClass = "package", doc = "t_pkg")
 public class cPACKAGE extends cCELL implements tPACKAGE
 {
 	/**
@@ -101,7 +103,7 @@ public class cPACKAGE extends cCELL implements tPACKAGE
 	 * @see aloyslisp.core.Cell#printable()
 	 */
 	@Override
-	public String toString()
+	public String TO_STRING()
 	{
 		return "#<cPACKAGE " + name + ">";
 	}
@@ -128,20 +130,6 @@ public class cPACKAGE extends cCELL implements tPACKAGE
 		return false;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.tPACKAGE#dump()
-	 */
-	@Override
-	public String dump()
-	{
-		trace(DESCRIBE());
-		trace("Internal : " + internal.DESCRIBE());
-		trace("External : " + external.DESCRIBE());
-		trace("Shadow : " + external.DESCRIBE());
-		return null;
-	}
-
 	// ////////////////////////////////////////////////////////////////////
 	// Static functions
 
@@ -151,16 +139,16 @@ public class cPACKAGE extends cCELL implements tPACKAGE
 	 * @param pack
 	 * @return
 	 */
-	@Static(name = "find-package")
+	@aFunction(name = "find-package")
 	public static tT FIND_PACKAGE( //
-			@Arg(name = "pack") tPACKAGE_DESIGNATOR pack)
+			@aArg(name = "pack") tPACKAGE_DESIGNATOR pack)
 	{
 		if (pack == null || pack == NIL)
 			return currPackage();
 		if (pack instanceof tPACKAGE)
 			return pack;
 		if (!(pack instanceof tSTRING_DESIGNATOR))
-			throw new LispException("Type error for " + pack);
+			throw new LispException("aType error for " + pack);
 
 		tT packN = packages.GETHASH(
 				str(cSTRING.STRING((tSTRING_DESIGNATOR) pack)), NIL)[0];
@@ -413,9 +401,9 @@ public class cPACKAGE extends cCELL implements tPACKAGE
 	 * @see aloyslisp.core.tT#hashCode()
 	 */
 	@Override
-	public int hashCode()
+	public Integer SXHASH()
 	{
-		return str(name).hashCode();
+		return str(name).SXHASH();
 	}
 
 	public String DESCRIBE()

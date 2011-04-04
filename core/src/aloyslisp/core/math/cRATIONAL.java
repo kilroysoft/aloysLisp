@@ -3,7 +3,7 @@
  * <p>
  * A LISP interpreter, compiler and library.
  * <p>
- * Copyright (C) 2010 kilroySoft <aloyslisp@kilroysoft.ch>
+ * Copyright (C) 2010-2011 kilroySoft <aloyslisp@kilroysoft.ch>
  * 
  * <p>
  * This program is free software: you can redistribute it and/or modify it under
@@ -24,7 +24,7 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 28 déc. 2010 Creation
+// IP 28 déc. 2010-2011 Creation
 // --------------------------------------------------------------------------
 
 package aloyslisp.core.math;
@@ -39,30 +39,15 @@ package aloyslisp.core.math;
 public abstract class cRATIONAL extends cREAL implements tRATIONAL
 {
 	/**
-	 * Numerator (for ratio) a/b -> a
-	 * 
 	 * @return
 	 */
-	abstract tINTEGER numerator();
-
-	/**
-	 * Denumerator (for ratio) a/b -> b
-	 * 
-	 * @return
-	 */
-	abstract tINTEGER denominator();
-
-	/**
-	 * @return
-	 */
-	abstract tRATIONAL rationalizeValue();
 
 	/*
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.math.tREAL#rational()
 	 */
 	@Override
-	tRATIONAL rational()
+	public tRATIONAL RATIONAL()
 	{
 		return this;
 	}
@@ -72,27 +57,9 @@ public abstract class cRATIONAL extends cREAL implements tRATIONAL
 	 * @see aloyslisp.core.math.tREAL#rationalize()
 	 */
 	@Override
-	tRATIONAL rationalize()
+	public tRATIONAL RATIONALIZE()
 	{
 		return this;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tRATIONAL#NUMERATOR()
-	 */
-	public tINTEGER NUMERATOR()
-	{
-		return numerator();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tRATIONAL#DENOMINATOR()
-	 */
-	public tINTEGER DENOMINATOR()
-	{
-		return denominator();
 	}
 
 }

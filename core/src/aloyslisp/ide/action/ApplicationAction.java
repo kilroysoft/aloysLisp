@@ -2,6 +2,16 @@ package aloyslisp.ide.action;
 
 import javax.swing.*;
 
+import aloyslisp.annotations.*;
+
+/**
+ * ApplicationAction
+ * 
+ * @author Ivan Pierre {ivan@kilroysoft.ch}
+ * @author George Kilroy {george@kilroysoft.ch}
+ * 
+ */
+@aJavaInternal
 public abstract class ApplicationAction extends AbstractAction
 {
 	/**

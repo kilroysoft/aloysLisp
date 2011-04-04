@@ -3,7 +3,7 @@
  * <p>
  * A LISP interpreter, compiler and library.
  * <p>
- * Copyright (C) 2010 kilroySoft <aloyslisp@kilroysoft.ch>
+ * Copyright (C) 2010-2011 kilroySoft <aloyslisp@kilroysoft.ch>
  * 
  * <p>
  * This program is free software: you can redistribute it and/or modify it under
@@ -24,7 +24,7 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 23 déc. 2010 Creation
+// IP 23 déc. 2010-2011 Creation
 // --------------------------------------------------------------------------
 
 package aloyslisp.core.math;
@@ -39,9 +39,92 @@ import aloyslisp.core.tT;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-@Type(name = "integer", doc = "t_intege", typep = "integerp")
+@aType(name = "integer", doc = "t_intege", typep = "integerp")
 public interface tINTEGER extends tRATIONAL
 {
+	/**
+	 * @param op
+	 * @return
+	 */
+	@aNonStandard
+	@aFunction(name = "single-gcd")
+	tINTEGER SINGLE_GCD( //
+			@aArg(name = "op") tINTEGER op);
+
+	/**
+	 * @param op
+	 * @return
+	 */
+	@aNonStandard
+	@aFunction(name = "single-lcm")
+	tINTEGER SINGLE_LCM(//
+			@aArg(name = "op") tINTEGER op);
+
+	/**
+	 * @param op
+	 * @return
+	 */
+	@aNonStandard
+	@aFunction(name = "single-logand")
+	tINTEGER SINGLE_LOGAND( //
+			@aArg(name = "op") tINTEGER op);
+
+	/**
+	 * @param op
+	 * @return
+	 */
+	@aNonStandard
+	@aFunction(name = "single-logior")
+	tINTEGER SINGLE_LOGIOR( //
+			@aArg(name = "op") tINTEGER op);
+
+	/**
+	 * @param op
+	 * @return
+	 */
+	@aNonStandard
+	@aFunction(name = "single-logxor")
+	tINTEGER SINGLE_LOGXOR( //
+			@aArg(name = "op") tINTEGER op);
+
+	/**
+	 * Arithmetic bit shift
+	 * 
+	 * @param count
+	 * @return
+	 */
+	@aFunction(name = "ash", doc = "f_ash")
+	public tINTEGER ASH( //
+			@aArg(name = "op") tINTEGER op);
+
+	/**
+	 * @return
+	 */
+	@aFunction(name = "evenp", doc = "f_evenpc")
+	public boolean EVENP();
+
+	/**
+	 * Greather common denumerator
+	 * 
+	 * @param op
+	 * @return
+	 */
+	@aFunction(name = "gcd", doc = "f_gcd")
+	public tINTEGER GCD( //
+			@aRest(name = "op") tT op);
+
+	/**
+	 * @return
+	 */
+	@aFunction(name = "integer-length", doc = "f_intege")
+	public tINTEGER INTEGER_LENGTH();
+
+	/**
+	 * @return
+	 */
+	@aFunction(name = "isqrt", doc = "f_sqrt_")
+	public tINTEGER ISQRT();
+
 	/********************************************************
 	 * LISP FUNCTIONS
 	 */
@@ -54,19 +137,9 @@ public interface tINTEGER extends tRATIONAL
 	 * @param op
 	 * @return
 	 */
-	@Function(name = "lcm", doc = "f_lcm")
+	@aFunction(name = "lcm", doc = "f_lcm")
 	public tINTEGER LCM( //
-			@Rest(name = "op") tT op);
-
-	/**
-	 * Greather common denumerator
-	 * 
-	 * @param op
-	 * @return
-	 */
-	@Function(name = "gcd", doc = "f_gcd")
-	public tINTEGER GCD( //
-			@Rest(name = "op") tT op);
+			@aRest(name = "op") tT op);
 
 	/**
 	 * Arithmetic AND
@@ -74,9 +147,9 @@ public interface tINTEGER extends tRATIONAL
 	 * @param op
 	 * @return
 	 */
-	@Function(name = "logand", doc = "f_logand")
+	@aFunction(name = "logand", doc = "f_logand")
 	public tINTEGER LOGAND( //
-			@Rest(name = "op") tT op);
+			@aRest(name = "op") tT op);
 
 	/**
 	 * Arithmetic NAND
@@ -84,9 +157,9 @@ public interface tINTEGER extends tRATIONAL
 	 * @param op
 	 * @return
 	 */
-	@Function(name = "lognand", doc = "f_logand")
+	@aFunction(name = "lognand", doc = "f_logand")
 	public tINTEGER LOGNAND( //
-			@Arg(name = "op") tINTEGER op);
+			@aArg(name = "op") tINTEGER op);
 
 	/**
 	 * Arithmetic NAND COMPLEMENT 1
@@ -94,9 +167,9 @@ public interface tINTEGER extends tRATIONAL
 	 * @param op
 	 * @return
 	 */
-	@Function(name = "logandc1", doc = "f_logand")
+	@aFunction(name = "logandc1", doc = "f_logand")
 	public tINTEGER LOGANDC1( //
-			@Arg(name = "op") tINTEGER op);
+			@aArg(name = "op") tINTEGER op);
 
 	/**
 	 * Arithmetic AND COMPLEMENT 2
@@ -104,9 +177,9 @@ public interface tINTEGER extends tRATIONAL
 	 * @param op
 	 * @return
 	 */
-	@Function(name = "logandc2", doc = "f_logand")
+	@aFunction(name = "logandc2", doc = "f_logand")
 	public tINTEGER LOGANDC2( //
-			@Arg(name = "op") tINTEGER op);
+			@aArg(name = "op") tINTEGER op);
 
 	/**
 	 * Arithmetic OR
@@ -114,9 +187,9 @@ public interface tINTEGER extends tRATIONAL
 	 * @param op
 	 * @return
 	 */
-	@Function(name = "logior", doc = "f_logand")
+	@aFunction(name = "logior", doc = "f_logand")
 	public tINTEGER LOGIOR( //
-			@Rest(name = "op") tT op);
+			@aRest(name = "op") tT op);
 
 	/**
 	 * Arithmetic OR COMPLEMENT 1
@@ -124,9 +197,9 @@ public interface tINTEGER extends tRATIONAL
 	 * @param op
 	 * @return
 	 */
-	@Function(name = "logorc1", doc = "f_logand")
+	@aFunction(name = "logorc1", doc = "f_logand")
 	public tINTEGER LOGORC1( //
-			@Arg(name = "op") tINTEGER op);
+			@aArg(name = "op") tINTEGER op);
 
 	/**
 	 * Arithmetic OR COMPLEMENT 2
@@ -134,9 +207,9 @@ public interface tINTEGER extends tRATIONAL
 	 * @param op
 	 * @return
 	 */
-	@Function(name = "logorc2", doc = "f_logand")
+	@aFunction(name = "logorc2", doc = "f_logand")
 	public tINTEGER LOGORC2( //
-			@Arg(name = "op") tINTEGER op);
+			@aArg(name = "op") tINTEGER op);
 
 	/**
 	 * Arithmetic XOR
@@ -144,9 +217,9 @@ public interface tINTEGER extends tRATIONAL
 	 * @param op
 	 * @return
 	 */
-	@Function(name = "logxor", doc = "f_logand")
+	@aFunction(name = "logxor", doc = "f_logand")
 	public tINTEGER LOGXOR( //
-			@Rest(name = "op") tT op);
+			@aRest(name = "op") tT op);
 
 	/**
 	 * Arithmetic EQUIVALENCE
@@ -154,16 +227,16 @@ public interface tINTEGER extends tRATIONAL
 	 * @param op
 	 * @return
 	 */
-	@Function(name = "logeqv", doc = "f_logand")
+	@aFunction(name = "logeqv", doc = "f_logand")
 	public tINTEGER LOGEQV( //
-			@Rest(name = "op") tT op);
+			@aRest(name = "op") tT op);
 
 	/**
 	 * Arithmetic NOT (complement to 0)
 	 * 
 	 * @return
 	 */
-	@Function(name = "lognot", doc = "f_logand")
+	@aFunction(name = "lognot", doc = "f_logand")
 	public tINTEGER LOGNOT();
 
 	/* *******************************************************************
@@ -175,7 +248,7 @@ public interface tINTEGER extends tRATIONAL
 	 * @param op
 	 * @return
 	 */
-	@Function(name = "logcount", doc = "f_logcou")
+	@aFunction(name = "logcount", doc = "f_logcou")
 	public tINTEGER LOGCOUNT();
 
 	/**
@@ -184,9 +257,9 @@ public interface tINTEGER extends tRATIONAL
 	 * @param op
 	 * @return
 	 */
-	@Function(name = "logtest", doc = "f_logtes")
+	@aFunction(name = "logtest", doc = "f_logtes")
 	public Boolean LOGTEST( //
-			@Arg(name = "op") tINTEGER op);
+			@aArg(name = "op") tINTEGER op);
 
 	/**
 	 * Arithmetic bit test
@@ -194,42 +267,14 @@ public interface tINTEGER extends tRATIONAL
 	 * @param op
 	 * @return
 	 */
-	@Function(name = "logbitp", doc = "f_logbtp")
+	@aFunction(name = "logbitp", doc = "f_logbtp")
 	public Boolean LOGBITP( //
-			@Arg(name = "op") tINTEGER op);
-
-	/**
-	 * Arithmetic bit shift
-	 * 
-	 * @param count
-	 * @return
-	 */
-	@Function(name = "ash", doc = "f_ash")
-	public tINTEGER ASH( //
-			@Arg(name = "op") tINTEGER op);
+			@aArg(name = "op") tINTEGER op);
 
 	/**
 	 * @return
 	 */
-	@Function(name = "evenp", doc = "f_evenpc")
-	public boolean EVENP();
-
-	/**
-	 * @return
-	 */
-	@Function(name = "oddp", doc = "f_evenpc")
+	@aFunction(name = "oddp", doc = "f_evenpc")
 	public boolean ODDP();
-
-	/**
-	 * @return
-	 */
-	@Function(name = "isqrt", doc = "f_sqrt_")
-	public tINTEGER ISQRT();
-
-	/**
-	 * @return
-	 */
-	@Function(name = "integer-length", doc = "f_intege")
-	public tINTEGER INTEGER_LENGTH();
 
 }

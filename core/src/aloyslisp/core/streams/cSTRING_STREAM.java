@@ -3,7 +3,7 @@
  * <p>
  * A LISP interpreter, compiler and library.
  * <p>
- * Copyright (C) 2010 kilroySoft <aloyslisp@kilroysoft.ch>
+ * Copyright (C) 2010-2011 kilroySoft <aloyslisp@kilroysoft.ch>
  * 
  * <p>
  * This program is free software: you can redistribute it and/or modify it under
@@ -29,15 +29,11 @@
 
 package aloyslisp.core.streams;
 
-import static aloyslisp.core.L.NIL;
-import aloyslisp.annotations.Arg;
-import aloyslisp.annotations.Opt;
-import aloyslisp.annotations.Static;
-import aloyslisp.core.tT;
-import aloyslisp.core.conditions.END_OF_FILE;
-import aloyslisp.core.conditions.LispException;
-import aloyslisp.core.math.cINTEGER;
-import aloyslisp.core.math.tINTEGER;
+import static aloyslisp.core.L.*;
+import aloyslisp.annotations.*;
+import aloyslisp.core.*;
+import aloyslisp.core.conditions.*;
+import aloyslisp.core.math.*;
 
 /**
  * cSTRING_STREAM
@@ -78,7 +74,7 @@ public class cSTRING_STREAM extends cSTREAM implements tSTRING_STREAM
 		if (start < 0)
 			start = 0;
 
-		setString(str);
+		SET_OUPUT_STREAM_STRING(str);
 		this.index = start;
 		this.end = end;
 		opened = true;
@@ -92,21 +88,10 @@ public class cSTRING_STREAM extends cSTREAM implements tSTRING_STREAM
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.streams.tSTRING_STREAM#getString()
-	 */
-	@Override
-	public String getString()
-	{
-		// give back the rest of non read string
-		return buffer.substring(index);
-	}
-
-	/*
-	 * (non-Javadoc)
 	 * @see aloyslisp.core.streams.tSTRING_STREAM#setString(java.lang.String)
 	 */
 	@Override
-	public void setString(String str)
+	public void SET_OUPUT_STREAM_STRING(String str)
 	{
 		this.buffer = str;
 		this.index = 0;
@@ -119,11 +104,11 @@ public class cSTRING_STREAM extends cSTREAM implements tSTRING_STREAM
 	 * @param end
 	 * @return
 	 */
-	@Static(name = "make-string-input-stream", doc = "f_mk_s_1")
+	@aFunction(name = "make-string-input-stream", doc = "f_mk_s_1")
 	public static tSTRING_STREAM MAKE_STRING_INPUT_STREAM( //
-			@Arg(name = "string") String string, //
-			@Opt(name = "start") tT start, //
-			@Opt(name = "end") tT end //
+			@aArg(name = "string") String string, //
+			@aOpt(name = "start") tT start, //
+			@aOpt(name = "end") tT end //
 	)
 	{
 		Integer st = 0;
@@ -138,10 +123,10 @@ public class cSTRING_STREAM extends cSTREAM implements tSTRING_STREAM
 					"make-string-input-stream : end should be an integer");
 
 		if (start != NIL)
-			st = ((cINTEGER) start).integerValue();
+			st = ((cINTEGER) start).INTEGER_VALUE();
 
 		if (end != NIL)
-			en = ((cINTEGER) end).integerValue();
+			en = ((cINTEGER) end).INTEGER_VALUE();
 
 		return new cSTRING_STREAM(string, st, en);
 	}
@@ -308,7 +293,8 @@ public class cSTRING_STREAM extends cSTREAM implements tSTRING_STREAM
 	@Override
 	public String GET_OUTPUT_STREAM_STRING()
 	{
-		return getString();
+		// give back the rest of non read string
+		return buffer.substring(index);
 	}
 
 }

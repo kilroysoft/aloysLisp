@@ -3,7 +3,7 @@
  * <p>
  * A LISP interpreter, compiler and library.
  * <p>
- * Copyright (C) 2010 kilroySoft <aloyslisp@kilroysoft.ch>
+ * Copyright (C) 2010-2011 kilroySoft <aloyslisp@kilroysoft.ch>
  * 
  * <p>
  * This program is free software: you can redistribute it and/or modify it under
@@ -24,7 +24,7 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 26 oct. 2010 Creation
+// IP 26 oct. 2010-2011 Creation
 // --------------------------------------------------------------------------
 
 package aloyslisp.core.functions;
@@ -37,6 +37,9 @@ import java.lang.reflect.*;
 import aloyslisp.annotations.*;
 import aloyslisp.core.*;
 import aloyslisp.core.conditions.*;
+import aloyslisp.core.designators.tPACKAGE_DESIGNATOR;
+import aloyslisp.core.designators.tPATHNAME_DESIGNATOR;
+import aloyslisp.core.designators.tSTRING_DESIGNATOR;
 import aloyslisp.core.math.*;
 import aloyslisp.core.packages.*;
 import aloyslisp.core.sequences.*;
@@ -52,7 +55,7 @@ import static aloyslisp.core.L.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-@BuiltIn(classOf = "function", typeOf = "compiled-function", doc = "03_b")
+@aBuiltIn(lispClass = "function", lispType = "compiled-function", doc = "03_b")
 public class cCOMPILED_FUNCTION extends cFUNCTION implements tCOMPILED_FUNCTION
 {
 	protected Method	method	= null;
@@ -65,27 +68,22 @@ public class cCOMPILED_FUNCTION extends cFUNCTION implements tCOMPILED_FUNCTION
 	public cCOMPILED_FUNCTION(Method method)
 	{
 		super();
-		Function func = method.getAnnotation(Function.class);
-		Static stat = method.getAnnotation(Static.class);
+		aFunction func = method.getAnnotation(aFunction.class);
+		SET_API_DOC(NIL);
 		if (func != null)
 		{
 			name = sym(func.name());
-		}
-		if (stat != null)
-		{
-			name = sym(stat.name());
+			if (!func.doc().equals(""))
+				SET_API_DOC(str(func.doc()));
 		}
 
-		this.special = method.getAnnotation(SpecialOp.class) != null;
-		this.macro = method.getAnnotation(Macro.class) != null;
+		this.special = method.getAnnotation(aSpecialOperator.class) != null;
+		this.macro = method.getAnnotation(aMacro.class) != null;
 		this.method = method;
 		vars = SET_API_ARGS(NIL);
-		if (func != null)
-			vars = API_SET_OBJ(vars, method.getAnnotation(BaseArg.class));
-		SET_API_DOC(NIL);
+		if ((method.getModifiers() & Modifier.STATIC) == 0)
+			vars = API_SET_OBJ(vars, method.getAnnotation(aBaseArg.class));
 		SET_API_DECL(NIL);
-		environment = e.topEnv;
-		// System.out.println("cCOMPILED_FUNCTION = " + DESCRIBE());
 	}
 
 	public static final tSYMBOL	ELEM	= sym("elem");
@@ -95,13 +93,16 @@ public class cCOMPILED_FUNCTION extends cFUNCTION implements tCOMPILED_FUNCTION
 	 * @param annotation
 	 * @return
 	 */
-	private tLIST API_SET_OBJ(tLIST vars, BaseArg base)
+	private tLIST API_SET_OBJ(tLIST vars, aBaseArg base)
 	{
 		LISTIterator iter = new LISTIterator(vars);
 		if (base == null)
 		{
+			// System.out.println("Before object add : " + name + " " + vars);
 			iter.add(new cARG(ELEM, NIL, true));
-			basePos = 0;
+			// System.out.println("After object add : " + name + " "
+			// + (tLIST) iter.getFinal());
+			basePos = -1;
 			return (tLIST) iter.getFinal();
 		}
 
@@ -123,28 +124,47 @@ public class cCOMPILED_FUNCTION extends cFUNCTION implements tCOMPILED_FUNCTION
 		for (Annotation[] an : method.getParameterAnnotations())
 		{
 			int state = 0;
+			if (an.length == 0)
+				System.out.println("Warning missing annotations on " + name
+						+ " on " + method.getDeclaringClass().getSimpleName());
 			for (Annotation a : an)
 			{
-				if (a instanceof Arg && state < 1)
+				if (a instanceof aArg && state < 1)
 				{
-					vars.append(new cARG(sym(((Arg) a).name()), NIL, true));
+					vars.append(new cARG(sym(((aArg) a).name()), NIL, true));
 					state = 1;
 				}
-				else if (a instanceof Opt && state < 2)
+				else if (a instanceof aOpt && state < 2)
 				{
-					vars.append(new cARG(sym(((Opt) a).name()), lisp(((Opt) a)
-							.def()), true));
+					vars.append(new cARG(sym(((aOpt) a).name()),
+							lisp(((aOpt) a).def()), true));
 					state = 2;
 				}
-				else if (a instanceof Rest && state < 3 && rest == null)
+				else if (a instanceof aRest && state < 3 && rest == null)
 				{
-					rest = sym(((Rest) a).name());
+					rest = sym(((aRest) a).name());
 					state = 3;
 				}
-				else if (a instanceof Whole && state < 4 && whole == null)
+				else if (a instanceof aWhole && state < 4 && whole == null)
 				{
-					whole = sym(((Whole) a).name());
+					whole = sym(((aWhole) a).name());
 					state = 4;
+				}
+			}
+		}
+
+		aKey keyDef = method.getAnnotation(aKey.class);
+		if (keyDef != null)
+		{
+			String ks = keyDef.keys();
+			if (!(ks.equals("") || ks.equals("()")))
+			{
+				tT kl = lisp(keyDef.keys());
+				for (tT key : (tLIST) kl)
+				{
+					tARG var = new cARG_KEY(key);
+					keys.SET_GETHASH(var, ((cARG_KEY) var).key);
+					vars.append(var);
 				}
 			}
 		}
@@ -162,14 +182,15 @@ public class cCOMPILED_FUNCTION extends cFUNCTION implements tCOMPILED_FUNCTION
 	@Override
 	public tT[] API_CALL(tLIST args)
 	{
-		args = API_OBJECT(args);
+		Boolean stat = (method.getModifiers() & Modifier.STATIC) != 0;
+
 		tT[] res = new tT[]
 		{ NIL };
 		tT object = null;
 
-		Function func = method.getAnnotation(Function.class);
-		if (func != null)
+		if (!stat)
 		{
+			args = API_OBJECT(args);
 			object = args.CAR();
 			args = (tLIST) args.CDR();
 		}
@@ -221,11 +242,11 @@ public class cCOMPILED_FUNCTION extends cFUNCTION implements tCOMPILED_FUNCTION
 	public tLIST API_OBJECT(tLIST args)
 	{
 		int pos = 0;
-		Function func = method.getAnnotation(Function.class);
-		if (func == null)
-			return args;
+		// aFunction func = method.getAnnotation(aFunction.class);
+		// if (func == null)
+		// return args;
 
-		BaseArg position = method.getAnnotation(BaseArg.class);
+		aBaseArg position = method.getAnnotation(aBaseArg.class);
 		if (position != null)
 			pos = position.pos();
 
@@ -247,7 +268,7 @@ public class cCOMPILED_FUNCTION extends cFUNCTION implements tCOMPILED_FUNCTION
 	public String API_GET_MAC()
 	{
 		String mac = null;
-		Mac annotation = method.getAnnotation(Mac.class);
+		aMac annotation = method.getAnnotation(aMac.class);
 		if (annotation != null)
 			mac = annotation.prefix();
 		return mac;
@@ -256,18 +277,18 @@ public class cCOMPILED_FUNCTION extends cFUNCTION implements tCOMPILED_FUNCTION
 	/**
 	 * @return
 	 */
-	public String getLispDeclare()
+	protected String getLispDeclare()
 	{
 		// TODO api description
 		// String lFunc = name.SYMBOL_NAME();
 		// tLIST res = list(name);
-		// if (!(method.toString().contains("static")) && baseArg == -1)
+		// if (!(method.TO_STRING().contains("static")) && baseArg == -1)
 		// {
 		// res = (tLIST) res.APPEND(list(sym(method.getDeclaringClass()
 		// .getSimpleName().substring(1))));
 		// }
 		// res = (tLIST) res.APPEND(this.API_ARGS());
-		// String decl = "* " + res.toString().replaceAll(" \\*", " \\\\*");
+		// String decl = "* " + res.TO_STRING().replaceAll(" \\*", " \\\\*");
 		// decl = decl.replaceFirst(
 		// lFunc.replaceAll("\\*", "\\\\*").replaceAll("\\%", "\\\\%")
 		// .replaceAll("\\+", "\\\\+"), "[[" + lFunc
@@ -282,7 +303,7 @@ public class cCOMPILED_FUNCTION extends cFUNCTION implements tCOMPILED_FUNCTION
 	 * @param arg
 	 * @return
 	 */
-	public Object[] tranformArgs(tLIST arg)
+	protected Object[] tranformArgs(tLIST arg)
 	{
 		// Transform arguments
 		Class<?>[] paramTypes = method.getParameterTypes();
@@ -318,7 +339,7 @@ public class cCOMPILED_FUNCTION extends cFUNCTION implements tCOMPILED_FUNCTION
 	 * @param cl
 	 * @return
 	 */
-	public Object transform(Object arg, Class<?> cl)
+	protected Object transform(Object arg, Class<?> cl)
 	{
 		Object res = null;
 
@@ -340,7 +361,8 @@ public class cCOMPILED_FUNCTION extends cFUNCTION implements tCOMPILED_FUNCTION
 			{
 				throw new LispException("1Argument " + arg + " : "
 						+ arg.getClass().getSimpleName()
-						+ " should be of type " + cl.getSimpleName());
+						+ " should be of type " + cl.getSimpleName() + " in "
+						+ method.getName());
 			}
 
 		if (cl == Boolean.class)
@@ -350,22 +372,22 @@ public class cCOMPILED_FUNCTION extends cFUNCTION implements tCOMPILED_FUNCTION
 
 		if (cl == Integer.class && arg instanceof tINTEGER)
 		{
-			res = ((cINTEGER) arg).integerValue();
+			res = ((tINTEGER) arg).INTEGER_VALUE();
 		}
 
 		if (cl == Long.class && arg instanceof tINTEGER)
 		{
-			res = ((cINTEGER) arg).integerValue();
+			res = ((tINTEGER) arg).INTEGER_VALUE();
 		}
 
 		if (cl == Float.class && arg instanceof tREAL)
 		{
-			res = ((cREAL) arg).floatValue();
+			res = ((tREAL) arg).FLOAT_VALUE();
 		}
 
 		if (cl == Double.class && arg instanceof tREAL)
 		{
-			res = ((cREAL) arg).doubleValue();
+			res = ((tREAL) arg).DOUBLE_VALUE();
 		}
 
 		if (cl == String.class)
@@ -402,8 +424,9 @@ public class cCOMPILED_FUNCTION extends cFUNCTION implements tCOMPILED_FUNCTION
 					+ arg.getClass().getSimpleName() + ")"
 					+ " should be of type " + cl.getSimpleName());
 
-		trace(" ~~~> " + arg + " (" + arg.getClass().getSimpleName() + ") -> "
-				+ res + " (" + cl.getSimpleName() + ")");
+		// trace(" ~~~> " + arg + " (" + arg.getClass().getSimpleName() +
+		// ") -> "
+		// + res + " (" + cl.getSimpleName() + ")");
 
 		return res;
 	}
@@ -431,8 +454,11 @@ public class cCOMPILED_FUNCTION extends cFUNCTION implements tCOMPILED_FUNCTION
 		else if (cell instanceof Character)
 			return c((Character) cell);
 
-		throw new LispException("primitive : return value of type "
-				+ cell.getClass().getSimpleName() + " not managed");
+		if (cell == null)
+			throw new LispException("primitive : null return value not managed");
+		else
+			throw new LispException("primitive : return value of type "
+					+ cell.getClass().getSimpleName() + " not managed");
 	}
 
 	/**
@@ -460,9 +486,15 @@ public class cCOMPILED_FUNCTION extends cFUNCTION implements tCOMPILED_FUNCTION
 	protected tLIST argsDecl(Annotation[][] notes)
 	{
 		tLIST res = NIL;
-		res = (tLIST) res.APPEND(argsBase(notes, Arg.class, ""));
-		res = (tLIST) res.APPEND(argsBase(notes, Opt.class, "&optional"));
-		res = (tLIST) res.APPEND(argsBase(notes, Rest.class, "&rest"));
+		res = (tLIST) res.APPEND(argsBase(notes, aArg.class, ""));
+		res = (tLIST) res.APPEND(argsBase(notes, aOpt.class, "&optional"));
+		res = (tLIST) res.APPEND(argsBase(notes, aRest.class, "&rest"));
+		tLIST key = keys.HASH_TABLE_KEYS();
+		if (key != NIL)
+		{
+			res = (tLIST) res.APPEND(list(sym("&list")));
+			res = (tLIST) res.APPEND(key);
+		}
 		return res;
 	}
 
@@ -485,24 +517,24 @@ public class cCOMPILED_FUNCTION extends cFUNCTION implements tCOMPILED_FUNCTION
 				tT arg = NIL;
 				if (type.isAssignableFrom(a.getClass()))
 				{
-					if (a instanceof Arg)
+					if (a instanceof aArg)
 					{
-						arg = sym(((Arg) a).name());
+						arg = sym(((aArg) a).name());
 						if (call)
 							arg = unquote(arg);
 					}
-					else if (a instanceof Opt)
+					else if (a instanceof aOpt)
 					{
-						arg = sym(((Opt) a).name());
+						arg = sym(((aOpt) a).name());
 						if (call)
 							arg = unquote(arg);
 						else
 							arg = list(arg).APPEND(
-									list(getDefault(((Opt) a).def())));
+									list(getDefault(((aOpt) a).def())));
 					}
-					else if (a instanceof Rest)
+					else if (a instanceof aRest)
 					{
-						arg = sym(((Rest) a).name());
+						arg = sym(((aRest) a).name());
 						if (call)
 							arg = splice(arg);
 					}

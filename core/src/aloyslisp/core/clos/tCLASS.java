@@ -3,7 +3,7 @@
  * <p>
  * A LISP interpreter, compiler and library.
  * <p>
- * Copyright (C) 2010 kilroySoft <aloyslisp@kilroysoft.ch>
+ * Copyright (C) 2010-2011 kilroySoft <aloyslisp@kilroysoft.ch>
  * 
  * <p>
  * This program is free software: you can redistribute it and/or modify it under
@@ -29,7 +29,7 @@
 
 package aloyslisp.core.clos;
 
-import aloyslisp.annotations.Type;
+import aloyslisp.annotations.aType;
 
 /**
  * tCLASS
@@ -38,7 +38,7 @@ import aloyslisp.annotations.Type;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-@Type(name = "class", doc = "t_class", typep = "classp")
+@aType(name = "class", doc = "t_class", typep = "classp")
 public interface tCLASS extends tSTANDARD_OBJECT
 {
 

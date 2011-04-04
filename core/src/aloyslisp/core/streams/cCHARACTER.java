@@ -3,7 +3,7 @@
  * <p>
  * A LISP interpreter, compiler and library.
  * <p>
- * Copyright (C) 2010 kilroySoft <aloyslisp@kilroysoft.ch>
+ * Copyright (C) 2010-2011 kilroySoft <aloyslisp@kilroysoft.ch>
  * 
  * <p>
  * This program is free software: you can redistribute it and/or modify it under
@@ -24,14 +24,12 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 20 sept. 2010 Creation
+// IP 20 sept. 2010-2011 Creation
 // --------------------------------------------------------------------------
 
 package aloyslisp.core.streams;
 
-import aloyslisp.annotations.Arg;
-import aloyslisp.annotations.BuiltIn;
-import aloyslisp.annotations.Static;
+import aloyslisp.annotations.*;
 import aloyslisp.core.*;
 import aloyslisp.core.conditions.*;
 import aloyslisp.core.sequences.*;
@@ -44,7 +42,7 @@ import static aloyslisp.core.L.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-@BuiltIn(classOf = "character", doc = "t_ch")
+@aBuiltIn(lispClass = "character", doc = "t_ch")
 public class cCHARACTER extends cCELL implements tCHARACTER
 {
 	private Character			value;
@@ -86,7 +84,7 @@ public class cCHARACTER extends cCELL implements tCHARACTER
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.cCELL#printable()
 	 */
-	public String toString()
+	public String TO_STRING()
 	{
 		return "" + value;
 	}
@@ -208,9 +206,9 @@ public class cCHARACTER extends cCELL implements tCHARACTER
 	 * @param name
 	 * @return
 	 */
-	@Static(name = "name-char", doc = "f_name_c")
+	@aFunction(name = "name-char", doc = "f_name_c")
 	public static tCHARACTER NAME_CHAR( //
-			@Arg(name = "name") tT name)
+			@aArg(name = "name") tT name)
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -261,7 +259,7 @@ public class cCHARACTER extends cCELL implements tCHARACTER
 	 * @see aloyslisp.core.tT#hashCode()
 	 */
 	@Override
-	public int hashCode()
+	public Integer SXHASH()
 	{
 		return ("" + value).hashCode();
 	}

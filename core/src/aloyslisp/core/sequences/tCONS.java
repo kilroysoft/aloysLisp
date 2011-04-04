@@ -3,7 +3,7 @@
  * <p>
  * A LISP interpreter, compiler and library.
  * <p>
- * Copyright (C) 2010 kilroySoft <aloyslisp@kilroysoft.ch>
+ * Copyright (C) 2010-2011 kilroySoft <aloyslisp@kilroysoft.ch>
  * 
  * <p>
  * This program is free software: you can redistribute it and/or modify it under
@@ -24,12 +24,12 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 11 sept. 2010 Creation
+// IP 11 sept. 2010-2011 Creation
 // --------------------------------------------------------------------------
 
 package aloyslisp.core.sequences;
 
-import aloyslisp.annotations.Type;
+import aloyslisp.annotations.aType;
 import aloyslisp.core.clos.tBUILT_IN_CLASS;
 
 /**
@@ -39,7 +39,7 @@ import aloyslisp.core.clos.tBUILT_IN_CLASS;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-@Type(name = "cons", doc = "t_cons", typep = "consp")
+@aType(name = "cons", doc = "t_cons", typep = "consp")
 public interface tCONS extends tLIST, tBUILT_IN_CLASS
 {
 }

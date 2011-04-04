@@ -1,7 +1,7 @@
 /**
  * aloysLisp. 
  * <p>A LISP interpreter, compiler and library.
- * <p>Copyright (C) 2010 kilroySoft <aloyslisp@kilroysoft.ch>
+ * <p>Copyright (C) 2010-2011 kilroySoft <aloyslisp@kilroysoft.ch>
  *
  * <p>This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@
 //--------------------------------------------------------------------------
 // history
 //--------------------------------------------------------------------------
-// IP 18 déc. 2010 Creation
+// IP 18 déc. 2010-2011 Creation
 //--------------------------------------------------------------------------
 
 package aloyslisp.core.streams;

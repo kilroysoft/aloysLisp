@@ -3,7 +3,7 @@
  * <p>
  * A LISP interpreter, compiler and library.
  * <p>
- * Copyright (C) 2010 kilroySoft <aloyslisp@kilroysoft.ch>
+ * Copyright (C) 2010-2011 kilroySoft <aloyslisp@kilroysoft.ch>
  * 
  * <p>
  * This program is free software: you can redistribute it and/or modify it under
@@ -24,13 +24,13 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 15 oct. 2010 Creation
+// IP 15 oct. 2010-2011 Creation
 // BUG Math functions doesn't work
 // --------------------------------------------------------------------------
 
 package aloyslisp.core.math;
 
-import aloyslisp.annotations.BuiltIn;
+import aloyslisp.annotations.aBuiltIn;
 import aloyslisp.core.conditions.*;
 import static aloyslisp.core.L.*;
 
@@ -41,7 +41,7 @@ import static aloyslisp.core.L.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-@BuiltIn(classOf = "ratio", doc = "t_ratio")
+@aBuiltIn(lispClass = "ratio", doc = "t_ratio")
 public class cRATIO extends cRATIONAL implements tRATIO
 {
 	/**
@@ -65,9 +65,9 @@ public class cRATIO extends cRATIONAL implements tRATIO
 	 */
 	public cRATIO(tINTEGER num, tINTEGER den)
 	{
-		tINTEGER pgcd = num.GCD(den).getIntegerValue();
-		this.num = num.DIVISION(pgcd).getIntegerValue();
-		this.den = den.DIVISION(pgcd).getIntegerValue();
+		tINTEGER pgcd = num.GCD(den).COERCE_TO_INTEGER();
+		this.num = num.DIVISION(pgcd).COERCE_TO_INTEGER();
+		this.den = den.DIVISION(pgcd).COERCE_TO_INTEGER();
 	}
 
 	/**
@@ -82,191 +82,104 @@ public class cRATIO extends cRATIONAL implements tRATIO
 
 	/*
 	 * (non-Javadoc)
-	 * @see java.lang.Object#toString()
+	 * @see java.lang.Object#TO_STRING()
 	 */
-	public String toString()
+	public String TO_STRING()
 	{
 		return "" + num + "/" + den;
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see java.lang.Number#integerValue()
+	 * @see aloyslisp.core.math.cREAL#COERCE_TO_COMPLEX()
 	 */
-	public cINTEGER getIntegerValue()
-	{
-		if (!den.EQ(ONE))
-			throw new ARITHMETIC_ERROR(this, sym("integer"));
-
-		return num.getIntegerValue();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see java.lang.Number#floatValue()
-	 */
-	public cSINGLE_FLOAT getFloatValue()
-	{
-		return num.getFloatValue().DIVISION(den).getFloatValue();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see java.lang.Number#doubleValue()
-	 */
-	public cDOUBLE_FLOAT getDoubleValue()
-	{
-		return num.getDoubleValue().DIVISION(den).getDoubleValue();
-	}
-
-	/**
-	 * @return
-	 */
-	public cRATIO getRatioValue()
-	{
-		return this;
-	}
-
-	/**
-	 * @return
-	 */
-	public cCOMPLEX getComplexValue()
+	public cCOMPLEX COERCE_TO_COMPLEX()
 	{
 		return new cCOMPLEX(this, ZERO);
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#shortValue()
+	 * @see aloyslisp.core.math.tNUMBER#COERCE_TO_DOUBLE_FLOAT()
 	 */
-	@Override
-	public cSHORT_FLOAT getShortValue()
+	public tDOUBLE_FLOAT COERCE_TO_DOUBLE_FLOAT()
 	{
-		return num.getShortValue().DIVISION(den).getShortValue();
+		return num.COERCE_TO_DOUBLE_FLOAT().DIVISION(den)
+				.COERCE_TO_DOUBLE_FLOAT();
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.cRATIONAL#getRationalValue()
+	 * @see aloyslisp.core.math.tNUMBER#COERCE_TO_INTEGER()
 	 */
-	@Override
-	public tRATIONAL rationalizeValue()
+	public tINTEGER COERCE_TO_INTEGER()
 	{
-		if (den.EQUALNUM(ONE))
-			return num;
+		if (!den.EQ(ONE))
+			throw new ARITHMETIC_ERROR(this, sym("integer"));
 
+		return num.COERCE_TO_INTEGER();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tNUMBER#COERCE_TO_RATIO()
+	 */
+	public cRATIO COERCE_TO_RATIO()
+	{
 		return this;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tNUMBER#COERCE_TO_SHORT_FLOAT()
+	 */
+	public tSHORT_FLOAT COERCE_TO_SHORT_FLOAT()
+	{
+		return num.COERCE_TO_SHORT_FLOAT().DIVISION(den)
+				.COERCE_TO_SHORT_FLOAT();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tNUMBER#COERCE_TO_SINGLE_FLOAT()
+	 */
+	public tSINGLE_FLOAT COERCE_TO_SINGLE_FLOAT()
+	{
+		return num.COERCE_TO_SINGLE_FLOAT().DIVISION(den)
+				.COERCE_TO_SINGLE_FLOAT();
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.math.tNUMBER#coerce(aloyslisp.core.math.tNUMBER)
 	 */
-	public cNUMBER coerce(tNUMBER var)
+	public tNUMBER COERCE_TO_NUMBER(tNUMBER var)
 	{
 		if (var instanceof cSINGLE_FLOAT)
-			return getFloatValue();
-
+			return COERCE_TO_SINGLE_FLOAT();
+	
 		if (var instanceof cDOUBLE_FLOAT)
-			return getDoubleValue();
-
+			return COERCE_TO_DOUBLE_FLOAT();
+	
 		if (var instanceof cSHORT_FLOAT)
-			return getShortValue();
-
+			return COERCE_TO_SHORT_FLOAT();
+	
 		if (var instanceof cCOMPLEX)
-			return getComplexValue();
-
+			return COERCE_TO_COMPLEX();
+	
 		return this;
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tREAL#equal(aloyslisp.core.math.tNUMBER)
+	 * @see aloyslisp.core.math.cRATIONAL#rationalizeValue()
 	 */
-	@Override
-	boolean equalnum(tNUMBER op)
+	public tRATIONAL RATIONALIZE_VALUE()
 	{
-		cRATIO op2 = op.getRatioValue();
-		return ((tINTEGER) num.MULTIPLY(op2.den)).EQUALNUM(den
-				.MULTIPLY(op2.num));
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tREAL#greater(aloyslisp.core.math.tNUMBER)
-	 */
-	@Override
-	boolean greater(tREAL op)
-	{
-		cRATIO op2 = op.getRatioValue();
-		return ((tINTEGER) num.MULTIPLY(op2.den))
-				.GREATER(den.MULTIPLY(op2.num));
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tREAL#lower(aloyslisp.core.math.tNUMBER)
-	 */
-	@Override
-	boolean lower(tREAL op)
-	{
-		cRATIO op2 = op.getRatioValue();
-		return ((tINTEGER) num.MULTIPLY(op2.den)).LOWER(den.MULTIPLY(op2.num));
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#add(aloyslisp.core.math.tNUMBER)
-	 */
-	@Override
-	tNUMBER add(tNUMBER op)
-	{
-		cRATIO op2 = op.getRatioValue();
-		return new cRATIO((tINTEGER) num.MULTIPLY(op2.den).ADD(
-				den.MULTIPLY(op2.num)), (tINTEGER) den.MULTIPLY(op2.den))
-				.rationalizeValue();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#substract(aloyslisp.core.math.tNUMBER)
-	 */
-	@Override
-	tNUMBER substract(tNUMBER op)
-	{
-		return ADD(op.MINUS());
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#minus()
-	 */
-	@Override
-	tNUMBER minus()
-	{
-		return new cRATIO((tINTEGER) num.MINUS(), den).rationalizeValue();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#inversion()
-	 */
-	@Override
-	tNUMBER inversion()
-	{
-		return new cRATIO(den, num).rationalizeValue();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#multiply(aloyslisp.core.math.tNUMBER)
-	 */
-	@Override
-	tNUMBER multiply(tNUMBER op)
-	{
-		cRATIO op2 = op.getRatioValue();
-		return new cRATIO((tINTEGER) num.MULTIPLY(op2.num),
-				(tINTEGER) den.MULTIPLY(op2.den)).rationalizeValue();
+		if (den.EQUALNUM(ONE))
+			return num;
+	
+		return this;
 	}
 
 	/*
@@ -274,19 +187,80 @@ public class cRATIO extends cRATIONAL implements tRATIO
 	 * @see aloyslisp.core.math.tNUMBER#division(aloyslisp.core.math.tNUMBER)
 	 */
 	@Override
-	tNUMBER division(tNUMBER op)
+	public tNUMBER SINGLE_DIVISION(tNUMBER op)
 	{
 		return MULTIPLY(op.INVERSION());
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tRATIONAL#numerator()
+	 * @see aloyslisp.core.math.tNUMBER#add(aloyslisp.core.math.tNUMBER)
 	 */
 	@Override
-	tINTEGER numerator()
+	public tNUMBER SINGLE_ADD(tNUMBER op)
 	{
-		return num;
+		tRATIO op2 = op.COERCE_TO_RATIO();
+		return new cRATIO((tINTEGER) num.MULTIPLY(op2.DENOMINATOR()).ADD(
+				den.MULTIPLY(op2.NUMERATOR())), (tINTEGER) den.MULTIPLY(op2
+				.DENOMINATOR())).RATIONALIZE_VALUE();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tREAL#equal(aloyslisp.core.math.tNUMBER)
+	 */
+	@Override
+	public boolean SINGLE_EQUALNUM(tNUMBER op)
+	{
+		tRATIO op2 = op.COERCE_TO_RATIO();
+		return ((tINTEGER) num.MULTIPLY(op2.DENOMINATOR())).EQUALNUM(den
+				.MULTIPLY(op2.NUMERATOR()));
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tREAL#greater(aloyslisp.core.math.tNUMBER)
+	 */
+	@Override
+	public boolean SINGLE_GREATER(tREAL op)
+	{
+		tRATIO op2 = op.COERCE_TO_RATIO();
+		return ((tINTEGER) num.MULTIPLY(op2.DENOMINATOR())).GREATER(den
+				.MULTIPLY(op2.NUMERATOR()));
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tREAL#lower(aloyslisp.core.math.tNUMBER)
+	 */
+	@Override
+	public boolean SINGLE_LOWER(tREAL op)
+	{
+		tRATIO op2 = op.COERCE_TO_RATIO();
+		return ((tINTEGER) num.MULTIPLY(op2.DENOMINATOR())).LOWER(den
+				.MULTIPLY(op2.NUMERATOR()));
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tNUMBER#multiply(aloyslisp.core.math.tNUMBER)
+	 */
+	@Override
+	public tNUMBER SINGLE_MULTIPLY(tNUMBER op)
+	{
+		tRATIO op2 = op.COERCE_TO_RATIO();
+		return new cRATIO((tINTEGER) num.MULTIPLY(op2.NUMERATOR()),
+				(tINTEGER) den.MULTIPLY(op2.DENOMINATOR())).RATIONALIZE_VALUE();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tNUMBER#substract(aloyslisp.core.math.tNUMBER)
+	 */
+	@Override
+	public tNUMBER SINGLE_SUBSTRACT(tNUMBER op)
+	{
+		return ADD(op.MINUS());
 	}
 
 	/*
@@ -294,9 +268,39 @@ public class cRATIO extends cRATIONAL implements tRATIO
 	 * @see aloyslisp.core.math.tRATIONAL#denominator()
 	 */
 	@Override
-	tINTEGER denominator()
+	public tINTEGER DENOMINATOR()
 	{
 		return den;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tNUMBER#inversion()
+	 */
+	@Override
+	public tNUMBER INVERSION()
+	{
+		return new cRATIO(den, num).RATIONALIZE_VALUE();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tNUMBER#minus()
+	 */
+	@Override
+	public tNUMBER MINUS()
+	{
+		return new cRATIO((tINTEGER) num.MINUS(), den).RATIONALIZE_VALUE();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tRATIONAL#numerator()
+	 */
+	@Override
+	public tINTEGER NUMERATOR()
+	{
+		return num;
 	}
 
 }

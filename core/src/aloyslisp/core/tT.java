@@ -3,7 +3,7 @@
  * <p>
  * A LISP interpreter, compiler and library.
  * <p>
- * Copyright (C) 2010 kilroySoft <aloyslisp@kilroysoft.ch>
+ * Copyright (C) 2010-2011 kilroySoft <aloyslisp@kilroysoft.ch>
  * 
  * <p>
  * This program is free software: you can redistribute it and/or modify it under
@@ -24,8 +24,8 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 9 sept. 2010 Creation
-// IMPLEMENT Insert SpecialOp print variables management for printable
+// IP 9 sept. 2010-2011 Creation
+// IMPLEMENT Insert aSpecialOperator print variables management for printable
 // --------------------------------------------------------------------------
 
 package aloyslisp.core;
@@ -42,9 +42,59 @@ import aloyslisp.core.packages.tSYMBOL;
  * @author Ivan Pierre {ivan@kilroysoft.ch}
  * @author George Kilroy {george@kilroysoft.ch}
  */
-@Type(name = "t", doc = "t_t")
+@aType(name = "t", doc = "t_t")
 public interface tT
 {
+	/**
+	 * Get car
+	 * 
+	 * @return fCAR of cons
+	 */
+	@aFunction(name = "car", doc = "f_car_c")
+	@aWriter(accessor = "setf-car")
+	public tT CAR();
+
+	/**
+	 * Get cdr
+	 * 
+	 * @return fCDR of cons
+	 */
+	@aFunction(name = "cdr", doc = "f_car_c")
+	@aWriter(accessor = "setf-cdr")
+	public tT CDR();
+
+	/**
+	 * Return the class of object
+	 * 
+	 * @return
+	 */
+	@aFunction(name = "class-of", doc = "f_clas_1")
+	public tCLASS CLASS_OF();
+
+	/**
+	 * @param type
+	 * @return
+	 */
+	@aFunction(name = "coerce", doc = "f_coerce")
+	public tT COERCE( //
+			@aArg(name = "type") tT type);
+
+	/**
+	 * Return java code for cell creation
+	 * 
+	 * @return
+	 */
+	@aFunction(name = "compile", doc = "f_cmp")
+	public String COMPILE();
+
+	/**
+	 * Test if cell is constant
+	 * 
+	 * @return
+	 */
+	@aFunction(name = "constantp", doc = "f_consta")
+	public boolean CONSTANTP();
+
 	/**
 	 * Create a copy of the cell.
 	 * <p>
@@ -52,84 +102,16 @@ public interface tT
 	 * 
 	 * @return
 	 */
-	@Function(name = "copy-cell")
+	@aFunction(name = "copy-cell")
 	public tT COPY_CELL();
-
-	/**
-	 * Evaluate the cell
-	 * 
-	 * @return Value as an array (functions can give back multiple values)
-	 */
-	@Function(name = "eval", doc = "f_eval")
-	public tT[] EVAL();
-
-	/**
-	 * Return java code for cell creation
-	 * 
-	 * @return
-	 */
-	@Function(name = "compile", doc = "f_cmp")
-	public String COMPILE();
-
-	/**
-	 * Return java Code for cell evaluation
-	 * 
-	 * @return
-	 */
-	@Function(name = "evalcompile", doc = "TBD")
-	public String EVALCOMPILE();
-
-	/**
-	 * Return a printable form using Lisp formatting (see format print
-	 * variables)
-	 * 
-	 * @return Printable form
-	 */
-	public String toString();
 
 	/**
 	 * Return describe string
 	 * 
 	 * @return
 	 */
-	@Function(name = "describe", doc = "f_descri")
+	@aFunction(name = "describe", doc = "f_descri")
 	public String DESCRIBE();
-
-	/**
-	 * Macro expand
-	 * 
-	 * @return
-	 */
-	@Function(name = "macroexpand", doc = "f_mexp_")
-	public tT[] MACROEXPAND();
-
-	/**
-	 * Macro expand 1 step
-	 * 
-	 * @return
-	 */
-	@Function(name = "macroexpand-1", doc = "f_mexp_")
-	public tT[] MACROEXPAND_1();
-
-	/**
-	 * get car
-	 * <p>
-	 * Only here for code reading simplification
-	 * 
-	 * @return
-	 */
-	// definition in tSYMBOL
-	public tT CAR();
-
-	/**
-	 * get cdr
-	 * <p>
-	 * Only here for code reading simplification
-	 * 
-	 * @return
-	 */
-	// definition in tSYMBOL
-	public tT CDR();
 
 	/**
 	 * eq same cell
@@ -137,9 +119,9 @@ public interface tT
 	 * @param cell
 	 * @return
 	 */
-	@Function(name = "eq", doc = "f_eq")
+	@aFunction(name = "eq", doc = "f_eq")
 	public boolean EQ( //
-			@Arg(name = "cell") tT cell);
+			@aArg(name = "cell") tT cell);
 
 	/**
 	 * eql
@@ -148,9 +130,9 @@ public interface tT
 	 * @return
 	 *         TODO will be removed for a lisp version
 	 */
-	@Function(name = "eql", doc = "f_eql")
+	@aFunction(name = "eql", doc = "f_eql")
 	public boolean EQL( //
-			@Arg(name = "cell") tT cell);
+			@aArg(name = "cell") tT cell);
 
 	/**
 	 * equal
@@ -159,9 +141,9 @@ public interface tT
 	 * @return
 	 *         TODO will be removed for a lisp version
 	 */
-	@Function(name = "equal", doc = "f_equal")
+	@aFunction(name = "equal", doc = "f_equal")
 	public boolean EQUAL( //
-			@Arg(name = "cell") tT cell);
+			@aArg(name = "cell") tT cell);
 
 	/**
 	 * equalp
@@ -170,9 +152,25 @@ public interface tT
 	 * @return
 	 *         TODO will be removed for a lisp version
 	 */
-	@Function(name = "equalp", doc = "f_rqualp")
+	@aFunction(name = "equalp", doc = "f_rqualp")
 	public boolean EQUALP( //
-			@Arg(name = "cell") tT cell);
+			@aArg(name = "cell") tT cell);
+
+	/**
+	 * Evaluate the cell
+	 * 
+	 * @return Value as an array (functions can give back multiple values)
+	 */
+	@aFunction(name = "eval", doc = "f_eval")
+	public tT[] EVAL();
+
+	/**
+	 * Return java Code for cell evaluation
+	 * 
+	 * @return
+	 */
+	@aFunction(name = "evalcompile")
+	public String EVALCOMPILE();
 
 	/**
 	 * Test basic subtype test
@@ -180,38 +178,48 @@ public interface tT
 	 * @param type
 	 * @return
 	 */
-	@Function(name = "%istype", doc = "TBD")
-	public boolean pISTYPE( //
-			@Arg(name = "type") tSYMBOL type);
-
-	/**
-	 * Test if cell is constant
-	 * 
-	 * @return
-	 */
-	@Function(name = "constantp", doc = "f_consta")
-	public boolean CONSTANTP();
+	@aFunction(name = "%istype")
+	public boolean ISTYPE( //
+			@aArg(name = "type") tSYMBOL type);
 
 	/**
 	 * Test if thsi is a keyword
 	 * 
 	 * @return
 	 */
-	@Function(name = "keywordp", doc = "f_kwdp")
+	@aFunction(name = "keywordp", doc = "f_kwdp")
 	public boolean KEYWORDP();
 
 	/**
-	 * Return the class of object
+	 * aMacro expand
 	 * 
 	 * @return
 	 */
-	@Function(name = "class-of", doc = "f_clas_1")
-	public tCLASS CLASS_OF();
+	@aFunction(name = "macroexpand", doc = "f_mexp_")
+	public tT[] MACROEXPAND();
+
+	/**
+	 * aMacro expand 1 step
+	 * 
+	 * @return
+	 */
+	@aFunction(name = "macroexpand-1", doc = "f_mexp_")
+	public tT[] MACROEXPAND_1();
 
 	/**
 	 * @return
 	 */
-	@Function(name = "sxhash", doc = "f_sxhash")
+	@aFunction(name = "sxhash", doc = "f_sxhash")
 	public Integer SXHASH();
+
+	/**
+	 * Return a printable form using Lisp formatting (see format print
+	 * variables)
+	 * 
+	 * @return Printable form
+	 */
+	@aNonStandard
+	@aFunction(name = "to-string")
+	public String TO_STRING();
 
 }

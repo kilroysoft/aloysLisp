@@ -3,7 +3,7 @@
  * <p>
  * A LISP interpreter, compiler and library.
  * <p>
- * Copyright (C) 2010 kilroySoft <aloyslisp@kilroysoft.ch>
+ * Copyright (C) 2010-2011 kilroySoft <aloyslisp@kilroysoft.ch>
  * 
  * <p>
  * This program is free software: you can redistribute it and/or modify it under
@@ -41,7 +41,7 @@ import static aloyslisp.core.L.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-public class cENV_BLOCK extends cENV_PROGN
+public class cENV_BLOCK extends cENV_PROGN implements tENV_BLOCK
 {
 	/**
 	 * Name of block
@@ -61,11 +61,11 @@ public class cENV_BLOCK extends cENV_PROGN
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.cCELL#toString()
+	 * @see aloyslisp.core.cCELL#TO_STRING()
 	 */
-	public String toString()
+	public String TO_STRING()
 	{
-		return ("#<ENV-BLOCK " + name + " " + ip.toString() + ">");
+		return ("#<ENV-BLOCK " + name + " " + ip.TO_STRING() + ">");
 	}
 
 	/**

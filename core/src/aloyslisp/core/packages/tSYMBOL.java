@@ -3,7 +3,7 @@
  * <p>
  * A LISP interpreter, compiler and library.
  * <p>
- * Copyright (C) 2010 kilroySoft <aloyslisp@kilroysoft.ch>
+ * Copyright (C) 2010-2011 kilroySoft <aloyslisp@kilroysoft.ch>
  * 
  * <p>
  * This program is free software: you can redistribute it and/or modify it under
@@ -24,14 +24,15 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 12 sept. 2010 Creation
+// IP 12 sept. 2010-2011 Creation
 // --------------------------------------------------------------------------
 
 package aloyslisp.core.packages;
 
 import aloyslisp.annotations.*;
 import aloyslisp.core.*;
-import aloyslisp.core.clos.*;
+import aloyslisp.core.designators.tFUNCTION_DESIGNATOR;
+import aloyslisp.core.designators.tPACKAGE_DESIGNATOR;
 import aloyslisp.core.functions.*;
 
 /**
@@ -41,77 +42,10 @@ import aloyslisp.core.functions.*;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-/**
- * tSYMBOL
- * 
- * @author Ivan Pierre {ivan@kilroysoft.ch}
- * @author George Kilroy {george@kilroysoft.ch}
- * 
- */
-@Type(name = "symbol", doc = "t_symbol", typep = "symbolp")
-public interface tSYMBOL extends tBUILT_IN_CLASS, tFUNCTION_DESIGNATOR,
+@aType(name = "symbol", doc = "t_symbol", typep = "symbolp")
+public interface tSYMBOL extends tDYN_SYMBOL, tFUNCTION_DESIGNATOR,
 		tPACKAGE_DESIGNATOR
 {
-	/**
-	 * Create a copy of the symbol plus copy of value define and copy of plist.
-	 * 
-	 * @return
-	 */
-	public tT copy(tT copyProps);
-
-	/**
-	 * @param pack
-	 * @return
-	 */
-	@Function(name = "set-symbol-package")
-	public tSYMBOL SET_SYMBOL_PACKAGE( //
-			@Arg(name = "pack") tPACKAGE_DESIGNATOR pack);
-
-	/**
-	 * @return
-	 */
-	@Function(name = "symbol-package", doc = "f_symb_3")
-	public tPACKAGE SYMBOL_PACKAGE();
-
-	/**
-	 * @param name
-	 * @param data
-	 * @return
-	 */
-	@Function(name = "set-get")
-	public tSYMBOL SET_GET( //
-			@Arg(name = "name") tT name, //
-			@Arg(name = "data") tT data);
-
-	/**
-	 * @param name
-	 * @return
-	 */
-	@Function(name = "get", doc = "f_get")
-	public tT GET( //
-			@Arg(name = "name") tT name, //
-			@Arg(name = "def") tT def);
-
-	/**
-	 * @param name
-	 * @return
-	 */
-	@Function(name = "remprop", doc = "f_rempro")
-	public tT REMPROP( //
-			@Arg(name = "name") tT name);
-
-	/**
-	 * @return
-	 */
-	@Function(name = "symbol-name", doc = "f_symb_2")
-	public String SYMBOL_NAME();
-
-	/**
-	 * @param constant
-	 * @return
-	 */
-	public tSYMBOL setConstant(boolean constant);
-
 	/**
 	 * @param args
 	 * @return
@@ -119,83 +53,100 @@ public interface tSYMBOL extends tBUILT_IN_CLASS, tFUNCTION_DESIGNATOR,
 	public tT[] e(Object... args);
 
 	/**
-	 * @param value
+	 * Create a copy of the symbol plus copy of value define and copy of plist.
+	 * 
 	 * @return
 	 */
-	@Function(name = "set-symbol-value")
-	public tSYMBOL SET_SYMBOL_VALUE( //
-			@Arg(name = "value") tT value);
-
-	/**
-	 * @param func
-	 * @return
-	 */
-	@Function(name = "set-symbol-function")
-	public tSYMBOL SET_SYMBOL_FUNCTION( //
-			@Arg(name = "func") tFUNCTION func);
+	@aFunction(name = "copy-symbol", doc = "f_cp_sym")
+	public tT COPY_SYMBOL( //
+			@aArg(name = "copy-props") tT copyProps);
 
 	/**
 	 * @return
 	 */
-	@Function(name = "symbol-value", doc = "f_symb_5")
-	public tT SYMBOL_VALUE();
-
-	/**
-	 * @return
-	 */
-	@Function(name = "symbol-function", doc = "f_symb_1")
-	public tFUNCTION SYMBOL_FUNCTION();
-
-	/**
-	 * @return
-	 */
-	@Function(name = "fdefinition", doc = "f_fdefin")
-	public tFUNCTION FDEFINITION();
-
-	/**
-	 * @return
-	 */
-	public tSYMBOL unset();
-
-	/**
-	 * @return
-	 */
-	public tSYMBOL fUnset();
-
-	/**
-	 * @return
-	 */
-	@Function(name = "boundp", doc = "f_boundp")
-	public boolean BOUNDP();
-
-	/**
-	 * @return
-	 */
-	@Function(name = "fboundp", doc = "f_fbound")
+	@aFunction(name = "fboundp", doc = "f_fbound")
 	public boolean FBOUNDP();
 
 	/**
 	 * @return
 	 */
-	@Function(name = "special-operator-p", doc = "f_specia")
+	@aFunction(name = "fdefinition", doc = "f_fdefin")
+	public tFUNCTION FDEFINITION();
+
+	/**
+	 * @return
+	 */
+	@aFunction(name = "fmakunbound", doc = "f_fmakun")
+	public tSYMBOL FMAKUNBOUND();
+
+	/**
+	 * @param name
+	 * @return
+	 */
+	@aFunction(name = "get", doc = "f_get")
+	public tT GET( //
+			@aArg(name = "name") tT name, //
+			@aArg(name = "def") tT def);
+
+	/**
+	 * @return
+	 */
+	@aFunction(name = "macro-function", doc = "f_macro_")
+	public tT MACRO_FUNCTION();
+
+	/**
+	 * @param name
+	 * @return
+	 */
+	@aFunction(name = "remprop", doc = "f_rempro")
+	public tT REMPROP( //
+			@aArg(name = "name") tT name);
+
+	/**
+	 * @param constant
+	 * @return
+	 */
+	@aNonStandard
+	@aFunction(name = "set-constant")
+	public tSYMBOL SET_CONSTANT( //
+			@aArg(name = "constant") boolean constant);
+
+	/**
+	 * @param name
+	 * @param data
+	 * @return
+	 */
+	@aFunction(name = "set-get")
+	public tSYMBOL SET_GET( //
+			@aArg(name = "name") tT name, //
+			@aArg(name = "data") tT data);
+
+	/**
+	 * @param func
+	 * @return
+	 */
+	@aFunction(name = "set-symbol-function")
+	public tSYMBOL SET_SYMBOL_FUNCTION( //
+			@aArg(name = "func") tFUNCTION func);
+
+	/**
+	 * @param pack
+	 * @return
+	 */
+	@aFunction(name = "set-symbol-package")
+	public tSYMBOL SET_SYMBOL_PACKAGE( //
+			@aArg(name = "pack") tPACKAGE_DESIGNATOR pack);
+
+	/**
+	 * @return
+	 */
+	@aFunction(name = "special-operator-p", doc = "f_specia")
 	public tT SPECIAL_OPERATOR_P();
 
 	/**
 	 * @return
 	 */
-	@Function(name = "macro-function", doc = "f_macro_")
-	public tT MACRO_FUNCTION();
-
-	/**
-	 * @return
-	 */
-	@Function(name = "specialp")
-	public Boolean SPECIALP();
-
-	/**
-	 * @return
-	 */
-	@Function(name = "set-special")
-	public tSYMBOL SET_SPECIAL(Boolean special);
+	@aFunction(name = "symbol-function", doc = "f_symb_1")
+	public tFUNCTION SYMBOL_FUNCTION();
 
 }

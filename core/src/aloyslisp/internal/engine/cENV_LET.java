@@ -3,7 +3,7 @@
  * <p>
  * A LISP interpreter, compiler and library.
  * <p>
- * Copyright (C) 2010 kilroySoft <aloyslisp@kilroysoft.ch>
+ * Copyright (C) 2010-2011 kilroySoft <aloyslisp@kilroysoft.ch>
  * 
  * <p>
  * This program is free software: you can redistribute it and/or modify it under
@@ -59,7 +59,7 @@ public class cENV_LET extends cENV
 		vars = new cHASH_TABLE(null, nInt(1), nFloat((float) 0.75));
 	}
 
-	public String toString()
+	public String TO_STRING()
 	{
 		return "#<ENV-LET " + vars + ">";
 	}

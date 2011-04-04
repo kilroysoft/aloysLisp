@@ -3,7 +3,7 @@
  * <p>
  * A LISP interpreter, compiler and library.
  * <p>
- * Copyright (C) 2010 kilroySoft <aloyslisp@kilroysoft.ch>
+ * Copyright (C) 2010-2011 kilroySoft <aloyslisp@kilroysoft.ch>
  * 
  * <p>
  * This program is free software: you can redistribute it and/or modify it under
@@ -24,13 +24,16 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 15 sept. 2010 Creation
+// IP 15 sept. 2010-2011 Creation
 // --------------------------------------------------------------------------
 
 package aloyslisp;
 
 import aloyslisp.core.conditions.LispException;
-import aloyslisp.internal.engine.*;
+import aloyslisp.core.streams.cPATHNAME;
+import aloyslisp.internal.engine.cTHREAD;
+import static aloyslisp.core.streams.cSTREAM.*;
+import static aloyslisp.internal.engine.cINTERNAL_CLASS.*;
 import static aloyslisp.core.L.*;
 
 /**
@@ -52,44 +55,23 @@ public class Lisp
 	{
 		// Should be the first to allow READTABLE to be active in class
 		// loading...
-		// TODO put to core
-		System.out.println(cl.PACKAGE_NAME());
-		loadClasses("aloyslisp.core.streams");
+		MAKE_INTERNAL_CLASS("aloyslisp.core.streams.cREADTABLE");
+		MAKE_INTERNAL_CLASS("aloyslisp.internal.engine.tINTERNAL_CLASSES");
+		MAKE_INTERNAL_CLASS("aloyslisp.internal.engine.cINTERNAL_CLASSES");
+		MAKE_INTERNAL_CLASS("aloyslisp.packages.common_lisp.SpecialOperators");
 
-		// Load the rest
-		// TODO Should be systematized probably :
-		// loadClasses("aloyslisp.core");
-		// loadClasses("aloyslisp.internal");
-		// loadClasses("aloyslisp.packages");
-		loadClasses("aloyslisp.annotations");
-		loadClasses("aloyslisp.core");
-		loadClasses("aloyslisp.core.clos");
-		loadClasses("aloyslisp.core.conditions");
-		loadClasses("aloyslisp.core.functions");
-		loadClasses("aloyslisp.core.math");
-		loadClasses("aloyslisp.core.packages");
-		loadClasses("aloyslisp.core.sequences");
-		loadClasses("aloyslisp.core.streams");
-		loadClasses("aloyslisp.internal.engine");
-		loadClasses("aloyslisp.internal.flowcontrol");
-		loadClasses("aloyslisp.internal.iterators");
-		loadClasses("aloyslisp.packages.common_lisp");
-		loadClasses("aloyslisp.packages.system");
+		// Load classes and repl definition
+		LOAD(new cPATHNAME("class.lisp"), false, false, false);
 
 		// Load first lisp file (REPL definition)
-		sym("print").e(str("aloysLisp v.V314"));
-
-		// Load first lisp file (REPL definition)
-		sym("load").e(str("class.lisp"));
-
-		// cPACKAGE.cl.dump();
+		eval("(print \"aloysLisp v.V314\")");
 
 		// loop recovering errors
 		for (;;)
 		{
 			try
 			{
-				sym("repl").e();
+				eval("(repl)");
 			}
 			catch (Exception ex)
 			{

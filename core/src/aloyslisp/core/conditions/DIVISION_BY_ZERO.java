@@ -3,7 +3,7 @@
  * <p>
  * A LISP interpreter, compiler and library.
  * <p>
- * Copyright (C) 2010 kilroySoft <aloyslisp@kilroysoft.ch>
+ * Copyright (C) 2010-2011 kilroySoft <aloyslisp@kilroysoft.ch>
  * 
  * <p>
  * This program is free software: you can redistribute it and/or modify it under
@@ -24,7 +24,7 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 29 déc. 2010 Creation
+// IP 29 déc. 2010-2011 Creation
 // --------------------------------------------------------------------------
 
 package aloyslisp.core.conditions;
@@ -39,8 +39,8 @@ import aloyslisp.core.tT;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-@Type(name = "division-by-zero", doc = "e_divisi")
-@BuiltIn(classOf = "division-by-zero", doc = "e_divisi")
+@aType(name = "division-by-zero", doc = "e_divisi")
+@aBuiltIn(lispClass = "division-by-zero", doc = "e_divisi")
 public class DIVISION_BY_ZERO extends ARITHMETIC_ERROR
 {
 	private static final long	serialVersionUID	= 1L;

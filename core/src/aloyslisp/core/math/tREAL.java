@@ -3,7 +3,7 @@
  * <p>
  * A LISP interpreter, compiler and library.
  * <p>
- * Copyright (C) 2010 kilroySoft <aloyslisp@kilroysoft.ch>
+ * Copyright (C) 2010-2011 kilroySoft <aloyslisp@kilroysoft.ch>
  * 
  * <p>
  * This program is free software: you can redistribute it and/or modify it under
@@ -24,7 +24,7 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 25 déc. 2010 Creation
+// IP 25 déc. 2010-2011 Creation
 // --------------------------------------------------------------------------
 
 package aloyslisp.core.math;
@@ -39,9 +39,31 @@ import aloyslisp.core.tT;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-@Type(name = "real", doc = "t_real", typep = "realp")
+@aType(name = "real", doc = "t_real", typep = "realp")
 public interface tREAL extends tNUMBER
 {
+
+	/**
+	 * Test greater a > b
+	 * 
+	 * @param op
+	 * @return
+	 */
+	@aNonStandard
+	@aFunction(name = "single-greater")
+	public abstract boolean SINGLE_GREATER( //
+			@aArg(name = "op") tREAL op);
+
+	/**
+	 * Test lower a < b
+	 * 
+	 * @param op
+	 * @return
+	 */
+	@aNonStandard
+	@aFunction(name = "single-lower")
+	public boolean SINGLE_LOWER( //
+			@aArg(name = "op") tREAL op);
 
 	/****************************************************************
 	 * LISP FUNCTIONS
@@ -50,14 +72,40 @@ public interface tREAL extends tNUMBER
 	 * COMPARATORS
 	 */
 	/**
+	 * Ceiling
+	 * 
+	 * @param op
+	 * @return
+	 */
+	@aFunction(name = "ceiling", doc = "f_floorc")
+	public tREAL[] CEILING( //
+			@aOpt(name = "div") tT div);
+
+	/**
+	 * @return
+	 */
+	@aFunction(name = "cis", doc = "f_cis")
+	public tNUMBER CIS();
+
+	/**
+	 * Floor
+	 * 
+	 * @param op
+	 * @return
+	 */
+	@aFunction(name = "floor", doc = "f_floorc")
+	public tREAL[] FLOOR( //
+			@aOpt(name = "div") tT div);
+
+	/**
 	 * Test greater a > b
 	 * 
 	 * @param op
 	 * @return
 	 */
-	@Function(name = ">", doc = "f_eq_sle")
+	@aFunction(name = ">", doc = "f_eq_sle")
 	public boolean GREATER( //
-			@Rest(name = "op") tT op);
+			@aRest(name = "op") tT op);
 
 	/**
 	 * Test lower a < b
@@ -65,36 +113,15 @@ public interface tREAL extends tNUMBER
 	 * @param op
 	 * @return
 	 */
-	@Function(name = "<", doc = "f_eq_sle")
+	@aFunction(name = "<", doc = "f_eq_sle")
 	public boolean LOWER( //
-			@Rest(name = "op") tT op);
+			@aRest(name = "op") tT op);
 
 	/**
 	 * @return
 	 */
-	@Function(name = "minusp", doc = "f_minusp")
+	@aFunction(name = "minusp", doc = "f_minusp")
 	public boolean MINUSP();
-
-	/**
-	 * @return
-	 */
-	@Function(name = "plusp", doc = "f_minusp")
-	public boolean PLUSP();
-
-	/* *******************************************************************
-	 * cRATIONAL
-	 */
-	/**
-	 * @return
-	 */
-	@Function(name = "rational", doc = "f_ration")
-	public tRATIONAL RATIONAL();
-
-	/**
-	 * @return
-	 */
-	@Function(name = "rationalize", doc = "f_ration")
-	public tRATIONAL RATIONALIZE();
 
 	/* *******************************************************************
 	 * FUNCTIONS
@@ -105,9 +132,37 @@ public interface tREAL extends tNUMBER
 	 * @param op
 	 * @return
 	 */
-	@Function(name = "mod", doc = "f_mod_r")
+	@aFunction(name = "mod", doc = "f_mod_r")
 	public tREAL MOD( //
-			@Arg(name = "op") tREAL op);
+			@aArg(name = "op") tREAL op);
+
+	/**
+	 * @return
+	 */
+	@aFunction(name = "plusp", doc = "f_minusp")
+	public boolean PLUSP();
+
+	/**
+	 * @return
+	 */
+	@aFunction(name = "random", doc = "f_random")
+	public tNUMBER RANDOM( //
+			@aOpt(name = "state") tT st);
+
+	/* *******************************************************************
+	 * cRATIONAL
+	 */
+	/**
+	 * @return
+	 */
+	@aFunction(name = "rational", doc = "f_ration")
+	public tRATIONAL RATIONAL();
+
+	/**
+	 * @return
+	 */
+	@aFunction(name = "rationalize", doc = "f_ration")
+	public tRATIONAL RATIONALIZE();
 
 	/**
 	 * Remainder
@@ -115,39 +170,9 @@ public interface tREAL extends tNUMBER
 	 * @param op
 	 * @return
 	 */
-	@Function(name = "rem", doc = "f_mod_r")
+	@aFunction(name = "rem", doc = "f_mod_r")
 	public tREAL REM( //
-			@Arg(name = "op") tREAL op);
-
-	/**
-	 * Floor
-	 * 
-	 * @param op
-	 * @return
-	 */
-	@Function(name = "floor", doc = "f_floorc")
-	public tREAL[] FLOOR( //
-			@Opt(name = "div") tT div);
-
-	/**
-	 * Ceiling
-	 * 
-	 * @param op
-	 * @return
-	 */
-	@Function(name = "ceiling", doc = "f_floorc")
-	public tREAL[] CEILING( //
-			@Opt(name = "div") tT div);
-
-	/**
-	 * Truncate
-	 * 
-	 * @param op
-	 * @return
-	 */
-	@Function(name = "truncate", doc = "f_floorc")
-	public tREAL[] TRUNCATE( //
-			@Opt(name = "div") tT div);
+			@aArg(name = "op") tREAL op);
 
 	/**
 	 * Round
@@ -155,21 +180,17 @@ public interface tREAL extends tNUMBER
 	 * @param op
 	 * @return
 	 */
-	@Function(name = "round", doc = "f_floorc")
+	@aFunction(name = "round", doc = "f_floorc")
 	public tREAL[] ROUND( //
-			@Opt(name = "div") tT div);
+			@aOpt(name = "div") tT div);
 
 	/**
+	 * Truncate
+	 * 
+	 * @param op
 	 * @return
 	 */
-	@Function(name = "cis", doc = "f_cis")
-	public tNUMBER CIS();
-
-	/**
-	 * @return
-	 */
-	@Function(name = "random", doc = "f_random")
-	public tNUMBER RANDOM( //
-			@Opt(name = "state") tT st);
-
+	@aFunction(name = "truncate", doc = "f_floorc")
+	public tREAL[] TRUNCATE( //
+			@aOpt(name = "div") tT div);
 }

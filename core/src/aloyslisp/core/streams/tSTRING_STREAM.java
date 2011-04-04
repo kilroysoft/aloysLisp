@@ -3,7 +3,7 @@
  * <p>
  * A LISP interpreter, compiler and library.
  * <p>
- * Copyright (C) 2010 kilroySoft <aloyslisp@kilroysoft.ch>
+ * Copyright (C) 2010-2011 kilroySoft <aloyslisp@kilroysoft.ch>
  * 
  * <p>
  * This program is free software: you can redistribute it and/or modify it under
@@ -24,12 +24,12 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 11 nov. 2010 Creation
+// IP 11 nov. 2010-2011 Creation
 // --------------------------------------------------------------------------
 
 package aloyslisp.core.streams;
 
-import aloyslisp.annotations.Function;
+import aloyslisp.annotations.*;
 
 /**
  * tSTRING_STREAM
@@ -41,19 +41,15 @@ import aloyslisp.annotations.Function;
 public interface tSTRING_STREAM extends tSTREAM
 {
 	/**
-	 * Get back string state
-	 * 
-	 * @return
-	 */
-	public String getString();
-
-	/**
 	 * Initialize string state
 	 * 
 	 * @param str
 	 */
-	public void setString(String str);
+	@aNonStandard
+	@aWriter(accessor = "get-output-stream-string")
+	@aFunction(name = "set-output-stream-string", doc = "f_get_ou")
+	public void SET_OUPUT_STREAM_STRING(String str);
 
-	@Function(name = "get-output-stream-string", doc = "f_get_ou")
+	@aFunction(name = "get-output-stream-string", doc = "f_get_ou")
 	public String GET_OUTPUT_STREAM_STRING();
 }

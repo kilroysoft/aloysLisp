@@ -3,7 +3,7 @@
  * <p>
  * A LISP interpreter, compiler and library.
  * <p>
- * Copyright (C) 2010 kilroySoft <aloyslisp@kilroysoft.ch>
+ * Copyright (C) 2010-2011 kilroySoft <aloyslisp@kilroysoft.ch>
  * 
  * <p>
  * This program is free software: you can redistribute it and/or modify it under
@@ -24,12 +24,12 @@
 // --------------------------------------------------------------------------
 // history
 // --------------------------------------------------------------------------
-// IP 23 déc. 2010 Creation
+// IP 23 déc. 2010-2011 Creation
 // --------------------------------------------------------------------------
 
 package aloyslisp.core.math;
 
-import aloyslisp.annotations.BuiltIn;
+import aloyslisp.annotations.aBuiltIn;
 import aloyslisp.core.tT;
 
 /**
@@ -39,7 +39,7 @@ import aloyslisp.core.tT;
  * @author George Kilroy {george@kilroysoft.ch}
  * 
  */
-@BuiltIn(classOf = "float", typeOf = "single-float", doc = "t_short_")
+@aBuiltIn(lispClass = "float", lispType = "single-float", doc = "t_short_")
 public class cSINGLE_FLOAT extends cFLOAT implements tSINGLE_FLOAT
 {
 	public Float	value;
@@ -54,76 +54,95 @@ public class cSINGLE_FLOAT extends cFLOAT implements tSINGLE_FLOAT
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.cCELL#toString()
+	 * @see aloyslisp.core.math.cREAL#COERCE_TO_COMPLEX()
 	 */
-	public String toString()
-	{
-		return value.toString();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#complexValue()
-	 */
-	@Override
-	public cCOMPLEX getComplexValue()
+	public cCOMPLEX COERCE_TO_COMPLEX()
 	{
 		return new cCOMPLEX(this, ZERO);
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#floatValue()
+	 * @see aloyslisp.core.math.tNUMBER#COERCE_TO_SINGLE_FLOAT()
 	 */
-	@Override
-	public cSINGLE_FLOAT getFloatValue()
+	public cSINGLE_FLOAT COERCE_TO_SINGLE_FLOAT()
 	{
 		return new cSINGLE_FLOAT(value);
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#doubleValue()
+	 * @see aloyslisp.core.math.tNUMBER#COERCE_TO_DOUBLE_FLOAT()
 	 */
-	@Override
-	public cDOUBLE_FLOAT getDoubleValue()
+	public cDOUBLE_FLOAT COERCE_TO_DOUBLE_FLOAT()
 	{
 		return new cDOUBLE_FLOAT(value);
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#shortValue()
+	 * @see aloyslisp.core.math.tNUMBER#COERCE_TO_SHORT_FLOAT()
 	 */
-	@Override
-	public cSHORT_FLOAT getShortValue()
+	public cSHORT_FLOAT COERCE_TO_SHORT_FLOAT()
 	{
 		return new cSHORT_FLOAT(value);
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#coerce(aloyslisp.core.math.tNUMBER)
+	 * @see
+	 * aloyslisp.core.math.tNUMBER#COERCE_TO_NUMBER(aloyslisp.core.math.tNUMBER)
 	 */
-	public cNUMBER coerce(tNUMBER var)
+	public cNUMBER COERCE_TO_NUMBER(tNUMBER var)
 	{
 		if (var instanceof cDOUBLE_FLOAT)
-			return getDoubleValue();
+			return COERCE_TO_DOUBLE_FLOAT();
 
 		if (var instanceof cCOMPLEX)
-			return getComplexValue();
+			return COERCE_TO_COMPLEX();
 
 		return this;
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tREAL#equal(aloyslisp.core.math.tNUMBER)
+	 * @see aloyslisp.core.cCELL#TO_STRING()
+	 */
+	public String TO_STRING()
+	{
+		return value.toString();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tNUMBER#add(aloyslisp.core.math.tNUMBER)
 	 */
 	@Override
-	boolean equalnum(tNUMBER op)
+	public tNUMBER SINGLE_ADD(tNUMBER op)
 	{
-		return value == op.getFloatValue().floatValue();
+		return new cSINGLE_FLOAT(value
+				+ op.COERCE_TO_SINGLE_FLOAT().FLOAT_VALUE());
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tNUMBER#division(aloyslisp.core.math.tNUMBER)
+	 */
+	@Override
+	public tNUMBER SINGLE_DIVISION(tNUMBER op)
+	{
+		return new cSINGLE_FLOAT(value
+				/ op.COERCE_TO_SINGLE_FLOAT().FLOAT_VALUE());
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * aloyslisp.core.math.tNUMBER#SINGLE_EQUALNUM(aloyslisp.core.math.tNUMBER)
+	 */
+	public boolean SINGLE_EQUALNUM(tNUMBER op)
+	{
+		return value == op.COERCE_TO_SINGLE_FLOAT().FLOAT_VALUE();
 	}
 
 	/*
@@ -131,9 +150,9 @@ public class cSINGLE_FLOAT extends cFLOAT implements tSINGLE_FLOAT
 	 * @see aloyslisp.core.math.tREAL#greater(aloyslisp.core.math.tNUMBER)
 	 */
 	@Override
-	boolean greater(tREAL op)
+	public boolean SINGLE_GREATER(tREAL op)
 	{
-		return value > op.getFloatValue().floatValue();
+		return value > op.COERCE_TO_SINGLE_FLOAT().FLOAT_VALUE();
 	}
 
 	/*
@@ -141,9 +160,51 @@ public class cSINGLE_FLOAT extends cFLOAT implements tSINGLE_FLOAT
 	 * @see aloyslisp.core.math.tREAL#lower(aloyslisp.core.math.tNUMBER)
 	 */
 	@Override
-	boolean lower(tREAL op)
+	public boolean SINGLE_LOWER(tREAL op)
 	{
-		return value < op.getFloatValue().floatValue();
+		return value < op.COERCE_TO_SINGLE_FLOAT().FLOAT_VALUE();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tNUMBER#multiply(aloyslisp.core.math.tNUMBER)
+	 */
+	@Override
+	public tNUMBER SINGLE_MULTIPLY(tNUMBER op)
+	{
+		return new cSINGLE_FLOAT(value
+				* op.COERCE_TO_SINGLE_FLOAT().FLOAT_VALUE());
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tNUMBER#substract(aloyslisp.core.math.tNUMBER)
+	 */
+	@Override
+	public tNUMBER SINGLE_SUBSTRACT(tNUMBER op)
+	{
+		return new cSINGLE_FLOAT(value
+				- op.COERCE_TO_SINGLE_FLOAT().FLOAT_VALUE());
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tNUMBER#inversion()
+	 */
+	@Override
+	public tNUMBER INVERSION()
+	{
+		return new cSINGLE_FLOAT(1 / value);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.math.tNUMBER#minus()
+	 */
+	@Override
+	public tNUMBER MINUS()
+	{
+		return new cSINGLE_FLOAT(-value);
 	}
 
 	/*
@@ -151,7 +212,7 @@ public class cSINGLE_FLOAT extends cFLOAT implements tSINGLE_FLOAT
 	 * @see aloyslisp.core.math.tREAL#rational()
 	 */
 	@Override
-	tRATIONAL rational()
+	public tRATIONAL RATIONAL()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -162,7 +223,7 @@ public class cSINGLE_FLOAT extends cFLOAT implements tSINGLE_FLOAT
 	 * @see aloyslisp.core.math.tREAL#rationalize()
 	 */
 	@Override
-	tRATIONAL rationalize()
+	public tRATIONAL RATIONALIZE()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -170,70 +231,10 @@ public class cSINGLE_FLOAT extends cFLOAT implements tSINGLE_FLOAT
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#add(aloyslisp.core.math.tNUMBER)
-	 */
-	@Override
-	tNUMBER add(tNUMBER op)
-	{
-		return new cSINGLE_FLOAT(value + op.getFloatValue().floatValue());
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#substract(aloyslisp.core.math.tNUMBER)
-	 */
-	@Override
-	tNUMBER substract(tNUMBER op)
-	{
-		return new cSINGLE_FLOAT(value - op.getFloatValue().floatValue());
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#minus()
-	 */
-	@Override
-	tNUMBER minus()
-	{
-		return new cSINGLE_FLOAT(-value);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#inversion()
-	 */
-	@Override
-	tNUMBER inversion()
-	{
-		return new cSINGLE_FLOAT(1 / value);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#multiply(aloyslisp.core.math.tNUMBER)
-	 */
-	@Override
-	tNUMBER multiply(tNUMBER op)
-	{
-		return new cSINGLE_FLOAT(value * op.getFloatValue().floatValue());
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.math.tNUMBER#division(aloyslisp.core.math.tNUMBER)
-	 */
-	@Override
-	tNUMBER division(tNUMBER op)
-	{
-		return new cSINGLE_FLOAT(value / op.getFloatValue().floatValue());
-	}
-
-	/*
-	 * (non-Javadoc)
 	 * @see aloyslisp.core.math.tFLOAT#decode_float(aloyslisp.core.math.tFLOAT)
 	 */
 	@Override
-	tT[] decode_float()
+	public tT[] DECODE_FLOAT()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -246,7 +247,7 @@ public class cSINGLE_FLOAT extends cFLOAT implements tSINGLE_FLOAT
 	 * )
 	 */
 	@Override
-	tT[] integer_decode_float()
+	public tT[] INTEGER_DECODE_FLOAT()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -258,7 +259,7 @@ public class cSINGLE_FLOAT extends cFLOAT implements tSINGLE_FLOAT
 	 * aloyslisp.core.math.tINTEGER)
 	 */
 	@Override
-	tFLOAT scale_float(tINTEGER scale)
+	public tFLOAT SCALE_FLOAT(tINTEGER scale)
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -269,7 +270,7 @@ public class cSINGLE_FLOAT extends cFLOAT implements tSINGLE_FLOAT
 	 * @see aloyslisp.core.math.tFLOAT#float_radix(aloyslisp.core.math.tFLOAT)
 	 */
 	@Override
-	tFLOAT float_radix()
+	public tFLOAT FLOAT_RADIX()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -281,7 +282,7 @@ public class cSINGLE_FLOAT extends cFLOAT implements tSINGLE_FLOAT
 	 * aloyslisp.core.math.tFLOAT)
 	 */
 	@Override
-	tFLOAT float_sign(tFLOAT f2)
+	public tFLOAT FLOAT_SIGN(tFLOAT f2)
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -292,7 +293,7 @@ public class cSINGLE_FLOAT extends cFLOAT implements tSINGLE_FLOAT
 	 * @see aloyslisp.core.math.tFLOAT#float_digits(aloyslisp.core.math.tFLOAT)
 	 */
 	@Override
-	tINTEGER float_digits()
+	public tINTEGER FLOAT_DIGITS()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -304,7 +305,7 @@ public class cSINGLE_FLOAT extends cFLOAT implements tSINGLE_FLOAT
 	 * aloyslisp.core.math.tFLOAT#float_precision(aloyslisp.core.math.tFLOAT)
 	 */
 	@Override
-	tINTEGER float_precision()
+	public tINTEGER FLOAT_PRECISION()
 	{
 		// TODO Auto-generated method stub
 		return null;
