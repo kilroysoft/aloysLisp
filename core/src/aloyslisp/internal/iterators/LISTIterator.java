@@ -162,7 +162,7 @@ public class LISTIterator extends SEQUENCEIterator
 
 		save();
 
-		current = previous.SET_CDR(current.CDR());
+		current = previous.RPLACD(current.CDR());
 	}
 
 	/*
@@ -198,7 +198,7 @@ public class LISTIterator extends SEQUENCEIterator
 		save();
 
 		tLIST newCons = new cCONS(obj, current.CDR());
-		current.SET_CDR(newCons);
+		current.RPLACD(newCons);
 		return null;
 	}
 
@@ -221,12 +221,12 @@ public class LISTIterator extends SEQUENCEIterator
 		if (current == NIL)
 		{
 			current = new cCONS(obj, NIL);
-			previous.SET_CDR(current);
+			previous.RPLACD(current);
 			index++;
 			return obj;
 		}
 
-		current.SET_CAR(obj);
+		current.RPLACA(obj);
 		return obj;
 	}
 
@@ -244,12 +244,12 @@ public class LISTIterator extends SEQUENCEIterator
 		if (current == NIL)
 		{
 			current = new cCONS(obj, NIL);
-			previous.SET_CDR(current);
+			previous.RPLACD(current);
 			index++;
 			return obj;
 		}
 
-		current.SET_CDR(obj);
+		current.RPLACD(obj);
 		return obj;
 	}
 
@@ -359,7 +359,7 @@ public class LISTIterator extends SEQUENCEIterator
 		}
 		else
 		{
-			current.SET_CDR(res = list(obj));
+			current.RPLACD(res = list(obj));
 		}
 
 		return res;

@@ -32,6 +32,7 @@ package aloyslisp.core.sequences;
 import java.util.Iterator;
 
 import aloyslisp.annotations.aBuiltIn;
+import aloyslisp.annotations.aJavaInternal;
 import aloyslisp.core.cCELL;
 import aloyslisp.core.tT;
 import aloyslisp.internal.iterators.SEQUENCEIterator;
@@ -57,21 +58,10 @@ public class cBIT_VECTOR extends cCELL implements tBIT_VECTOR
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.sequences.tARRAY#get()
-	 */
-	@Override
-	public tT[] get()
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
 	 * @see aloyslisp.core.sequences.tARRAY#getType()
 	 */
 	@Override
-	public tT getType()
+	public tT ARRAY_ELEMENT_TYPE()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -82,7 +72,7 @@ public class cBIT_VECTOR extends cCELL implements tBIT_VECTOR
 	 * @see aloyslisp.core.sequences.tARRAY#setType(aloyslisp.core.tT)
 	 */
 	@Override
-	public tARRAY setType(tT type)
+	public tARRAY SET_ARRAY_ELEMENT_TYPE(tT type)
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -93,6 +83,7 @@ public class cBIT_VECTOR extends cCELL implements tBIT_VECTOR
 	 * @see aloyslisp.core.sequences.tSEQUENCE#iterator(boolean)
 	 */
 	@Override
+	@aJavaInternal
 	public SEQUENCEIterator iterator(boolean destructive)
 	{
 		// TODO Auto-generated method stub
@@ -206,6 +197,7 @@ public class cBIT_VECTOR extends cCELL implements tBIT_VECTOR
 	 * @see java.lang.Iterable#iterator()
 	 */
 	@Override
+	@aJavaInternal
 	public Iterator<tT> iterator()
 	{
 		// TODO Auto-generated method stub

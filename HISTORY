@@ -25,10 +25,10 @@
 * Add THROW/CATCH environment and special operator.
 * Implement PATHNAME and STREAM Functions.
 * Manage Class of BaseArg argument.
-* Suppress @Static annotation to @Function with test on static function.
 * All non lisp functions on objects are private or protected or global.
 
 == Current state ==
+* Suppress @aStatic annotation to @aFunction with test on static function.
 * Annotation @aNonStandard for Non Standard Common-lisp functions and classes
 * Replace SymMap by cHASH_MAP.
 * Annotation @aWriter for simple SETF macros.

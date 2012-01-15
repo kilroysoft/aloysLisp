@@ -110,6 +110,8 @@ public interface tHASH_TABLE extends tBUILT_IN_CLASS
 	 */
 	@aFunction(name = "setf-gethash", doc = "f_gethas")
 	@aBaseArg(name = "hash-table", pos = 2)
+	@aNonStandard
+	@aWriter(accessor = "gethash")
 	public tT SET_GETHASH( //
 			@aArg(name = "value") tT value, //
 			@aArg(name = "key") tT key //

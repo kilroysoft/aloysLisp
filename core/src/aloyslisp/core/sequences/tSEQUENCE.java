@@ -46,13 +46,14 @@ import aloyslisp.internal.iterators.SEQUENCEIterator;
 @aType(name = "sequencs", doc = "t_seq", typep = "sequence-p")
 public interface tSEQUENCE extends tT, Iterable<tT>
 {
+
 	/**
 	 * Return iterator over sequence.
 	 * 
-	 * @param sequence
 	 * @param destructive
 	 * @return
 	 */
+	@aJavaInternal
 	public SEQUENCEIterator iterator(boolean destructive);
 
 	// ////////////////////////////////////////////////////////

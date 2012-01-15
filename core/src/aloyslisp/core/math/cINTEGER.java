@@ -31,7 +31,10 @@ package aloyslisp.core.math;
 
 import java.math.BigInteger;
 
+import aloyslisp.annotations.aArg;
 import aloyslisp.annotations.aBuiltIn;
+import aloyslisp.annotations.aFunction;
+import aloyslisp.annotations.aNonStandard;
 import aloyslisp.core.*;
 import aloyslisp.core.conditions.*;
 import aloyslisp.core.sequences.*;
@@ -113,8 +116,14 @@ public class cINTEGER extends cRATIONAL implements tINTEGER
 	 * @param junk
 	 * @return
 	 */
-	public static cINTEGER parse_integer(String val, Integer start,
-			Integer end, Integer radix, Boolean junk)
+	@aNonStandard
+	@aFunction(name = "parse-integer")
+	public static cINTEGER PARSE_INTEGER( //
+			@aArg(name = "val") String val, //
+			@aArg(name = "start") Integer start, //
+			@aArg(name = "end") Integer end, //
+			@aArg(name = "radix") Integer radix, //
+			@aArg(name = "junk") Boolean junk)
 	{
 		return new cINTEGER(new BigInteger(val, radix));
 	}
@@ -397,7 +406,7 @@ public class cINTEGER extends cRATIONAL implements tINTEGER
 			else
 				return this.GCD((tNUMBER) list.CAR()).GCD(list.CDR());
 		}
-	
+
 		throw new TYPE_ERROR(op, sym("integer"));
 	}
 
@@ -457,7 +466,7 @@ public class cINTEGER extends cRATIONAL implements tINTEGER
 			else
 				return this.LCM((tNUMBER) list.CAR()).LCM(list.CDR());
 		}
-	
+
 		throw new TYPE_ERROR(op, sym("integer"));
 	}
 

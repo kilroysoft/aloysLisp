@@ -349,7 +349,7 @@ public interface tNUMBER extends tBUILT_IN_CLASS
 	 * @return
 	 */
 	@aNonStandard
-	@aFunction(name = "%inversion")
+	@aFunction(name = "inversion")
 	public tNUMBER INVERSION();
 
 	/**
@@ -376,7 +376,7 @@ public interface tNUMBER extends tBUILT_IN_CLASS
 	 * @return
 	 */
 	@aNonStandard
-	@aFunction(name = "%minus")
+	@aFunction(name = "minus")
 	public tNUMBER MINUS();
 
 	/**

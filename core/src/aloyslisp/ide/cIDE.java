@@ -97,6 +97,12 @@ public class cIDE extends JFrame implements ActionListener
 				"(describe *package*)"));
 		f_lispMenu.add(aproposItem);
 
+		// -- Apropos SYSTEM
+		JMenuItem systemItem = new JMenuItem(new RunTask(this, "system", null,
+				"Lists all defined symbols and functions in system package",
+				null, null, "(describe (find-package \"sys\"))"));
+		f_lispMenu.add(systemItem);
+
 		// -- Load
 		JMenuItem loadItem = new JMenuItem(new RunLoadFileTask(this,
 				"load file...", null, "Select and load a file into LISP", null,

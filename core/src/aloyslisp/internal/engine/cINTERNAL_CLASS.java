@@ -88,6 +88,11 @@ public class cINTERNAL_CLASS extends cCELL implements tINTERNAL_CLASS
 			aPackage pack = getClassURI().getAnnotation(aPackage.class);
 			aJavaInternal javaInternal = getClassURI().getAnnotation(
 					aJavaInternal.class);
+			if (javaInternal != null)
+			{
+				valid = false;
+				return;
+			}
 			if (ns != null)
 			{
 				L.sPACKAGEs.SET_SYMBOL_VALUE(L.sys);
@@ -96,11 +101,6 @@ public class cINTERNAL_CLASS extends cCELL implements tINTERNAL_CLASS
 			{
 				// todo get package
 				L.sPACKAGEs.SET_SYMBOL_VALUE(L.sys);
-			}
-			if (javaInternal != null)
-			{
-				valid = false;
-				return;
 			}
 
 			if (!InstFields())
@@ -146,32 +146,6 @@ public class cINTERNAL_CLASS extends cCELL implements tINTERNAL_CLASS
 		return true;
 	}
 
-	/**
-	 * Read all lisp functions of the class and create appropriate package entry
-	 * 
-	 * There is different types of functions
-	 * <ul>
-	 * <li>@aFunction Normal Lisp objects function
-	 * <li>@aFunction Normal static function or constructor
-	 * </ul>
-	 * 
-	 * @param cls
-	 * @return
-	 */
-	@aFunction(name = "make-internal-class")
-	public static tT MAKE_INTERNAL_CLASS( //
-			@aArg(name = "class") String cls)
-	{
-		if (!CLASS_EXISTS(cls))
-			return NIL;
-
-		cINTERNAL_CLASS cla = new cINTERNAL_CLASS(cls);
-		if (!cla.valid)
-			return NIL;
-
-		return cla;
-	}
-
 	static String	EOL	= "\r\n";
 
 	/**
@@ -194,7 +168,7 @@ public class cINTERNAL_CLASS extends cCELL implements tINTERNAL_CLASS
 			throw new LispException("Can't generate VB file for "
 					+ classURI.getSimpleName());
 		}
-
+	
 		// file header
 		String clType = inter ? "Interface" : "Class";
 		write.print("'" + EOL);
@@ -235,7 +209,7 @@ public class cINTERNAL_CLASS extends cCELL implements tINTERNAL_CLASS
 		write.print("' Creation" + EOL);
 		write.print("'--------------------------------------------------------------------------"
 				+ EOL);
-
+	
 		// Write annotation header
 		if (!annot)
 		{
@@ -245,7 +219,7 @@ public class cINTERNAL_CLASS extends cCELL implements tINTERNAL_CLASS
 				write.print(getVBAnnotationObject(an) + " _" + EOL);
 			}
 		}
-
+	
 		// Write class definition header
 		if (annot)
 		{
@@ -262,7 +236,7 @@ public class cINTERNAL_CLASS extends cCELL implements tINTERNAL_CLASS
 					type = "Field";
 				if (elType[0].compareTo(ElementType.TYPE) == 0)
 					type = "Class or AttributeTargets.Interface";
-
+	
 				write.print("<AttributeUsage(AttributeTargets." + type + ")> _"
 						+ EOL);
 				write.print("Public Class " + classURI.getSimpleName() + EOL);
@@ -285,14 +259,14 @@ public class cINTERNAL_CLASS extends cCELL implements tINTERNAL_CLASS
 			else
 				write.print("Public Class " + classURI.getSimpleName() + EOL);
 		}
-
+	
 		// add base class
 		if (classURI.getSuperclass() != null)
 		{
 			write.print("\tInherits "
 					+ classURI.getSuperclass().getSimpleName() + EOL);
 		}
-
+	
 		// add interfaces
 		if (classURI.getInterfaces().length > 0)
 		{
@@ -305,7 +279,7 @@ public class cINTERNAL_CLASS extends cCELL implements tINTERNAL_CLASS
 			{
 				sep = "\tImplements ";
 			}
-
+	
 			Class<?>[] interf = classURI.getInterfaces();
 			for (Class<?> cl : interf)
 			{
@@ -316,7 +290,7 @@ public class cINTERNAL_CLASS extends cCELL implements tINTERNAL_CLASS
 			}
 			write.printf(EOL);
 		}
-
+	
 		if (annot)
 			write.printf(getVBAnnotation());
 		else
@@ -324,7 +298,7 @@ public class cINTERNAL_CLASS extends cCELL implements tINTERNAL_CLASS
 			write.print(getVBFields());
 			write.print(getVBMethod());
 		}
-
+	
 		// close file
 		if (inter)
 		{
@@ -334,8 +308,34 @@ public class cINTERNAL_CLASS extends cCELL implements tINTERNAL_CLASS
 		{
 			write.print("End Class" + EOL);
 		}
-
+	
 		return true;
+	}
+
+	/**
+	 * Read all lisp functions of the class and create appropriate package entry
+	 * 
+	 * There is different types of functions
+	 * <ul>
+	 * <li>@aFunction Normal Lisp objects function
+	 * <li>@aFunction Normal static function or constructor
+	 * </ul>
+	 * 
+	 * @param cls
+	 * @return
+	 */
+	@aFunction(name = "make-internal-class")
+	public static tT MAKE_INTERNAL_CLASS( //
+			@aArg(name = "class") String cls)
+	{
+		if (!CLASS_EXISTS(cls))
+			return NIL;
+
+		cINTERNAL_CLASS cla = new cINTERNAL_CLASS(cls);
+		if (!cla.valid)
+			return NIL;
+
+		return cla;
 	}
 
 	/**

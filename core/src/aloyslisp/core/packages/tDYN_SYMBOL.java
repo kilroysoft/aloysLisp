@@ -58,6 +58,7 @@ public interface tDYN_SYMBOL extends tBUILT_IN_CLASS
 	 * @return
 	 */
 	@aNonStandard
+	@aWriter(accessor = "specialp")
 	@aFunction(name = "set-special")
 	public tSYMBOL SET_SPECIAL( //
 			@aArg(name = "special-p") Boolean special);

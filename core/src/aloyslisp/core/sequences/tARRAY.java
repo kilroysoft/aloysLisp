@@ -29,6 +29,7 @@
 
 package aloyslisp.core.sequences;
 
+import aloyslisp.annotations.aFunction;
 import aloyslisp.annotations.aType;
 import aloyslisp.core.*;
 import aloyslisp.core.clos.tBUILT_IN_CLASS;
@@ -44,22 +45,19 @@ import aloyslisp.core.clos.tBUILT_IN_CLASS;
 public interface tARRAY extends tBUILT_IN_CLASS
 {
 	/**
-	 * @return
-	 */
-	public tT[] get();
-
-	/**
 	 * Return the type as a cons (int) (int 0 5) (complex (int) (float))
 	 * 
 	 * @return aType of array cell
 	 */
-	public tT getType();
+	@aFunction(name = "array-element-type", doc = "f_ar_ele")
+	public tT ARRAY_ELEMENT_TYPE();
 
 	/**
 	 * The the array type
 	 * 
 	 * @param type
 	 */
-	public tARRAY setType(tT type);
+	@aFunction(name = "array-element-type", doc = "f_ar_ele")
+	public tARRAY SET_ARRAY_ELEMENT_TYPE(tT type);
 
 }

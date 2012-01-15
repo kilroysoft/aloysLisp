@@ -61,12 +61,12 @@ public class cPACKAGE extends cCELL implements tPACKAGE
 	public tHASH_TABLE	uses;
 
 	/**
-	 * Shadow variables
+	 * Internal symbols
 	 */
 	public tHASH_TABLE	internal;
 
 	/**
-	 * Shadow variables
+	 * External symbols
 	 */
 	public tHASH_TABLE	external;
 
@@ -89,24 +89,84 @@ public class cPACKAGE extends cCELL implements tPACKAGE
 	public cPACKAGE(String name)
 	{
 		super();
+		name = name.toUpperCase();
 		// trace = true;
-		this.name = name.toUpperCase();
+		this.name = name;
 		uses = MAKE_HASH_TABLE();
+		if (cl != null && !name.equals(cl.PACKAGE_NAME()))
+		{
+			// As standard add COMMON-LISP in uses list
+			uses.SET_GETHASH(cl, str(cl.PACKAGE_NAME()));
+		}
 		internal = MAKE_HASH_TABLE();
 		external = MAKE_HASH_TABLE();
 		shadow = MAKE_HASH_TABLE();
 		trace = true;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.Cell#printable()
+	/**
+	 * @param symbol
+	 * @param pack
 	 */
-	@Override
-	public String TO_STRING()
+	private void exp(tSYMBOL symbol)
 	{
-		return "#<cPACKAGE " + name + ">";
+		tSYMBOL[] sym = this.FIND_SYMBOL(symbol.SYMBOL_NAME());
+
+		if (sym[1] == EXTERNAL)
+			return;
+
+		if (sym[1] == INTERNAL)
+		{
+			internal.REMHASH(str(sym[0].SYMBOL_NAME()));
+			external.SET_GETHASH(sym[0], str(sym[0].SYMBOL_NAME()));
+		}
+		else if (sym[1] == INHERITED)
+		{
+			external.SET_GETHASH(sym[0], str(sym[0].SYMBOL_NAME()));
+		}
+		else
+		{
+			if (symbol.SYMBOL_PACKAGE() == NIL)
+				symbol.SET_SYMBOL_PACKAGE(this);
+			external.SET_GETHASH(symbol, str(symbol.SYMBOL_NAME()));
+		}
+		return;
 	}
+
+	/**
+	 * @param symbol
+	 * @param pack
+	 */
+	private void imp(tSYMBOL symbol)
+	{
+		tSYMBOL[] sym = this.FIND_SYMBOL(symbol.SYMBOL_NAME());
+
+		if (sym[1] == INTERNAL || sym[1] == EXTERNAL)
+		{
+			if (sym[0].SYMBOL_PACKAGE() == symbol.SYMBOL_PACKAGE()
+					&& sym[0] != symbol)
+				throw new LispException("Correctable symbol discrepency");
+			if (sym[0].SYMBOL_PACKAGE() == NIL)
+			{
+				symbol.SET_SYMBOL_PACKAGE(this);
+				shadow.SET_GETHASH(symbol, str(symbol.SYMBOL_NAME()));
+			}
+			else if (sym[0].SYMBOL_PACKAGE() != symbol.SYMBOL_PACKAGE())
+			{
+				shadow.SET_GETHASH(symbol, str(symbol.SYMBOL_NAME()));
+			}
+		}
+		else
+		{
+			if (symbol.SYMBOL_PACKAGE() == NIL)
+				symbol.SET_SYMBOL_PACKAGE(this);
+			internal.SET_GETHASH(symbol, str(symbol.SYMBOL_NAME()));
+		}
+		return;
+	}
+
+	// ////////////////////////////////////////////////////////////////////
+	// Static functions
 
 	/*
 	 * (non-Javadoc)
@@ -115,7 +175,10 @@ public class cPACKAGE extends cCELL implements tPACKAGE
 	 * plugs.cCELL)
 	 */
 	@Override
-	public boolean isInUseList(tPACKAGE pack)
+	@aNonStandard
+	@aFunction(name = "is-in-use-list")
+	public boolean IS_IN_USE_LIST( //
+			@aArg(name = "pack") tPACKAGE pack)
 	{
 		tLIST keys = uses.HASH_TABLE_VALUES();
 		for (tT walk : keys)
@@ -123,23 +186,84 @@ public class cPACKAGE extends cCELL implements tPACKAGE
 			if (walk == pack)
 				return true;
 
-			if (((cPACKAGE) walk).isInUseList(pack))
+			if (((cPACKAGE) walk).IS_IN_USE_LIST(pack))
 				return true;
 		}
 
 		return false;
 	}
 
-	// ////////////////////////////////////////////////////////////////////
-	// Static functions
-
 	/**
-	 * (FIND-cPACKAGE name)
+	 * delete-package deletes package from all package system data structures.
+	 * If the operation is successful, delete-package returns true, otherwise
+	 * nil. The effect of delete-package is that the name and nicknames of
+	 * package cease to be recognized package names. The package object is still
+	 * a package (i.e., packagep is true of it) but package-name returns nil.
+	 * The consequences of deleting the COMMON-LISP package or the KEYWORD
+	 * package are undefined. The consequences of invoking any other package
+	 * operation on package once it has been deleted are unspecified. In
+	 * particular, the consequences of invoking find-symbol, intern and other
+	 * functions that look for a symbol name in a package are unspecified if
+	 * they are called with *package* bound to the deleted package or with the
+	 * deleted package as an argument.
+	 * <p>
+	 * If package is a package object that has already been deleted,
+	 * delete-package immediately returns nil.
+	 * <p>
+	 * After this operation completes, the home package of any symbol whose home
+	 * package had previously been package is implementation-dependent. Except
+	 * for this, symbols accessible in package are not modified in any other
+	 * way; symbols whose home package is not package remain unchanged.
 	 * 
 	 * @param pack
 	 * @return
 	 */
-	@aFunction(name = "find-package")
+	@aFunction(name = "delete-package", doc = "f_del_pk")
+	public static Boolean DELETE_PACKAGE( //
+			@aArg(name = "pack") tPACKAGE_DESIGNATOR pack)
+	{
+		return true;
+	}
+
+	/**
+	 * list-all-packages returns a fresh list of all registered packages.
+	 * 
+	 * @return
+	 */
+	@aFunction(name = "list-all-packages", doc = "f_list_a")
+	public static tLIST LIST_ALL_PACKAGES()
+	{
+		return null;
+	}
+
+	/**
+	 * find-all-symbols searches every registered package for symbols that have
+	 * a name that is the same (under string=) as string. A list of all such
+	 * symbols is returned. Whether or how the list is ordered is
+	 * implementation-dependent.
+	 * 
+	 * @param symbol
+	 * @return
+	 */
+	@aFunction(name = "find-symbol", doc = "f_find_s")
+	public static tSYMBOL[] FIND_ALL_SYMBOL( //
+			@aArg(name = "symbol") String symbol //
+	)
+	{
+		return null;
+	}
+
+	/**
+	 * If name is a string designator, find-package locates and returns the
+	 * package whose name or nickname is name. This search is case sensitive. If
+	 * there is no such package, find-package returns nil.
+	 * <p>
+	 * If name is a package object, that package object is returned.
+	 * 
+	 * @param pack
+	 * @return
+	 */
+	@aFunction(name = "find-package", doc = "f_find_p")
 	public static tT FIND_PACKAGE( //
 			@aArg(name = "pack") tPACKAGE_DESIGNATOR pack)
 	{
@@ -153,76 +277,140 @@ public class cPACKAGE extends cCELL implements tPACKAGE
 		tT packN = packages.GETHASH(
 				str(cSTRING.STRING((tSTRING_DESIGNATOR) pack)), NIL)[0];
 		if (packN == NIL)
-			throw new LispException("FIND-cPACKAGE : Package inconnu : " + pack);
+			return NIL;
 
 		return packN;
 	}
 
-	// ////////////////////////////////////////////////////////////////////
-	// Member functions
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.tPACKAGE#INTERN(java.lang.String,
-	 * aloyslisp.core.tPACKAGE_DESIGNATOR)
+	/**
+	 * Causes the the package named by name to become the current package---that
+	 * is, the value of *package*. If no such package already exists, an error
+	 * of type package-error is signaled.
+	 * <p>
+	 * Everything in-package does is also performed at compile time if the call
+	 * appears as a top level form.
+	 * 
+	 * @param pack
+	 * @return
 	 */
-	@Override
-	public tSYMBOL[] INTERN(String symbol)
+	@aFunction(name = "in-package", doc = "f_in_pkg")
+	public static tPACKAGE IN_PACKAGE( //
+			@aArg(name = "pack") tPACKAGE_DESIGNATOR pack)
 	{
-		symbol = symbol.toUpperCase();
-		tSYMBOL res[] = FIND_SYMBOL(symbol);
-		if (res[1] != NIL)
-			return res;
-
-		tSYMBOL sym = new cSYMBOL(symbol, this);
-		internal.SET_GETHASH(sym, str(symbol));
-		return new tSYMBOL[]
-		{ sym, NIL };
+		tT found = FIND_PACKAGE(pack);
+		if (found == NIL)
+			throw new LispException("IN-PACKAGE no package for " + pack);
+		return (tPACKAGE) found;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.tPACKAGE#UNINTERN(java.lang.String,
-	 * aloyslisp.core.tPACKAGE_DESIGNATOR)
+	/**
+	 * defpackage creates a package as specified and returns the package.
+	 * <p>
+	 * If defined-package-name already refers to an existing package, the
+	 * name-to-package mapping for that name is not changed. If the new
+	 * definition is at variance with the current state of that package, the
+	 * consequences are undefined; an implementation might choose to modify the
+	 * existing package to reflect the new definition. If defined-package-name
+	 * is a symbol, its name is used.
+	 * <p>
+	 * The standard options are described below.
+	 * <p>
+	 * :nicknames
+	 * <p>
+	 * The arguments to :nicknames set the package's nicknames to the supplied
+	 * names.
+	 * <p>
+	 * :documentation
+	 * <p>
+	 * The argument to :documentation specifies a documentation string; it is
+	 * attached as a documentation string to the package. At most one
+	 * :documentation option can appear in a single defpackage form.
+	 * <p>
+	 * :use
+	 * <p>
+	 * The arguments to :use set the packages that the package named by
+	 * package-name will inherit from. If :use is not supplied, it defaults to
+	 * the same implementation-dependent value as the :use argument to
+	 * make-package.
+	 * <p>
+	 * :shadow
+	 * <p>
+	 * The arguments to :shadow, symbol-names, name symbols that are to be
+	 * created in the package being defined. These symbols are added to the list
+	 * of shadowing symbols effectively as if by shadow.
+	 * <p>
+	 * :shadowing-import-from
+	 * <p>
+	 * The symbols named by the argument symbol-names are found (involving a
+	 * lookup as if by find-symbol) in the specified package-name. The resulting
+	 * symbols are imported into the package being defined, and placed on the
+	 * shadowing symbols list as if by shadowing-import. In no case are symbols
+	 * created in any package other than the one being defined.
+	 * <p>
+	 * :import-from
+	 * <p>
+	 * The symbols named by the argument symbol-names are found in the package
+	 * named by package-name and they are imported into the package being
+	 * defined. In no case are symbols created in any package other than the one
+	 * being defined.
+	 * <p>
+	 * :export
+	 * <p>
+	 * The symbols named by the argument symbol-names are found or created in
+	 * the package being defined and exported. The :export option interacts with
+	 * the :use option, since inherited symbols can be used rather than new ones
+	 * created. The :export option interacts with the :import-from and
+	 * :shadowing-import-from options, since imported symbols can be used rather
+	 * than new ones created. If an argument to the :export option is accessible
+	 * as an (inherited) internal symbol via use-package, that the symbol named
+	 * by symbol-name is first imported into the package being defined, and is
+	 * then exported from that package.
+	 * <p>
+	 * :intern
+	 * <p>
+	 * The symbols named by the argument symbol-names are found or created in
+	 * the package being defined. The :intern option interacts with the :use
+	 * option, since inherited symbols can be used rather than new ones created.
+	 * <p>
+	 * :size
+	 * <p>
+	 * The argument to the :size option declares the approximate number of
+	 * symbols expected in the package. This is an efficiency hint only and
+	 * might be ignored by an implementation.
+	 * <p>
+	 * The order in which the options appear in a defpackage form is irrelevant.
+	 * The order in which they are executed is as follows:
+	 * <p>
+	 * 1. :shadow and :shadowing-import-from. 2. :use. 3. :import-from and
+	 * :intern. 4. :export.
+	 * <p>
+	 * Shadows are established first, since they might be necessary to block
+	 * spurious name conflicts when the :use option is processed. The :use
+	 * option is executed next so that :intern and :export options can refer to
+	 * normally inherited symbols. The :export option is executed last so that
+	 * it can refer to symbols created by any of the other options; in
+	 * particular, shadowing symbols and imported symbols can be made external.
+	 * <p>
+	 * If a defpackage form appears as a top level form, all of the actions
+	 * normally performed by this macro at load time must also be performed at
+	 * compile time.
+	 * 
+	 * @param pack
+	 * @param options
+	 * @return
 	 */
-	@Override
-	public tSYMBOL UNINTERN(String symbol)
+	@aFunction(name = "defpackage", doc = "f_defpkg")
+	public static tPACKAGE MAKE_PACKAGE( //
+			@aArg(name = "pack") tSTRING_DESIGNATOR pack, //
+			@aRest(name = "options") tLIST options)
 	{
-		symbol = symbol.toUpperCase();
-		tT res;
-		tSTRING sym = str(symbol);
-		if ((res = external.GETHASH(sym, NIL)[0]) != NIL)
-		{
-			if (this != res)
-			{
-				external.REMHASH(sym);
-				shadow.REMHASH(sym);
-				return T;
-			}
+		return null;
+	}
 
-			// Test if conflict
-			if (shadow.GETHASH(sym, NIL)[0] != NIL)
-				throw new LispException("Correctable error shadow conflict");
-
-			((tSYMBOL) res).SET_SYMBOL_PACKAGE(null);
-			return NIL;
-		}
-		if ((res = internal.GETHASH(sym, NIL)[0]) != NIL)
-		{
-			if (this != res)
-			{
-				internal.REMHASH(sym);
-				shadow.REMHASH(sym);
-				return T;
-			}
-
-			// Test if conflict
-			if (shadow.GETHASH(sym, NIL)[0] != NIL)
-				throw new LispException("Correctable error shadow conflict");
-
-			((tSYMBOL) res).SET_SYMBOL_PACKAGE(null);
-			return NIL;
-		}
-		return NIL;
+	public String DESCRIBE()
+	{
+		return "#<PACKAGE " + name + " " + uses + " " + internal + " "
+				+ external + " " + shadow + ">";
 	}
 
 	/*
@@ -297,36 +485,25 @@ public class cPACKAGE extends cCELL implements tPACKAGE
 		return T;
 	}
 
-	/**
-	 * @param symbol
-	 * @param pack
+	// ////////////////////////////////////////////////////////////////////
+	// Member functions
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.tPACKAGE#INTERN(java.lang.String,
+	 * aloyslisp.core.tPACKAGE_DESIGNATOR)
 	 */
-	private void imp(tSYMBOL symbol)
+	@Override
+	public tSYMBOL[] INTERN(String symbol)
 	{
-		tSYMBOL[] sym = this.FIND_SYMBOL(symbol.SYMBOL_NAME());
+		symbol = symbol.toUpperCase();
+		tSYMBOL res[] = FIND_SYMBOL(symbol);
+		if (res[1] != NIL)
+			return res;
 
-		if (sym[1] == INTERNAL || sym[1] == EXTERNAL)
-		{
-			if (sym[0].SYMBOL_PACKAGE() == symbol.SYMBOL_PACKAGE()
-					&& sym[0] != symbol)
-				throw new LispException("Correctable symbol discrepency");
-			if (sym[0].SYMBOL_PACKAGE() == NIL)
-			{
-				symbol.SET_SYMBOL_PACKAGE(this);
-				shadow.SET_GETHASH(symbol, str(symbol.SYMBOL_NAME()));
-			}
-			else if (sym[0].SYMBOL_PACKAGE() != symbol.SYMBOL_PACKAGE())
-			{
-				shadow.SET_GETHASH(symbol, str(symbol.SYMBOL_NAME()));
-			}
-		}
-		else
-		{
-			if (symbol.SYMBOL_PACKAGE() == NIL)
-				symbol.SET_SYMBOL_PACKAGE(this);
-			internal.SET_GETHASH(symbol, str(symbol.SYMBOL_NAME()));
-		}
-		return;
+		tSYMBOL sym = new cSYMBOL(symbol, this);
+		internal.SET_GETHASH(sym, str(symbol));
+		return new tSYMBOL[]
+		{ sym, NIL };
 	}
 
 	/*
@@ -357,35 +534,6 @@ public class cPACKAGE extends cCELL implements tPACKAGE
 		return T;
 	}
 
-	/**
-	 * @param symbol
-	 * @param pack
-	 */
-	private void exp(tSYMBOL symbol)
-	{
-		tSYMBOL[] sym = this.FIND_SYMBOL(symbol.SYMBOL_NAME());
-
-		if (sym[1] == EXTERNAL)
-			return;
-
-		if (sym[1] == INTERNAL)
-		{
-			internal.REMHASH(str(sym[0].SYMBOL_NAME()));
-			external.SET_GETHASH(sym[0], str(sym[0].SYMBOL_NAME()));
-		}
-		else if (sym[1] == INHERITED)
-		{
-			external.SET_GETHASH(sym[0], str(sym[0].SYMBOL_NAME()));
-		}
-		else
-		{
-			if (symbol.SYMBOL_PACKAGE() == NIL)
-				symbol.SET_SYMBOL_PACKAGE(this);
-			external.SET_GETHASH(symbol, str(symbol.SYMBOL_NAME()));
-		}
-		return;
-	}
-
 	/*
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.collections.IPackage#getName()
@@ -398,6 +546,87 @@ public class cPACKAGE extends cCELL implements tPACKAGE
 
 	/*
 	 * (non-Javadoc)
+	 * @see aloyslisp.core.packages.tPACKAGE#PACKAGE_NICKNAMES()
+	 */
+	@Override
+	public tLIST PACKAGE_NICKNAMES()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.packages.tPACKAGE#PACKAGE_SHADOWING_SYMBOLS()
+	 */
+	@Override
+	public tLIST PACKAGE_SHADOWING_SYMBOLS()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.packages.tPACKAGE#PACKAGE_USE_LIST()
+	 */
+	@Override
+	public tLIST PACKAGE_USE_LIST()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.packages.tPACKAGE#PACKAGE_USED_BY_LIST()
+	 */
+	@Override
+	public tLIST PACKAGE_USED_BY_LIST()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.packages.tPACKAGE#RENAME_PACKAGE(aloyslisp.core.tT,
+	 * aloyslisp.core.tT)
+	 */
+	@Override
+	public tSYMBOL RENAME_PACKAGE(tT newName, tT newNicknames)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * aloyslisp.core.packages.tPACKAGE#SHADOW(aloyslisp.core.sequences.tLIST)
+	 */
+	@Override
+	public tSYMBOL SHADOW(tLIST symbols)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * aloyslisp.core.packages.tPACKAGE#SHADOWING_IMPORT(aloyslisp.core.sequences
+	 * .tLIST)
+	 */
+	@Override
+	public tSYMBOL SHADOWING_IMPORT(tLIST symbols)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
 	 * @see aloyslisp.core.tT#hashCode()
 	 */
 	@Override
@@ -406,10 +635,98 @@ public class cPACKAGE extends cCELL implements tPACKAGE
 		return str(name).SXHASH();
 	}
 
-	public String DESCRIBE()
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.Cell#printable()
+	 */
+	@Override
+	public String TO_STRING()
 	{
-		return "#<PACKAGE " + name + " " + uses + " " + internal + " "
-				+ external + " " + shadow + ">";
+		return "#<cPACKAGE " + name + ">";
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * aloyslisp.core.packages.tPACKAGE#UNEXPORT(aloyslisp.core.sequences.tLIST)
+	 */
+	@Override
+	public tSYMBOL UNEXPORT(tLIST symbols)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.tPACKAGE#UNINTERN(java.lang.String,
+	 * aloyslisp.core.tPACKAGE_DESIGNATOR)
+	 */
+	@Override
+	public tSYMBOL UNINTERN(String symbol)
+	{
+		symbol = symbol.toUpperCase();
+		tT res;
+		tSTRING sym = str(symbol);
+		if ((res = external.GETHASH(sym, NIL)[0]) != NIL)
+		{
+			if (this != res)
+			{
+				external.REMHASH(sym);
+				shadow.REMHASH(sym);
+				return T;
+			}
+
+			// Test if conflict
+			if (shadow.GETHASH(sym, NIL)[0] != NIL)
+				throw new LispException("Correctable error shadow conflict");
+
+			((tSYMBOL) res).SET_SYMBOL_PACKAGE(null);
+			return NIL;
+		}
+		if ((res = internal.GETHASH(sym, NIL)[0]) != NIL)
+		{
+			if (this != res)
+			{
+				internal.REMHASH(sym);
+				shadow.REMHASH(sym);
+				return T;
+			}
+
+			// Test if conflict
+			if (shadow.GETHASH(sym, NIL)[0] != NIL)
+				throw new LispException("Correctable error shadow conflict");
+
+			((tSYMBOL) res).SET_SYMBOL_PACKAGE(null);
+			return NIL;
+		}
+		return NIL;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * aloyslisp.core.packages.tPACKAGE#UNUSE_PACKAGE(aloyslisp.core.sequences
+	 * .tLIST)
+	 */
+	@Override
+	public tSYMBOL UNUSE_PACKAGE(tLIST packages)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * aloyslisp.core.packages.tPACKAGE#USE_PACKAGE(aloyslisp.core.sequences
+	 * .tLIST)
+	 */
+	@Override
+	public tSYMBOL USE_PACKAGE(tLIST packages)
+	{
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

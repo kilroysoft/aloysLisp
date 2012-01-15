@@ -67,8 +67,8 @@ public class cCONS extends cCELL implements tCONS
 	 */
 	public cCONS(tT car, tT cdr)
 	{
-		SET_CAR(car);
-		SET_CDR(cdr);
+		RPLACA(car);
+		RPLACD(cdr);
 	}
 
 	/**
@@ -91,7 +91,56 @@ public class cCONS extends cCELL implements tCONS
 		initCons(decl, list);
 	}
 
-	public void initCons(boolean decl, Object... list)
+	/**
+	 * Make a new Sequence of values
+	 * 
+	 * @param cnt
+	 * @param value
+	 */
+	public cCONS(Integer cnt, tT value)
+	{
+		if (cnt < 1)
+		{
+			throw new LispException(
+					"Can't make a sequence of less than 1 element");
+		}
+
+		tLIST res = NIL;
+		for (Integer i = 0; i < cnt; i++)
+		{
+			res = new cCONS(value, res);
+		}
+
+		RPLACA(res.CAR());
+		RPLACD(res.CDR());
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see java.lang.Iterable#iterator()
+	 */
+	@aJavaInternal
+	public LISTIterator iterator()
+	{
+		return iterator(true);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.sequences.tSEQUENCE#sequenceIterator(boolean)
+	 */
+	@Override
+	@aJavaInternal
+	public LISTIterator iterator(boolean destructive)
+	{
+		return new LISTIterator(this, destructive);
+	}
+
+	/**
+	 * @param decl
+	 * @param list
+	 */
+	private void initCons(boolean decl, Object... list)
 	{
 		if (list.length == 0)
 			throw new LispException(
@@ -144,27 +193,18 @@ public class cCONS extends cCELL implements tCONS
 	}
 
 	/**
-	 * Make a new Sequence of values
-	 * 
-	 * @param cnt
-	 * @param value
+	 * QUOTE to test constant lists
 	 */
-	public cCONS(Integer cnt, tT value)
+	private static final tT	QUOTE	= sym("quote");
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.types.tLIST#APPEND(aloyslisp.core.types.tT)
+	 */
+	public tT APPEND(tT item)
 	{
-		if (cnt < 1)
-		{
-			throw new LispException(
-					"Can't make a sequence of less than 1 element");
-		}
-
-		tLIST res = NIL;
-		for (Integer i = 0; i < cnt; i++)
-		{
-			res = new cCONS(value, res);
-		}
-
-		SET_CAR(res.CAR());
-		SET_CDR(res.CDR());
+		LAST().RPLACD(item);
+		return this;
 	}
 
 	// ////////////////////////////////////////////////////////////////////////////
@@ -181,6 +221,16 @@ public class cCONS extends cCELL implements tCONS
 
 	/*
 	 * (non-Javadoc)
+	 * @see aloyslisp.core.types.tLIST#SET_CAR(aloyslisp.core.types.tT)
+	 */
+	public tLIST RPLACA(tT val)
+	{
+		car = val;
+		return this;
+	}
+
+	/*
+	 * (non-Javadoc)
 	 * @see aloyslisp.core.cCELL#CDR()
 	 */
 	public tT CDR()
@@ -190,35 +240,51 @@ public class cCONS extends cCELL implements tCONS
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.types.tLIST#SET_CAR(aloyslisp.core.types.tT)
-	 */
-	public tLIST SET_CAR(tT val)
-	{
-		car = val;
-		return this;
-	}
-
-	/*
-	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tLIST#SET_CDR(aloyslisp.core.types.tT)
 	 */
-	public tLIST SET_CDR(tT val)
+	public tLIST RPLACD(tT val)
 	{
 		cdr = val;
 		return this;
 	}
 
-	/**
-	 * @param list
-	 * @return
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.types.tT#COERCE(aloyslisp.core.types.tT)
 	 */
-	@aFunction(name = "list", doc = "f_list")
-	public static tLIST LIST( //
-			@aRest(name = "list") Object... list)
+	public tT COERCE(tT type)
 	{
-		if (list.length == 0)
-			return NIL;
-		return new cCONS(list);
+		// IMPLEMENT Coerce
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.cCELL#COMPILE()
+	 */
+	public String COMPILE()
+	{
+		String res = "";
+		if (ENDP())
+		{
+			return "cons(" + CAR().COMPILE() + "," + CDR().COMPILE() + ")";
+		}
+
+		res = "list(";
+		String sep = "";
+		LISTIterator iter = (LISTIterator) iterator();
+		while (iter.hasNext())
+		{
+			tT walk = iter.next();
+			if (!iter.hasNext())
+			{
+				return res + ").append(cons(" + CAR().COMPILE() + ","
+						+ CDR().COMPILE() + "))";
+			}
+			res += sep + walk.COMPILE();
+			sep = ",";
+		}
+		return res + ")";
 	}
 
 	/**
@@ -232,6 +298,95 @@ public class cCONS extends cCELL implements tCONS
 			@aArg(name = "cdr") tT cdr)
 	{
 		return new cCONS(car, cdr);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.cCELL#CONSTANTP()
+	 */
+	public boolean CONSTANTP()
+	{
+		return CAR() == QUOTE;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.cCELL#copy()
+	 */
+	public tT COPY_CELL()
+	{
+		return new cCONS(CAR().COPY_CELL(), CDR().COPY_CELL());
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.types.tSEQUENCE#ELT(java.lang.Integer)
+	 */
+	public tT ELT(Integer pos)
+	{
+		LISTIterator iter = (LISTIterator) iterator();
+		return iter.go(pos);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.cCELL#EQUAL(aloyslisp.core.types.tT)
+	 */
+	public boolean EQUAL(tT cell)
+	{
+		if (!(cell instanceof tCONS))
+			return false;
+
+		return CAR().EQUAL(((tCONS) cell).CAR())
+				&& CDR().EQUAL(((tCONS) cell).CDR());
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.cCELL#EQUALP(aloyslisp.core.types.tT)
+	 */
+	public boolean EQUALP(tT cell)
+	{
+		if (!(cell instanceof tCONS))
+			return false;
+
+		return CAR().EQUALP(((tCONS) cell).CAR())
+				&& CDR().EQUALP(((tCONS) cell).CDR());
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.sequences.tSEQUENCE#FIND(aloyslisp.core.tT)
+	 */
+	public tT FIND(tT item)
+	{
+		// TODO implement keys
+		LISTIterator iter = new LISTIterator(this);
+		while (iter.hasNext())
+			if (iter.next().EQL(item))
+				return iter.getNode();
+		return NIL;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.types.tSEQUENCE#SET_ELT(java.lang.Integer,
+	 * aloyslisp.core.types.tT)
+	 */
+	public tT SET_ELT(tT value, Integer pos)
+	{
+		LISTIterator iter = (LISTIterator) iterator();
+		iter.go(pos);
+		return iter.set(value);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.types.tLIST#ENDP()
+	 */
+	public boolean ENDP()
+	{
+		return !(CDR() instanceof cCONS) || CDR() instanceof cNULL;
 	}
 
 	/*
@@ -254,6 +409,59 @@ public class cCONS extends cCELL implements tCONS
 
 		tFUNCTION func = SpecialOperators.FUNCTION(car);
 		return ((tFUNCTION) func).FUNCALL((tLIST) cdr);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.types.tLIST#LAST()
+	 */
+	public tLIST LAST()
+	{
+		tLIST walk = this;
+
+		while (!walk.ENDP())
+		{
+			walk = (tLIST) walk.CDR();
+		}
+
+		return walk;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.types.tLIST#SET_LAST(aloyslisp.core.types.tT)
+	 */
+	public tLIST SET_LAST(tT value)
+	{
+		// IMPLEMENT set-last
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.types.tSEQUENCE#LENGTH()
+	 */
+	public Integer LENGTH()
+	{
+		Integer cnt = 0;
+
+		for (tLIST walk = this; walk != NIL; walk = (tLIST) walk.CDR(), cnt++)
+			;
+
+		return cnt;
+	}
+
+	/**
+	 * @param list
+	 * @return
+	 */
+	@aFunction(name = "list", doc = "f_list")
+	public static tLIST LIST( //
+			@aRest(name = "list") Object... list)
+	{
+		if (list.length == 0)
+			return NIL;
+		return new cCONS(list);
 	}
 
 	/*
@@ -281,6 +489,18 @@ public class cCONS extends cCELL implements tCONS
 
 	/*
 	 * (non-Javadoc)
+	 * @see aloyslisp.core.types.tSEQUENCE#NREVERSE()
+	 */
+	public tLIST NREVERSE()
+	{
+		tLIST newCons = REVERSE();
+		RPLACA(newCons.CAR());
+		RPLACD(newCons.CDR());
+		return this;
+	}
+
+	/*
+	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tSEQUENCE#REVERSE()
 	 */
 	public tLIST REVERSE()
@@ -297,14 +517,34 @@ public class cCONS extends cCELL implements tCONS
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.types.tSEQUENCE#NREVERSE()
+	 * @see aloyslisp.core.types.tSEQUENCE#SUBSEQ(java.lang.Integer,
+	 * java.lang.Integer)
 	 */
-	public tLIST NREVERSE()
+	public tLIST SUBSEQ(Integer start, Integer end)
 	{
-		tLIST newCons = REVERSE();
-		SET_CAR(newCons.CAR());
-		SET_CDR(newCons.CDR());
-		return this;
+		// TODO Subsequence
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.tT#hashCode()
+	 */
+	@Override
+	public Integer SXHASH()
+	{
+		return car.SXHASH() ^ cdr.SXHASH();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see aloyslisp.core.types.tSEQUENCE#SET_SUBSEQ(java.lang.Integer,
+	 * java.lang.Integer, aloyslisp.core.types.tT)
+	 */
+	public tSEQUENCE SET_SUBSEQ(tT value, Integer start, Integer end)
+	{
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	/*
@@ -353,138 +593,6 @@ public class cCONS extends cCELL implements tCONS
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.types.tLIST#LAST()
-	 */
-	public tLIST LAST()
-	{
-		tLIST walk = this;
-
-		while (!walk.ENDP())
-		{
-			walk = (tLIST) walk.CDR();
-		}
-
-		return walk;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.types.tLIST#SET_LAST(aloyslisp.core.types.tT)
-	 */
-	public tLIST SET_LAST(tT value)
-	{
-		// IMPLEMENT set-last
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.types.tLIST#ENDP()
-	 */
-	public boolean ENDP()
-	{
-		return !(CDR() instanceof cCONS) || CDR() instanceof cNULL;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.types.tSEQUENCE#LENGTH()
-	 */
-	public Integer LENGTH()
-	{
-		Integer cnt = 0;
-
-		for (tLIST walk = this; walk != NIL; walk = (tLIST) walk.CDR(), cnt++)
-			;
-
-		return cnt;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.types.tSEQUENCE#ELT(java.lang.Integer)
-	 */
-	public tT ELT(Integer pos)
-	{
-		LISTIterator iter = (LISTIterator) iterator();
-		return iter.go(pos);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.types.tSEQUENCE#SET_ELT(java.lang.Integer,
-	 * aloyslisp.core.types.tT)
-	 */
-	public tT SET_ELT(tT value, Integer pos)
-	{
-		LISTIterator iter = (LISTIterator) iterator();
-		iter.go(pos);
-		return iter.set(value);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.types.tSEQUENCE#SUBSEQ(java.lang.Integer,
-	 * java.lang.Integer)
-	 */
-	public tLIST SUBSEQ(Integer start, Integer end)
-	{
-		// TODO Subsequence
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.types.tSEQUENCE#SET_SUBSEQ(java.lang.Integer,
-	 * java.lang.Integer, aloyslisp.core.types.tT)
-	 */
-	public tSEQUENCE SET_SUBSEQ(tT value, Integer start, Integer end)
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.types.tLIST#APPEND(aloyslisp.core.types.tT)
-	 */
-	public tT APPEND(tT item)
-	{
-		LAST().SET_CDR(item);
-		return this;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.cCELL#COMPILE()
-	 */
-	public String COMPILE()
-	{
-		String res = "";
-		if (ENDP())
-		{
-			return "cons(" + CAR().COMPILE() + "," + CDR().COMPILE() + ")";
-		}
-
-		res = "list(";
-		String sep = "";
-		LISTIterator iter = (LISTIterator) iterator();
-		while (iter.hasNext())
-		{
-			tT walk = iter.next();
-			if (!iter.hasNext())
-			{
-				return res + ").append(cons(" + CAR().COMPILE() + ","
-						+ CDR().COMPILE() + "))";
-			}
-			res += sep + walk.COMPILE();
-			sep = ",";
-		}
-		return res + ")";
-	}
-
-	/*
-	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tSEQUENCE#getArray()
 	 */
 	public tT[] VALUES_LIST()
@@ -496,108 +604,6 @@ public class cCONS extends cCELL implements tCONS
 			res[i++] = walk;
 		}
 		return (tT[]) res;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.cCELL#copy()
-	 */
-	public tT COPY_CELL()
-	{
-		return new cCONS(CAR().COPY_CELL(), CDR().COPY_CELL());
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.cCELL#EQUAL(aloyslisp.core.types.tT)
-	 */
-	public boolean EQUAL(tT cell)
-	{
-		if (!(cell instanceof tCONS))
-			return false;
-
-		return CAR().EQUAL(((tCONS) cell).CAR())
-				&& CDR().EQUAL(((tCONS) cell).CDR());
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.cCELL#EQUALP(aloyslisp.core.types.tT)
-	 */
-	public boolean EQUALP(tT cell)
-	{
-		if (!(cell instanceof tCONS))
-			return false;
-
-		return CAR().EQUALP(((tCONS) cell).CAR())
-				&& CDR().EQUALP(((tCONS) cell).CDR());
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.types.tT#COERCE(aloyslisp.core.types.tT)
-	 */
-	public tT COERCE(tT type)
-	{
-		// IMPLEMENT Coerce
-		return null;
-	}
-
-	/**
-	 * QUOTE to test constant lists
-	 */
-	private static final tT	QUOTE	= sym("quote");
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.cCELL#CONSTANTP()
-	 */
-	public boolean CONSTANTP()
-	{
-		return CAR() == QUOTE;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.sequences.tSEQUENCE#FIND(aloyslisp.core.tT)
-	 */
-	public tT FIND(tT item)
-	{
-		// TODO implement keys
-		LISTIterator iter = new LISTIterator(this);
-		while (iter.hasNext())
-			if (iter.next().EQL(item))
-				return iter.getNode();
-		return NIL;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see java.lang.Iterable#iterator()
-	 */
-	public LISTIterator iterator()
-	{
-		return iterator(true);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.sequences.tSEQUENCE#sequenceIterator(boolean)
-	 */
-	@Override
-	public LISTIterator iterator(boolean destructive)
-	{
-		return new LISTIterator(this, destructive);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see aloyslisp.core.tT#hashCode()
-	 */
-	@Override
-	public Integer SXHASH()
-	{
-		return car.SXHASH() ^ cdr.SXHASH();
 	}
 
 }

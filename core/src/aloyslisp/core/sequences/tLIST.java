@@ -49,9 +49,9 @@ public interface tLIST extends tSEQUENCE
 	 * 
 	 * @param newCell
 	 */
-	@aFunction(name = "setf-car")
-	@aBaseArg(name = "list", pos = 1)
-	public tLIST SET_CAR( //
+	@aFunction(name = "rplaca", doc = "f_rplaca")
+	@aWriter(accessor = "car")
+	public tLIST RPLACA( //
 			@aArg(name = "val") tT val //
 	);
 
@@ -60,9 +60,9 @@ public interface tLIST extends tSEQUENCE
 	 * 
 	 * @param newCell
 	 */
-	@aFunction(name = "setf-cdr")
-	@aBaseArg(name = "list", pos = 1)
-	public tLIST SET_CDR( //
+	@aFunction(name = "rplacd", doc = "f_rplaca")
+	// @aWriter(accessor = "cdr")
+	public tLIST RPLACD( //
 			@aArg(name = "val") tT val //
 	);
 
@@ -87,6 +87,8 @@ public interface tLIST extends tSEQUENCE
 	 * @return
 	 */
 	@aFunction(name = "setf-last")
+	@aNonStandard
+	@aWriter(accessor = "last")
 	public tLIST SET_LAST( //
 			@aArg(name = "value") tT value);
 

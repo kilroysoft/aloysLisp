@@ -172,12 +172,12 @@ public class cSYMBOL extends cCELL implements tSYMBOL
 				return this;
 			}
 			tLIST nc = (tLIST) list(name, data).APPEND(pList.COPY_CELL());
-			pList.SET_CAR(nc.CAR());
-			pList.SET_CDR(nc.CDR());
+			pList.RPLACA(nc.CAR());
+			pList.RPLACD(nc.CDR());
 			return (tSYMBOL) name;
 		}
 		// Write data
-		((tLIST) sym.CDR()).SET_CAR(data);
+		((tLIST) sym.CDR()).RPLACA(data);
 		return (tSYMBOL) name;
 	}
 
@@ -481,7 +481,7 @@ public class cSYMBOL extends cCELL implements tSYMBOL
 			return "#:" + name;
 
 		boolean current = currPackage() == pack;
-		boolean reachable = current || currPackage().isInUseList(pack);
+		boolean reachable = current || currPackage().IS_IN_USE_LIST(pack);
 
 		if (pack == key)
 			return (":" + name);
@@ -495,6 +495,7 @@ public class cSYMBOL extends cCELL implements tSYMBOL
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tSYMBOL#e(aloyslisp.core.types.tT[])
 	 */
+	@aJavaInternal
 	public tT[] e(Object... args)
 	{
 		tT a = NIL;

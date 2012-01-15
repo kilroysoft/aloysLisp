@@ -54,21 +54,10 @@ public class cARRAY extends cCELL implements tARRAY
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.sequences.tARRAY#get()
-	 */
-	@Override
-	public tT[] get()
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
 	 * @see aloyslisp.core.sequences.tARRAY#getType()
 	 */
 	@Override
-	public tT getType()
+	public tT ARRAY_ELEMENT_TYPE()
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -79,7 +68,7 @@ public class cARRAY extends cCELL implements tARRAY
 	 * @see aloyslisp.core.sequences.tARRAY#setType(aloyslisp.core.tT)
 	 */
 	@Override
-	public tARRAY setType(tT type)
+	public tARRAY SET_ARRAY_ELEMENT_TYPE(tT type)
 	{
 		// TODO Auto-generated method stub
 		return null;

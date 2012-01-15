@@ -30,6 +30,7 @@
 package aloyslisp.core.functions;
 
 import static aloyslisp.core.L.*;
+import aloyslisp.annotations.aJavaInternal;
 import aloyslisp.core.*;
 import aloyslisp.core.conditions.*;
 import aloyslisp.core.sequences.*;
@@ -49,6 +50,7 @@ public abstract class cFUNCTION extends cAPI implements tFUNCTION
 	 * @see aloyslisp.core.functions.tFUNCTION#e(java.lang.Object[])
 	 */
 	@Override
+	@aJavaInternal
 	public tT[] e(Object... args)
 	{
 		return FUNCALL(list(args));
@@ -87,12 +89,12 @@ public abstract class cFUNCTION extends cAPI implements tFUNCTION
 			{
 				let.ENV_POP();
 				closure = new cENV_CLOSURE(name, environment);
-//				if (environment != null)
-//				{
-//					System.out.println(">ENV============================");
-//					environment.ENV_DUMP();
-//					System.out.println("<ENV============================");
-//				}
+				// if (environment != null)
+				// {
+				// System.out.println(">ENV============================");
+				// environment.ENV_DUMP();
+				// System.out.println("<ENV============================");
+				// }
 				closure.ENV_PUSH();
 				let.ENV_PUSH();
 			}

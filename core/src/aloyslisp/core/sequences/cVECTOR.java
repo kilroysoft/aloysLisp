@@ -104,18 +104,9 @@ public class cVECTOR extends cCELL implements tVECTOR
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.sequences.tARRAY#get()
-	 */
-	public tT[] get()
-	{
-		return array.toArray(new cCELL[0]);
-	}
-
-	/*
-	 * (non-Javadoc)
 	 * @see aloyslisp.core.sequences.tARRAY#getType()
 	 */
-	public tT getType()
+	public tT ARRAY_ELEMENT_TYPE()
 	{
 		return type;
 	}
@@ -124,7 +115,7 @@ public class cVECTOR extends cCELL implements tVECTOR
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.sequences.tARRAY#setType(aloyslisp.core.tT)
 	 */
-	public tARRAY setType(tT type)
+	public tARRAY SET_ARRAY_ELEMENT_TYPE(tT type)
 	{
 		this.type = type;
 		return this;

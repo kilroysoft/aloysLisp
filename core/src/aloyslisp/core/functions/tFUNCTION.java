@@ -63,6 +63,7 @@ public interface tFUNCTION extends tAPI
 	 *            individual args
 	 * @return Evaluated results in ana array for eventual multiple values
 	 */
+	@aJavaInternal
 	public tT[] e(Object... args);
 
 }

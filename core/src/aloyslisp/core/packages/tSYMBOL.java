@@ -50,6 +50,7 @@ public interface tSYMBOL extends tDYN_SYMBOL, tFUNCTION_DESIGNATOR,
 	 * @param args
 	 * @return
 	 */
+	@aJavaInternal
 	public tT[] e(Object... args);
 
 	/**
@@ -107,6 +108,7 @@ public interface tSYMBOL extends tDYN_SYMBOL, tFUNCTION_DESIGNATOR,
 	 * @return
 	 */
 	@aNonStandard
+	@aWriter(accessor = "constantp")
 	@aFunction(name = "set-constant")
 	public tSYMBOL SET_CONSTANT( //
 			@aArg(name = "constant") boolean constant);
@@ -117,6 +119,8 @@ public interface tSYMBOL extends tDYN_SYMBOL, tFUNCTION_DESIGNATOR,
 	 * @return
 	 */
 	@aFunction(name = "set-get")
+	@aNonStandard
+	@aWriter(accessor = "get")
 	public tSYMBOL SET_GET( //
 			@aArg(name = "name") tT name, //
 			@aArg(name = "data") tT data);
@@ -126,6 +130,8 @@ public interface tSYMBOL extends tDYN_SYMBOL, tFUNCTION_DESIGNATOR,
 	 * @return
 	 */
 	@aFunction(name = "set-symbol-function")
+	@aNonStandard
+	@aWriter(accessor = "symbol-function")
 	public tSYMBOL SET_SYMBOL_FUNCTION( //
 			@aArg(name = "func") tFUNCTION func);
 
@@ -134,6 +140,7 @@ public interface tSYMBOL extends tDYN_SYMBOL, tFUNCTION_DESIGNATOR,
 	 * @return
 	 */
 	@aFunction(name = "set-symbol-package")
+	@aWriter(accessor = "symbol-package")
 	public tSYMBOL SET_SYMBOL_PACKAGE( //
 			@aArg(name = "pack") tPACKAGE_DESIGNATOR pack);
 

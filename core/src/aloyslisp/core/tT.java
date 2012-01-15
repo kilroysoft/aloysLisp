@@ -51,7 +51,6 @@ public interface tT
 	 * @return fCAR of cons
 	 */
 	@aFunction(name = "car", doc = "f_car_c")
-	@aWriter(accessor = "setf-car")
 	public tT CAR();
 
 	/**
@@ -60,7 +59,6 @@ public interface tT
 	 * @return fCDR of cons
 	 */
 	@aFunction(name = "cdr", doc = "f_car_c")
-	@aWriter(accessor = "setf-cdr")
 	public tT CDR();
 
 	/**
