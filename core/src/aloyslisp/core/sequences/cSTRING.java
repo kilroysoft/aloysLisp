@@ -81,6 +81,7 @@ public class cSTRING extends cVECTOR implements tSTRING
 	 * @see aloyslisp.core.IString#getString()
 	 */
 	@Override
+	@aJavaInternal
 	public String getString()
 	{
 		StringBuilder res = new StringBuilder("");

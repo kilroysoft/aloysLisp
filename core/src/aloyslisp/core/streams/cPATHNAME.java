@@ -217,6 +217,7 @@ public class cPATHNAME extends cCELL implements tPATHNAME
 	 * @see aloyslisp.core.streams.tPATHNAME#getFile()
 	 */
 	@Override
+	@aJavaInternal
 	public File getFile()
 	{
 		// TODO Auto-generated method stub

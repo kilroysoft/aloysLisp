@@ -211,6 +211,7 @@ public interface tSTREAM extends tBUILT_IN_CLASS
 	 * @return
 	 * @throws END_OF_FILE
 	 */
+	@aJavaInternal
 	public String readAtom( //
 			@aOpt(name = "eof-error-p", def = "t") Boolean eofErrorP, //
 			@aOpt(name = "eof-value", def = "nil") tT eofValue, //
@@ -225,6 +226,7 @@ public interface tSTREAM extends tBUILT_IN_CLASS
 	 * @return
 	 * @throws END_OF_FILE
 	 */
+	@aJavaInternal
 	public String readAtom( //
 			Boolean firstEscaped, //
 			Boolean eofErrorP, //
@@ -238,6 +240,7 @@ public interface tSTREAM extends tBUILT_IN_CLASS
 	 * @return
 	 * @throws END_OF_FILE
 	 */
+	@aJavaInternal
 	public tT readMacroChar(Boolean eofErrorP, tT eofValue, Boolean recursiveP)
 			throws END_OF_FILE;
 

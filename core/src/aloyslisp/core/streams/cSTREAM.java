@@ -29,22 +29,11 @@
 
 package aloyslisp.core.streams;
 
-import static aloyslisp.core.L.NIL;
-import static aloyslisp.core.L.T;
-import static aloyslisp.core.L.c;
-import static aloyslisp.core.L.printEscape;
-import static aloyslisp.core.L.printReadably;
-import static aloyslisp.core.L.readTable;
-import static aloyslisp.core.L.str;
-import static aloyslisp.core.L.sym;
+import static aloyslisp.core.L.*;
 import aloyslisp.annotations.*;
-import aloyslisp.core.L;
-import aloyslisp.core.cCELL;
-import aloyslisp.core.tT;
-import aloyslisp.core.conditions.END_OF_FILE;
-import aloyslisp.core.conditions.FILE_ERROR;
-import aloyslisp.core.conditions.LispException;
-import aloyslisp.core.designators.tPATHNAME_DESIGNATOR;
+import aloyslisp.core.*;
+import aloyslisp.core.conditions.*;
+import aloyslisp.core.designators.*;
 import aloyslisp.core.functions.tFUNCTION;
 import aloyslisp.core.math.cNUMBER;
 import aloyslisp.core.packages.tNULL;
@@ -188,6 +177,7 @@ public abstract class cSTREAM extends cCELL implements tSTREAM
 	 * @return
 	 * @throws END_OF_FILE
 	 */
+	@aJavaInternal
 	public tT readMacroChar(Boolean eofErrorP, tT eofValue, Boolean recursiveP)
 			throws END_OF_FILE
 	{
@@ -244,6 +234,7 @@ public abstract class cSTREAM extends cCELL implements tSTREAM
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.streams.IInputStream#readAtom()
 	 */
+	@aJavaInternal
 	public String readAtom(Boolean eofErrorP, tT eofValue, Boolean recursiveP)
 			throws END_OF_FILE
 	{
@@ -254,6 +245,7 @@ public abstract class cSTREAM extends cCELL implements tSTREAM
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.streams.IInputStream#readAtom(boolean)
 	 */
+	@aJavaInternal
 	public String readAtom(Boolean firstEscaped, Boolean eofErrorP,
 			tT eofValue, Boolean recursiveP)
 	{

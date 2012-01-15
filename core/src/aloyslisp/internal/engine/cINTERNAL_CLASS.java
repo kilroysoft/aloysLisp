@@ -168,7 +168,7 @@ public class cINTERNAL_CLASS extends cCELL implements tINTERNAL_CLASS
 			throw new LispException("Can't generate VB file for "
 					+ classURI.getSimpleName());
 		}
-	
+
 		// file header
 		String clType = inter ? "Interface" : "Class";
 		write.print("'" + EOL);
@@ -209,7 +209,7 @@ public class cINTERNAL_CLASS extends cCELL implements tINTERNAL_CLASS
 		write.print("' Creation" + EOL);
 		write.print("'--------------------------------------------------------------------------"
 				+ EOL);
-	
+
 		// Write annotation header
 		if (!annot)
 		{
@@ -219,7 +219,7 @@ public class cINTERNAL_CLASS extends cCELL implements tINTERNAL_CLASS
 				write.print(getVBAnnotationObject(an) + " _" + EOL);
 			}
 		}
-	
+
 		// Write class definition header
 		if (annot)
 		{
@@ -236,7 +236,7 @@ public class cINTERNAL_CLASS extends cCELL implements tINTERNAL_CLASS
 					type = "Field";
 				if (elType[0].compareTo(ElementType.TYPE) == 0)
 					type = "Class or AttributeTargets.Interface";
-	
+
 				write.print("<AttributeUsage(AttributeTargets." + type + ")> _"
 						+ EOL);
 				write.print("Public Class " + classURI.getSimpleName() + EOL);
@@ -259,14 +259,14 @@ public class cINTERNAL_CLASS extends cCELL implements tINTERNAL_CLASS
 			else
 				write.print("Public Class " + classURI.getSimpleName() + EOL);
 		}
-	
+
 		// add base class
 		if (classURI.getSuperclass() != null)
 		{
 			write.print("\tInherits "
 					+ classURI.getSuperclass().getSimpleName() + EOL);
 		}
-	
+
 		// add interfaces
 		if (classURI.getInterfaces().length > 0)
 		{
@@ -279,7 +279,7 @@ public class cINTERNAL_CLASS extends cCELL implements tINTERNAL_CLASS
 			{
 				sep = "\tImplements ";
 			}
-	
+
 			Class<?>[] interf = classURI.getInterfaces();
 			for (Class<?> cl : interf)
 			{
@@ -290,7 +290,7 @@ public class cINTERNAL_CLASS extends cCELL implements tINTERNAL_CLASS
 			}
 			write.printf(EOL);
 		}
-	
+
 		if (annot)
 			write.printf(getVBAnnotation());
 		else
@@ -298,7 +298,7 @@ public class cINTERNAL_CLASS extends cCELL implements tINTERNAL_CLASS
 			write.print(getVBFields());
 			write.print(getVBMethod());
 		}
-	
+
 		// close file
 		if (inter)
 		{
@@ -308,7 +308,7 @@ public class cINTERNAL_CLASS extends cCELL implements tINTERNAL_CLASS
 		{
 			write.print("End Class" + EOL);
 		}
-	
+
 		return true;
 	}
 
@@ -346,7 +346,7 @@ public class cINTERNAL_CLASS extends cCELL implements tINTERNAL_CLASS
 	{
 		Boolean inter = classURI.getSimpleName().startsWith("t");
 		String res = "";
-		// System.out.println("class " + cls);
+		// System.out.println("class " + classURI.getSimpleName());
 		// Method[] meth = clas.getDeclaredMethods();
 		Method[] meth = classURI.getDeclaredMethods();
 		String name = "";
@@ -354,10 +354,15 @@ public class cINTERNAL_CLASS extends cCELL implements tINTERNAL_CLASS
 		{
 			Boolean isPrivate = ((m.getModifiers() & Modifier.PRIVATE) != 0);
 			Boolean isProtected = ((m.getModifiers() & Modifier.PROTECTED) != 0);
-			aJavaInternal javaInternal = m.getAnnotation(aJavaInternal.class);
+			Boolean javaInternal = m.getAnnotation(aJavaInternal.class) != null;
 
-			if (javaInternal != null)
+			if (javaInternal)
 			{
+				/*
+				 * System.out.println("internal " + classURI.getSimpleName() +
+				 * " "
+				 * + m.getName());
+				 */
 				continue;
 			}
 
@@ -365,6 +370,13 @@ public class cINTERNAL_CLASS extends cCELL implements tINTERNAL_CLASS
 				continue;
 
 			name = m.getName();
+
+			// supress some functions defined in Java library
+			if (name.equals("iterator"))
+				continue;
+
+			if (name.startsWith("$"))
+				continue;
 
 			if (isPrivate || isProtected)
 				continue;
@@ -415,7 +427,9 @@ public class cINTERNAL_CLASS extends cCELL implements tINTERNAL_CLASS
 			if (func == null)
 			{
 				System.out.println("======NO @func def======"
-						+ classURI.getSimpleName() + "." + m.getName());
+						+ classURI.getSimpleName() + "." + m.getName() + "->"
+						+ m.getDeclaringClass().getCanonicalName()
+						+ " internal=" + javaInternal);
 				continue;
 			}
 

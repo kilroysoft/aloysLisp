@@ -127,7 +127,7 @@ public class cCONS extends cCELL implements tCONS
 
 	/*
 	 * (non-Javadoc)
-	 * @see aloyslisp.core.sequences.tSEQUENCE#sequenceIterator(boolean)
+	 * @see aloyslisp.core.sequences.tCONS#iterator(boolean)
 	 */
 	@Override
 	@aJavaInternal

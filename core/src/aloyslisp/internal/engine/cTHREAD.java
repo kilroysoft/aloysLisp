@@ -29,6 +29,7 @@
 
 package aloyslisp.internal.engine;
 
+import aloyslisp.annotations.aJavaInternal;
 import aloyslisp.core.*;
 import aloyslisp.core.conditions.LispException;
 import aloyslisp.core.packages.*;
@@ -55,6 +56,7 @@ public class cTHREAD extends cCELL implements tENV
 	 * @param name
 	 * @return
 	 */
+	@aJavaInternal
 	public cDYN_SYMBOL arg(tSYMBOL name)
 	{
 		if (topEnv == null)
@@ -71,6 +73,7 @@ public class cTHREAD extends cCELL implements tENV
 	 * @param val
 	 * @return
 	 */
+	@aJavaInternal
 	public tDYN_SYMBOL writeEnv(tSYMBOL name, tT val)
 	{
 		if (topEnv == null)
@@ -92,6 +95,7 @@ public class cTHREAD extends cCELL implements tENV
 	 * @param name
 	 * @return
 	 */
+	@aJavaInternal
 	public tT readEnv(tSYMBOL name)
 	{
 		cDYN_SYMBOL res = arg(name);

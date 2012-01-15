@@ -93,6 +93,7 @@ public class cCHARACTER extends cCELL implements tCHARACTER
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tCHARACTER#getChar()
 	 */
+	@aJavaInternal
 	public Character getChar()
 	{
 		return value;
@@ -102,6 +103,7 @@ public class cCHARACTER extends cCELL implements tCHARACTER
 	 * (non-Javadoc)
 	 * @see aloyslisp.core.types.tCHARACTER#getFormated()
 	 */
+	@aJavaInternal
 	public String getFormated()
 	{
 		switch (value)
@@ -218,6 +220,7 @@ public class cCHARACTER extends cCELL implements tCHARACTER
 	 * @param name
 	 * @return
 	 */
+	@aJavaInternal
 	Character nameToChar(String name)
 	{
 		if (name.length() == 1)

@@ -29,7 +29,7 @@
 
 package aloyslisp.core.sequences;
 
-import aloyslisp.annotations.aType;
+import aloyslisp.annotations.*;
 import aloyslisp.core.clos.tBUILT_IN_CLASS;
 
 /**

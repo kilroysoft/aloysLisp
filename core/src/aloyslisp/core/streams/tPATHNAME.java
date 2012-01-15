@@ -49,6 +49,7 @@ public interface tPATHNAME extends tBUILT_IN_CLASS, tPATHNAME_DESIGNATOR
 	/**
 	 * @return
 	 */
+	@aJavaInternal
 	public File getFile();
 
 	/**

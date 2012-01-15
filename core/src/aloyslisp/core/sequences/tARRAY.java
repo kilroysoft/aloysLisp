@@ -29,6 +29,7 @@
 
 package aloyslisp.core.sequences;
 
+import aloyslisp.annotations.aArg;
 import aloyslisp.annotations.aFunction;
 import aloyslisp.annotations.aType;
 import aloyslisp.core.*;
@@ -57,7 +58,9 @@ public interface tARRAY extends tBUILT_IN_CLASS
 	 * 
 	 * @param type
 	 */
-	@aFunction(name = "array-element-type", doc = "f_ar_ele")
-	public tARRAY SET_ARRAY_ELEMENT_TYPE(tT type);
+	@aFunction(name = "set-array-element-type", doc = "f_ar_ele")
+	public tARRAY SET_ARRAY_ELEMENT_TYPE( //
+			@aArg(name = "type") tT type //
+	);
 
 }

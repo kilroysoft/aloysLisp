@@ -48,8 +48,11 @@ public interface tSTRING_STREAM extends tSTREAM
 	@aNonStandard
 	@aWriter(accessor = "get-output-stream-string")
 	@aFunction(name = "set-output-stream-string", doc = "f_get_ou")
-	public void SET_OUPUT_STREAM_STRING(String str);
+	public void SET_OUPUT_STREAM_STRING( //
+			@aArg(name = "new-file") String str //
+	);
 
 	@aFunction(name = "get-output-stream-string", doc = "f_get_ou")
-	public String GET_OUTPUT_STREAM_STRING();
+	public String GET_OUTPUT_STREAM_STRING( //
+	);
 }

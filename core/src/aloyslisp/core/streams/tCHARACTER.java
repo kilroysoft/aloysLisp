@@ -49,6 +49,7 @@ public interface tCHARACTER extends tBUILT_IN_CLASS, tSTRING_DESIGNATOR
 	 * 
 	 * @return
 	 */
+	@aJavaInternal
 	public Character getChar();
 
 	/**
@@ -56,6 +57,7 @@ public interface tCHARACTER extends tBUILT_IN_CLASS, tSTRING_DESIGNATOR
 	 * 
 	 * @return
 	 */
+	@aJavaInternal
 	public String getFormated();
 
 	/**

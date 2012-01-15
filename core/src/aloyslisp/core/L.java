@@ -105,6 +105,7 @@ public abstract class L
 	/**
 	 * Afterward we can get the current package here
 	 */
+	@aJavaInternal
 	public static tPACKAGE currPackage()
 	{
 		// System.out.println("Curr package = " + sPACKAGEs);
@@ -363,6 +364,7 @@ public abstract class L
 	 * @param name
 	 * @return
 	 */
+	@aJavaInternal
 	public static cDYN_SYMBOL getAll(tSYMBOL name)
 	{
 		cDYN_SYMBOL res = e.arg(name);
@@ -379,6 +381,7 @@ public abstract class L
 	 * @param name
 	 * @return
 	 */
+	@aJavaInternal
 	public static tSYMBOL getGlobal(String name)
 	{
 		tSYMBOL[] res = currPackage().FIND_SYMBOL(name);
@@ -394,6 +397,7 @@ public abstract class L
 	 * @param name
 	 * @return
 	 */
+	@aJavaInternal
 	public static tT arg(String name)
 	{
 		return arg(sym(name), tT.class, NIL);
@@ -406,6 +410,7 @@ public abstract class L
 	 * @param def
 	 * @return
 	 */
+	@aJavaInternal
 	public static tT arg(String name, tT def)
 	{
 		return arg(sym(name), tT.class, def);
@@ -419,6 +424,7 @@ public abstract class L
 	 * @param def
 	 * @return
 	 */
+	@aJavaInternal
 	public static tT arg(String name, Class<?> cla, tT def)
 	{
 		return arg(sym(name), cla, def);
@@ -432,6 +438,7 @@ public abstract class L
 	 * @param def
 	 * @return
 	 */
+	@aJavaInternal
 	public static tT arg(tSYMBOL name, Class<?> cla, tT def)
 	{
 		cDYN_SYMBOL atom = e.arg(name);
@@ -452,6 +459,7 @@ public abstract class L
 	 * @param string
 	 * @return
 	 */
+	@aJavaInternal
 	public static tSTRING str(String string)
 	{
 		if (string == null)
@@ -465,6 +473,7 @@ public abstract class L
 	 * @param car
 	 * @return
 	 */
+	@aJavaInternal
 	public static tCHARACTER c(Character car)
 	{
 		return new cCHARACTER(car);
@@ -476,6 +485,7 @@ public abstract class L
 	 * @param list
 	 * @return
 	 */
+	@aJavaInternal
 	public static tLIST list(Object... list)
 	{
 		if (list.length == 0)
@@ -490,6 +500,7 @@ public abstract class L
 	 * @param list
 	 * @return
 	 */
+	@aJavaInternal
 	public static tLIST decl(Object... list)
 	{
 		return new cCONS(true, list);
@@ -502,6 +513,7 @@ public abstract class L
 	 * @param cdr
 	 * @return
 	 */
+	@aJavaInternal
 	public static tLIST cons(tT car, tT cdr)
 	{
 		return new cCONS(car, cdr);
@@ -513,6 +525,7 @@ public abstract class L
 	 * @param value
 	 * @return
 	 */
+	@aJavaInternal
 	public static cINTEGER nInt(Integer value)
 	{
 		return new cINTEGER(value);
@@ -524,6 +537,7 @@ public abstract class L
 	 * @param value
 	 * @return
 	 */
+	@aJavaInternal
 	public static cINTEGER nInt(Long value)
 	{
 		return new cINTEGER(value);
@@ -533,6 +547,7 @@ public abstract class L
 	 * @param value
 	 * @return
 	 */
+	@aJavaInternal
 	public static cSINGLE_FLOAT nFloat(Float value)
 	{
 		return new cSINGLE_FLOAT(value);
@@ -542,6 +557,7 @@ public abstract class L
 	 * @param value
 	 * @return
 	 */
+	@aJavaInternal
 	public static cDOUBLE_FLOAT nDouble(Double value)
 	{
 		return new cDOUBLE_FLOAT(value);
@@ -551,6 +567,7 @@ public abstract class L
 	 * @param value
 	 * @return
 	 */
+	@aJavaInternal
 	public static cSHORT_FLOAT nShort(Short value)
 	{
 		return new cSHORT_FLOAT(value);
@@ -561,6 +578,7 @@ public abstract class L
 	 * @param imag
 	 * @return
 	 */
+	@aJavaInternal
 	public static cCOMPLEX nComplex(tREAL real, tREAL imag)
 	{
 		return new cCOMPLEX(real, imag);
@@ -571,6 +589,7 @@ public abstract class L
 	 * @param den
 	 * @return
 	 */
+	@aJavaInternal
 	public static cRATIO mRatio(tNUMBER num, tNUMBER den)
 	{
 		return new cRATIO(num.COERCE_TO_INTEGER(), den.COERCE_TO_INTEGER());
@@ -582,6 +601,7 @@ public abstract class L
 	 * @param bool
 	 * @return
 	 */
+	@aJavaInternal
 	public static tT bool(boolean bool)
 	{
 		return bool ? T : NIL;
@@ -593,6 +613,7 @@ public abstract class L
 	 * @param def
 	 * @return
 	 */
+	@aJavaInternal
 	public static tT lisp(String def)
 	{
 		def = def.trim();
@@ -603,6 +624,7 @@ public abstract class L
 	 * @param def
 	 * @return
 	 */
+	@aJavaInternal
 	public static tT[] eval(String def)
 	{
 		return lisp(def).EVAL();
@@ -612,6 +634,7 @@ public abstract class L
 	 * @param name
 	 * @return
 	 */
+	@aJavaInternal
 	public static tSYMBOL sym(tSTRING name)
 	{
 		throw new LispException("mheu");
@@ -623,6 +646,7 @@ public abstract class L
 	 * @param name
 	 * @return
 	 */
+	@aJavaInternal
 	public static tSYMBOL sym(String name)
 	{
 		if (name.endsWith(":"))
@@ -680,6 +704,7 @@ public abstract class L
 	 * @param name
 	 * @return
 	 */
+	@aJavaInternal
 	public static tSYMBOL sym(tPACKAGE_DESIGNATOR pack, String name)
 	{
 		tT p = cPACKAGE.FIND_PACKAGE(pack);
@@ -696,6 +721,7 @@ public abstract class L
 	 * @param name
 	 * @return
 	 */
+	@aJavaInternal
 	public static tSYMBOL key(String name)
 	{
 		tSYMBOL res = (tSYMBOL) ((cPACKAGE) key).external.SET_GETHASH(
@@ -716,6 +742,7 @@ public abstract class L
 	 * @param form
 	 * @return
 	 */
+	@aJavaInternal
 	public static tLIST quote(Object form)
 	{
 		return decl("quote", form);
@@ -727,6 +754,7 @@ public abstract class L
 	 * @param form
 	 * @return
 	 */
+	@aJavaInternal
 	public static tLIST unquote(Object form)
 	{
 		return decl("%unquote", form);
@@ -738,6 +766,7 @@ public abstract class L
 	 * @param form
 	 * @return
 	 */
+	@aJavaInternal
 	public static tLIST backquote(Object form)
 	{
 		return decl("%backquote", form);
@@ -749,6 +778,7 @@ public abstract class L
 	 * @param form
 	 * @return
 	 */
+	@aJavaInternal
 	public static tLIST splice(Object form)
 	{
 		return decl("%splice", form);
@@ -760,6 +790,7 @@ public abstract class L
 	 * @param cell
 	 * @param name
 	 */
+	@aJavaInternal
 	public static boolean beginWith(tT cell, String name)
 	{
 		if (cell instanceof cNULL)

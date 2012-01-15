@@ -49,6 +49,7 @@ public interface tSTRING extends tVECTOR, tPATHNAME_DESIGNATOR,
 	/**
 	 * @return string value
 	 */
+	@aJavaInternal
 	public String getString();
 
 	/**
