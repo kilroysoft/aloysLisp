@@ -1,3 +1,5 @@
+== aloysLisp ==
+
 A long, long time ago....
 
 Well, you'll see it doesn't move from a long while.... but it's tsill here 
@@ -16,13 +18,13 @@ So rewrite clojure to make an objective lisp.... pfff lisp2 with a lisp1, rewrit
 clojure. Make a new lib to make an objective lisp, one more... no.
 
 So... sorry for this trial, but, you can look inside the pros, and cons of the 
-questions I encounter. It can be read as a novel, ideas, good and bad, regrets, 
+questions I encounter. It can be read as a novel : ideas, good and bad, regrets, 
 dead ends, and so.
 
-But I think, I can definitively put thit thread as DEPRECATED. Anyway is somene 
+But I think, I can definitively put this thread as DEPRECATED. Anyway is somene 
 want to try a Frankenstein work he's free to make the monster live again :D
 
-== aloysLisp ==
+  IP 02/03/2013
  
  A LISP interpreter, compiler and library.
  
